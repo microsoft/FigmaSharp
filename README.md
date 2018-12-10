@@ -10,7 +10,7 @@ Inlcuded with this library provide an additional library to parse this models in
 | --------------------------- | ------------------------- |
 | Xamarin.Mac (Cocoa)         | Implemented               |
 | Wpf                         | In progess..              |
-| Xamarin.Forms               | Not implemented           |
+| Xamarin.Forms               | In progress..             |
 | WinForms                    | Not implemented           |
 
 
