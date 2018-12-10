@@ -1,6 +1,8 @@
 
 # FigmaSharp + UI Kit  <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" width="50" />
 
+![](https://github.com/netonjm/FigmaSharp/blob/master/icons/figmasharp-show.gif)
+
 FigmaSharp library provides model classes to use in your .Net applications taking advantage of Figma's component system.
 
 Inlcuded with this library provide an additional library to parse this models into real views. Right now we only cover Xamarin.Mac but probably will cover other backends like Wpf, Xamarin.Forms..
