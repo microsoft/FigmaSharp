@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionModel>
+    <Runtime>
+    </Runtime>
+    <Extension path="/MonoDevelop/Core/MimeTypes">
+        <MimeType id="text/fig-x-json" _description="Figma layout" baseType="text/x-json">
+            <File pattern="*.figma"/>
+        </MimeType>
+    </Extension>
+        <Extension path = "/MonoDevelop/Ide/DisplayBindings">
+            <DisplayBinding id = "FigmaDocumentViewer" class = "MonoDevelop.Figma.FigmaDisplayBinding" />
+        </Extension>
+   <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Other">
+        <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
+  </Extension>
+</ExtensionModel>

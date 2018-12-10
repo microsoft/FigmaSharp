@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Xamarin.Mac" />
+    <PackageReference Include="MonoDevelop.Addins" Version="0.4.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
+  </ItemGroup>
+</Project>
