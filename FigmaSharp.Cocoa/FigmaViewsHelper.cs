@@ -54,11 +54,16 @@ namespace FigmaSharp
                     return NSImage.FromStream(stream);
                 }
             }
+            catch (System.ArgumentNullException)
+            {
+                Console.WriteLine("[ERROR] File '{0}' not found in Resources and/or not set Build action to EmbeddedResource", resource);
+            }
             catch (System.Exception ex)
             {
                 Console.WriteLine(ex);
-                return null;
+
             }
+            return null;
         }
 
         public static NSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
