@@ -569,8 +569,8 @@ namespace FigmaSharp
                 label.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
                 label.AlphaValue = text.opacity;
                 label.Hidden = !child.visible;
-                //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
-                //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
+                label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
+                label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
 
                 var fills = text.fills.FirstOrDefault();
                 if (fills != null)
