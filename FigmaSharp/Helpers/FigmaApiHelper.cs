@@ -33,39 +33,10 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace FigmaSharp
 {
-    public class FigmaImageResponse
-    {
-        public string err { get; set; }
-        public Dictionary<string, string> images { get; set; }
-    }
-
-    public class FigmaImageQuery
-    {
-        public FigmaImageQuery(string document, string[] ids) : this (FigmaEnvirontment.Token, document, ids)
-        {
-           
-        }
-
-        public FigmaImageQuery(string personalAccessToken, string document, string[] ids)
-        {
-            Document = document;
-            Ids = ids;
-            PersonalAccessToken = personalAccessToken;
-        }
-
-        public string Document { get; set; }
-        public string[] Ids { get; set; }
-        public string PersonalAccessToken { get; set; }
-        public string Scale { get; set; }
-        public string Format { get; set; }
-        public string Version { get; set; }
-    }
-
-    public static class FigmaHelper
+    public static class FigmaApiHelper
     {
         public static string GetManifestResource (Assembly assembly, string resource)
         {
@@ -138,48 +109,10 @@ namespace FigmaSharp
 			return resultNodes.FirstOrDefault () as IFigmaDocumentContainer;
 		}
 
-
-        //TODO: Change to async multithread
-        public static async Task SaveFilesAsync(string destinationDirectory, string format, params string[] remotefile)
-        {
-            if (!Directory.Exists(destinationDirectory))
-            {
-                throw new DirectoryNotFoundException(destinationDirectory);
-            }
-            List<Task> downloads = new List<Task>();
-            foreach (var file in remotefile)
-            {
-                var task = Task.Run(() =>
-                {
-                    var fileName = string.Concat (Path.GetFileName (file), format);
-                    var fullPath = Path.Combine(destinationDirectory, fileName);
-
-                    if (File.Exists(fullPath))
-                    {
-                        File.Delete(fullPath);
-                    }
-
-                    try
-                    {
-                        using (WebClient client = new WebClient())
-                        {
-                            client.DownloadFile(new Uri(file), fullPath);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                });
-                downloads.Add(task);
-            }
-            await Task.WhenAll(downloads);
-        }
-
         public static FigmaImageResponse GetFigmaImages(string fileId, string[] ids)
         {
             var query = new FigmaImageQuery(FigmaEnvirontment.Token, fileId, ids);
-            return FigmaHelper.GetFigmaImage(query);
+            return FigmaApiHelper.GetFigmaImage(query);
         }
 
         public static FigmaImageResponse GetFigmaImage (FigmaImageQuery figmaQuery)

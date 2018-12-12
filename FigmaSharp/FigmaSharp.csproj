@@ -36,7 +36,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FigmaModels.cs" />
-    <Compile Include="FigmaHelper.cs" />
     <Compile Include="FigmaEnvirontment.cs" />
     <Compile Include="FigmaFrameEntityResponse.cs" />
     <Compile Include="Interfaces\IImageViewWrapper.cs" />
@@ -44,11 +43,16 @@
     <Compile Include="Interfaces\IObjectWrapper.cs" />
     <Compile Include="Converters\FigmaResponseConverter.cs" />
     <Compile Include="Extensions\FigmaNodeExtensions.cs" />
+    <Compile Include="Helpers\FigmaApiHelper.cs" />
+    <Compile Include="FigmaImageQuery.cs" />
+    <Compile Include="FigmaImageResponse.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

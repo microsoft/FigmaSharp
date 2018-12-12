@@ -33,7 +33,7 @@ namespace FigmaDocumentExporter
 
             var fileId = documentTextField.StringValue;
 
-            var content = FigmaHelper.GetFigmaFileContent (fileId);
+            var content = FigmaApiHelper.GetFigmaFileContent (fileId);
 
             var outputFilePath = Path.Combine (outputDirectory, outputFile);
             if (File.Exists (outputFilePath)) {
@@ -41,7 +41,7 @@ namespace FigmaDocumentExporter
             }
             File.WriteAllText (outputFilePath, content);
 
-            var mainNode = FigmaHelper.GetFigmaDialogFromContent (content) as FigmaNode;
+            var mainNode = FigmaApiHelper.GetFigmaDialogFromContent (content) as FigmaNode;
             var figmaModelImages = mainNode.OfTypeImage ().ToArray();
             var figmaImageIds = figmaModelImages.Select(s => s.ID).ToArray();
 
@@ -49,9 +49,9 @@ namespace FigmaDocumentExporter
 
             if (figmaImageIds.Length > 0)
             {
-                var figmaResponse = FigmaHelper.GetFigmaImages(fileId, figmaImageIds);
+                var figmaResponse = FigmaApiHelper.GetFigmaImages(fileId, figmaImageIds);
                 var urls = figmaResponse.images.Select(s => s.Value).ToArray();
-                await FigmaHelper.SaveFilesAsync(outputDirectory, ".png", urls);
+                await FigmaApiHelper.SaveFilesAsync(outputDirectory, ".png", urls);
 
                 alert.MessageText = "Process finished correctly";
             }
