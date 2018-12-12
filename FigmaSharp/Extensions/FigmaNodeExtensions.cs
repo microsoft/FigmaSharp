@@ -33,7 +33,7 @@ using System.Linq;
 
 namespace FigmaSharp
 {
-    public static class FigmaExtensions
+    public static class FigmaNodeExtensions
     {
 		public static void Recursively(this FigmaNode[] customViews, string filter, List<FigmaNode> viewsFound)
         {

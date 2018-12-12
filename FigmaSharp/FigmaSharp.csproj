@@ -36,17 +36,19 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FigmaModels.cs" />
-    <Compile Include="FigmaResponseConverter.cs" />
     <Compile Include="FigmaHelper.cs" />
-    <Compile Include="FigmaExtensions.cs" />
     <Compile Include="FigmaEnvirontment.cs" />
     <Compile Include="FigmaFrameEntityResponse.cs" />
-    <Compile Include="ViewsWrappers\IImageViewWrapper.cs" />
-    <Compile Include="ViewsWrappers\IImageWrapper.cs" />
-    <Compile Include="ViewsWrappers\IObjectWrapper.cs" />
+    <Compile Include="Interfaces\IImageViewWrapper.cs" />
+    <Compile Include="Interfaces\IImageWrapper.cs" />
+    <Compile Include="Interfaces\IObjectWrapper.cs" />
+    <Compile Include="Converters\FigmaResponseConverter.cs" />
+    <Compile Include="Extensions\FigmaNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewsWrappers\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
