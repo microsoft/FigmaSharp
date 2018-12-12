@@ -84,7 +84,7 @@ namespace ExampleFigmaMac
             var fileName = Environment.GetEnvironmentVariable("FILE");
             var nodeName = "";
 
-            contentView.LoadFigmaFromUrlFile(fileName, out List<FigmaImageView> figmaImageViews, viewName, nodeName);
+            contentView.LoadFigmaFromUrlFile(fileName, out List<IImageViewWrapper> figmaImageViews, viewName, nodeName);
             figmaImageViews.Load(fileName);
         }
 
@@ -98,7 +98,7 @@ namespace ExampleFigmaMac
             var resourcesLocation = Path.Combine(Path.GetDirectoryName(currentLocation), "Resources");
             var figmaFilePath = Path.Combine(resourcesLocation, figmaFile);
 
-            contentView.LoadFigmaFromResource(figmaFile, out List<FigmaImageView> figmaImageViews);
+            contentView.LoadFigmaFromResource(figmaFile, out List<IImageViewWrapper> figmaImageViews);
             figmaImageViews.LoadFromLocalImageResources();
         }
     }

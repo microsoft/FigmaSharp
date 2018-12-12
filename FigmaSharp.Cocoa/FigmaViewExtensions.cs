@@ -41,9 +41,9 @@ namespace FigmaSharp
 {
     public static class FigmaViewExtensions
     {
-        public static void LoadFigmaFromFilePath(this NSWindow window, string filePath, out List<FigmaImageView> figmaImageViews, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromFilePath(this NSWindow window, string filePath, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
-            figmaImageViews = new List<FigmaImageView>();
+            figmaImageViews = new List<IImageViewWrapper>();
             var figmaDialog = FigmaHelper.GetFigmaDialogFromFilePath(filePath, viewName, nodeName);
             var boundingBox = figmaDialog.absoluteBoundingBox;
             if (boundingBox != null) {
@@ -52,46 +52,45 @@ namespace FigmaSharp
             LoadFigma(window.ContentView, new FigmaFrameEntityResponse(filePath, figmaDialog), figmaImageViews);
         }
 
-        public static void LoadFigmaFromUrlFile(this NSWindow window, string urlFile, out List<FigmaImageView> figmaImageViews, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromUrlFile(this NSWindow window, string urlFile, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
-            figmaImageViews = new List<FigmaImageView>();
+            figmaImageViews = new List<IImageViewWrapper>();
             var figmaDialog = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile, viewName, nodeName);
             var boundingBox = figmaDialog.absoluteBoundingBox;
             window.SetFrame(new CGRect(window.Frame.X, window.Frame.Y, boundingBox.width, boundingBox.height), true);
             LoadFigma(window.ContentView, new FigmaFrameEntityResponse(urlFile, figmaDialog), figmaImageViews);
         }
 
-
-        public static void LoadFigmaFromResource(this NSView contentView, string resource, out List<FigmaImageView> figmaImageViews, Assembly assembly = null, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromResource(this NSView contentView, string resource, out List<IImageViewWrapper> figmaImageViews, Assembly assembly = null, string viewName = null, string nodeName = null)
         {
-            figmaImageViews = new List<FigmaImageView>();
+            figmaImageViews = new List<IImageViewWrapper>();
             var template = FigmaHelper.GetManifestResource(assembly, resource);
             var figmaDialog = FigmaHelper.GetFigmaDialogFromContent(template, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
-        public static void LoadFigmaFromFilePath(this NSView contentView, string filePath, out List<FigmaImageView> figmaImageViews, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromFilePath(this NSView contentView, string filePath, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
-            figmaImageViews = new List<FigmaImageView>();
+            figmaImageViews = new List<IImageViewWrapper>();
             var figmaDialog = FigmaHelper.GetFigmaDialogFromFilePath(filePath, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
-        public static void LoadFigmaFromContent(this NSView contentView, string figmaContent, out List<FigmaImageView> figmaImageViews, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromContent(this NSView contentView, string figmaContent, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
-            figmaImageViews = new List<FigmaImageView>();
+            figmaImageViews = new List<IImageViewWrapper>();
             var figmaDialog = FigmaHelper.GetFigmaDialogFromContent(figmaContent, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
-        public static void LoadFigmaFromUrlFile(this NSView contentView, string urlFile, out List<FigmaImageView> figmaImageViews, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromUrlFile(this NSView contentView, string urlFile, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
-            figmaImageViews = new List<FigmaImageView>();
+            figmaImageViews = new List<IImageViewWrapper>();
             var figmaDialog = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
-        public static void LoadFigmaFromFrameEntity(this NSView view, IFigmaDocumentContainer figmaView, List<FigmaImageView> figmaImageViews, string figmaFileName, string viewName = null, string nodeName = null)
+        public static void LoadFigmaFromFrameEntity(this NSView view, IFigmaDocumentContainer figmaView, List<IImageViewWrapper> figmaImageViews, string figmaFileName, string viewName = null, string nodeName = null)
         {
             if (figmaView != null)
             {
@@ -110,15 +109,14 @@ namespace FigmaSharp
             }
         }
 
-        public static void LoadFromLocalImageResources(this List<FigmaImageView> figmaImageViews, Assembly assembly = null)
+        public static void LoadFromLocalImageResources(this List<IImageViewWrapper> figmaImageViews, Assembly assembly = null)
         {
-
             for (int i = 0; i < figmaImageViews.Count; i++)
             {
                 try
                 {
-                    var image = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", figmaImageViews[i].Data.imageRef));
-                    figmaImageViews[i].Image = image;
+                    var image = Cocoa.MacFigmaDelegate.GetImageFromManifest (assembly, figmaImageViews[i].Data.imageRef);
+                    figmaImageViews[i].SetImage (image);
                 }
                 catch (Exception ex)
                 {
@@ -127,7 +125,7 @@ namespace FigmaSharp
             }
         }
 
-        public static void LoadFromResourceImageDirectory(this List<FigmaImageView> figmaImageViews, string resourcesDirectory, string format = ".png")
+        public static void LoadFromResourceImageDirectory(this List<IImageViewWrapper> figmaImageViews, string resourcesDirectory, string format = ".png")
         {
             for (int i = 0; i < figmaImageViews.Count; i++)
             {
@@ -138,7 +136,7 @@ namespace FigmaSharp
                     {
                         throw new FileNotFoundException(filePath);
                     }
-                    figmaImageViews[i].Image = new NSImage(filePath);
+                    figmaImageViews[i].SetImage(Cocoa.MacFigmaDelegate.GetImageFromFilePath(filePath));
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -151,7 +149,7 @@ namespace FigmaSharp
             }
         }
 
-        public static void Load(this IEnumerable<FigmaImageView> figmaImageViews, string fileId)
+        public static void Load(this IEnumerable<IImageViewWrapper> figmaImageViews, string fileId)
         {
             var ids = figmaImageViews.Select(s => s.Data.ID).ToArray();
             var images = FigmaHelper.GetFigmaImages(fileId, ids);
@@ -165,11 +163,9 @@ namespace FigmaSharp
                         var url = images.images[imageView.Data.ID];
                         Console.WriteLine($"Processing image - ID:[{imageView.Data.ID}] ImageRef:[{imageView.Data.imageRef}] Url:[{url}]");
                         try {
-
-                            var image = new NSImage(new Foundation.NSUrl(url));
-
+                            var image = Cocoa.MacFigmaDelegate.GetImage(url);
                             NSApplication.SharedApplication.InvokeOnMainThread(() => {
-                                imageView.Image = image;
+                                imageView.SetImage (image);
                             });
                             Console.WriteLine($"[SUCCESS] Processing image - ID:[{imageView.Data.ID}] ImageRef:[{imageView.Data.imageRef}] Url:[{url}]");
                         } catch (Exception ex) {
@@ -195,7 +191,12 @@ namespace FigmaSharp
             }
         }
 
-        public static void LoadFigma(this NSView contentView, FigmaFrameEntityResponse frameEntityResponse, List<FigmaImageView> figmaImageViews = null)
+        public static NSColor ToNSColor(this FigmaColor color)
+        {
+            return NSColor.FromRgba(color.r, color.g, color.b, color.a);
+        }
+
+        public static void LoadFigma(this NSView contentView, FigmaFrameEntityResponse frameEntityResponse, List<IImageViewWrapper> figmaImageViews = null)
         {
             //clean views from current container
             var views = contentView.Subviews;
@@ -223,9 +224,49 @@ namespace FigmaSharp
             return new CGRect(0, 0, rectangle.width, rectangle.height);
         }
 
-        public static NSColor ToNSColor(this FigmaColor color)
+        public static NSFont ToNSFont(this FigmaTypeStyle style)
         {
-            return NSColor.FromRgba(color.r, color.g, color.b, color.a);
+            string family = style.fontFamily;
+            if (family == "SF UI Text")
+            {
+                family = ".SF NS Text";
+            }
+            else if (family == "SF Mono")
+            {
+                family = ".SF NS Display";
+            }
+            else
+            {
+                Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
+            }
+
+            var font = NSFont.FromFontName(family, style.fontSize);
+            var w = ToAppKitFontWeight(style.fontWeight);
+            NSFontTraitMask traits = default(NSFontTraitMask);
+            if (style.fontPostScriptName != null && style.fontPostScriptName.EndsWith("-Bold"))
+            {
+                traits = NSFontTraitMask.Bold;
+            }
+            else
+            {
+
+            }
+            //if (font != null)
+            //{
+            //    var w = NSFontManager.SharedFontManager.WeightOfFont(font);
+            //    var traits = NSFontManager.SharedFontManager.TraitsOfFont(font);
+
+            //}
+
+            font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, w, style.fontSize);
+            //var font = NSFont.FromFontName(".SF NS Text", 12);
+
+            if (font == null)
+            {
+                Console.WriteLine($"[ERROR] Font not found :{family}");
+                font = NSFont.LabelFontOfSize(style.fontSize);
+            }
+            return font;
         }
 
         public static CGPoint GetRelativePosition(this IAbsoluteBoundingBox parent, IAbsoluteBoundingBox node)
@@ -297,52 +338,6 @@ namespace FigmaSharp
             var select_weight = (int) Math.Round(weight / 100) - 1;
             return app_kit_font_weights[select_weight];
         }
-
-        public static NSFont ToNSFont(this FigmaTypeStyle style)
-        {
-            string family = style.fontFamily;
-            if (family == "SF UI Text")
-            {
-                family = ".SF NS Text";
-            }
-            else if (family == "SF Mono")
-            {
-                family = ".SF NS Display";
-            }
-            else
-            {
-                Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
-            }
-
-            var font = NSFont.FromFontName(family, style.fontSize);
-            var w = ToAppKitFontWeight(style.fontWeight);
-            NSFontTraitMask traits = default(NSFontTraitMask);
-            if (style.fontPostScriptName != null && style.fontPostScriptName.EndsWith ("-Bold"))
-            {
-                traits = NSFontTraitMask.Bold;
-            }
-            else
-            {
-
-            }
-            //if (font != null)
-            //{
-            //    var w = NSFontManager.SharedFontManager.WeightOfFont(font);
-            //    var traits = NSFontManager.SharedFontManager.TraitsOfFont(font);
-
-            //}
-
-            font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, w, style.fontSize);
-            //var font = NSFont.FromFontName(".SF NS Text", 12);
-           
-            if (font == null)
-            {
-                Console.WriteLine($"[ERROR] Font not found :{family}");
-                font = NSFont.LabelFontOfSize(style.fontSize);
-            }
-            return font;
-        }
-
         public static void CalculateBounds (this IFigmaNodeContainer figmaNodeContainer)
         {
             if (figmaNodeContainer is IAbsoluteBoundingBox calculatedBounds)
@@ -422,7 +417,7 @@ namespace FigmaSharp
         }
 
         //TODO: This 
-        public static NSView ToNSView(this FigmaNode parent, NSView parentView, FigmaNode child, List<FigmaImageView> figmaImageViews = null)
+        public static NSView ToNSView(this FigmaNode parent, NSView parentView, FigmaNode child, List<IImageViewWrapper> figmaImageViews = null)
         {
             Console.WriteLine("[{0}({1})] Processing {2}..", child.id, child.name, child.GetType());
             if (child is IFigmaDocumentContainer instance && child is IConstraints instanceConstrains)
@@ -441,7 +436,7 @@ namespace FigmaSharp
                     var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
                     if (figmaText != null)
                     {
-                        button.Font = ToNSFont(figmaText.style);
+                        button.Font = figmaText.style.ToNSFont();
                     }
 
                     button.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
@@ -624,7 +619,7 @@ namespace FigmaSharp
                 var fills = vector.fills.FirstOrDefault();
                 if (fills != null && fills.color != null)
                 {
-                    currengroupView.Layer.BackgroundColor = ToNSColor(fills.color).CGColor;
+                    currengroupView.Layer.BackgroundColor = fills.color.ToNSColor ().CGColor;
                 }
 
                 parentView.AddSubview(currengroupView);
@@ -652,8 +647,9 @@ namespace FigmaSharp
                 if (fills?.type == "IMAGE" && fills is FigmaPaint figmaPaint)
                 {
                     figmaPaint.ID = child.id;
-                    FigmaImageView figmaImageView;
-                    currengroupView = figmaImageView = new FigmaImageView() { Data = figmaPaint };
+
+                    var figmaImageView = Cocoa.MacFigmaDelegate.GetImageView(figmaPaint);
+                    currengroupView = figmaImageView.NativeObject as NSImageView;
                     figmaImageViews?.Add(figmaImageView);
                 }
                 else
@@ -672,14 +668,14 @@ namespace FigmaSharp
 
                 if (fills?.color != null)
                 {
-                    currengroupView.Layer.BackgroundColor = ToNSColor(fills.color).CGColor;
+                    currengroupView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
                 }
                 var strokes = rectangleVector.strokes.FirstOrDefault();
                 if (strokes != null)
                 {
                     if (strokes.color != null)
                     {
-                        currengroupView.Layer.BorderColor = ToNSColor(strokes.color).CGColor;
+                        currengroupView.Layer.BorderColor = strokes.color.ToNSColor ().CGColor;
                     }
                     currengroupView.Layer.BorderWidth = rectangleVector.strokeWeight;
                 }
@@ -719,7 +715,7 @@ namespace FigmaSharp
                 var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
                 if (fills != null)
                 {
-                    circleLayer.FillColor = ToNSColor(fills.color).CGColor;
+                    circleLayer.FillColor = fills.color.ToNSColor().CGColor;
                 }
 
                 var strokes = elipse.strokes.FirstOrDefault();
@@ -727,7 +723,7 @@ namespace FigmaSharp
                 {
                     if (strokes.color != null)
                     {
-                        circleLayer.BorderColor = ToNSColor(strokes.color).CGColor;
+                        circleLayer.BorderColor = strokes.color.ToNSColor().CGColor;
                     }
                 }
 
@@ -747,7 +743,7 @@ namespace FigmaSharp
                 var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
                 if (fills != null)
                 {
-                    figmaLineView.Layer.BackgroundColor = ToNSColor(fills.color).CGColor;
+                    figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
                 }
 
                 var strokes = figmaLine.strokes.FirstOrDefault();
@@ -755,7 +751,7 @@ namespace FigmaSharp
                 {
                     if (strokes.color != null)
                     {
-                        figmaLineView.Layer.BackgroundColor = ToNSColor(strokes.color).CGColor;
+                        figmaLineView.Layer.BackgroundColor = strokes.color.ToNSColor().CGColor;
                     }
                 }
 

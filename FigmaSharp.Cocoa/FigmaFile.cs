@@ -37,7 +37,7 @@ namespace FigmaSharp
 	public class FigmaFile
 	{
 		string file;
-		public List<FigmaImageView> FigmaImages { get; private set; }
+		public List<IImageViewWrapper> FigmaImages { get; private set; }
 		public IFigmaDocumentContainer Document { get; private set; }
 		public NSView ContentView { get; private set; }
 
@@ -75,7 +75,7 @@ namespace FigmaSharp
 				Document = FigmaHelper.GetFigmaDialogFromContent (template);
 				Console.WriteLine ($"Reading successfull");
 
-				FigmaImages = new List<FigmaImageView> ();
+				FigmaImages = new List<IImageViewWrapper> ();
 
 				ContentView = new NSView ();
 				//Reload ();
