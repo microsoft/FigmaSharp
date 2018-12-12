@@ -44,7 +44,7 @@ namespace FigmaSharp
         public static void LoadFigmaFromFilePath(this NSWindow window, string filePath, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
             figmaImageViews = new List<IImageViewWrapper>();
-            var figmaDialog = FigmaHelper.GetFigmaDialogFromFilePath(filePath, viewName, nodeName);
+            var figmaDialog = FigmaApiHelper.GetFigmaDialogFromFilePath(filePath, viewName, nodeName);
             var boundingBox = figmaDialog.absoluteBoundingBox;
             if (boundingBox != null) {
                 window.SetFrame(new CGRect(window.Frame.X, window.Frame.Y, boundingBox.width, boundingBox.height), true);
@@ -55,7 +55,7 @@ namespace FigmaSharp
         public static void LoadFigmaFromUrlFile(this NSWindow window, string urlFile, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
             figmaImageViews = new List<IImageViewWrapper>();
-            var figmaDialog = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile, viewName, nodeName);
+            var figmaDialog = FigmaApiHelper.GetFigmaDialogFromUrlFile(urlFile, viewName, nodeName);
             var boundingBox = figmaDialog.absoluteBoundingBox;
             window.SetFrame(new CGRect(window.Frame.X, window.Frame.Y, boundingBox.width, boundingBox.height), true);
             LoadFigma(window.ContentView, new FigmaFrameEntityResponse(urlFile, figmaDialog), figmaImageViews);
@@ -64,29 +64,29 @@ namespace FigmaSharp
         public static void LoadFigmaFromResource(this NSView contentView, string resource, out List<IImageViewWrapper> figmaImageViews, Assembly assembly = null, string viewName = null, string nodeName = null)
         {
             figmaImageViews = new List<IImageViewWrapper>();
-            var template = FigmaHelper.GetManifestResource(assembly, resource);
-            var figmaDialog = FigmaHelper.GetFigmaDialogFromContent(template, viewName, nodeName);
+            var template = FigmaApiHelper.GetManifestResource(assembly, resource);
+            var figmaDialog = FigmaApiHelper.GetFigmaDialogFromContent(template, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
         public static void LoadFigmaFromFilePath(this NSView contentView, string filePath, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
             figmaImageViews = new List<IImageViewWrapper>();
-            var figmaDialog = FigmaHelper.GetFigmaDialogFromFilePath(filePath, viewName, nodeName);
+            var figmaDialog = FigmaApiHelper.GetFigmaDialogFromFilePath(filePath, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
         public static void LoadFigmaFromContent(this NSView contentView, string figmaContent, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
             figmaImageViews = new List<IImageViewWrapper>();
-            var figmaDialog = FigmaHelper.GetFigmaDialogFromContent(figmaContent, viewName, nodeName);
+            var figmaDialog = FigmaApiHelper.GetFigmaDialogFromContent(figmaContent, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
         public static void LoadFigmaFromUrlFile(this NSView contentView, string urlFile, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
             figmaImageViews = new List<IImageViewWrapper>();
-            var figmaDialog = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile, viewName, nodeName);
+            var figmaDialog = FigmaApiHelper.GetFigmaDialogFromUrlFile(urlFile, viewName, nodeName);
             LoadFigmaFromFrameEntity(contentView, figmaDialog, figmaImageViews, viewName, nodeName);
         }
 
@@ -152,7 +152,7 @@ namespace FigmaSharp
         public static void Load(this IEnumerable<IImageViewWrapper> figmaImageViews, string fileId)
         {
             var ids = figmaImageViews.Select(s => s.Data.ID).ToArray();
-            var images = FigmaHelper.GetFigmaImages(fileId, ids);
+            var images = FigmaApiHelper.GetFigmaImages(fileId, ids);
 
             if (images != null) {
 
@@ -183,11 +183,11 @@ namespace FigmaSharp
         {
             var ids = paints.Select(s => s.ID).ToArray();
             var query = new FigmaImageQuery(FigmaEnvirontment.Token, fileId, ids);
-            var images = FigmaHelper.GetFigmaImage(query);
+            var images = FigmaApiHelper.GetFigmaImage(query);
             if (images != null)
             {
                 var urls = paints.Select(s => images.images[s.ID]).ToArray();
-                await FigmaHelper.SaveFilesAsync(directoryPath, format, urls);
+                await FileHelper.SaveFilesAsync(directoryPath, format, urls);
             }
         }
 

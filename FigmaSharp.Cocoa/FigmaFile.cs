@@ -70,9 +70,9 @@ namespace FigmaSharp
 		{
 			try {
 				Console.WriteLine ($"Reading {file} from resources");
-				var template = FigmaHelper.GetManifestResource (GetType ().Assembly, file);
+				var template = FigmaApiHelper.GetManifestResource (GetType ().Assembly, file);
 
-				Document = FigmaHelper.GetFigmaDialogFromContent (template);
+				Document = FigmaApiHelper.GetFigmaDialogFromContent (template);
 				Console.WriteLine ($"Reading successfull");
 
 				FigmaImages = new List<IImageViewWrapper> ();
