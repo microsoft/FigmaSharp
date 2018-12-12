@@ -41,6 +41,12 @@
     <Compile Include="FigmaExtensions.cs" />
     <Compile Include="FigmaEnvirontment.cs" />
     <Compile Include="FigmaFrameEntityResponse.cs" />
+    <Compile Include="ViewsWrappers\IImageViewWrapper.cs" />
+    <Compile Include="ViewsWrappers\IImageWrapper.cs" />
+    <Compile Include="ViewsWrappers\IObjectWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewsWrappers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -118,7 +118,7 @@ namespace MonoDevelop.Figma
 		void Reload ()
 		{
 			try {
-				renderer.LoadFigmaFromFilePath (fileName, out List<FigmaImageView> figmaImageViews, null);
+				renderer.LoadFigmaFromFilePath (fileName, out List<MacImageViewWrapper> figmaImageViews, null);
                 var resourcesDirectoryPath = Path.Combine (this.Project.BaseDirectory, "Resources");
                 if (!Directory.Exists(resourcesDirectoryPath))
                 {

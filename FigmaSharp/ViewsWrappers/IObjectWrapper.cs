@@ -26,19 +26,11 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using AppKit;
-using CoreGraphics;
 
 namespace FigmaSharp
 {
-    public class FigmaImageView : NSImageView
+    public interface IObjectWrapper
     {
-        public FigmaImageView()
-        {
-            TranslatesAutoresizingMaskIntoConstraints = false;
-        }
-
-        public FigmaPaint Data { get; internal set; }
-
+        object NativeObject { get; }
     }
 }
