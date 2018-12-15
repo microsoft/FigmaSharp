@@ -178,19 +178,6 @@ namespace FigmaSharp
             }
         }
 
-        //TODO: Change to async multithread
-        public static async Task SaveFigmaImageFiles(this FigmaPaint[] paints, string fileId, string directoryPath, string format = ".png")
-        {
-            var ids = paints.Select(s => s.ID).ToArray();
-            var query = new FigmaImageQuery(FigmaEnvirontment.Token, fileId, ids);
-            var images = FigmaApiHelper.GetFigmaImage(query);
-            if (images != null)
-            {
-                var urls = paints.Select(s => images.images[s.ID]).ToArray();
-                await FileHelper.SaveFilesAsync(directoryPath, format, urls);
-            }
-        }
-
         public static NSColor ToNSColor(this FigmaColor color)
         {
             return NSColor.FromRgba(color.r, color.g, color.b, color.a);
@@ -337,57 +324,6 @@ namespace FigmaSharp
 
             var select_weight = (int) Math.Round(weight / 100) - 1;
             return app_kit_font_weights[select_weight];
-        }
-        public static void CalculateBounds (this IFigmaNodeContainer figmaNodeContainer)
-        {
-            if (figmaNodeContainer is IAbsoluteBoundingBox calculatedBounds)
-            {
-                calculatedBounds.absoluteBoundingBox = FigmaRectangle.Zero;
-                foreach (var item in figmaNodeContainer.children)
-                {
-                    if (item is IAbsoluteBoundingBox itmBoundingBox)
-                    {
-                        calculatedBounds.absoluteBoundingBox.x = Math.Min(calculatedBounds.absoluteBoundingBox.x, itmBoundingBox.absoluteBoundingBox.x);
-                        calculatedBounds.absoluteBoundingBox.y = Math.Min(calculatedBounds.absoluteBoundingBox.y, itmBoundingBox.absoluteBoundingBox.y);
-
-                        if (itmBoundingBox.absoluteBoundingBox.x + itmBoundingBox.absoluteBoundingBox.width > calculatedBounds.absoluteBoundingBox.x + calculatedBounds.absoluteBoundingBox.width)
-                        {
-                            calculatedBounds.absoluteBoundingBox.width += (itmBoundingBox.absoluteBoundingBox.x + itmBoundingBox.absoluteBoundingBox.width) - (calculatedBounds.absoluteBoundingBox.x + calculatedBounds.absoluteBoundingBox.width);
-                        }
-
-                        if (itmBoundingBox.absoluteBoundingBox.y + itmBoundingBox.absoluteBoundingBox.height > calculatedBounds.absoluteBoundingBox.y + calculatedBounds.absoluteBoundingBox.height)
-                        {
-                            calculatedBounds.absoluteBoundingBox.height += (itmBoundingBox.absoluteBoundingBox.y + itmBoundingBox.absoluteBoundingBox.height) - (calculatedBounds.absoluteBoundingBox.y + calculatedBounds.absoluteBoundingBox.height);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static IEnumerable<FigmaPaint> OfTypeImage (this FigmaNode child)
-        {
-            if (child.GetType() == typeof(FigmaRectangleVector))
-            {
-                var rectangleVector = ((FigmaVectorEntity)child);
-
-                var fills = rectangleVector.fills.FirstOrDefault();
-                if (fills?.type == "IMAGE" && fills is FigmaPaint figmaPaint)
-                {
-                    figmaPaint.ID = child.id;
-                    yield return figmaPaint;
-                }
-            }
-
-            if (child is IFigmaNodeContainer nodeContainer)
-            {
-                foreach (var item in nodeContainer.children)
-                {
-                    foreach (var resultItems in OfTypeImage(item))
-                    {
-                        yield return resultItems;
-                    }
-                }
-            }
         }
 
         static CGPath ToGCPath (this NSBezierPath bezierPath)
@@ -784,6 +720,5 @@ namespace FigmaSharp
             }
             return null;
         }
-
     }
 }
