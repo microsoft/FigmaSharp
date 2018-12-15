@@ -106,8 +106,6 @@ namespace MonoDevelop.Figma
 
             container.AddArrangedSubview (scrollView);
 
-			
-
 			//IdeApp.Workbench.ActiveDocument.Editor.TextChanged += Editor_TextChanged;
 
 			_content.ShowAll ();
@@ -118,7 +116,7 @@ namespace MonoDevelop.Figma
 		void Reload ()
 		{
 			try {
-				renderer.LoadFigmaFromFilePath (fileName, out List<MacImageViewWrapper> figmaImageViews, null);
+				renderer.LoadFigmaFromFilePath (fileName, out List<IImageViewWrapper> figmaImageViews, null);
                 var resourcesDirectoryPath = Path.Combine (this.Project.BaseDirectory, "Resources");
                 if (!Directory.Exists(resourcesDirectoryPath))
                 {
