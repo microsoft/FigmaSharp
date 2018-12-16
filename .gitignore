@@ -7,3 +7,4 @@ debug
 obj
 nuget.exe
 .vs
+.user
