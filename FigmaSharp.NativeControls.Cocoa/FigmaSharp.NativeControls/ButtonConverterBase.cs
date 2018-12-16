@@ -26,7 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.NativeControls.Base
 {
     public abstract class ButtonConverterBase : CustomViewConverter
     {

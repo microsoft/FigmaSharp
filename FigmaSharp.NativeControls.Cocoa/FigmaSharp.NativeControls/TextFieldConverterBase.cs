@@ -26,9 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.NativeControls.Base
 {
-    internal abstract class TextFieldConverterBase : CustomViewConverter
+    public abstract class TextFieldConverterBase : CustomViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {

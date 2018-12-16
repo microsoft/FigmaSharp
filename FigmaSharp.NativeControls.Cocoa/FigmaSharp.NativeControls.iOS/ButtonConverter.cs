@@ -25,47 +25,41 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
 using System.Linq;
+using FigmaSharp.NativeControls.Base;
+using UIKit;
 
 namespace FigmaSharp.NativeControls
 {
     public class ButtonConverter : ButtonConverterBase
     {
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            return (currentNode.name == "button" || currentNode.name == "button default") && currentNode is IFigmaDocumentContainer;
-        }
-
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var button = new UIButton() { TranslatesAutoresizingMaskIntoConstraints = false };
             button.Configure(currentNode);
 
             var instance = (IFigmaDocumentContainer)currentNode;
             var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
             if (figmaText != null)
             {
-                button.AlphaValue = figmaText.opacity;
-                button.Font = figmaText.style.ToNSFont();
+                button.Alpha = figmaText.opacity;
+                button.Font = figmaText.style.ToUIFont();
             }
 
             if (instance.children.OfType<FigmaGroup>().Any())
             {
-                button.Title = "";
-                button.AlphaValue = 0.15f;
-                button.BezelStyle = NSBezelStyle.TexturedSquare;
+                button.SetTitle ("", UIControlState.Normal);
+                button.Alpha = 0.15f;
             }
             else
             {
                 if (figmaText != null)
                 {
-                    button.AlphaValue = figmaText.opacity;
-                    button.Title = figmaText.characters;
+                    button.Alpha = figmaText.opacity;
+                    button.SetTitle(figmaText.characters, UIControlState.Normal);
                 }
 
-                button.BezelStyle = NSBezelStyle.Rounded;
-                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
+                button.Layer.BackgroundColor = instance.backgroundColor.ToUIColor().CGColor;
                 return null;
             }
             return new ViewWrapper(button);

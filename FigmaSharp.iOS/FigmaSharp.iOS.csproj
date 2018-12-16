@@ -50,6 +50,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="ViewWrappers\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="FigmaDelegate.cs" />
     <Compile Include="FigmaViewsHelper.cs" />
+    <Compile Include="Extensions\FigmaExtensions.cs" />
+    <Compile Include="Extensions\ViewConfigureExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
