@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,12 +26,16 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 namespace FigmaSharp
 {
-    public interface IImageViewWrapper : IViewWrapper
+    public abstract class FigmaViewConverter : CustomViewConverter
     {
-        FigmaPaint Data { get; }
-        void SetImage(IImageWrapper image);
+    }
+
+    public abstract class CustomViewConverter
+    {
+        public abstract bool CanConvert(FigmaNode currentNode);
+
+        public abstract IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView);
     }
 }

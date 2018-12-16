@@ -39,6 +39,15 @@
     <Compile Include="ViewWrappers\MacImageWrapper.cs" />
     <Compile Include="ViewWrappers\MacViewWrapper.cs" />
     <Compile Include="ViewWrappers\MacImageViewWrapper.cs" />
+    <Compile Include="Converters\Custom\CustomButtonConverter.cs" />
+    <Compile Include="Converters\Custom\CustomTextFieldConverter.cs" />
+    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
+    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
+    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
+    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
+    <Compile Include="Converters\FigmaElipseConverter.cs" />
+    <Compile Include="Converters\FigmaTextConverter.cs" />
+    <Compile Include="Converters\FigmaLineConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
@@ -48,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Converters\Custom\" />
   </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

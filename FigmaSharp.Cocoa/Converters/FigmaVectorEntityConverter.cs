@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaVectorEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,13 +25,23 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using AppKit;
 
-
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public interface IImageViewWrapper : IViewWrapper
+    public class FigmaVectorEntityConverter : FigmaViewConverter
     {
-        FigmaPaint Data { get; }
-        void SetImage(IImageWrapper image);
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.GetType() == typeof(FigmaVectorEntity);
+        }
+
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        {
+            var vector = ((FigmaVectorEntity)currentNode);
+            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            currengroupView.Configure(vector);
+            return new MacViewWrapper(currengroupView);
+        }
     }
 }
