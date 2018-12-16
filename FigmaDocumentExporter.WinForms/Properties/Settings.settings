@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FigmaDocumentExporter.WinForms.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="TOKEN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5134-3333cd9c-832b-46d2-a993-03f4e60ff5fd</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
