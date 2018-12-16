@@ -28,9 +28,9 @@
 using AppKit;
 using System.Linq;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.NativeControls
 {
-    public class CustomButtonConverter : CustomViewConverter
+    public class ButtonConverter : ButtonConverterBase
     {
         public override bool CanConvert(FigmaNode currentNode)
         {

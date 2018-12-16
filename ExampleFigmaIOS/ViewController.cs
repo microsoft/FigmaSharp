@@ -1,6 +1,7 @@
 ﻿using System;
 
 using UIKit;
+using FigmaSharp;
 
 namespace ExampleFigmaIOS
 {
@@ -21,6 +22,8 @@ namespace ExampleFigmaIOS
         {
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
+
+            var service = new FigmaViewService();
         }
     }
 }

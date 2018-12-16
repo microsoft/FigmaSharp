@@ -11,5 +11,9 @@
 </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Converters\Custom\CustomButtonConverter.cs" />
   </ItemGroup>
 </Project>

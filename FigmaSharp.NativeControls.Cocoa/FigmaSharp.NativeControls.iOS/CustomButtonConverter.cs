@@ -25,14 +25,43 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System.Linq;
+using UIKit;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class CustomButtonConverter : CustomViewConverter
+    public class ButtonConverter : ButtonConverterBase
     {
-        public override bool CanConvert(FigmaNode currentNode)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            return (currentNode.name == "button" || currentNode.name == "button default") && currentNode is IFigmaDocumentContainer;
+            var button = new UIButton() { TranslatesAutoresizingMaskIntoConstraints = false };
+            button.Configure(currentNode);
+
+            var instance = (IFigmaDocumentContainer)currentNode;
+            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
+            if (figmaText != null)
+            {
+                button.Alpha = figmaText.opacity;
+                button.Font = figmaText.style.ToNSFont();
+            }
+
+            if (instance.children.OfType<FigmaGroup>().Any())
+            {
+                button.SetTitle ("", UIControlState.Normal);
+                button.Alpha = 0.15f;
+            }
+            else
+            {
+                if (figmaText != null)
+                {
+                    button.Alpha = figmaText.opacity;
+                    button.SetTitle(figmaText.characters, UIControlState.Normal);
+                }
+
+                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
+                return null;
+            }
+            return new ViewWrapper(button);
         }
     }
 }
