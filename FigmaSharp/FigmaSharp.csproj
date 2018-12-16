@@ -58,6 +58,7 @@
     <Compile Include="Converters\FigmaTextConverter.cs" />
     <Compile Include="Converters\FigmaVectorViewConverter.cs" />
     <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
+    <Compile Include="IFigmaFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
