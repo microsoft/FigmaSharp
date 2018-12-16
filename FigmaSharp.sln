@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exporters", "Exporters", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaDocumentExporter.WinForms", "FigmaDocumentExporter.WinForms\FigmaDocumentExporter.WinForms.csproj", "{B14BDB8A-337D-4FCA-BCDC-E63C4F98752F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBBB8608-7B63-4C07-9609-16DDEB01C081}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.WinForms", "FigmaSharp.WinForms\FigmaSharp.WinForms.csproj", "{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,18 +31,18 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.MacDebug|Any CPU.ActiveCfg = MacDebug|Any CPU
-		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.MacDebug|Any CPU.Build.0 = MacDebug|Any CPU
+		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.MacDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.MacDebug|Any CPU.Build.0 = Debug|Any CPU
 		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD306162-8DAD-4DBD-B264-BDA8765CC107}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.MacDebug|Any CPU.ActiveCfg = MacDebug|Any CPU
-		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.MacDebug|Any CPU.Build.0 = MacDebug|Any CPU
+		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.MacDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.MacDebug|Any CPU.Build.0 = Debug|Any CPU
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.MacDebug|Any CPU.ActiveCfg = MacDebug|Any CPU
-		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.MacDebug|Any CPU.Build.0 = MacDebug|Any CPU
+		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.MacDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.MacDebug|Any CPU.Build.0 = Debug|Any CPU
 		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C999739F-24D6-4649-A223-67FBC26A358B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,8 +51,8 @@ Global
 		{C999739F-24D6-4649-A223-67FBC26A358B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C999739F-24D6-4649-A223-67FBC26A358B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.MacDebug|Any CPU.ActiveCfg = MacDebug|Any CPU
-		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.MacDebug|Any CPU.Build.0 = MacDebug|Any CPU
+		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.MacDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.MacDebug|Any CPU.Build.0 = Debug|Any CPU
 		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{461B4A01-C603-4C8A-9763-642197569E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -61,12 +65,20 @@ Global
 		{B14BDB8A-337D-4FCA-BCDC-E63C4F98752F}.MacDebug|Any CPU.ActiveCfg = MacDebug|Any CPU
 		{B14BDB8A-337D-4FCA-BCDC-E63C4F98752F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B14BDB8A-337D-4FCA-BCDC-E63C4F98752F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}.MacDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}.MacDebug|Any CPU.Build.0 = Debug|Any CPU
+		{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{6B3ED949-8155-4029-89B0-68AEC8EDC255} = {FBBB8608-7B63-4C07-9609-16DDEB01C081}
 		{EE526CFA-BA83-4EB6-89A4-CEE6E7B6945B} = {F20C1377-D697-49DF-BFC6-29A09631AAD1}
+		{461B4A01-C603-4C8A-9763-642197569E9A} = {FBBB8608-7B63-4C07-9609-16DDEB01C081}
 		{B14BDB8A-337D-4FCA-BCDC-E63C4F98752F} = {F20C1377-D697-49DF-BFC6-29A09631AAD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
