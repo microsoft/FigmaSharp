@@ -201,7 +201,7 @@ namespace FigmaSharp
             contentView.Layer.BackgroundColor = backgroundColor.CGColor;
 
             var figmaView = frameEntityResponse.FigmaMainNode as FigmaNode;
-            var mainView = figmaView.ToViewWrapper(new MacViewWrapper (contentView), figmaView);
+            var mainView = figmaView.ToViewWrapper(new ViewWrapper (contentView), figmaView);
             if (mainView != null) {
                 contentView.AddSubview(mainView.NativeObject as NSView);
             }
@@ -491,20 +491,30 @@ namespace FigmaSharp
             }
         }
 
-        static readonly FigmaViewConverter[] figmaViewConverters = {
-            new MacFigmaVectorViewConverter (),
-            new MacFigmaFrameEntityConverter (),
-            new MacFigmaTextConverter (),
-            new MacFigmaVectorEntityConverter (),
-            new MacFigmaRectangleVectorConverter (), 
-            new MacFigmaElipseConverter (), 
-            new MacFigmaLineConverter ()
-        };
+
 
         static readonly CustomViewConverter[] customViewConverters = {
-            new MacCustomButtonConverter (),
-            new MacCustomTextFieldConverter (),
+            new CustomButtonConverter (),
+            new CustomTextFieldConverterBase (),
         };
+
+
+        public class FigmViewService
+        {
+            public List<CustomViewConverter> CustomConverters { get; set; } = new List<CustomViewConverter>();
+
+            readonly List<FigmaViewConverter> FigmaDefaultConverters;
+
+            public FigmViewService()
+            {
+                FigmaDefaultConverters = Cocoa.MacFigmaDelegate.GetFigmaConverters();
+            }
+
+            public void Start ()
+            {
+
+            }
+        }
 
         //TODO: This 
         public static IViewWrapper ToViewWrapper(this FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)

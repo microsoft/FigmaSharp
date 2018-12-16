@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaElipseConverter.cs 
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -29,14 +29,14 @@ using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaElipseConverter : FigmaElipseConverter
+    public class FigmaLineConverter : FigmaLineConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var elipseView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            var elipse = (FigmaElipse)currentNode;
-            elipseView.Configure(elipse);
-            return new MacViewWrapper(elipseView);
+            var figmaLineView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var figmaLine = (FigmaLine)currentNode;
+            figmaLineView.Configure(figmaLine);
+            return new ViewWrapper(figmaLineView);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * CustomTextFieldConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,17 +26,28 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
+using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaLineConverter : FigmaLineConverter
+    public class CustomTextFieldConverter : CustomTextFieldConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var figmaLineView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new MacViewWrapper(figmaLineView);
+            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
+
+            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
+                .FirstOrDefault();
+
+            textField.StringValue = figmaText.characters;
+            textField.Font = figmaText.style.ToNSFont();
+
+            //var absolute = instance.absoluteBoundingBox;
+            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
+            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
+            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
+            //return null;
+            return new ViewWrapper(textField);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaRectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,28 +26,28 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class MacCustomTextFieldConverter : CustomTextFieldConverter
+    public class MacFigmaRectangleVectorConverter : FigmaRectangleVectorConverter
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var rectangleVector = ((FigmaRectangleVector)currentNode);
+            if (rectangleVector.HasFills)
+            {
+                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
+                {
+                    var figmaImageView = FigmaDelegate.Current.GetImageView(figmaPaint);
+                    var imageView = figmaImageView.NativeObject as NSImageView;
+                    imageView.Configure(rectangleVector);
+                    return figmaImageView;
+                }
+            }
 
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault();
-
-            textField.StringValue = figmaText.characters;
-            textField.Font = figmaText.style.ToNSFont();
-
-            //var absolute = instance.absoluteBoundingBox;
-            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-            //return null;
-            return new MacViewWrapper(textField);
+            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            currengroupView.Configure(rectangleVector);
+            return new ViewWrapper(currengroupView);
         }
     }
 }

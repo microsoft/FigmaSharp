@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomButtonConverter.cs 
+ * FigmaVectorEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,44 +26,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class MacCustomButtonConverter : CustomButtonConverter
+    public class MacFigmaVectorEntityConverter : FigmaVectorEntityConverter
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
-            button.Configure(currentNode);
-
-            var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-            if (figmaText != null)
-            {
-                button.AlphaValue = figmaText.opacity;
-                button.Font = figmaText.style.ToNSFont();
-            }
-
-            if (instance.children.OfType<FigmaGroup>().Any())
-            {
-                button.Title = "";
-                button.AlphaValue = 0.15f;
-                button.BezelStyle = NSBezelStyle.TexturedSquare;
-            }
-            else
-            {
-                if (figmaText != null)
-                {
-                    button.AlphaValue = figmaText.opacity;
-                    button.Title = figmaText.characters;
-                }
-
-                button.BezelStyle = NSBezelStyle.Rounded;
-                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
-                return null;
-            }
-            return new MacViewWrapper(button);
+            var vector = ((FigmaVectorEntity)currentNode);
+            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            currengroupView.Configure(vector);
+            return new ViewWrapper(currengroupView);
         }
     }
 }

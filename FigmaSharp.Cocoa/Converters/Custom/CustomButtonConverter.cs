@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaRectangleVectorConverter.cs
+ * CustomButtonConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,28 +26,49 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
+using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaRectangleVectorConverter : FigmaRectangleVectorConverter
+    public class CustomButtonConverter : CustomViewConverter
     {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return (currentNode.name == "button" || currentNode.name == "button default") && currentNode is IFigmaDocumentContainer;
+        }
+
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var rectangleVector = ((FigmaRectangleVector)currentNode);
-            if (rectangleVector.HasFills)
+            var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
+            button.Configure(currentNode);
+
+            var instance = (IFigmaDocumentContainer)currentNode;
+            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
+            if (figmaText != null)
             {
-                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
-                {
-                    var figmaImageView = Cocoa.MacFigmaDelegate.GetImageView(figmaPaint);
-                    var imageView = figmaImageView.NativeObject as NSImageView;
-                    imageView.Configure(rectangleVector);
-                    return figmaImageView;
-                }
+                button.AlphaValue = figmaText.opacity;
+                button.Font = figmaText.style.ToNSFont();
             }
 
-            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            currengroupView.Configure(rectangleVector);
-            return new MacViewWrapper(currengroupView);
+            if (instance.children.OfType<FigmaGroup>().Any())
+            {
+                button.Title = "";
+                button.AlphaValue = 0.15f;
+                button.BezelStyle = NSBezelStyle.TexturedSquare;
+            }
+            else
+            {
+                if (figmaText != null)
+                {
+                    button.AlphaValue = figmaText.opacity;
+                    button.Title = figmaText.characters;
+                }
+
+                button.BezelStyle = NSBezelStyle.Rounded;
+                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
+                return null;
+            }
+            return new ViewWrapper(button);
         }
     }
 }

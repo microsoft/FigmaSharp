@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,13 +26,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.Converters
+using AppKit;
+
+namespace FigmaSharp
 {
-    public abstract class FigmaLineConverter : FigmaViewConverter
+    public class ImageWrapper : IImageWrapper
     {
-        public override bool CanConvert(FigmaNode currentNode)
+        public object NativeObject => image;
+
+        protected NSImage image;
+        public ImageWrapper(NSImage image)
         {
-            return currentNode.GetType() == typeof(FigmaLine);
+            this.image = image;
         }
     }
 }

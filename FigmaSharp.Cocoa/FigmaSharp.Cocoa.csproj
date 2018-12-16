@@ -34,19 +34,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FigmaViewExtensions.cs" />
     <Compile Include="FigmaViewsHelper.cs" />
-    <Compile Include="MacFigmaDelegate.cs" />
-    <Compile Include="ViewWrappers\MacImageWrapper.cs" />
-    <Compile Include="ViewWrappers\MacViewWrapper.cs" />
-    <Compile Include="ViewWrappers\MacImageViewWrapper.cs" />
-    <Compile Include="Converters\Custom\MacCustomButtonConverter.cs" />
-    <Compile Include="Converters\Custom\MacCustomTextFieldConverter.cs" />
-    <Compile Include="Converters\MacFigmaElipseConverter.cs" />
-    <Compile Include="Converters\MacFigmaFrameEntityConverter.cs" />
-    <Compile Include="Converters\MacFigmaLineConverter.cs" />
-    <Compile Include="Converters\MacFigmaRectangleVectorConverter.cs" />
-    <Compile Include="Converters\MacFigmaTextConverter.cs" />
-    <Compile Include="Converters\MacFigmaVectorViewConverter.cs" />
-    <Compile Include="Converters\MacFigmaVectorEntityConverter.cs" />
+    <Compile Include="FigmaDelegate.cs" />
+    <Compile Include="ViewWrappers\ImageWrapper.cs" />
+    <Compile Include="ViewWrappers\ViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ImageViewWrapper.cs" />
+    <Compile Include="Converters\Custom\CustomButtonConverter.cs" />
+    <Compile Include="Converters\Custom\CustomTextFieldConverter.cs" />
+    <Compile Include="Converters\FigmaElipseConverter.cs" />
+    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
+    <Compile Include="Converters\FigmaLineConverter.cs" />
+    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
+    <Compile Include="Converters\FigmaTextConverter.cs" />
+    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
+    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
