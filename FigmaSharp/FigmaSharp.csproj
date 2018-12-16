@@ -47,6 +47,8 @@
     <Compile Include="FigmaImageQuery.cs" />
     <Compile Include="FigmaImageResponse.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Interfaces\IViewWrapper.cs" />
+    <Compile Include="Converters\CustomViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

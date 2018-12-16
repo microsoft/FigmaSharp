@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,13 +25,23 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using AppKit;
 
-
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public interface IImageViewWrapper : IViewWrapper
+    public class FigmaLineConverter : FigmaViewConverter
     {
-        FigmaPaint Data { get; }
-        void SetImage(IImageWrapper image);
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.GetType() == typeof(FigmaLine);
+        }
+
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        {
+            var figmaLineView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var figmaLine = (FigmaLine)currentNode;
+            figmaLineView.Configure(figmaLine);
+            return new MacViewWrapper(figmaLineView);
+        }
     }
 }

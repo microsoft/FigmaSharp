@@ -200,9 +200,9 @@ namespace FigmaSharp
             contentView.Layer.BackgroundColor = backgroundColor.CGColor;
 
             var figmaView = frameEntityResponse.FigmaMainNode as FigmaNode;
-            var mainView = figmaView.ToNSView(contentView, figmaView, figmaImageViews);
+            var mainView = figmaView.ToViewWrapper(new MacViewWrapper (contentView), figmaView);
             if (mainView != null) {
-                contentView.AddSubview(mainView);
+                contentView.AddSubview(mainView.NativeObject as NSView);
             }
         }
 
@@ -352,373 +352,204 @@ namespace FigmaSharp
             return path;
         }
 
-        //TODO: This 
-        public static NSView ToNSView(this FigmaNode parent, NSView parentView, FigmaNode child, List<IImageViewWrapper> figmaImageViews = null)
+        public static void Configure(this NSView view, FigmaFrameEntity child)
         {
-            Console.WriteLine("[{0}({1})] Processing {2}..", child.id, child.name, child.GetType());
-            if (child is IFigmaDocumentContainer instance && child is IConstraints instanceConstrains)
+            Configure (view, (FigmaNode)child);
+
+            view.AlphaValue = child.opacity;
+            view.Layer.BackgroundColor = ToNSColor(child.backgroundColor).CGColor;
+        }
+
+        public static void Configure(this NSView view, FigmaNode child)
+        {
+            view.Hidden = !child.visible;
+            view.WantsLayer = true;
+
+            if (child is IFigmaDocumentContainer container)
             {
-                var absolute = instance.absoluteBoundingBox;
-                var parentFrame = (IAbsoluteBoundingBox)parent;
+                view.SetFrameSize(new CGSize(container.absoluteBoundingBox.width, container.absoluteBoundingBox.height));
+            }
+        }
 
-                if (child.name == "button" || child.name == "button default")
+        public static void Configure(this NSView view, FigmaElipse elipse)
+        {
+            Configure(view, (FigmaVectorEntity)elipse);
+
+            var circleLayer = new CAShapeLayer();
+            var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, elipse.absoluteBoundingBox.width, elipse.absoluteBoundingBox.height));
+            circleLayer.Path = bezierPath.ToGCPath();
+
+            view.Layer.AddSublayer(circleLayer);
+
+            var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
+            if (fills != null)
+            {
+                circleLayer.FillColor = fills.color.ToNSColor().CGColor;
+            }
+
+            var strokes = elipse.strokes.FirstOrDefault();
+            if (strokes != null)
+            {
+                if (strokes.color != null)
                 {
-                    var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
-                    parentView.AddSubview(button);
-                    button.Hidden = !child.visible;
+                    circleLayer.BorderColor = strokes.color.ToNSColor().CGColor;
+                }
+            }
+        }
 
-                    button.WantsLayer = true;
+        public static void Configure(this NSView figmaLineView, FigmaLine figmaLine)
+        {
+            Configure(figmaLineView, (FigmaVectorEntity)figmaLine);
 
-                    var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-                    if (figmaText != null)
+            var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
+            if (fills != null) {
+                figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
+            }
+
+            var absolute = figmaLine.absoluteBoundingBox;
+            var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
+
+            var constraintWidth = figmaLineView.WidthAnchor.ConstraintEqualToConstant(lineWidth);
+            constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
+            constraintWidth.Active = true;
+
+            var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
+
+            var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualToConstant(lineHeight);
+            constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
+            constraintHeight.Active = true;
+        }
+
+        public static void Configure (this NSView view, FigmaVectorEntity child)
+        {
+            Configure(view, (FigmaNode)child);
+
+            if (child.HasFills && child.fills[0].color != null)
+            {
+                view.Layer.BackgroundColor = child.fills[0].color.ToNSColor().CGColor;
+            }
+
+            //var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            //currengroupView.Configure(rectangleVector);
+
+            var strokes = child.strokes.FirstOrDefault();
+            if (strokes != null)
+            {
+                if (strokes.color != null)
+                {
+                    view.Layer.BorderColor = strokes.color.ToNSColor().CGColor;
+                }
+                view.Layer.BorderWidth = child.strokeWeight;
+            }
+        }
+
+        public static void Configure(this NSView view, FigmaRectangleVector child)
+        {
+            Configure(view, (FigmaVectorEntity)child);
+
+            view.Layer.CornerRadius = child.cornerRadius;
+        }
+
+        public static void Configure(this NSTextField label, FigmaText text)
+        {
+            Configure(label, (FigmaNode)text);
+
+            label.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
+            label.AlphaValue = text.opacity;
+            label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
+            label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
+
+            var fills = text.fills.FirstOrDefault();
+            if (fills != null)
+            {
+                label.TextColor = ToNSColor(fills.color);
+            }
+
+            if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
+            {
+                var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
+                for (int i = 0; i < text.characterStyleOverrides.Length; i++)
+                {
+                    var key = text.characterStyleOverrides[i].ToString();
+                    if (!text.styleOverrideTable.ContainsKey(key))
                     {
-                        button.Font = figmaText.style.ToNSFont();
+                        continue;
                     }
-
-                    button.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-                    button.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-                    CreateConstraints(button, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-
-                    if (instance.children.OfType<FigmaGroup>().Any())
+                    var element = text.styleOverrideTable[key];
+                    if (element.fontFamily == null)
                     {
-                        //button.Bordered  false;
-                        //button.SetButtonType(NSButtonType.MomentaryPushIn);
-                        button.Title = "";
-                        //button.Transparent = true;
-                        button.AlphaValue = 0.15f;
-                        button.BezelStyle = NSBezelStyle.TexturedSquare;
+                        continue;
                     }
-                    else
+                    var localFont = ToNSFont(element);
+                    var range = new NSRange(i, 1);
+                    attributedText.AddAttribute(NSStringAttributeKey.Font, localFont, range);
+                    attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
+                }
+
+                label.AttributedStringValue = attributedText;
+            }
+        }
+
+        static FigmaViewConverter[] figmaViewConverters = {
+            new FigmaVectorViewConverter (),
+            new FigmaFrameEntityConverter (),
+            new FigmaTextConverter (),
+            new FigmaVectorEntityConverter (),
+            new FigmaRectangleVectorConverter (), 
+            new FigmaElipseConverter (), 
+            new FigmaLineConverter ()
+        };
+
+        static CustomViewConverter[] customViewConverters = {
+            new CustomButtonConverter (),
+            new CustomTextFieldConverter (),
+        };
+
+        //TODO: This 
+        public static IViewWrapper ToViewWrapper(this FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)
+        {
+            Console.WriteLine("[{0}({1})] Processing {2}..", currentNode.id, currentNode.name, currentNode.GetType());
+            IViewWrapper nextView = null;
+
+            foreach (var customConverter in customViewConverters)
+            {
+                if (customConverter.CanConvert (currentNode))
+                {
+                    var view = customConverter.ConvertTo(currentNode, parentNode, parentView);
+                    parentView.AddChild(view);
+                    view.CreateConstraints(parentNode, parentView);
+                    nextView = view;
+                    break;
+                }
+            }
+
+            if (nextView == null)
+            {
+                foreach (var converter in figmaViewConverters)
+                {
+                    if (converter.CanConvert(currentNode))
                     {
-                        if (figmaText != null)
+                        var view = converter.ConvertTo(currentNode, parentNode, parentView);
+                        if (view != null)
                         {
-                            button.AlphaValue = figmaText.opacity;
-                            button.Title = figmaText.characters;
+                            parentView.AddChild(view);
+                            view.CreateConstraints(parentNode, parentView);
+                            nextView = view;
                         }
-                    
-                        button.BezelStyle = NSBezelStyle.Rounded;
-                        button.Layer.BackgroundColor = ToNSColor(instance.backgroundColor).CGColor;
-                        return null;
-                    }
-
-                }
-
-                if (child.name == "text field" || child.name == "Field")
-                {
-                    var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
-                    parentView.AddSubview(textField);
-  
-                    textField.Hidden = !child.visible;
-                    var figmaText = instance.children.OfType<FigmaText>()
-                        .FirstOrDefault();
-
-                    textField.AlphaValue = figmaText.opacity;
-                    textField.StringValue = figmaText.characters;
-                    textField.Font = ToNSFont(figmaText.style);
-                    textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-                    textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-                    CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-                    //return null;
-                }
-
-            }
-
-            if (child.GetType() == typeof(FigmaVector))
-            {
-                var vector = ((FigmaVector)child);
-                 Console.WriteLine(vector);
-            }
-            else if (child.GetType() == typeof(FigmaInstance))
-            {
-                Console.WriteLine("Not implemented {0}", child.name);
-                if (child is IFigmaNodeContainer nodeContainer)
-                {
-                    foreach (var item in nodeContainer.children)
-                    {
-                        ToNSView(parent, parentView, item, figmaImageViews);
+                        break;
                     }
                 }
             }
-            else if (child is FigmaFrameEntity figmaFrameEntity)
+           
+            Console.WriteLine("[{1}({2})] Not implemented: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
+            if (currentNode is IFigmaNodeContainer nodeContainer)
             {
-                var absolute = figmaFrameEntity.absoluteBoundingBox;
-                var parentFrame = (IAbsoluteBoundingBox)parent;
-
-                var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-                currengroupView.WantsLayer = true;
-                currengroupView.Hidden = !child.visible;
-                currengroupView.AlphaValue = figmaFrameEntity.opacity;
-                currengroupView.Layer.BackgroundColor = ToNSColor(figmaFrameEntity.backgroundColor).CGColor;
-
-                parentView.AddSubview(currengroupView);
-
-                var constraintWidth = currengroupView.WidthAnchor.ConstraintEqualToConstant(absolute.width);
-                constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintWidth.Active = true;
-                var constraintHeight = currengroupView.HeightAnchor.ConstraintEqualToConstant(absolute.height);
-                constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintHeight.Active = true;
-
-                if (parentView?.Superview is NSClipView)
+                foreach (var item in nodeContainer.children)
                 {
-                    parentView.Frame = new CGRect(
-                    parentFrame.absoluteBoundingBox.x,
-                        parentFrame.absoluteBoundingBox.y,
-                    parentFrame.absoluteBoundingBox.width,
-                        parentFrame.absoluteBoundingBox.height);
-                }
-
-                var constraints = figmaFrameEntity.constraints;
-
-                if (parent is FigmaCanvas canvas)
-                {
-                    CreateConstraints(currengroupView, parentView, constraints, absolute, canvas.absoluteBoundingBox);
-                }
-                else if (parent is FigmaFrameEntity parentFigmaFrameEntity)
-                {
-                    CreateConstraints(currengroupView, parentView, constraints, absolute, parentFigmaFrameEntity.absoluteBoundingBox ?? FigmaRectangle.Zero);
-                }
-
-                foreach (var item in figmaFrameEntity.children)
-                {
-                    ToNSView(figmaFrameEntity, currengroupView, item, figmaImageViews);
-                }
-
-                Console.WriteLine(figmaFrameEntity);
-            }
-            else if (child.GetType() == typeof(FigmaText))
-            {
-                var text = ((FigmaText)child);
-
-                var absolute = text.absoluteBoundingBox;
-                var parentFrame = (FigmaFrameEntity)parent;
-                var position = GetRelativePosition(parentFrame, text);
-                var constraints = text.constraints;
-
-                var font = ToNSFont(text.style);
-                var label = FigmaViewsHelper.CreateLabel(text.characters, font);
-                label.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
-                label.AlphaValue = text.opacity;
-                label.Hidden = !child.visible;
-                label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
-                label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
-
-                var fills = text.fills.FirstOrDefault();
-                if (fills != null)
-                {
-                    label.TextColor = ToNSColor(fills.color);
-                }
-
-                if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
-                {
-                    var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
-                    for (int i = 0; i < text.characterStyleOverrides.Length; i++)
-                    {
-                        var key = text.characterStyleOverrides[i].ToString();
-                        if (!text.styleOverrideTable.ContainsKey(key))
-                        {
-                            continue;
-                        }
-                        var element = text.styleOverrideTable[key];
-                        if (element.fontFamily == null)
-                        {
-                            continue;
-                        }
-                        var localFont = ToNSFont(element);
-
-                        var range = new NSRange(i, 1);
-                        attributedText.AddAttribute(NSStringAttributeKey.Font, localFont, range);
-                        attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
-                    }
-
-                    label.AttributedStringValue = attributedText;
-                }
-
-                parentView.AddSubview(label);
-
-                label.WidthAnchor.ConstraintGreaterThanOrEqualToConstant(absolute.width).Active = true;
-                //label.HeightAnchor.ConstraintEqualToConstant (absolute.height).Active = true;
-                CreateConstraints(label, parentView, constraints, absolute, parentFrame.absoluteBoundingBox);
-                Console.WriteLine(text);
-            }
-            else if (child.GetType() == typeof(FigmaVectorEntity))
-            {
-                var vector = ((FigmaVectorEntity)child);
-                var absolute = vector.absoluteBoundingBox;
-                var parentEntityFrame = (IAbsoluteBoundingBox)parent;
-                var constraints = vector.constraints;
-               
-                var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-                currengroupView.WantsLayer = true;
-                currengroupView.AlphaValue = vector.opacity;
-                currengroupView.Hidden = !child.visible;
-                var fills = vector.fills.FirstOrDefault();
-                if (fills != null && fills.color != null)
-                {
-                    currengroupView.Layer.BackgroundColor = fills.color.ToNSColor ().CGColor;
-                }
-
-                parentView.AddSubview(currengroupView);
-
-                var constraintWidth = currengroupView.WidthAnchor.ConstraintEqualToConstant(absolute.width);
-                constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintWidth.Active = true;
-                var constraintHeight = currengroupView.HeightAnchor.ConstraintEqualToConstant(absolute.height);
-                constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintHeight.Active = true;
-                CreateConstraints(currengroupView, parentView, constraints, absolute, parentEntityFrame.absoluteBoundingBox);
-
-            }
-            else if (child.GetType() == typeof(FigmaRectangleVector))
-            {
-                var rectangleVector = ((FigmaVectorEntity)child);
-                var absolute = rectangleVector.absoluteBoundingBox;
-                var parentEntityFrame = (IAbsoluteBoundingBox)parent;
-                var position = GetRelativePosition(parentEntityFrame, rectangleVector);
-                var constraints = rectangleVector.constraints;
-
-                NSView currengroupView = null; // = new NSView () { TranslatesAutoresizingMaskIntoConstraints = false };
-
-                var fills = rectangleVector.fills.FirstOrDefault();
-                if (fills?.type == "IMAGE" && fills is FigmaPaint figmaPaint)
-                {
-                    figmaPaint.ID = child.id;
-
-                    var figmaImageView = Cocoa.MacFigmaDelegate.GetImageView(figmaPaint);
-                    currengroupView = figmaImageView.NativeObject as NSImageView;
-                    figmaImageViews?.Add(figmaImageView);
-                }
-                else
-                {
-                    currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-                }
-
-                currengroupView.WantsLayer = true;
-                currengroupView.Hidden = !child.visible;
-                currengroupView.AlphaValue = rectangleVector.opacity;
-                  
-                if (child is FigmaRectangleVector vector)
-                {
-                    currengroupView.Layer.CornerRadius = vector.cornerRadius;
-                }
-
-                if (fills?.color != null)
-                {
-                    currengroupView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
-                }
-                var strokes = rectangleVector.strokes.FirstOrDefault();
-                if (strokes != null)
-                {
-                    if (strokes.color != null)
-                    {
-                        currengroupView.Layer.BorderColor = strokes.color.ToNSColor ().CGColor;
-                    }
-                    currengroupView.Layer.BorderWidth = rectangleVector.strokeWeight;
-                }
-
-                parentView.AddSubview(currengroupView);
-
-                var constraintWidth = currengroupView.WidthAnchor.ConstraintEqualToConstant(absolute.width);
-                constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintWidth.Active = true;
-                var constraintHeight = currengroupView.HeightAnchor.ConstraintEqualToConstant(absolute.height);
-                constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintHeight.Active = true;
-                CreateConstraints(currengroupView, parentView, constraints, absolute, parentEntityFrame.absoluteBoundingBox);
-
-            }
-            else if (child.GetType() == typeof(FigmaElipse))
-            {
-                var elipse = ((FigmaElipse)child);
-                var absolute = elipse.absoluteBoundingBox;
-                var parentFrame = (IAbsoluteBoundingBox)parent;
-              
-                var currentElipse = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-                currentElipse.WantsLayer = true;
-                currentElipse.AlphaValue = elipse.opacity;
-                currentElipse.Hidden = !child.visible;
-                parentView.AddSubview(currentElipse);
-
-                currentElipse.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-                currentElipse.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-
-                var circleLayer = new CAShapeLayer();
-                var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, absolute.width, absolute.height));
-                circleLayer.Path = bezierPath.ToGCPath();
-
-                currentElipse.Layer.AddSublayer(circleLayer);
-
-                var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
-                if (fills != null)
-                {
-                    circleLayer.FillColor = fills.color.ToNSColor().CGColor;
-                }
-
-                var strokes = elipse.strokes.FirstOrDefault();
-                if (strokes != null)
-                {
-                    if (strokes.color != null)
-                    {
-                        circleLayer.BorderColor = strokes.color.ToNSColor().CGColor;
-                    }
-                }
-
-                CreateConstraints(currentElipse, parentView, elipse.constraints, absolute, parentFrame.absoluteBoundingBox);
-
-            }
-            else if (child.GetType() == typeof(FigmaLine))
-            {
-                var figmaLine = ((FigmaLine)child);
-                var absolute = figmaLine.absoluteBoundingBox;
-                var parentFrame = (IAbsoluteBoundingBox)parent;
-
-                var figmaLineView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-                figmaLineView.WantsLayer = true;
-                figmaLineView.AlphaValue = figmaLine.opacity;
-                figmaLineView.Hidden = !child.visible;
-                var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
-                if (fills != null)
-                {
-                    figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
-                }
-
-                var strokes = figmaLine.strokes.FirstOrDefault();
-                if (strokes != null)
-                {
-                    if (strokes.color != null)
-                    {
-                        figmaLineView.Layer.BackgroundColor = strokes.color.ToNSColor().CGColor;
-                    }
-                }
-
-                parentView.AddSubview(figmaLineView);
-
-                var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
-
-                var constraintWidth = figmaLineView.WidthAnchor.ConstraintEqualToConstant(lineWidth);
-                constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintWidth.Active = true;
-
-                var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
-
-                var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualToConstant(lineHeight);
-                constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
-                constraintHeight.Active = true;
-
-                CreateConstraints(figmaLineView, parentView, figmaLine.constraints, absolute, parentFrame.absoluteBoundingBox);
-            }
-            else
-            {
-                Console.WriteLine("[{1}({2})] Not implemented: {0}", child.GetType(), child.id, child.name);
-                if (child is IFigmaNodeContainer nodeContainer)
-                {
-                    foreach (var item in nodeContainer.children)
-                    {
-                        ToNSView(parent, parentView, item, figmaImageViews);
-                    }
+                    ToViewWrapper(parentNode, parentView, item);
                 }
             }
-            return null;
+            return nextView;
         }
     }
 }

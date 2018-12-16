@@ -27,11 +27,19 @@
  */
 
 
+using System.Collections.Generic;
+
 namespace FigmaSharp
 {
-    public interface IImageViewWrapper : IViewWrapper
+    public interface IViewWrapper : IObjectWrapper
     {
-        FigmaPaint Data { get; }
-        void SetImage(IImageWrapper image);
+        IViewWrapper Parent { get; }
+
+        IReadOnlyList<IViewWrapper> Children { get; }
+
+        void AddChild(IViewWrapper view);
+        void CreateConstraints(FigmaNode parent, IViewWrapper parentView);
+
+        void RemoveChild(IViewWrapper view);
     }
 }

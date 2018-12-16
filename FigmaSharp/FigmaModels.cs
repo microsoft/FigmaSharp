@@ -245,6 +245,8 @@ namespace FigmaSharp
         public int strokeWeight { get; set; }
         public FigmaPath[] strokeGeometry { get; set; }
         public string strokeAlign { get; set; }
+
+        public bool HasFills => fills?.Length > 0;
     }
 
     public class FigmaPath
