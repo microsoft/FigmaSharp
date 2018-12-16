@@ -91,7 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.WinForms\FigmaSharp.WinForms.csproj">
-      <Project>{2a1576d3-ae03-47d6-bec6-c8a0caf229f6}</Project>
+      <Project>{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}</Project>
       <Name>FigmaSharp.WinForms</Name>
     </ProjectReference>
   </ItemGroup>

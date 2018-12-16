@@ -34,7 +34,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FigmaViewExtensions.cs" />
     <Compile Include="FigmaViewsHelper.cs" />
-    <Compile Include="FigmaFile.cs" />
     <Compile Include="MacFigmaDelegate.cs" />
     <Compile Include="ViewWrappers\MacImageWrapper.cs" />
     <Compile Include="ViewWrappers\MacViewWrapper.cs" />
