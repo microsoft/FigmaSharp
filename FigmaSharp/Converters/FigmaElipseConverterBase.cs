@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameEntityConverter.cs
+ * FigmaElipseConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -28,11 +28,11 @@
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaFrameEntityConverter : FigmaViewConverter
+    public abstract class FigmaElipseConverterBase : FigmaViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode is FigmaFrameEntity;
+            return currentNode.GetType() == typeof(FigmaElipse);
         }
     }
 }

@@ -26,60 +26,22 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System.Collections.Generic;
 using AppKit;
+using CoreGraphics;
 
 namespace FigmaSharp
 {
-    public class MacViewWrapper : IViewWrapper
+    public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {
-        public object NativeObject => nativeView;
-
-        public IViewWrapper Parent
+        public ImageViewWrapper(NSImageView imageView) : base(imageView)
         {
-            get
-            {
-                if (nativeView.Superview != null)
-                {
-                    return new MacViewWrapper(nativeView.Superview);
-                }
-                return null;
-            }
         }
 
-        readonly List<IViewWrapper> children = new List<IViewWrapper>();
-        public IReadOnlyList<IViewWrapper> Children => children;
+        public FigmaPaint Data { get; set; }
 
-        protected NSView nativeView;
-
-        public MacViewWrapper() : this (new NSView ())
+        public void SetImage(IImageWrapper image)
         {
-
-        }
-
-        public MacViewWrapper(NSView nativeView)
-        {
-            this.nativeView = nativeView;
-        }
-
-        public void AddChild(IViewWrapper view)
-        {
-            children.Add(view);
-            nativeView.AddSubview(view.NativeObject as NSView);
-        }
-
-        public void CreateConstraints(FigmaNode parent, IViewWrapper parentView)
-        {
-
-        }
-
-        public void RemoveChild(IViewWrapper view)
-        {
-            if (children.Contains (view))
-            {
-                children.Remove(view);
-                ((NSView)view.NativeObject).RemoveFromSuperview();
-            }
+            ((NSImageView)nativeView).Image = image.NativeObject as NSImage;
         }
     }
 }

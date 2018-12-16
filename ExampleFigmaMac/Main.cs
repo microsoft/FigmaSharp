@@ -70,7 +70,7 @@ namespace ExampleFigmaMac
         static void ReadStoryboardFigmaFile()
         {
             var testStoryboard = new FigmaStoryboard();
-            scrollView.DocumentView = testStoryboard.ContentView;
+            scrollView.DocumentView = testStoryboard.ContentView.NativeObject as NSView;
             //we need reload after set the content to ensure the scrollview
             testStoryboard.Reload(true);
         }

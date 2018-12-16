@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaFrameEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,19 +25,18 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 using AppKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public class MacImageWrapper : IImageWrapper
+    public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
     {
-        public object NativeObject => image;
-
-        protected NSImage image;
-        public MacImageWrapper(NSImage image)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            this.image = image;
+            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            currengroupView.Configure(figmaFrameEntity);
+            return new ViewWrapper(currengroupView);
         }
     }
 }

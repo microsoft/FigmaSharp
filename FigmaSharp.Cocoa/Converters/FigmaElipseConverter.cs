@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaElipseConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,14 +25,18 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class CustomTextFieldConverter : CustomViewConverter
+    public class MacFigmaElipseConverter : FigmaElipseConverter
     {
-        public override bool CanConvert(FigmaNode currentNode)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            return (currentNode.name == "text field" || currentNode.name == "Field") && currentNode is IFigmaDocumentContainer;
+            var elipseView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var elipse = (FigmaElipse)currentNode;
+            elipseView.Configure(elipse);
+            return new ViewWrapper(elipseView);
         }
     }
 }

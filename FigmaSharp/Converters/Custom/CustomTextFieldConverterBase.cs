@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaRectangleVectorConverter.cs
+ * CustomTextFieldConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -28,11 +28,11 @@
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaRectangleVectorConverter : FigmaViewConverter
+    public abstract class CustomTextFieldConverterBase : CustomViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaRectangleVector);
+            return (currentNode.name == "text field" || currentNode.name == "Field") && currentNode is IFigmaDocumentContainer;
         }
     }
 }

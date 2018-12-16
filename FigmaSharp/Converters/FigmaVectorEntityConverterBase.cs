@@ -28,7 +28,7 @@
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaVectorEntityConverter : FigmaViewConverter
+    public abstract class FigmaVectorEntityConverterBase : FigmaViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {

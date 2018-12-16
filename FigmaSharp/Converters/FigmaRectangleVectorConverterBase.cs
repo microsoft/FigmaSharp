@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaElipseConverter.cs 
+ * FigmaRectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -28,11 +28,11 @@
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaElipseConverter : FigmaViewConverter
+    public abstract class FigmaRectangleVectorConverterBase : FigmaViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaElipse);
+            return currentNode.GetType() == typeof(FigmaRectangleVector);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorEntityConverter.cs
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,18 +25,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaVectorEntityConverter : FigmaVectorEntityConverter
+    public abstract class FigmaLineConverterBase : FigmaViewConverter
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override bool CanConvert(FigmaNode currentNode)
         {
-            var vector = ((FigmaVectorEntity)currentNode);
-            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            currengroupView.Configure(vector);
-            return new MacViewWrapper(currengroupView);
+            return currentNode.GetType() == typeof(FigmaLine);
         }
     }
 }

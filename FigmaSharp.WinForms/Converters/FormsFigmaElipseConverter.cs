@@ -4,7 +4,7 @@ using FigmaSharp.Converters;
 
 namespace FigmaSharp.WinForms.Converters
 {
-    public class FormsFigmaElipseConverter : FigmaElipseConverter
+    public class FormsFigmaElipseConverter : FigmaElipseConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {

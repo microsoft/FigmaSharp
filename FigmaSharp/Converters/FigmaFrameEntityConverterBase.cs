@@ -25,18 +25,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaFrameEntityConverter : FigmaFrameEntityConverter
+    public abstract class FigmaFrameEntityConverterBase : FigmaViewConverter
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override bool CanConvert(FigmaNode currentNode)
         {
-            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
-            currengroupView.Configure(figmaFrameEntity);
-            return new MacViewWrapper(currengroupView);
+            return currentNode is FigmaFrameEntity;
         }
     }
 }
