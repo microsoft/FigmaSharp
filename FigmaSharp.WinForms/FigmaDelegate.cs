@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace FigmaSharp
 {
@@ -8,7 +9,22 @@ namespace FigmaSharp
         {
         }
 
+        public IViewWrapper CreateEmptyView()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public FigmaViewConverter[] GetFigmaConverters()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetFigmaFileContent(string file, string token)
         {
             throw new System.NotImplementedException();
         }
@@ -29,6 +45,16 @@ namespace FigmaSharp
         }
 
         public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetManifestResource(Assembly assembly, string file)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName)
         {
             throw new System.NotImplementedException();
         }

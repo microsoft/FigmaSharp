@@ -10,6 +10,7 @@
     <AssemblyName>ExampleFigmaMac</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+    <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,6 +67,9 @@
     <Reference Include="Xamarin.PropertyEditing.Mac">
       <HintPath>..\packages\Accessibility.Inspector.Mac.0.2.1\lib\net40\Xamarin.PropertyEditing.Mac.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -97,13 +101,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
       <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
       <Name>FigmaSharp.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

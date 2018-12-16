@@ -44,19 +44,21 @@ namespace FigmaSharp
             };
        }
 
-        public FigmaViewConverter[] GetFigmaConverters()
-        {
-            return figmaViewConverters;
-        }
+        public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
 
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName)
-        {
+        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName) =>
             (contentView.NativeObject as NSView).LoadFigmaFromFrameEntity(document, figmaImages, figmaFileName);
-        }
 
-        public string GetFigmaFileContent(string file, string token)
-        {
-            return FigmaApiHelper.GetFigmaFileContent(file, token);
-        }
+        public string GetFigmaFileContent(string file, string token) =>
+             FigmaApiHelper.GetFigmaFileContent(file, token);
+
+        public IViewWrapper CreateEmptyView() => new ViewWrapper();
+
+        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template) =>
+            FigmaApiHelper.GetFigmaDialogFromContent(template);
+
+        public string GetManifestResource(Assembly assembly, string file) =>
+            FigmaApiHelper.GetManifestResource(assembly, file);
+
     }
 }
