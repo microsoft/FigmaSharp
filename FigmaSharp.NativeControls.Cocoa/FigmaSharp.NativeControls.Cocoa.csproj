@@ -54,8 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CustomButtonConverter.cs" />
-    <Compile Include="CustomTextFieldConverter.cs" />
+    <Compile Include="TextFieldConverter.cs" />
+    <Compile Include="ButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">

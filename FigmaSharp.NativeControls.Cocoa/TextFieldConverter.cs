@@ -26,11 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
+using FigmaSharp.NativeControls.Base;
 using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class CustomTextFieldConverter : CustomTextFieldConverterBase
+    public class TextFieldConverter : TextFieldConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {

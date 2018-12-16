@@ -32,7 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FigmaViewExtensions.cs" />
     <Compile Include="FigmaViewsHelper.cs" />
     <Compile Include="FigmaDelegate.cs" />
     <Compile Include="ViewWrappers\ImageWrapper.cs" />
@@ -46,6 +45,9 @@
     <Compile Include="Converters\FigmaVectorViewConverter.cs" />
     <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
     <Compile Include="FigmaApplication.cs" />
+    <Compile Include="Extensions\FigmaExtensions.cs" />
+    <Compile Include="Extensions\LoaderExtensions.cs" />
+    <Compile Include="Extensions\ViewConfigureExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
@@ -56,6 +58,7 @@
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
     <Folder Include="Converters\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

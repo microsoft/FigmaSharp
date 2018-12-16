@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * CustomButtonConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,28 +26,45 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
+using FigmaSharp.NativeControls.Base;
 using System.Linq;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.NativeControls
 {
-    public class CustomTextFieldConverter : CustomTextFieldConverterBase
+    public class ButtonConverter : ButtonConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
+            button.Configure(currentNode);
 
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault();
+            var instance = (IFigmaDocumentContainer)currentNode;
+            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
+            if (figmaText != null)
+            {
+                button.AlphaValue = figmaText.opacity;
+                button.Font = figmaText.style.ToNSFont();
+            }
 
-            textField.StringValue = figmaText.characters;
-            textField.Font = figmaText.style.ToNSFont();
+            if (instance.children.OfType<FigmaGroup>().Any())
+            {
+                button.Title = "";
+                button.AlphaValue = 0.15f;
+                button.BezelStyle = NSBezelStyle.TexturedSquare;
+            }
+            else
+            {
+                if (figmaText != null)
+                {
+                    button.AlphaValue = figmaText.opacity;
+                    button.Title = figmaText.characters;
+                }
 
-            //var absolute = instance.absoluteBoundingBox;
-            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-            //return null;
-            return new ViewWrapper(textField);
+                button.BezelStyle = NSBezelStyle.Rounded;
+                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
+                return null;
+            }
+            return new ViewWrapper(button);
         }
     }
 }
