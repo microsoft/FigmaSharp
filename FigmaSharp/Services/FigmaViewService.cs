@@ -28,14 +28,14 @@
 using System.Collections.Generic;
 using System;
 
-namespace FigmaSharp
+namespace FigmaSharp.Services
 {
-    public class FigmViewService
+    public class FigmaViewService
     {
         readonly public List<CustomViewConverter> CustomConverters = new List<CustomViewConverter>();
         readonly FigmaViewConverter[] FigmaDefaultConverters;
 
-        public FigmViewService()
+        public FigmaViewService()
         {
             FigmaDefaultConverters = AppContext.Current.GetFigmaConverters();
         }

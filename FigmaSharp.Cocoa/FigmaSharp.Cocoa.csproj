@@ -38,8 +38,6 @@
     <Compile Include="ViewWrappers\ImageWrapper.cs" />
     <Compile Include="ViewWrappers\ViewWrapper.cs" />
     <Compile Include="ViewWrappers\ImageViewWrapper.cs" />
-    <Compile Include="Converters\Custom\CustomButtonConverter.cs" />
-    <Compile Include="Converters\Custom\CustomTextFieldConverter.cs" />
     <Compile Include="Converters\FigmaElipseConverter.cs" />
     <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
     <Compile Include="Converters\FigmaLineConverter.cs" />
@@ -58,7 +56,6 @@
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
     <Folder Include="Converters\" />
-    <Folder Include="Converters\Custom\" />
   </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

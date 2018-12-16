@@ -25,14 +25,29 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using AppKit;
+using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class CustomTextFieldConverterBase : CustomViewConverter
+    public class CustomTextFieldConverter : CustomTextFieldConverterBase
     {
-        public override bool CanConvert(FigmaNode currentNode)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            return (currentNode.name == "text field" || currentNode.name == "Field") && currentNode is IFigmaDocumentContainer;
+            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
+
+            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
+                .FirstOrDefault();
+
+            textField.StringValue = figmaText.characters;
+            textField.Font = figmaText.style.ToNSFont();
+
+            //var absolute = instance.absoluteBoundingBox;
+            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
+            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
+            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
+            //return null;
+            return new ViewWrapper(textField);
         }
     }
 }
