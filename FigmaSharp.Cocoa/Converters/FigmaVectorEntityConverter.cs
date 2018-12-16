@@ -29,7 +29,7 @@ using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaVectorEntityConverter : FigmaVectorEntityConverter
+    public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {

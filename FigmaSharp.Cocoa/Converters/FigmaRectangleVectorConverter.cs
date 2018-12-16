@@ -29,7 +29,7 @@ using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaRectangleVectorConverter : FigmaRectangleVectorConverter
+    public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
@@ -38,7 +38,7 @@ namespace FigmaSharp.Converters
             {
                 if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
                 {
-                    var figmaImageView = FigmaDelegate.Current.GetImageView(figmaPaint);
+                    var figmaImageView = AppContext.Current.GetImageView(figmaPaint);
                     var imageView = figmaImageView.NativeObject as NSImageView;
                     imageView.Configure(rectangleVector);
                     return figmaImageView;

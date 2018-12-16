@@ -92,7 +92,7 @@ namespace FigmaSharp
         public static async Task SaveFigmaImageFiles(this FigmaPaint[] paints, string fileId, string directoryPath, string format = ".png")
         {
             var ids = paints.Select(s => s.ID).ToArray();
-            var query = new FigmaImageQuery(FigmaEnvirontment.Token, fileId, ids);
+            var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
             var images = FigmaApiHelper.GetFigmaImage(query);
             if (images != null)
             {

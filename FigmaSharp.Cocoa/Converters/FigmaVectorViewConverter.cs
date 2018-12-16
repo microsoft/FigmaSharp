@@ -29,7 +29,7 @@ using System;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaVectorViewConverter : FigmaVectorViewConverter
+    public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {

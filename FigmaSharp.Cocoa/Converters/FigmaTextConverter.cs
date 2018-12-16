@@ -28,7 +28,7 @@
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaTextConverter : FigmaTextConverter
+    public class FigmaTextConverter : FigmaTextConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {

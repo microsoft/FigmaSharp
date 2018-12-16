@@ -65,7 +65,7 @@ namespace FigmaSharp
 
         public static IFigmaDocumentContainer GetFigmaDialogFromUrlFile (string urlFile, string viewName = null, string nodeName = null)
 		{
-			var figmaContent = GetFigmaFileContent (urlFile, FigmaEnvirontment.Token);
+			var figmaContent = GetFigmaFileContent (urlFile, AppContext.Current.Token);
 			return GetFigmaDialogFromContent (figmaContent, viewName, nodeName);
 		}
 
@@ -111,7 +111,7 @@ namespace FigmaSharp
 
         public static FigmaImageResponse GetFigmaImages(string fileId, string[] ids)
         {
-            var query = new FigmaImageQuery(FigmaEnvirontment.Token, fileId, ids);
+            var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
             return FigmaApiHelper.GetFigmaImage(query);
         }
 
@@ -156,7 +156,7 @@ namespace FigmaSharp
 
 		public static string GetFigmaFileContent (string file)
 		{
-			return GetFigmaFileContent (file, FigmaEnvirontment.Token);
+			return GetFigmaFileContent (file, AppContext.Current.Token);
 		}
 
 		public static string GetFigmaFileContent (string file, string personal_access_token)

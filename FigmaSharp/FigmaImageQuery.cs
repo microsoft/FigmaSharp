@@ -30,7 +30,7 @@ namespace FigmaSharp
 {
     public class FigmaImageQuery
     {
-        public FigmaImageQuery(string document, string[] ids) : this(FigmaEnvirontment.Token, document, ids)
+        public FigmaImageQuery(string document, string[] ids) : this(AppContext.Current.Token, document, ids)
         {
 
         }
