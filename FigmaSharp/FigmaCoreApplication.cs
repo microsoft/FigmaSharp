@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace FigmaSharp
@@ -65,29 +66,31 @@ namespace FigmaSharp
             Token = token;
         }
 
-        public FigmaViewConverter[] GetFigmaConverters()
-        {
-            return figmaDelegate.GetFigmaConverters();
-        }
+        public IViewWrapper CreateEmptyView() => figmaDelegate.CreateEmptyView();
 
-        public IImageWrapper GetImage(string url)
-        {
-            return figmaDelegate.GetImage(url);
-        }
+        public FigmaViewConverter[] GetFigmaConverters() => figmaDelegate.GetFigmaConverters();
 
-        public IImageWrapper GetImageFromFilePath(string filePath)
-        {
-            return figmaDelegate.GetImageFromFilePath(filePath);
-        }
+        public IImageWrapper GetImage(string url) => figmaDelegate.GetImage(url);
 
-        public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
-        {
-            return figmaDelegate.GetImageView(figmaPaint);
-        }
+        public IImageWrapper GetImageFromFilePath(string filePath) =>
+            figmaDelegate.GetImageFromFilePath(filePath);
 
-        public IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef)
-        {
-            return figmaDelegate.GetImageFromManifest(assembly, imageRef);
-        }
+        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template) =>
+            figmaDelegate.GetFigmaDialogFromContent(template);
+
+        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName) =>
+            figmaDelegate.LoadFigmaFromFrameEntity(contentView, document, figmaImages, figmaFileName);
+
+        public IImageViewWrapper GetImageView(FigmaPaint figmaPaint) =>
+            figmaDelegate.GetImageView(figmaPaint);
+
+        public IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef) =>
+            figmaDelegate.GetImageFromManifest(assembly, imageRef);
+
+        public string GetFigmaFileContent(string file, string token) =>
+            figmaDelegate.GetFigmaFileContent(file, token);
+
+        public string GetManifestResource(Assembly assembly, string file) =>
+            figmaDelegate.GetManifestResource(assembly, file);
     }
 }

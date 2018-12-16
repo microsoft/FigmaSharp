@@ -1,7 +1,7 @@
 ﻿using System;
 
 using UIKit;
-using FigmaSharp;
+using FigmaSharp.Services;
 
 namespace ExampleFigmaIOS
 {
@@ -15,6 +15,15 @@ namespace ExampleFigmaIOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            var fileName = Environment.GetEnvironmentVariable("FILE");
+
+            var service = new FigmaRemoteFileService();
+            var buttonConverter = new CustomButtonConverter();
+            service.CustomConverters.Add(buttonConverter);
+            service.Start(fileName);
+
+            View = service.ContentView as UIView;
             // Perform any additional setup after loading the view, typically from a nib.
         }
 
@@ -22,8 +31,6 @@ namespace ExampleFigmaIOS
         {
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
-
-            var service = new FigmaViewService();
         }
     }
 }

@@ -27,26 +27,55 @@
  */
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace FigmaSharp.Services
 {
-    public class FigmaViewService
+    public abstract class FigmaFileService
     {
         readonly public List<CustomViewConverter> CustomConverters = new List<CustomViewConverter>();
         readonly FigmaViewConverter[] FigmaDefaultConverters;
 
-        public FigmaViewService()
+        public readonly List<IImageViewWrapper> FigmaImages = new List<IImageViewWrapper>();
+        public IFigmaDocumentContainer Document { get; private set; }
+        public IViewWrapper ContentView { get; private set; }
+
+        public string File { get; private set; }
+        public bool ImagesLoaded { get; private set; }
+
+        public FigmaFileService ()
         {
+            ContentView = AppContext.Current.CreateEmptyView();
             FigmaDefaultConverters = AppContext.Current.GetFigmaConverters();
         }
 
-        public void Start()
+        public void Start(string file)
         {
+            Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
+            Console.WriteLine($"Reading {file} from resources..");
 
+            File = file;
+
+            try
+            {
+                var template = GetContentTemplate(file);
+                Document = AppContext.Current.GetFigmaDialogFromContent(template);
+                Console.WriteLine($"Reading successfull");
+
+                Console.WriteLine($"Loading views..");
+                AppContext.Current.LoadFigmaFromFrameEntity(ContentView, Document, FigmaImages, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading resource");
+                Console.WriteLine(ex);
+            }
         }
 
+        protected abstract string GetContentTemplate(string file);
+
         //TODO: This 
-        IViewWrapper Recursively (FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)
+        IViewWrapper Recursively(FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)
         {
             Console.WriteLine("[{0}({1})] Processing {2}..", currentNode.id, currentNode.name, currentNode.GetType());
             IViewWrapper nextView = null;
@@ -90,6 +119,22 @@ namespace FigmaSharp.Services
                 }
             }
             return nextView;
+        }
+    }
+
+    public class FigmaLocalFileService : FigmaFileService
+    {
+        protected override string GetContentTemplate(string file)
+        {
+            return AppContext.Current.GetManifestResource(GetType().Assembly, file);
+        }
+    }
+
+    public class FigmaRemoteFileService : FigmaFileService
+    {
+        protected override string GetContentTemplate(string file)
+        {
+            return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
         }
     }
 }
