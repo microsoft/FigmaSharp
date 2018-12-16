@@ -36,6 +36,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Foundation;
 using CoreAnimation;
+using FigmaSharp.Converters;
 
 namespace FigmaSharp
 {
@@ -490,7 +491,7 @@ namespace FigmaSharp
             }
         }
 
-        static FigmaViewConverter[] figmaViewConverters = {
+        static readonly FigmaViewConverter[] figmaViewConverters = {
             new FigmaVectorViewConverter (),
             new FigmaFrameEntityConverter (),
             new FigmaTextConverter (),
@@ -500,7 +501,7 @@ namespace FigmaSharp
             new FigmaLineConverter ()
         };
 
-        static CustomViewConverter[] customViewConverters = {
+        static readonly CustomViewConverter[] customViewConverters = {
             new CustomButtonConverter (),
             new CustomTextFieldConverter (),
         };
