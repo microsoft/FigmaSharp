@@ -49,12 +49,22 @@
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Interfaces\IViewWrapper.cs" />
     <Compile Include="Converters\CustomViewConverter.cs" />
+    <Compile Include="Converters\Custom\CustomButtonConverter.cs" />
+    <Compile Include="Converters\Custom\CustomTextFieldConverter.cs" />
+    <Compile Include="Converters\FigmaElipseConverter.cs" />
+    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
+    <Compile Include="Converters\FigmaLineConverter.cs" />
+    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
+    <Compile Include="Converters\FigmaTextConverter.cs" />
+    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
+    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Converters\Custom\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

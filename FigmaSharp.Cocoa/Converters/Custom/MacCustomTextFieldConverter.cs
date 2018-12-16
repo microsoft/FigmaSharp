@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameEntityConverter.cs
+ * CustomTextFieldConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,22 +26,28 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
+using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class FigmaFrameEntityConverter : FigmaViewConverter
+    public class MacCustomTextFieldConverter : CustomTextFieldConverter
     {
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            return currentNode is FigmaFrameEntity;
-        }
-
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
-            currengroupView.Configure(figmaFrameEntity);
-            return new MacViewWrapper(currengroupView);
+            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
+
+            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
+                .FirstOrDefault();
+
+            textField.StringValue = figmaText.characters;
+            textField.Font = figmaText.style.ToNSFont();
+
+            //var absolute = instance.absoluteBoundingBox;
+            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
+            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
+            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
+            //return null;
+            return new MacViewWrapper(textField);
         }
     }
 }

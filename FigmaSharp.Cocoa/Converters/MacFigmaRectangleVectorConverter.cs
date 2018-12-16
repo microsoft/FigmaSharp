@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomButtonConverter.cs 
+ * FigmaRectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,49 +26,28 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class CustomButtonConverter : CustomViewConverter
+    public class MacFigmaRectangleVectorConverter : FigmaRectangleVectorConverter
     {
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            return (currentNode.name == "button" || currentNode.name == "button default") && currentNode is IFigmaDocumentContainer;
-        }
-
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
-            button.Configure(currentNode);
-
-            var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-            if (figmaText != null)
+            var rectangleVector = ((FigmaRectangleVector)currentNode);
+            if (rectangleVector.HasFills)
             {
-                button.AlphaValue = figmaText.opacity;
-                button.Font = figmaText.style.ToNSFont();
-            }
-
-            if (instance.children.OfType<FigmaGroup>().Any())
-            {
-                button.Title = "";
-                button.AlphaValue = 0.15f;
-                button.BezelStyle = NSBezelStyle.TexturedSquare;
-            }
-            else
-            {
-                if (figmaText != null)
+                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
                 {
-                    button.AlphaValue = figmaText.opacity;
-                    button.Title = figmaText.characters;
+                    var figmaImageView = Cocoa.MacFigmaDelegate.GetImageView(figmaPaint);
+                    var imageView = figmaImageView.NativeObject as NSImageView;
+                    imageView.Configure(rectangleVector);
+                    return figmaImageView;
                 }
-
-                button.BezelStyle = NSBezelStyle.Rounded;
-                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
-                return null;
             }
-            return new MacViewWrapper(button);
+
+            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            currengroupView.Configure(rectangleVector);
+            return new MacViewWrapper(currengroupView);
         }
     }
 }

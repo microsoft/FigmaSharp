@@ -28,22 +28,11 @@
 
 namespace FigmaSharp.Converters
 {
-    public class FigmaTextConverter : FigmaViewConverter
+    public abstract class FigmaTextConverter : FigmaViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.GetType() == typeof(FigmaText);
-        }
-
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
-        {
-            var figmaText = ((FigmaText)currentNode);
-            var font = figmaText.style.ToNSFont();
-            var textField = FigmaViewsHelper.CreateLabel(figmaText.characters, font);
-            textField.Configure(figmaText);
-            var wrapper = new MacViewWrapper(textField);
-            parentView.AddChild(wrapper);
-            return wrapper;
         }
     }
 }
