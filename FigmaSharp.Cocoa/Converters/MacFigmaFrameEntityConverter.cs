@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaRectangleVectorConverter.cs
+ * FigmaFrameEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -29,29 +29,13 @@ using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class FigmaRectangleVectorConverter : FigmaViewConverter
+    public class MacFigmaFrameEntityConverter : FigmaFrameEntityConverter
     {
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            return currentNode.GetType() == typeof(FigmaRectangleVector);
-        }
-
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
-            var rectangleVector = ((FigmaRectangleVector)currentNode);
-            if (rectangleVector.HasFills)
-            {
-                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
-                {
-                    var figmaImageView = Cocoa.MacFigmaDelegate.GetImageView(figmaPaint);
-                    var imageView = figmaImageView.NativeObject as NSImageView;
-                    imageView.Configure(rectangleVector);
-                    return figmaImageView;
-                }
-            }
-
             var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            currengroupView.Configure(rectangleVector);
+            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            currengroupView.Configure(figmaFrameEntity);
             return new MacViewWrapper(currengroupView);
         }
     }

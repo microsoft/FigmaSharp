@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaElipseConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,34 +25,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
-using System.Linq;
 
 namespace FigmaSharp.Converters
 {
-    public class CustomTextFieldConverter : CustomViewConverter
+    public abstract class FigmaElipseConverter : FigmaViewConverter
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
-        {
-            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
-
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault();
-
-            textField.StringValue = figmaText.characters;
-            textField.Font = figmaText.style.ToNSFont();
-
-            //var absolute = instance.absoluteBoundingBox;
-            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-            //return null;
-            return new MacViewWrapper(textField);
-        }
-
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return (currentNode.name == "text field" || currentNode.name == "Field") && currentNode is IFigmaDocumentContainer;
+            return currentNode.GetType() == typeof(FigmaElipse);
         }
     }
 }

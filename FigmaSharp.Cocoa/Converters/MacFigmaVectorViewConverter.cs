@@ -29,13 +29,8 @@ using System;
 
 namespace FigmaSharp.Converters
 {
-    public class FigmaVectorViewConverter : FigmaViewConverter
+    public class MacFigmaVectorViewConverter : FigmaVectorViewConverter
     {
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            return currentNode.GetType() == typeof(FigmaVector);
-        }
-
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {
             var vector = ((FigmaVector)currentNode);
