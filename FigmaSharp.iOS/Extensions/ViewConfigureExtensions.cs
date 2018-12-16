@@ -1,7 +1,7 @@
 ﻿using System;
 using UIKit;
 
-namespace FigmaSharp.iOS.Extensions
+namespace FigmaSharp
 {
     public static class ViewConfigureExtensions
     {

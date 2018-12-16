@@ -29,6 +29,8 @@ using System.Linq;
 using FigmaSharp.NativeControls.Base;
 using UIKit;
 
+using FigmaSharp;
+
 namespace FigmaSharp.NativeControls
 {
     public class ButtonConverter : ButtonConverterBase
