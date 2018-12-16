@@ -2,6 +2,9 @@
 <ExtensionModel>
     <Runtime>
     </Runtime>
+       <Extension path="/MonoDevelop/Ide/StartupHandlers">
+        <Class class="MonoDevelop.Figma.Commands.FigmaInitCommand"/>
+    </Extension>
     <Extension path="/MonoDevelop/Core/MimeTypes">
         <MimeType id="text/fig-x-json" _description="Figma layout" baseType="text/x-json">
             <File pattern="*.figma"/>

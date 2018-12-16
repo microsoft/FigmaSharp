@@ -75,8 +75,7 @@ namespace MonoDevelop.Figma
 
 		public FigmaViewContent (FilePath fileName)
 		{
-			FigmaEnvirontment.SetAccessToken (FigmaRuntime.Token);
-
+		
 			this.fileName = fileName;
 			ContentName = fileName;
 

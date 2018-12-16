@@ -26,40 +26,22 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp;
 using Microsoft.CodeAnalysis;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui;
 using MonoDevelop.Projects;
 
-namespace MonoDevelop.Figma
+namespace MonoDevelop.Figma.Commands
 {
-	class FigmaDisplayBinding : IViewDisplayBinding
-	{
-		public FigmaDisplayBinding ()
-		{
-		}
-
-		public string Name {
-			get {
-				return "Figma Renderer";
-			}
-		}
-
-		public bool CanUseAsDefault {
-			get {
-				return true;
-			}
-		}
-
-		public bool CanHandle (FilePath fileName, string mimeType, Projects.Project ownerProject)
-		{
-			return fileName.IsNotNull && fileName.HasExtension (".figma");
-		}
-
-		public ViewContent CreateContent (FilePath fileName, string mimeType, Projects.Project ownerProject)
-		{
-			return new FigmaViewContent (fileName);
-		}
-	}
+    public class FigmaInitCommand : CommandHandler
+    {
+        protected override void Run()
+        {
+            FigmaApplication.Init(FigmaRuntime.Token);
+        }
+    }
 }
+
+
