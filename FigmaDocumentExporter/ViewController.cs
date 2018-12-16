@@ -51,7 +51,7 @@ namespace FigmaDocumentExporter
             {
                 var figmaResponse = FigmaApiHelper.GetFigmaImages(fileId, figmaImageIds);
                 var urls = figmaResponse.images.Select(s => s.Value).ToArray();
-                await FigmaApiHelper.SaveFilesAsync(outputDirectory, ".png", urls);
+                await FileHelper.SaveFilesAsync(outputDirectory, ".png", urls);
 
                 alert.MessageText = "Process finished correctly";
             }

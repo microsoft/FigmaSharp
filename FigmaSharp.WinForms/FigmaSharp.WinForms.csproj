@@ -53,14 +53,14 @@
     <Compile Include="FigmaViewExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{ad306162-8dad-4dbd-b264-bda8765cc107}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="ViewWrapperts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -492,18 +492,18 @@ namespace FigmaSharp
         }
 
         static readonly FigmaViewConverter[] figmaViewConverters = {
-            new FigmaVectorViewConverter (),
-            new FigmaFrameEntityConverter (),
-            new FigmaTextConverter (),
-            new FigmaVectorEntityConverter (),
-            new FigmaRectangleVectorConverter (), 
-            new FigmaElipseConverter (), 
-            new FigmaLineConverter ()
+            new MacFigmaVectorViewConverter (),
+            new MacFigmaFrameEntityConverter (),
+            new MacFigmaTextConverter (),
+            new MacFigmaVectorEntityConverter (),
+            new MacFigmaRectangleVectorConverter (), 
+            new MacFigmaElipseConverter (), 
+            new MacFigmaLineConverter ()
         };
 
         static readonly CustomViewConverter[] customViewConverters = {
-            new CustomButtonConverter (),
-            new CustomTextFieldConverter (),
+            new MacCustomButtonConverter (),
+            new MacCustomTextFieldConverter (),
         };
 
         //TODO: This 

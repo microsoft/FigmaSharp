@@ -28,18 +28,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using AppKit;
 
 namespace FigmaSharp
 {
-	public class FigmaFile
+	public class FigmaFile : IFigmaFile
 	{
 		string file;
 		public List<IImageViewWrapper> FigmaImages { get; private set; }
 		public IFigmaDocumentContainer Document { get; private set; }
-		public NSView ContentView { get; private set; }
+		public IViewWrapper ContentView { get; private set; }
 
 		public FigmaFile (string file)
 		{
@@ -49,7 +46,7 @@ namespace FigmaSharp
 		public void Reload (bool includeImages = false)
 		{
 			Console.WriteLine ($"Loading views..");
-			ContentView.LoadFigmaFromFrameEntity (Document, FigmaImages, null);
+			//ContentView.LoadFigmaFromFrameEntity (Document, FigmaImages, null);
 
             if (includeImages)
             {
@@ -62,7 +59,7 @@ namespace FigmaSharp
             Console.WriteLine($"Loading images..");
             if (FigmaImages != null && FigmaImages.Count > 0)
             {
-                FigmaImages.LoadFromLocalImageResources();
+                //FigmaImages.LoadFromLocalImageResources();
             }
         }
 
@@ -77,7 +74,7 @@ namespace FigmaSharp
 
 				FigmaImages = new List<IImageViewWrapper> ();
 
-				ContentView = new NSView ();
+				//ContentView = new NSView ();
 				//Reload ();
 			} catch (Exception ex) {
 				Console.WriteLine ($"Error reading resource");
