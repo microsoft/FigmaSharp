@@ -110,10 +110,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp.iOS\FigmaSharp.iOS.csproj">
-      <Project>{183C5215-8110-4691-81F1-6A366710E07A}</Project>
-      <Name>FigmaSharp.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>

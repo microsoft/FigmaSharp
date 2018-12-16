@@ -43,8 +43,6 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FigmaFile.cs" />
-    <Compile Include="IFigmaFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewWrapperts\ViewWrapper.cs" />
     <Compile Include="ViewWrapperts\ImageWrapper.cs" />
