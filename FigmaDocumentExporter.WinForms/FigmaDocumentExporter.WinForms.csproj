@@ -94,6 +94,10 @@
       <Project>{ad306162-8dad-4dbd-b264-bda8765cc107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp.WinForms\FigmaSharp.WinForms.csproj">
+      <Project>{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}</Project>
+      <Name>FigmaSharp.WinForms</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

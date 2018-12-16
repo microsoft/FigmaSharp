@@ -29,7 +29,7 @@ using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class MacFigmaElipseConverter : FigmaElipseConverter
+    public class FigmaElipseConverter : FigmaElipseConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
         {

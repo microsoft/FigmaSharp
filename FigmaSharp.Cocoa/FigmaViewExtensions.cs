@@ -40,7 +40,7 @@ using FigmaSharp.Converters;
 
 namespace FigmaSharp
 {
-    public static class FigmaViewExtensions
+    public static partial class FigmaViewExtensions
     {
         public static void LoadFigmaFromFilePath(this NSWindow window, string filePath, out List<IImageViewWrapper> figmaImageViews, string viewName = null, string nodeName = null)
         {
@@ -116,7 +116,7 @@ namespace FigmaSharp
             {
                 try
                 {
-                    var image = Cocoa.MacFigmaDelegate.GetImageFromManifest (assembly, figmaImageViews[i].Data.imageRef);
+                    var image = AppContext.Current.GetImageFromManifest (assembly, figmaImageViews[i].Data.imageRef);
                     figmaImageViews[i].SetImage (image);
                 }
                 catch (Exception ex)
@@ -137,7 +137,7 @@ namespace FigmaSharp
                     {
                         throw new FileNotFoundException(filePath);
                     }
-                    figmaImageViews[i].SetImage(Cocoa.MacFigmaDelegate.GetImageFromFilePath(filePath));
+                    figmaImageViews[i].SetImage(AppContext.Current.GetImageFromFilePath(filePath));
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -164,7 +164,7 @@ namespace FigmaSharp
                         var url = images.images[imageView.Data.ID];
                         Console.WriteLine($"Processing image - ID:[{imageView.Data.ID}] ImageRef:[{imageView.Data.imageRef}] Url:[{url}]");
                         try {
-                            var image = Cocoa.MacFigmaDelegate.GetImage(url);
+                            var image = AppContext.Current.GetImage(url);
                             NSApplication.SharedApplication.InvokeOnMainThread(() => {
                                 imageView.SetImage (image);
                             });
@@ -201,10 +201,10 @@ namespace FigmaSharp
             contentView.Layer.BackgroundColor = backgroundColor.CGColor;
 
             var figmaView = frameEntityResponse.FigmaMainNode as FigmaNode;
-            var mainView = figmaView.ToViewWrapper(new ViewWrapper (contentView), figmaView);
-            if (mainView != null) {
-                contentView.AddSubview(mainView.NativeObject as NSView);
-            }
+            //var mainView = figmaView.ToViewWrapper(new ViewWrapper (contentView), figmaView);
+            //if (mainView != null) {
+            //    contentView.AddSubview(mainView.NativeObject as NSView);
+            //}
         }
 
         public static CGRect ToCGRect(this FigmaRectangle rectangle)
@@ -491,76 +491,5 @@ namespace FigmaSharp
             }
         }
 
-
-
-        static readonly CustomViewConverter[] customViewConverters = {
-            new CustomButtonConverter (),
-            new CustomTextFieldConverterBase (),
-        };
-
-
-        public class FigmViewService
-        {
-            public List<CustomViewConverter> CustomConverters { get; set; } = new List<CustomViewConverter>();
-
-            readonly List<FigmaViewConverter> FigmaDefaultConverters;
-
-            public FigmViewService()
-            {
-                FigmaDefaultConverters = Cocoa.MacFigmaDelegate.GetFigmaConverters();
-            }
-
-            public void Start ()
-            {
-
-            }
-        }
-
-        //TODO: This 
-        public static IViewWrapper ToViewWrapper(this FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)
-        {
-            Console.WriteLine("[{0}({1})] Processing {2}..", currentNode.id, currentNode.name, currentNode.GetType());
-            IViewWrapper nextView = null;
-
-            foreach (var customConverter in customViewConverters)
-            {
-                if (customConverter.CanConvert (currentNode))
-                {
-                    var view = customConverter.ConvertTo(currentNode, parentNode, parentView);
-                    parentView.AddChild(view);
-                    view.CreateConstraints(parentNode, parentView);
-                    nextView = view;
-                    break;
-                }
-            }
-
-            if (nextView == null)
-            {
-                foreach (var converter in figmaViewConverters)
-                {
-                    if (converter.CanConvert(currentNode))
-                    {
-                        var view = converter.ConvertTo(currentNode, parentNode, parentView);
-                        if (view != null)
-                        {
-                            parentView.AddChild(view);
-                            view.CreateConstraints(parentNode, parentView);
-                            nextView = view;
-                        }
-                        break;
-                    }
-                }
-            }
-           
-            Console.WriteLine("[{1}({2})] Not implemented: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
-            if (currentNode is IFigmaNodeContainer nodeContainer)
-            {
-                foreach (var item in nodeContainer.children)
-                {
-                    ToViewWrapper(parentNode, parentView, item);
-                }
-            }
-            return nextView;
-        }
     }
 }

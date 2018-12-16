@@ -9,7 +9,7 @@ namespace FigmaDocumentExporter
 		static void Main (string[] args)
 		{
 			var token = Environment.GetEnvironmentVariable ("TOKEN");
-			FigmaEnvirontment.SetAccessToken (token);
+            FigmaApplication.Init (token);
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}

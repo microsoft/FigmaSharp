@@ -48,18 +48,5 @@ namespace FigmaSharp
         {
             return figmaViewConverters;
         }
-
-        static FigmaDelegate current;
-        public static FigmaDelegate Current
-        {
-            get
-            {
-                if (current == null)
-                {
-                    current = new FigmaDelegate();
-                }
-                return current;
-            }
-        }
     }
 }

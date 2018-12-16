@@ -16,7 +16,7 @@ namespace FigmaDocumentExporter.WinForms
         [STAThread]
         static void Main()
         {
-            FigmaEnvirontment.SetAccessToken (Settings.Default.TOKEN);
+            FigmaApplication.Init (Settings.Default.TOKEN);
             Application.EnableVisualStyles ();
             Application.SetCompatibleTextRenderingDefault (false);
             Application.Run (new Form1 ());

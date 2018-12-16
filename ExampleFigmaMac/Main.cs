@@ -15,6 +15,9 @@ namespace ExampleFigmaMac
     {
         static void Main(string[] args)
         {
+            var token = Environment.GetEnvironmentVariable("TOKEN");
+            FigmaApplication.Init(token);
+
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
           
@@ -22,9 +25,7 @@ namespace ExampleFigmaMac
             var yPos = NSScreen.MainScreen.Frame.Height / 2;
 
             var mainWindow = new MacAccInspectorWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
-            var token = Environment.GetEnvironmentVariable("TOKEN");
-            FigmaEnvirontment.SetAccessToken(token);
-
+           
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             var button = new NSButton() { Title = "Refresh" };
             stackView.AddArrangedSubview(button);
@@ -61,8 +62,8 @@ namespace ExampleFigmaMac
 
         static void Refresh(NSView contentView)
         {
-            ReadStoryboardFigmaFile (); //Example reading storyboard figma
-            //ReadRemoteFigmaFile (contentView); //Example reading remote file
+            //ReadStoryboardFigmaFile (); //Example reading storyboard figma
+            ReadRemoteFigmaFile (contentView); //Example reading remote file
             //ReadLocalFilePath(contentView); //Example reading local file
         }
 

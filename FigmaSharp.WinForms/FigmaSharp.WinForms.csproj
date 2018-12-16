@@ -51,6 +51,8 @@
     <Compile Include="ViewWrapperts\ImageViewWrapper.cs" />
     <Compile Include="Converters\FormsFigmaElipseConverter.cs" />
     <Compile Include="FigmaViewExtensions.cs" />
+    <Compile Include="FigmaApplication.cs" />
+    <Compile Include="FigmaDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
