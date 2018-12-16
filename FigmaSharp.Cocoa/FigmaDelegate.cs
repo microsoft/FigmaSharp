@@ -48,5 +48,15 @@ namespace FigmaSharp
         {
             return figmaViewConverters;
         }
+
+        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName)
+        {
+            (contentView.NativeObject as NSView).LoadFigmaFromFrameEntity(document, figmaImages, figmaFileName);
+        }
+
+        public string GetFigmaFileContent(string file, string token)
+        {
+            return FigmaApiHelper.GetFigmaFileContent(file, token);
+        }
     }
 }
