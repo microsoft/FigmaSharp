@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
@@ -38,12 +39,12 @@ namespace FigmaSharp
 		public IFigmaDocumentContainer Document { get; private set; }
 		public IViewWrapper ContentView { get; private set; }
 
-		public FigmaFile (string file)
+        public FigmaFile (string file)
 		{
-			this.file = file;
-		}
+            this.file = file;
+        }
 
-		public void Reload (bool includeImages = false)
+        public void Reload (bool includeImages = false)
 		{
 			Console.WriteLine ($"Loading views..");
 			//ContentView.LoadFigmaFromFrameEntity (Document, FigmaImages, null);
@@ -65,7 +66,7 @@ namespace FigmaSharp
 
         public void Initialize ()
 		{
-			try {
+            try {
 				Console.WriteLine ($"Reading {file} from resources");
 				var template = FigmaApiHelper.GetManifestResource (GetType ().Assembly, file);
 
