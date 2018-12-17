@@ -8,6 +8,7 @@ using MonoDevelop.Inspector.Mac;
 using System.Linq;
 using System.Net;
 using Foundation;
+using FigmaSharp.Services;
 
 namespace ExampleFigmaMac
 {
@@ -85,8 +86,12 @@ namespace ExampleFigmaMac
             var fileName = Environment.GetEnvironmentVariable("FILE");
             var nodeName = "";
 
-            contentView.LoadFigmaFromUrlFile(fileName, out List<IImageViewWrapper> figmaImageViews, viewName, nodeName);
-            figmaImageViews.Load(fileName);
+
+            var figmaService = new FigmaRemoteFileService();
+            figmaService.Start(fileName);
+            var view = figmaService.ContentView;
+            contentView.AddSubview(view.NativeObject as NSView);
+            //figmaImageViews.Load(fileName);
         }
 
         //Example 3

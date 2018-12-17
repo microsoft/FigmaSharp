@@ -63,7 +63,18 @@ namespace FigmaSharp.Services
                 Console.WriteLine($"Reading successfull");
 
                 Console.WriteLine($"Loading views..");
-                AppContext.Current.LoadFigmaFromFrameEntity(ContentView, Document, FigmaImages, null);
+                //AppContext.Current.LoadFigmaFromFrameEntity(ContentView, Document, FigmaImages, null);
+                var viewWrapper = AppContext.Current.CreateEmptyView();
+
+                List<IViewWrapper> views = new List<IViewWrapper>();
+                foreach (var item in Document.children)
+                {
+                    var view = Recursively(item, viewWrapper, null);
+                    views.Add(view);
+                }
+                Console.WriteLine();
+                //ContentView = Recursively(Document., viewWrapper, null);
+
             }
             catch (Exception ex)
             {
@@ -77,7 +88,7 @@ namespace FigmaSharp.Services
         //TODO: This 
         IViewWrapper Recursively(FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)
         {
-            Console.WriteLine("[{0}({1})] Processing {2}..", currentNode.id, currentNode.name, currentNode.GetType());
+            Console.WriteLine("[{0}({1})] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
             IViewWrapper nextView = null;
 
             foreach (var customConverter in CustomConverters)
@@ -115,7 +126,7 @@ namespace FigmaSharp.Services
             {
                 foreach (var item in nodeContainer.children)
                 {
-                    Recursively(parentNode, parentView, item);
+                    Recursively(item, parentView, parentNode);
                 }
             }
             return nextView;
