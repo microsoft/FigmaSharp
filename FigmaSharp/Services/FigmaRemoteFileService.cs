@@ -33,20 +33,27 @@ namespace FigmaSharp.Services
 {
     public abstract class FigmaFileService
     {
-        readonly public List<CustomViewConverter> CustomConverters = new List<CustomViewConverter>();
+        readonly public List<CustomViewConverter> CustomViewConverters = new List<CustomViewConverter>();
         readonly FigmaViewConverter[] FigmaDefaultConverters;
+
+        public List<ProcessedNode> NodesProcessed = new List<ProcessedNode>();
 
         public readonly List<IImageViewWrapper> FigmaImages = new List<IImageViewWrapper>();
         public IFigmaDocumentContainer Document { get; private set; }
-        public IViewWrapper ContentView { get; private set; }
 
         public string File { get; private set; }
-        public bool ImagesLoaded { get; private set; }
 
         public FigmaFileService ()
         {
-            ContentView = AppContext.Current.CreateEmptyView();
             FigmaDefaultConverters = AppContext.Current.GetFigmaConverters();
+        }
+
+        public async Task StartAsync (string file)
+        {
+            await Task.Run(() =>
+            {
+                Start(file);
+            });
         }
 
         public void Start(string file)
@@ -54,27 +61,22 @@ namespace FigmaSharp.Services
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
 
+            NodesProcessed.Clear();
+
             File = file;
 
             try
             {
                 var template = GetContentTemplate(file);
                 Document = AppContext.Current.GetFigmaDialogFromContent(template);
+
                 Console.WriteLine($"Reading successfull");
-
                 Console.WriteLine($"Loading views..");
-                //AppContext.Current.LoadFigmaFromFrameEntity(ContentView, Document, FigmaImages, null);
-                var viewWrapper = AppContext.Current.CreateEmptyView();
 
-                List<IViewWrapper> views = new List<IViewWrapper>();
                 foreach (var item in Document.children)
-                {
-                    var view = Recursively(item, viewWrapper, null);
-                    views.Add(view);
-                }
-                Console.WriteLine();
-                //ContentView = Recursively(Document., viewWrapper, null);
+                    GenerateViewsRecursively (item, null);
 
+                Console.WriteLine("View generation ended.");
             }
             catch (Exception ex)
             {
@@ -85,51 +87,49 @@ namespace FigmaSharp.Services
 
         protected abstract string GetContentTemplate(string file);
 
+        ProcessedNode GetProcessedNode (FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent)
+        {
+            foreach (var customViewConverter in customViewConverters)
+            {
+                if (customViewConverter.CanConvert(currentNode))
+                {
+                    var currentView = customViewConverter.ConvertTo(currentNode, parent);
+                    var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
+                    return currentElement;
+                }
+            }
+            return null;
+        }
+
         //TODO: This 
-        IViewWrapper Recursively(FigmaNode currentNode, IViewWrapper parentView, FigmaNode parentNode)
+        void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent)
         {
             Console.WriteLine("[{0}({1})] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
-            IViewWrapper nextView = null;
 
-            foreach (var customConverter in CustomConverters)
+            var currentProcessedNode = GetProcessedNode(currentNode, CustomViewConverters, parent);
+
+            if (currentProcessedNode == null)
             {
-                if (customConverter.CanConvert(currentNode))
-                {
-                    var view = customConverter.ConvertTo(currentNode, parentNode, parentView);
-                    parentView.AddChild(view);
-                    view.CreateConstraints(parentNode, parentView);
-                    nextView = view;
-                    break;
-                }
+                currentProcessedNode = GetProcessedNode(currentNode, FigmaDefaultConverters, parent);
             }
 
-            if (nextView == null)
+            if (currentProcessedNode != null)
             {
-                foreach (var converter in FigmaDefaultConverters)
-                {
-                    if (converter.CanConvert(currentNode))
-                    {
-                        var view = converter.ConvertTo(currentNode, parentNode, parentView);
-                        if (view != null)
-                        {
-                            parentView.AddChild(view);
-                            view.CreateConstraints(parentNode, parentView);
-                            nextView = view;
-                        }
-                        break;
-                    }
-                }
+                NodesProcessed.Add(currentProcessedNode);
+            }
+            else
+            {
+                Console.WriteLine("[{1}({2})] There is no converted for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
-            Console.WriteLine("[{1}({2})] Not implemented: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             if (currentNode is IFigmaNodeContainer nodeContainer)
             {
                 foreach (var item in nodeContainer.children)
                 {
-                    Recursively(item, parentView, parentNode);
+                    GenerateViewsRecursively(item, currentProcessedNode);
                 }
             }
-            return nextView;
+
         }
     }
 

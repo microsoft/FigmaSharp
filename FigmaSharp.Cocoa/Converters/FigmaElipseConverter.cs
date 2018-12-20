@@ -31,7 +31,7 @@ namespace FigmaSharp.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var elipseView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
             var elipse = (FigmaElipse)currentNode;

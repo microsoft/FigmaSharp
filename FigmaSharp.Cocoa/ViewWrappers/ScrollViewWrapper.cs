@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,18 +25,42 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
 
-namespace FigmaSharp.Converters
+using AppKit;
+using System.Linq;
+
+namespace FigmaSharp
 {
-    public class FigmaLineConverter : FigmaLineConverterBase
+    public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        readonly NSScrollView scrollView;
+
+        public ScrollViewWrapper(NSScrollView scrollView) : base(scrollView)
         {
-            var figmaLineView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
+            this.scrollView = scrollView;
+
+            if (this.scrollView.DocumentView == null)
+            {
+                this.scrollView.DocumentView = new NSView();
+            }
+        }
+
+        public override void AddChild(IViewWrapper view)
+        {
+            if (scrollView.DocumentView is NSView content)
+            {
+                content.AddSubview(view.NativeObject as NSView);
+            }
+        }
+
+        public override void RemoveChild(IViewWrapper view)
+        {
+            if (scrollView.DocumentView is NSView content)
+            {
+                if (content.Subviews.Contains (view.NativeObject)) {
+                    ((NSView)view.NativeObject).RemoveFromSuperview();
+                }
+            }
         }
     }
 }

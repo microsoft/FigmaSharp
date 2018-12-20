@@ -5,7 +5,6 @@ using AppKit;
 using CoreGraphics;
 using FigmaSharp;
 using MonoDevelop.Inspector.Mac;
-using System.Linq;
 using System.Net;
 using Foundation;
 using FigmaSharp.Services;
@@ -82,15 +81,17 @@ namespace ExampleFigmaMac
         //Example 2
         static void ReadRemoteFigmaFile(NSView contentView)
         {
-            var viewName = "";
             var fileName = Environment.GetEnvironmentVariable("FILE");
-            var nodeName = "";
 
+            var fileService = new FigmaRemoteFileService();
+            fileService.Start(fileName);
 
-            var figmaService = new FigmaRemoteFileService();
-            figmaService.Start(fileName);
-            var view = figmaService.ContentView;
-            contentView.AddSubview(view.NativeObject as NSView);
+            var scrollViewWrapper = new ScrollViewWrapper(scrollView);
+
+            var builderService = new ScrollViewRendererService();
+            builderService.Start(scrollViewWrapper, fileService.NodesProcessed);
+            Console.WriteLine();
+
             //figmaImageViews.Load(fileName);
         }
 
