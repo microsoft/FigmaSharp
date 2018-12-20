@@ -31,7 +31,7 @@ namespace FigmaSharp.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var vector = ((FigmaVector)currentNode);
             Console.WriteLine(vector);

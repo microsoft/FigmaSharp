@@ -30,14 +30,13 @@ namespace FigmaSharp.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaText = ((FigmaText)currentNode);
             var font = figmaText.style.ToNSFont();
             var textField = FigmaViewsHelper.CreateLabel(figmaText.characters, font);
             textField.Configure(figmaText);
             var wrapper = new ViewWrapper(textField);
-            parentView.AddChild(wrapper);
             return wrapper;
         }
     }

@@ -20,7 +20,7 @@ namespace ExampleFigmaIOS
 
             var service = new FigmaRemoteFileService();
             var buttonConverter = new CustomButtonConverter();
-            service.CustomConverters.Add(buttonConverter);
+            service.CustomViewConverters.Add(buttonConverter);
             service.Start(fileName);
 
             View = service.ContentView as UIView;

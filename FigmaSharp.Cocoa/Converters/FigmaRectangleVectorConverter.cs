@@ -31,7 +31,7 @@ namespace FigmaSharp.Converters
 {
     public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var rectangleVector = ((FigmaRectangleVector)currentNode);
             if (rectangleVector.HasFills)

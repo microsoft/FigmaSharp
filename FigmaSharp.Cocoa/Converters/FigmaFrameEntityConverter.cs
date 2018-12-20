@@ -31,7 +31,7 @@ namespace FigmaSharp.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;

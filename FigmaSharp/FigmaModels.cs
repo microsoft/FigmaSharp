@@ -335,6 +335,14 @@ namespace FigmaSharp
     
     }
 
+    public class ProcessedNode
+    {
+        public FigmaNode FigmaNode { get; set; }
+        public IViewWrapper View { get; set; }
+
+        public ProcessedNode ParentView { get; set; }
+    }
+
     public class FigmaNode
     {
         public string id { get; set; }
