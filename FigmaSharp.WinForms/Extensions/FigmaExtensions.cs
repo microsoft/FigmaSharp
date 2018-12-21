@@ -42,7 +42,7 @@ namespace FigmaSharp
 
         public static Color ToColor(this FigmaColor color)
         {
-            return Color.FromArgb ((int)color.a * 255, (int)color.r * 255, (int)color.g * 255, (int)color.b * 255);
+            return Color.FromArgb ((int)(color.a * 255), (int)(color.r * 255), (int)(color.g * 255), (int)(color.b * 255));
         }
 
         public static Font ToFont(this FigmaTypeStyle style)

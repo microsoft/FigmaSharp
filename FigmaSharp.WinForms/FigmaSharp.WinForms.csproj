@@ -43,6 +43,9 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LineControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
     <Compile Include="Converters\FigmaLineConverter.cs" />
     <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
@@ -61,11 +64,9 @@
     <Compile Include="ViewWrapperts\ViewWrapper.cs" />
     <Compile Include="ViewWrapperts\ImageWrapper.cs" />
     <Compile Include="ViewWrapperts\ImageViewWrapper.cs" />
-    <Compile Include="FigmaViewExtensions.cs" />
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="FigmaDelegate.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
