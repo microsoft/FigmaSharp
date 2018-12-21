@@ -32,7 +32,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls.iOS", "FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.iOS\FigmaSharp.NativeControls.iOS.csproj", "{10FCDA86-5589-4342-9421-D0610607EAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigma.iOS", "ExampleFigma.IOS\ExampleFigma.IOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigma.IOS", "ExampleFigma.IOS\ExampleFigma.IOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ExampleFigma.Shared", "ExampleFigma.Shared\ExampleFigma.Shared.shproj", "{88CC3650-709A-4A60-A43B-0FE2F6C4098D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -236,6 +238,7 @@ Global
 		{BE718164-2C38-48F6-A54B-35B81FD638DC} = {1998B69B-8AD6-4170-86D1-22CFF5685D8F}
 		{10FCDA86-5589-4342-9421-D0610607EAC5} = {1998B69B-8AD6-4170-86D1-22CFF5685D8F}
 		{72D9836A-F902-46A3-8E71-6B327C5D24BB} = {FBBB8608-7B63-4C07-9609-16DDEB01C081}
+		{88CC3650-709A-4A60-A43B-0FE2F6C4098D} = {FBBB8608-7B63-4C07-9609-16DDEB01C081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF39AB59-9991-4134-A69A-4A88A5503FC7}

@@ -12,7 +12,6 @@ namespace FigmaSharp
         public static void Configure(this UIView view, FigmaFrameEntity child)
         {
             Configure(view, (FigmaNode)child);
-
             view.Alpha = child.opacity;
             view.Layer.BackgroundColor = FigmaExtensions.ToUIColor(child.backgroundColor).CGColor;
         }
@@ -20,10 +19,9 @@ namespace FigmaSharp
         public static void Configure(this UIView view, FigmaNode child)
         {
             view.Hidden = !child.visible;
-            //view.WantsLayer = true;
-
             if (child is IFigmaDocumentContainer container)
             {
+                view.Bounds = new CGRect(0, 0, container.absoluteBoundingBox.width, container.absoluteBoundingBox.height);
                 view.Frame = container.absoluteBoundingBox.ToCGRect ();
             }
         }

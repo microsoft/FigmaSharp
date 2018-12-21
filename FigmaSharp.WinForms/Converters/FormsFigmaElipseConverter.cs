@@ -6,7 +6,7 @@ namespace FigmaSharp.WinForms.Converters
 {
     public class FormsFigmaElipseConverter : FigmaElipseConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var elipseView = new Control();
             return new ViewWrapper(elipseView);

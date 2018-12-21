@@ -4,10 +4,10 @@ using System.IO;
 using AppKit;
 using CoreGraphics;
 using FigmaSharp;
-using MonoDevelop.Inspector.Mac;
 using System.Net;
 using Foundation;
 using FigmaSharp.Services;
+using ExampleFigma;
 
 namespace ExampleFigmaMac
 {
@@ -15,8 +15,7 @@ namespace ExampleFigmaMac
     {
         static void Main(string[] args)
         {
-            var token = Environment.GetEnvironmentVariable("TOKEN");
-            FigmaApplication.Init(token);
+            FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
 
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
@@ -24,7 +23,7 @@ namespace ExampleFigmaMac
             var xPos = NSScreen.MainScreen.Frame.Width / 2;
             var yPos = NSScreen.MainScreen.Frame.Height / 2;
 
-            var mainWindow = new MacAccInspectorWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
            
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             var button = new NSButton() { Title = "Refresh" };
@@ -77,22 +76,16 @@ namespace ExampleFigmaMac
         }
 
         static NSScrollView scrollView;
+        static ExampleViewManager manager;
 
         //Example 2
         static void ReadRemoteFigmaFile(NSView contentView)
         {
             var fileName = Environment.GetEnvironmentVariable("FILE");
-
-            var fileService = new FigmaRemoteFileService();
-            fileService.Start(fileName);
-
             var scrollViewWrapper = new ScrollViewWrapper(scrollView);
 
-            var builderService = new ScrollViewRendererService();
-            builderService.Start(scrollViewWrapper, fileService.NodesProcessed);
-            Console.WriteLine();
-
-            //figmaImageViews.Load(fileName);
+            manager = new ExampleViewManager(scrollViewWrapper, fileName);
+            manager.Initialize();
         }
 
         //Example 3

@@ -26,6 +26,41 @@ namespace FigmaSharp
 
         public object NativeObject => nativeView;
 
+
+        public float X
+        {
+            get => (float)nativeView.Location.X;
+            set
+            {
+                //layer.Bounds = new CoreGraphics.CGRect(0, 0, 150, 150);
+                //Position = new CGPoint(50, 50);
+                nativeView.Left = (int) value;
+            }
+        }
+        public float Y
+        {
+            get => (float)nativeView.Location.Y;
+            set
+            {
+                nativeView.Top = (int)value;
+            }
+        }
+        public float Width
+        {
+            get => (float)nativeView.Width;
+            set
+            {
+                nativeView.Width = (int) value;
+            }
+        }
+        public float Height
+        {
+            get => (float)nativeView.Height;
+            set
+            {
+                nativeView.Height = (int)value;
+            }
+        }
         public void AddChild(IViewWrapper view)
         {
             if (children.Contains(view))
@@ -48,6 +83,16 @@ namespace FigmaSharp
                 children.Remove(view);
                 var controls = nativeView.Controls.Cast<Control>();
                 nativeView.Controls.Remove((Control)view.NativeObject);
+            }
+        }
+
+        public void ClearSubviews()
+        {
+            var controls = nativeView.Controls;
+            foreach (var item in controls)
+            {
+                if (item is Control control)
+                nativeView.Controls.Remove(control);
             }
         }
     }

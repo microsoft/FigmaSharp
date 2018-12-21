@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" Condition="Exists('..\ExampleFigma.Shared\ExampleFigma.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -93,6 +94,10 @@
     <ProjectReference Include="..\FigmaSharp.WinForms\FigmaSharp.WinForms.csproj">
       <Project>{2A1576D3-AE03-47D6-BEC6-C8A0CAF229F6}</Project>
       <Name>FigmaSharp.WinForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
