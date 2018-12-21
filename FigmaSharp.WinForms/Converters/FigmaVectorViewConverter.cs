@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaVectorViewConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,29 +25,17 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
 
-
-using System.Collections.Generic;
-
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public interface IViewWrapper : IObjectWrapper
+    public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
-        IViewWrapper Parent { get; }
-
-        IReadOnlyList<IViewWrapper> Children { get; }
-
-        float X { get; set; }
-        float Y { get; set; }
-        float Width { get; set; }
-        float Height { get; set; }
-            
-        void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-      
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var vector = ((FigmaVector)currentNode);
+            Console.WriteLine(vector);
+            return null;
+        }
     }
 }

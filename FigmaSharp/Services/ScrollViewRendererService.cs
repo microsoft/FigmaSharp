@@ -25,7 +25,7 @@ namespace FigmaSharp.Services
                 var children = processedNodes.Where(s => s.ParentView == mainNodes[i]);
                 if (children.Any())
                 {
-                    ProcessNodeSubviews(mainNodes[i].View, children);
+                    ProcessNodeSubviews(mainNodes[i], children);
                 }
             }
 
@@ -44,20 +44,25 @@ namespace FigmaSharp.Services
                 view.X = currentX;
                 view.Y = Margin;
                 currentX += view.Width + Margin;
-               
             }
         }
 
-        void ProcessNodeSubviews(IViewWrapper parentView, IEnumerable<ProcessedNode> nodes)
+        void ProcessNodeSubviews(ProcessedNode parentProcessedNode, IEnumerable<ProcessedNode> nodes)
         {
             //we start to process all nodes
             foreach (var processedNode in nodes)
             {
-                parentView.AddChild(processedNode.View);
+                parentProcessedNode.View.AddChild(processedNode.View);
+
+                if (processedNode.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentProcessedNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox) {
+                    processedNode.View.X = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+                    processedNode.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
+                }
+
                 var children = processedNodes.Where(s => s.ParentView == processedNode);
                 if (children.Any ())
                 {
-                    ProcessNodeSubviews(processedNode.View, children);
+                    ProcessNodeSubviews(processedNode, children);
                 }
             }
         }

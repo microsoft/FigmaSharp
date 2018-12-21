@@ -43,19 +43,29 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
+    <Compile Include="Converters\FigmaLineConverter.cs" />
+    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
+    <Compile Include="Converters\FigmaTextConverter.cs" />
+    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
+    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
+    <Compile Include="Converters\FigmaElipseConverter.cs" />
+    <Compile Include="Extensions\FigmaExtensions.cs" />
+    <Compile Include="Extensions\ViewConfigureExtensions.cs" />
+    <Compile Include="FigmaViewsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransparentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ViewWrapperts\ScrollViewWrapper.cs" />
     <Compile Include="ViewWrapperts\ViewWrapper.cs" />
     <Compile Include="ViewWrapperts\ImageWrapper.cs" />
     <Compile Include="ViewWrapperts\ImageViewWrapper.cs" />
-    <Compile Include="Converters\FormsFigmaElipseConverter.cs" />
     <Compile Include="FigmaViewExtensions.cs" />
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="FigmaDelegate.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-    <Folder Include="ViewWrapperts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>

@@ -26,28 +26,32 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace FigmaSharp
 {
-    public interface IViewWrapper : IObjectWrapper
+    public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
-        IViewWrapper Parent { get; }
+        readonly ScrollableControl scrollView;
 
-        IReadOnlyList<IViewWrapper> Children { get; }
+        public ScrollViewWrapper(ScrollableControl scrollView) : base(scrollView)
+        {
+            this.scrollView = scrollView;
+            scrollView.AutoScroll = true;
+        }
 
-        float X { get; set; }
-        float Y { get; set; }
-        float Width { get; set; }
-        float Height { get; set; }
-            
-        void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-      
+        public void AdjustToContent()
+        {
+            //CGRect contentRect = CGRect.Empty;
+            //foreach (var view in scrollView.Subviews)
+            //{
+            //    contentRect = contentRect.UnionWith(view.Frame);
+            //}
+            //if (scrollView.DocumentView is NSView content)
+            //{
+            //    content.SetFrameSize(contentRect.Size);
+            //}
+        }
     }
 }

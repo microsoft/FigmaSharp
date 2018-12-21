@@ -9,7 +9,7 @@ namespace FigmaSharp
     {
         protected Control nativeView;
 
-        public ViewWrapper() : this(new Control())
+        public ViewWrapper() : this(new TransparentControl())
         {
 
         }
@@ -61,7 +61,7 @@ namespace FigmaSharp
                 nativeView.Height = (int)value;
             }
         }
-        public void AddChild(IViewWrapper view)
+        public virtual void AddChild(IViewWrapper view)
         {
             if (children.Contains(view))
             {
@@ -71,12 +71,12 @@ namespace FigmaSharp
             nativeView.Controls.Add((Control)view.NativeObject);
         }
 
-        public void CreateConstraints(FigmaNode parent, IViewWrapper parentView)
+        public virtual void CreateConstraints(FigmaNode current)
         {
-
+          
         }
 
-        public void RemoveChild(IViewWrapper view)
+        public virtual void RemoveChild(IViewWrapper view)
         {
             if (children.Contains(view))
             {
@@ -86,7 +86,7 @@ namespace FigmaSharp
             }
         }
 
-        public void ClearSubviews()
+        public virtual void ClearSubviews()
         {
             var controls = nativeView.Controls;
             foreach (var item in controls)

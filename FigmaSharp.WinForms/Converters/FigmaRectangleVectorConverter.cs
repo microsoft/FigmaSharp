@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaRectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,28 +26,29 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Windows.Forms;
 
-using System.Collections.Generic;
-
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public interface IViewWrapper : IObjectWrapper
+    public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
     {
-        IViewWrapper Parent { get; }
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var rectangleVector = ((FigmaRectangleVector)currentNode);
+            if (rectangleVector.HasFills)
+            {
+                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
+                {
+                    var figmaImageView = AppContext.Current.GetImageView(figmaPaint);
+                    var imageView = figmaImageView.NativeObject as PictureBox;
+                    imageView.Configure(rectangleVector);
+                    return figmaImageView;
+                }
+            }
 
-        IReadOnlyList<IViewWrapper> Children { get; }
-
-        float X { get; set; }
-        float Y { get; set; }
-        float Width { get; set; }
-        float Height { get; set; }
-            
-        void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-      
+            var currengroupView = new TransparentControl ();
+            currengroupView.Configure(rectangleVector);
+            return new ViewWrapper(currengroupView);
+        }
     }
 }
