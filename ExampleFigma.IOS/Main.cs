@@ -1,8 +1,8 @@
-﻿using UIKit;
+﻿using System;
 using FigmaSharp;
-using System;
+using UIKit;
 
-namespace ExampleFigmaIOS
+namespace ExampleFigma.IOS
 {
     public class Application
     {
@@ -10,6 +10,7 @@ namespace ExampleFigmaIOS
         static void Main(string[] args)
         {
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
             UIApplication.Main(args, null, "AppDelegate");

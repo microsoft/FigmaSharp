@@ -9,13 +9,13 @@ namespace FigmaSharp
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly FigmaViewConverter[] figmaViewConverters = {
-            //new FigmaVectorViewConverter (),
-            //new FigmaFrameEntityConverter (),
-            //new FigmaTextConverter (),
-            //new FigmaVectorEntityConverter (),
-            //new FigmaRectangleVectorConverter (),
-            //new FigmaElipseConverter (),
-            //new FigmaLineConverter ()
+            new FigmaVectorViewConverter (),
+            new FigmaFrameEntityConverter (),
+            new FigmaTextConverter (),
+            new FigmaVectorEntityConverter (),
+            new FigmaRectangleVectorConverter (),
+            new FigmaElipseConverter (),
+            new FigmaLineConverter ()
         };
 
         public IImageWrapper GetImage (string url)

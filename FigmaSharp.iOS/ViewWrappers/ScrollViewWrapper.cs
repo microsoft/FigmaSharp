@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,30 +25,31 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System.Linq;
-using FigmaSharp.NativeControls.Base;
 using UIKit;
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp
 {
-    public class TextFieldConverter : TextFieldConverterBase
+    public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        readonly UIScrollView scrollView;
+
+        public ScrollViewWrapper(UIScrollView scrollView) : base(scrollView)
         {
-            var textField = new UITextField() { TranslatesAutoresizingMaskIntoConstraints = false };
+            this.scrollView = scrollView;
+        }
 
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault();
+        public override void AddChild(IViewWrapper view)
+        {
+            scrollView.AddSubview(view.NativeObject as UIView);
+        }
 
-            textField.Text = figmaText.characters;
-            textField.Font = figmaText.style.ToUIFont();
-
-            //var absolute = instance.absoluteBoundingBox;
-            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-            //return null;
-            return new ViewWrapper(textField);
+        public override void RemoveChild(IViewWrapper view)
+        {
+            if (scrollView.Subviews.Contains (view.NativeObject)) {
+                ((UIView)view.NativeObject).RemoveFromSuperview();
+            }
         }
     }
 }

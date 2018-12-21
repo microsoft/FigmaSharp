@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectGuid>{7B97AE13-23FC-4455-AE35-AE1AF1669932}</ProjectGuid>
+    <ProjectGuid>{72D9836A-F902-46A3-8E71-6B327C5D24BB}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ExampleFigmaIOS</RootNamespace>
-    <AssemblyName>ExampleFigmaIOS</AssemblyName>
+    <RootNamespace>ExampleFigma.IOS</RootNamespace>
+    <AssemblyName>ExampleFigma.IOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -22,7 +22,7 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchFastDev>true</MtouchFastDev>
-    <IOSDebuggerPort>37882</IOSDebuggerPort>
+    <IOSDebuggerPort>27903</IOSDebuggerPort>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
@@ -74,7 +74,7 @@
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <IOSDebuggerPort>35579</IOSDebuggerPort>
+    <IOSDebuggerPort>15176</IOSDebuggerPort>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARM64</MtouchArch>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
@@ -116,13 +116,17 @@
     <Compile Include="Converters\CustomButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FigmaSharp.iOS\FigmaSharp.iOS.csproj">
+      <Project>{D800A90B-44BD-4C94-85AE-B31C9389D0D2}</Project>
+      <Name>FigmaSharp.iOS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp.iOS\FigmaSharp.iOS.csproj">
-      <Project>{D800A90B-44BD-4C94-85AE-B31C9389D0D2}</Project>
-      <Name>FigmaSharp.iOS</Name>
+    <ProjectReference Include="..\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.iOS\FigmaSharp.NativeControls.iOS.csproj">
+      <Project>{10FCDA86-5589-4342-9421-D0610607EAC5}</Project>
+      <Name>FigmaSharp.NativeControls.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
