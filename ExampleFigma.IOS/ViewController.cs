@@ -1,4 +1,6 @@
 ﻿using System;
+using CoreAnimation;
+using CoreGraphics;
 using FigmaSharp;
 using FigmaSharp.Services;
 using UIKit;
@@ -12,27 +14,18 @@ namespace ExampleFigma.IOS
             // Note: this .ctor should not contain any initialization logic.
         }
 
+        ExampleViewManager manager;
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
             // Perform any additional setup after loading the view, typically from a nib.
 
             var fileName = Environment.GetEnvironmentVariable("FILE");
-
-            var service = new FigmaRemoteFileService();
-            var buttonConverter = new CustomButtonConverter();
-            service.CustomViewConverters.Add(buttonConverter);
-            service.Start(fileName);
-
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
 
-            var builderService = new ScrollViewRendererService();
-            builderService.Start(scrollViewWrapper, service.NodesProcessed);
-            MainScrollView.ContentSize = new CoreGraphics.CGSize(1000, 300);
-
-
-            //View = service.ContentView as UIView;
-            // Perform any additional setup after loading the view, typically from a nib.
+            manager = new ExampleViewManager(scrollViewWrapper, fileName);
+            manager.Initialize();
         }
 
         public override void DidReceiveMemoryWarning()

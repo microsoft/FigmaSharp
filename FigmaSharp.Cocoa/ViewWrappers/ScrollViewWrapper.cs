@@ -27,6 +27,7 @@
  */
 
 using AppKit;
+using CoreGraphics;
 using System.Linq;
 
 namespace FigmaSharp
@@ -50,6 +51,19 @@ namespace FigmaSharp
             if (scrollView.DocumentView is NSView content)
             {
                 content.AddSubview(view.NativeObject as NSView);
+            }
+        }
+
+        public void AdjustToContent()
+        {
+            CGRect contentRect = CGRect.Empty;
+            foreach (var view in scrollView.Subviews)
+            {
+                contentRect = contentRect.UnionWith(view.Frame);
+            }
+            if (scrollView.DocumentView is NSView content)
+            {
+                content.SetFrameSize(contentRect.Size);
             }
         }
 

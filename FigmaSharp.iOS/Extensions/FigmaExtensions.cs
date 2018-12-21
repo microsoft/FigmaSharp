@@ -36,7 +36,7 @@ namespace FigmaSharp
 
         public static CGRect ToCGRect(this FigmaRectangle rectangle)
         {
-            return new CGRect(0, 0, rectangle.width, rectangle.height);
+            return new CGRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         }
 
         public static UIFont ToUIFont(this FigmaTypeStyle style)

@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ExampleFigmaMac</RootNamespace>
     <AssemblyName>ExampleFigmaMac</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
+    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,20 +56,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="MonoDevelop.Inspector.Core">
-      <HintPath>..\packages\Accessibility.Inspector.Mac.0.2.1\lib\net40\MonoDevelop.Inspector.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoDevelop.Inspector.Mac">
-      <HintPath>..\packages\Accessibility.Inspector.Mac.0.2.1\lib\net40\MonoDevelop.Inspector.Mac.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.PropertyEditing">
-      <HintPath>..\packages\Accessibility.Inspector.Mac.0.2.1\lib\net40\Xamarin.PropertyEditing.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.PropertyEditing.Mac">
-      <HintPath>..\packages\Accessibility.Inspector.Mac.0.2.1\lib\net40\Xamarin.PropertyEditing.Mac.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +122,7 @@
     <EmbeddedResource Include="Resources\e342ca2b0ee8af27928b6b86c559b0b7.png" />
     <EmbeddedResource Include="Resources\eeecbbdd9a43e6057f2a45e6328d3236.png" />
   </ItemGroup>
+  <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" Condition="Exists('..\ExampleFigma.Shared\ExampleFigma.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
      
 </Project>

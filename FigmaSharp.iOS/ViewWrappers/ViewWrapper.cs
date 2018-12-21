@@ -55,6 +55,9 @@ namespace FigmaSharp
             get => (float)nativeView.Frame.X;
             set
             {
+                //layer.Bounds = new CoreGraphics.CGRect(0, 0, 150, 150);
+                //Position = new CGPoint(50, 50);
+               
                 nativeView.Frame = new CoreGraphics.CGRect(value, nativeView.Frame.Y, nativeView.Frame.Width, nativeView.Frame.Height);
             }
         }
@@ -71,6 +74,7 @@ namespace FigmaSharp
             get => (float)nativeView.Frame.Width;
             set
             {
+                nativeView.Bounds = new CoreGraphics.CGRect(0,0, value, nativeView.Frame.Height); 
                 nativeView.Frame = new CoreGraphics.CGRect(nativeView.Frame.X, nativeView.Frame.Y, value, nativeView.Frame.Height);
             }
         }
@@ -79,6 +83,7 @@ namespace FigmaSharp
             get => (float)nativeView.Frame.Height;
             set
             {
+                nativeView.Bounds = new CoreGraphics.CGRect(0, 0, nativeView.Frame.Width, value);
                 nativeView.Frame = new CoreGraphics.CGRect(nativeView.Frame.X, nativeView.Frame.Y, nativeView.Frame.Width, value);
             }
         }

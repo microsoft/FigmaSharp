@@ -26,7 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Linq;
+using CoreGraphics;
 using UIKit;
 
 namespace FigmaSharp
@@ -43,6 +45,16 @@ namespace FigmaSharp
         public override void AddChild(IViewWrapper view)
         {
             scrollView.AddSubview(view.NativeObject as UIView);
+        }
+
+        public void AdjustToContent()
+        {
+            CGRect contentRect = CGRect.Empty;
+            foreach (var view in scrollView.Subviews)
+            {
+                contentRect = contentRect.UnionWith(view.Frame);
+            }
+            scrollView.ContentSize = contentRect.Size;
         }
 
         public override void RemoveChild(IViewWrapper view)

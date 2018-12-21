@@ -38,10 +38,13 @@ namespace FigmaSharp.Services
             foreach (var processedNode in MainViews)
             {
                 var view = processedNode.View;
+
                 targetView.AddChild(view);
+
                 view.X = currentX;
                 view.Y = Margin;
                 currentX += view.Width + Margin;
+               
             }
         }
 
