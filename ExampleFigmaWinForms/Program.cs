@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExampleFigmaWinForms.Properties;
 using FigmaSharp;
 
 namespace ExampleFigmaWinForms
@@ -15,7 +16,11 @@ namespace ExampleFigmaWinForms
         [STAThread]
         static void Main()
         {
-            FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+            var token = Environment.GetEnvironmentVariable ("TOKEN");
+            if (string.IsNullOrEmpty(token)) {
+                token = Settings.Default.TOKEN;
+            }
+            FigmaApplication.Init(token);
             Application.EnableVisualStyles ();
             Application.SetCompatibleTextRenderingDefault (false);
             Application.Run (new Form1 ());
