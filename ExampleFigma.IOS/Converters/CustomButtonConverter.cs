@@ -2,7 +2,7 @@
 using UIKit;
 using FigmaSharp;
 
-namespace ExampleFigmaIOS
+namespace ExampleFigma.IOS
 {
     public class CustomButtonConverter : CustomViewConverter
     {
@@ -11,7 +11,7 @@ namespace ExampleFigmaIOS
             return (currentNode.name == "button" || currentNode.name == "button default") && currentNode is IFigmaDocumentContainer;
         }
 
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var button = new UIButton();
             button.SetTitle("test", UIControlState.Normal);

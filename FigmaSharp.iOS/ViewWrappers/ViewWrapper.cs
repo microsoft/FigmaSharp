@@ -50,10 +50,58 @@ namespace FigmaSharp
         readonly List<IViewWrapper> children = new List<IViewWrapper>();
         public IReadOnlyList<IViewWrapper> Children => children;
 
+        public float X
+        {
+            get => (float)nativeView.Frame.X;
+            set
+            {
+                nativeView.Frame = new CoreGraphics.CGRect(value, nativeView.Frame.Y, nativeView.Frame.Width, nativeView.Frame.Height);
+            }
+        }
+        public float Y
+        {
+            get => (float)nativeView.Frame.Y;
+            set
+            {
+                nativeView.Frame = new CoreGraphics.CGRect(nativeView.Frame.X, value, nativeView.Frame.Width, nativeView.Frame.Height);
+            }
+        }
+        public float Width
+        {
+            get => (float)nativeView.Frame.Width;
+            set
+            {
+                nativeView.Frame = new CoreGraphics.CGRect(nativeView.Frame.X, nativeView.Frame.Y, value, nativeView.Frame.Height);
+            }
+        }
+        public float Height
+        {
+            get => (float)nativeView.Frame.Height;
+            set
+            {
+                nativeView.Frame = new CoreGraphics.CGRect(nativeView.Frame.X, nativeView.Frame.Y, nativeView.Frame.Width, value);
+            }
+        }
+
         protected UIView nativeView;
 
         public ViewWrapper() : this (new UIView ())
         {
+
+        }
+
+        public virtual void ClearSubviews()
+        {
+            //clean views from current container
+            //var views = nativeView.Subviews;
+            //foreach (var item in views)
+            //{
+            //    item.RemoveFromSuperview();
+            //}
+            //nativeView.RemoveConstraints(nativeView.Constraints);
+
+            //Figma doesn't calculate the bounds of our first level
+            //frameEntityResponse.FigmaMainNode.CalculateBounds();
 
         }
 
@@ -62,18 +110,18 @@ namespace FigmaSharp
             this.nativeView = nativeView;
         }
 
-        public void AddChild(IViewWrapper view)
+        public virtual void AddChild(IViewWrapper view)
         {
             children.Add(view);
             nativeView.AddSubview(view.NativeObject as UIView);
         }
 
-        public void CreateConstraints(FigmaNode parent, IViewWrapper parentView)
+        public virtual void CreateConstraints(FigmaNode parent, IViewWrapper parentView)
         {
 
         }
 
-        public void RemoveChild(IViewWrapper view)
+        public virtual void RemoveChild(IViewWrapper view)
         {
             if (children.Contains (view))
             {
@@ -81,5 +129,6 @@ namespace FigmaSharp
                 ((UIView)view.NativeObject).RemoveFromSuperview();
             }
         }
+       
     }
 }

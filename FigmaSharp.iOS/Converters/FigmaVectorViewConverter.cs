@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomButtonConverter.cs 
+ * FigmaVectorViewConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,46 +25,17 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Linq;
-using FigmaSharp.NativeControls.Base;
-using UIKit;
+using System;
 
-using FigmaSharp;
-
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.Converters
 {
-    public class ButtonConverter : ButtonConverterBase
+    public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var button = new UIButton() { TranslatesAutoresizingMaskIntoConstraints = false };
-            button.Configure(currentNode);
-
-            var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-            if (figmaText != null)
-            {
-                button.Alpha = figmaText.opacity;
-                button.Font = figmaText.style.ToUIFont();
-            }
-
-            if (instance.children.OfType<FigmaGroup>().Any())
-            {
-                button.SetTitle ("", UIControlState.Normal);
-                button.Alpha = 0.15f;
-            }
-            else
-            {
-                if (figmaText != null)
-                {
-                    button.Alpha = figmaText.opacity;
-                    button.SetTitle(figmaText.characters, UIControlState.Normal);
-                }
-
-                button.Layer.BackgroundColor = instance.backgroundColor.ToUIColor().CGColor;
-                return null;
-            }
-            return new ViewWrapper(button);
+            var vector = ((FigmaVector)currentNode);
+            Console.WriteLine(vector);
+            return null;
         }
     }
 }

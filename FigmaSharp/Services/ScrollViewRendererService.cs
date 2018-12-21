@@ -32,18 +32,16 @@ namespace FigmaSharp.Services
             targetView.ClearSubviews();
 
             //Alignment 
-            int MaxColumns = 3;
-            int currentColumn = 0;
-            int file = 0;
+            const int Margin = 20;
 
-            float currentX = 0;
+            float currentX = Margin;
             foreach (var processedNode in MainViews)
             {
                 var view = processedNode.View;
                 targetView.AddChild(view);
                 view.X = currentX;
-
-                currentX += view.Width + 20;
+                view.Y = Margin;
+                currentX += view.Width + Margin;
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomButtonConverter.cs 
+ * FigmaRectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,46 +25,30 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Linq;
-using FigmaSharp.NativeControls.Base;
+
 using UIKit;
 
-using FigmaSharp;
-
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.Converters
 {
-    public class ButtonConverter : ButtonConverterBase
+    public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var button = new UIButton() { TranslatesAutoresizingMaskIntoConstraints = false };
-            button.Configure(currentNode);
-
-            var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-            if (figmaText != null)
+            var rectangleVector = ((FigmaRectangleVector)currentNode);
+            if (rectangleVector.HasFills)
             {
-                button.Alpha = figmaText.opacity;
-                button.Font = figmaText.style.ToUIFont();
-            }
-
-            if (instance.children.OfType<FigmaGroup>().Any())
-            {
-                button.SetTitle ("", UIControlState.Normal);
-                button.Alpha = 0.15f;
-            }
-            else
-            {
-                if (figmaText != null)
+                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
                 {
-                    button.Alpha = figmaText.opacity;
-                    button.SetTitle(figmaText.characters, UIControlState.Normal);
+                    var figmaImageView = AppContext.Current.GetImageView(figmaPaint);
+                    var imageView = figmaImageView.NativeObject as UIImageView;
+                    imageView.Configure(rectangleVector);
+                    return figmaImageView;
                 }
-
-                button.Layer.BackgroundColor = instance.backgroundColor.ToUIColor().CGColor;
-                return null;
             }
-            return new ViewWrapper(button);
+
+            var currengroupView = new UIView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            currengroupView.Configure(rectangleVector);
+            return new ViewWrapper(currengroupView);
         }
     }
 }

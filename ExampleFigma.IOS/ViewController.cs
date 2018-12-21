@@ -1,9 +1,9 @@
 ﻿using System;
-
-using UIKit;
+using FigmaSharp;
 using FigmaSharp.Services;
+using UIKit;
 
-namespace ExampleFigmaIOS
+namespace ExampleFigma.IOS
 {
     public partial class ViewController : UIViewController
     {
@@ -15,6 +15,7 @@ namespace ExampleFigmaIOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            // Perform any additional setup after loading the view, typically from a nib.
 
             var fileName = Environment.GetEnvironmentVariable("FILE");
 
@@ -23,7 +24,14 @@ namespace ExampleFigmaIOS
             service.CustomViewConverters.Add(buttonConverter);
             service.Start(fileName);
 
-            View = service.ContentView as UIView;
+            var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
+
+            var builderService = new ScrollViewRendererService();
+            builderService.Start(scrollViewWrapper, service.NodesProcessed);
+            MainScrollView.ContentSize = new CoreGraphics.CGSize(1000, 300);
+
+
+            //View = service.ContentView as UIView;
             // Perform any additional setup after loading the view, typically from a nib.
         }
 

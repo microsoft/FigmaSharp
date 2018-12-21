@@ -51,6 +51,7 @@
     <Folder Include="Resources\" />
     <Folder Include="ViewWrappers\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +64,14 @@
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="Extensions\LoaderExtensions.cs" />
+    <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
+    <Compile Include="Converters\FigmaElipseConverter.cs" />
+    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
+    <Compile Include="Converters\FigmaLineConverter.cs" />
+    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
+    <Compile Include="Converters\FigmaTextConverter.cs" />
+    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
+    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
