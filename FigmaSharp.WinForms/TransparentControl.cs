@@ -76,10 +76,15 @@ public class TransparentControl : Control
         if (this.BackColor != Color.Transparent | drag) {
             g.FillRectangle (bckColor, bounds);
         }
-
+        CustomDraw (g);
         bckColor.Dispose ();
         g.Dispose ();
         base.OnPaint (e);
+    }
+
+    protected virtual void CustomDraw (Graphics g)
+    {
+
     }
 
     protected override void OnBackColorChanged(EventArgs e)

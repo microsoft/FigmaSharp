@@ -17,7 +17,7 @@ namespace FigmaSharp
         {
             view.Visible = child.visible;
 
-            if (child is IFigmaDocumentContainer container)
+            if (child is IAbsoluteBoundingBox container)
             {
                 view.Width = (int) container.absoluteBoundingBox.width;
                 view.Height = (int) container.absoluteBoundingBox.height;
@@ -50,28 +50,23 @@ namespace FigmaSharp
             //}
         }
 
-        public static void Configure(this TransparentControl figmaLineView, FigmaLine figmaLine)
+        public static void Configure(this LineControl figmaLineView, FigmaLine figmaLine)
         {
             Configure(figmaLineView, (FigmaVectorEntity)figmaLine);
 
-            //var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
-            //if (fills != null)
-            //{
-            //    figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
-            //}
+            var fills = figmaLine.fills.OfType<FigmaPaint> ().FirstOrDefault ();
+            if (fills != null) {
+                figmaLineView.BackColor = fills.color.ToColor ();
+            }
 
-            //var absolute = figmaLine.absoluteBoundingBox;
-            //var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
+            var absolute = figmaLine.absoluteBoundingBox;
+            var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
 
-            //var constraintWidth = figmaLineView.WidthAnchor.ConstraintEqualToConstant(lineWidth);
-            //constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
-            //constraintWidth.Active = true;
+            figmaLineView.Width = (int)lineWidth;
 
-            //var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
+            var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
 
-            //var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualToConstant(lineHeight);
-            //constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
-            //constraintHeight.Active = true;
+            figmaLineView.Height = (int)lineHeight;
         }
 
         public static void Configure(this TransparentControl view, FigmaVectorEntity child)
@@ -89,9 +84,8 @@ namespace FigmaSharp
             var strokes = child.strokes.FirstOrDefault();
             if (strokes != null)
             {
-                //if (strokes.color != null)
-                //{
-                //    view. Layer.BorderColor = strokes.color.ToNSColor().CGColor;
+                //if (strokes.color != null) {
+                //    view .BorderColor = strokes.color.ToNSColor ().CGColor;
                 //}
                 //view.Layer.BorderWidth = child.strokeWeight;
             }
@@ -108,7 +102,7 @@ namespace FigmaSharp
         {
             Configure(label, (FigmaNode)text);
 
-            label.TextAlign = text.style.textAlignHorizontal == "CENTER" ? System.Drawing.ContentAlignment.MiddleCenter : text.style.textAlignHorizontal == "LEFT" ? System.Drawing.ContentAlignment.MiddleLeft : System.Drawing.ContentAlignment.MiddleRight;
+            label.TextAlign = text.style.textAlignHorizontal == "CENTER" ? System.Drawing.ContentAlignment.TopCenter : text.style.textAlignHorizontal == "LEFT" ? System.Drawing.ContentAlignment.TopLeft : System.Drawing.ContentAlignment.TopRight;
             //label.AlphaValue = text.opacity;
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
             //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
