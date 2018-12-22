@@ -25,15 +25,15 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
 
 namespace FigmaSharp.Converters
 {
+
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var elipseView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var elipseView = new FlippedView();// { TranslatesAutoresizingMaskIntoConstraints = false };
             var elipse = (FigmaElipse)currentNode;
             elipseView.Configure(elipse);
             return new ViewWrapper(elipseView);

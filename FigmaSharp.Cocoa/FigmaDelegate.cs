@@ -38,7 +38,7 @@ namespace FigmaSharp
 
         public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
         {
-            return new ImageViewWrapper(new NSImageView())
+            return new ImageViewWrapper(new FlippedImageView())
             {
                  Data = figmaPaint
             };

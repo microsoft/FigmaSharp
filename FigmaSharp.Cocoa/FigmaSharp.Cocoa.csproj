@@ -61,6 +61,11 @@
     <Compile Include="Extensions\LoaderExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
+    <Compile Include="CustomViews\FlippedImageView.cs" />
+    <Compile Include="CustomViews\FlippedView.cs" />
+    <Compile Include="CustomViews\FlippedTextField.cs" />
+    <Compile Include="CustomViews\FlippedScrollView.cs" />
+    <Compile Include="CustomViews\FlippedStackView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
@@ -72,6 +77,7 @@
     <Folder Include="ViewWrappers\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
+    <Folder Include="CustomViews\" />
   </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

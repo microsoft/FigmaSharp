@@ -34,7 +34,7 @@ namespace FigmaSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var vector = ((FigmaVectorEntity)currentNode);
-            var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var currengroupView = new FlippedView();// { TranslatesAutoresizingMaskIntoConstraints = false };
             currengroupView.Configure(vector);
             return new ViewWrapper(currengroupView);
         }

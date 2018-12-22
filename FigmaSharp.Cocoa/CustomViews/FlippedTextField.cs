@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaViewsHelper.cs - Helper methods for NSViews
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -27,16 +27,10 @@
  */
 using AppKit;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp
 {
-    public class FigmaLineConverter : FigmaLineConverterBase
+    public class FlippedTextField : NSTextField
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
-        {
-            var figmaLineView = new FlippedView();// { TranslatesAutoresizingMaskIntoConstraints = false };
-            var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
-        }
+        public override bool IsFlipped => true;
     }
 }
