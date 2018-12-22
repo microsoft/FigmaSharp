@@ -48,12 +48,21 @@ public class TransparentControl : Control
     protected override void OnPaint(PaintEventArgs e)
     {
         Graphics g = e.Graphics;
+      
+        CustomDraw (g);
+       
+        g.Dispose ();
+        base.OnPaint (e);
+    }
+
+    protected virtual void CustomDraw (Graphics g)
+    {
         Rectangle bounds = new Rectangle (0, 0, this.Width - 1, this.Height - 1);
 
         Color frmColor = this.Parent.BackColor;
         Brush bckColor = default (Brush);
 
-        alpha = (int) (m_opacity * 255);
+        alpha = (int)(m_opacity * 255);
 
         if (drag) {
             Color dragBckColor = default (Color);
@@ -76,15 +85,8 @@ public class TransparentControl : Control
         if (this.BackColor != Color.Transparent | drag) {
             g.FillRectangle (bckColor, bounds);
         }
-        CustomDraw (g);
+
         bckColor.Dispose ();
-        g.Dispose ();
-        base.OnPaint (e);
-    }
-
-    protected virtual void CustomDraw (Graphics g)
-    {
-
     }
 
     protected override void OnBackColorChanged(EventArgs e)

@@ -60,8 +60,10 @@ namespace FigmaSharp
             {
                 Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
             }
+
+            var size = style.fontSize - 3;
             var isBold = style.fontPostScriptName != null && style.fontPostScriptName.EndsWith ("-Bold");
-            var font = new Font (family, style.fontSize, isBold ? FontStyle.Bold : FontStyle.Regular);
+            var font = new Font (family, size, isBold ? FontStyle.Bold : FontStyle.Regular);
 
             if (font == null)
             {

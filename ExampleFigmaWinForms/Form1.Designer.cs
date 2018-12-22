@@ -40,6 +40,7 @@
             this.ContainerPanel.Name = "ContainerPanel";
             this.ContainerPanel.Size = new System.Drawing.Size(595, 451);
             this.ContainerPanel.TabIndex = 1;
+            this.ContainerPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ContainerPanel_Scroll);
             // 
             // Form1
             // 
@@ -47,7 +48,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 475);
             this.Controls.Add(this.ContainerPanel);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

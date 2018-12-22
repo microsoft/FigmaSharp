@@ -36,9 +36,10 @@ namespace FigmaSharp.Converters
         {
             var figmaText = ((FigmaText)currentNode);
             var font = figmaText.style.ToFont();
-            var textField = new Label ();
-            textField.Text = figmaText.characters;
+            //var textField = new Label ();
+            var textField = new TransparentLabel ();
             textField.Font = font;
+            textField.Text = figmaText.characters;
             textField.Configure(figmaText);
             var wrapper = new ViewWrapper(textField);
             return wrapper;
