@@ -19,7 +19,7 @@ namespace FigmaSharp
         public static void Configure(this UIView view, FigmaNode child)
         {
             view.Hidden = !child.visible;
-            if (child is IFigmaDocumentContainer container)
+            if (child is IAbsoluteBoundingBox container)
             {
                 view.Bounds = new CGRect(0, 0, container.absoluteBoundingBox.width, container.absoluteBoundingBox.height);
                 view.Frame = container.absoluteBoundingBox.ToCGRect ();
