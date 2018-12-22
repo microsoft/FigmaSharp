@@ -26,7 +26,9 @@ namespace FigmaSharp
             }
         }
 
-        public int X1, Y1, X2, Y2;
+        public Point Point1 { get; set; }
+        public Point Point2 { get; set; }
+
         public LineControl (System.Drawing.Color color)
         {
             LineColor = color;
@@ -36,7 +38,7 @@ namespace FigmaSharp
         {
             base.CustomDraw (g);
             var myPen = new Pen (LineColor, LineWidth);
-            g.DrawLine (myPen, X1, Y1, X2, Y2);
+            g.DrawLine (myPen, Point1.X, Point1.Y, Point2.X, Point2.Y);
         }
     }
 }

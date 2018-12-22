@@ -28,5 +28,11 @@ namespace ExampleFigmaWinForms
             manager = new ExampleViewManager (scrollViewWrapper, fileName);
             manager.Initialize ();
         }
+
+        private void ContainerPanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            ContainerPanel.Refresh ();
+            ContainerPanel.Invalidate ();
+        }
     }
 }

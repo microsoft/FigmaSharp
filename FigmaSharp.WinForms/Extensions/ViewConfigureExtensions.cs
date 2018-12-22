@@ -98,11 +98,11 @@ namespace FigmaSharp
             //view.Layer.CornerRadius = child.cornerRadius;
         }
 
-        public static void Configure(this Label label, FigmaText text)
+        public static void Configure(this TransparentLabel label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);
 
-            label.TextAlign = text.style.textAlignHorizontal == "CENTER" ? System.Drawing.ContentAlignment.TopCenter : text.style.textAlignHorizontal == "LEFT" ? System.Drawing.ContentAlignment.TopLeft : System.Drawing.ContentAlignment.TopRight;
+            //label.TextAlign = text.style.textAlignHorizontal == "CENTER" ? System.Drawing.ContentAlignment.TopCenter : text.style.textAlignHorizontal == "LEFT" ? System.Drawing.ContentAlignment.TopLeft : System.Drawing.ContentAlignment.TopRight;
             //label.AlphaValue = text.opacity;
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
             //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
