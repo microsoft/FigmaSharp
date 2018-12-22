@@ -46,7 +46,7 @@ namespace FigmaSharp.Converters
                 }
             }
 
-            var currengroupView = new UIView() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var currengroupView = new UIView(); // { TranslatesAutoresizingMaskIntoConstraints = false };
             currengroupView.Configure(rectangleVector);
             return new ViewWrapper(currengroupView);
         }

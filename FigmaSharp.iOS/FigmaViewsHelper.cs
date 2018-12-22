@@ -44,7 +44,6 @@ namespace FigmaSharp
                 Text = text ?? "",
                 Font = font ?? GetSystemFont(false),
             };
-            label.TranslatesAutoresizingMaskIntoConstraints = false;
             return label;
         }
 

@@ -35,9 +35,11 @@ namespace FigmaSharp.Services
 
             targetView.ClearSubviews();
 
+            Reposition();
+
+
             targetView.AdjustToContent();
 
-            Reposition();
         }
 
         public void Reposition()
