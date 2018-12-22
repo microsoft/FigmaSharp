@@ -22,7 +22,7 @@ namespace FigmaSharp
             view.Hidden = !child.visible;
             view.WantsLayer = true;
 
-            if (child is IFigmaDocumentContainer container)
+            if (child is IAbsoluteBoundingBox container)
             {
                 view.SetFrameSize(new CGSize(container.absoluteBoundingBox.width, container.absoluteBoundingBox.height));
             }
@@ -114,8 +114,8 @@ namespace FigmaSharp
 
             label.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
             label.AlphaValue = text.opacity;
-            label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
-            label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
+            //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
+            //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
 
             var fills = text.fills.FirstOrDefault();
             if (fills != null)

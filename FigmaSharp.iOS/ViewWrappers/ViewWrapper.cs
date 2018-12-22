@@ -121,7 +121,7 @@ namespace FigmaSharp
             nativeView.AddSubview(view.NativeObject as UIView);
         }
 
-        public virtual void CreateConstraints(FigmaNode parent, IViewWrapper parentView)
+        public virtual void CreateConstraints(FigmaNode current)
         {
 
         }

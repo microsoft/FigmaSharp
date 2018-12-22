@@ -13,6 +13,7 @@ namespace ExampleFigmaMac
 {
     static class MainClass
     {
+       
         static void Main(string[] args)
         {
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
@@ -25,11 +26,11 @@ namespace ExampleFigmaMac
 
             var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
            
-            var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
+            var stackView = new FlippedStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             var button = new NSButton() { Title = "Refresh" };
             stackView.AddArrangedSubview(button);
 
-            scrollView = new NSScrollView()
+            scrollView = new FlippedScrollView()
             {
                 HasVerticalScroller = true,
                 HasHorizontalScroller = true,
@@ -42,7 +43,7 @@ namespace ExampleFigmaMac
             scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
             mainWindow.ContentView = stackView;
 
-            var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
+            var contentView = new FlippedView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
             contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
 
             scrollView.DocumentView = contentView;

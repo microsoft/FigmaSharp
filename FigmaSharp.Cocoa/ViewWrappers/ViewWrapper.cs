@@ -58,7 +58,7 @@ namespace FigmaSharp
         }
         public float Y
         {
-            get => (float)nativeView.Frame.Y;
+            get =>  (float)(nativeView.Frame.Y);
             set
             {
                 nativeView.SetFrameOrigin(new CoreGraphics.CGPoint( nativeView.Frame.X, value));
@@ -100,9 +100,9 @@ namespace FigmaSharp
             nativeView.AddSubview(view.NativeObject as NSView);
         }
 
-        public virtual void CreateConstraints(FigmaNode parent, IViewWrapper parentView)
+        public virtual void CreateConstraints(FigmaNode actual)
         {
-            if (parent == null)
+            if (actual == null)
             {
                 return;
             }

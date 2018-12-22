@@ -129,7 +129,6 @@ namespace FigmaSharp.Services
                     GenerateViewsRecursively(item, currentProcessedNode);
                 }
             }
-
         }
     }
 

@@ -35,7 +35,7 @@ using System.Reflection;
 
 namespace FigmaSharp
 {
-    public static class FigmaViewsHelper
+    public static partial class FigmaViewsHelper
     {
         public static NSImage GetManifestImageResource(Assembly assembly, string resource)
         {
@@ -68,7 +68,7 @@ namespace FigmaSharp
 
         public static NSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
         {
-            var label = new NSTextField()
+            var label = new FlippedTextField()
             {
                 StringValue = text ?? "",
                 Font = font ?? GetSystemFont(false),
@@ -79,7 +79,6 @@ namespace FigmaSharp
                 Selectable = false,
                 Alignment = alignment
             };
-            label.TranslatesAutoresizingMaskIntoConstraints = false;
             return label;
         }
 
