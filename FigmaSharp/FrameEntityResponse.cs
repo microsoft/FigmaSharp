@@ -30,13 +30,14 @@ namespace FigmaSharp
 {
     public class FigmaFrameEntityResponse
     {
-        public FigmaFrameEntityResponse(string document, IFigmaDocumentContainer frameEntity)
+        public FigmaFrameEntityResponse(FigmaResponse figmaResponse, int page)
         {
-            Document = document;
-            FigmaMainNode = frameEntity;
+            Page = page;
+            FigmaResponse = figmaResponse;
         }
+        public int Page { get; }
+        public FigmaCanvas PageContent => FigmaResponse.document.children[Page];
 
-        public string Document { get; set; }
-        public IFigmaDocumentContainer FigmaMainNode { get; set; }
+        public FigmaResponse FigmaResponse { get; }
     }
 }

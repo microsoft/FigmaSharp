@@ -63,51 +63,50 @@ namespace FigmaSharp
             }
         }
 
-        public static IFigmaDocumentContainer GetFigmaDialogFromUrlFile (string urlFile, string viewName = null, string nodeName = null)
+        public static FigmaResponse GetFigmaDialogFromUrlFile (string urlFile)
 		{
 			var figmaContent = GetFigmaFileContent (urlFile, AppContext.Current.Token);
-			return GetFigmaDialogFromContent (figmaContent, viewName, nodeName);
+			return GetFigmaResponseFromContent(figmaContent);
 		}
 
-		public static IFigmaDocumentContainer GetFigmaDialogFromFilePath (string file, string viewName = null, string nodeName = null)
+		public static FigmaResponse GetFigmaDialogFromFilePath (string file)
 		{
 			var figmaContent = File.ReadAllText (file);
-			return GetFigmaDialogFromContent (figmaContent, viewName, nodeName);
+			return GetFigmaResponseFromContent(figmaContent);
 		}
 
-		public static IFigmaDocumentContainer GetFigmaDialogFromContent (string figmaContent, string viewName = null, string nodeName = null)
+		public static FigmaResponse GetFigmaResponseFromContent (string figmaContent)
 		{
-			var figmaResponse = JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
-			return GetFigmaDialogFromResponse (figmaResponse, viewName, nodeName);
+			return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
 		}
 
-		static IFigmaDocumentContainer GetFigmaDialogFromResponse (FigmaResponse figmaResponse, string viewName = null, string nodeName = null)
-		{
-			var resultNodes = new List<FigmaNode> ();
+		//static IFigmaDocumentContainer GetFigmaDialogFromResponse (FigmaResponse figmaResponse, string viewName = null, string nodeName = null)
+		//{
+		//	var resultNodes = new List<FigmaNode> ();
 
-			FigmaNode[] figmaNodes = figmaResponse.document.children;
+		//	FigmaCanvas[] figmaNodes = figmaResponse.document.children;
 
-			if (!string.IsNullOrEmpty (nodeName)) {
-				figmaNodes.Recursively (nodeName, resultNodes);
-				var figmaFrame = (FigmaFrameEntity)resultNodes.FirstOrDefault ();
-				if (figmaFrame == null) {
-					return null;
-				}
-				figmaNodes = figmaFrame.children;
-				resultNodes.Clear ();
-			}
+		//	//if (!string.IsNullOrEmpty (nodeName)) {
+		//	//	figmaNodes.Recursively (nodeName, resultNodes);
+		//	//	var figmaFrame = (FigmaFrameEntity)resultNodes.FirstOrDefault ();
+		//	//	if (figmaFrame == null) {
+		//	//		return null;
+		//	//	}
+		//	//	figmaNodes = figmaFrame.children;
+		//	//	resultNodes.Clear ();
+		//	//}
 
-			if (string.IsNullOrEmpty (viewName)) {
-				return figmaNodes.FirstOrDefault () as IFigmaDocumentContainer;
-			}
+		//	if (string.IsNullOrEmpty (viewName)) {
+		//		return figmaNodes.FirstOrDefault () as IFigmaDocumentContainer;
+		//	}
 
-			figmaNodes.Recursively (viewName, resultNodes);
-			if (resultNodes.Count == 0) {
-				return null;
-			}
+		//	figmaNodes.Recursively (viewName, resultNodes);
+		//	if (resultNodes.Count == 0) {
+		//		return null;
+		//	}
 
-			return resultNodes.FirstOrDefault () as IFigmaDocumentContainer;
-		}
+		//	return resultNodes.FirstOrDefault () as IFigmaDocumentContainer;
+		//}
 
         public static FigmaImageResponse GetFigmaImages(string fileId, string[] ids)
         {

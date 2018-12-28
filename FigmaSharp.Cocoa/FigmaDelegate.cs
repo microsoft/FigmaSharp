@@ -46,16 +46,16 @@ namespace FigmaSharp
 
         public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
 
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName) =>
-            (contentView.NativeObject as NSView).LoadFigmaFromFrameEntity(document, figmaImages, figmaFileName);
+        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, FigmaResponse response, List<IImageViewWrapper> figmaImages, int page) =>
+            (contentView.NativeObject as NSView).LoadFigmaFromFrameEntity(response, figmaImages, page);
 
         public string GetFigmaFileContent(string file, string token) =>
              FigmaApiHelper.GetFigmaFileContent(file, token);
 
         public IViewWrapper CreateEmptyView() => new ViewWrapper();
 
-        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template) =>
-            FigmaApiHelper.GetFigmaDialogFromContent(template);
+        public FigmaResponse GetFigmaResponseFromContent(string template) =>
+            FigmaApiHelper.GetFigmaResponseFromContent(template);
 
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource(assembly, file);

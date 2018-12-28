@@ -325,9 +325,9 @@ namespace FigmaSharp
 		public static FigmaRectangle Zero { get; set; } = new FigmaRectangle { x=0,y =0,width =0,height= 0 };
 	}
 
-    public class FigmaDocument : FigmaNode, IFigmaNodeContainer
+    public class FigmaDocument : FigmaNode
     {
-        public FigmaNode[] children { get; set; }
+        public FigmaCanvas[] children { get; set; }
     }
 
     public class FigmaComponent : FigmaFrameEntity
