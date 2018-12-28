@@ -39,9 +39,10 @@ namespace FigmaSharp.Services
         public List<ProcessedNode> NodesProcessed = new List<ProcessedNode>();
 
         public readonly List<IImageViewWrapper> FigmaImages = new List<IImageViewWrapper>();
-        public IFigmaDocumentContainer Document { get; private set; }
+        public FigmaResponse Response { get; private set; }
 
         public string File { get; private set; }
+        public int Page { get; private set; }
 
         public FigmaFileService ()
         {
@@ -56,24 +57,26 @@ namespace FigmaSharp.Services
             });
         }
 
-        public void Start(string file)
+        public void Start(string file, int page = 0)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
 
             NodesProcessed.Clear();
-
+            Page = page;
             File = file;
 
             try
             {
                 var template = GetContentTemplate(file);
-                Document = AppContext.Current.GetFigmaDialogFromContent(template);
+                Response = AppContext.Current.GetFigmaResponseFromContent(template);
 
                 Console.WriteLine($"Reading successfull");
-                Console.WriteLine($"Loading views..");
 
-                foreach (var item in Document.children)
+                Console.WriteLine($"Loading views from page {page}..");
+
+                var selected = Response.document.children[page];
+                foreach (var item in selected.children)
                     GenerateViewsRecursively (item, null);
 
                 Console.WriteLine("View generation ended.");

@@ -168,13 +168,13 @@ namespace FigmaSharp
             contentView.RemoveConstraints(contentView.Constraints);
 
             //Figma doesn't calculate the bounds of our first level
-            frameEntityResponse.FigmaMainNode.CalculateBounds();
+            frameEntityResponse.FigmaResponse.CalculateBounds();
 
             //contentView.WantsLayer = true;
-            var backgroundColor = frameEntityResponse.FigmaMainNode.backgroundColor.ToUIColor();
+            var backgroundColor = frameEntityResponse.FigmaResponse.backgroundColor.ToUIColor();
             contentView.Layer.BackgroundColor = backgroundColor.CGColor;
 
-            var figmaView = frameEntityResponse.FigmaMainNode as FigmaNode;
+            var figmaView = frameEntityResponse.FigmaResponse as FigmaNode;
             //var mainView = figmaView.ToViewWrapper(new ViewWrapper (contentView), figmaView);
             //if (mainView != null) {
             //    contentView.AddSubview(mainView.NativeObject as NSView);

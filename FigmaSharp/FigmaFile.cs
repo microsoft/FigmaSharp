@@ -36,7 +36,7 @@ namespace FigmaSharp
 	{
 		string file;
 		public List<IImageViewWrapper> FigmaImages { get; private set; }
-		public IFigmaDocumentContainer Document { get; private set; }
+		public FigmaResponse Document { get; private set; }
 		public IViewWrapper ContentView { get; private set; }
 
         public FigmaFile (string file)
@@ -70,7 +70,7 @@ namespace FigmaSharp
 				Console.WriteLine ($"Reading {file} from resources");
 				var template = FigmaApiHelper.GetManifestResource (GetType ().Assembly, file);
 
-				Document = FigmaApiHelper.GetFigmaDialogFromContent (template);
+				Document = FigmaApiHelper.GetFigmaResponseFromContent (template);
 				Console.WriteLine ($"Reading successfull");
 
 				FigmaImages = new List<IImageViewWrapper> ();

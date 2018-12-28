@@ -75,11 +75,11 @@ namespace FigmaSharp
         public IImageWrapper GetImageFromFilePath(string filePath) =>
             figmaDelegate.GetImageFromFilePath(filePath);
 
-        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template) =>
-            figmaDelegate.GetFigmaDialogFromContent(template);
+        public FigmaResponse GetFigmaResponseFromContent(string template) =>
+              FigmaApiHelper.GetFigmaResponseFromContent(template);
 
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName) =>
-            figmaDelegate.LoadFigmaFromFrameEntity(contentView, document, figmaImages, figmaFileName);
+        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, FigmaResponse figmaResponse, List<IImageViewWrapper> figmaImages, int page) =>
+            figmaDelegate.LoadFigmaFromFrameEntity(contentView, figmaResponse, figmaImages, page);
 
         public IImageViewWrapper GetImageView(FigmaPaint figmaPaint) =>
             figmaDelegate.GetImageView(figmaPaint);
