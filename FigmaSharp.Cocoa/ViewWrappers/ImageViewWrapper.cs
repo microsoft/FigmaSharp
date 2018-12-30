@@ -33,15 +33,16 @@ namespace FigmaSharp
 {
     public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {
+        readonly NSImageView imageView;
         public ImageViewWrapper(NSImageView imageView) : base(imageView)
         {
+            this.imageView = imageView;
         }
-
-        public FigmaPaint Data { get; set; }
 
         public void SetImage(IImageWrapper image)
         {
-            ((NSImageView)nativeView).Image = image.NativeObject as NSImage;
+            imageView.Layer.BackgroundColor = NSColor.Clear.CGColor;
+            imageView.Image = image.NativeObject as NSImage;
         }
     }
 }
