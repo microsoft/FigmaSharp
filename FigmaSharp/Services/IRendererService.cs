@@ -6,6 +6,6 @@ namespace FigmaSharp.Services
     public interface IRendererService<T> where T : IViewWrapper
     {
         ProcessedNode[] MainViews { get; }
-        void Start(T targetView, IEnumerable<ProcessedNode> processedNodes);
+        void Start(T targetView, FigmaFileService figmaFileService);
     }
 }

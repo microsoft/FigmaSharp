@@ -36,7 +36,7 @@ namespace FigmaSharp
     public static class FileHelper
     {
         //TODO: Change to async multithread
-        public static async Task SaveFilesAsync(string destinationDirectory, string format, params string[] remotefile)
+        public static void SaveFiles(string destinationDirectory, string format, params string[] remotefile)
         {
             if (!Directory.Exists(destinationDirectory))
             {
@@ -45,8 +45,6 @@ namespace FigmaSharp
             List<Task> downloads = new List<Task>();
             foreach (var file in remotefile)
             {
-                var task = Task.Run(() =>
-                {
                     var fileName = string.Concat(Path.GetFileName(file), format);
                     var fullPath = Path.Combine(destinationDirectory, fileName);
 
@@ -66,11 +64,7 @@ namespace FigmaSharp
                     {
                         Console.WriteLine(ex);
                     }
-                });
-                downloads.Add(task);
+                };
             }
-            await Task.WhenAll(downloads);
         }
-
     }
-}

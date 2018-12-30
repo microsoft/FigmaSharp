@@ -85,45 +85,45 @@ namespace FigmaSharp
             }
         }
 
-        public static void LoadFromLocalImageResources(this List<IImageViewWrapper> figmaImageViews, Assembly assembly = null)
-        {
-            for (int i = 0; i < figmaImageViews.Count; i++)
-            {
-                try
-                {
-                    var image = AppContext.Current.GetImageFromManifest(assembly, figmaImageViews[i].Data.imageRef);
-                    figmaImageViews[i].SetImage(image);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-        }
+        //public static void LoadFromLocalImageResources(this List<IImageViewWrapper> figmaImageViews, Assembly assembly = null)
+        //{
+        //    for (int i = 0; i < figmaImageViews.Count; i++)
+        //    {
+        //        try
+        //        {
+        //            var image = AppContext.Current.GetImageFromManifest(assembly, figmaImageViews[i].Data.imageRef);
+        //            figmaImageViews[i].SetImage(image);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex);
+        //        }
+        //    }
+        //}
 
-        public static void LoadFromResourceImageDirectory(this List<IImageViewWrapper> figmaImageViews, string resourcesDirectory, string format = ".png")
-        {
-            for (int i = 0; i < figmaImageViews.Count; i++)
-            {
-                try
-                {
-                    string filePath = Path.Combine(resourcesDirectory, string.Concat(figmaImageViews[i].Data.imageRef, format));
-                    if (!File.Exists(filePath))
-                    {
-                        throw new FileNotFoundException(filePath);
-                    }
-                    figmaImageViews[i].SetImage(AppContext.Current.GetImageFromFilePath(filePath));
-                }
-                catch (FileNotFoundException ex)
-                {
-                    Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-        }
+        //public static void LoadFromResourceImageDirectory(this List<IImageViewWrapper> figmaImageViews, string resourcesDirectory, string format = ".png")
+        //{
+        //    for (int i = 0; i < figmaImageViews.Count; i++)
+        //    {
+        //        try
+        //        {
+        //            string filePath = Path.Combine(resourcesDirectory, string.Concat(figmaImageViews[i].Data.imageRef, format));
+        //            if (!File.Exists(filePath))
+        //            {
+        //                throw new FileNotFoundException(filePath);
+        //            }
+        //            figmaImageViews[i].SetImage(AppContext.Current.GetImageFromFilePath(filePath));
+        //        }
+        //        catch (FileNotFoundException ex)
+        //        {
+        //            Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex);
+        //        }
+        //    }
+        //}
 
         //public static void Load(this IEnumerable<IImageViewWrapper> figmaImageViews, string fileId)
         //{

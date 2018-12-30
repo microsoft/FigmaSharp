@@ -20,7 +20,7 @@ namespace ExampleFigma
             var fileService = new FigmaRemoteFileService();
             fileService.Start(fileName);
             var builderService = new ScrollViewRendererService();
-            builderService.Start(scrollViewWrapper, fileService.NodesProcessed);
+            builderService.Start(scrollViewWrapper, fileService);
         }
     }
 }

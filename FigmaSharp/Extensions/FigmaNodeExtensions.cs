@@ -62,18 +62,11 @@ namespace FigmaSharp
                 }
             }
         }
-        public static IEnumerable<FigmaPaint> OfTypeImage(this FigmaNode child)
+        public static IEnumerable<FigmaVectorEntity> OfTypeImage(this FigmaNode child)
         {
-            if (child.GetType() == typeof(FigmaRectangleVector))
+            if (child.GetType () != typeof (FigmaText) && child is FigmaVectorEntity figmaVectorEntity)
             {
-                var rectangleVector = ((FigmaVectorEntity)child);
-
-                var fills = rectangleVector.fills.FirstOrDefault();
-                if (fills?.type == "IMAGE" && fills is FigmaPaint figmaPaint)
-                {
-                    figmaPaint.ID = child.id;
-                    yield return figmaPaint;
-                }
+                yield return figmaVectorEntity;
             }
 
             if (child is IFigmaNodeContainer nodeContainer)
@@ -97,7 +90,7 @@ namespace FigmaSharp
             if (images != null)
             {
                 var urls = paints.Select(s => images.images[s.ID]).ToArray();
-                await FileHelper.SaveFilesAsync(directoryPath, format, urls);
+                FileHelper.SaveFiles(directoryPath, format, urls);
             }
         }
 

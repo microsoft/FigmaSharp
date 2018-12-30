@@ -36,18 +36,25 @@ namespace FigmaSharp
            return new ImageWrapper(image);
         }
 
-        public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
+       // public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
+       // {
+       //     return new ImageViewWrapper(new FlippedImageView())
+       //     {
+       //          Data = figmaPaint
+       //     };
+       //}
+
+        public IImageViewWrapper GetImageView(IImageWrapper imageWrapper)
         {
-            return new ImageViewWrapper(new FlippedImageView())
-            {
-                 Data = figmaPaint
-            };
-       }
+            var wrapper = new ImageViewWrapper(new NSImageView());
+            wrapper.SetImage(imageWrapper);
+            return wrapper;
+        }
 
         public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
 
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, FigmaResponse response, List<IImageViewWrapper> figmaImages, int page) =>
-            (contentView.NativeObject as NSView).LoadFigmaFromFrameEntity(response, figmaImages, page);
+        //public void LoadFigmaFromFrameEntity(IViewWrapper contentView, FigmaResponse response, List<IImageViewWrapper> figmaImages, int page) =>
+            //(contentView.NativeObject as NSView).LoadFigmaFromFrameEntity(response, figmaImages, page);
 
         public string GetFigmaFileContent(string file, string token) =>
              FigmaApiHelper.GetFigmaFileContent(file, token);

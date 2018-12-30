@@ -84,7 +84,7 @@ namespace FigmaSharp
 
             if (child.HasFills && child.fills[0].color != null)
             {
-                view.Layer.BackgroundColor = child.fills[0].color.ToNSColor().CGColor;
+                //view.Layer.BackgroundColor = child.fills[0].color.ToNSColor().CGColor;
             }
 
             //var currengroupView = new NSView() { TranslatesAutoresizingMaskIntoConstraints = false };

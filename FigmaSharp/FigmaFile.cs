@@ -47,7 +47,6 @@ namespace FigmaSharp
         public void Reload (bool includeImages = false)
 		{
 			Console.WriteLine ($"Loading views..");
-			//ContentView.LoadFigmaFromFrameEntity (Document, FigmaImages, null);
 
             if (includeImages)
             {

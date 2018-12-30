@@ -33,7 +33,7 @@ namespace FigmaSharp.NativeControls
 {
     public class ButtonConverter : ButtonConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
             button.Configure(currentNode);

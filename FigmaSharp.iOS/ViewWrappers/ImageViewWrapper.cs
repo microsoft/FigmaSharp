@@ -37,8 +37,6 @@ namespace FigmaSharp
         {
         }
 
-        public FigmaPaint Data { get; set; }
-
         public void SetImage(IImageWrapper image)
         {
             ((UIImageView)nativeView).Image = image.NativeObject as UIImage;

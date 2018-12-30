@@ -50,7 +50,7 @@ namespace FigmaSharp
             //}
         }
 
-        public static void Configure(this LineControl figmaLineView, FigmaLine figmaLine)
+        public static void Configure(this LineTransparentControl figmaLineView, FigmaLine figmaLine)
         {
             Configure(figmaLineView, (FigmaVectorEntity)figmaLine);
 

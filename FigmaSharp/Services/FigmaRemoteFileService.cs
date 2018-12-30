@@ -28,6 +28,7 @@
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FigmaSharp.Services
 {
@@ -38,18 +39,20 @@ namespace FigmaSharp.Services
 
         public List<ProcessedNode> NodesProcessed = new List<ProcessedNode>();
 
-        public readonly List<IImageViewWrapper> FigmaImages = new List<IImageViewWrapper>();
+        public readonly Dictionary<FigmaVectorEntity, string> ImageVectors = new Dictionary<FigmaVectorEntity, string> ();
+
         public FigmaResponse Response { get; private set; }
 
         public string File { get; private set; }
         public int Page { get; private set; }
+        public bool ProcessImages { get; private set; }
 
-        public FigmaFileService ()
+        public FigmaFileService()
         {
             FigmaDefaultConverters = AppContext.Current.GetFigmaConverters();
         }
 
-        public async Task StartAsync (string file)
+        public async Task StartAsync(string file)
         {
             await Task.Run(() =>
             {
@@ -57,12 +60,14 @@ namespace FigmaSharp.Services
             });
         }
 
-        public void Start(string file, int page = 0)
+        public void Start(string file, int page = 0, bool processImages = true)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
 
+            ImageVectors.Clear();
             NodesProcessed.Clear();
+            ProcessImages = processImages;
             Page = page;
             File = file;
 
@@ -73,13 +78,25 @@ namespace FigmaSharp.Services
 
                 Console.WriteLine($"Reading successfull");
 
-                Console.WriteLine($"Loading views from page {page}..");
+                Console.WriteLine($"Loading views for page {page}..");
 
-                var selected = Response.document.children[page];
-                foreach (var item in selected.children)
-                    GenerateViewsRecursively (item, null);
+                var canvas = Response.document.children[page];
+                foreach (var item in canvas.children)
+                    GenerateViewsRecursively(item, null);
 
-                Console.WriteLine("View generation ended.");
+                //Images
+                var vectorsIds = ImageVectors.Select(s => s.Key.id);
+                var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectorsIds);
+                if (figmaImageResponse != null)
+                {
+                    foreach (var imageResponse in figmaImageResponse.images)
+                    {
+                        var image = ImageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
+                        ImageVectors[image] = imageResponse.Value;
+                    }
+                }
+
+                Console.WriteLine("View generation finished.");
             }
             catch (Exception ex)
             {
@@ -90,7 +107,7 @@ namespace FigmaSharp.Services
 
         protected abstract string GetContentTemplate(string file);
 
-        ProcessedNode GetProcessedNode (FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent)
+        ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent)
         {
             foreach (var customViewConverter in customViewConverters)
             {
@@ -100,6 +117,7 @@ namespace FigmaSharp.Services
                     var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                     return currentElement;
                 }
+
             }
             return null;
         }
@@ -119,10 +137,28 @@ namespace FigmaSharp.Services
             if (currentProcessedNode != null)
             {
                 NodesProcessed.Add(currentProcessedNode);
+
+                //Image processing
+                //if (ProcessImages)
+                //{
+                if (currentProcessedNode.FigmaNode.GetType () == typeof (FigmaVectorEntity))
+                {
+                    ImageVectors.Add((FigmaVectorEntity)currentProcessedNode.FigmaNode, null);
+                    //    var rectangleVector = ((FigmaVectorEntity)currentProcessedNode.FigmaNode);
+
+                    //    var fills = rectangleVector.fills.FirstOrDefault();
+                    //    if (fills?.type == "IMAGE" && fills is FigmaPaint figmaPaint)
+                    //    {
+                    //        figmaPaint.ID = currentProcessedNode.FigmaNode.id;
+
+                    //    }
+                    //vectors.Add(figmaPaint);
+                }
+                // }
             }
             else
             {
-                Console.WriteLine("[{1}({2})] There is no converted for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
+                Console.WriteLine("[{1}({2})] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
             if (currentNode is IFigmaNodeContainer nodeContainer)

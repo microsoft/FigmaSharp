@@ -33,7 +33,7 @@ namespace FigmaSharp.Converters
 {
     public class TextFieldConverter : TextFieldConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, FigmaNode parentNode, IViewWrapper parentView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
 

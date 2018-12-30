@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FigmaSharp
 {
-    public class LineControl : TransparentControl
+    public class LineTransparentControl : TransparentControl
     {
         System.Drawing.Color color;
         public System.Drawing.Color LineColor {
@@ -29,7 +29,7 @@ namespace FigmaSharp
         public Point Point1 { get; set; }
         public Point Point2 { get; set; }
 
-        public LineControl (System.Drawing.Color color)
+        public LineTransparentControl (System.Drawing.Color color)
         {
             LineColor = color;
         }

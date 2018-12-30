@@ -9,16 +9,16 @@ namespace FigmaSharp.Services
     {
         public ProcessedNode[] MainViews { get; private set; }
 
-        IEnumerable<ProcessedNode> processedNodes;
+        FigmaFileService figmaFileService;
         IViewWrapper currentView;
         float currentHeight;
 
-        public void Start (IScrollViewWrapper targetView, IEnumerable<ProcessedNode> processedNodes)
+        public void Start (IScrollViewWrapper targetView, FigmaFileService figmaFileService)
         {
             this.currentView = targetView;
-            this.processedNodes = processedNodes;
+            this.figmaFileService = figmaFileService;
 
-            var mainNodes = processedNodes.Where(s => s.ParentView == null).ToArray ();
+            var mainNodes = figmaFileService.NodesProcessed.Where(s => s.ParentView == null).ToArray ();
             MainViews = new ProcessedNode[mainNodes.Length];
             for (int i = 0; i < mainNodes.Length; i++)
             {
@@ -26,7 +26,7 @@ namespace FigmaSharp.Services
 
                 currentHeight = ((IAbsoluteBoundingBox)mainNodes[i].FigmaNode).absoluteBoundingBox.height;
 
-                var children = processedNodes.Where(s => s.ParentView == mainNodes[i]);
+                var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == mainNodes[i]);
                 if (children.Any())
                 {
                     ProcessNodeSubviews(mainNodes[i], i, children);
@@ -37,9 +37,19 @@ namespace FigmaSharp.Services
 
             Reposition();
 
-
             targetView.AdjustToContent();
 
+            //loading views
+            foreach (var vector in figmaFileService.ImageVectors)
+            {
+                var processedNode = figmaFileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Key);
+                if (!string.IsNullOrEmpty (vector.Value))
+                {
+                    var image = AppContext.Current.GetImage(vector.Value);
+                    var wrapper = processedNode.View as IImageViewWrapper;
+                    wrapper.SetImage(image);
+                }
+            }
         }
 
         public void Reposition()
@@ -73,7 +83,7 @@ namespace FigmaSharp.Services
                     processedNode.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y; // currentHeight - absoluteBounding.absoluteBoundingBox.height - (absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y);
                 }
 
-                var children = processedNodes.Where(s => s.ParentView == processedNode);
+                var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == processedNode);
                 if (children.Any ())
                 {
                     ProcessNodeSubviews(processedNode, id, children);

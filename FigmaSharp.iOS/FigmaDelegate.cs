@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using FigmaSharp.Converters;
+using Foundation;
 using UIKit;
 
 namespace FigmaSharp
@@ -18,9 +19,16 @@ namespace FigmaSharp
             new FigmaLineConverter ()
         };
 
+        static UIImage FromUrl(string uri)
+        {
+            using (var url = new NSUrl(uri))
+            using (var data = NSData.FromUrl(url))
+                return UIImage.LoadFromData(data);
+        }
+
         public IImageWrapper GetImage (string url)
         {
-            var image = new UIImage(url);
+           var image = FromUrl(url);
             return new ImageWrapper(image);
         }
 
@@ -36,18 +44,7 @@ namespace FigmaSharp
            return new ImageWrapper(image);
         }
 
-        public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
-        {
-            return new ImageViewWrapper(new UIImageView())
-            {
-                 Data = figmaPaint
-            };
-       }
-
         public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
-
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName) =>
-            (contentView.NativeObject as UIView).LoadFigmaFromFrameEntity(document, figmaImages, figmaFileName);
 
         public string GetFigmaFileContent(string file, string token) =>
              FigmaApiHelper.GetFigmaFileContent(file, token);
@@ -55,9 +52,16 @@ namespace FigmaSharp
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource(assembly, file);
 
-        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template) =>
-            FigmaApiHelper.GetFigmaDialogFromContent(template);
+        public FigmaResponse GetFigmaResponseFromContent(string template) =>
+            FigmaApiHelper.GetFigmaResponseFromContent(template);
 
         public IViewWrapper CreateEmptyView() => new ViewWrapper();
+
+        public IImageViewWrapper GetImageView(IImageWrapper image)
+        {
+            var imageView = new ImageViewWrapper(new UIImageView ());
+            imageView.SetImage(image);
+            return imageView;
+        }
     }
 }
