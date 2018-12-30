@@ -2,6 +2,7 @@
 using FigmaSharp;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace FigmaSharp.Services
 {
@@ -11,7 +12,6 @@ namespace FigmaSharp.Services
 
         FigmaFileService figmaFileService;
         IViewWrapper currentView;
-        float currentHeight;
 
         public void Start (IScrollViewWrapper targetView, FigmaFileService figmaFileService)
         {
@@ -24,7 +24,6 @@ namespace FigmaSharp.Services
             {
                 MainViews[i] = mainNodes[i];
 
-                currentHeight = ((IAbsoluteBoundingBox)mainNodes[i].FigmaNode).absoluteBoundingBox.height;
 
                 var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == mainNodes[i]);
                 if (children.Any())
@@ -40,28 +39,30 @@ namespace FigmaSharp.Services
             targetView.AdjustToContent();
 
             //loading views
-            foreach (var vector in figmaFileService.ImageVectors)
-            {
-                var processedNode = figmaFileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Key);
-                if (!string.IsNullOrEmpty (vector.Value))
-                {
-                    var image = AppContext.Current.GetImage(vector.Value);
-                    var wrapper = processedNode.View as IImageViewWrapper;
-                    wrapper.SetImage(image);
-                }
-            }
+            Task.Run(() =>
+           {
+               foreach (var vector in figmaFileService.ImageVectors)
+               {
+                   var processedNode = figmaFileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Key);
+                   if (!string.IsNullOrEmpty(vector.Value))
+                   {
+                       var image = AppContext.Current.GetImage(vector.Value);
+                       var wrapper = processedNode.View as IImageViewWrapper;
+                       wrapper.SetImage(image);
+                   }
+               }
+           });
         }
 
+       
         public void Reposition()
         {
             //Alignment 
             const int Margin = 20;
-
             float currentX = Margin;
             foreach (var processedNode in MainViews)
             {
                 var view = processedNode.View;
-                currentHeight = ((IAbsoluteBoundingBox)processedNode.FigmaNode).absoluteBoundingBox.y;
 
                 currentView.AddChild(view);
 

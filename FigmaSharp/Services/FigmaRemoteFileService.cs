@@ -139,22 +139,10 @@ namespace FigmaSharp.Services
                 NodesProcessed.Add(currentProcessedNode);
 
                 //Image processing
-                //if (ProcessImages)
-                //{
                 if (currentProcessedNode.FigmaNode.GetType () == typeof (FigmaVectorEntity))
                 {
                     ImageVectors.Add((FigmaVectorEntity)currentProcessedNode.FigmaNode, null);
-                    //    var rectangleVector = ((FigmaVectorEntity)currentProcessedNode.FigmaNode);
-
-                    //    var fills = rectangleVector.fills.FirstOrDefault();
-                    //    if (fills?.type == "IMAGE" && fills is FigmaPaint figmaPaint)
-                    //    {
-                    //        figmaPaint.ID = currentProcessedNode.FigmaNode.id;
-
-                    //    }
-                    //vectors.Add(figmaPaint);
                 }
-                // }
             }
             else
             {

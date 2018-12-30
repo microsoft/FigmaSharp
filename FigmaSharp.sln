@@ -14,9 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.WinForms", "Figm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoDevelop.Figma", "MonoDevelop.Figma\MonoDevelop.Figma.csproj", "{8DD0F517-6822-4FEF-8153-0649E5E3AF17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigmaWinForms", "ExampleFigmaWinForms\ExampleFigmaWinForms.csproj", "{461B4A01-C603-4C8A-9763-642197569E9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigma.WinForms", "ExampleFigmaWinForms\ExampleFigma.WinForms.csproj", "{461B4A01-C603-4C8A-9763-642197569E9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigmaMac", "ExampleFigmaMac\ExampleFigmaMac.csproj", "{6B3ED949-8155-4029-89B0-68AEC8EDC255}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigma.Cocoa", "ExampleFigmaMac\ExampleFigma.Cocoa.csproj", "{6B3ED949-8155-4029-89B0-68AEC8EDC255}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.iOS", "FigmaSharp.iOS\FigmaSharp.iOS.csproj", "{D800A90B-44BD-4C94-85AE-B31C9389D0D2}"
 EndProject
@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FigmaSharp.NativeControls",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls.iOS", "FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.iOS\FigmaSharp.NativeControls.iOS.csproj", "{10FCDA86-5589-4342-9421-D0610607EAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigma.IOS", "ExampleFigma.IOS\ExampleFigma.IOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleFigma.iOS", "ExampleFigma.IOS\ExampleFigma.IOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ExampleFigma.Shared", "ExampleFigma.Shared\ExampleFigma.Shared.shproj", "{88CC3650-709A-4A60-A43B-0FE2F6C4098D}"
 EndProject
