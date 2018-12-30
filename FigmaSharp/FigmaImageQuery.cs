@@ -26,16 +26,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Collections.Generic;
+
 namespace FigmaSharp
 {
     public class FigmaImageQuery
     {
-        public FigmaImageQuery(string document, string[] ids) : this(AppContext.Current.Token, document, ids)
+        public FigmaImageQuery(string document, IEnumerable<string> ids) : this(AppContext.Current.Token, document, ids)
         {
 
         }
 
-        public FigmaImageQuery(string personalAccessToken, string document, string[] ids)
+        public FigmaImageQuery(string personalAccessToken, string document, IEnumerable<string> ids)
         {
             Document = document;
             Ids = ids;
@@ -43,7 +45,7 @@ namespace FigmaSharp
         }
 
         public string Document { get; set; }
-        public string[] Ids { get; set; }
+        public IEnumerable<string> Ids { get; set; }
         public string PersonalAccessToken { get; set; }
         public string Scale { get; set; }
         public string Format { get; set; }

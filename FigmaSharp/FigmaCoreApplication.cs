@@ -78,12 +78,6 @@ namespace FigmaSharp
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
               FigmaApiHelper.GetFigmaResponseFromContent(template);
 
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, FigmaResponse figmaResponse, List<IImageViewWrapper> figmaImages, int page) =>
-            figmaDelegate.LoadFigmaFromFrameEntity(contentView, figmaResponse, figmaImages, page);
-
-        public IImageViewWrapper GetImageView(FigmaPaint figmaPaint) =>
-            figmaDelegate.GetImageView(figmaPaint);
-
         public IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef) =>
             figmaDelegate.GetImageFromManifest(assembly, imageRef);
 
@@ -92,5 +86,10 @@ namespace FigmaSharp
 
         public string GetManifestResource(Assembly assembly, string file) =>
             figmaDelegate.GetManifestResource(assembly, file);
+
+        public IImageViewWrapper GetImageView(IImageWrapper image)
+        {
+            return figmaDelegate.GetImageView(image);
+        }
     }
 }

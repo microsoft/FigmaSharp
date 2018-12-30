@@ -31,7 +31,6 @@ namespace FigmaSharp
 {
     public interface IImageViewWrapper : IViewWrapper
     {
-        FigmaPaint Data { get; }
         void SetImage(IImageWrapper image);
     }
 }

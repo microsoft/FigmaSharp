@@ -19,6 +19,7 @@ namespace FigmaSharp
             new FigmaElipseConverter (),
             new FigmaLineConverter ()
         };
+
         public FigmaDelegate()
         {
         }
@@ -35,7 +36,7 @@ namespace FigmaSharp
 
                 using (var response = request.GetResponse ())
                 using (var stream = response.GetResponseStream ()) {
-                    return Bitmap.FromStream (stream);
+                    return Image.FromStream(stream);
                 }
             } catch (System.Exception ex) {
                 Console.WriteLine (ex);
@@ -61,28 +62,22 @@ namespace FigmaSharp
             return new ImageWrapper (assemblyImage);
         }
 
-        public IImageViewWrapper GetImageView(FigmaPaint figmaPaint)
-        {
-            return new ImageViewWrapper (new PictureBox ()) {
-                Data = figmaPaint
-            };
-        }
-
-
-        public void LoadFigmaFromFrameEntity(IViewWrapper contentView, IFigmaDocumentContainer document, List<IImageViewWrapper> figmaImages, string figmaFileName)
-        {
-
-        }
-
         public string GetFigmaFileContent(string file, string token) =>
              FigmaApiHelper.GetFigmaFileContent (file, token);
 
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource (assembly, file);
 
-        public IFigmaDocumentContainer GetFigmaDialogFromContent(string template) =>
-            FigmaApiHelper.GetFigmaDialogFromContent (template);
+        public FigmaResponse GetFigmaResponseFromContent(string template) =>
+            FigmaApiHelper.GetFigmaResponseFromContent (template);
 
         public IViewWrapper CreateEmptyView() => new ViewWrapper ();
+
+        public IImageViewWrapper GetImageView(IImageWrapper image)
+        {
+            var imageView = new ImageViewWrapper(new ImageTransparentControl());
+            imageView.SetImage(image);
+            return imageView;
+        }
     }
 }

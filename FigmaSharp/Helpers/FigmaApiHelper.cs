@@ -80,35 +80,7 @@ namespace FigmaSharp
 			return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
 		}
 
-		//static IFigmaDocumentContainer GetFigmaDialogFromResponse (FigmaResponse figmaResponse, string viewName = null, string nodeName = null)
-		//{
-		//	var resultNodes = new List<FigmaNode> ();
-
-		//	FigmaCanvas[] figmaNodes = figmaResponse.document.children;
-
-		//	//if (!string.IsNullOrEmpty (nodeName)) {
-		//	//	figmaNodes.Recursively (nodeName, resultNodes);
-		//	//	var figmaFrame = (FigmaFrameEntity)resultNodes.FirstOrDefault ();
-		//	//	if (figmaFrame == null) {
-		//	//		return null;
-		//	//	}
-		//	//	figmaNodes = figmaFrame.children;
-		//	//	resultNodes.Clear ();
-		//	//}
-
-		//	if (string.IsNullOrEmpty (viewName)) {
-		//		return figmaNodes.FirstOrDefault () as IFigmaDocumentContainer;
-		//	}
-
-		//	figmaNodes.Recursively (viewName, resultNodes);
-		//	if (resultNodes.Count == 0) {
-		//		return null;
-		//	}
-
-		//	return resultNodes.FirstOrDefault () as IFigmaDocumentContainer;
-		//}
-
-        public static FigmaImageResponse GetFigmaImages(string fileId, string[] ids)
+        public static FigmaImageResponse GetFigmaImages(string fileId, IEnumerable<string> ids)
         {
             var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
             return FigmaApiHelper.GetFigmaImage(query);

@@ -46,7 +46,7 @@
     <Compile Include="CustomControls\LabelTransparentControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomControls\LineControl.cs">
+    <Compile Include="CustomControls\LineTransparentControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="ViewWrapperts\ImageViewWrapper.cs" />
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="FigmaDelegate.cs" />
+    <Compile Include="CustomControls\ImageTransparentControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

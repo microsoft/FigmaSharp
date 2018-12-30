@@ -5,15 +5,13 @@ namespace FigmaSharp
 {
     public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {
-        public ImageViewWrapper(PictureBox pictureBox) : base(pictureBox)
+        public ImageViewWrapper(ImageTransparentControl pictureBox) : base(pictureBox)
         {
         }
 
-        public FigmaPaint Data { get; set; }
-
         public void SetImage(IImageWrapper image)
         {
-            ((PictureBox)nativeView).Image = image.NativeObject as System.Drawing.Image;
+            ((ImageTransparentControl)nativeView).Image = image.NativeObject as System.Drawing.Image;
         }
     }
 }

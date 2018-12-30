@@ -115,14 +115,14 @@ namespace MonoDevelop.Figma
 		void Reload ()
 		{
 			try {
-				renderer.LoadFigmaFromFilePath (fileName, out List<IImageViewWrapper> figmaImageViews, null);
+				//renderer.LoadFigmaFromFilePath (fileName, out List<IImageViewWrapper> figmaImageViews, null);
                 var resourcesDirectoryPath = Path.Combine (this.Project.BaseDirectory, "Resources");
                 if (!Directory.Exists(resourcesDirectoryPath))
                 {
                     throw new DirectoryNotFoundException(resourcesDirectoryPath);
                 }
 
-                figmaImageViews.LoadFromResourceImageDirectory(resourcesDirectoryPath);
+                //figmaImageViews.LoadFromResourceImageDirectory(resourcesDirectoryPath);
             } catch (DirectoryNotFoundException ex) {
                 Console.WriteLine ("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
             } catch (System.Exception ex) {

@@ -39,14 +39,14 @@ namespace FigmaSharp.Converters
             {
                 if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
                 {
-                    var figmaImageView = AppContext.Current.GetImageView(figmaPaint);
-                    var imageView = figmaImageView.NativeObject as UIImageView;
+                    var imageView = new UIImageView();
+                    var figmaImageView = new ImageViewWrapper(imageView);
                     imageView.Configure(rectangleVector);
                     return figmaImageView;
                 }
             }
 
-            var currengroupView = new UIView(); // { TranslatesAutoresizingMaskIntoConstraints = false };
+            var currengroupView = new UIView();
             currengroupView.Configure(rectangleVector);
             return new ViewWrapper(currengroupView);
         }

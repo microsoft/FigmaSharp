@@ -34,9 +34,9 @@ namespace FigmaSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var vector = ((FigmaVectorEntity)currentNode);
-            var currengroupView = new TransparentControl (); // { TranslatesAutoresizingMaskIntoConstraints = false };
+            var currengroupView = new ImageTransparentControl (); // { TranslatesAutoresizingMaskIntoConstraints = false };
             currengroupView.Configure(vector);
-            return new ViewWrapper(currengroupView);
+            return new ImageViewWrapper(currengroupView);
         }
     }
 }

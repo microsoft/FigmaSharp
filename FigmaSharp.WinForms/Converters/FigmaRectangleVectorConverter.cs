@@ -39,8 +39,8 @@ namespace FigmaSharp.Converters
             {
                 if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
                 {
-                    var figmaImageView = AppContext.Current.GetImageView(figmaPaint);
-                    var imageView = figmaImageView.NativeObject as PictureBox;
+                    var imageView = new ImageTransparentControl();
+                    var figmaImageView = new ImageViewWrapper(imageView);
                     imageView.Configure(rectangleVector);
                     return figmaImageView;
                 }

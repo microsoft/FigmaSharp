@@ -7,9 +7,9 @@ namespace FigmaSharp.Services
     {
         public ProcessedNode[] MainViews => throw new System.NotImplementedException();
 
-        public void Start(IViewWrapper targetView, IEnumerable<ProcessedNode> processedNodes)
+        public void Start(IViewWrapper targetView, FigmaFileService figmaFileService)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }
