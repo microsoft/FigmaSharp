@@ -108,7 +108,7 @@ namespace FigmaSharp
 
             if (child.HasFills && child.fills[0].color != null)
             {
-                //view.Layer.BackgroundColor = child.fills[0].color.ToUIColor().CGColor;
+                view.Layer.BackgroundColor = child.fills[0].color.ToUIColor().CGColor;
             }
 
             //var currengroupView = new UIView() { TranslatesAutoresizingMaskIntoConstraints = false };
