@@ -85,16 +85,7 @@ namespace FigmaSharp.Services
                     GenerateViewsRecursively(item, null);
 
                 //Images
-                var vectorsIds = ImageVectors.Select(s => s.Key.id);
-                var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectorsIds);
-                if (figmaImageResponse != null)
-                {
-                    foreach (var imageResponse in figmaImageResponse.images)
-                    {
-                        var image = ImageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
-                        ImageVectors[image] = imageResponse.Value;
-                    }
-                }
+                OnStartImageProcessing(ImageVectors, file);
 
                 Console.WriteLine("View generation finished.");
             }
@@ -104,6 +95,8 @@ namespace FigmaSharp.Services
                 Console.WriteLine(ex);
             }
         }
+
+        protected abstract void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
 
         protected abstract string GetContentTemplate(string file);
 
@@ -163,7 +156,12 @@ namespace FigmaSharp.Services
     {
         protected override string GetContentTemplate(string file)
         {
-            return AppContext.Current.GetManifestResource(GetType().Assembly, file);
+            return AppContext.Current.GetManifestResource(null, file);
+        }
+
+        protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        {
+          //not needed in local files
         }
     }
 
@@ -172,6 +170,21 @@ namespace FigmaSharp.Services
         protected override string GetContentTemplate(string file)
         {
             return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
+        }
+
+        protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        {
+            //Remote files need get the real image url to get the file
+            var vectorsIds = imageVectors.Select(s => s.Key.id);
+            var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectorsIds);
+            if (figmaImageResponse != null)
+            {
+                foreach (var imageResponse in figmaImageResponse.images)
+                {
+                    var image = imageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
+                    imageVectors[image] = imageResponse.Value;
+                }
+            }
         }
     }
 }

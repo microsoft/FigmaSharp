@@ -105,22 +105,24 @@
       <IncludeInPackage>true</IncludeInPackage>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\0994e20d46f1138d0cd3a236c16157a1.png" />
+    <EmbeddedResource Include="Resources\101-13.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\3d164193ed66475a8a1747b9c162c582.png" />
-    <EmbeddedResource Include="Resources\3df641e64f57d4a02b59f681c00254d3.png" />
-    <EmbeddedResource Include="Resources\6b6233a91238e7d51650e8ec584e686f.png" />
-    <EmbeddedResource Include="Resources\9be31b25102922e6ba0d1494feea6cb0.png" />
-    <EmbeddedResource Include="Resources\40d3e445510fa5049f7b91ed4d4b1b4a.png" />
-    <EmbeddedResource Include="Resources\59b6de4a0f45dc38c16d0568861e83db.png" />
-    <EmbeddedResource Include="Resources\553c5e48f6ad69ecd7fe5aa7e3926200.png" />
-    <EmbeddedResource Include="Resources\d15f5ff02d6105fa9bec474190473885.png" />
-    <EmbeddedResource Include="Resources\e2dc5547a081bc7ce127cfce40b30e0e.png" />
-    <EmbeddedResource Include="Resources\e36de132e4fca69c962082e529f8e407.png" />
-    <EmbeddedResource Include="Resources\e92c83d0650edf2ec594a6cd294e3c50.png" />
-    <EmbeddedResource Include="Resources\e342ca2b0ee8af27928b6b86c559b0b7.png" />
-    <EmbeddedResource Include="Resources\eeecbbdd9a43e6057f2a45e6328d3236.png" />
+    <EmbeddedResource Include="Resources\101-45.png" />
+    <EmbeddedResource Include="Resources\101-43.png" />
+    <EmbeddedResource Include="Resources\101-42.png" />
+    <EmbeddedResource Include="Resources\101-39.png" />
+    <EmbeddedResource Include="Resources\101-33.png" />
+    <EmbeddedResource Include="Resources\101-30.png" />
+    <EmbeddedResource Include="Resources\101-29.png" />
+    <EmbeddedResource Include="Resources\101-28.png" />
+    <EmbeddedResource Include="Resources\101-27.png" />
+    <EmbeddedResource Include="Resources\101-25.png" />
+    <EmbeddedResource Include="Resources\101-24.png" />
+    <EmbeddedResource Include="Resources\101-23.png" />
+    <EmbeddedResource Include="Resources\101-16.png" />
+    <EmbeddedResource Include="Resources\101-8.png" />
+    <EmbeddedResource Include="Resources\101-4.png" />
   </ItemGroup>
   <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" Condition="Exists('..\ExampleFigma.Shared\ExampleFigma.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

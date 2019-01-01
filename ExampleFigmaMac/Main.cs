@@ -13,7 +13,8 @@ namespace ExampleFigmaMac
 {
     static class MainClass
     {
-       
+        static IScrollViewWrapper scrollViewWrapper;
+         
         static void Main(string[] args)
         {
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
@@ -36,6 +37,9 @@ namespace ExampleFigmaMac
                 HasHorizontalScroller = true,
                 AutomaticallyAdjustsContentInsets = false
             };
+
+            scrollViewWrapper = new ScrollViewWrapper(scrollView);
+
             stackView.AddArrangedSubview(scrollView);
 
             scrollView.AutohidesScrollers = false;
@@ -50,11 +54,6 @@ namespace ExampleFigmaMac
 
             Refresh(contentView);
 
-            button.Activated += (sender, e) =>
-            {
-                //Refresh (contentView);
-            };
-
             mainWindow.MakeKeyAndOrderFront(null);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
@@ -62,8 +61,8 @@ namespace ExampleFigmaMac
 
         static void Refresh(NSView contentView)
         {
-            //ReadStoryboardFigmaFile (); //Example reading storyboard figma
-            ReadRemoteFigmaFile (contentView); //Example reading remote file
+            ReadStoryboardFigmaFile (); //Example reading storyboard figma
+            //ReadRemoteFigmaFile (contentView); //Example reading remote file
             //ReadLocalFilePath(contentView); //Example reading local file
         }
 
@@ -74,6 +73,7 @@ namespace ExampleFigmaMac
             scrollView.DocumentView = testStoryboard.ContentView.NativeObject as NSView;
             //we need reload after set the content to ensure the scrollview
             testStoryboard.Reload(true);
+            scrollViewWrapper.AdjustToContent();
         }
 
         static NSScrollView scrollView;
@@ -83,24 +83,8 @@ namespace ExampleFigmaMac
         static void ReadRemoteFigmaFile(NSView contentView)
         {
             var fileName = Environment.GetEnvironmentVariable("FILE");
-            var scrollViewWrapper = new ScrollViewWrapper(scrollView);
-
             manager = new ExampleViewManager(scrollViewWrapper, fileName);
             manager.Initialize();
-        }
-
-        //Example 3
-        static void ReadLocalFilePath(NSView contentView)
-        {
-            var fileName = Environment.GetEnvironmentVariable("FILE");
-            var figmaFile = "FigmaStoryboard.figma";
-
-            var currentLocation = Path.GetDirectoryName(typeof(MainClass).Assembly.Location);
-            var resourcesLocation = Path.Combine(Path.GetDirectoryName(currentLocation), "Resources");
-            var figmaFilePath = Path.Combine(resourcesLocation, figmaFile);
-
-            contentView.LoadFigmaFromResource(figmaFile, out List<IImageViewWrapper> figmaImageViews);
-            figmaImageViews.LoadFromLocalImageResources();
         }
     }
 }

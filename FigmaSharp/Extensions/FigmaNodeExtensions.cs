@@ -81,18 +81,18 @@ namespace FigmaSharp
             }
         }
 
-        //TODO: Change to async multithread
-        public static async Task SaveFigmaImageFiles(this FigmaPaint[] paints, string fileId, string directoryPath, string format = ".png")
-        {
-            var ids = paints.Select(s => s.ID).ToArray();
-            var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
-            var images = FigmaApiHelper.GetFigmaImage(query);
-            if (images != null)
-            {
-                var urls = paints.Select(s => images.images[s.ID]).ToArray();
-                FileHelper.SaveFiles(directoryPath, format, urls);
-            }
-        }
+        ////TODO: Change to async multithread
+        //public static async Task SaveFigmaImageFiles(this FigmaPaint[] paints, string fileId, string directoryPath, string format = ".png")
+        //{
+        //    var ids = paints.Select(s => s.ID).ToArray();
+        //    var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
+        //    var images = FigmaApiHelper.GetFigmaImage(query);
+        //    if (images != null)
+        //    {
+        //        var urls = paints.Select(s => images.images[s.ID]).ToArray();
+        //        FileHelper.SaveFiles(directoryPath, format, urls);
+        //    }
+        //}
 
         public static void Recursively(this FigmaNode[] customViews, string filter, List<FigmaNode> viewsFound)
         {
