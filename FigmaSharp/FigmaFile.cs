@@ -27,21 +27,28 @@
  */
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using FigmaSharp.Converters;
 using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
-	public class FigmaFile : IFigmaFile
+    public class FigmaFile : IFigmaFile
 	{
 		string file;
 		public List<IImageViewWrapper> FigmaImages { get; private set; }
-		public FigmaResponse Document { get; private set; }
+        public FigmaResponse Document => fileService.Response;
 		public IViewWrapper ContentView { get; private set; }
+
+        readonly FigmaLocalFileService fileService;
+        readonly RendererService rendererService;
 
         public FigmaFile (string file)
 		{
             this.file = file;
+            fileService = new FigmaLocalFileService();
+            rendererService = new RendererService(fileService);
         }
 
         public void Reload (bool includeImages = false)
@@ -57,25 +64,55 @@ namespace FigmaSharp
         public void ReloadImages ()
         {
             Console.WriteLine($"Loading images..");
-            if (FigmaImages != null && FigmaImages.Count > 0)
+
+            var imageVectors = fileService.ImageVectors;
+            if (imageVectors?.Count > 0)
             {
-                //FigmaImages.LoadFromLocalImageResources();
+                foreach (var imageVector in imageVectors)
+                {
+                    var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Key.id);
+                    var image = AppContext.Current.GetImageFromManifest(null, recoveredKey);
+
+                    var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Key);
+                    var wrapper = processedNode.View as IImageViewWrapper;
+                    wrapper.SetImage(image);
+                    FigmaImages.Add(wrapper);
+                }
+            }
+        }
+
+        //TODO: Prototype
+        public void Reposition()
+        {
+            const int Margin = 20;
+            float currentX = Margin;
+            foreach (var child in ContentView.Children)
+            {
+                child.X = currentX;
+                child.Y = 0;
+                currentX += child.Width + Margin;
             }
         }
 
         public void Initialize ()
 		{
             try {
-				Console.WriteLine ($"Reading {file} from resources");
-				var template = FigmaApiHelper.GetManifestResource (GetType ().Assembly, file);
+                fileService.Start(file);
 
-				Document = FigmaApiHelper.GetFigmaResponseFromContent (template);
-				Console.WriteLine ($"Reading successfull");
+                rendererService.Start();
 
-				FigmaImages = new List<IImageViewWrapper> ();
+                FigmaImages = new List<IImageViewWrapper> ();
 
-				//ContentView = new NSView ();
-				//Reload ();
+                ContentView = AppContext.Current.CreateEmptyView();
+
+                foreach (var items in rendererService.MainViews)
+                {
+                    ContentView.AddChild(items.View);
+                }
+
+                Reposition();
+
+                Reload();
 			} catch (Exception ex) {
 				Console.WriteLine ($"Error reading resource");
 				Console.WriteLine (ex);

@@ -30,41 +30,49 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using FigmaSharp.Converters;
 
 namespace FigmaSharp
 {
     public static class FileHelper
     {
         //TODO: Change to async multithread
-        public static void SaveFiles(string destinationDirectory, string format, params string[] remotefile)
+        public static void SaveFiles(string destinationDirectory, string format, Dictionary<string, string> remotefile)
         {
             if (!Directory.Exists(destinationDirectory))
             {
                 throw new DirectoryNotFoundException(destinationDirectory);
             }
             List<Task> downloads = new List<Task>();
+
             foreach (var file in remotefile)
             {
-                    var fileName = string.Concat(Path.GetFileName(file), format);
-                    var fullPath = Path.Combine(destinationDirectory, fileName);
+                if (file.Value == null)
+                {
+                    continue;
+                }
 
-                    if (File.Exists(fullPath))
-                    {
-                        File.Delete(fullPath);
-                    }
+                var key = FigmaResourceConverter.FromResource(file.Key);
+                var fileName = string.Concat(Path.GetFileName(key), format);
+                var fullPath = Path.Combine(destinationDirectory, fileName);
 
-                    try
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+
+                try
+                {
+                    using (WebClient client = new WebClient())
                     {
-                        using (WebClient client = new WebClient())
-                        {
-                            client.DownloadFile(new Uri(file), fullPath);
-                        }
+                        client.DownloadFile(new Uri(file.Value), fullPath);
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            };
             }
         }
     }

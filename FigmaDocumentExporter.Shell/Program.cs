@@ -39,11 +39,7 @@ namespace FigmaDocumentExporter.Shell
             if (figmaImageIds.Length > 0)
             {
                 var figmaImageResponse = FigmaApiHelper.GetFigmaImages(fileId, figmaImageIds);
-                var urls = figmaImageResponse.images.Where (s => !string.IsNullOrEmpty (s.Value))
-                    .Select(s => s.Value)
-                    .ToArray();
-
-                FileHelper.SaveFiles(outputDirectory, ".png", urls);
+                FileHelper.SaveFiles(outputDirectory, ".png", figmaImageResponse.images);
             }
             Console.WriteLine("Process finished successfull ({0} images processed)", figmaImageIds.Length);
         }

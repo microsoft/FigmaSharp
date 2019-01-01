@@ -37,6 +37,7 @@ namespace FigmaSharp
         public ImageViewWrapper(NSImageView imageView) : base(imageView)
         {
             this.imageView = imageView;
+            this.imageView.WantsLayer = true;
         }
 
         public void SetImage(IImageWrapper image)

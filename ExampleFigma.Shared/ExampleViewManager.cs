@@ -21,6 +21,7 @@ namespace ExampleFigma
             fileService.Start(fileName);
             var builderService = new ScrollViewRendererService();
             builderService.Start(scrollViewWrapper, fileService);
+            scrollViewWrapper.AdjustToContent();
         }
     }
 }
