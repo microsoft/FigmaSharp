@@ -61,9 +61,8 @@ namespace ExampleFigmaMac
 
         static void Refresh(NSView contentView)
         {
-            ReadStoryboardFigmaFile (); //Example reading storyboard figma
-            //ReadRemoteFigmaFile (contentView); //Example reading remote file
-            //ReadLocalFilePath(contentView); //Example reading local file
+            //ReadStoryboardFigmaFile (); //Example reading storyboard figma
+            ReadRemoteFigmaFile (contentView); //Example reading remote file
         }
 
         //Example 1

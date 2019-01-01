@@ -63,7 +63,6 @@
     <Compile Include="FigmaViewsHelper.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
-    <Compile Include="Extensions\LoaderExtensions.cs" />
     <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
     <Compile Include="Converters\FigmaElipseConverter.cs" />
     <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
