@@ -58,7 +58,6 @@
     <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
-    <Compile Include="Extensions\LoaderExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
     <Compile Include="CustomViews\FlippedImageView.cs" />
