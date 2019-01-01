@@ -39,6 +39,9 @@ using CoreGraphics;
 using System.Collections.Generic;
 using MonoDevelop.Projects;
 using System.IO;
+using FigmaSharp.Services;
+using System.Linq;
+using FigmaSharp.Converters;
 
 namespace MonoDevelop.Figma
 {
@@ -73,14 +76,22 @@ namespace MonoDevelop.Figma
 
 		Gtk.Widget _content;
 
-		public FigmaViewContent (FilePath fileName)
+        readonly FigmaLocalFileService fileService;
+        readonly RendererService rendererService;
+        readonly IScrollViewWrapper scrollViewWrapper;
+
+        public FigmaViewContent (FilePath fileName)
 		{
 		
 			this.fileName = fileName;
 			ContentName = fileName;
 
-			container = new NSStackView ();
-			container.Spacing = 10;
+            fileService = new FigmaLocalFileService();
+            rendererService = new RendererService(fileService);
+
+            container = new NSStackView ();
+           
+            container.Spacing = 10;
 			container.WantsLayer = true;
 			container.Layer.BackgroundColor = NSColor.DarkGray.CGColor;
 
@@ -91,17 +102,21 @@ namespace MonoDevelop.Figma
 			_content.CanFocus = true;
 			_content.Sensitive = true;
 
-			var scrollView = new NSScrollView () {
+			var scrollView = new FlippedScrollView()
+            {
 				HasVerticalScroller = true,
 				HasHorizontalScroller = true,
 			};
+
 			scrollView.AutohidesScrollers = false;
 			scrollView.BackgroundColor = NSColor.DarkGray;
 			scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
 
-            renderer = new NSView ();
-            scrollView.DocumentView = renderer;
-            renderer.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
+            scrollViewWrapper = new ScrollViewWrapper(scrollView);
+
+            var contentView = new FlippedView ();
+            contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
+            scrollView.DocumentView = contentView;
 
             container.AddArrangedSubview (scrollView);
 
@@ -110,19 +125,32 @@ namespace MonoDevelop.Figma
 			_content.ShowAll ();
 		}
 
-		NSView renderer;
-
 		void Reload ()
 		{
-			try {
-				//renderer.LoadFigmaFromFilePath (fileName, out List<IImageViewWrapper> figmaImageViews, null);
-                var resourcesDirectoryPath = Path.Combine (this.Project.BaseDirectory, "Resources");
+            try {
+                var resourcesDirectoryPath = Path.Combine(this.Project.BaseDirectory, "Resources");
                 if (!Directory.Exists(resourcesDirectoryPath))
                 {
                     throw new DirectoryNotFoundException(resourcesDirectoryPath);
                 }
 
-                //figmaImageViews.LoadFromResourceImageDirectory(resourcesDirectoryPath);
+                fileService.Start(fileName);
+                rendererService.Start();
+
+                var mainNodes = fileService.NodesProcessed
+                    .Where(s => s.ParentView == null)
+                    .ToArray();
+
+                foreach (var items in rendererService.MainViews)
+                {
+                    scrollViewWrapper.AddChild(items.View);
+                }
+
+                Reposition(mainNodes);
+
+                //we need reload after set the content to ensure the scrollview
+                scrollViewWrapper.AdjustToContent();
+
             } catch (DirectoryNotFoundException ex) {
                 Console.WriteLine ("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
             } catch (System.Exception ex) {
@@ -130,7 +158,62 @@ namespace MonoDevelop.Figma
 			}
 		}
 
-		void Editor_TextChanged (object sender, Core.Text.TextChangeEventArgs e)
+        public void ReloadImages(string resourcesDirectory, string format = ".png")
+        {
+            Console.WriteLine($"Loading images..");
+
+            var imageVectors = fileService.ImageVectors;
+            if (imageVectors?.Count > 0)
+            {
+                foreach (var imageVector in imageVectors)
+                {
+                    try
+                    {
+                        var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Key.id);
+                        string filePath = Path.Combine(resourcesDirectory, string.Concat(recoveredKey, format));
+
+                        if (!File.Exists(filePath))
+                        {
+                            throw new FileNotFoundException(filePath);
+                        }
+
+                        var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Key);
+                        var wrapper = processedNode.View as IImageViewWrapper;
+
+                        var image = new ImageWrapper (new NSImage(filePath));
+                        wrapper.SetImage(image);
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    //FigmaImages.Add(wrapper);
+                }
+            }
+        }
+
+        public void Reposition(ProcessedNode[] mainNodes)
+        {
+            //Alignment 
+            const int Margin = 20;
+            float currentX = Margin;
+            foreach (var processedNode in mainNodes)
+            {
+                var view = processedNode.View;
+
+                scrollViewWrapper.AddChild(view);
+
+                view.X = currentX;
+                view.Y = 0; //currentView.Height + currentHeight;
+                currentX += view.Width + Margin;
+            }
+        }
+
+        void Editor_TextChanged (object sender, Core.Text.TextChangeEventArgs e)
 		{
 
 		}

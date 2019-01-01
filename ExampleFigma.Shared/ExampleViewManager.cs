@@ -9,15 +9,12 @@ namespace ExampleFigma
     public class ExampleViewManager 
     {
         string fileName;
-        IScrollViewWrapper scrollViewWrapper;
+        readonly IScrollViewWrapper scrollViewWrapper;
         readonly FigmaRemoteFileService fileService;
         readonly RendererService rendererService;
 
-        ProcessedNode[] MainNodes;
-
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, string fileName)
         {
-          
             this.scrollViewWrapper = scrollViewWrapper;
             this.fileName = fileName;
 
@@ -30,20 +27,20 @@ namespace ExampleFigma
             fileService.Start(fileName);
             rendererService.Start();
 
-            MainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)
+            var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)
             .ToArray();
 
-            Reposition();
+            Reposition(mainNodes);
 
             scrollViewWrapper.AdjustToContent();
         }
 
-        public void Reposition()
+        public void Reposition(ProcessedNode[] mainNodes)
         {
             //Alignment 
             const int Margin = 20;
             float currentX = Margin;
-            foreach (var processedNode in MainNodes)
+            foreach (var processedNode in mainNodes)
             {
                 var view = processedNode.View;
 

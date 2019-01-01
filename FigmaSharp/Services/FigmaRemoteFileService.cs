@@ -152,7 +152,7 @@ namespace FigmaSharp.Services
         }
     }
 
-    public class FigmaLocalFileService : FigmaFileService
+    public class FigmaManifestResourceFileService : FigmaFileService
     {
         protected override string GetContentTemplate(string file)
         {
@@ -162,6 +162,19 @@ namespace FigmaSharp.Services
         protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
         {
           //not needed in local files
+        }
+    }
+
+    public class FigmaLocalFileService : FigmaFileService
+    {
+        protected override string GetContentTemplate(string file)
+        {
+            return System.IO.File.ReadAllText(file);
+        }
+
+        protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        {
+            //not needed in local files
         }
     }
 

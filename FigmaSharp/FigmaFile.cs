@@ -41,13 +41,13 @@ namespace FigmaSharp
         public FigmaResponse Document => fileService.Response;
 		public IViewWrapper ContentView { get; private set; }
 
-        readonly FigmaLocalFileService fileService;
+        readonly FigmaManifestResourceFileService fileService;
         readonly RendererService rendererService;
 
         public FigmaFile (string file)
 		{
             this.file = file;
-            fileService = new FigmaLocalFileService();
+            fileService = new FigmaManifestResourceFileService();
             rendererService = new RendererService(fileService);
         }
 
