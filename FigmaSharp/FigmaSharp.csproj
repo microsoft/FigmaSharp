@@ -11,7 +11,9 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
+        <Private>False</Private>        
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Services\ViewContentRendererService.cs" />
