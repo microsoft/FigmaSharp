@@ -57,7 +57,6 @@ namespace FigmaSharp
             {
                 //layer.Bounds = new CoreGraphics.CGRect(0, 0, 150, 150);
                 //Position = new CGPoint(50, 50);
-               
                 nativeView.Frame = new CoreGraphics.CGRect(value, nativeView.Frame.Y, nativeView.Frame.Width, nativeView.Frame.Height);
             }
         }

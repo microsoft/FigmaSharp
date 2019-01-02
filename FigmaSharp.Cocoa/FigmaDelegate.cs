@@ -56,5 +56,6 @@ namespace FigmaSharp
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource(assembly, file);
 
+        public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
     }
 }

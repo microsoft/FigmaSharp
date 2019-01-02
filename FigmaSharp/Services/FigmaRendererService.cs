@@ -44,7 +44,10 @@ namespace FigmaSharp.Services
                     {
                         var image = AppContext.Current.GetImage(vector.Value);
                         var wrapper = processedNode.View as IImageViewWrapper;
-                        wrapper.SetImage(image);
+
+                        AppContext.Current.BeginInvoke(() => {
+                           wrapper.SetImage(image);
+                        });
                     }
                 }
             });

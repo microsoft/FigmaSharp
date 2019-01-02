@@ -33,22 +33,9 @@ namespace FigmaSharp
 {
     public class AppContext : IFigmaDelegate
     {
-        static AppContext current;
-        public static AppContext Current
-        {
-            get
-            {
-                if (current == null)
-                {
-                    current = new AppContext();
-                }
-                return current;
-            }
-        }
+        IFigmaDelegate figmaDelegate;
 
         internal string Token { get; set; }
-
-        IFigmaDelegate figmaDelegate;
 
         AppContext()
         {
@@ -65,6 +52,8 @@ namespace FigmaSharp
         {
             Token = token;
         }
+
+        public void BeginInvoke(Action handler) => figmaDelegate.BeginInvoke(handler);
 
         public IViewWrapper CreateEmptyView() => figmaDelegate.CreateEmptyView();
 
@@ -91,5 +80,22 @@ namespace FigmaSharp
         {
             return figmaDelegate.GetImageView(image);
         }
+
+        #region Static
+
+        static AppContext current;
+        public static AppContext Current
+        {
+            get
+            {
+                if (current == null)
+                {
+                    current = new AppContext();
+                }
+                return current;
+            }
+        }
+
+        #endregion
     }
 }

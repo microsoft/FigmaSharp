@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace FigmaSharp
@@ -15,5 +16,6 @@ namespace FigmaSharp
 
         IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef);
         IImageViewWrapper GetImageView(IImageWrapper image);
+        void BeginInvoke(Action handler);
     }
 }
