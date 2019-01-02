@@ -35,20 +35,11 @@ namespace FigmaSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var rectangleVector = ((FigmaRectangleVector)currentNode);
-            if (rectangleVector.HasFills)
-            {
-                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
-                {
-                    var imageView = new UIImageView();
-                    var figmaImageView = new ImageViewWrapper(imageView);
-                    imageView.Configure(rectangleVector);
-                    return figmaImageView;
-                }
-            }
 
-            var currengroupView = new UIView();
-            currengroupView.Configure(rectangleVector);
-            return new ViewWrapper(currengroupView);
+            var imageView = new UIImageView();
+            var figmaImageView = new ImageViewWrapper(imageView);
+            imageView.Configure(rectangleVector);
+            return figmaImageView;
         }
     }
 }
