@@ -79,5 +79,10 @@ namespace FigmaSharp
             imageView.SetImage(image);
             return imageView;
         }
+
+        public void BeginInvoke(Action handler)
+        {
+            //To define
+        }
     }
 }
