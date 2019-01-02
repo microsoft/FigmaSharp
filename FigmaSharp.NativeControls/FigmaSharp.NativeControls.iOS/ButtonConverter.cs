@@ -37,32 +37,19 @@ namespace FigmaSharp.NativeControls
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var button = new UIButton() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var button = new UIButton();
             button.Configure(currentNode);
 
             var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
+
+            button.BackgroundColor = instance.backgroundColor.ToUIColor();
+
+           var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
             if (figmaText != null)
             {
                 button.Alpha = figmaText.opacity;
                 button.Font = figmaText.style.ToUIFont();
-            }
-
-            if (instance.children.OfType<FigmaGroup>().Any())
-            {
-                button.SetTitle ("", UIControlState.Normal);
-                button.Alpha = 0.15f;
-            }
-            else
-            {
-                if (figmaText != null)
-                {
-                    button.Alpha = figmaText.opacity;
-                    button.SetTitle(figmaText.characters, UIControlState.Normal);
-                }
-
-                button.Layer.BackgroundColor = instance.backgroundColor.ToUIColor().CGColor;
-                return null;
+                button.SetTitle(figmaText.characters, UIControlState.Normal);
             }
             return new ViewWrapper(button);
         }

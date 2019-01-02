@@ -29,25 +29,18 @@ using AppKit;
 using FigmaSharp.NativeControls.Base;
 using System.Linq;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.NativeControls
 {
     public class TextFieldConverter : TextFieldConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var textField = new NSTextField() { TranslatesAutoresizingMaskIntoConstraints = false };
-
+            var textField = new NSTextField();
+            textField.Configure(currentNode);
             var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
                 .FirstOrDefault();
-
-            textField.StringValue = figmaText.characters;
             textField.Font = figmaText.style.ToNSFont();
-
-            //var absolute = instance.absoluteBoundingBox;
-            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-            //return null;
+            textField.StringValue = figmaText.characters;
             return new ViewWrapper(textField);
         }
     }

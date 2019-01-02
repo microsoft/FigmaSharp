@@ -35,8 +35,9 @@ namespace FigmaSharp.NativeControls
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false };
+            var button = new NSButton();
             button.Configure(currentNode);
+            button.BezelStyle = NSBezelStyle.Rounded;
 
             var instance = (IFigmaDocumentContainer)currentNode;
             var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
@@ -44,25 +45,7 @@ namespace FigmaSharp.NativeControls
             {
                 button.AlphaValue = figmaText.opacity;
                 button.Font = figmaText.style.ToNSFont();
-            }
-
-            if (instance.children.OfType<FigmaGroup>().Any())
-            {
-                button.Title = "";
-                button.AlphaValue = 0.15f;
-                button.BezelStyle = NSBezelStyle.TexturedSquare;
-            }
-            else
-            {
-                if (figmaText != null)
-                {
-                    button.AlphaValue = figmaText.opacity;
-                    button.Title = figmaText.characters;
-                }
-
-                button.BezelStyle = NSBezelStyle.Rounded;
-                button.Layer.BackgroundColor = instance.backgroundColor.ToNSColor().CGColor;
-                return null;
+                button.Title = figmaText.characters;
             }
             return new ViewWrapper(button);
         }

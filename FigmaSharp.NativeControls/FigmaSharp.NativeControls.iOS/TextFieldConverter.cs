@@ -35,19 +35,15 @@ namespace FigmaSharp.NativeControls
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var textField = new UITextField() { TranslatesAutoresizingMaskIntoConstraints = false };
-
+            var textField = new UITextField();
+            textField.Configure(currentNode);
             var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
                 .FirstOrDefault();
 
-            textField.Text = figmaText.characters;
+            textField.BackgroundColor = UIColor.White;
             textField.Font = figmaText.style.ToUIFont();
+            textField.Text = figmaText.characters;
 
-            //var absolute = instance.absoluteBoundingBox;
-            //textField.WidthAnchor.ConstraintEqualToConstant(absolute.width).Active = true;
-            //textField.HeightAnchor.ConstraintEqualToConstant(absolute.height).Active = true;
-            ////CreateConstraints(textField, parentView, instanceConstrains.constraints, absolute, parentFrame.absoluteBoundingBox);
-            //return null;
             return new ViewWrapper(textField);
         }
     }
