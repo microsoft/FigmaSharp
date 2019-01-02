@@ -42,13 +42,13 @@ namespace FigmaSharp
 		public IViewWrapper ContentView { get; private set; }
 
         readonly FigmaManifestResourceFileService fileService;
-        readonly RendererService rendererService;
+        readonly FigmaRendererService rendererService;
 
         public FigmaFile (string file)
 		{
             this.file = file;
             fileService = new FigmaManifestResourceFileService();
-            rendererService = new RendererService(fileService);
+            rendererService = new FigmaRendererService(fileService);
         }
 
         public void Reload (bool includeImages = false)

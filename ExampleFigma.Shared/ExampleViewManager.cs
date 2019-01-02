@@ -11,7 +11,7 @@ namespace ExampleFigma
         string fileName;
         readonly IScrollViewWrapper scrollViewWrapper;
         readonly FigmaRemoteFileService fileService;
-        readonly RendererService rendererService;
+        readonly FigmaRendererService rendererService;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, string fileName)
         {
@@ -19,7 +19,7 @@ namespace ExampleFigma
             this.fileName = fileName;
 
             fileService = new FigmaRemoteFileService();
-            rendererService = new RendererService(fileService);
+            rendererService = new FigmaRendererService(fileService);
         }
        
         public void Initialize ()
