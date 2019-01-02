@@ -77,7 +77,7 @@ namespace MonoDevelop.Figma
 		Gtk.Widget _content;
 
         readonly FigmaLocalFileService fileService;
-        readonly RendererService rendererService;
+        readonly FigmaRendererService rendererService;
         readonly IScrollViewWrapper scrollViewWrapper;
 
         public FigmaViewContent (FilePath fileName)
@@ -87,7 +87,7 @@ namespace MonoDevelop.Figma
 			ContentName = fileName;
 
             fileService = new FigmaLocalFileService();
-            rendererService = new RendererService(fileService);
+            rendererService = new FigmaRendererService(fileService);
 
             container = new NSStackView ();
            
