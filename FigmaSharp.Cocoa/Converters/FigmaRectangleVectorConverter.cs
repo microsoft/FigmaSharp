@@ -33,11 +33,9 @@ namespace FigmaSharp.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var rectangleVector = ((FigmaRectangleVector)currentNode);
-
             var currengroupView = new FlippedImageView();
-            currengroupView.Configure(rectangleVector);
-            return new ViewWrapper(currengroupView);
+            currengroupView.Configure((FigmaRectangleVector)currentNode);
+            return new ImageViewWrapper(currengroupView);
         }
     }
 }

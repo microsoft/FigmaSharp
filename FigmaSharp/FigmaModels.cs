@@ -34,10 +34,12 @@ namespace FigmaSharp
 {
     public class FigmaElipse : FigmaVectorEntity
     {
+        public override bool ImageSupported => false;
     }
 
     public class FigmaStar : FigmaVectorEntity
     {
+        public override bool ImageSupported => false;
     }
 
     public class FigmaInstance : FigmaFrameEntity
@@ -47,10 +49,12 @@ namespace FigmaSharp
 
     public class FigmaRegularPoligon : FigmaVectorEntity
     {
+        public override bool ImageSupported => false;
     }
 
     public class FigmaLine : FigmaVectorEntity
     {
+        public override bool ImageSupported => false;
     }
 
     public class FigmaRectangleVector : FigmaVectorEntity
@@ -221,6 +225,8 @@ namespace FigmaSharp
 
     public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints
     {
+        public virtual bool ImageSupported => true;
+
         public FigmaExportSetting[] exportSettings { get; set; }
         public FigmaBlendMode blendMode { get; set; }
         public bool preserveRatio { get; set; }
@@ -261,6 +267,7 @@ namespace FigmaSharp
 
     public class FigmaBoolean : FigmaVectorEntity, IFigmaNodeContainer
     {
+        public override bool ImageSupported => false;
         public FigmaNode[] children { get; set; }
         public string booleanOperation { get; set; }
     }
@@ -356,6 +363,7 @@ namespace FigmaSharp
 
     public class FigmaText : FigmaVectorEntity
     {
+        public override bool ImageSupported => false;
         public string characters { get; set; }
         public FigmaTypeStyle style { get; set; }
         public int[] characterStyleOverrides { get; set; }

@@ -35,7 +35,7 @@ using System.Reflection;
 
 namespace FigmaSharp
 {
-    public static partial class FigmaViewsHelper
+    public static class FigmaViewsHelper
     {
         public static NSImage GetManifestImageResource(Assembly assembly, string resource)
         {

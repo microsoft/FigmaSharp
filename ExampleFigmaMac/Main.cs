@@ -26,11 +26,9 @@ namespace ExampleFigmaMac
             var yPos = NSScreen.MainScreen.Frame.Height / 2;
 
             var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
-           
-            var stackView = new FlippedStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
-            var button = new NSButton() { Title = "Refresh" };
-            stackView.AddArrangedSubview(button);
+            mainWindow.Title = "Cocoa Figma Sample";
 
+            var stackView = new FlippedStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             scrollView = new FlippedScrollView()
             {
                 HasVerticalScroller = true,
@@ -43,7 +41,7 @@ namespace ExampleFigmaMac
             stackView.AddArrangedSubview(scrollView);
 
             scrollView.AutohidesScrollers = false;
-            scrollView.BackgroundColor = NSColor.Orange;
+            scrollView.BackgroundColor = NSColor.Black;
             scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
             mainWindow.ContentView = stackView;
 
@@ -61,8 +59,8 @@ namespace ExampleFigmaMac
 
         static void Refresh(NSView contentView)
         {
-            //ReadStoryboardFigmaFile (); //Example reading storyboard figma
-            ReadRemoteFigmaFile (contentView); //Example reading remote file
+            ReadStoryboardFigmaFile (); //Example reading storyboard figma
+            //ReadRemoteFigmaFile (contentView); //Example reading remote file
         }
 
         //Example 1

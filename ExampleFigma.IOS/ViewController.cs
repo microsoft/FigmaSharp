@@ -21,6 +21,8 @@ namespace ExampleFigma.IOS
             base.ViewDidLoad();
             // Perform any additional setup after loading the view, typically from a nib.
 
+            View.Layer.BackgroundColor = UIColor.Black.CGColor;
+
             var fileName = Environment.GetEnvironmentVariable("FILE");
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
 

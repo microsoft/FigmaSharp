@@ -33,7 +33,7 @@ namespace FigmaSharp.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var figmaLineView = new FlippedView();// { TranslatesAutoresizingMaskIntoConstraints = false };
+            var figmaLineView = new FlippedView();
             var figmaLine = (FigmaLine)currentNode;
             figmaLineView.Configure(figmaLine);
             return new ViewWrapper(figmaLineView);
