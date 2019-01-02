@@ -56,17 +56,17 @@
     <Compile Include="TextFieldConverter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
-      <Name>FigmaSharp</Name>
+    <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
+      <Project>{E9891F05-7A3B-40A2-9388-505354D6D4C3}</Project>
+      <Name>FigmaSharp.NativeControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.iOS\FigmaSharp.iOS.csproj">
       <Project>{D800A90B-44BD-4C94-85AE-B31C9389D0D2}</Project>
       <Name>FigmaSharp.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
-      <Project>{BE718164-2C38-48F6-A54B-35B81FD638DC}</Project>
-      <Name>FigmaSharp.NativeControls</Name>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
