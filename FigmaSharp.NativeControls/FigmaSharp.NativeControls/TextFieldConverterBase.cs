@@ -32,7 +32,7 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return (currentNode.name == "text field" || currentNode.name == "Field") && currentNode is IFigmaDocumentContainer;
+            return currentNode.name == "textfield" && currentNode is IFigmaDocumentContainer;
         }
     }
 }

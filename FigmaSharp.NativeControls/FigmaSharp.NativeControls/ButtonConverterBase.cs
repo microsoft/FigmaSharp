@@ -32,7 +32,7 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return (currentNode.name == "button" || currentNode.name == "button default") && currentNode is IFigmaDocumentContainer;
+            return (currentNode.name == "button") && currentNode is IFigmaDocumentContainer;
         }
     }
 }

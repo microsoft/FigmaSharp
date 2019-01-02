@@ -120,11 +120,17 @@ namespace FigmaSharp.Services
         {
             Console.WriteLine("[{0}({1})] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
+            bool navigateChild = true;
+
             var currentProcessedNode = GetProcessedNode(currentNode, CustomViewConverters, parent);
 
             if (currentProcessedNode == null)
             {
                 currentProcessedNode = GetProcessedNode(currentNode, FigmaDefaultConverters, parent);
+            }
+            else
+            {
+                navigateChild = false;
             }
 
             if (currentProcessedNode != null)
@@ -142,7 +148,7 @@ namespace FigmaSharp.Services
                 Console.WriteLine("[{1}({2})] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
-            if (currentNode is IFigmaNodeContainer nodeContainer)
+            if (navigateChild && currentNode is IFigmaNodeContainer nodeContainer)
             {
                 foreach (var item in nodeContainer.children)
                 {
