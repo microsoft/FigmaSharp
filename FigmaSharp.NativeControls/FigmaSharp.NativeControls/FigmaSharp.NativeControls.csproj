@@ -8,9 +8,9 @@
     <Compile Remove="Class1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj" />
   </ItemGroup>
 </Project>
