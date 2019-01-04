@@ -137,6 +137,8 @@ namespace MonoDevelop.Figma
                 fileService.Start(fileName);
                 rendererService.Start();
 
+                ReloadImages(resourcesDirectoryPath);
+
                 var mainNodes = fileService.NodesProcessed
                     .Where(s => s.ParentView == null)
                     .ToArray();
