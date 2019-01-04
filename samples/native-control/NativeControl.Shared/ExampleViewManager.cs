@@ -1,4 +1,5 @@
 ﻿using FigmaSharp;
+using FigmaSharp.NativeControls;
 using FigmaSharp.Services;
 using System;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace ExampleFigmaMac
 
             fileService = new FigmaRemoteFileService();
 
-            var nativeConverters = FigmaSharp.NativeControls.Resources.GetConverters();
+            var nativeConverters = Resources.GetConverters();
             fileService.CustomViewConverters.AddRange(nativeConverters);
 
             rendererService = new FigmaRendererService(fileService);
