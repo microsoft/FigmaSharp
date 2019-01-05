@@ -80,7 +80,15 @@ namespace FigmaSharp.Designer
 
         public void SetParentWindow(IWindowWrapper selectedWindow)
         {
-            this.ParentWindow = selectedWindow.NativeObject as NSWindow;
+            try
+            {
+                this.ParentWindow = selectedWindow.NativeObject as NSWindow;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+          
         }
 
         public void AlignWith(IViewWrapper view)

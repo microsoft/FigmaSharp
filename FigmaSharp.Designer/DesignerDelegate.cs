@@ -29,11 +29,12 @@ namespace FigmaSharp.Designer
         {
             StopHoverSelection();
 
-            var nativeWindow = currentWindow.NativeObject as NSWindow;
 
             clickMonitor = NSEvent.AddLocalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDown, (NSEvent theEvent) => {
 
-                    var point = nativeWindow.ConvertBaseToScreen(theEvent.LocationInWindow);
+                var nativeWindow = NSApplication.SharedApplication.MainWindow;
+
+                var point = nativeWindow.ConvertBaseToScreen(theEvent.LocationInWindow);
                     if (!nativeWindow.AccessibilityFrame.Contains(point))
                     {
                         return null;

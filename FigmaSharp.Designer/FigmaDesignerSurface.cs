@@ -79,7 +79,7 @@ namespace FigmaSharp.Designer
 
                 if (viewSelectedOverlayWindow != null)
                 {
-                    viewSelectedOverlayWindow.SetParentWindow(selectedWindow);
+                    //viewSelectedOverlayWindow.SetParentWindow(selectedWindow);
                     viewSelectedOverlayWindow.Visible = value;
                     if (SelectedView != null)
                     {
@@ -188,7 +188,7 @@ namespace FigmaSharp.Designer
             }
             IsFirstResponderOverlayVisible = true;
             ChangeFocusedView(viewWrapper);
-            viewWrapper.MakeFirstResponder();
+            //viewWrapper.MakeFirstResponder();
         }
 
         void RefreshWindows()

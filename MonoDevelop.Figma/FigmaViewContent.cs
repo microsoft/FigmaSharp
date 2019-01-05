@@ -42,6 +42,7 @@ using System.IO;
 using FigmaSharp.Services;
 using System.Linq;
 using System.Xml.Linq;
+using FigmaSharp.Designer;
 
 namespace MonoDevelop.Figma
 {
@@ -134,23 +135,67 @@ namespace MonoDevelop.Figma
 
             if (session == null)
             {
-                CreateSession();
+                figmaDelegate = new DesignerDelegate();
+
+                ideService = new XamarinStudioIdeService(Project);
+
+                session = new FigmaDesignerSession();
+                session.ModifiedChanged += HandleModifiedChanged;
+                session.ReloadFinished += Session_ReloadFinished;
+
+                surface = new FigmaDesignerSurface(figmaDelegate)
+                {
+                    Session = session
+                };
+
+                var window = NSApplication.SharedApplication.MainWindow;
+                surface.SetWindow(new WindowInternalWrapper (window));
+                surface.StartHoverSelection();
+
                 IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
                 IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
             }
 
-            session.Reload(fileName, Project.BaseDirectory, scrollViewWrapper);
+            session.Reload(fileName, Project.BaseDirectory);
 
             ContentName = fileName;
             return Task.FromResult(true);
         }
+        IDesignerDelegate figmaDelegate;
 
-        private void CreateSession()
+        FigmaDesignerSurface surface;
+
+        void Session_ReloadFinished(object sender, EventArgs e)
         {
-            ideService = new XamarinStudioIdeService(Project);
+            foreach (var items in session.MainViews)
+            {
+                scrollViewWrapper.AddChild(items.View);
+            }
 
-            session = new FigmaDesignerSession();
-            session.ModifiedChanged += HandleModifiedChanged;
+            var mainNodes = session.ProcessedNodes
+               .Where(s => s.ParentView == null)
+               .ToArray();
+
+            Reposition(mainNodes);
+
+            //we need reload after set the content to ensure the scrollview
+            scrollViewWrapper.AdjustToContent();
+        }
+
+        public void Reposition(ProcessedNode[] mainNodes)
+        {
+            //Alignment 
+            const int Margin = 20;
+            float currentX = Margin;
+            foreach (var processedNode in mainNodes)
+            {
+                var view = processedNode.View;
+                scrollViewWrapper.AddChild(view);
+
+                view.X = currentX;
+                view.Y = 0; //currentView.Height + currentHeight;
+                currentX += view.Width + Margin;
+            }
         }
 
         private void HandleModifiedChanged(object sender, EventArgs e)

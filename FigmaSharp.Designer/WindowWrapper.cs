@@ -9,6 +9,133 @@ using System.Threading;
 namespace FigmaSharp.Designer
 {
     [Register("WindowWrapper")]
+    public class WindowInternalWrapper : IWindowWrapper
+    {
+        NSWindow window;
+        public WindowInternalWrapper (NSWindow window)
+        {
+            this.window = window;
+            Initialize();
+        }
+
+        public bool HasParentWindow => window.ParentWindow != null;
+
+
+        void Initialize()
+        {
+            window.DidResize += (s, e) => {
+                ResizeRequested?.Invoke(this, EventArgs.Empty);
+            };
+
+            window.DidMove += (s, e) => {
+                MovedRequested?.Invoke(this, EventArgs.Empty);
+            };
+
+            window.DidResignKey += (s, e) => {
+                LostFocus?.Invoke(this, EventArgs.Empty);
+            };
+        }
+
+        public object NativeObject => this;
+
+        public void AddChildWindow(IWindowWrapper borderer)
+        {
+            window.AddChildWindow(borderer.NativeObject as NSWindow, NSWindowOrderingMode.Above);
+        }
+
+        public bool ContainsChildWindow(IWindowWrapper debugOverlayWindow)
+        {
+            return window.ChildWindows.Contains(debugOverlayWindow.NativeObject as NSWindow);
+        }
+
+        IViewWrapper IWindowWrapper.ContentView
+        {
+            get
+            {
+                if (window.ContentView is NSView view)
+                {
+                    return new ViewWrapper(view);
+                }
+                return null;
+            }
+            set
+            {
+                window.ContentView = value.NativeObject as NSView;
+            }
+        }
+
+        IViewWrapper IWindowWrapper.FirstResponder
+        {
+            get
+            {
+                if (window.FirstResponder is NSView view)
+                {
+                    return new ViewWrapper(view);
+                }
+                return null;
+            }
+        }
+
+        public float FrameX => (float)window.Frame.X;
+        public float FrameY => (float)window.Frame.Y;
+        public float FrameWidth => (float)window.Frame.Width;
+        public float FrameHeight => (float)window.Frame.Height;
+
+        public void AlignRight(IWindowWrapper toView, int pixels)
+        {
+            var toViewWindow = toView.NativeObject as NSWindow;
+            var frame = window.Frame;
+            frame.Location = new CGPoint(toViewWindow.Frame.Right + pixels, toViewWindow.Frame.Bottom - frame.Height);
+            window.SetFrame(frame, true);
+        }
+
+        public void AlignLeft(IWindowWrapper toView, int pixels)
+        {
+            var toViewWindow = toView.NativeObject as NSWindow;
+            var frame = window.Frame;
+            frame.Location = new CGPoint(toViewWindow.Frame.Left - window.Frame.Width - pixels, toViewWindow.Frame.Bottom - frame.Height);
+            window.SetFrame(frame, true);
+        }
+
+        public void AlignTop(IWindowWrapper toView, int pixels)
+        {
+            var toViewWindow = toView.NativeObject as NSWindow;
+            var frame = window.Frame;
+            frame.Location = new CGPoint(toViewWindow.Frame.Left, toViewWindow.AccessibilityFrame.Y + toViewWindow.Frame.Height + pixels);
+            window.SetFrame(frame, true);
+        }
+
+        public void SetTitle(string v)
+        {
+            window.Title = v;
+        }
+
+        public void SetContentSize(int toolbarWindowWidth, int toolbarWindowHeight)
+        {
+            window.SetContentSize(new CGSize(toolbarWindowWidth, toolbarWindowHeight));
+        }
+
+        public void SetAppareance(bool isDark)
+        {
+            window.Appearance = NSAppearance.GetAppearance(isDark ? NSAppearance.NameVibrantDark : NSAppearance.NameVibrantLight);
+        }
+
+        public void RecalculateKeyViewLoop()
+        {
+            window.RecalculateKeyViewLoop();
+        }
+
+        public void Close()
+        {
+            window.Close();
+        }
+
+        public event EventHandler ResizeRequested;
+        public event EventHandler MovedRequested;
+        public event EventHandler LostFocus;
+    }
+
+    [Register("WindowWrapper")]
     public class WindowWrapper : NSWindow, IWindowWrapper
     {
         public WindowWrapper()
