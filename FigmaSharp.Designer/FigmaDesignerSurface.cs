@@ -65,7 +65,7 @@ namespace FigmaSharp.Designer
 
         IObjectWrapper nativeObject;
         internal IViewWrapper SelectedView => nativeObject as IViewWrapper;
-        IMainWindowWrapper selectedWindow;
+        IWindowWrapper selectedWindow;
 
         readonly IBorderedWindow viewSelectedOverlayWindow;
 
@@ -90,12 +90,26 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public FigmaDesignerSurface()
+        public FigmaDesignerSurface(IDesignerDelegate figmaDelegate)
         {
+            viewSelectedOverlayWindow = figmaDelegate.CreateOverlayWindow ();
+            Delegate = figmaDelegate;
 
+            figmaDelegate.HoverSelecting += FigmaDelegate_HoverSelecting;
+            figmaDelegate.HoverSelectionEnded += FigmaDelegate_HoverSelectionEnded;
         }
 
-        public void SetWindow(IMainWindowWrapper selectedWindow)
+        void FigmaDelegate_HoverSelectionEnded(object sender, IViewWrapper e)
+        {
+            HoverSelectView(e);
+        }
+
+        void FigmaDelegate_HoverSelecting(object sender, IViewWrapper e)
+        {
+            HoverSelectView(e);
+        }
+
+        public void SetWindow(IWindowWrapper selectedWindow)
         {
             if (this.selectedWindow?.NativeObject == selectedWindow?.NativeObject)
             {
@@ -146,8 +160,6 @@ namespace FigmaSharp.Designer
             IsFirstResponderOverlayVisible = IsFirstResponderOverlayVisible;
         }
 
-
-
         public void ChangeFocusedView(IObjectWrapper nextView)
         {
             if (selectedWindow == null || nextView == null || SelectedView == nextView)
@@ -168,6 +180,17 @@ namespace FigmaSharp.Designer
             }
         }
 
+        void HoverSelectView(IViewWrapper viewWrapper)
+        {
+            if (viewWrapper == null)
+            {
+                return;
+            }
+            IsFirstResponderOverlayVisible = true;
+            ChangeFocusedView(viewWrapper);
+            viewWrapper.MakeFirstResponder();
+        }
+
         void RefreshWindows()
         {
             //toolbarWindow.AlignTop(selectedWindow, WindowMargin);
@@ -176,6 +199,9 @@ namespace FigmaSharp.Designer
             //inspectorWindow.GenerateStatusView(SelectedView, Delegate, ViewMode);
         }
 
-
+        public void StartHoverSelection()
+        {
+            Delegate.StartHoverSelection(selectedWindow);
+        }
     }
 }

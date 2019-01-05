@@ -25,6 +25,8 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
+
 namespace FigmaSharp.Designer
 {
     public interface IDesignerDelegate
@@ -34,5 +36,10 @@ namespace FigmaSharp.Designer
         void DeepHoverSelection();
         void PreviousHoverSelection();
         void StopHoverSelection();
+        IBorderedWindow CreateOverlayWindow();
+
+        event EventHandler<IViewWrapper> HoverSelecting;
+
+        event EventHandler<IViewWrapper> HoverSelectionEnded;
     }
 }
