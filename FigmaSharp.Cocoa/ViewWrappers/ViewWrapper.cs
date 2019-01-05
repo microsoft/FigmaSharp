@@ -82,6 +82,24 @@ namespace FigmaSharp
             }
         }
 
+        public string Identifier 
+        { 
+            get => nativeView.Identifier;
+            set => nativeView.Identifier = value;
+         }
+
+        public string NodeName
+        {
+            get => nativeView.Identifier;
+            set => nativeView.Identifier = value;
+        }
+
+        public bool Hidden
+        {
+            get => nativeView.Hidden;
+            set => nativeView.Hidden = value;
+        }
+
         protected NSView nativeView;
 
         public ViewWrapper() : this (new NSView ())
