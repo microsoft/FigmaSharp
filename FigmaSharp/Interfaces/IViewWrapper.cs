@@ -37,11 +37,15 @@ namespace FigmaSharp
 
         IReadOnlyList<IViewWrapper> Children { get; }
 
+        string Identifier { get; set; }
+        string NodeName { get; set; }
+        bool Hidden { get; set; }
+
         float X { get; set; }
         float Y { get; set; }
         float Width { get; set; }
         float Height { get; set; }
-            
+
         void AddChild(IViewWrapper view);
         void CreateConstraints(FigmaNode current);
 

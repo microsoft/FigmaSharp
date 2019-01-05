@@ -42,6 +42,34 @@ namespace FigmaSharp
 {
     public static class FigmaExtensions
     {
+        public static NSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
+        {
+            var label = new NSTextField()
+            {
+                StringValue = text ?? "",
+                Font = font ?? GetSystemFont(false),
+                Editable = false,
+                Bordered = false,
+                Bezeled = false,
+                DrawsBackground = false,
+                Selectable = false,
+                Alignment = alignment
+            };
+            label.TranslatesAutoresizingMaskIntoConstraints = false;
+            return label;
+        }
+
+        public static NSFont GetSystemFont(bool bold, float size = 0.0f)
+        {
+            if (size <= 0)
+            {
+                size = (float)NSFont.SystemFontSize;
+            }
+            if (bold)
+                return NSFont.BoldSystemFontOfSize(size);
+            return NSFont.SystemFontOfSize(size);
+        }
+
         #region View Extensions
 
         public static NSColor ToNSColor(this FigmaColor color)

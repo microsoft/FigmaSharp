@@ -41,13 +41,16 @@ using MonoDevelop.Projects;
 using System.IO;
 using FigmaSharp.Services;
 using System.Linq;
-using FigmaSharp.Converters;
+using System.Xml.Linq;
 
 namespace MonoDevelop.Figma
 {
-	public class FigmaViewContent : ViewContent
-	{
-		private FilePath fileName;
+    public class FigmaViewContent : ViewContent
+    {
+        XamarinStudioIdeService ideService;
+        FigmaDesignerSession session;
+
+        private FilePath fileName;
 		NSStackView container;
 
 		public override bool IsReadOnly {
@@ -76,8 +79,6 @@ namespace MonoDevelop.Figma
 
 		Gtk.Widget _content;
 
-        readonly FigmaLocalFileService fileService;
-        readonly FigmaRendererService rendererService;
         readonly IScrollViewWrapper scrollViewWrapper;
 
         public FigmaViewContent (FilePath fileName)
@@ -85,9 +86,6 @@ namespace MonoDevelop.Figma
 		
 			this.fileName = fileName;
 			ContentName = fileName;
-
-            fileService = new FigmaLocalFileService();
-            rendererService = new FigmaRendererService(fileService);
 
             container = new NSStackView ();
            
@@ -125,105 +123,83 @@ namespace MonoDevelop.Figma
 			_content.ShowAll ();
 		}
 
-		void Reload ()
-		{
-            try {
-                var resourcesDirectoryPath = Path.Combine(this.Project.BaseDirectory, "Resources");
-                if (!Directory.Exists(resourcesDirectoryPath))
-                {
-                    throw new DirectoryNotFoundException(resourcesDirectoryPath);
-                }
-
-                fileService.Start(fileName);
-                rendererService.Start();
-
-                ReloadImages(resourcesDirectoryPath);
-
-                var mainNodes = fileService.NodesProcessed
-                    .Where(s => s.ParentView == null)
-                    .ToArray();
-
-                foreach (var items in rendererService.MainViews)
-                {
-                    scrollViewWrapper.AddChild(items.View);
-                }
-
-                Reposition(mainNodes);
-
-                //we need reload after set the content to ensure the scrollview
-                scrollViewWrapper.AdjustToContent();
-
-            } catch (DirectoryNotFoundException ex) {
-                Console.WriteLine ("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
-            } catch (System.Exception ex) {
-				Console.WriteLine (ex);
-			}
-		}
-
-        public void ReloadImages(string resourcesDirectory, string format = ".png")
-        {
-            Console.WriteLine($"Loading images..");
-
-            var imageVectors = fileService.ImageVectors;
-            if (imageVectors?.Count > 0)
-            {
-                foreach (var imageVector in imageVectors)
-                {
-                    try
-                    {
-                        var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Key.id);
-                        string filePath = Path.Combine(resourcesDirectory, string.Concat(recoveredKey, format));
-
-                        if (!File.Exists(filePath))
-                        {
-                            throw new FileNotFoundException(filePath);
-                        }
-
-                        var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Key);
-                        var wrapper = processedNode.View as IImageViewWrapper;
-
-                        var image = new ImageWrapper (new NSImage(filePath));
-                        wrapper.SetImage(image);
-                    }
-                    catch (FileNotFoundException ex)
-                    {
-                        Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    //FigmaImages.Add(wrapper);
-                }
-            }
-        }
-
-        public void Reposition(ProcessedNode[] mainNodes)
-        {
-            //Alignment 
-            const int Margin = 20;
-            float currentX = Margin;
-            foreach (var processedNode in mainNodes)
-            {
-                var view = processedNode.View;
-
-                scrollViewWrapper.AddChild(view);
-
-                view.X = currentX;
-                view.Y = 0; //currentView.Height + currentHeight;
-                currentX += view.Width + Margin;
-            }
-        }
-
         void Editor_TextChanged (object sender, Core.Text.TextChangeEventArgs e)
 		{
 
 		}
 
+        public override Task Load(FileOpenInformation fileOpenInformation)
+        {
+            fileName = fileOpenInformation.FileName;
+
+            if (session == null)
+            {
+                CreateSession();
+                IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
+                IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
+            }
+
+            session.Reload(fileName, Project.BaseDirectory, scrollViewWrapper);
+
+            ContentName = fileName;
+            return Task.FromResult(true);
+        }
+
+        private void CreateSession()
+        {
+            ideService = new XamarinStudioIdeService(Project);
+
+            session = new FigmaDesignerSession();
+            session.ModifiedChanged += HandleModifiedChanged;
+        }
+
+        private void HandleModifiedChanged(object sender, EventArgs e)
+        {
+            if (session == null)
+                return;
+
+            IsDirty = session.IsModified;
+        }
+
+        private void OnDocumentOpened(object sender, DocumentEventArgs e)
+        {
+            UpdateLayout();
+        }
+
+        private void OnActiveDocumentChanged(object sender, EventArgs e)
+        {
+            UpdateLayout();
+        }
+
+        string lastLayout;
+
+        private void UpdateLayout()
+        {
+            var current = IdeApp.Workbench.ActiveDocument?.GetContent<string>();
+            if (current == null)
+            {
+                if (lastLayout != null && IdeApp.Workbench.CurrentLayout == "Visual Design")
+                    IdeApp.Workbench.CurrentLayout = lastLayout;
+                lastLayout = null;
+            }
+            else
+            {
+                if (IdeApp.Workbench.CurrentLayout != "Visual Design")
+                {
+                    if (lastLayout == null)
+                    {
+                        lastLayout = IdeApp.Workbench.CurrentLayout;
+                        IdeApp.Workbench.CurrentLayout = "Visual Design";
+                    }
+                }
+                //current.widget.SetFocus();
+            }
+        }
+
         protected override void OnSetProject(Project project)
         {
             base.OnSetProject(project);
-            Reload();
+           
         }
 
         public override void Dispose ()
@@ -233,5 +209,16 @@ namespace MonoDevelop.Figma
 		}
 
 		public override Control Control => _content;
-	}
+    }
+
+    class XamarinStudioIdeService
+    {
+        private Project project;
+
+        public XamarinStudioIdeService(Project project)
+        {
+            this.project = project;
+        }
+    }
+
 }
