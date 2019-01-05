@@ -1,4 +1,6 @@
-﻿using AppKit;
+﻿using System;
+using AppKit;
+using FigmaSharp;
 
 namespace StandaloneDesigner
 {
@@ -6,6 +8,7 @@ namespace StandaloneDesigner
     {
         static void Main(string[] args)
         {
+            FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
             NSApplication.Init();
             NSApplication.Main(args);
         }

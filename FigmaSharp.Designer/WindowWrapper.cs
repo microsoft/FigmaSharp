@@ -8,8 +8,8 @@ using System.Threading;
 
 namespace FigmaSharp.Designer
 {
-
-    class WindowWrapper : NSWindow, IWindowWrapper
+    [Register("WindowWrapper")]
+    public class WindowWrapper : NSWindow, IWindowWrapper
     {
         public WindowWrapper()
         {

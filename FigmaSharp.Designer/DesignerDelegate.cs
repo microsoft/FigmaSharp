@@ -141,7 +141,7 @@ namespace FigmaSharp.Designer
             var selectedView = GetHoverSelectedView();
             if (selectedView != null)
             {
-                HoverSelecting?.Invoke(this, new MacViewWrapper(selectedView));
+                HoverSelecting?.Invoke(this, new ViewWrapper(selectedView));
             }
 
         }

@@ -9,18 +9,12 @@ using System.CodeDom.Compiler;
 
 namespace StandaloneDesigner
 {
-	[Register ("ViewController")]
-	partial class ViewController
+	[Register ("ContentScrollView")]
+	partial class ContentScrollView
 	{
-		[Outlet]
-		StandaloneDesigner.ContentScrollView scrollview { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (scrollview != null) {
-				scrollview.Dispose ();
-				scrollview = null;
-			}
 		}
 	}
 }

@@ -33,9 +33,8 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSurface
     {
+        public event EventHandler ReloadFinished;
         internal IDesignerDelegate Delegate;
-
-        IScrollViewWrapper scrollViewWrapper;
 
         FigmaDesignerSession session;
         public FigmaDesignerSession Session
@@ -57,6 +56,11 @@ namespace FigmaSharp.Designer
                 session = value;
                 session.ReloadFinished += Session_ReloadFinished;
             }
+        }
+
+        void Session_ReloadFinished(object sender, EventArgs e)
+        {
+            ReloadFinished?.Invoke(this, EventArgs.Empty);
         }
 
         IObjectWrapper nativeObject;
@@ -142,40 +146,7 @@ namespace FigmaSharp.Designer
             IsFirstResponderOverlayVisible = IsFirstResponderOverlayVisible;
         }
 
-        void Session_ReloadFinished(object sender, EventArgs e)
-        {
 
-            foreach (var items in session.MainViews)
-            {
-                scrollViewWrapper.AddChild(items.View);
-            }
-
-            var mainNodes = session.ProcessedNodes
-               .Where(s => s.ParentView == null)
-               .ToArray();
-
-            Reposition(mainNodes);
-
-            //we need reload after set the content to ensure the scrollview
-            scrollViewWrapper.AdjustToContent();
-        }
-
-        public void Reposition(ProcessedNode[] mainNodes)
-        {
-            //Alignment 
-            const int Margin = 20;
-            float currentX = Margin;
-            foreach (var processedNode in mainNodes)
-            {
-                var view = processedNode.View;
-
-                scrollViewWrapper.AddChild(view);
-
-                view.X = currentX;
-                view.Y = 0; //currentView.Height + currentHeight;
-                currentX += view.Width + Margin;
-            }
-        }
 
         public void ChangeFocusedView(IObjectWrapper nextView)
         {
