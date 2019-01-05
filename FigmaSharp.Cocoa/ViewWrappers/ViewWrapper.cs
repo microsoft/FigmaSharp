@@ -150,5 +150,10 @@ namespace FigmaSharp
                 ((NSView)view.NativeObject).RemoveFromSuperview();
             }
         }
+
+        public void MakeFirstResponder()
+        {
+            nativeView.Window.MakeFirstResponder(nativeView);
+        }
     }
 }

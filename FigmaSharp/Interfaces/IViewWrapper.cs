@@ -52,6 +52,7 @@ namespace FigmaSharp
         void RemoveChild(IViewWrapper view);
 
         void ClearSubviews();
-      
+
+        void MakeFirstResponder();
     }
 }

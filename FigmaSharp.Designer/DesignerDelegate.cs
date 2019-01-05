@@ -23,7 +23,6 @@ namespace FigmaSharp.Designer
             }
         }
 
-
         #region Hover selection
 
         public void StartHoverSelection(IWindowWrapper currentWindow)
@@ -32,10 +31,25 @@ namespace FigmaSharp.Designer
 
             var nativeWindow = currentWindow.NativeObject as NSWindow;
 
-            endSelection = false;
-
             clickMonitor = NSEvent.AddLocalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDown, (NSEvent theEvent) => {
-                StopHoverSelection();
+
+                    var point = nativeWindow.ConvertBaseToScreen(theEvent.LocationInWindow);
+                    if (!nativeWindow.AccessibilityFrame.Contains(point))
+                    {
+                        return null;
+                    }
+                    containerViews.Clear();
+                    AddContainerViews(nativeWindow.ContentView, point, containerViews);
+
+                    if (containerViews.Count > 0)
+                    {
+                        index = containerViews.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
+                //StopHoverSelection();
                 var selected = GetHoverSelectedView();
                 if (selected != null)
                 {
@@ -46,36 +60,6 @@ namespace FigmaSharp.Designer
                     HoverSelectionEnded?.Invoke(this, null);
                 }
 
-                return null;
-            });
-
-            moveMonitor = NSEvent.AddLocalMonitorForEventsMatchingMask(NSEventMask.MouseMoved, (NSEvent theEvent) => {
-                if (endSelection)
-                {
-                    return null;
-                }
-                var point = nativeWindow.ConvertBaseToScreen(theEvent.LocationInWindow);
-                if (!nativeWindow.AccessibilityFrame.Contains(point))
-                {
-                    return null;
-                }
-                containerViews.Clear();
-                AddContainerViews(nativeWindow.ContentView, point, containerViews);
-
-                if (containerViews.Count > 0)
-                {
-                    index = containerViews.Count - 1;
-                }
-                else
-                {
-                    index = -1;
-                }
-
-                var selectedView = GetHoverSelectedView();
-                if (selectedView != null)
-                {
-                    HoverSelecting?.Invoke(this, new ViewWrapper(selectedView));
-                }
                 return null;
             });
         }
@@ -111,10 +95,6 @@ namespace FigmaSharp.Designer
 
         public void DeepHoverSelection()
         {
-            if (endSelection)
-            {
-                return;
-            }
             if (index == 0)
             {
                 return;
@@ -129,10 +109,6 @@ namespace FigmaSharp.Designer
 
         public void PreviousHoverSelection()
         {
-            if (endSelection)
-            {
-                return;
-            }
             if (index >= containerViews.Count - 2)
             {
                 return;
@@ -143,31 +119,33 @@ namespace FigmaSharp.Designer
             {
                 HoverSelecting?.Invoke(this, new ViewWrapper(selectedView));
             }
-
         }
 
         public void StopHoverSelection()
         {
-            endSelection = true;
             if (clickMonitor != null)
             {
                 NSEvent.RemoveMonitor(clickMonitor);
                 clickMonitor = null;
             }
 
-            if (moveMonitor != null)
-            {
-                NSEvent.RemoveMonitor(moveMonitor);
-                moveMonitor = null;
-            }
+            //if (moveMonitor != null)
+            //{
+            //    NSEvent.RemoveMonitor(moveMonitor);
+            //    moveMonitor = null;
+            //}
         }
 
         int index;
-        bool endSelection;
-        NSObject clickMonitor, moveMonitor;
+        NSObject clickMonitor;
         List<NSView> containerViews = new List<NSView>();
 
         NSView GetHoverSelectedView() => index == -1 || index >= containerViews.Count ? null : containerViews[index];
+
+        public IBorderedWindow CreateOverlayWindow()
+        {
+            return new BorderedWindow(CGRect.Empty, NSColor.Blue);
+        }
 
         public event EventHandler<IViewWrapper> HoverSelecting;
         public event EventHandler<IViewWrapper> HoverSelectionEnded;

@@ -30,24 +30,27 @@ namespace StandaloneDesigner
 
             // Do any additional setup after loading the view.
             session = new FigmaDesignerSession();
-            surface = new FigmaDesignerSurface
+            surface = new FigmaDesignerSurface (figmaDelegate)
             {
                 Session = session
             };
 
-
             session.ReloadFinished += Session_ReloadFinished;
-
          
             var directory = Environment.GetEnvironmentVariable("DIRECTORY");
 
             var file = Path.Combine (directory, Environment.GetEnvironmentVariable("FILE"));
             session.Reload(file, directory);
+
+            var window = NSApplication.SharedApplication.Windows.FirstOrDefault();
+
+            surface.SetWindow(window as WindowWrapper);
+
+            surface.StartHoverSelection();
         }
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {
-
             foreach (var items in session.MainViews)
             {
                 scrollViewWrapper.AddChild(items.View);
@@ -62,6 +65,7 @@ namespace StandaloneDesigner
             //we need reload after set the content to ensure the scrollview
             scrollViewWrapper.AdjustToContent();
         }
+        
         public void Reposition(ProcessedNode[] mainNodes)
         {
             //Alignment 
@@ -78,14 +82,6 @@ namespace StandaloneDesigner
             }
         }
 
-        public override bool BecomeFirstResponder()
-        {
-            if (View.Window != null)
-            {
-                figmaDelegate.StartHoverSelection(View.Window as WindowWrapper);
-            }
-            return base.BecomeFirstResponder();
-        }
         public override NSObject RepresentedObject
         {
             get
