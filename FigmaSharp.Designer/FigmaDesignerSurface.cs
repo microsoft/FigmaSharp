@@ -199,5 +199,12 @@ namespace FigmaSharp.Designer
         {
             Delegate.StartHoverSelection(selectedWindow);
         }
+
+        public void StopHover()
+        {
+            Delegate.StopHoverSelection();
+            IsViewSelected = false;
+            viewSelectedOverlayWindow.Close();
+        }
     }
 }

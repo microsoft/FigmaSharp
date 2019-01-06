@@ -35,7 +35,6 @@ namespace MonoDevelop.Figma
 {
     public class FigmaDesignerPropertyPad : Gtk.VBox
     {
-      
         static FigmaDesignerPropertyPad instance;
 
         public static FigmaDesignerPropertyPad Instance
@@ -56,14 +55,27 @@ namespace MonoDevelop.Figma
             }
         }
 
+        public void Select(object data)
+        {
+            propertyPanel.Select(data);
+        }
+
+        FigmaPropertyPanel propertyPanel;
+
         private FigmaDesignerPropertyPad(FigmaDesignerSession service)
         {
-            var label = new NSTextField() { StringValue = "dsadsadads " };
-            var widget = GtkMacInterop.NSViewToGtkWidget(label);
+            propertyPanel = new FigmaPropertyPanel();
+            var widget = GtkMacInterop.NSViewToGtkWidget(propertyPanel.View);
             PackStart(widget, true, true, 0);
 
             ShowAll();
+
+            //propertyPanel.Initialize();
+        }
+
+        public void Initialize()
+        {
+            propertyPanel.Initialize();
         }
     }
-
 }

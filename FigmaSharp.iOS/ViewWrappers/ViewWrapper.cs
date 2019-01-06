@@ -87,6 +87,10 @@ namespace FigmaSharp
             }
         }
 
+        public string Identifier { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string NodeName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public bool Hidden { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         protected UIView nativeView;
 
         public ViewWrapper() : this (new UIView ())
@@ -133,6 +137,13 @@ namespace FigmaSharp
                 ((UIView)view.NativeObject).RemoveFromSuperview();
             }
         }
-       
+
+        public void MakeFirstResponder()
+        {
+            if (nativeView.CanBecomeFirstResponder)
+            {
+                nativeView.BecomeFirstResponder();
+            }
+        }
     }
 }
