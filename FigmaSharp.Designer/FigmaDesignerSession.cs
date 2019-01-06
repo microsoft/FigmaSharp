@@ -128,6 +128,12 @@ namespace FigmaSharp.Designer
             var processed = ProcessedNodes.FirstOrDefault(s => s.FigmaNode == e);
             return processed?.View;
         }
+
+        public FigmaNode GetModel(IViewWrapper e)
+        {
+            var processed = ProcessedNodes.FirstOrDefault(s => s.View.NativeObject == e.NativeObject);
+            return processed?.FigmaNode;
+        }
     }
 
 }

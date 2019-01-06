@@ -61,6 +61,11 @@ namespace FigmaSharp
                 nativeView.Height = (int)value;
             }
         }
+
+        public string Identifier { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string NodeName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Hidden { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public virtual void AddChild(IViewWrapper view)
         {
             if (children.Contains(view))
@@ -94,6 +99,11 @@ namespace FigmaSharp
                 if (item is Control control)
                 nativeView.Controls.Remove(control);
             }
+        }
+
+        public void MakeFirstResponder()
+        {
+
         }
     }
 }

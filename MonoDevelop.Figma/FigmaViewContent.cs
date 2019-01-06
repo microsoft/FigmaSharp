@@ -45,40 +45,50 @@ using System.Xml.Linq;
 using FigmaSharp.Designer;
 using MonoDevelop.DesignerSupport;
 using Gtk;
+using System.ComponentModel;
 
 namespace MonoDevelop.Figma
 {
     public class FigmaViewContent : ViewContent, IOutlinedDocument, ICustomPropertyPadProvider
     {
-        XamarinStudioIdeService ideService;
-
         FigmaDesignerSession session;
         IDesignerDelegate figmaDelegate;
         FigmaDesignerSurface surface;
 
+        FigmaDesignerOutlinePad outlinePad;
+        FigmaNodeView data;
+
         private FilePath fileName;
         NSStackView container;
 
-        public override bool IsReadOnly {
-            get {
+        public override bool IsReadOnly
+        {
+            get
+            {
                 return true;
             }
         }
 
-        public override bool IsFile {
-            get {
+        public override bool IsFile
+        {
+            get
+            {
                 return true;
             }
         }
 
-        public override string TabPageLabel {
-            get {
+        public override string TabPageLabel
+        {
+            get
+            {
                 return fileName.FileName;
             }
         }
 
-        public override bool IsViewOnly {
-            get {
+        public override bool IsViewOnly
+        {
+            get
+            {
                 return true;
             }
         }
@@ -87,14 +97,14 @@ namespace MonoDevelop.Figma
 
         readonly IScrollViewWrapper scrollViewWrapper;
 
-        public FigmaViewContent (FilePath fileName)
+        public FigmaViewContent(FilePath fileName)
         {
-        
+
             this.fileName = fileName;
             ContentName = fileName;
 
-            container = new NSStackView ();
-           
+            container = new NSStackView();
+
             container.Spacing = 10;
             container.WantsLayer = true;
             container.Layer.BackgroundColor = NSColor.DarkGray.CGColor;
@@ -102,7 +112,7 @@ namespace MonoDevelop.Figma
             container.Distribution = NSStackViewDistribution.Fill;
             container.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
 
-            _content = GtkMacInterop.NSViewToGtkWidget (container);
+            _content = GtkMacInterop.NSViewToGtkWidget(container);
             _content.CanFocus = true;
             _content.Sensitive = true;
 
@@ -118,18 +128,18 @@ namespace MonoDevelop.Figma
 
             scrollViewWrapper = new ScrollViewWrapper(scrollView);
 
-            var contentView = new FlippedView ();
+            var contentView = new FlippedView();
             contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
             scrollView.DocumentView = contentView;
 
-            container.AddArrangedSubview (scrollView);
+            container.AddArrangedSubview(scrollView);
 
             //IdeApp.Workbench.ActiveDocument.Editor.TextChanged += Editor_TextChanged;
 
-            _content.ShowAll ();
+            _content.ShowAll();
         }
 
-        void Editor_TextChanged (object sender, Core.Text.TextChangeEventArgs e)
+        void Editor_TextChanged(object sender, Core.Text.TextChangeEventArgs e)
         {
 
         }
@@ -141,8 +151,6 @@ namespace MonoDevelop.Figma
             if (session == null)
             {
                 figmaDelegate = new DesignerDelegate();
-
-                ideService = new XamarinStudioIdeService(Project);
 
                 session = new FigmaDesignerSession();
                 session.ModifiedChanged += HandleModifiedChanged;
@@ -156,7 +164,7 @@ namespace MonoDevelop.Figma
                 surface.FocusedViewChanged += Surface_FocusedViewChanged;
 
                 var window = NSApplication.SharedApplication.MainWindow;
-                surface.SetWindow(new WindowInternalWrapper (window));
+                surface.SetWindow(new WindowInternalWrapper(window));
                 surface.StartHoverSelection();
 
                 IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
@@ -171,7 +179,18 @@ namespace MonoDevelop.Figma
 
         void Surface_FocusedViewChanged(object sender, IViewWrapper e)
         {
-            //We want get the model based in the view selected
+            if (data == null && outlinePad != null)
+            {
+                data = new FigmaNodeView(session.Response.document);
+                figmaDelegate.ConvertToNodes(session.Response.document, data);
+                outlinePad.GenerateTree(data);
+            }
+           
+            //if (propertyPad != null)
+            //{
+            //    var model = session.GetModel(e);
+            //    propertyPad.Select(model);
+            //}
         }
 
         void Session_ReloadFinished(object sender, EventArgs e)
@@ -250,20 +269,24 @@ namespace MonoDevelop.Figma
             }
         }
 
-        public override void Dispose ()
+        public override void Dispose()
         {
-            IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
-            base.Dispose ();
+            surface.StopHover();
+            if (IdeApp.Workbench.ActiveDocument != null)
+            {
+                IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
+            }
+            base.Dispose();
         }
-
-        FigmaNodeView data;
+       
         public Widget GetOutlineWidget()
         {
             data = new FigmaNodeView(session.Response.document);
             figmaDelegate.ConvertToNodes(session.Response.document, data);
 
-            var outlinePad = FigmaDesignerOutlinePad.Instance;
+            outlinePad = FigmaDesignerOutlinePad.Instance;
             outlinePad.GenerateTree(data);
+
             outlinePad.RaiseFirstResponder += OutlinePad_RaiseFirstResponder;
             outlinePad.RaiseDeleteItem += OutlinePad_RaiseDeleteItem; ;
             return outlinePad;
@@ -288,14 +311,17 @@ namespace MonoDevelop.Figma
 
         public void ReleaseOutlineWidget()
         {
-           // throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
+
+        FigmaDesignerPropertyPad propertyPad;
 
         public Widget GetCustomPropertyWidget()
         {
             FigmaDesignerPropertyPad.Initialize(session);
+            propertyPad = FigmaDesignerPropertyPad.Instance;
             //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
-            return FigmaDesignerPropertyPad.Instance;
+            return propertyPad;
         }
 
         public void DisposeCustomPropertyWidget()
@@ -305,15 +331,4 @@ namespace MonoDevelop.Figma
 
         public override Control Control => _content;
     }
-
-    class XamarinStudioIdeService
-    {
-        private Project project;
-
-        public XamarinStudioIdeService(Project project)
-        {
-            this.project = project;
-        }
-    }
-
 }
