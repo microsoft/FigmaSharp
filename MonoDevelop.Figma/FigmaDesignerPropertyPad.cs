@@ -26,22 +26,40 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using AppKit;
+using FigmaSharp.Designer;
+using Xwt.GtkBackend;
 
-namespace FigmaSharp.Designer
+namespace MonoDevelop.Figma
 {
-    public interface IDesignerDelegate
+    public class FigmaDesignerPropertyPad : Gtk.VBox
     {
-        void RemoveAllErrorWindows(IWindowWrapper windowWrapper);
-        void StartHoverSelection(IWindowWrapper currentWindow);
-        void DeepHoverSelection();
-        void PreviousHoverSelection();
-        void StopHoverSelection();
-        IBorderedWindow CreateOverlayWindow();
+        static FigmaDesignerPropertyPad instance;
 
-        event EventHandler<IViewWrapper> HoverSelecting;
+        public static FigmaDesignerPropertyPad Instance
+        {
+            get
+            {
+                if (instance == null)
+                    throw new InvalidOperationException("Needs to be initialized first");
+                return instance;
+            }
+        }
 
-        event EventHandler<IViewWrapper> HoverSelectionEnded;
+        public static void Initialize(FigmaDesignerSession service)
+        {
+            if (instance == null)
+                instance = new FigmaDesignerPropertyPad(service);
+        }
 
-        void ConvertToNodes(FigmaNode figmaNode, FigmaNodeView node);
+        private FigmaDesignerPropertyPad(FigmaDesignerSession service)
+        {
+            var label = new NSTextField() { StringValue = "dsadsadads " };
+            var widget = GtkMacInterop.NSViewToGtkWidget(label);
+            PackStart(widget, true, true, 0);
+
+            ShowAll();
+        }
     }
+
 }

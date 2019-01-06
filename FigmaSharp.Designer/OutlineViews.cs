@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using AppKit;
-using FigmaSharp;
 using Foundation;
 
-namespace MonoDevelop.Figma
+namespace FigmaSharp
 {
-    class OutlineView : NSOutlineView
+    public class OutlineView : NSOutlineView
     {
         public event EventHandler<ushort> KeyPress;
 
@@ -106,6 +105,7 @@ namespace MonoDevelop.Figma
             Node = new Node ("test");
         }
     }
+
 
     public class NodeView : Node
     {

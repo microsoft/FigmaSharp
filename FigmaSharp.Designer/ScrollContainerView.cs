@@ -25,23 +25,20 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System;
 
-namespace FigmaSharp.Designer
+using AppKit;
+
+namespace MonoDevelop.Figma
 {
-    public interface IDesignerDelegate
+    public class ScrollContainerView : NSScrollView
     {
-        void RemoveAllErrorWindows(IWindowWrapper windowWrapper);
-        void StartHoverSelection(IWindowWrapper currentWindow);
-        void DeepHoverSelection();
-        void PreviousHoverSelection();
-        void StopHoverSelection();
-        IBorderedWindow CreateOverlayWindow();
-
-        event EventHandler<IViewWrapper> HoverSelecting;
-
-        event EventHandler<IViewWrapper> HoverSelectionEnded;
-
-        void ConvertToNodes(FigmaNode figmaNode, FigmaNodeView node);
+        public ScrollContainerView(NSView content)
+        {
+            ContentInsets = new NSEdgeInsets(0, 0, 0, 0);
+            HasVerticalScroller = true;
+            HasHorizontalScroller = false;
+            DocumentView = content;
+        }
     }
+
 }

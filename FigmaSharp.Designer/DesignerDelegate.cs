@@ -148,6 +148,47 @@ namespace FigmaSharp.Designer
             return new BorderedWindow(CGRect.Empty, NSColor.Blue);
         }
 
+        public void ConvertToNodes(FigmaNode figmaNode, FigmaNodeView node)
+        {
+
+            var current = new FigmaNodeView(figmaNode);
+            node.AddChild(current);
+
+            if (figmaNode is FigmaDocument document)
+            {
+                if (document.children != null)
+                {
+                    foreach (var item in document.children)
+                    {
+                        try
+                        {
+                            ConvertToNodes(item, current);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                    }
+                }
+                return;
+            }
+
+            if (figmaNode is IFigmaNodeContainer container)
+            {
+                foreach (var item in container.children)
+                {
+                    try
+                    {
+                        ConvertToNodes(item, current);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+        }
+
         public event EventHandler<IViewWrapper> HoverSelecting;
         public event EventHandler<IViewWrapper> HoverSelectionEnded;
 

@@ -43,6 +43,8 @@ namespace FigmaSharp.Designer
 
         public bool IsModified { get; internal set; }
 
+        public FigmaResponse Response => fileService.Response;
+
         public List<ProcessedNode> ProcessedNodes => fileService.NodesProcessed;
         public ProcessedNode[] MainViews => rendererService.MainViews;
 
@@ -64,9 +66,9 @@ namespace FigmaSharp.Designer
                     throw new DirectoryNotFoundException(resourcesDirectoryPath);
                 }
 
+
                 fileService.Start(fileName);
                 rendererService.Start();
-
                 ReloadImages(resourcesDirectoryPath);
 
                 ReloadFinished?.Invoke(this, EventArgs.Empty);
