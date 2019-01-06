@@ -57,64 +57,64 @@ namespace MonoDevelop.Figma
         FigmaDesignerSurface surface;
 
         private FilePath fileName;
-		NSStackView container;
+        NSStackView container;
 
-		public override bool IsReadOnly {
-			get {
-				return true;
-			}
-		}
+        public override bool IsReadOnly {
+            get {
+                return true;
+            }
+        }
 
-		public override bool IsFile {
-			get {
-				return true;
-			}
-		}
+        public override bool IsFile {
+            get {
+                return true;
+            }
+        }
 
-		public override string TabPageLabel {
-			get {
-				return fileName.FileName;
-			}
-		}
+        public override string TabPageLabel {
+            get {
+                return fileName.FileName;
+            }
+        }
 
-		public override bool IsViewOnly {
-			get {
-				return true;
-			}
-		}
+        public override bool IsViewOnly {
+            get {
+                return true;
+            }
+        }
 
-		Gtk.Widget _content;
+        Gtk.Widget _content;
 
         readonly IScrollViewWrapper scrollViewWrapper;
 
         public FigmaViewContent (FilePath fileName)
-		{
-		
-			this.fileName = fileName;
-			ContentName = fileName;
+        {
+        
+            this.fileName = fileName;
+            ContentName = fileName;
 
             container = new NSStackView ();
            
             container.Spacing = 10;
-			container.WantsLayer = true;
-			container.Layer.BackgroundColor = NSColor.DarkGray.CGColor;
+            container.WantsLayer = true;
+            container.Layer.BackgroundColor = NSColor.DarkGray.CGColor;
 
-			container.Distribution = NSStackViewDistribution.Fill;
-			container.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
+            container.Distribution = NSStackViewDistribution.Fill;
+            container.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
 
-			_content = GtkMacInterop.NSViewToGtkWidget (container);
-			_content.CanFocus = true;
-			_content.Sensitive = true;
+            _content = GtkMacInterop.NSViewToGtkWidget (container);
+            _content.CanFocus = true;
+            _content.Sensitive = true;
 
-			var scrollView = new FlippedScrollView()
+            var scrollView = new FlippedScrollView()
             {
-				HasVerticalScroller = true,
-				HasHorizontalScroller = true,
-			};
+                HasVerticalScroller = true,
+                HasHorizontalScroller = true,
+            };
 
-			scrollView.AutohidesScrollers = false;
-			scrollView.BackgroundColor = NSColor.DarkGray;
-			scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
+            scrollView.AutohidesScrollers = false;
+            scrollView.BackgroundColor = NSColor.DarkGray;
+            scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
 
             scrollViewWrapper = new ScrollViewWrapper(scrollView);
 
@@ -124,15 +124,15 @@ namespace MonoDevelop.Figma
 
             container.AddArrangedSubview (scrollView);
 
-			//IdeApp.Workbench.ActiveDocument.Editor.TextChanged += Editor_TextChanged;
+            //IdeApp.Workbench.ActiveDocument.Editor.TextChanged += Editor_TextChanged;
 
-			_content.ShowAll ();
-		}
+            _content.ShowAll ();
+        }
 
         void Editor_TextChanged (object sender, Core.Text.TextChangeEventArgs e)
-		{
+        {
 
-		}
+        }
 
         public override Task Load(FileOpenInformation fileOpenInformation)
         {
@@ -251,9 +251,9 @@ namespace MonoDevelop.Figma
         }
 
         public override void Dispose ()
-		{
-			IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
-			base.Dispose ();
+        {
+            IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
+            base.Dispose ();
         }
 
         FigmaNodeView data;
@@ -261,8 +261,24 @@ namespace MonoDevelop.Figma
         {
             data = new FigmaNodeView(session.Response.document);
             figmaDelegate.ConvertToNodes(session.Response.document, data);
-            FigmaDesignerOutlinePad.Instance.GenerateTree(data);
-            return FigmaDesignerOutlinePad.Instance;
+
+            var outlinePad = FigmaDesignerOutlinePad.Instance;
+            outlinePad.GenerateTree(data);
+            outlinePad.RaiseFirstResponder += OutlinePad_RaiseFirstResponder;
+            outlinePad.RaiseDeleteItem += OutlinePad_RaiseDeleteItem; ;
+            return outlinePad;
+        }
+
+        void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
+        {
+
+        }
+
+
+        void OutlinePad_RaiseFirstResponder(object sender, FigmaNode e)
+        {
+            var view = session.GetViewWrapper(e);
+            surface.ChangeFocusedView(view);
         }
 
         public IEnumerable<Widget> GetToolbarWidgets()

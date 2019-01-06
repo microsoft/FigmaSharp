@@ -122,6 +122,12 @@ namespace FigmaSharp.Designer
         }
 
         public event EventHandler ModifiedChanged;
+
+        public IViewWrapper GetViewWrapper(FigmaNode e)
+        {
+            var processed = ProcessedNodes.FirstOrDefault(s => s.FigmaNode == e);
+            return processed?.View;
+        }
     }
 
 }
