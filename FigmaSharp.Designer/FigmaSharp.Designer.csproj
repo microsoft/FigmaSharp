@@ -62,6 +62,10 @@
     <Compile Include="IDesignerDelegate.cs" />
     <Compile Include="BorderedWindow.cs" />
     <Compile Include="WindowWrapper.cs" />
+    <Compile Include="FigmaNodeView.cs" />
+    <Compile Include="OutlineViews.cs" />
+    <Compile Include="OutlinePanel.cs" />
+    <Compile Include="ScrollContainerView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">

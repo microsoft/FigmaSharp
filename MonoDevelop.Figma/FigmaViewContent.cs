@@ -43,13 +43,18 @@ using FigmaSharp.Services;
 using System.Linq;
 using System.Xml.Linq;
 using FigmaSharp.Designer;
+using MonoDevelop.DesignerSupport;
+using Gtk;
 
 namespace MonoDevelop.Figma
 {
-    public class FigmaViewContent : ViewContent
+    public class FigmaViewContent : ViewContent, IOutlinedDocument, ICustomPropertyPadProvider
     {
         XamarinStudioIdeService ideService;
+
         FigmaDesignerSession session;
+        IDesignerDelegate figmaDelegate;
+        FigmaDesignerSurface surface;
 
         private FilePath fileName;
 		NSStackView container;
@@ -148,6 +153,8 @@ namespace MonoDevelop.Figma
                     Session = session
                 };
 
+                surface.FocusedViewChanged += Surface_FocusedViewChanged;
+
                 var window = NSApplication.SharedApplication.MainWindow;
                 surface.SetWindow(new WindowInternalWrapper (window));
                 surface.StartHoverSelection();
@@ -161,9 +168,11 @@ namespace MonoDevelop.Figma
             ContentName = fileName;
             return Task.FromResult(true);
         }
-        IDesignerDelegate figmaDelegate;
 
-        FigmaDesignerSurface surface;
+        void Surface_FocusedViewChanged(object sender, IViewWrapper e)
+        {
+            //We want get the model based in the view selected
+        }
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {
@@ -241,19 +250,44 @@ namespace MonoDevelop.Figma
             }
         }
 
-        protected override void OnSetProject(Project project)
-        {
-            base.OnSetProject(project);
-           
-        }
-
         public override void Dispose ()
 		{
 			IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
 			base.Dispose ();
-		}
+        }
 
-		public override Control Control => _content;
+        FigmaNodeView data;
+        public Widget GetOutlineWidget()
+        {
+            data = new FigmaNodeView(session.Response.document);
+            figmaDelegate.ConvertToNodes(session.Response.document, data);
+            FigmaDesignerOutlinePad.Instance.GenerateTree(data);
+            return FigmaDesignerOutlinePad.Instance;
+        }
+
+        public IEnumerable<Widget> GetToolbarWidgets()
+        {
+            yield break;
+        }
+
+        public void ReleaseOutlineWidget()
+        {
+           // throw new NotImplementedException();
+        }
+
+        public Widget GetCustomPropertyWidget()
+        {
+            FigmaDesignerPropertyPad.Initialize(session);
+            //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
+            return FigmaDesignerPropertyPad.Instance;
+        }
+
+        public void DisposeCustomPropertyWidget()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public override Control Control => _content;
     }
 
     class XamarinStudioIdeService

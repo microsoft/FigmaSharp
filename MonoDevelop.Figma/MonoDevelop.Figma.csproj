@@ -14,4 +14,7 @@
   <ItemGroup>
     <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
   </ItemGroup>
+      <ItemGroup>
+    <AddinReference Include="MonoDevelop.DesignerSupport" />
+  </ItemGroup>
 </Project>

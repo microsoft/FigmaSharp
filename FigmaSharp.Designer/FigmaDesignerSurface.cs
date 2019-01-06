@@ -33,6 +33,8 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSurface
     {
+        public event EventHandler<IViewWrapper> FocusedViewChanged;
+
         public event EventHandler ReloadFinished;
         internal IDesignerDelegate Delegate;
 
@@ -137,21 +139,13 @@ namespace FigmaSharp.Designer
 
             RefreshOverlaysVisibility();
 
-            RefreshNeeded();
-
             this.selectedWindow.ResizeRequested += OnRespositionViews;
             this.selectedWindow.MovedRequested += OnRespositionViews;
             this.selectedWindow.LostFocus += OnRespositionViews;
         }
 
-        void RefreshNeeded()
-        {
-            //AccessibilityService.Current.ScanErrors(Delegate, selectedWindow, ViewMode);
-        }
-
         void OnRespositionViews(object sender, EventArgs e)
         {
-            //var currentWidth = selectedWindow.FrameWidth;
             RefreshOverlaysVisibility();
         }
 
@@ -170,13 +164,12 @@ namespace FigmaSharp.Designer
 
             nativeObject = nextView;
 
-            RefreshWindows();
             RefreshOverlaysVisibility();
 
             if (SelectedView != null)
             {
                 //toolbarWindow.ChangeView(this, SelectedView);
-                //FocusedViewChanged?.Invoke(this, SelectedView);
+                FocusedViewChanged?.Invoke(this, SelectedView);
             }
         }
 
@@ -189,14 +182,6 @@ namespace FigmaSharp.Designer
             IsFirstResponderOverlayVisible = true;
             ChangeFocusedView(viewWrapper);
             //viewWrapper.MakeFirstResponder();
-        }
-
-        void RefreshWindows()
-        {
-            //toolbarWindow.AlignTop(selectedWindow, WindowMargin);
-            //inspectorWindow.AlignRight(selectedWindow, WindowMargin);
-            //accessibilityWindow.AlignLeft(selectedWindow, WindowMargin);
-            //inspectorWindow.GenerateStatusView(SelectedView, Delegate, ViewMode);
         }
 
         public void StartHoverSelection()
