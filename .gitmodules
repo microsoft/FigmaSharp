@@ -1,0 +1,3 @@
+[submodule "external/Xamarin.PropertyEditing"]
+	path = external/Xamarin.PropertyEditing
+	url = https://github.com/xamarin/Xamarin.PropertyEditing
