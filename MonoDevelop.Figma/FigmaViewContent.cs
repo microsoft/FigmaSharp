@@ -56,42 +56,12 @@ namespace MonoDevelop.Figma
         FigmaDesignerSurface surface;
 
         FigmaDesignerOutlinePad outlinePad;
-        FigmaNodeView data;
 
         private FilePath fileName;
         NSStackView container;
 
-        public override bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override bool IsFile
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override string TabPageLabel
-        {
-            get
-            {
-                return fileName.FileName;
-            }
-        }
-
-        public override bool IsViewOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool IsFile => true;
+        public override string TabPageLabel => fileName.FileName;
 
         Gtk.Widget _content;
 
@@ -144,6 +114,20 @@ namespace MonoDevelop.Figma
 
         }
 
+        public override Task Save()
+        {
+            session.Save(fileName);
+            IsDirty = false;
+            return Task.FromResult(true);
+        }
+
+        public override Task Save(FileSaveInformation fileSaveInformation)
+        {
+            session.Save(fileSaveInformation.FileName);
+            IsDirty = false;
+            return Task.FromResult(true);
+        }
+
         public override Task Load(FileOpenInformation fileOpenInformation)
         {
             fileName = fileOpenInformation.FileName;
@@ -153,7 +137,7 @@ namespace MonoDevelop.Figma
                 figmaDelegate = new DesignerDelegate();
 
                 session = new FigmaDesignerSession();
-                session.ModifiedChanged += HandleModifiedChanged;
+                //session.ModifiedChanged += HandleModifiedChanged;
                 session.ReloadFinished += Session_ReloadFinished;
 
                 surface = new FigmaDesignerSurface(figmaDelegate)
@@ -179,13 +163,12 @@ namespace MonoDevelop.Figma
 
         void Surface_FocusedViewChanged(object sender, IViewWrapper e)
         {
-            if (data == null && outlinePad != null)
+            if (outlinePad != null)
             {
-                data = new FigmaNodeView(session.Response.document);
-                figmaDelegate.ConvertToNodes(session.Response.document, data);
-                outlinePad.GenerateTree(data);
+                var model = session.GetModel(e);
+                outlinePad.Focus(model);
             }
-           
+
             //if (propertyPad != null)
             //{
             //    var model = session.GetModel(e);
@@ -195,6 +178,8 @@ namespace MonoDevelop.Figma
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {
+            scrollViewWrapper.ClearSubviews();
+
             foreach (var items in session.MainViews)
             {
                 scrollViewWrapper.AddChild(items.View);
@@ -226,14 +211,6 @@ namespace MonoDevelop.Figma
             }
         }
 
-        private void HandleModifiedChanged(object sender, EventArgs e)
-        {
-            if (session == null)
-                return;
-
-            IsDirty = session.IsModified;
-        }
-
         private void OnDocumentOpened(object sender, DocumentEventArgs e)
         {
             UpdateLayout();
@@ -245,7 +222,6 @@ namespace MonoDevelop.Figma
         }
 
         string lastLayout;
-
         private void UpdateLayout()
         {
             var current = IdeApp.Workbench.ActiveDocument?.GetContent<string>();
@@ -269,34 +245,37 @@ namespace MonoDevelop.Figma
             }
         }
 
-        public override void Dispose()
-        {
-            surface.StopHover();
-            if (IdeApp.Workbench.ActiveDocument != null)
-            {
-                IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
-            }
-            base.Dispose();
-        }
-       
+        #region IOutlinedDocument
+
         public Widget GetOutlineWidget()
         {
-            data = new FigmaNodeView(session.Response.document);
-            figmaDelegate.ConvertToNodes(session.Response.document, data);
-
             outlinePad = FigmaDesignerOutlinePad.Instance;
-            outlinePad.GenerateTree(data);
+            outlinePad.GenerateTree(session.Response.document, figmaDelegate);
 
             outlinePad.RaiseFirstResponder += OutlinePad_RaiseFirstResponder;
-            outlinePad.RaiseDeleteItem += OutlinePad_RaiseDeleteItem; ;
+            outlinePad.RaiseDeleteItem += OutlinePad_RaiseDeleteItem;
             return outlinePad;
         }
 
         void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
         {
-
+            IsDirty = true;
+            session.DeleteView(e);
+            RefreshAll();
         }
 
+        void RefreshAll ()
+        {
+            session.Reload();
+            if (outlinePad != null)
+            {
+                var selectedView = surface.SelectedView;
+                var selectedModel = session.GetModel(selectedView);
+
+                outlinePad.GenerateTree(session.Response.document, figmaDelegate);
+                outlinePad.Focus(selectedModel);
+            }
+        }
 
         void OutlinePad_RaiseFirstResponder(object sender, FigmaNode e)
         {
@@ -314,6 +293,10 @@ namespace MonoDevelop.Figma
             // throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region ICustomPropertyPadProvider
+
         FigmaDesignerPropertyPad propertyPad;
 
         public Widget GetCustomPropertyWidget()
@@ -329,6 +312,19 @@ namespace MonoDevelop.Figma
             //throw new NotImplementedException();
         }
 
+        #endregion
+
         public override Control Control => _content;
+
+
+        public override void Dispose()
+        {
+            surface.StopHover();
+            if (IdeApp.Workbench.ActiveDocument != null)
+            {
+                IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
+            }
+            base.Dispose();
+        }
     }
 }

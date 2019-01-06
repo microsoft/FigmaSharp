@@ -56,8 +56,20 @@ namespace FigmaSharp.Designer
 
         public event EventHandler ReloadFinished;
 
+        public void Reload ()
+        {
+            fileService.Refresh();
+            rendererService.Start();
+            var resourcesDirectoryPath = Path.Combine(baseDirectory, "Resources");
+            ReloadImages(resourcesDirectoryPath);
+            ReloadFinished?.Invoke(this, EventArgs.Empty);
+        }
+
+        string baseDirectory;
+
         public void Reload(string fileName, string baseDirectory)
         {
+            this.baseDirectory = baseDirectory;
             try
             {
                 var resourcesDirectoryPath = Path.Combine(baseDirectory, "Resources");
@@ -65,8 +77,6 @@ namespace FigmaSharp.Designer
                 {
                     throw new DirectoryNotFoundException(resourcesDirectoryPath);
                 }
-
-
                 fileService.Start(fileName);
                 rendererService.Start();
                 ReloadImages(resourcesDirectoryPath);
@@ -121,6 +131,11 @@ namespace FigmaSharp.Designer
             }
         }
 
+        public void Save(string fileName)
+        {
+            fileService.Save(fileName);
+        }
+
         public event EventHandler ModifiedChanged;
 
         public IViewWrapper GetViewWrapper(FigmaNode e)
@@ -129,11 +144,91 @@ namespace FigmaSharp.Designer
             return processed?.View;
         }
 
-        public FigmaNode GetModel(IViewWrapper e)
+        public FigmaNode GetModel (IViewWrapper e)
         {
             var processed = ProcessedNodes.FirstOrDefault(s => s.View.NativeObject == e.NativeObject);
             return processed?.FigmaNode;
         }
-    }
 
+        public void DeleteView(FigmaNode e)
+        {
+            foreach (var canvas in fileService.Response.document.children)
+            {
+                if (DeleteNodeRecursively(canvas, fileService.Response.document, e))
+                {
+                    return;
+                }
+            }
+        }
+
+        static T[] RemoveAt<T>(T[] source, int index)
+        {
+            T[] dest = new T[source.Length - 1];
+            if (index > 0)
+                Array.Copy(source, 0, dest, 0, index);
+
+            if (index < source.Length - 1)
+                Array.Copy(source, index + 1, dest, index, source.Length - index - 1);
+
+            return dest;
+        }
+        bool DeleteNodeRecursively (FigmaNode current, FigmaNode parent, FigmaNode toDelete)
+        {
+            if (current == toDelete)
+            {
+                if (parent is FigmaDocument parentDocument)
+                {
+                    var index = Array.FindIndex(parentDocument.children, row => row == current);
+                    parentDocument.children = RemoveAt<FigmaCanvas>(parentDocument.children, index);
+                    return true;
+                } else if (parent is IFigmaNodeContainer parentNodeContainer)
+                {
+                    var index = Array.FindIndex(parentNodeContainer.children, row => row == current);
+                    parentNodeContainer.children = RemoveAt<FigmaNode>(parentNodeContainer.children, index);
+                    return true;
+                }
+            }
+
+            if (current is FigmaDocument document)
+            {
+                if (document.children != null)
+                {
+                    foreach (var item in document.children)
+                    {
+                        try
+                        {
+                            if (DeleteNodeRecursively(item, current, toDelete))
+                            {
+                                return true;
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                    }
+                }
+                return false;
+            }
+
+            if (current is IFigmaNodeContainer container)
+            {
+                foreach (var item in container.children)
+                {
+                    try
+                    {
+                        if (DeleteNodeRecursively(item, current, toDelete))
+                        {
+                            return true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+            return false;
+        }
+    }
 }

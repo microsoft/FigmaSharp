@@ -52,6 +52,11 @@ namespace FigmaSharp.Services
             FigmaDefaultConverters = AppContext.Current.GetFigmaConverters();
         }
 
+        public void Save(string filePath)
+        {
+            AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
+        }
+
         public async Task StartAsync(string file)
         {
             await Task.Run(() =>
@@ -60,13 +65,40 @@ namespace FigmaSharp.Services
             });
         }
 
+        public void Refresh ()
+        {
+            try
+            {
+           
+            ImageVectors.Clear();
+            NodesProcessed.Clear();
+
+            Console.WriteLine($"Reading successfull");
+
+            Console.WriteLine($"Loading views for page {Page}..");
+
+            var canvas = Response.document.children[Page];
+            foreach (var item in canvas.children)
+                GenerateViewsRecursively(item, null);
+
+            //Images
+            OnStartImageProcessing(ImageVectors, File);
+
+            Console.WriteLine("View generation finished.");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading resource");
+                Console.WriteLine(ex);
+            }
+        }
+
         public void Start(string file, int page = 0, bool processImages = true)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
-
-            ImageVectors.Clear();
-            NodesProcessed.Clear();
+          
             ProcessImages = processImages;
             Page = page;
             File = file;
@@ -76,18 +108,7 @@ namespace FigmaSharp.Services
                 var template = GetContentTemplate(file);
                 Response = AppContext.Current.GetFigmaResponseFromContent(template);
 
-                Console.WriteLine($"Reading successfull");
-
-                Console.WriteLine($"Loading views for page {page}..");
-
-                var canvas = Response.document.children[page];
-                foreach (var item in canvas.children)
-                    GenerateViewsRecursively(item, null);
-
-                //Images
-                OnStartImageProcessing(ImageVectors, file);
-
-                Console.WriteLine("View generation finished.");
+                Refresh();
             }
             catch (Exception ex)
             {
@@ -173,6 +194,8 @@ namespace FigmaSharp.Services
 
     public class FigmaLocalFileService : FigmaFileService
     {
+
+
         protected override string GetContentTemplate(string file)
         {
             return System.IO.File.ReadAllText(file);

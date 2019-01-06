@@ -68,6 +68,17 @@ namespace FigmaSharp
             }
         }
 
+        public override void ClearSubviews()
+        {
+            if (scrollView.DocumentView is NSView content)
+            {
+                foreach (var item in content.Subviews)
+                {
+                    item.RemoveFromSuperview();
+                }
+            }
+        }
+
         public override void RemoveChild(IViewWrapper view)
         {
             if (scrollView.DocumentView is NSView content)

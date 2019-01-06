@@ -76,6 +76,11 @@ namespace MonoDevelop.Figma
             //inspectorDelegate.ConvertToNodes(window.ContentView, new NodeWrapper(data), viewMode);
             View.SetData(node);
         }
+
+        public void FocusNode(Node node)
+        {
+            View.FocusNode(node);
+        }
     }
 
 }

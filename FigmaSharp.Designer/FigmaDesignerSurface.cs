@@ -66,7 +66,7 @@ namespace FigmaSharp.Designer
         }
 
         IObjectWrapper nativeObject;
-        internal IViewWrapper SelectedView => nativeObject as IViewWrapper;
+        public IViewWrapper SelectedView => nativeObject as IViewWrapper;
         IWindowWrapper selectedWindow;
 
         readonly IBorderedWindow viewSelectedOverlayWindow;
@@ -94,7 +94,7 @@ namespace FigmaSharp.Designer
 
         public FigmaDesignerSurface(IDesignerDelegate figmaDelegate)
         {
-            viewSelectedOverlayWindow = figmaDelegate.CreateOverlayWindow ();
+            viewSelectedOverlayWindow = figmaDelegate.CreateOverlayWindow();
             Delegate = figmaDelegate;
 
             figmaDelegate.HoverSelecting += FigmaDelegate_HoverSelecting;
@@ -161,10 +161,10 @@ namespace FigmaSharp.Designer
                 //FocusedViewChanged?.Invoke(this, nextView);
                 return;
             }
-
+           
             nativeObject = nextView;
 
-            RefreshOverlaysVisibility();
+            IsFirstResponderOverlayVisible = true;
 
             if (SelectedView != null)
             {
@@ -183,7 +183,7 @@ namespace FigmaSharp.Designer
             ChangeFocusedView(viewWrapper);
         }
 
-        bool Exists (IViewWrapper viewWrapper)
+        bool Exists(IViewWrapper viewWrapper)
         {
             foreach (var item in session.ProcessedNodes)
             {
@@ -206,5 +206,12 @@ namespace FigmaSharp.Designer
             IsViewSelected = false;
             viewSelectedOverlayWindow.Close();
         }
+
+        //public void Remove(FigmaNode e)
+        //{
+        //    var view = session.GetViewWrapper(e);
+        //    view.Parent.RemoveChild(view);
+        //    session.DeleteView(e);
+        //}
     }
 }

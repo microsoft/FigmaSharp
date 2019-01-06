@@ -43,10 +43,9 @@ namespace FigmaSharp
             IndentationPerLevel = 16;
             RowHeight = 17;
             NSTableColumn column = new NSTableColumn ("Values");
-            column.Title = "View Outline";
+            column.Title = "View Hierarchy";
             AddColumn (column);
             OutlineTableColumn = column;
-
             Delegate = new OutlineViewDelegate ();
             DataSource = new OutlineViewDataSource (Data);
         }
