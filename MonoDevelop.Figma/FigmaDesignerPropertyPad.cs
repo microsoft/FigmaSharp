@@ -27,6 +27,7 @@
  */
 using System;
 using AppKit;
+using FigmaSharp;
 using FigmaSharp.Designer;
 using Xwt.GtkBackend;
 
@@ -34,6 +35,7 @@ namespace MonoDevelop.Figma
 {
     public class FigmaDesignerPropertyPad : Gtk.VBox
     {
+      
         static FigmaDesignerPropertyPad instance;
 
         public static FigmaDesignerPropertyPad Instance
@@ -49,7 +51,9 @@ namespace MonoDevelop.Figma
         public static void Initialize(FigmaDesignerSession service)
         {
             if (instance == null)
+            {
                 instance = new FigmaDesignerPropertyPad(service);
+            }
         }
 
         private FigmaDesignerPropertyPad(FigmaDesignerSession service)

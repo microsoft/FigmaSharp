@@ -36,8 +36,8 @@ namespace MonoDevelop.Figma
         const ushort DeleteKey = 51;
         public ScrollContainerView EnclosingScrollView { get; }
         public OutlineView View { get; }
-        public event EventHandler<IObjectWrapper> RaiseFirstResponder;
-        public event EventHandler<IObjectWrapper> RaiseDeleteItem;
+        public event EventHandler<FigmaNode> RaiseFirstResponder;
+        public event EventHandler<FigmaNode> RaiseDeleteItem;
 
         public OutlinePanel()
         {
@@ -46,7 +46,7 @@ namespace MonoDevelop.Figma
 
             View.SelectionNodeChanged += (s, e) =>
             {
-                if (View.SelectedNode is NodeView nodeView)
+                if (View.SelectedNode is FigmaNodeView nodeView)
                 {
                     RaiseFirstResponder?.Invoke(this, nodeView.Wrapper);
                 }
@@ -56,7 +56,7 @@ namespace MonoDevelop.Figma
             {
                 if (e == DeleteKey)
                 {
-                    if (View.SelectedNode is NodeView nodeView)
+                    if (View.SelectedNode is FigmaNodeView nodeView)
                     {
                         RaiseDeleteItem?.Invoke(this, nodeView.Wrapper);
                     }

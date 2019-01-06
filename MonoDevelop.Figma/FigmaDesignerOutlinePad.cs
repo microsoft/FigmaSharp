@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using FigmaSharp;
 using FigmaSharp.Designer;
 using Xwt.GtkBackend;
@@ -34,6 +35,9 @@ namespace MonoDevelop.Figma
 {
     public class FigmaDesignerOutlinePad : Gtk.VBox
     {
+        public event EventHandler<FigmaNode> RaiseFirstResponder;
+        public event EventHandler<FigmaNode> RaiseDeleteItem;
+
         static FigmaDesignerOutlinePad instance;
 
         public static FigmaDesignerOutlinePad Instance
@@ -41,7 +45,10 @@ namespace MonoDevelop.Figma
             get
             {
                 if (instance == null)
+                {
                     instance = new FigmaDesignerOutlinePad();
+                }
+
                 return instance;
             }
         }
@@ -50,7 +57,16 @@ namespace MonoDevelop.Figma
         public FigmaDesignerOutlinePad()
         {
             outlinePanel = new OutlinePanel();
-      
+
+            outlinePanel.RaiseFirstResponder += (s, e) =>
+            {
+                RaiseFirstResponder?.Invoke(s, e);
+            };
+            outlinePanel.RaiseDeleteItem += (s, e) =>
+            {
+                RaiseDeleteItem?.Invoke(s, e);
+            };
+
             var widget = GtkMacInterop.NSViewToGtkWidget(outlinePanel.EnclosingScrollView);
             CanFocus = widget.CanFocus = true;
             Sensitive = widget.Sensitive = true;

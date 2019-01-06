@@ -175,13 +175,24 @@ namespace FigmaSharp.Designer
 
         void HoverSelectView(IViewWrapper viewWrapper)
         {
-            if (viewWrapper == null)
+            if (viewWrapper == null || !Exists(viewWrapper))
             {
                 return;
             }
             IsFirstResponderOverlayVisible = true;
             ChangeFocusedView(viewWrapper);
-            //viewWrapper.MakeFirstResponder();
+        }
+
+        bool Exists (IViewWrapper viewWrapper)
+        {
+            foreach (var item in session.ProcessedNodes)
+            {
+                if (item.View.NativeObject == viewWrapper.NativeObject)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void StartHoverSelection()
