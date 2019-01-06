@@ -67,6 +67,9 @@ namespace FigmaSharp
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
               FigmaApiHelper.GetFigmaResponseFromContent(template);
 
+        public void SetFigmaResponseFromContent(FigmaResponse figmaResponse, string filePath) =>
+             FigmaApiHelper.SetFigmaResponseFromContent(figmaResponse, filePath);
+
         public IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef) =>
             figmaDelegate.GetImageFromManifest(assembly, imageRef);
 

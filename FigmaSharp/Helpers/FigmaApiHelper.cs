@@ -80,6 +80,15 @@ namespace FigmaSharp
 			return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
 		}
 
+        public static void SetFigmaResponseFromContent(FigmaResponse figmaResponse, string filePath)
+        {
+            var data = JsonConvert.SerializeObject (figmaResponse);
+            if (File.Exists (filePath)) {
+                File.Delete(filePath);
+            }
+            File.WriteAllText(filePath, data);
+        }
+
         public static FigmaImageResponse GetFigmaImages(string fileId, IEnumerable<string> ids)
         {
             var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);

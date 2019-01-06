@@ -39,7 +39,6 @@ namespace FigmaSharp.Designer
         {
             StopHoverSelection();
 
-
             clickMonitor = NSEvent.AddLocalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDown, (NSEvent theEvent) => {
 
                 var nativeWindow = GetWindow();
@@ -47,7 +46,7 @@ namespace FigmaSharp.Designer
                 var point = nativeWindow.ConvertBaseToScreen(theEvent.LocationInWindow);
                     if (!nativeWindow.AccessibilityFrame.Contains(point))
                     {
-                        return null;
+                        return theEvent;
                     }
                     containerViews.Clear();
                     AddContainerViews(nativeWindow.ContentView, point, containerViews);
@@ -71,7 +70,7 @@ namespace FigmaSharp.Designer
                     HoverSelectionEnded?.Invoke(this, null);
                 }
 
-                return null;
+                return theEvent;
             });
         }
 

@@ -84,10 +84,48 @@ namespace MonoDevelop.Figma
             outlinePanel.FocusSelectedView();
         }
 
-
-        public void GenerateTree(Node node)
+        public void Focus(FigmaNode model)
         {
-            outlinePanel.GenerateTree(node);
+            if (data != null && model != null)
+            {
+                var found = Search (data, model);
+                if (found != null)
+                {
+                    outlinePanel.FocusNode(found);
+                }
+            }
+        }
+
+        static FigmaNodeView Search (FigmaNodeView nodeView, FigmaNode view)
+        {
+            if (nodeView.Wrapper != null && nodeView.Wrapper == view)
+            {
+                return nodeView;
+            }
+
+            if (nodeView.ChildCount == 0)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < nodeView.ChildCount; i++)
+            {
+                var node = (FigmaNodeView)nodeView.GetChild(i);
+                var found = Search(node, view);
+                if (found != null)
+                {
+                    return found;
+                }
+            }
+            return null;
+        }
+
+        FigmaNodeView data;
+        internal void GenerateTree(FigmaDocument document, IDesignerDelegate figmaDelegate)
+        {
+            data = new FigmaNodeView(document);
+            figmaDelegate.ConvertToNodes (document, data);
+            outlinePanel.GenerateTree(data);
         }
     }
 

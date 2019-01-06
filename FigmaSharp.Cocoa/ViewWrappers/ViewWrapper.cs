@@ -129,17 +129,10 @@ namespace FigmaSharp
 
         public virtual void ClearSubviews()
         {
-            //clean views from current container
-            //var views = nativeView.Subviews;
-            //foreach (var item in views)
-            //{
-            //    item.RemoveFromSuperview();
-            //}
-            //nativeView.RemoveConstraints(nativeView.Constraints);
-
-            //Figma doesn't calculate the bounds of our first level
-            //frameEntityResponse.FigmaMainNode.CalculateBounds();
-
+            foreach (var item in nativeView.Subviews)
+            {
+                item.RemoveFromSuperview();
+            }
         }
 
         public virtual void RemoveChild(IViewWrapper view)
