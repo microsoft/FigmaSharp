@@ -30,7 +30,7 @@ using FigmaSharp;
 
 namespace MonoDevelop.Figma
 {
-	public class ViewHelpers
+	class ViewHelpers
 	{
 		public static NSTextField CreateLabel (string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left, bool translatesAutoresizingMaskIntoConstraints = false)
 		{

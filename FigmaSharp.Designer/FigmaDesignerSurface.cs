@@ -36,7 +36,7 @@ namespace FigmaSharp.Designer
         public event EventHandler<IViewWrapper> FocusedViewChanged;
 
         public event EventHandler ReloadFinished;
-        internal IDesignerDelegate Delegate;
+        internal IFigmaDesignerDelegate Delegate;
 
         FigmaDesignerSession session;
         public FigmaDesignerSession Session
@@ -92,7 +92,7 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public FigmaDesignerSurface(IDesignerDelegate figmaDelegate)
+        public FigmaDesignerSurface(IFigmaDesignerDelegate figmaDelegate)
         {
             viewSelectedOverlayWindow = figmaDelegate.CreateOverlayWindow();
             Delegate = figmaDelegate;

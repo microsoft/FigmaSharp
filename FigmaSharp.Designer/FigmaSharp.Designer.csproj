@@ -58,8 +58,8 @@
     <Compile Include="IWindowWrapper.cs" />
     <Compile Include="InspectorViewMode.cs" />
     <Compile Include="IMainWindowWrapper.cs" />
-    <Compile Include="DesignerDelegate.cs" />
-    <Compile Include="IDesignerDelegate.cs" />
+    <Compile Include="FigmaDesignerDelegate.cs" />
+    <Compile Include="IFigmaDesignerDelegate.cs" />
     <Compile Include="BorderedWindow.cs" />
     <Compile Include="WindowWrapper.cs" />
     <Compile Include="FigmaNodeView.cs" />

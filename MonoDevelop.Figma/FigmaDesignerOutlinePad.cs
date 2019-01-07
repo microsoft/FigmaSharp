@@ -33,7 +33,7 @@ using Xwt.GtkBackend;
 
 namespace MonoDevelop.Figma
 {
-    public class FigmaDesignerOutlinePad : Gtk.VBox
+    class FigmaDesignerOutlinePad : Gtk.VBox
     {
         public event EventHandler<FigmaNode> RaiseFirstResponder;
         public event EventHandler<FigmaNode> RaiseDeleteItem;
@@ -121,7 +121,7 @@ namespace MonoDevelop.Figma
         }
 
         FigmaNodeView data;
-        internal void GenerateTree(FigmaDocument document, IDesignerDelegate figmaDelegate)
+        internal void GenerateTree(FigmaDocument document, IFigmaDesignerDelegate figmaDelegate)
         {
             data = new FigmaNodeView(document);
             figmaDelegate.ConvertToNodes (document, data);

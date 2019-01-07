@@ -33,9 +33,10 @@ using Xwt.GtkBackend;
 
 namespace MonoDevelop.Figma
 {
-    public class FigmaDesignerPropertyPad : Gtk.VBox
+    class FigmaDesignerPropertyPad : Gtk.VBox
     {
         static FigmaDesignerPropertyPad instance;
+        bool isInitialized;
 
         public static FigmaDesignerPropertyPad Instance
         {
@@ -69,12 +70,13 @@ namespace MonoDevelop.Figma
             PackStart(widget, true, true, 0);
 
             ShowAll();
-
-            //propertyPanel.Initialize();
         }
 
         public void Initialize()
         {
+            if (isInitialized)
+                return;
+            isInitialized = true;
             propertyPanel.Initialize();
         }
     }

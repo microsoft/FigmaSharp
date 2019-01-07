@@ -7,9 +7,9 @@ using CoreGraphics;
 
 namespace FigmaSharp.Designer
 {
-    public class DesignerDelegate : IDesignerDelegate
+    public class FigmaDesignerDelegate : IFigmaDesignerDelegate
     {
-        public DesignerDelegate()
+        public FigmaDesignerDelegate()
         {
         }
 
@@ -43,22 +43,28 @@ namespace FigmaSharp.Designer
 
                 var nativeWindow = GetWindow();
 
-                var point = nativeWindow.ConvertBaseToScreen(theEvent.LocationInWindow);
-                    if (!nativeWindow.AccessibilityFrame.Contains(point))
-                    {
-                        return theEvent;
-                    }
-                    containerViews.Clear();
-                    AddContainerViews(nativeWindow.ContentView, point, containerViews);
+                if (theEvent.Window != nativeWindow)
+                {
+                    return theEvent;
+                }
 
-                    if (containerViews.Count > 0)
-                    {
-                        index = containerViews.Count - 1;
-                    }
-                    else
-                    {
-                        index = -1;
-                    }
+                var point = nativeWindow.ConvertPointToScreen(theEvent.LocationInWindow);//nativeWindow.ConvertBaseToScreen();
+
+                if (!nativeWindow.AccessibilityFrame.Contains(point))
+                {
+                    return theEvent;
+                }
+                containerViews.Clear();
+                AddContainerViews(nativeWindow.ContentView, point, containerViews);
+
+                if (containerViews.Count > 0)
+                {
+                    index = containerViews.Count - 1;
+                }
+                else
+                {
+                    index = -1;
+                }
                 //StopHoverSelection();
                 var selected = GetHoverSelectedView();
                 if (selected != null)
