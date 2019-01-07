@@ -49,7 +49,7 @@ using System.ComponentModel;
 
 namespace MonoDevelop.Figma
 {
-    class FigmaViewContent : ViewContent, IOutlinedDocument, ICustomPropertyPadProvider
+    class FigmaViewContent : ViewContent, IOutlinedDocument//, ICustomPropertyPadProvider
     {
         FigmaDesignerSession session;
         IFigmaDesignerDelegate figmaDelegate;
@@ -298,20 +298,20 @@ namespace MonoDevelop.Figma
 
         #region ICustomPropertyPadProvider
 
-        FigmaDesignerPropertyPad propertyPad;
+        //FigmaDesignerPropertyPad propertyPad;
 
-        public Widget GetCustomPropertyWidget()
-        {
-            FigmaDesignerPropertyPad.Initialize(session);
-            propertyPad = FigmaDesignerPropertyPad.Instance;
-            //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
-            return propertyPad;
-        }
+        //public Widget GetCustomPropertyWidget()
+        //{
+        //    FigmaDesignerPropertyPad.Initialize(session);
+        //    propertyPad = FigmaDesignerPropertyPad.Instance;
+        //    //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
+        //    return propertyPad;
+        //}
 
-        public void DisposeCustomPropertyWidget()
-        {
-            //throw new NotImplementedException();
-        }
+        //public void DisposeCustomPropertyWidget()
+        //{
+        //    //throw new NotImplementedException();
+        //}
 
         #endregion
 
