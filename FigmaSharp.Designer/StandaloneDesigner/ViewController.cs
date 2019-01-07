@@ -5,6 +5,8 @@ using FigmaSharp;
 using FigmaSharp.Designer;
 using Foundation;
 using System.Linq;
+using MonoDevelop.Figma;
+using CoreGraphics;
 
 namespace StandaloneDesigner
 {
@@ -12,7 +14,7 @@ namespace StandaloneDesigner
     {
         FigmaDesignerSurface surface;
         FigmaDesignerSession session;
-        IDesignerDelegate figmaDelegate;
+        IFigmaDesignerDelegate figmaDelegate;
 
         ScrollViewWrapper scrollViewWrapper;
 
@@ -47,7 +49,24 @@ namespace StandaloneDesigner
             surface.SetWindow(window as WindowWrapper);
 
             surface.StartHoverSelection();
+           
+            var second = new NSWindow(new CGRect(0, 0, 300, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            window.AddChildWindow(second, NSWindowOrderingMode.Above);
+
+            propertyPanel = new FigmaPropertyPanel();
+            second.ContentView = propertyPanel.View;
+            propertyPanel.Initialize();
+
+            surface.FocusedViewChanged += (sender, e) =>
+            {
+                var model = session.GetModel(e);
+                propertyPanel.Select(model);
+            };
+
+            propertyPanel.Select(session.MainViews[0].FigmaNode);
         }
+
+        FigmaPropertyPanel propertyPanel;
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {

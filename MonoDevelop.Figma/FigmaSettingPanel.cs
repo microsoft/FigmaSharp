@@ -33,7 +33,7 @@ using MonoDevelop.Ide.Gui.Dialogs;
 
 namespace MonoDevelop.Figma
 {
-	public static class FigmaRuntime
+	static class FigmaRuntime
 	{
 		const string FigmaSetting = "FigmaToken";
 

@@ -29,7 +29,7 @@ using System;
 
 namespace FigmaSharp.Designer
 {
-    public interface IDesignerDelegate
+    public interface IFigmaDesignerDelegate
     {
         void RemoveAllErrorWindows(IWindowWrapper windowWrapper);
         void StartHoverSelection(IWindowWrapper currentWindow);

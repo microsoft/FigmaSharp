@@ -49,10 +49,10 @@ using System.ComponentModel;
 
 namespace MonoDevelop.Figma
 {
-    public class FigmaViewContent : ViewContent, IOutlinedDocument, ICustomPropertyPadProvider
+    class FigmaViewContent : ViewContent, IOutlinedDocument, ICustomPropertyPadProvider
     {
         FigmaDesignerSession session;
-        IDesignerDelegate figmaDelegate;
+        IFigmaDesignerDelegate figmaDelegate;
         FigmaDesignerSurface surface;
 
         FigmaDesignerOutlinePad outlinePad;
@@ -134,7 +134,7 @@ namespace MonoDevelop.Figma
 
             if (session == null)
             {
-                figmaDelegate = new DesignerDelegate();
+                figmaDelegate = new FigmaDesignerDelegate();
 
                 session = new FigmaDesignerSession();
                 //session.ModifiedChanged += HandleModifiedChanged;
@@ -171,6 +171,7 @@ namespace MonoDevelop.Figma
 
             //if (propertyPad != null)
             //{
+            //    propertyPad.Initialize();
             //    var model = session.GetModel(e);
             //    propertyPad.Select(model);
             //}

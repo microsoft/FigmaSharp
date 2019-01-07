@@ -35,7 +35,7 @@ using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma.Commands
 {
-    public class FigmaInitCommand : CommandHandler
+    class FigmaInitCommand : CommandHandler
     {
         protected override void Run()
         {
