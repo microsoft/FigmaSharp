@@ -102,7 +102,7 @@ namespace FigmaSharp
                 figmaObject = jsonObject.ToObject<FigmaStar>();
                 return figmaObject;
             }
-            else if (jsonObject["type"].Value<string>() == "REGULAR_POLIGON")
+            else if (jsonObject["type"].Value<string>() == "REGULAR_POLYGON")
             {
                 figmaObject = jsonObject.ToObject<FigmaRegularPoligon>();
                 return figmaObject;
