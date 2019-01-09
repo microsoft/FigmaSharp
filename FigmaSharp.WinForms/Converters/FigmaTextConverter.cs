@@ -44,5 +44,10 @@ namespace FigmaSharp.Converters
             var wrapper = new ViewWrapper(textField);
             return wrapper;
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

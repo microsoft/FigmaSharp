@@ -25,6 +25,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System.Text;
 using AppKit;
 
 namespace FigmaSharp.Converters
@@ -33,10 +34,20 @@ namespace FigmaSharp.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var figmaLineView = new FlippedView();
+            var figmaLineView = new NSView();
             var figmaLine = (FigmaLine)currentNode;
             figmaLineView.Configure(figmaLine);
             return new ViewWrapper(figmaLineView);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "lineView";
+            builder.AppendLine($"var {name} = new {nameof(NSView)}();");
+
+            builder.Configure(name, (FigmaLine)currentNode);
+            return builder.ToString();
         }
     }
 }

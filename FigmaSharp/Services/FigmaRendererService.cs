@@ -9,7 +9,7 @@ namespace FigmaSharp.Services
     public class FigmaRendererService
     {
         public ProcessedNode[] MainViews { get; private set; }
-        FigmaFileService figmaFileService;
+        protected FigmaFileService figmaFileService;
 
         public FigmaRendererService(FigmaFileService figmaFileService)
         {
@@ -26,12 +26,7 @@ namespace FigmaSharp.Services
             for (int i = 0; i < mainNodes.Length; i++)
             {
                 MainViews[i] = mainNodes[i];
-
-                var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == mainNodes[i]);
-                if (children.Any())
-                {
-                    ProcessNodeSubviews(mainNodes[i], i, children);
-                }
+                ProcessNodeSubviews(mainNodes[i]);
             }
 
             //loading views
@@ -53,24 +48,29 @@ namespace FigmaSharp.Services
             });
         }
 
-        void ProcessNodeSubviews(ProcessedNode parentProcessedNode, int id, IEnumerable<ProcessedNode> nodes)
+        void ProcessNodeSubviews(ProcessedNode parentProcessedNode)
         {
-            //we start to process all nodes
-            foreach (var processedNode in nodes)
+            var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == parentProcessedNode);
+            foreach (var child in children)
             {
-                parentProcessedNode.View.AddChild(processedNode.View);
-
-                if (processedNode.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentProcessedNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
+                if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentProcessedNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
                 {
-                    processedNode.View.X = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
-                    processedNode.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y; // currentHeight - absoluteBounding.absoluteBoundingBox.height - (absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y);
+                    child.View.X = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+                   
+                    if (AppContext.Current.IsYAxisFlipped)
+                    {
+                        var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
+                        var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
+                        child.View.Y = parentY - actualY;
+                    }
+                    else
+                    {
+                        child.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
+                    }
                 }
+                parentProcessedNode.View.AddChild(child.View);
 
-                var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == processedNode);
-                if (children.Any())
-                {
-                    ProcessNodeSubviews(processedNode, id, children);
-                }
+                ProcessNodeSubviews(child);
             }
         }
     }

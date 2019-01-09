@@ -32,6 +32,7 @@ using System.Linq;
 using CoreGraphics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace FigmaSharp
 {
@@ -68,7 +69,7 @@ namespace FigmaSharp
 
         public static NSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
         {
-            var label = new FlippedTextField()
+            var label = new NSTextField()
             {
                 StringValue = text ?? "",
                 Font = font ?? GetSystemFont(false),
@@ -80,6 +81,20 @@ namespace FigmaSharp
                 Alignment = alignment
             };
             return label;
+        }
+
+        public static string CreateLabelToDesignerString(string text, NSTextAlignment alignment = NSTextAlignment.Left)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format ("new {0}() {{", nameof (NSTextField)));
+            builder.AppendLine(string.Format ("    StringValue = \"{0}\",", text));
+            builder.AppendLine("Editable = false,");
+            builder.AppendLine("Bordered = false,");
+            builder.AppendLine("Bezeled = false,");
+            builder.AppendLine("DrawsBackground = false,");
+            builder.AppendLine(string.Format ("Alignment = {0},", alignment.ToDesignerString ()));
+            builder.Append("}");
+            return builder.ToString();
         }
 
         public static NSFont GetSystemFont(bool bold, float size = 0.0f)

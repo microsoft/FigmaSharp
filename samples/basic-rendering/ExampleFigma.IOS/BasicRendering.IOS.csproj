@@ -95,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -113,7 +112,6 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Converters\CustomButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">

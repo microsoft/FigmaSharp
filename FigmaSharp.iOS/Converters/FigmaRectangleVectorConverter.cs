@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Text;
 using UIKit;
 
 namespace FigmaSharp.Converters
@@ -40,6 +41,16 @@ namespace FigmaSharp.Converters
             var figmaImageView = new ImageViewWrapper(imageView);
             imageView.Configure(rectangleVector);
             return figmaImageView;
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "imageView";
+            builder.AppendLine($"var {name} = new {nameof(UIImageView)}();");
+
+            //builder.Configure(name, (FigmaVectorEntity)currentNode);
+            return builder.ToString();
         }
     }
 }

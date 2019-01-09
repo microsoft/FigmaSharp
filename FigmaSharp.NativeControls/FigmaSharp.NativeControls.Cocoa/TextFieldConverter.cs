@@ -28,6 +28,7 @@
 using AppKit;
 using FigmaSharp.NativeControls.Base;
 using System.Linq;
+using System.Text;
 
 namespace FigmaSharp.NativeControls
 {
@@ -42,6 +43,18 @@ namespace FigmaSharp.NativeControls
             textField.Font = figmaText.style.ToNSFont();
             textField.StringValue = figmaText.characters;
             return new ViewWrapper(textField);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
+               .FirstOrDefault();
+            StringBuilder builder = new StringBuilder();
+            var name = "textView";
+            builder.AppendLine($"var {name} = new {nameof(NSTextField)}();");
+            builder.AppendLine(string.Format ("{0}.StringValue = \"{1}\";", name, figmaText.characters));
+            builder.Configure(name, currentNode);
+            return builder.ToString();
         }
     }
 }

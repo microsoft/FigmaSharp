@@ -39,5 +39,10 @@ namespace FigmaSharp.Converters
             figmaLineView.Configure(figmaLine);
             return new ViewWrapper(figmaLineView);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

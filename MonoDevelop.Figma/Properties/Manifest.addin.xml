@@ -16,4 +16,16 @@
    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Other">
         <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
+    
+    <Extension path = "/MonoDevelop/Ide/Pads">
+        <Pad id = "MonoDevelop.Figma.FigmaDragAndDropPad"
+            class = "MonoDevelop.Figma.FigmaDragAndDropPad"
+            _label="Figma Toolbox"
+            icon = "md-toolbox-pad"
+            group = "Designer"
+            defaultLayout="*"
+            defaultPlacement="Right"
+            defaultStatus="AutoHide"
+            />
+    </Extension>
 </ExtensionModel>

@@ -28,6 +28,7 @@
 using AppKit;
 using FigmaSharp.NativeControls.Base;
 using System.Linq;
+using System.Text;
 
 namespace FigmaSharp.NativeControls
 {
@@ -48,6 +49,26 @@ namespace FigmaSharp.NativeControls
                 button.Title = figmaText.characters;
             }
             return new ViewWrapper(button);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "buttonView";
+            builder.AppendLine($"var {name} = new {nameof(NSButton)}();");
+            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.ToString ()));
+            builder.Configure(name, currentNode);
+
+            var instance = (IFigmaDocumentContainer)currentNode;
+            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
+            if (figmaText != null)
+            {
+                builder.AppendLine(string.Format("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
+                builder.AppendLine(string.Format("{0}.Title = \"{1}\";", name, figmaText.characters));
+                //button.Font = figmaText.style.ToNSFont();
+            }
+
+            return builder.ToString();
         }
     }
 }

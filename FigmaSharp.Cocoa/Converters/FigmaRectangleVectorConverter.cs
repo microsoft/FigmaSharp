@@ -25,6 +25,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System.Text;
 using AppKit;
 
 namespace FigmaSharp.Converters
@@ -33,9 +34,19 @@ namespace FigmaSharp.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var currengroupView = new FlippedImageView();
+            var currengroupView = new NSImageView();
             currengroupView.Configure((FigmaRectangleVector)currentNode);
             return new ImageViewWrapper(currengroupView);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "imageView";
+            builder.AppendLine($"var {name} = new {nameof(NSImageView)}();");
+
+            builder.Configure(name, (FigmaRectangleVector)currentNode);
+            return builder.ToString();
         }
     }
 }

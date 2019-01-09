@@ -99,6 +99,8 @@ namespace FigmaSharp
             }
         }
 
+        public bool IsYAxisFlipped => figmaDelegate.IsYAxisFlipped;
+
         #endregion
     }
 }

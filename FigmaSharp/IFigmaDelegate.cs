@@ -6,6 +6,8 @@ namespace FigmaSharp
 {
     public interface IFigmaDelegate
     {
+        bool IsYAxisFlipped { get; }
+
         IViewWrapper CreateEmptyView();
         FigmaViewConverter[] GetFigmaConverters();
         IImageWrapper GetImage(string url);

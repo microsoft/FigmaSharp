@@ -39,5 +39,10 @@ namespace FigmaSharp.Converters
             currengroupView.Configure(figmaFrameEntity);
             return new ViewWrapper(currengroupView);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

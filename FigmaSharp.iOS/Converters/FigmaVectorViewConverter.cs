@@ -37,5 +37,10 @@ namespace FigmaSharp.Converters
             Console.WriteLine(vector);
             return null;
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

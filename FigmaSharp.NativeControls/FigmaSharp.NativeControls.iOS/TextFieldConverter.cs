@@ -46,5 +46,10 @@ namespace FigmaSharp.NativeControls
 
             return new ViewWrapper(textField);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

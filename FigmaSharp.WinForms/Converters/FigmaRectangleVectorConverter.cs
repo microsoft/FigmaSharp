@@ -50,5 +50,10 @@ namespace FigmaSharp.Converters
             currengroupView.Configure(rectangleVector);
             return new ViewWrapper(currengroupView);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

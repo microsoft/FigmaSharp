@@ -77,6 +77,31 @@ namespace FigmaSharp
             return NSColor.FromRgba(color.r, color.g, color.b, color.a);
         }
 
+        public static string ToDesignerString(this float value)
+        {
+            return string.Concat (value.ToString(),"f");
+        }
+
+        public static NSTextAlignment ToNSTextAlignment(string value)
+        {
+            return value == "CENTER" ? NSTextAlignment.Center : value == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
+        }
+
+        public static string ToDesignerString(this NSTextAlignment alignment)
+        {
+            return string.Format ("{0}.{1}", nameof(NSTextAlignment), alignment.ToString());
+        }
+
+        public static string ToDesignerString(this FigmaColor color)
+        {
+            return $"NSColor.FromRgba({color.r.ToDesignerString ()}, {color.g.ToDesignerString ()}, {color.b.ToDesignerString ()}, {color.a.ToDesignerString ()}).CGColor";
+        }
+
+        public static string ToDesignerString(this bool value)
+        {
+            return value ? "true" : "false";
+        }
+
         public static CGRect ToCGRect(this FigmaRectangle rectangle)
         {
             return new CGRect(0, 0, rectangle.width, rectangle.height);

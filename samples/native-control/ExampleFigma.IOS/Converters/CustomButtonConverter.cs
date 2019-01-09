@@ -17,5 +17,10 @@ namespace ExampleFigma.IOS
             button.SetTitle("test", UIControlState.Normal);
             return new ViewWrapper(button);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

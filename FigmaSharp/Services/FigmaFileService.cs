@@ -70,22 +70,24 @@ namespace FigmaSharp.Services
             try
             {
            
-            ImageVectors.Clear();
-            NodesProcessed.Clear();
+                ImageVectors.Clear();
+                NodesProcessed.Clear();
 
-            Console.WriteLine($"Reading successfull");
+                Console.WriteLine($"Reading successfull");
 
-            Console.WriteLine($"Loading views for page {Page}..");
+                Console.WriteLine($"Loading views for page {Page}..");
 
-            var canvas = Response.document.children[Page];
-            foreach (var item in canvas.children)
-                GenerateViewsRecursively(item, null);
+                var canvas = Response.document.children[Page];
+                foreach (var item in canvas.children)
+                    GenerateViewsRecursively(item, null);
 
-            //Images
-            OnStartImageProcessing(ImageVectors, File);
+                //Images
+                if (ProcessImages)
+                {
+                    OnStartImageProcessing(ImageVectors, File);
+                }
 
-            Console.WriteLine("View generation finished.");
-
+                Console.WriteLine("View generation finished.");
             }
             catch (Exception ex)
             {
@@ -107,7 +109,6 @@ namespace FigmaSharp.Services
             {
                 var template = GetContentTemplate(file);
                 Response = AppContext.Current.GetFigmaResponseFromContent(template);
-
                 Refresh();
             }
             catch (Exception ex)
@@ -128,7 +129,8 @@ namespace FigmaSharp.Services
                 if (customViewConverter.CanConvert(currentNode))
                 {
                     var currentView = customViewConverter.ConvertTo(currentNode, parent);
-                    var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
+                    var currentCode = customViewConverter.ConvertToCode(currentNode, parent);
+                    var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, Code = currentCode, ParentView = parent };
                     return currentElement;
                 }
 
@@ -194,8 +196,6 @@ namespace FigmaSharp.Services
 
     public class FigmaLocalFileService : FigmaFileService
     {
-
-
         protected override string GetContentTemplate(string file)
         {
             return System.IO.File.ReadAllText(file);

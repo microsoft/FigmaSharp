@@ -28,6 +28,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace FigmaSharp
@@ -346,7 +347,7 @@ namespace FigmaSharp
     {
         public FigmaNode FigmaNode { get; set; }
         public IViewWrapper View { get; set; }
-
+        public string Code { get; set; }
         public ProcessedNode ParentView { get; set; }
     }
 

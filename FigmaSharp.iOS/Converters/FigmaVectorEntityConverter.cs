@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Text;
 using UIKit;
 
 namespace FigmaSharp.Converters
@@ -38,6 +39,16 @@ namespace FigmaSharp.Converters
             var currengroupView = new UIImageView();
             currengroupView.Configure(vector);
             return new ImageViewWrapper(currengroupView);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "imageView";
+            builder.AppendLine($"var {name} = new {nameof(UIImageView)}();");
+
+            //builder.Configure(name, (FigmaVectorEntity)currentNode);
+            return builder.ToString();
         }
     }
 }
