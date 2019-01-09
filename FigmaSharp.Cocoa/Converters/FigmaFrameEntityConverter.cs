@@ -44,7 +44,7 @@ namespace FigmaSharp.Converters
         {
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
             StringBuilder builder = new StringBuilder();
-            var name = "elipseView";
+            var name = "[NAME]";
             builder.AppendLine($"var {name} = new {nameof(NSView)}();");
             builder.Configure(name, figmaFrameEntity);
             return builder.ToString();

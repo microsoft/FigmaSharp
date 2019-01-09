@@ -30,6 +30,31 @@ using AppKit;
 
 namespace FigmaSharp.Converters
 {
+    public class MacFigmaCodePositionConverter : FigmaCodePositionConverter
+    {
+        public override string ConvertToCode (string name, ProcessedNode parentNode, ProcessedNode current)
+        {
+            if (current.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
+            {
+                var x = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+
+                var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
+                var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
+                var y = parentY - actualY;
+                return string.Format("{0}.SetFrameOrigin(new {1}.{2}({3}, {4}));", name, nameof(CoreGraphics), nameof(CoreGraphics.CGPoint), x.ToDesignerString(), y.ToDesignerString());
+            }
+            return string.Empty;   
+        }
+    }
+
+    public class MacFigmaCodeAddChildConverter : FigmaCodeAddChildConverter
+    {
+        public override string ConvertToCode(string parent, string current, ProcessedNode parentNode, ProcessedNode currentNode)
+        {
+            return string.Format("{0}.AddSubview({1});", parent, current);
+        }
+    }
+
     public class FigmaLineConverter : FigmaLineConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
@@ -43,7 +68,7 @@ namespace FigmaSharp.Converters
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
         {
             StringBuilder builder = new StringBuilder();
-            var name = "lineView";
+            var name = "[NAME]";
             builder.AppendLine($"var {name} = new {nameof(NSView)}();");
 
             builder.Configure(name, (FigmaLine)currentNode);

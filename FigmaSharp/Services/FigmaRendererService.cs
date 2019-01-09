@@ -26,7 +26,7 @@ namespace FigmaSharp.Services
             for (int i = 0; i < mainNodes.Length; i++)
             {
                 MainViews[i] = mainNodes[i];
-                ProcessNodeSubviews(mainNodes[i]);
+                Recursively(mainNodes[i]);
             }
 
             //loading views
@@ -48,12 +48,12 @@ namespace FigmaSharp.Services
             });
         }
 
-        void ProcessNodeSubviews(ProcessedNode parentProcessedNode)
+        void Recursively(ProcessedNode parentNode)
         {
-            var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == parentProcessedNode);
+            var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == parentNode);
             foreach (var child in children)
             {
-                if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentProcessedNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
+                if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
                 {
                     child.View.X = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
                    
@@ -68,9 +68,9 @@ namespace FigmaSharp.Services
                         child.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
                     }
                 }
-                parentProcessedNode.View.AddChild(child.View);
+                parentNode.View.AddChild(child.View);
 
-                ProcessNodeSubviews(child);
+                Recursively(child);
             }
         }
     }

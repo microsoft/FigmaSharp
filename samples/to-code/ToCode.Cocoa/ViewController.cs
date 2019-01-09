@@ -55,7 +55,7 @@ namespace ToCode.Cocoa
 
         void OutlinePanel_RaiseFirstResponder(object sender, FigmaNode e)
         {
-            var code = codeRenderer.GetCode(e);
+            var code = codeRenderer.GetCode(e, true);
             var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
             textField.Value = code;
 

@@ -42,7 +42,7 @@ namespace FigmaSharp.Converters
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
         {
             StringBuilder builder = new StringBuilder();
-            var name = "imageView";
+            var name = "[NAME]";
             builder.AppendLine($"var {name} = new {nameof(NSImageView)}();");
 
             builder.Configure(name, (FigmaRectangleVector)currentNode);
