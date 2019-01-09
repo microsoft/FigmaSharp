@@ -15,5 +15,10 @@ namespace FigmaSharp.Converters
             var elipseView = new TransparentControl ();
             return new ViewWrapper (elipseView);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

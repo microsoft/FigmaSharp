@@ -7,6 +7,7 @@ using Foundation;
 using System.Linq;
 using MonoDevelop.Figma;
 using CoreGraphics;
+using FigmaSharp.Services;
 
 namespace StandaloneDesigner
 {
@@ -22,26 +23,25 @@ namespace StandaloneDesigner
         {
         }
 
+        FigmaRemoteFileService fileService;
+        OutlinePanel outlinePanel;
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 
             scrollViewWrapper = new ScrollViewWrapper(scrollview);
+            outlinePanel = new OutlinePanel();
 
-            figmaDelegate = new DesignerDelegate();
-
+            figmaDelegate = new FigmaDesignerDelegate();
+            fileService = new FigmaRemoteFileService();
+            surface = new FigmaDesignerSurface(figmaDelegate);
             // Do any additional setup after loading the view.
-            session = new FigmaDesignerSession();
-            surface = new FigmaDesignerSurface (figmaDelegate)
-            {
-                Session = session
-            };
 
-            session.ReloadFinished += Session_ReloadFinished;
-         
             var directory = Environment.GetEnvironmentVariable("DIRECTORY");
 
             var file = Path.Combine (directory, Environment.GetEnvironmentVariable("FILE"));
+
+            session = new FigmaDesignerSession();
             session.Reload(file, directory);
 
             var window = NSApplication.SharedApplication.Windows.FirstOrDefault();
@@ -53,20 +53,20 @@ namespace StandaloneDesigner
             var second = new NSWindow(new CGRect(0, 0, 300, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
             window.AddChildWindow(second, NSWindowOrderingMode.Above);
 
-            propertyPanel = new FigmaPropertyPanel();
-            second.ContentView = propertyPanel.View;
-            propertyPanel.Initialize();
+            //propertyPanel = new FigmaPropertyPanel();
+            //second.ContentView = propertyPanel.View;
+            //propertyPanel.Initialize();
 
-            surface.FocusedViewChanged += (sender, e) =>
-            {
-                var model = session.GetModel(e);
-                propertyPanel.Select(model);
-            };
+            //surface.FocusedViewChanged += (sender, e) =>
+            //{
+            //    var model = session.GetModel(e);
+            //    propertyPanel.Select(model);
+            //};
 
-            propertyPanel.Select(session.MainViews[0].FigmaNode);
+            //propertyPanel.Select(session.MainViews[0].FigmaNode);
         }
 
-        FigmaPropertyPanel propertyPanel;
+        //FigmaPropertyPanel propertyPanel;
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {

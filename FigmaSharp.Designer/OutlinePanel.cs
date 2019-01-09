@@ -38,6 +38,8 @@ namespace MonoDevelop.Figma
         public OutlineView View { get; }
         public event EventHandler<FigmaNode> RaiseFirstResponder;
         public event EventHandler<FigmaNode> RaiseDeleteItem;
+        public event EventHandler<FigmaNode> DoubleClick;
+        public event EventHandler<FigmaNode> StartDrag;
 
         public OutlinePanel()
         {
@@ -62,6 +64,16 @@ namespace MonoDevelop.Figma
                     }
                 }
             };
+
+            View.DoubleClick += (sender, e) =>
+            {
+                DoubleClick?.Invoke(this, (View.SelectedNode as FigmaNodeView)?.Wrapper);
+            };
+
+            View.StartDrag += (sender, e) =>
+            {
+                StartDrag?.Invoke(this, (e as FigmaNodeView)?.Wrapper);
+            };
         }
 
         public void FocusSelectedView()
@@ -69,6 +81,7 @@ namespace MonoDevelop.Figma
             var window = View.Window;
             window.MakeFirstResponder(View);
         }
+
 
         public void GenerateTree(Node node)
         {
@@ -82,5 +95,4 @@ namespace MonoDevelop.Figma
             View.FocusNode(node);
         }
     }
-
 }

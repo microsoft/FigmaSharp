@@ -53,5 +53,10 @@ namespace FigmaSharp.NativeControls
             }
             return new ViewWrapper(button);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

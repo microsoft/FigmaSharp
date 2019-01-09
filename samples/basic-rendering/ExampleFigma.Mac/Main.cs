@@ -59,18 +59,7 @@ namespace ExampleFigmaMac
 
         static void Refresh(NSView contentView)
         {
-            //ReadStoryboardFigmaFile (); //Example reading storyboard figma
             ReadRemoteFigmaFile (contentView); //Example reading remote file
-        }
-
-        //Example 1
-        static void ReadStoryboardFigmaFile()
-        {
-            var testStoryboard = new FigmaStoryboard();
-            scrollView.DocumentView = testStoryboard.ContentView.NativeObject as NSView;
-            //we need reload after set the content to ensure the scrollview
-            testStoryboard.Reload(true);
-            scrollViewWrapper.AdjustToContent();
         }
 
         static NSScrollView scrollView;

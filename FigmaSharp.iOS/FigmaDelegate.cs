@@ -19,6 +19,8 @@ namespace FigmaSharp
             new FigmaLineConverter ()
         };
 
+        public bool IsYAxisFlipped => false;
+
         static UIImage FromUrl(string uri)
         {
             using (var url = new NSUrl(uri))

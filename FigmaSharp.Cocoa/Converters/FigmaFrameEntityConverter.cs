@@ -25,6 +25,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System.Text;
 using AppKit;
 
 namespace FigmaSharp.Converters
@@ -33,10 +34,20 @@ namespace FigmaSharp.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var currengroupView = new FlippedView();
+            var currengroupView = new NSView();
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
             currengroupView.Configure(figmaFrameEntity);
             return new ViewWrapper(currengroupView);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            StringBuilder builder = new StringBuilder();
+            var name = "elipseView";
+            builder.AppendLine($"var {name} = new {nameof(NSView)}();");
+            builder.Configure(name, figmaFrameEntity);
+            return builder.ToString();
         }
     }
 }

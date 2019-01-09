@@ -26,6 +26,8 @@
 * USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System.Text;
+
 namespace FigmaSharp.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
@@ -38,6 +40,16 @@ namespace FigmaSharp.Converters
             textField.Configure(figmaText);
             var wrapper = new ViewWrapper(textField);
             return wrapper;
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var figmaText = ((FigmaText)currentNode);
+            StringBuilder builder = new StringBuilder();
+            var name = "textView";
+            builder.AppendLine(string.Format ("var {0} = {1};", name, FigmaViewsHelper.CreateLabelToDesignerString (figmaText.characters)));
+            builder.Configure(name, currentNode);
+            return builder.ToString();
         }
     }
 }

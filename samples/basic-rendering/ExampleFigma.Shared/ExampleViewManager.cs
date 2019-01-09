@@ -24,7 +24,7 @@ namespace ExampleFigma
        
         public void Initialize ()
         {
-            fileService.Start(fileName);
+            fileService.Start(fileName, 0);
             rendererService.Start();
 
             var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)

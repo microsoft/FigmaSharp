@@ -39,5 +39,10 @@ namespace FigmaSharp.Converters
             elipseView.Configure(elipse);
             return new ViewWrapper(elipseView);
         }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

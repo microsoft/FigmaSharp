@@ -8,6 +8,7 @@ namespace FigmaSharp
 {
     public class OutlineView : NSOutlineView
     {
+        public event EventHandler<Node> StartDrag;
         public event EventHandler<ushort> KeyPress;
 
         public override void KeyDown(NSEvent theEvent)
@@ -35,7 +36,6 @@ namespace FigmaSharp
 
         public OutlineView ()
         {
-            TranslatesAutoresizingMaskIntoConstraints = false;
             AllowsExpansionToolTips = true;
             AllowsMultipleSelection = false;
             AutosaveTableColumns = false;
@@ -47,7 +47,12 @@ namespace FigmaSharp
             AddColumn (column);
             OutlineTableColumn = column;
             Delegate = new OutlineViewDelegate ();
-            DataSource = new OutlineViewDataSource (Data);
+            var outlineViewDataSource = new OutlineViewDataSource(Data);
+            DataSource = outlineViewDataSource;
+            outlineViewDataSource.StartDrag += (sender, e) =>
+            {
+                StartDrag?.Invoke(this, e as Node);
+            };
         }
 
         public void SetData (Node data)
@@ -164,6 +169,14 @@ namespace FigmaSharp
         public OutlineViewDataSource (MainNode mainNode)
         {
             this.mainNode = mainNode; 
+        }
+
+        public event EventHandler<NSObject> StartDrag;
+
+        public override INSPasteboardWriting PasteboardWriterForItem(NSOutlineView outlineView, NSObject item)
+        {
+            StartDrag?.Invoke(this, item);
+            return null;
         }
 
         public override nint GetChildrenCount (NSOutlineView outlineView, NSObject item)

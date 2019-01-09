@@ -26,17 +26,30 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
+using System.Text;
+using AppKit;
+
 namespace FigmaSharp.Converters
 {
-
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var elipseView = new FlippedView();// { TranslatesAutoresizingMaskIntoConstraints = false };
+            var elipseView = new NSView();// { TranslatesAutoresizingMaskIntoConstraints = false };
             var elipse = (FigmaElipse)currentNode;
             elipseView.Configure(elipse);
             return new ViewWrapper(elipseView);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "elipseView";
+            builder.AppendLine($"var {name} = new {nameof (NSView)}();");
+
+            builder.Configure(name, currentNode);
+            return builder.ToString();
         }
     }
 }

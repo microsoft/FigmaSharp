@@ -26,6 +26,9 @@
 * USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
+using System.Text;
+
 namespace FigmaSharp.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
@@ -38,6 +41,11 @@ namespace FigmaSharp.Converters
             textField.Configure(figmaText);
             var wrapper = new ViewWrapper(textField);
             return wrapper;
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
         }
     }
 }

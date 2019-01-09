@@ -18,6 +18,8 @@ namespace FigmaSharp
             new FigmaLineConverter ()
         };
 
+        public bool IsYAxisFlipped => true;
+
         public IImageWrapper GetImage (string url)
         {
             var image = new NSImage(new Foundation.NSUrl(url));

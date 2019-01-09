@@ -37,5 +37,7 @@ namespace FigmaSharp
         public abstract bool CanConvert(FigmaNode currentNode);
 
         public abstract IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent);
+
+        public abstract string ConvertToCode(FigmaNode currentNode, ProcessedNode parent);
     }
 }

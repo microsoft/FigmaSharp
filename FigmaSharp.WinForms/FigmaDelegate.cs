@@ -20,6 +20,8 @@ namespace FigmaSharp
             new FigmaLineConverter ()
         };
 
+        public bool IsYAxisFlipped => false;
+
         public FigmaDelegate()
         {
         }

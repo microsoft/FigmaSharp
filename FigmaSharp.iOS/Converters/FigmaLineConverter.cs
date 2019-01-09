@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Text;
 using UIKit;
 
 namespace FigmaSharp.Converters
@@ -38,6 +39,16 @@ namespace FigmaSharp.Converters
             var figmaLine = (FigmaLine)currentNode;
             figmaLineView.Configure(figmaLine);
             return new ViewWrapper(figmaLineView);
+        }
+
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            StringBuilder builder = new StringBuilder();
+            var name = "lineView";
+            builder.AppendLine($"var {name} = new {nameof(UIView)}();");
+
+            //builder.Configure(name, (FigmaLine)currentNode);
+            return builder.ToString();
         }
     }
 }
