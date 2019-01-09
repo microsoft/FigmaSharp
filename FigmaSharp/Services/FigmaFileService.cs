@@ -69,7 +69,6 @@ namespace FigmaSharp.Services
         {
             try
             {
-           
                 ImageVectors.Clear();
                 NodesProcessed.Clear();
 

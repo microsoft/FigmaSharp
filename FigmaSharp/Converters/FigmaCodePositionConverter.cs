@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorEntityConverter.cs
+ * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,28 +25,11 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Text;
-using AppKit;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp
 {
-    public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
+    public abstract class FigmaCodePositionConverter
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
-        {
-            var currengroupView = new NSImageView();
-            currengroupView.Configure((FigmaVectorEntity)currentNode);
-            return new ImageViewWrapper(currengroupView);
-        }
-
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
-        {
-            StringBuilder builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine($"var {name} = new {nameof(NSImageView)}();");
-
-            builder.Configure(name, (FigmaVectorEntity)currentNode);
-            return builder.ToString();
-        }
+        public abstract string ConvertToCode(string name, ProcessedNode parentNode, ProcessedNode current);
     }
 }

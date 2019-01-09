@@ -18,6 +18,9 @@ namespace FigmaSharp
             new FigmaLineConverter ()
         };
 
+        static readonly FigmaCodePositionConverter positionConverter = new MacFigmaCodePositionConverter();
+        static readonly FigmaCodeAddChildConverter addChildConverter = new MacFigmaCodeAddChildConverter();
+
         public bool IsYAxisFlipped => true;
 
         public IImageWrapper GetImage (string url)
@@ -59,5 +62,9 @@ namespace FigmaSharp
             FigmaApiHelper.GetManifestResource(assembly, file);
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
+
+        public FigmaCodePositionConverter GetPositionConverter() => positionConverter;
+
+        public FigmaCodeAddChildConverter GetAddChildConverter() => addChildConverter;
     }
 }

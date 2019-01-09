@@ -45,7 +45,7 @@ namespace FigmaSharp.Converters
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
         {
             StringBuilder builder = new StringBuilder();
-            var name = "elipseView";
+            var name = "[NAME]";
             builder.AppendLine($"var {name} = new {nameof (NSView)}();");
 
             builder.Configure(name, currentNode);

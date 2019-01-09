@@ -69,11 +69,11 @@ namespace MonoDevelop.Figma
                 // toolbox
             };
 
-            toolbox.SelectItem += (sender, e) =>
+            toolbox.SelectCode += (sender, e) =>
             {
-                if (e != null)
+                if (!string.IsNullOrEmpty (e))
                 {
-                    selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = e.Code });
+                    selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = e });
                     CurrentConsumer.ConsumeItem(selected);
                 }
             };

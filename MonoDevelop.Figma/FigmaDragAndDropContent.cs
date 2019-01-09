@@ -40,7 +40,7 @@ namespace MonoDevelop.Figma
 {
     class FigmaDragAndDropContent : NSView
     {
-        public event EventHandler<ProcessedNode> SelectItem;
+        public event EventHandler<string> SelectCode;
         public event EventHandler DragBegin;
         public event EventHandler DragSourceUnset;
         public event EventHandler<Gtk.TargetEntry[]> DragSourceSet;
@@ -99,7 +99,8 @@ namespace MonoDevelop.Figma
             outlinePanel.DoubleClick += (sender, e) =>
             {
                 var node = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == e);
-                SelectItem?.Invoke(this, node);
+                var code = codeRenderer.GetCode(node.FigmaNode, true);
+                SelectCode?.Invoke(this, code);
             };
 
             outlinePanel.StartDrag += (sender, e) =>

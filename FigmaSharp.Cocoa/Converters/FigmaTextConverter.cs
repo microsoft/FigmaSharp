@@ -46,7 +46,7 @@ namespace FigmaSharp.Converters
         {
             var figmaText = ((FigmaText)currentNode);
             StringBuilder builder = new StringBuilder();
-            var name = "textView";
+            var name = "[NAME]";
             builder.AppendLine(string.Format ("var {0} = {1};", name, FigmaViewsHelper.CreateLabelToDesignerString (figmaText.characters)));
             builder.Configure(name, currentNode);
             return builder.ToString();

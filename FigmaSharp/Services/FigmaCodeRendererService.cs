@@ -7,47 +7,42 @@ namespace FigmaSharp.Services
     public class FigmaCodeRendererService
     {
         protected FigmaFileService figmaFileService;
+        FigmaCodePositionConverter codePositionConverter;
+        FigmaCodeAddChildConverter codeAddChildConverter;
 
         public FigmaCodeRendererService(FigmaFileService figmaFileService)
         {
             this.figmaFileService = figmaFileService;
+            codePositionConverter = AppContext.Current.GetPositionConverter();
+            codeAddChildConverter = AppContext.Current.GetAddChildConverter();
         }
 
         public string GetCode(FigmaNode node, bool recursively = false)
         {
+            counter = 0;
             var current = figmaFileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == node);
             if (current == null) return string.Empty;
 
+            var name = "view" + counter++;
             var builder = new StringBuilder();
-            builder.Append(current.Code);
-
-            //if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && node is IAbsoluteBoundingBox nodeAbsoluteBoundingBox && node.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
-            //{
-            //    child.View.X = nodeAbsoluteBoundingBox.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
-
-            //    var diferencia = nodeAbsoluteBoundingBox.absoluteBoundingBox.y - absoluteBounding.absoluteBoundingBox.y;
-            //    child.View.Y = nodeAbsoluteBoundingBox.absoluteBoundingBox.height - diferencia;
-            //    // currentHeight - absoluteBounding.absoluteBoundingBox.height - (absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y);
-            //}
-
-
+            builder.AppendLine(current.Code.Replace("[NAME]", name));
+            Recursively(builder, name, current);
             return builder.ToString ();
         }
 
-        public void Recursively (StringBuilder builder, ProcessedNode node)
+        int counter;
+
+        public void Recursively (StringBuilder builder, string parent, ProcessedNode parentNode)
         {
             //we start to process all nodes
-            var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == node);
+            var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == parentNode);
             foreach (var child in children)
             {
-                if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && node is IAbsoluteBoundingBox nodeAbsoluteBoundingBox && node.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
-                {
-                    child.View.X = nodeAbsoluteBoundingBox.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
-
-                    var diferencia = nodeAbsoluteBoundingBox.absoluteBoundingBox.y - absoluteBounding.absoluteBoundingBox.y;
-                    child.View.Y = nodeAbsoluteBoundingBox.absoluteBoundingBox.height - diferencia;
-                    // currentHeight - absoluteBounding.absoluteBoundingBox.height - (absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y);
-                }
+                var name = "view" + counter++;
+                builder.AppendLine(child.Code.Replace ("[NAME]", name));
+                builder.AppendLine(codePositionConverter.ConvertToCode(name, parentNode, child));
+                builder.AppendLine(codeAddChildConverter.ConvertToCode (parent, name, parentNode, child));
+                Recursively(builder, name, child);
             }
 
             //if (children.Any())
