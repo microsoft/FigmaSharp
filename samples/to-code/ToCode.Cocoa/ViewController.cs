@@ -58,8 +58,8 @@ namespace ToCode.Cocoa
             var code = codeRenderer.GetCode(e, true);
             var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
             textField.Value = code;
-
-            Console.WriteLine(code);
+            NSPasteboard.GeneralPasteboard.DeclareTypes(new string[] { NSPasteboard.NSStringType }, null);
+            NSPasteboard.GeneralPasteboard.SetStringForType(code, NSPasteboard.NSStringType);
         }
 
         public override NSObject RepresentedObject

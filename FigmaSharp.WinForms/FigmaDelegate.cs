@@ -86,5 +86,15 @@ namespace FigmaSharp
         {
             //To define
         }
+
+        public FigmaCodePositionConverter GetPositionConverter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public FigmaCodeAddChildConverter GetAddChildConverter()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

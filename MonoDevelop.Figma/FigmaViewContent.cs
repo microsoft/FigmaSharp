@@ -86,7 +86,7 @@ namespace MonoDevelop.Figma
             _content.CanFocus = true;
             _content.Sensitive = true;
 
-            var scrollView = new FlippedScrollView()
+            var scrollView = new NSScrollView()
             {
                 HasVerticalScroller = true,
                 HasHorizontalScroller = true,
@@ -98,7 +98,7 @@ namespace MonoDevelop.Figma
 
             scrollViewWrapper = new ScrollViewWrapper(scrollView);
 
-            var contentView = new FlippedView();
+            var contentView = new NSView();
             contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
             scrollView.DocumentView = contentView;
 
