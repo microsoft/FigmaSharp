@@ -68,5 +68,15 @@ namespace FigmaSharp
 
         public void BeginInvoke(Action handler) =>
             UIApplication.SharedApplication.InvokeOnMainThread(handler);
+
+        public FigmaCodePositionConverter GetPositionConverter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public FigmaCodeAddChildConverter GetAddChildConverter()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
