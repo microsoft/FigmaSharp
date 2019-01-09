@@ -126,7 +126,7 @@ namespace FigmaSharp
             var size = font.PointSize;
             var w = NSFontManager.SharedFontManager.WeightOfFont(font);
             var traits = NSFontManager.SharedFontManager.TraitsOfFont(font);
-            return string.Format("NSFontManager.SharedFontManager.FontWithFamily(\"{0}\", {1}, {2}, {3});", family, traits.ToDesignerString (), w, style.fontSize);
+            return string.Format("NSFontManager.SharedFontManager.FontWithFamily(\"{0}\", {1}, {2}, {3})", family, traits.ToDesignerString (), w, style.fontSize);
         }
 
         public static NSFont ToNSFont(this FigmaTypeStyle style)

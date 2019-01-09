@@ -164,7 +164,7 @@ namespace FigmaSharp
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
             //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
 
-            var fills = text.fills.FirstOrDefault();
+            var fills = text.fills.FirstOrDefault () as FigmaPaint;
             if (fills != null)
             {
                 builder.AppendLine(string.Format("{0}.TextColor = {1};", name, fills.color.ToDesignerString ()));
@@ -172,29 +172,38 @@ namespace FigmaSharp
 
             if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
             {
-                //var attributedTextName = "attributedText" + DateTime.Now.ToString ("HHmmss");
-                //builder.AppendLine(string.Format("var {0} = new NSMutableAttributedString({1}.AttributedStringValue);", attributedTextName, name));
-                ////var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
-                //for (int i = 0; i < text.characterStyleOverrides.Length; i++)
-                //{
-                //    var key = text.characterStyleOverrides[i].ToString();
-                //    if (!text.styleOverrideTable.ContainsKey(key))
-                //    {
-                //        continue;
-                //    }
-                //    var element = text.styleOverrideTable[key];
-                //    if (element.fontFamily == null)
-                //    {
-                //        continue;
-                //    }
-                //    var localFont = FigmaExtensions.ToNSFont(element);
+                var attributedTextName = "attributedText" + DateTime.Now.ToString ("HHmmss");
+                builder.AppendLine(string.Format("var {0} = new NSMutableAttributedString({1}.AttributedStringValue);", attributedTextName, name));
 
-                //    var range = new NSRange(i, 1);
-                //    attributedText.AddAttribute(NSStringAttributeKey.Font, localFont, range);
-                //    attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
-                //}
+                //var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
+                for (int i = 0; i < text.characterStyleOverrides.Length; i++)
+                {
+                    var key = text.characterStyleOverrides[i].ToString();
+                    if (!text.styleOverrideTable.ContainsKey(key))
+                    {
+                        continue;
+                    }
+                    var element = text.styleOverrideTable[key];
+                    if (element.fontFamily == null)
+                    {
+                        continue;
+                    }
 
-                //label.AttributedStringValue = attributedText;
+
+                    builder.AppendLine(string.Format("{0}.AddAttribute(NSStringAttributeKey.Font, {1}, new NSRange({2}, 1));", attributedTextName, element.ToNSFontDesignerString(), i));
+
+                    string color = color = fills?.color?.ToDesignerString(); ;
+
+                    if (element.fills != null && element.fills.Any ())
+                    {
+                        if (element.fills.FirstOrDefault() is FigmaPaint paint)
+                        {
+                            color = paint.color.ToDesignerString();
+                        }
+                        builder.AppendLine(string.Format("{0}.AddAttribute(NSStringAttributeKey.ForegroundColor, {1}, new NSRange({2}, 1));", attributedTextName, color, i));
+                    }
+                }
+                builder.AppendLine(string.Format("{0}.AttributedStringValue = {1};", name, attributedTextName));
             }
         }
 

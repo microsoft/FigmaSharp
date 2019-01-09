@@ -382,5 +382,6 @@ namespace FigmaSharp
         public float letterSpacing { get; set; }
         public float lineHeightPx { get; set; }
         public int lineHeightPercent { get; set; }
+        public FigmaPaint[] fills { get; set; }
     }
 }
