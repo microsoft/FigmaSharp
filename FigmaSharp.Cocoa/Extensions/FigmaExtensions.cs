@@ -37,6 +37,7 @@ using System.Threading.Tasks;
 using Foundation;
 using CoreAnimation;
 using FigmaSharp.Converters;
+using System.Text;
 
 namespace FigmaSharp
 {
@@ -92,9 +93,10 @@ namespace FigmaSharp
             return string.Format ("{0}.{1}", nameof(NSTextAlignment), alignment.ToString());
         }
 
-        public static string ToDesignerString(this FigmaColor color)
+        public static string ToDesignerString(this FigmaColor color, bool cgColor = false)
         {
-            return $"NSColor.FromRgba({color.r.ToDesignerString ()}, {color.g.ToDesignerString ()}, {color.b.ToDesignerString ()}, {color.a.ToDesignerString ()}).CGColor";
+            var cg = cgColor ? ".CGColor" : "";
+            return $"NSColor.FromRgba({color.r.ToDesignerString ()}, {color.g.ToDesignerString ()}, {color.b.ToDesignerString ()}, {color.a.ToDesignerString ()}){cg}";
         }
 
         public static string ToDesignerString(this bool value)
@@ -105,6 +107,26 @@ namespace FigmaSharp
         public static CGRect ToCGRect(this FigmaRectangle rectangle)
         {
             return new CGRect(0, 0, rectangle.width, rectangle.height);
+        }
+
+        public static string ToDesignerString(this NSFontTraitMask mask)
+        {
+            if (mask.HasFlag (NSFontTraitMask.Bold))
+            {
+                return string.Format("{0}.{1}", nameof(NSFontTraitMask), nameof (NSFontTraitMask.Bold));
+            }
+            return "default(NSFontTraitMask)";
+            //return string.Format("{0}.{1}", nameof(NSFontTraitMask), mask.ToString());
+        }
+
+        public static string ToNSFontDesignerString(this FigmaTypeStyle style)
+        {
+            var font = style.ToNSFont();
+            var family = font.FamilyName;
+            var size = font.PointSize;
+            var w = NSFontManager.SharedFontManager.WeightOfFont(font);
+            var traits = NSFontManager.SharedFontManager.TraitsOfFont(font);
+            return string.Format("NSFontManager.SharedFontManager.FontWithFamily(\"{0}\", {1}, {2}, {3});", family, traits.ToDesignerString (), w, style.fontSize);
         }
 
         public static NSFont ToNSFont(this FigmaTypeStyle style)
@@ -130,20 +152,11 @@ namespace FigmaSharp
             {
                 traits = NSFontTraitMask.Bold;
             }
-            else
+            if (font == null)
             {
-
+                family = ".AppleSystemUIFont";
             }
-            //if (font != null)
-            //{
-            //    var w = NSFontManager.SharedFontManager.WeightOfFont(font);
-            //    var traits = NSFontManager.SharedFontManager.TraitsOfFont(font);
-
-            //}
-
             font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, w, style.fontSize);
-            //var font = NSFont.FromFontName(".SF NS Text", 12);
-
             if (font == null)
             {
                 Console.WriteLine($"[ERROR] Font not found :{family}");

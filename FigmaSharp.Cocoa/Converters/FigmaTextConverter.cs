@@ -48,7 +48,11 @@ namespace FigmaSharp.Converters
             StringBuilder builder = new StringBuilder();
             var name = "[NAME]";
             builder.AppendLine(string.Format ("var {0} = {1};", name, FigmaViewsHelper.CreateLabelToDesignerString (figmaText.characters)));
-            builder.Configure(name, currentNode);
+
+            var nsFont = figmaText.style.ToNSFont();
+            builder.AppendLine(string.Format("{0}.Font = {1};", name, figmaText.style.ToNSFontDesignerString()));
+
+            builder.Configure(name, (FigmaText)currentNode);
             return builder.ToString();
         }
     }

@@ -124,7 +124,7 @@ namespace FigmaSharp
 
             if (child.HasFills && child.fills[0].color != null)
             {
-                builder.AppendLine(string.Format("{0}.Layer.BackgroundColor = {1};", name, child.fills[0].color.ToDesignerString ()));
+                builder.AppendLine(string.Format("{0}.Layer.BackgroundColor = {1};", name, child.fills[0].color.ToDesignerString (true)));
             }
 
             var strokes = child.strokes.FirstOrDefault();
@@ -132,7 +132,7 @@ namespace FigmaSharp
             {
                 if (strokes.color != null)
                 {
-                    builder.AppendLine(string.Format("{0}.Layer.BorderColor = {1};", name, strokes.color.ToDesignerString()));
+                    builder.AppendLine(string.Format("{0}.Layer.BorderColor = {1};", name, strokes.color.ToDesignerString(true)));
                 }
                 builder.AppendLine(string.Format("{0}.Layer.BorderWidth = {1};", name, child.strokeWeight));
             }
@@ -172,8 +172,9 @@ namespace FigmaSharp
 
             if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
             {
-
-                //var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
+                //var attributedTextName = "attributedText" + DateTime.Now.ToString ("HHmmss");
+                //builder.AppendLine(string.Format("var {0} = new NSMutableAttributedString({1}.AttributedStringValue);", attributedTextName, name));
+                ////var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
                 //for (int i = 0; i < text.characterStyleOverrides.Length; i++)
                 //{
                 //    var key = text.characterStyleOverrides[i].ToString();
@@ -187,6 +188,7 @@ namespace FigmaSharp
                 //        continue;
                 //    }
                 //    var localFont = FigmaExtensions.ToNSFont(element);
+
                 //    var range = new NSRange(i, 1);
                 //    attributedText.AddAttribute(NSStringAttributeKey.Font, localFont, range);
                 //    attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
