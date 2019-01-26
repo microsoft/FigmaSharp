@@ -17,11 +17,24 @@
         <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
     
+     <Extension path = "/MonoDevelop/DesignerSupport/PropertyProviders">
+            <Class class = "MonoDevelop.Figma.FigmaPropertyProvider"/>
+    </Extension>
+    
     <Extension path = "/MonoDevelop/Ide/Pads">
         <Pad id = "MonoDevelop.Figma.FigmaDragAndDropPad"
             class = "MonoDevelop.Figma.FigmaDragAndDropPad"
             _label="Figma Toolbox"
             icon = "md-toolbox-pad"
+            group = "Designer"
+            defaultLayout="*"
+            defaultPlacement="Right"
+            defaultStatus="AutoHide"
+            />
+            <Pad id = "MonoDevelop.Figma.PropertyPad"
+            class = "MonoDevelop.Figma.PropertyPad"
+            _label="Figma Properties"
+            icon = "md-properties-pad"
             group = "Designer"
             defaultLayout="*"
             defaultPlacement="Right"

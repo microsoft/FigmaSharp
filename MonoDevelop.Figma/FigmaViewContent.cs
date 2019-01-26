@@ -46,6 +46,7 @@ using FigmaSharp.Designer;
 using MonoDevelop.DesignerSupport;
 using Gtk;
 using System.ComponentModel;
+using MonoDevelop.Components.PropertyGrid;
 
 namespace MonoDevelop.Figma
 {
@@ -64,6 +65,7 @@ namespace MonoDevelop.Figma
         public override string TabPageLabel => fileName.FileName;
 
         Gtk.Widget _content;
+        PropertyGrid grid;
 
         readonly IScrollViewWrapper scrollViewWrapper;
 
@@ -104,14 +106,15 @@ namespace MonoDevelop.Figma
 
             container.AddArrangedSubview(scrollView);
 
-            //IdeApp.Workbench.ActiveDocument.Editor.TextChanged += Editor_TextChanged;
-
             _content.ShowAll();
+
+            grid = PropertyPad.Instance.Control;
+            grid.Changed += PropertyPad_Changed;
         }
 
-        void Editor_TextChanged(object sender, Core.Text.TextChangeEventArgs e)
+        void PropertyPad_Changed(object sender, EventArgs e)
         {
-
+            session.Reload();
         }
 
         public override Task Save()
@@ -151,7 +154,7 @@ namespace MonoDevelop.Figma
                 surface.SetWindow(new WindowInternalWrapper(window));
                 surface.StartHoverSelection();
 
-                IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
+                //IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
                 IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
             }
 
@@ -160,29 +163,50 @@ namespace MonoDevelop.Figma
             ContentName = fileName;
             return Task.FromResult(true);
         }
-
+        
         void Surface_FocusedViewChanged(object sender, IViewWrapper e)
         {
-            if (outlinePad != null)
-            {
-                var model = session.GetModel(e);
+            var model = session.GetModel(e);
+            if (outlinePad != null) {
                 outlinePad.Focus(model);
             }
+            PropertyPad.Instance.Control.CurrentObject = GetWrapper (model);
+        }
 
-            //if (propertyPad != null)
-            //{
-            //    propertyPad.Initialize();
-            //    var model = session.GetModel(e);
-            //    propertyPad.Select(model);
-            //}
+        FigmaNodeWrapper GetWrapper (FigmaNode node)
+        {
+            if (node is FigmaFrameEntity figmaFrameEntity)
+            {
+                return new FigmaFrameEntityWrapper(figmaFrameEntity);
+            }
+
+            if (node is FigmaText figmaText)
+            {
+                return new FigmaTextWrapper(figmaText);
+            }
+
+            if (node is FigmaRectangleVector figmaRectangleVector)
+            {
+                return new FigmaRectangleVectorWrapper(figmaRectangleVector);
+            }
+
+            if (node is FigmaCanvas canvas)
+            {
+                return new FigmaCanvasWrapper(canvas);
+            }
+            if (node is FigmaVectorEntity vectorEntity)
+            {
+                return new FigmaVectorEntityWrapper(vectorEntity);
+            }
+
+            return new FigmaNodeWrapper(node);
         }
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {
             scrollViewWrapper.ClearSubviews();
 
-            foreach (var items in session.MainViews)
-            {
+            foreach (var items in session.MainViews) {
                 scrollViewWrapper.AddChild(items.View);
             }
 
@@ -321,10 +345,10 @@ namespace MonoDevelop.Figma
         public override void Dispose()
         {
             surface.StopHover();
-            if (IdeApp.Workbench.ActiveDocument != null)
-            {
-                IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
-            }
+            //if (IdeApp.Workbench.ActiveDocument != null)
+            //{
+            //    IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
+            //}
             base.Dispose();
         }
     }

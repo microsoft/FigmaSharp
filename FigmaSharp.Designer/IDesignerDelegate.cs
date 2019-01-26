@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaDisplayBinding.cs 
+ * FigmaViewContent.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,24 +25,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-using FigmaSharp;
-using Microsoft.CodeAnalysis;
-using MonoDevelop.Components.Commands;
-using MonoDevelop.Core;
-using MonoDevelop.Ide.Gui;
-using MonoDevelop.Projects;
-
-namespace MonoDevelop.Figma.Commands
+namespace FigmaSharp.Designer
 {
-    class FigmaInitCommand : CommandHandler
+    public interface IDesignerDelegate
     {
-        protected override void Run()
-        {
-            PropertyPad.Instance.Initialize();
-            FigmaApplication.Init(FigmaRuntime.Token);
-        }
+        void RemoveAllErrorWindows(IWindowWrapper windowWrapper);
+        void StartHoverSelection(IWindowWrapper currentWindow);
+        void DeepHoverSelection();
+        void PreviousHoverSelection();
+        void StopHoverSelection();
     }
 }
-
-

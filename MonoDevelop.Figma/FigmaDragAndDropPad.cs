@@ -102,15 +102,13 @@ namespace MonoDevelop.Figma
 
             if (IdeApp.Workbench != null)
             {
-                IdeApp.Workbench.ActiveDocumentChanged += new EventHandler(onActiveDocChanged);
-
-                onActiveDocChanged(null, null);
+                //IdeApp.Workbench.ActiveDocumentChanged += Workbench_ActiveDocumentChanged;
+                //IdeApp.Workbench.ActiveDocumentChanged += Workbench_ActiveDocumentChanged;
+                Workbench_ActiveDocumentChanged(null, null);
             }
         }
 
-        IToolboxConsumer CurrentConsumer;
-
-        void onActiveDocChanged(object sender, EventArgs e)
+        void Workbench_ActiveDocumentChanged(object sender, EventHandler e)
         {
             if (IdeApp.Workbench.ActiveDocument != null && IdeApp.Workbench.ActiveDocument.ActiveView != null)
             {
@@ -121,6 +119,8 @@ namespace MonoDevelop.Figma
                 CurrentConsumer = null;
             }
         }
+
+        IToolboxConsumer CurrentConsumer;
 
         Gtk.TargetList targets = new Gtk.TargetList();
         bool isDragging = false;
