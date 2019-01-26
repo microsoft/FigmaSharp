@@ -1,3 +1,6 @@
 [submodule "external/Xamarin.PropertyEditing"]
 	path = external/Xamarin.PropertyEditing
 	url = https://github.com/xamarin/Xamarin.PropertyEditing
+[submodule "external/xwt"]
+	path = external/xwt
+	url = https://github.com/mono/xwt
