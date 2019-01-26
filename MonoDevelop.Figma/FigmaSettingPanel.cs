@@ -39,7 +39,11 @@ namespace MonoDevelop.Figma
 
 		public static string Token {
 			get => PropertyService.Get<string> (FigmaSetting);
-			set => PropertyService.Set (FigmaSetting, value);
+            set
+            {
+                FigmaSharp.AppContext.Current.SetAccessToken(value);
+                PropertyService.Set(FigmaSetting, value);
+            }
 		}
 	}
 
