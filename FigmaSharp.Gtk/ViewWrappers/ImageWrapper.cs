@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * ImageWrapper.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,33 +26,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-using System.Collections.Generic;
+using Gtk;
 
 namespace FigmaSharp
 {
-    public interface IViewWrapper : IObjectWrapper
+    public class ImageWrapper : IImageWrapper
     {
-        IViewWrapper Parent { get; set; }
+        public object NativeObject => image;
 
-        IReadOnlyList<IViewWrapper> Children { get; }
-
-        string Identifier { get; set; }
-        string NodeName { get; set; }
-        bool Hidden { get; set; }
-
-        float X { get; set; }
-        float Y { get; set; }
-        float Width { get; set; }
-        float Height { get; set; }
-
-        void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-
-        void MakeFirstResponder();
+        protected Gdk.Pixbuf image;
+        public ImageWrapper(Gdk.Pixbuf image)
+        {
+            this.image = image;
+        }
     }
 }

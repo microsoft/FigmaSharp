@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,33 +26,26 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using Gtk;
 
-using System.Collections.Generic;
-
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public interface IViewWrapper : IObjectWrapper
+    public class FigmaLineConverter : FigmaLineConverterBase
     {
-        IViewWrapper Parent { get; set; }
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var model = (FigmaLine)currentNode;
+            var view = new Label();
+            view.Configure(model);
 
-        IReadOnlyList<IViewWrapper> Children { get; }
+            var fixedView = new Fixed();
+            fixedView.Put(view, 0, 0);
+            return new ViewWrapper(view, fixedView);
+        }
 
-        string Identifier { get; set; }
-        string NodeName { get; set; }
-        bool Hidden { get; set; }
-
-        float X { get; set; }
-        float Y { get; set; }
-        float Width { get; set; }
-        float Height { get; set; }
-
-        void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-
-        void MakeFirstResponder();
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }

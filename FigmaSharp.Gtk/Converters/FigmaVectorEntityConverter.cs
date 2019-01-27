@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaVectorEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,33 +26,29 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using Gtk;
 
-using System.Collections.Generic;
-
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-    public interface IViewWrapper : IObjectWrapper
+    public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
-        IViewWrapper Parent { get; set; }
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        {
+            var model = (FigmaVectorEntity)currentNode;
+            //var view = new Image (); // { TranslatesAutoresizingMaskIntoConstraints = false };
+            //view.ModifyBg(StateType.Active, new Gdk.Color(255, 0, 0));
+            //view.Configure(vector);
+            //return new ImageViewWrapper(view)
+            var view = new Label() { Text = "hola" };
+            view.Configure(model);
+            var fixedView = new Fixed();
+            fixedView.Put(view, 0, 0);
+            return new ViewWrapper(view, fixedView);
+        }
 
-        IReadOnlyList<IViewWrapper> Children { get; }
-
-        string Identifier { get; set; }
-        string NodeName { get; set; }
-        bool Hidden { get; set; }
-
-        float X { get; set; }
-        float Y { get; set; }
-        float Width { get; set; }
-        float Height { get; set; }
-
-        void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-
-        void MakeFirstResponder();
+        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        {
+            return string.Empty;
+        }
     }
 }
