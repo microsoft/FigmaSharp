@@ -25,29 +25,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Text;
-using AppKit;
 
 namespace FigmaSharp.Converters
 {
-    public class FigmaLineConverter : FigmaLineConverterBase
+    public class MacFigmaCodeAddChildConverter : FigmaCodeAddChildConverter
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(string parent, string current, ProcessedNode parentNode, ProcessedNode currentNode)
         {
-            var figmaLineView = new NSView();
-            var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
-        }
-
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
-        {
-            StringBuilder builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine($"var {name} = new {nameof(NSView)}();");
-
-            builder.Configure(name, (FigmaLine)currentNode);
-            return builder.ToString();
+            return string.Format("{0}.AddSubview({1});", parent, current);
         }
     }
 }

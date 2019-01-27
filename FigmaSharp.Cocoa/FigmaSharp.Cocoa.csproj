@@ -61,6 +61,8 @@
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
+    <Compile Include="Converters\MacFigmaCodePositionConverter.cs" />
+    <Compile Include="Converters\MacFigmaCodeAddChildConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
