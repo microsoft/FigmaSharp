@@ -53,6 +53,8 @@ namespace FigmaSharp.Services
             var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == parentNode);
             foreach (var child in children)
             {
+                parentNode.View.AddChild(child.View);
+
                 if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
                 {
                     child.View.X = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
@@ -68,7 +70,7 @@ namespace FigmaSharp.Services
                         child.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
                     }
                 }
-                parentNode.View.AddChild(child.View);
+
 
                 Recursively(child);
             }
