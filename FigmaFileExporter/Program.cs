@@ -2,6 +2,7 @@
 using System.IO;
 using FigmaSharp;
 using System.Linq;
+using System.Reflection;
 
 namespace FigmaDocumentExporter.Shell
 {
@@ -10,17 +11,33 @@ namespace FigmaDocumentExporter.Shell
 
         static void Main(string[] args)
         {
+            if (args.Length != 2 && args.Length != 3)
+            {
+                Console.WriteLine("Error: Invalid number of arguments");
+                Console.WriteLine("dotnet FigmaFileExporter.dll {FIGMA_TOKEN} {FILE_ID} {OUTPUT_DIRECTORY:OPTIONAL}");
+                return;
+            }
+            
             const string outputFile = "downloaded.figma";
 
-            FigmaSharp.AppContext.Current.SetAccessToken (Environment.GetEnvironmentVariable("TOKEN"));
+            var token = args[0];
+            var fileId = args[1];
 
-            var outputDirectory = args[0];
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            if (args.Length == 2)
+            {
+                Console.WriteLine($"Not output directory selected. Current Path: {currentDirectory}");
+            }
+            
+            var outputDirectory = args.Length == 2 ? currentDirectory : args[2];
+            
+            FigmaSharp.AppContext.Current.SetAccessToken (token);
+
             if (!Directory.Exists(outputDirectory))
             {
                 Directory.CreateDirectory(outputDirectory);
             }
-
-            var fileId = args[1];
 
             var content = FigmaApiHelper.GetFigmaFileContent(fileId);
 
