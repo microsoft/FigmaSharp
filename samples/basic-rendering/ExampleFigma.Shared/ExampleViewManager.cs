@@ -45,9 +45,7 @@ namespace ExampleFigma
                 var view = processedNode.View;
 
                 scrollViewWrapper.AddChild(view);
-
-                view.X = currentX;
-                view.Y = 0; //currentView.Height + currentHeight;
+                view.SetPosition(currentX, 0);
                 currentX += view.Width + Margin;
             }
         }

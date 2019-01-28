@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using Gtk;
 
 namespace FigmaSharp
@@ -33,14 +34,21 @@ namespace FigmaSharp
     public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {
         readonly Image imageView;
-        public ImageViewWrapper(Image imageView, Fixed fixedView) : base(imageView, fixedView)
+        public ImageViewWrapper(Image imageView) : base(imageView)
         {
             this.imageView = imageView;
         }
 
         public void SetImage(IImageWrapper image)
         {
-            imageView.IconSet = new IconSet ((Gdk.Pixbuf) image.NativeObject);
+            try
+            {
+                imageView.Pixbuf = (Gdk.Pixbuf)image.NativeObject;
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace FigmaSharp
     public class ViewWrapper : IViewWrapper
     {
         public object NativeObject => nativeView;
-        public IViewWrapper Parent { get; set; }
+        public IViewWrapper Parent => new ViewWrapper(nativeView.Parent);
 
         protected readonly List<IViewWrapper> children = new List<IViewWrapper>();
         public virtual IReadOnlyList<IViewWrapper> Children => children;
@@ -42,53 +42,45 @@ namespace FigmaSharp
         public float X {
             get => nativeView.Allocation.X;
             set {
-                if (FixedParentContainer == null)
-                {
-                    return;
-                }
-                FixedParentContainer?.Move(FixedContainer, (int)X, (int)value);
+                FixedParentContainer?.Move(nativeView, (int)value, (int)(Y == -1 ? 0 : Y) );
             } 
         }
 
-        static Fixed GetFixed (Widget widget)
-        {
-            return widget as Fixed ?? widget.Parent as Fixed;
-        }
+        //static Fixed GetFixed (Widget widget)
+        //{
+        //    return widget as Fixed ?? widget.Parent as Fixed;
+        //}
 
-        static Fixed GetFixedParent(Fixed fixedWidger)
-        {
-            if (fixedWidger.Parent is Fixed)
-            {
-                return (Fixed)fixedWidger.Parent;
-            }
-            return fixedWidger.Parent?.Parent as Fixed;
-        }
+        //static Fixed GetFixedParent(Fixed fixedWidger)
+        //{
+        //    if (fixedWidger.Parent is Fixed)
+        //    {
+        //        return (Fixed)fixedWidger.Parent;
+        //    }
+        //    return fixedWidger.Parent?.Parent as Fixed;
+        //}
 
-        static Fixed GetFixedParent (Widget widget)
-        {
-            var fixedContainter = GetFixed(widget);
-            if (fixedContainter == null)
-            {
-                return null;
-            }
-            return GetFixedParent(fixedContainter);
-        }
+        //static Fixed GetFixedParent (Widget widget)
+        //{
+        //    var fixedContainter = GetFixed(widget);
+        //    if (fixedContainter == null)
+        //    {
+        //        return null;
+        //    }
+        //    return GetFixedParent(fixedContainter);
+        //}
 
-        public Fixed FixedParentContainer => GetFixedParent(nativeView);
+        public Fixed FixedParentContainer => nativeView.Parent as Fixed;
 
         //public Fixed FixedContainer => GetFixed(nativeView);
-        public Fixed FixedContainer { get; }
+        ///public Fixed FixedContainer { get; }
 
         public float Y
         {
-            get => FixedContainer.Allocation.Y;
+            get => nativeView.Allocation.Y;
             set
             {
-                if (FixedParentContainer == null)
-                {
-                    return;
-                }
-                FixedParentContainer?.Move(FixedContainer, (int)Y, (int)value);
+                FixedParentContainer?.Move(nativeView,(int) (X == -1 ? 0 : X), (int)value);
             }
         }
 
@@ -129,7 +121,7 @@ namespace FigmaSharp
 
         protected Widget nativeView;
 
-        public ViewWrapper(Widget nativeView, Fixed fixedContainer)
+        public ViewWrapper(Widget nativeView)
         {
             //if (nativeView is Viewport viewport && viewport.Children[0] is Fixed viewPortFixedView)
             //{
@@ -146,18 +138,18 @@ namespace FigmaSharp
             //    FixedContainer = new Fixed();
             //    FixedContainer.Put(nativeView, 0, 0);
             //}
-            this.FixedContainer = fixedContainer;
+            //this.FixedContainer = fixedContainer;
             this.nativeView = nativeView;
         }
 
         public virtual void AddChild(IViewWrapper view)
         {
-
-            children.Add(view);
-            view.Parent = this;
-
-            var viewWrapper = (ViewWrapper)view;
-            FixedContainer?.Put(viewWrapper.FixedContainer, 0, 0);
+            if (nativeView is Fixed nativeFixed)
+            {
+                children.Add(view);
+                var viewWrapper = (ViewWrapper)view;
+                nativeFixed.Put(viewWrapper.nativeView, 0, 0);
+            }
         }
 
         public virtual void CreateConstraints(FigmaNode actual)
@@ -177,10 +169,12 @@ namespace FigmaSharp
 
         public virtual void RemoveChild(IViewWrapper view)
         {
-            var viewWrapper = (ViewWrapper)view;
-            children.Remove(view);
-            view.Parent = null;
-            FixedContainer?.Remove(viewWrapper.FixedContainer);
+            if (nativeView is Fixed nativeFixed)
+            {
+                var viewWrapper = (ViewWrapper)view;
+                children.Remove(view);
+                nativeFixed.Remove(viewWrapper.nativeView);
+            }
         }
 
         public void MakeFirstResponder()
@@ -189,6 +183,11 @@ namespace FigmaSharp
             {
                 nativeView.HasFocus = true;
             }
+        }
+
+        public void SetPosition(float x, float y)
+        {
+            FixedParentContainer?.Move(nativeView, (int)x, (int)y);
         }
     }
 }

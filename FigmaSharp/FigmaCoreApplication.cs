@@ -111,6 +111,8 @@ namespace FigmaSharp
 
         public bool IsYAxisFlipped => figmaDelegate.IsYAxisFlipped;
 
+        public bool SupportsImageInvoke => figmaDelegate.SupportsImageInvoke;
+
         #endregion
     }
 }

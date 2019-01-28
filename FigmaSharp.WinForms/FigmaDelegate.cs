@@ -22,6 +22,8 @@ namespace FigmaSharp
 
         public bool IsYAxisFlipped => false;
 
+        public bool SupportsImageInvoke => true;
+
         public FigmaDelegate()
         {
         }

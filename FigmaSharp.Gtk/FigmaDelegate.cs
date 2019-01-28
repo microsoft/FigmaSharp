@@ -21,11 +21,32 @@ namespace FigmaSharp
         static readonly FigmaCodeAddChildConverter addChildConverter = new GtkFigmaCodeAddChildConverter();
 
         public bool IsYAxisFlipped => false;
+        public bool SupportsImageInvoke => false;
+
+        byte[] DownloadImage (string url)
+        {
+            try
+            {
+                using (var webClient = new System.Net.WebClient())
+                {
+                    byte[] imageBytes = webClient.DownloadData(url);
+                    return imageBytes;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new byte[0];
+            }
+          
+        }
+
 
         public IImageWrapper GetImage (string url)
         {
-            var image = new Gdk.Pixbuf(url);
-            return new ImageWrapper(image);
+            var image = DownloadImage(url);
+            var pixbuf = new Gdk.Pixbuf(image);
+            return new ImageWrapper(pixbuf);
         }
 
         public IImageWrapper GetImageFromManifest (Assembly assembly, string imageRef)
@@ -46,7 +67,7 @@ namespace FigmaSharp
             var image = new Gtk.Image(pixelBuf);
             var fixedView = new Gtk.Fixed();
             fixedView.Put(image, 0, 0);
-            var wrapper = new ImageViewWrapper(image, fixedView);
+            var wrapper = new ImageViewWrapper(image);
             return wrapper;
         }
 
@@ -58,7 +79,7 @@ namespace FigmaSharp
         public IViewWrapper CreateEmptyView ()
         {
                 var fixedView = new Gtk.Fixed();
-                return new ViewWrapper(fixedView, fixedView);
+                return new ViewWrapper(fixedView);
 
         }
 

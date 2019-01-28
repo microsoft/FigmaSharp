@@ -40,9 +40,17 @@ namespace FigmaSharp.Services
                         var image = AppContext.Current.GetImage(vector.Value);
                         var wrapper = processedNode.View as IImageViewWrapper;
 
-                        AppContext.Current.BeginInvoke(() => {
-                           wrapper.SetImage(image);
-                        });
+                        if (AppContext.Current.SupportsImageInvoke)
+                        {
+                            AppContext.Current.BeginInvoke(() => {
+                               wrapper.SetImage(image);
+                            });
+                        }
+                        else
+                        {
+                            wrapper.SetImage(image);
+                        }
+
                     }
                 }
             });
@@ -57,20 +65,23 @@ namespace FigmaSharp.Services
 
                 if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
                 {
-                    child.View.X = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
-                   
+                    float x = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+                    float y;
+                    //child.View.X = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+
                     if (AppContext.Current.IsYAxisFlipped)
                     {
                         var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
                         var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
-                        child.View.Y = parentY - actualY;
+                        y = parentY - actualY;
                     }
                     else
                     {
-                        child.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
+                        y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
                     }
-                }
 
+                    child.View.SetPosition(x, y);
+                }
 
                 Recursively(child);
             }

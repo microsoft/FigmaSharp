@@ -105,5 +105,11 @@ namespace FigmaSharp
         {
 
         }
+
+        public void SetPosition(float x, float y)
+        {
+            nativeView.Top = (int) y;
+            nativeView.Left = (int)x;
+        }
     }
 }

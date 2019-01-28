@@ -13,12 +13,10 @@ namespace FigmaSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var model = (FigmaElipse)currentNode;
-            var view = new Label ();
+            var view = new Fixed ();
             view.Configure(model);
 
-            var fixedView = new Fixed();
-            fixedView.Put(view, 0, 0);
-            return new ViewWrapper (view, fixedView);
+            return new ViewWrapper (view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)

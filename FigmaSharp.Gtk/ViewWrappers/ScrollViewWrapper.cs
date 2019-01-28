@@ -39,7 +39,7 @@ namespace FigmaSharp
 
         readonly Fixed currentContainer;
 
-        public ScrollViewWrapper(ScrolledWindow scrollView, Fixed fixedView) : base(scrollView, fixedView)
+        public ScrollViewWrapper(ScrolledWindow scrollView, Fixed fixedView) : base(scrollView)
         {
             this.scrollView = scrollView;
             var viewportView = scrollView.Children.FirstOrDefault();
@@ -68,20 +68,15 @@ namespace FigmaSharp
         public override void AddChild(IViewWrapper view)
         {
             children.Add(view);
-            view.Parent = this;
-
             var viewWrapper = (ViewWrapper)view;
-            currentContainer?.Put(viewWrapper.FixedContainer, 0, 0);
-            //ViewPort.AddChild(view);
-            //view.Parent = this;
+            currentContainer?.Put(viewWrapper.NativeObject as Widget, 0, 0);
         }
 
         public override void RemoveChild(IViewWrapper view)
         {
             var viewWrapper = (ViewWrapper)view;
             children.Remove(view);
-            view.Parent = null;
-            currentContainer?.Remove(viewWrapper.FixedContainer);
+            currentContainer?.Remove(viewWrapper.NativeObject as Widget);
         }
 
         public override void ClearSubviews()

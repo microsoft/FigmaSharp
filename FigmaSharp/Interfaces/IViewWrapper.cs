@@ -33,7 +33,7 @@ namespace FigmaSharp
 {
     public interface IViewWrapper : IObjectWrapper
     {
-        IViewWrapper Parent { get; set; }
+        IViewWrapper Parent { get; }
 
         IReadOnlyList<IViewWrapper> Children { get; }
 
@@ -54,5 +54,6 @@ namespace FigmaSharp
         void ClearSubviews();
 
         void MakeFirstResponder();
+        void SetPosition(float x, float y);
     }
 }

@@ -39,12 +39,9 @@ namespace FigmaSharp.Converters
             //var textField = new Label ();
             var view = new Label ();
             //textField.Font = font;
-            view.Text = model.characters;
             view.Configure(model);
 
-            var fixedView = new Fixed();
-            fixedView.Put(view, 0, 0);
-            var wrapper = new ViewWrapper(view, fixedView);
+            var wrapper = new ViewWrapper(view);
             return wrapper;
         }
 

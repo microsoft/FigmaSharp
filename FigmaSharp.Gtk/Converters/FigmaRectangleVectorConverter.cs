@@ -35,22 +35,20 @@ namespace FigmaSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var model = (FigmaRectangleVector)currentNode;
-            //if (rectangleVector.HasFills)
-            //{
-            //    if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
-            //    {
-            //        var imageView = new Image();
-            //        var figmaImageView = new ImageViewWrapper(imageView);
-            //        //imageView.Configure(rectangleVector);
-            //        return figmaImageView;
-            //    }
-            //}
+            if (model.HasFills)
+            {
+                if (model.fills[0].type == "IMAGE" && model.fills[0] is FigmaPaint figmaPaint)
+                {
+                    var imageView = new Image();
+                    var figmaImageView = new ImageViewWrapper(imageView);
+                    imageView.Configure(model);
+                    return figmaImageView;
+                }
+            }
 
-            var view = new Label() { Text = "dsadsadsda" };
-            var fixedView = new Fixed();
-            fixedView.Put(view, 0, 0);
+            var view = new Fixed();
             view.Configure(model);
-            return new ViewWrapper(view, fixedView);
+            return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)

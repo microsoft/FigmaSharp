@@ -148,5 +148,10 @@ namespace FigmaSharp
         {
             nativeView.Window.MakeFirstResponder(nativeView);
         }
+
+        public void SetPosition(float x, float y)
+        {
+            nativeView.SetFrameOrigin(new CoreGraphics.CGPoint(x, y));
+        }
     }
 }

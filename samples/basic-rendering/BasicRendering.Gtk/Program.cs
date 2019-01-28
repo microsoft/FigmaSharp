@@ -33,9 +33,7 @@ namespace BasicRendering.Gtk
             var manager = new ExampleViewManager(scrollViewWrapper, fileName);
             manager.Initialize();
 
-
             window.ShowAll();
-
 
             Application.Run();
         }

@@ -7,6 +7,7 @@ namespace FigmaSharp
     public interface IFigmaDelegate
     {
         bool IsYAxisFlipped { get; }
+        bool SupportsImageInvoke { get; }
 
         IViewWrapper CreateEmptyView();
         FigmaViewConverter[] GetFigmaConverters();

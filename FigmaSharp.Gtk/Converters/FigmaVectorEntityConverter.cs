@@ -35,15 +35,9 @@ namespace FigmaSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var model = (FigmaVectorEntity)currentNode;
-            //var view = new Image (); // { TranslatesAutoresizingMaskIntoConstraints = false };
-            //view.ModifyBg(StateType.Active, new Gdk.Color(255, 0, 0));
-            //view.Configure(vector);
-            //return new ImageViewWrapper(view)
-            var view = new Label() { Text = "hola" };
+            var view = new Fixed (); // { TranslatesAutoresizingMaskIntoConstraints = false };
             view.Configure(model);
-            var fixedView = new Fixed();
-            fixedView.Put(view, 0, 0);
-            return new ViewWrapper(view, fixedView);
+            return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)

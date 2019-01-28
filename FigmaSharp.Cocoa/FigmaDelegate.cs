@@ -22,6 +22,7 @@ namespace FigmaSharp
         static readonly FigmaCodeAddChildConverter addChildConverter = new MacFigmaCodeAddChildConverter();
 
         public bool IsYAxisFlipped => true;
+        public bool SupportsImageInvoke => true;
 
         public IImageWrapper GetImage (string url)
         {

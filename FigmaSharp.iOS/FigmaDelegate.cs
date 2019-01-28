@@ -21,6 +21,8 @@ namespace FigmaSharp
 
         public bool IsYAxisFlipped => false;
 
+        public bool SupportsImageInvoke => true;
+
         static UIImage FromUrl(string uri)
         {
             using (var url = new NSUrl(uri))
