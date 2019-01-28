@@ -117,7 +117,7 @@ namespace FigmaSharp
                     if (view is Fixed fixedView)
                     {
                         fixedView.HasWindow = true;
-                        view.ModifyBg(StateType.Normal, child.fills[0].color.ToGdkColor());
+                        fixedView.ModifyBg(StateType.Normal, child.fills[0].color.ToGdkColor());
                     }
                 }
             }
