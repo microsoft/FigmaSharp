@@ -293,13 +293,13 @@ namespace FigmaSharp
             //label.AlphaValue = text.opacity;
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
             //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
-            float textHorizontalAlign = GetHorizontalAlignment (text.style.textAlignHorizontal);
-            label.SetAlignment(textHorizontalAlign, 0.5f);
+            //float textHorizontalAlign = GetHorizontalAlignment (text.style.textAlignHorizontal);
+            //label.SetAlignment(textHorizontalAlign, 0.5f);
             label.Justify = GetJustification(text.style.textAlignHorizontal);
             label.Text = text.characters;
             label.Wrap = true;
-
-            var fills = text.fills.FirstOrDefault();
+			label.LineWrapMode = Pango.WrapMode.Word;
+			var fills = text.fills.FirstOrDefault();
             if (fills == null)
             {
                 return;

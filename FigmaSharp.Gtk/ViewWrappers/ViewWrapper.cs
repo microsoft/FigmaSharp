@@ -148,7 +148,7 @@ namespace FigmaSharp
             {
                 children.Add(view);
                 var viewWrapper = (ViewWrapper)view;
-                nativeFixed.Put(viewWrapper.nativeView, 0, 0);
+                nativeFixed.Add(viewWrapper.nativeView);
             }
         }
 
