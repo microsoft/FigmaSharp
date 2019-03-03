@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * FigmaViewContent.cs 
  * 
  * Author:
@@ -103,22 +103,19 @@ namespace MonoDevelop.Figma
             if (IdeApp.Workbench != null)
             {
                 //IdeApp.Workbench.ActiveDocumentChanged += Workbench_ActiveDocumentChanged;
-                //IdeApp.Workbench.ActiveDocumentChanged += Workbench_ActiveDocumentChanged;
-                Workbench_ActiveDocumentChanged(null, null);
+                 IdeApp.Workbench.ActiveDocumentChanged += onActiveDocChanged; // += new EventHandler(onActiveDocChanged);
+                onActiveDocChanged(null, null);
             }
         }
 
-        void Workbench_ActiveDocumentChanged(object sender, EventHandler e)
-        {
-            if (IdeApp.Workbench.ActiveDocument != null && IdeApp.Workbench.ActiveDocument.ActiveView != null)
-            {
-                CurrentConsumer = IdeApp.Workbench.ActiveDocument.ActiveView.GetContent<IToolboxConsumer>();
-            }
-            else
-            {
-                CurrentConsumer = null;
-            }
-        }
+	    void onActiveDocChanged (object sender, DocumentEventArgs e)
+		{
+			if (IdeApp.Workbench.ActiveDocument != null && IdeApp.Workbench.ActiveDocument.ActiveView != null) {
+				CurrentConsumer = IdeApp.Workbench.ActiveDocument.ActiveView.GetContent<IToolboxConsumer> ();
+			} else {
+				CurrentConsumer = null;
+			}
+		}
 
         IToolboxConsumer CurrentConsumer;
 
