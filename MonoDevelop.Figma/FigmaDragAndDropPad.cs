@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * FigmaViewContent.cs 
  * 
  * Author:
@@ -102,25 +102,22 @@ namespace MonoDevelop.Figma
 
             if (IdeApp.Workbench != null)
             {
-                IdeApp.Workbench.ActiveDocumentChanged += new EventHandler(onActiveDocChanged);
+                IdeApp.Workbench.ActiveDocumentChanged += onActiveDocChanged; // += new EventHandler(onActiveDocChanged);
 
                 onActiveDocChanged(null, null);
             }
-        }
+		}
 
-        IToolboxConsumer CurrentConsumer;
+		void onActiveDocChanged (object sender, DocumentEventArgs e)
+		{
+			if (IdeApp.Workbench.ActiveDocument != null && IdeApp.Workbench.ActiveDocument.ActiveView != null) {
+				CurrentConsumer = IdeApp.Workbench.ActiveDocument.ActiveView.GetContent<IToolboxConsumer> ();
+			} else {
+				CurrentConsumer = null;
+			}
+		}
 
-        void onActiveDocChanged(object sender, EventArgs e)
-        {
-            if (IdeApp.Workbench.ActiveDocument != null && IdeApp.Workbench.ActiveDocument.ActiveView != null)
-            {
-                CurrentConsumer = IdeApp.Workbench.ActiveDocument.ActiveView.GetContent<IToolboxConsumer>();
-            }
-            else
-            {
-                CurrentConsumer = null;
-            }
-        }
+		IToolboxConsumer CurrentConsumer;
 
         Gtk.TargetList targets = new Gtk.TargetList();
         bool isDragging = false;
