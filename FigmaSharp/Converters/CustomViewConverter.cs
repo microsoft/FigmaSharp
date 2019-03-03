@@ -26,6 +26,8 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Collections.Generic;
+
 namespace FigmaSharp
 {
     public abstract class FigmaViewConverter : CustomViewConverter
@@ -34,6 +36,45 @@ namespace FigmaSharp
 
     public abstract class CustomViewConverter
     {
+        Dictionary<string, string> GetKeyValues (FigmaNode currentNode)
+        {
+            Dictionary<string, string> ids = new Dictionary<string, string>();
+
+
+            return ids;
+        }
+     
+        string GetValue (string identifier, string parameter)
+        {
+            var index = identifier.IndexOf($"{parameter}=", System.StringComparison.InvariantCultureIgnoreCase);
+            if (index == -1)
+            {
+               
+                var resto = identifier.Substring(index + $"{parameter}=".Length);
+                var end = resto.IndexOf(" ", System.StringComparison.InvariantCultureIgnoreCase);
+
+                string value;
+                if (end == -1)
+                {
+                    return resto;
+                }
+                return resto.Substring(0, end);
+            } else
+            {
+                return identifier;
+            }
+        }
+
+        protected bool ContainsIdentifier (FigmaNode currentNode, string name)
+        {
+            if (currentNode.name.Length == 0)
+            {
+                return false;
+            }
+         
+
+        }
+
         public abstract bool CanConvert(FigmaNode currentNode);
 
         public abstract IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent);

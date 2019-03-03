@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * CustomTextFieldConverter.cs
  * 
  * Author:
@@ -37,11 +37,25 @@ namespace FigmaSharp.NativeControls
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var textField = new NSTextField();
-            textField.Configure(currentNode);
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault();
-            textField.Font = figmaText.style.ToNSFont();
-            textField.StringValue = figmaText.characters;
+           
+            var placeholderView = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
+                .FirstOrDefault(s => s.name == "placeholderstring");
+            if (placeholderView != null)
+            {
+                textField.PlaceholderString = placeholderView.characters;
+            }
+
+            var textFieldView = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
+               .FirstOrDefault(s => s.name == "text");
+            if (textFieldView != null)
+            {
+                textField.StringValue = textFieldView.characters;
+                textField.Configure(textFieldView);
+            } else
+            {
+                textField.Configure(currentNode);
+            }
+
             return new ViewWrapper(textField);
         }
 
