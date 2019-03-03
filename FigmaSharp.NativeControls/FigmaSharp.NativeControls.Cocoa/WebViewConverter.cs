@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Text;
 using AppKit;
 using WebKit;
 
-namespace FigmaSharp.NativeControls.Cocoa
+namespace FigmaSharp.NativeControls
 {
 	public class WebViewConverter : CustomViewConverter
 	{

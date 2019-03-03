@@ -2,7 +2,7 @@
 using System.Text;
 using AppKit;
 
-namespace FigmaSharp.NativeControls.Cocoa
+namespace FigmaSharp.NativeControls
 {
 	public class DatePickerConverter : CustomViewConverter
 	{

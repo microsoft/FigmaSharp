@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Text;
 using MapKit;
 
-namespace FigmaSharp.NativeControls.Cocoa
+namespace FigmaSharp.NativeControls
 {
 	public class MapViewConverter : CustomViewConverter
 	{

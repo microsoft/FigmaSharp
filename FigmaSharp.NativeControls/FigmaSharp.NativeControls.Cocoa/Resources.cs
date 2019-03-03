@@ -38,8 +38,16 @@ namespace FigmaSharp.NativeControls
             {
                 converters = new CustomViewConverter[]
                 {
+                     new OptionBoxConverter (),
+                     new CheckBoxConverter (),
                     new ButtonConverter (),
                     new TextFieldConverter (),
+                     new DatePickerConverter (),
+                     new SliderViewConverter (),
+                     new MapViewConverter (),
+                     new WebViewConverter (),
+                         new ListViewConverter (),
+
                 };
             }
 

@@ -41,7 +41,7 @@ namespace FigmaSharp.NativeControls
             button.BezelStyle = NSBezelStyle.Rounded;
 
             var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
+            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault(s => s.name == "title");
             if (figmaText != null)
             {
                 button.AlphaValue = figmaText.opacity;
@@ -53,7 +53,7 @@ namespace FigmaSharp.NativeControls
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             var name = "buttonView";
             builder.AppendLine($"var {name} = new {nameof(NSButton)}();");
             builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.ToString ()));

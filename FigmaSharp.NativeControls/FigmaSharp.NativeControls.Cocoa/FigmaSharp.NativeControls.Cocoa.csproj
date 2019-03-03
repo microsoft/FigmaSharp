@@ -57,11 +57,11 @@
     <Compile Include="TextFieldConverter.cs" />
     <Compile Include="ButtonConverter.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="ImageButtonConverter.cs" />
     <Compile Include="DatePickerConverter.cs" />
     <Compile Include="ListViewConverter.cs" />
     <Compile Include="MapViewConverter.cs" />
     <Compile Include="WebViewConverter.cs" />
+    <Compile Include="SliderViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
