@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace FigmaSharp
@@ -36,44 +37,61 @@ namespace FigmaSharp
 
     public abstract class CustomViewConverter
     {
-        Dictionary<string, string> GetKeyValues (FigmaNode currentNode)
+		protected T ToEnum<T> (string value)
+		{
+			try {
+				foreach (T suit in (T[])Enum.GetValues (typeof (T))) {
+					if (suit.ToString ().ToLower ().Equals (value, StringComparison.InvariantCultureIgnoreCase)) {
+						return suit;
+					}
+				}
+			} catch (System.Exception ex) {
+				Console.WriteLine (ex);
+
+			}
+			return default (T);
+		}
+
+		protected Dictionary<string, string> GetKeyValues (FigmaNode currentNode)
         {
             Dictionary<string, string> ids = new Dictionary<string, string>();
-
-
-            return ids;
+			var index = currentNode.name.IndexOf ($"type:", System.StringComparison.InvariantCultureIgnoreCase);
+			if (index > -1) {
+				var properties = currentNode.name.Split (' ');
+				foreach (var property in properties) {
+					var data = property.Split (':');
+					if (data.Length != 2) {
+						Console.WriteLine ($"Error format in parameter: '{property}'");
+						continue;
+					}
+					ids.Add (data[0], data[1]);
+				}
+			} else {
+				ids.Add ("type", currentNode.name);
+			}
+			return ids;
         }
      
-        string GetValue (string identifier, string parameter)
+        string GetIdentifierValue (string data, string parameter)
         {
-            var index = identifier.IndexOf($"{parameter}=", System.StringComparison.InvariantCultureIgnoreCase);
-            if (index == -1)
+            var index = data.IndexOf($"{parameter}:", System.StringComparison.InvariantCultureIgnoreCase);
+            if (index > -1)
             {
-               
-                var resto = identifier.Substring(index + $"{parameter}=".Length);
-                var end = resto.IndexOf(" ", System.StringComparison.InvariantCultureIgnoreCase);
+                var delta = data.Substring(index + $"{parameter}=".Length);
+                var endIndex = delta.IndexOf(" ", System.StringComparison.InvariantCultureIgnoreCase);
 
-                string value;
-                if (end == -1)
-                {
-                    return resto;
-                }
-                return resto.Substring(0, end);
-            } else
-            {
-                return identifier;
+                if (endIndex == -1)
+                    return delta;
+                return delta.Substring(0, endIndex);
             }
+			return null;
         }
 
-        protected bool ContainsIdentifier (FigmaNode currentNode, string name)
+        protected bool ContainsType (FigmaNode currentNode, string name)
         {
-            if (currentNode.name.Length == 0)
-            {
-                return false;
-            }
-         
-
-        }
+			var identifier = GetIdentifierValue (currentNode.name, "type") ?? currentNode.name;
+			return identifier == name;
+		}
 
         public abstract bool CanConvert(FigmaNode currentNode);
 

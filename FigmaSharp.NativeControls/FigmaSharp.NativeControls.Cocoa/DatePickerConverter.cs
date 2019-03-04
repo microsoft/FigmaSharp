@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using AppKit;
 
@@ -8,14 +8,24 @@ namespace FigmaSharp.NativeControls
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			return currentNode.name == "datePicker" && currentNode is IFigmaDocumentContainer;
+			return ContainsType (currentNode, "datePicker");
 		}
 
 		public override IViewWrapper ConvertTo (FigmaNode currentNode, ProcessedNode parent)
 		{
-			var textField = new AppKit.NSDatePicker ();
-			textField.Configure (currentNode);
-			return new ViewWrapper (textField);
+			var view = new AppKit.NSDatePicker ();
+			view.Configure (currentNode);
+
+			var keyValues = GetKeyValues (currentNode);
+			foreach (var key in keyValues) {
+				if (key.Key == "type") {
+					continue;
+				}
+				if (key.Key == "size") {
+					view.ControlSize = ToEnum<NSControlSize> (key.Value);
+				}
+			}
+			return new ViewWrapper (view);
 		}
 
 		public override string ConvertToCode (FigmaNode currentNode, ProcessedNode parent)

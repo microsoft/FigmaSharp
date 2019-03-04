@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * CustomButtonConverter.cs 
  * 
  * Author:
@@ -29,26 +29,54 @@ using AppKit;
 using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
-
+using System;
 namespace FigmaSharp.NativeControls
 {
     public class ButtonConverter : ButtonConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+		public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var button = new NSButton();
-            button.Configure(currentNode);
-            button.BezelStyle = NSBezelStyle.Rounded;
+            var view = new NSButton();
+			view.Title = "";
 
-            var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault(s => s.name == "title");
-            if (figmaText != null)
-            {
-                button.AlphaValue = figmaText.opacity;
-                button.Font = figmaText.style.ToNSFont();
-                button.Title = figmaText.characters;
-            }
-            return new ViewWrapper(button);
+			view.Configure(currentNode);
+            view.BezelStyle = NSBezelStyle.Rounded;
+
+			var keyValues = GetKeyValues (currentNode);
+			foreach (var key in keyValues) {
+				if (key.Key == "type") {
+					continue;
+				}
+
+				if (key.Key == "enabled") {
+					view.Enabled = key.Value == "true";
+				} else if (key.Key == "size") {
+					view.ControlSize = ToEnum<NSControlSize> (key.Value);
+				} else if (key.Key == "style") {
+					view.BezelStyle = ToEnum<NSBezelStyle> (key.Value);
+				} else if (key.Key == "buttontype") {
+					view.SetButtonType (ToEnum<NSButtonType> (key.Value));
+				}
+			}
+			if (currentNode is IFigmaDocumentContainer instance) {
+				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "title");
+				if (figmaText != null) {
+					view.AlphaValue = figmaText.opacity;
+					view.Font = figmaText.style.ToNSFont ();
+					view.Title = figmaText.characters;
+				}
+
+				var image = instance.children.OfType<FigmaVectorEntity> ().FirstOrDefault (s => s.name == "image");
+				if (image != null) {
+					var paint = image.fills.OfType<FigmaPaint> ().FirstOrDefault ();
+					if (paint != null) {
+						//var query = new FigmaImageQuery ()
+						//FigmaApiHelper.GetFigmaImage (new FigmaImageQuery ())
+					}
+				}
+			}
+          
+			return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
@@ -59,15 +87,14 @@ namespace FigmaSharp.NativeControls
             builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.ToString ()));
             builder.Configure(name, currentNode);
 
-            var instance = (IFigmaDocumentContainer)currentNode;
-            var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-            if (figmaText != null)
-            {
-                builder.AppendLine(string.Format("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
-                builder.AppendLine(string.Format("{0}.Title = \"{1}\";", name, figmaText.characters));
-                //button.Font = figmaText.style.ToNSFont();
-            }
-
+			if (currentNode is IFigmaDocumentContainer instance) {
+				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
+				if (figmaText != null) {
+					builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
+					builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, figmaText.characters));
+					//button.Font = figmaText.style.ToNSFont();
+				}
+			}
             return builder.ToString();
         }
     }

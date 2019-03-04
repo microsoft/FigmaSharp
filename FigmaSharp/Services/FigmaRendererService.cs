@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FigmaSharp;
 using System.Linq;
 using System;
@@ -40,9 +40,15 @@ namespace FigmaSharp.Services
                         var image = AppContext.Current.GetImage(vector.Value);
                         var wrapper = processedNode.View as IImageViewWrapper;
 
-                        AppContext.Current.BeginInvoke(() => {
-                           wrapper.SetImage(image);
-                        });
+							AppContext.Current.BeginInvoke (() => {
+								try {
+								wrapper.SetImage (image);
+								} catch (Exception ex) {
+									Console.WriteLine (ex);
+								}
+							});
+
+					
                     }
                 }
             });

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using AppKit;
@@ -48,7 +48,7 @@ namespace ExampleFigmaMac
 
             scrollView.DocumentView = contentView;
 
-            var file = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
+			var file = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
             var manager = new ExampleViewManager(scrollViewWrapper, file);
             manager.Initialize();
 

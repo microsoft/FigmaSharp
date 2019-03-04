@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * CustomTextFieldConverter.cs
  * 
  * Author:
@@ -32,7 +32,7 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.name == "textfield" && currentNode is IFigmaDocumentContainer;
+			return ContainsType (currentNode, "textfield");
         }
     }
 }
