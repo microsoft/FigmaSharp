@@ -27,6 +27,7 @@
  */
 using AppKit;
 using FigmaSharp.NativeControls.Base;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -34,39 +35,55 @@ namespace FigmaSharp.NativeControls
 {
     public class TextFieldConverter : TextFieldConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+		public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var textField = new NSTextField();
-           
-            var placeholderView = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault(s => s.name == "placeholderstring");
-            if (placeholderView != null)
-            {
-                textField.PlaceholderString = placeholderView.characters;
-            }
+            var view = new NSTextField();
 
-            var textFieldView = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-               .FirstOrDefault(s => s.name == "text");
-            if (textFieldView != null)
-            {
-                textField.StringValue = textFieldView.characters;
-                textField.Configure(textFieldView);
-            } else
-            {
-                textField.Configure(currentNode);
-            }
+			var keyValues = GetKeyValues (currentNode);
+			foreach (var key in keyValues) {
+				if (key.Key == "type") {
+					continue;
+				} 
+				if (key.Key == "enabled") {
+					view.Enabled = key.Value == "true";
+				} else if (key.Key == "size") {
+					view.ControlSize = ToEnum<NSControlSize> (key.Value);
+				}
+			}
 
-            return new ViewWrapper(textField);
+			if (currentNode is IFigmaDocumentContainer container) {
+				var placeholderView = container.children.OfType<FigmaText> ()
+			.FirstOrDefault (s => s.name == "placeholderstring");
+				if (placeholderView != null) {
+					view.PlaceholderString = placeholderView.characters;
+				}
+
+				var textFieldView = container.children.OfType<FigmaText> ()
+				   .FirstOrDefault (s => s.name == "text");
+				if (textFieldView != null) {
+					view.StringValue = textFieldView.characters;
+					view.Configure (textFieldView);
+				} else {
+					view.Configure (currentNode);
+				}
+			} else {
+				view.Configure (currentNode);
+			}
+
+            return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
         {
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-               .FirstOrDefault();
-            StringBuilder builder = new StringBuilder();
-            var name = "textView";
-            builder.AppendLine($"var {name} = new {nameof(NSTextField)}();");
-            builder.AppendLine(string.Format ("{0}.StringValue = \"{1}\";", name, figmaText.characters));
+			StringBuilder builder = new StringBuilder ();
+			var name = "textView";
+			builder.AppendLine ($"var {name} = new {nameof (NSTextField)}();");
+			if (currentNode is IFigmaDocumentContainer container) 
+			{
+				var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
+	   .FirstOrDefault ();
+				builder.AppendLine (string.Format ("{0}.StringValue = \"{1}\";", name, figmaText.characters));
+			}
             builder.Configure(name, currentNode);
             return builder.ToString();
         }

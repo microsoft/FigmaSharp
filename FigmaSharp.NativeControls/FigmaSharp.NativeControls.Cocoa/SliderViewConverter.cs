@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using AppKit;
 
@@ -8,16 +8,35 @@ namespace FigmaSharp.NativeControls
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.name == "slider" && currentNode is IFigmaDocumentContainer;
+            return ContainsType (currentNode, "slider");
         }
 
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var textField = new NSSlider();
-            textField.SliderType = NSSliderType.Linear;
-            ((NSSliderCell)textField.Cell).TickMarkPosition = NSTickMarkPosition.Right;
-            textField.Configure(currentNode);
-            return new ViewWrapper(textField);
+			var sliderView = new NSSlider ();
+
+			var keyValues = GetKeyValues (currentNode);
+			foreach (var key in keyValues) {
+				if (key.Key == "type") {
+					continue;
+				} 
+				if (key.Key == "enabled") {
+					sliderView.Enabled = key.Value == "true";
+				} else if (key.Key == "size") {
+					sliderView.ControlSize = ToEnum<NSControlSize> (key.Value);
+				} else if (key.Key == "max") {
+					sliderView.MaxValue = Convert.ToDouble (key.Value);
+				} else if (key.Key == "min") {
+					sliderView.MinValue = Convert.ToDouble (key.Value);
+				} else if (key.Key == "value") {
+					sliderView.DoubleValue = Convert.ToDouble (key.Value);
+				}
+			}
+
+			sliderView.SliderType = NSSliderType.Linear;
+            //((NSSliderCell)sliderView.Cell).TickMarkPosition = NSTickMarkPosition.Right;
+            sliderView.Configure(currentNode);
+            return new ViewWrapper(sliderView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)

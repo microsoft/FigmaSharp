@@ -8,14 +8,21 @@ namespace FigmaSharp.NativeControls
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			return currentNode.name == "mapView" && currentNode is IFigmaDocumentContainer;
+			return ContainsType (currentNode, "mapView");
 		}
 
 		public override IViewWrapper ConvertTo (FigmaNode currentNode, ProcessedNode parent)
 		{
-			var mapview = new MapKit.MKMapView ();
-			mapview.Configure (currentNode);
-			return new ViewWrapper (mapview);
+			var view = new MapKit.MKMapView ();
+			view.Configure (currentNode);
+			var keyValues = GetKeyValues (currentNode);
+			foreach (var key in keyValues) {
+				if (key.Key == "type") {
+					continue;
+				} 
+
+			}
+			return new ViewWrapper (view);
 		}
 
 		public override string ConvertToCode (FigmaNode currentNode, ProcessedNode parent)

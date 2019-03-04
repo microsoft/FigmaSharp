@@ -62,6 +62,11 @@
     <Compile Include="MapViewConverter.cs" />
     <Compile Include="WebViewConverter.cs" />
     <Compile Include="SliderViewConverter.cs" />
+    <Compile Include="ToggleConverter.cs" />
+    <Compile Include="OptionBoxConverter.cs" />
+    <Compile Include="CheckBoxConverter.cs" />
+    <Compile Include="PopupButtonConverter.cs" />
+    <Compile Include="StepperConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
