@@ -10,9 +10,6 @@
             <File pattern="*.figma"/>
         </MimeType>
     </Extension>
-        <Extension path = "/MonoDevelop/Ide/DisplayBindings">
-            <DisplayBinding id = "FigmaDocumentViewer" class = "MonoDevelop.Figma.FigmaDisplayBinding" />
-        </Extension>
    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Other">
         <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
