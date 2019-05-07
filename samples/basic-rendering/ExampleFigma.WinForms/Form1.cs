@@ -19,7 +19,7 @@ namespace ExampleFigmaWinForms
         public Form1()
         {
             InitializeComponent ();
-            var fileName = Environment.GetEnvironmentVariable ("FILE");
+            var fileName = "nWFYvx7YMBEtPAgAydX66e";
             if (string.IsNullOrEmpty (fileName)) {
                 fileName = Settings.Default.FILE;
             }
