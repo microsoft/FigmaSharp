@@ -47,10 +47,17 @@ using MonoDevelop.DesignerSupport;
 using Gtk;
 using System.ComponentModel;
 using MonoDevelop.Components.PropertyGrid;
+using MonoDevelop.Ide.Gui.Documents;
 
 namespace MonoDevelop.Figma
 {
-    class FigmaViewContent : ViewContent, IOutlinedDocument//, ICustomPropertyPadProvider
+    [ExportFileDocumentController(
+        Id = "FigmaDesignerViewer",
+        Name = "Figma Designer",
+        FileExtension = ".figma",
+        CanUseAsDefault = true,
+        InsertBefore = "DefaultDisplayBinding")]
+    class FigmaViewContent : FileDocumentController, IOutlinedDocument//, ICustomPropertyPadProvider
     {
         FigmaDesignerSession session;
         IFigmaDesignerDelegate figmaDelegate;
@@ -61,19 +68,13 @@ namespace MonoDevelop.Figma
         private FilePath fileName;
         NSStackView container;
 
-        public override bool IsFile => true;
-        public override string TabPageLabel => fileName.FileName;
-
         Gtk.Widget _content;
         PropertyGrid grid;
 
         readonly IScrollViewWrapper scrollViewWrapper;
 
-        public FigmaViewContent(FilePath fileName)
+        public FigmaViewContent()
         {
-
-            this.fileName = fileName;
-            ContentName = fileName;
 
             container = new NSStackView();
 
@@ -117,26 +118,24 @@ namespace MonoDevelop.Figma
             session.Reload();
         }
 
-        public override Task Save()
+        protected override Task OnSave()
         {
             session.Save(fileName);
-            IsDirty = false;
+            HasUnsavedChanges = false;
             return Task.FromResult(true);
         }
 
-        public override Task Save(FileSaveInformation fileSaveInformation)
+        protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
         {
-            session.Save(fileSaveInformation.FileName);
-            IsDirty = false;
-            return Task.FromResult(true);
-        }
-
-        public override Task Load(FileOpenInformation fileOpenInformation)
-        {
-            fileName = fileOpenInformation.FileName;
+            if (!(modelDescriptor is FileDescriptor fileDescriptor))
+                throw new InvalidOperationException();
 
             if (session == null)
             {
+                Owner = fileDescriptor.Owner;
+                fileName = fileDescriptor.FilePath;
+                DocumentTitle = fileDescriptor.FilePath.FileName;
+
                 figmaDelegate = new FigmaDesignerDelegate();
 
                 session = new FigmaDesignerSession();
@@ -158,10 +157,11 @@ namespace MonoDevelop.Figma
                 IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
             }
 
-            session.Reload(fileName, Project.BaseDirectory);
-
-            ContentName = fileName;
-            return Task.FromResult(true);
+            if (fileDescriptor.Owner is DotNetProject project)
+            {
+                session.Reload(fileName, project.BaseDirectory);
+            }
+            await base.OnInitialize(modelDescriptor, status);
         }
         
         void Surface_FocusedViewChanged(object sender, IViewWrapper e)
@@ -284,7 +284,7 @@ namespace MonoDevelop.Figma
 
         void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
         {
-            IsDirty = true;
+            HasUnsavedChanges = true;
             session.DeleteView(e);
             RefreshAll();
         }
@@ -339,17 +339,15 @@ namespace MonoDevelop.Figma
 
         #endregion
 
-        public override Control Control => _content;
+        protected override Control OnGetViewControl(DocumentViewContent view)
+        {
+            return _content;
+        }
 
-
-        public override void Dispose()
+        protected override void OnDispose()
         {
             surface.StopHover();
-            //if (IdeApp.Workbench.ActiveDocument != null)
-            //{
-            //    IdeApp.Workbench.ActiveDocument.Editor.TextChanged -= Editor_TextChanged;
-            //}
-            base.Dispose();
+            base.OnDispose();
         }
     }
 }

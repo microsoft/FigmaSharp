@@ -110,8 +110,8 @@ namespace MonoDevelop.Figma
 
 	    void onActiveDocChanged (object sender, DocumentEventArgs e)
 		{
-			if (IdeApp.Workbench.ActiveDocument != null && IdeApp.Workbench.ActiveDocument.ActiveView != null) {
-				CurrentConsumer = IdeApp.Workbench.ActiveDocument.ActiveView.GetContent<IToolboxConsumer> ();
+			if (IdeApp.Workbench.ActiveDocument != null) {
+				CurrentConsumer = IdeApp.Workbench.ActiveDocument.GetContent<IToolboxConsumer> ();
 			} else {
 				CurrentConsumer = null;
 			}
