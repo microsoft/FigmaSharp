@@ -40,20 +40,26 @@ namespace MonoDevelop.Figma
     public class FigmaDragAndDropPad : PadContent
     {
         Gtk.Widget widget;
-
+        FigmaDragAndDropContent dragPad;
         TemplateToolboxNode selected;
-        protected override void Initialize(IPadWindow container)
+        IPadWindow window;
+
+        protected override void Initialize(IPadWindow window)
         {
-            var toolbox = new FigmaDragAndDropContent();
-          
-            widget = GtkMacInterop.NSViewToGtkWidget(toolbox);
+            this.window = window;
+            dragPad = new FigmaDragAndDropContent();
+
+            window.PadHidden += Container_PadHidden;
+            window.PadShown += Container_PadShown;
+
+            widget = GtkMacInterop.NSViewToGtkWidget(dragPad);
             widget.CanFocus = true;
             widget.Sensitive = true;
 
             widget.DragBegin += (o, args) => {
                 if (!isDragging)
                 {
-                    var processedNode = toolbox.GetProcessedNode(toolbox.SelectedNode);
+                    var processedNode = dragPad.GetProcessedNode(dragPad.SelectedNode);
                     selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = processedNode.Code });
                     CurrentConsumer.DragItem(selected, widget, args.Context);
                     //DesignerSupport.Service.ToolboxService.DragSelectedItem(widget, args.Context);
@@ -69,7 +75,7 @@ namespace MonoDevelop.Figma
                 // toolbox
             };
 
-            toolbox.SelectCode += (sender, e) =>
+            dragPad.SelectCode += (sender, e) =>
             {
                 if (!string.IsNullOrEmpty (e))
                 {
@@ -78,11 +84,11 @@ namespace MonoDevelop.Figma
                 }
             };
 
-            toolbox.DragSourceSet += (s, e) => {
+            dragPad.DragSourceSet += (s, e) => {
                 targets = new Gtk.TargetList();
                 targets.AddTable(e);
             };
-            toolbox.DragBegin += (object sender, EventArgs e) => {
+            dragPad.DragBegin += (object sender, EventArgs e) => {
                 if (!isDragging)
                 {
                     Gtk.Drag.SourceUnset(widget);
@@ -108,7 +114,10 @@ namespace MonoDevelop.Figma
             }
         }
 
-	    void onActiveDocChanged (object sender, DocumentEventArgs e)
+        private void Container_PadShown(object sender, Components.Docking.VisibilityChangeEventArgs e) => dragPad.Hidden = false;
+        private void Container_PadHidden(object sender, Components.Docking.VisibilityChangeEventArgs e) => dragPad.Hidden = true;
+
+        void onActiveDocChanged (object sender, DocumentEventArgs e)
 		{
 			if (IdeApp.Workbench.ActiveDocument != null) {
 				CurrentConsumer = IdeApp.Workbench.ActiveDocument.GetContent<IToolboxConsumer> ();
@@ -121,6 +130,17 @@ namespace MonoDevelop.Figma
 
         Gtk.TargetList targets = new Gtk.TargetList();
         bool isDragging = false;
+
+        public override void Dispose()
+        {
+            if (window != null)
+            {
+                window.PadHidden -= Container_PadHidden;
+                window.PadShown -= Container_PadShown;
+                window = null;
+            }
+            base.Dispose();
+        }
 
         public override Control Control
         {

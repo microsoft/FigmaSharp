@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using FigmaSharp;
+using FigmaSharp.Designer;
 using MonoDevelop.Components;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Components.Docking;
@@ -120,6 +122,11 @@ namespace MonoDevelop.Figma
                 foreach (var w in toolbar.Children)
                     toolbar.Remove(w);
             }
+        }
+
+        internal static void Initialize(FigmaDesignerSession session)
+        {
+            throw new NotImplementedException();
         }
     }
 }
