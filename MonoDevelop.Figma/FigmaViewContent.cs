@@ -57,7 +57,7 @@ namespace MonoDevelop.Figma
         FileExtension = ".figma",
         CanUseAsDefault = true,
         InsertBefore = "DefaultDisplayBinding")]
-    class FigmaViewContent : FileDocumentController, IOutlinedDocument//, ICustomPropertyPadProvider
+    class FigmaViewContent : FileDocumentController, IOutlinedDocument, ICustomPropertyPadProvider
     {
         FigmaDesignerSession session;
         IFigmaDesignerDelegate figmaDelegate;
@@ -322,20 +322,20 @@ namespace MonoDevelop.Figma
 
         #region ICustomPropertyPadProvider
 
-        //FigmaDesignerPropertyPad propertyPad;
+        PropertyContentPad propertyPad;
 
-        //public Widget GetCustomPropertyWidget()
-        //{
-        //    FigmaDesignerPropertyPad.Initialize(session);
-        //    propertyPad = FigmaDesignerPropertyPad.Instance;
-        //    //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
-        //    return propertyPad;
-        //}
+        public Widget GetCustomPropertyWidget()
+        {
+            PropertyPad.Initialize(session);
+            propertyPad = PropertyPad.Instance;
+            //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
+            return propertyPad.Control;
+        }
 
-        //public void DisposeCustomPropertyWidget()
-        //{
-        //    //throw new NotImplementedException();
-        //}
+        public void DisposeCustomPropertyWidget()
+        {
+            //throw new NotImplementedException();
+        }
 
         #endregion
 

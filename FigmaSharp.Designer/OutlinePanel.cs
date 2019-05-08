@@ -36,6 +36,11 @@ namespace MonoDevelop.Figma
         const ushort DeleteKey = 51;
         public ScrollContainerView EnclosingScrollView { get; }
         public OutlineView View { get; }
+        public bool Hidden {
+            get => View.Hidden;
+            set => View.Hidden = value;
+        }
+
         public event EventHandler<FigmaNode> RaiseFirstResponder;
         public event EventHandler<FigmaNode> RaiseDeleteItem;
         public event EventHandler<FigmaNode> DoubleClick;
