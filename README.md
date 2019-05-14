@@ -53,7 +53,7 @@ namespace ExampleFigmaMac
         static void Main(string[] args)
         {
 		FigmaEnvironment.SetAccessToken ("YOUR TOKEN");
-		var figmaModels = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile);
+		FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile);
         }
 
     }
