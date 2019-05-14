@@ -63,22 +63,26 @@ namespace FigmaSharp
             }
         }
 
+
         public static FigmaResponse GetFigmaDialogFromUrlFile (string urlFile)
-		{
-			var figmaContent = GetFigmaFileContent (urlFile, AppContext.Current.Token);
-			return GetFigmaResponseFromContent(figmaContent);
-		}
+       {
+         var figmaContent = GetFigmaFileContent (urlFile, AppContext.Current.Token);
+         return GetFigmaResponseFromContent(figmaContent);
+       }
 
-		public static FigmaResponse GetFigmaDialogFromFilePath (string file)
-		{
-			var figmaContent = File.ReadAllText (file);
-			return GetFigmaResponseFromContent(figmaContent);
-		}
 
-		public static FigmaResponse GetFigmaResponseFromContent (string figmaContent)
-		{
-			return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
-		}
+       public static FigmaResponse GetFigmaDialogFromFilePath (string file)
+       {
+         var figmaContent = File.ReadAllText (file);
+         return GetFigmaResponseFromContent(figmaContent);
+       }
+
+
+       public static FigmaResponse GetFigmaResponseFromContent (string figmaContent)
+       {
+         return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
+       }
+
 
         public static void SetFigmaResponseFromContent(FigmaResponse figmaResponse, string filePath)
         {
@@ -89,11 +93,13 @@ namespace FigmaSharp
             File.WriteAllText(filePath, data);
         }
 
+
         public static FigmaImageResponse GetFigmaImages(string fileId, IEnumerable<string> ids)
         {
             var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
             return FigmaApiHelper.GetFigmaImage(query);
         }
+
 
         public static FigmaImageResponse GetFigmaImage (FigmaImageQuery figmaQuery)
         {
@@ -134,12 +140,14 @@ namespace FigmaSharp
             return null;
         }
 
-		public static string GetFigmaFileContent (string file)
-		{
-			return GetFigmaFileContent (file, AppContext.Current.Token);
-		}
 
-		public static string GetFigmaFileContent (string file, string personal_access_token)
+       public static string GetFigmaFileContent (string file)
+       {
+         return GetFigmaFileContent (file, AppContext.Current.Token);
+       }
+
+
+        public static string GetFigmaFileContent (string file, string personal_access_token)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://api.figma.com/v1/files/{file}");
             httpWebRequest.ContentType = "application/json";
