@@ -35,6 +35,8 @@ namespace FigmaSharp
     {
         IFigmaDelegate figmaDelegate;
 
+        public bool IsConfigured => !string.IsNullOrEmpty(Token);
+
         internal string Token { get; set; }
 
         AppContext()

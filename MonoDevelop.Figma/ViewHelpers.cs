@@ -31,8 +31,16 @@ using FigmaSharp;
 namespace MonoDevelop.Figma
 {
 	class ViewHelpers
-	{
-		public static NSTextField CreateLabel (string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left, bool translatesAutoresizingMaskIntoConstraints = false)
+    {
+        public static NSStackView CreateHorizontalStackView(int spacing = 10) => new NSStackView()
+        {
+            Orientation = NSUserInterfaceLayoutOrientation.Horizontal,
+            Alignment = NSLayoutAttribute.CenterY,
+            Spacing = spacing,
+            Distribution = NSStackViewDistribution.Fill,
+        };
+
+        public static NSTextField CreateLabel (string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left, bool translatesAutoresizingMaskIntoConstraints = false)
 		{
 			var label = new NSTextField ()
 			{
