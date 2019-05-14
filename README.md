@@ -3,23 +3,23 @@
 
 ![](https://github.com/netonjm/FigmaSharp/blob/master/icons/figmasharp-show.gif)
 
-FigmaSharp library provides model classes to use in your .Net applications taking advantage of Figma's component system.
+FigmaSharp library provides model classes to use in your .NET applications taking advantage of Figma's component system.
 
-Inlcuded with this library provide an additional library to parse this models into real views. Right now we only cover Xamarin.Mac but probably will cover other backends like Wpf, Xamarin.Forms..
+Included with this library provide an additional library to parse this models into real views. Right now we only cover Xamarin.Mac but probably will cover other backends like WPF, Xamarin.Forms…
 
 
 | GUI Framework               | Covered                   | 
 | --------------------------- | ------------------------- |
 | Xamarin.Mac (Cocoa)         | Implemented               |
-| Wpf                         | In progess..              |
-| Xamarin.Forms               | In progress..             |
+| Xamarin.Forms               | In progress…              |
+| WPF                         | In progress…              |
 | WinForms                    | Not implemented           |
 
 
 # How to use
 
 
-To get all models from Figma we provide some helper methods 
+To get all models from Figma we provide some helper methods
 
 
 * [FigmaHelper.GetFigmaDialogFromUrlFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaHelper.cs#L95-L99)
@@ -47,7 +47,7 @@ namespace ExampleFigmaMac
     {
         static void Main(string[] args)
         {
-		FigmaEnvirontment.SetAccessToken ("YOUR TOKEN");
+		FigmaEnvironment.SetAccessToken ("YOUR TOKEN");
 		var figmaModels = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile);
         }
 
@@ -63,7 +63,7 @@ Hey! It would be great generate UI's on the fly with this models! It's possible 
 
 # FigmaSharp UI Kit
 
-FigmaSharp UI kit adds tools to generate easy Views of your favorite GUI Frameworks(like Forms, Wpf, WinForms) as demand.
+FigmaSharp UI kit adds tools to generate easy Views of your favorite GUI Frameworks(like Forms, WPF, WinForms) as demand.
 
 
 All this code platform specific is included in FigmaSharp.Cocoa library, this provides some extension methods to generate dynamically NSViews on the fly based in our provided model.
@@ -108,20 +108,20 @@ namespace ExampleFigmaMac
 			// Do any additional setup after loading the view.
 			FigmaEnvirontment.SetAccessToken ("YOUR TOKEN");
 
-			var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
+			var stackView = new NSStackView () { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
 
-			List<FigmaImageView> figmaImageViews; //you will get all the images in this array
+			List<FigmaImageView> figmaImageViews; // you will get all the images in this array
 
-			View.LoadFigmaFromUrlFile(fileName, out figmaImageViews);
+			View.LoadFigmaFromUrlFile (fileName, out figmaImageViews);
 
-			figmaImageViews.Load(fileName); //request to Figma API all the images and converts into NSImage files
+			figmaImageViews.Load (fileName); // request to Figma API all the images and converts into NSImage files
 		}
 	}
 }
 
 ```
 
-Hey I love all of this! but... why not create a standard type of file to pack all of this? I want work with local files in my project!!
+Hey I love all of this! but… why not create a standard type of file to pack all of this? I want work with local files in my project!!
 
 # Introducing Figma Files (in preview)
 
@@ -183,12 +183,12 @@ Wow!! That's cool! But I am not sure how generate this automagically!
 
 # Figma Local Exporter (only mac for now)
 
-In the source code we provided a simple tool to export Figma files from remote FIGMA API
+In the source code we provided a simple tool to export Figma files from remote Figma API
 
 This tools downloads your .figma storyboard and all the images on it into an output directory. 
 
 
-1) Type your Figma File name
+1) Type your Figma file name
 
 2) Type your output directory
 
@@ -220,7 +220,7 @@ Result: this will download and generate all files into output directory
 # Figma Renderer for VSforMac
 
 
-We also included a Figma Renderer to show Figma.Files in VS4Mac!!!!!
+We also included a Figma Renderer to show Figma.Files in Visual Studio for Mac!!!!!
 
 <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/FigmaRenderer.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/FigmaRenderer.png" />
 
@@ -244,8 +244,7 @@ https://github.com/netonjm/MonoDevelop.Mac.Debug
 * Code generation 
 * Extension: Include drag and drop to Source Editor 
 
-Easy than this!
-
+Easy as this!
 
 
 Contribute and hope you enjoy!
