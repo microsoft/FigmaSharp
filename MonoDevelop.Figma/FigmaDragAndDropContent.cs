@@ -30,11 +30,16 @@
 using System;
 using AppKit;
 using System.Linq;
+using MonoDevelop;
 
 using CoreGraphics;
 using FigmaSharp;
 using FigmaSharp.Designer;
 using FigmaSharp.Services;
+using MonoDevelop.Ide;
+using System.Collections.Generic;
+using System.Reflection;
+using System.IO;
 
 namespace MonoDevelop.Figma
 {
@@ -47,25 +52,17 @@ namespace MonoDevelop.Figma
 
         public FigmaNode SelectedNode => (outlinePanel.View.SelectedNode as FigmaNodeView)?.Wrapper;
 
-        public static NSStackView CreateHorizontalStackView(int spacing = 10) => new NSStackView()
-        {
-            Orientation = NSUserInterfaceLayoutOrientation.Horizontal,
-            Alignment = NSLayoutAttribute.CenterY,
-            Spacing = spacing,
-            Distribution = NSStackViewDistribution.Fill,
-        };
-
         public override bool IsFlipped => true;
         public const int TextType = 1;
         OutlinePanel outlinePanel;
         NSTextField fileTextField;
-        NSButton button;
+        NSButton openFileButton, loadAssemblyButton;
         NSScrollView scrollView;
         NSStackView toolbarBox;
 
         public FigmaDragAndDropContent()
         {
-            toolbarBox = CreateHorizontalStackView();
+            toolbarBox = ViewHelpers.CreateHorizontalStackView();
             toolbarBox.EdgeInsets = new NSEdgeInsets(0, 10, 0, 10);
             AddSubview(toolbarBox);
             toolbarBox.AutoresizingMask = NSViewResizingMask.WidthSizable;
@@ -74,11 +71,17 @@ namespace MonoDevelop.Figma
             fileTextField.StringValue = "UeIJu6C1IQwPkdOut2IWRgGd";
             toolbarBox.AddArrangedSubview(fileTextField);
 
-            button = new NSButton() { Title = "Open" };
-            button.BezelStyle = NSBezelStyle.RoundRect;
-            toolbarBox.AddArrangedSubview(button);
+            openFileButton = new NSButton() { Title = "Open" };
+            openFileButton.BezelStyle = NSBezelStyle.RoundRect;
+            toolbarBox.AddArrangedSubview(openFileButton);
 
-            button.Activated += Button_Activated;
+            openFileButton.Activated += openFileButton_Activated;
+
+            loadAssemblyButton = new NSButton() { Title = "Load" };
+            loadAssemblyButton.BezelStyle = NSBezelStyle.RoundRect;
+            toolbarBox.AddArrangedSubview(loadAssemblyButton);
+
+            loadAssemblyButton.Activated += loadAssemblyButton_Activated;
 
             outlinePanel = new OutlinePanel();
             scrollView = outlinePanel.EnclosingScrollView;
@@ -86,9 +89,9 @@ namespace MonoDevelop.Figma
 
             AddSubview(scrollView);
 
-            toolbarBox.SetFrameSize(new CoreGraphics.CGSize(Frame.Width, 30));
-            scrollView.SetFrameOrigin(new CoreGraphics.CGPoint(0, 30));
-            scrollView.SetFrameSize(new CoreGraphics.CGSize(Frame.Width, Frame.Height - 30));
+            toolbarBox.SetFrameSize(new CGSize(Frame.Width, 30));
+            scrollView.SetFrameOrigin(new CGPoint(0, 30));
+            scrollView.SetFrameSize(new CGSize(Frame.Width, Frame.Height - 30));
 
             scrollView.AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable; 
 
@@ -112,7 +115,83 @@ namespace MonoDevelop.Figma
                 DragSourceSet?.Invoke(this, entries);
                 DragBegin?.Invoke(this, EventArgs.Empty);
             };
+
+            RefreshUIStates(); 
             // scrollView.SetContentHuggingPriorityForOrientation((int)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Vertical);
+        }
+
+        private void loadAssemblyButton_Activated(object sender, EventArgs e)
+        {
+            var fullpath = "/Users/jmedrano/FigmaSharp/FigmaSharp.NativeControls/FigmaSharp.NativeControls.Cocoa/bin/Debug";
+            List<string> modules = new List<string>();
+            modules.Add(fullpath + "/FigmaSharp.NativeControls.dll");
+            modules.Add (fullpath + "/FigmaSharp.NativeControls.Cocoa.dll");
+            ModulesService.LoadModule(modules.ToArray ());
+        }
+
+        public static class ModulesService
+        {
+            public static List<CustomViewConverter> Converters = new List<CustomViewConverter>();
+
+            public static void LoadModule(params string[] filePath)
+            {
+                //var path = Path.GetDirectoryName(filePath);
+
+                Dictionary<Assembly, string> instanciableTypes = new Dictionary<Assembly, string>();
+
+                Console.WriteLine("Loading {0}...", string.Join (",",filePath));
+
+                //var enumeratedFiles = Directory.EnumerateFiles(path, "*.dll");
+                var enumeratedFiles = filePath;
+
+                foreach (var file in enumeratedFiles)
+                {
+                    var fileName = Path.GetFileName(file);
+                    Console.WriteLine("[{0}] Found.", fileName);
+                    try
+                    {
+                        var assembly = Assembly.LoadFile(file);
+                        instanciableTypes.Add(assembly, file);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[{0}] Error loading.", fileName);
+                        //Console.WriteLine(ex);
+                    }
+                }
+
+                foreach (var assemblyTypes in instanciableTypes)
+                {
+                    try
+                    {
+                        var interfaceType = typeof(CustomViewConverter);
+                        var types = assemblyTypes.Key.GetTypes()
+                            .Where(interfaceType.IsAssignableFrom);
+
+                        Console.WriteLine("[{0}] Loaded.", assemblyTypes.Value);
+                        foreach (var type in types)
+                        {
+                            Console.WriteLine("[{0}] Creating instance {1}", assemblyTypes.Key, type);
+                            try
+                            {
+                                if (Activator.CreateInstance(type) is CustomViewConverter element)
+                                    Converters.Add(element);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
+                            Console.WriteLine("[{0}] Loaded", type);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+
+                Console.WriteLine("[{0}] Load finished.");
+            }
         }
 
         public ProcessedNode GetProcessedNode (FigmaNode node)
@@ -133,7 +212,12 @@ namespace MonoDevelop.Figma
         FigmaCodeRendererService codeRenderer;
         FigmaNodeView data;
 
-        void Button_Activated(object sender, EventArgs e)
+        public void RefreshUIStates ()
+        {
+            fileTextField.Enabled = openFileButton.Enabled = loadAssemblyButton.Enabled = !FigmaSharp.AppContext.Current.IsConfigured;
+        }
+
+        void openFileButton_Activated(object sender, EventArgs e)
         {
             fileService.Start(fileTextField.StringValue, processImages: false);
             data = new FigmaNodeView(fileService.Response.document);
