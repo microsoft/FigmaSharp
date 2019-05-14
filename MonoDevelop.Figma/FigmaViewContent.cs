@@ -328,7 +328,6 @@ namespace MonoDevelop.Figma
         {
             PropertyPad.Initialize(session);
             propertyPad = PropertyPad.Instance;
-            //FigmaDesignerPropertyPad.Instance.SetSource(this, ds);
             return propertyPad.Control;
         }
 
