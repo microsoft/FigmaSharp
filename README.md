@@ -18,6 +18,11 @@ Included with this library provide an additional library to parse this models in
 | WinForms                    | Not implemented           |
 
 
+# Getting Started
+
+To get documents from Figma you'll need to generate a Personal Access Token. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
+
+
 # How to use
 
 
