@@ -49,8 +49,8 @@ namespace MonoDevelop.Figma
             this.window = window;
             dragPad = new FigmaDragAndDropContent();
 
-            window.PadHidden += Container_PadHidden;
-            window.PadShown += Container_PadShown;
+            window.PadContentHidden += Container_PadHidden;
+            window.PadContentShown += Container_PadShown;
 
             widget = GtkMacInterop.NSViewToGtkWidget(dragPad);
             widget.CanFocus = true;
@@ -114,8 +114,15 @@ namespace MonoDevelop.Figma
             }
         }
 
-        private void Container_PadShown(object sender, Components.Docking.VisibilityChangeEventArgs e) => dragPad.Hidden = false;
-        private void Container_PadHidden(object sender, Components.Docking.VisibilityChangeEventArgs e) => dragPad.Hidden = true;
+        private void Container_PadShown(object sender, EventArgs e)
+        {
+            dragPad.RefreshUIStates();
+            dragPad.Hidden = false;
+        }
+        private void Container_PadHidden(object sender, EventArgs e)
+        {
+            dragPad.Hidden = true;
+        }
 
         void onActiveDocChanged (object sender, DocumentEventArgs e)
 		{
