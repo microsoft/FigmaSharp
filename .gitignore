@@ -8,3 +8,4 @@ obj
 nuget.exe
 .vs
 .user
+*.user
