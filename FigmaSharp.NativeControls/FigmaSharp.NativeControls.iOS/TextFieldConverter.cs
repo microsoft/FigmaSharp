@@ -35,16 +35,52 @@ namespace FigmaSharp.NativeControls
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var textField = new UITextField();
-            textField.Configure(currentNode);
-            var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText>()
-                .FirstOrDefault();
+            var view = new UITextField();
+            var keyValues = GetKeyValues(currentNode);
 
-            textField.BackgroundColor = UIColor.White;
-            textField.Font = figmaText.style.ToUIFont();
-            textField.Text = figmaText.characters;
+            foreach (var key in keyValues)
+            {
+                if (key.Key == "type")
+                {
+                    continue;
+                }
+                if (key.Key == "enabled")
+                {
+                    view.Enabled = key.Value == "true";
+                }
+                else if (key.Key == "size")
+                {
+                    //view.ControlSize = ToEnum<NSControlSize>(key.Value);
+                }
+            }
 
-            return new ViewWrapper(textField);
+            if (currentNode is IFigmaDocumentContainer container)
+            {
+                var placeholderView = container.children.OfType<FigmaText>()
+            .FirstOrDefault(s => s.name == "placeholderstring");
+                if (placeholderView != null)
+                {
+                    view.Placeholder = placeholderView.characters;
+                }
+
+                var textFieldView = container.children.OfType<FigmaText>()
+                   .FirstOrDefault(s => s.name == "text");
+                if (textFieldView != null)
+                {
+                    view.Text = textFieldView.characters;
+                    view.Configure(textFieldView);
+                }
+                else
+                {
+                    view.Configure(currentNode);
+                }
+            }
+            else
+            {
+                view.Configure(currentNode);
+            }
+
+            return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)

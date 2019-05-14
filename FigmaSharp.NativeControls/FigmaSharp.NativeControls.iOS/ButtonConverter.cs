@@ -37,21 +37,70 @@ namespace FigmaSharp.NativeControls
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var button = new UIButton();
-            button.Configure(currentNode);
+            var view = new UIButton();
+            view.Configure(currentNode);
 
-            var instance = (IFigmaDocumentContainer)currentNode;
+            //if (currentNode is IFigmaDocumentContainer documentContainer)
+            //{
+            //    view.BackgroundColor = documentContainer.backgroundColor.ToUIColor();
+            //    var figmaText = documentContainer.children.OfType<FigmaText>().FirstOrDefault();
+            //    if (figmaText != null)
+            //    {
+            //        view.Alpha = figmaText.opacity;
+            //        view.Font = figmaText.style.ToUIFont();
+            //        view.SetTitle(figmaText.characters, UIControlState.Normal);
+            //    }
+            //    return new ViewWrapper(view);
+            //}
 
-            button.BackgroundColor = instance.backgroundColor.ToUIColor();
-
-           var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault();
-            if (figmaText != null)
+            var keyValues = GetKeyValues(currentNode);
+            foreach (var key in keyValues)
             {
-                button.Alpha = figmaText.opacity;
-                button.Font = figmaText.style.ToUIFont();
-                button.SetTitle(figmaText.characters, UIControlState.Normal);
+                if (key.Key == "type")
+                {
+                    continue;
+                }
+
+                if (key.Key == "enabled")
+                {
+                    view.Enabled = key.Value == "true";
+                }
+                else if (key.Key == "size")
+                {
+                 //   view. = ToEnum<NSControlSize>(key.Value);
+                }
+                else if (key.Key == "style")
+                {
+                    //view.sth = ToEnum<NSBezelStyle>(key.Value);
+                }
+                else if (key.Key == "buttontype")
+                {
+                    //view.ButtonType = UIButtonType. (ToEnum<NSButtonType>(key.Value));
+                }
             }
-            return new ViewWrapper(button);
+            if (currentNode is IFigmaDocumentContainer instance)
+            {
+                var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault(s => s.name == "title");
+                if (figmaText != null)
+                {
+                    view.Alpha = figmaText.opacity;
+                    view.Font = figmaText.style.ToUIFont();
+                    view.SetTitle (figmaText.characters, UIControlState.Normal);
+                }
+
+                var image = instance.children.OfType<FigmaVectorEntity>().FirstOrDefault(s => s.name == "image");
+                if (image != null)
+                {
+                    var paint = image.fills.OfType<FigmaPaint>().FirstOrDefault();
+                    if (paint != null)
+                    {
+                        //var query = new FigmaImageQuery ()
+                        //FigmaApiHelper.GetFigmaImage (new FigmaImageQuery ())
+                    }
+                }
+            }
+
+            return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
