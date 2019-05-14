@@ -24,13 +24,11 @@ Included with this library provide an additional library to parse this models in
 To get all models from Figma we provide some helper methods
 
 
-* [FigmaHelper.GetFigmaDialogFromUrlFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaHelper.cs#L95-L99)
+* [FigmaHelper.GetFigmaDialogFromUrlFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
 
+* [FigmaHelper.GetFigmaDialogFromFilePath](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
 
-* [FigmaHelper.GetFigmaDialogFromFilePath](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaHelper.cs#L101-L105)
-
-
-* [FigmaHelper.GetFigmaDialogFromContent](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaHelper.cs#L107-L111)
+* [FigmaHelper.GetFigmaDialogFromContent](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
 
 
 This returns a [IFigmaDocumentContainer](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaModels.cs#L164-L167) which inherits from IFigmaNodeContainer
