@@ -1,7 +1,7 @@
 
 # FigmaSharp + UI Kit  <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" width="50" />
 
-FigmaSharp turns your Figma user interface designs into working code.
+FigmaSharp turns your Figma designs into working code.
 
 ![](https://github.com/netonjm/FigmaSharp/blob/master/icons/figmasharp-show.gif)
 
