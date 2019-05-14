@@ -1,26 +1,49 @@
-
 # FigmaSharp + UI Kit  <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" width="50" />
 
 FigmaSharp turns your Figma designs into working code.
 
 ![](https://github.com/netonjm/FigmaSharp/blob/master/icons/figmasharp-show.gif)
 
-FigmaSharp library provides model classes to use in your .NET applications taking advantage of Figma's component system.
 
-Included with this library provide an additional library to parse this models into real views. Right now we only cover Xamarin.Mac but probably will cover other backends like WPF, Xamarin.Forms…
+Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added later.
 
-
-| GUI Framework               | Covered                   | 
+| Framework                   | Status                    | 
 | --------------------------- | ------------------------- |
-| Xamarin.Mac (Cocoa)         | Implemented               |
+| Cocoa (with Xamarin.Mac)    | Implemented               |
 | Xamarin.Forms               | In progress…              |
 | WPF                         | In progress…              |
 | WinForms                    | Not implemented           |
 
 
-# Getting Started
+# Setting Up
 
 To get documents from Figma you'll need to generate a Personal Access Token. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
+
+
+```CSharp
+using FigmaSharp;
+
+namespace ExampleFigmaMac
+{
+    static class MainClass
+    {
+        const string FIGMA_TOKEN = "13c44-b0f20d98-815c-48b7-83de-1f94504b98bd";
+     
+        static void Main(string[] args)
+        {
+                FigmaEnvironment.SetAccessToken (FIGMA_TOKEN);
+                FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile);
+        }
+
+    }
+}
+```
+
+`FigmaResponse` contains a `FigmaDocument` and metadata. This is the main way of getting documents from figma.com.
+
+
+
+
 
 
 # How to use
