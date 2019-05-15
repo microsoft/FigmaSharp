@@ -26,11 +26,14 @@ namespace FigmaSharpExample
     static class Main
     {
         const string FIGMA_TOKEN = "13c44-b0f20d98-815c-48b7-83de-1f94504b98bd";
+        const string FIGMA_URL = "https://www.figma.com/file/QzEga2172k21eMF2s4Nc5keY";
 
         static void Main(string[] args)
         {
                 FigmaEnvironment.SetAccessToken (FIGMA_TOKEN);
-                FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile);
+                FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(FIGMA_URL);
+
+                FigmaDocument document = response.Document;
         }
 
     }
