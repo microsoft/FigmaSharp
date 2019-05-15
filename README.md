@@ -1,7 +1,7 @@
 # FigmaSharp + UI Kit  <img src="FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="FigmaSharp/blob/master/icons/image-logo.png" width="50" />
 
 FigmaSharp turns your Figma designs into working code.
-![](FigmaSharp/blob/master/icons/figmasharp-show.gif)
+![](./FigmaSharp/blob/master/icons/figmasharp-show.gif)
 
 Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added later.
 
