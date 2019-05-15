@@ -166,50 +166,33 @@ Wow!! That's cool! But I am not sure how generate this automagically!
 # Figma Local Exporter (only mac for now)
 
 In the source code we provided a simple tool to export Figma files from remote Figma API
-
 This tools downloads your .figma storyboard and all the images on it into an output directory. 
 
 
 1) Type your Figma file name
-
 2) Type your output directory
-
 3) Press the button!!
 
-
-
-Result: this will download and generate all files into output directory
-
-
-
 <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/FigmaExporter.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/FigmaExporter.png" />
-
 
 **Now in your solution project**
 
 1) Rename your **downloaded.figma** file to **yourdesiredname.figma** and copy it to your project and set the Build action to **EmbeddedResource**.
-
 2) Copy all the images in your Resources directory and set the Build action to **EmbeddedResource**.
-
 3) Generate a .cs file like we described in FigmaFiles section
-
 
 
 **Congrats!! you created your first figma.file!**
 
 
 
-# Figma Renderer for VSforMac
-
+# Visual Studio for Mac integration
 
 We also included a Figma Renderer to show Figma.Files in Visual Studio for Mac!!!!!
 
 <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/FigmaRenderer.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/FigmaRenderer.png" />
 
-
-
-Download Figma Extension from Extension Gallery and have a Fun time!
-
+Install the [FigmaSharp extension] from NuGet and have a fun time!
 
 <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/VSMacExtension.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/VSMacExtension.png" />
 
