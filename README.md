@@ -15,7 +15,7 @@ Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added la
 
 # Setting Up
 
-To get documents from figma.com you'll need to generate a Personal Access Token. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
+To get documents from [figma.com](https://www.figma.com/) you'll need to generate a `Personal Access Token`. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
 
 
 ```CSharp
@@ -40,40 +40,18 @@ namespace FigmaSharpExample
 }
 ```
 
-`FigmaResponse` contains a `FigmaDocument` and metadata. This is the main way of getting documents from figma.com.
+`FigmaResponse` contains a `FigmaDocument`, which is a hierarchy of `FigmaNode`s, and metadata.
 
 There are several ways to load Figma documents:
 
 * From a figma.com URL with [FigmaHelper.GetFigmaDialogFromUrlFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
-* From a local file: FigmaHelper.GetFigmaDialogFromFilePath](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
+* From a local .figma file: FigmaHelper.GetFigmaDialogFromFilePath](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
 * From raw data: [FigmaHelper.GetFigmaDialogFromContent](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
 
-This returns a [IFigmaDocumentContainer](FigmaSharp/FigmaModels.cs#L164-L167) which inherits from IFigmaNodeContainer
+
+# Using a FigmaDocument to generate a native user interface
 
 
-All this methods internally deserialize a FigmaResponse class using a FigmaResponseConverter generating a hierarchy of [FigmaNode](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaModels.cs)'s.
-
-
-```CSharp
-
-using FigmaSharp;
-
-namespace ExampleFigmaMac
-{
-    static class MainClass
-    {
-        static void Main(string[] args)
-        {
-		FigmaEnvironment.SetAccessToken ("YOUR TOKEN");
-		FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(urlFile);
-        }
-
-    }
-}
-
-```
-
-As simple as this!!
 
 Hey! It would be great generate UI's on the fly with this models! It's possible to do it with this Toolkit?
 * Of course yes! *
@@ -103,7 +81,6 @@ namespace ExampleFigmaMac
 	{
 		public ViewController (IntPtr handle) : base (handle)
 		{
-
 		}
 
 		public override void ViewDidLoad ()
@@ -126,6 +103,7 @@ namespace ExampleFigmaMac
 ```
 
 Hey I love all of this! but… why not create a standard type of file to pack all of this? I want work with local files in my project!!
+
 
 # Introducing Figma Files (in preview)
 
