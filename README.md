@@ -15,7 +15,7 @@ Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added la
 
 # Setting Up
 
-To get documents from Figma you'll need to generate a Personal Access Token. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
+To get documents from figma.com you'll need to generate a Personal Access Token. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
 
 
 ```CSharp
@@ -30,7 +30,7 @@ namespace FigmaSharpExample
 
         static void Main(string[] args)
         {
-                FigmaEnvironment.SetAccessToken (FIGMA_TOKEN);
+                FigmaEnvironment.SetAccessToken(FIGMA_TOKEN);
                 FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(FIGMA_URL);
 
                 FigmaDocument document = response.Document;
@@ -42,15 +42,11 @@ namespace FigmaSharpExample
 
 `FigmaResponse` contains a `FigmaDocument` and metadata. This is the main way of getting documents from figma.com.
 
+There are several ways to load Figma documents:
 
-
-# How to use
-
-To get all models from Figma we provide some helper methods
-
-* [FigmaHelper.GetFigmaDialogFromUrlFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
-* [FigmaHelper.GetFigmaDialogFromFilePath](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
-* [FigmaHelper.GetFigmaDialogFromContent](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
+* From a figma.com URL with [FigmaHelper.GetFigmaDialogFromUrlFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
+* From a local file: FigmaHelper.GetFigmaDialogFromFilePath](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
+* From raw data: [FigmaHelper.GetFigmaDialogFromContent](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
 
 This returns a [IFigmaDocumentContainer](FigmaSharp/FigmaModels.cs#L164-L167) which inherits from IFigmaNodeContainer
 
