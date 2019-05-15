@@ -56,7 +56,8 @@ There are several ways to load Figma documents:
 Hey! It would be great generate UI's on the fly with this models! It's possible to do it with this Toolkit?
 * Of course yes! *
 
-# FigmaSharp UI Kit
+
+# FigmaSharp.Cocoa
 
 FigmaSharp UI kit adds tools to generate easy Views of your favorite GUI Frameworks(like Forms, WPF, WinForms) as demand.
 
@@ -83,6 +84,7 @@ namespace ExampleFigmaMac
 		{
 		}
 
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
@@ -102,64 +104,47 @@ namespace ExampleFigmaMac
 }
 ```
 
+
 Hey I love all of this! but… why not create a standard type of file to pack all of this? I want work with local files in my project!!
 
 
-# Introducing Figma Files (in preview)
 
-Figma files is a new way to generate local Figma storyboards with images.
-
-Structure:
-
---  ExampleFigmaFile.figma (json)
-
-|_ ExampleFigmaFile.cs
- 
-  |_ FigmaFile
-       
-
-Figma files are basically a .JSON file (provided by Figma API) and the code behind .cs class which is based in our [FigmaFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaFile.cs). All the image files needs to be named like its corresponding figmaId and include in your project like a EmbeddedResource. 
+# Including Figma files in your project with FigmaFile.
 
 
-Figma files are basically a .JSON file (provided by Figma API) and the code behind .cs class which is based in our [FigmaFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaFile.cs)
+In your solution it will look like this:
+```
 
-This is an example
+|
++--+ MyDialog.figma
+   |
+   +-- MyDialog.figma.cs
+   |
+   +-- icon.png
+   +-- icon@2x.png
+|
+
+```
+
+`.figma` files are JSON files and are accompanied by a code-behind `.figma.cs` file.
+Image files need to be named like their corresponding Figma ID, and their Build Action should be `EmbeddedResource`.
 
 
 ```csharp
-public class FigmaStoryboard : FigmaFile
+public class MyDialog : FigmaFile
 {
-	public FigmaStoryboard () : base ("FigmaStoryboard.figma")
+	public MyDialog () : base ("MyDialog.figma")
 	{
 		Initialize ();
+                Reload (includeImages: true);
 	}
 }
 ```
 
-Note: the base class initializes with your json FileName
+`Initialize()`  creates a `FigmaDocument` as `MyDialog.Document`.
+`Reload ()` takes the initialized FigmaDocument and images and creates a native Cocoa `NSView` as `MyDialog.ContentView`, which you can now use in your macOS apps.
 
 
-The *Initialize()* method, generates all figma models into FigmaStoryboard.Document hierarchy.. but wait this don't generate views yet!
-
-
-If you want to generate it you will need to do an extra call!
-
-
-```csharp
-public class FigmaStoryboard : FigmaFile
-{
-	public FigmaStoryboard () : base ("FigmaStoryboard.figma")
-	{
-		Initialize ();
-      		Reload (true); //Reload including images
-	}
-}
-```
-
-Call to: **Reload (true)** creates all the native views into your [FigmaStoryboard.ContentView](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaFile.cs#L14) property and also your  images in [FigmaImages](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaFile.cs#L12) property.
-
-
-Wow!! That's cool! But I am not sure how generate this automagically!
 
 
 
