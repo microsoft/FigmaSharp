@@ -1,9 +1,7 @@
-# FigmaSharp + UI Kit  <img src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="https://github.com/netonjm/FigmaSharp/blob/master/icons/image-logo.png" width="50" />
+# FigmaSharp + UI Kit  <img src="FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="FigmaSharp/blob/master/icons/image-logo.png" width="50" />
 
 FigmaSharp turns your Figma designs into working code.
-
-![](https://github.com/netonjm/FigmaSharp/blob/master/icons/figmasharp-show.gif)
-
+![](FigmaSharp/blob/master/icons/figmasharp-show.gif)
 
 Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added later.
 
@@ -23,12 +21,12 @@ To get documents from Figma you'll need to generate a Personal Access Token. Sig
 ```CSharp
 using FigmaSharp;
 
-namespace ExampleFigmaMac
+namespace FigmaSharpExample
 {
-    static class MainClass
+    static class Main
     {
         const string FIGMA_TOKEN = "13c44-b0f20d98-815c-48b7-83de-1f94504b98bd";
-     
+
         static void Main(string[] args)
         {
                 FigmaEnvironment.SetAccessToken (FIGMA_TOKEN);
@@ -43,23 +41,15 @@ namespace ExampleFigmaMac
 
 
 
-
-
-
 # How to use
-
 
 To get all models from Figma we provide some helper methods
 
+* [FigmaHelper.GetFigmaDialogFromUrlFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
+* [FigmaHelper.GetFigmaDialogFromFilePath](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
+* [FigmaHelper.GetFigmaDialogFromContent](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
 
-* [FigmaHelper.GetFigmaDialogFromUrlFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
-
-* [FigmaHelper.GetFigmaDialogFromFilePath](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
-
-* [FigmaHelper.GetFigmaDialogFromContent](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
-
-
-This returns a [IFigmaDocumentContainer](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaModels.cs#L164-L167) which inherits from IFigmaNodeContainer
+This returns a [IFigmaDocumentContainer](FigmaSharp/FigmaModels.cs#L164-L167) which inherits from IFigmaNodeContainer
 
 
 All this methods internally deserialize a FigmaResponse class using a FigmaResponseConverter generating a hierarchy of [FigmaNode](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp/FigmaModels.cs)'s.
@@ -96,28 +86,16 @@ FigmaSharp UI kit adds tools to generate easy Views of your favorite GUI Framewo
 
 All this code platform specific is included in FigmaSharp.Cocoa library, this provides some extension methods to generate dynamically NSViews on the fly based in our provided model.
 
-
-* [LoadFigmaFromFilePath](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
-
-
-* [LoadFigmaFromUrlFile](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
-
-
-* [LoadFigmaFromResource](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L65)
-
-
-* [LoadFigmaFromContent](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L80)
-
-
-* [LoadFigmaFromFrameEntity](https://github.com/netonjm/FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L94)
-
+* [LoadFigmaFromFilePath](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
+* [LoadFigmaFromUrlFile](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
+* [LoadFigmaFromResource](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L65)
+* [LoadFigmaFromContent](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L80)
+* [LoadFigmaFromFrameEntity](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L94)
 
 All this extension methods work over any NSView or NSWindow entities.
 
 
-
 ```CSharp
-
 using FigmaSharp;
 
 namespace ExampleFigmaMac
@@ -146,7 +124,6 @@ namespace ExampleFigmaMac
 		}
 	}
 }
-
 ```
 
 Hey I love all of this! but… why not create a standard type of file to pack all of this? I want work with local files in my project!!
