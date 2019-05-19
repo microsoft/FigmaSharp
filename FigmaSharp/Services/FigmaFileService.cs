@@ -47,9 +47,9 @@ namespace FigmaSharp.Services
         public int Page { get; private set; }
         public bool ProcessImages { get; private set; }
 
-        public FigmaFileService()
+        public FigmaFileService(FigmaViewConverter[] figmaViewConverters)
         {
-            FigmaDefaultConverters = AppContext.Current.GetFigmaConverters();
+            FigmaDefaultConverters = figmaViewConverters;
         }
 
         public void Save(string filePath)
@@ -182,6 +182,10 @@ namespace FigmaSharp.Services
 
     public class FigmaManifestResourceFileService : FigmaFileService
     {
+        public FigmaManifestResourceFileService(FigmaViewConverter[] figmaViewConverters) : base(figmaViewConverters)
+        {
+        }
+
         protected override string GetContentTemplate(string file)
         {
             return AppContext.Current.GetManifestResource(null, file);
@@ -195,6 +199,10 @@ namespace FigmaSharp.Services
 
     public class FigmaLocalFileService : FigmaFileService
     {
+        public FigmaLocalFileService(FigmaViewConverter[] figmaViewConverters) : base(figmaViewConverters)
+        {
+        }
+
         protected override string GetContentTemplate(string file)
         {
             return System.IO.File.ReadAllText(file);
@@ -208,6 +216,10 @@ namespace FigmaSharp.Services
 
     public class FigmaRemoteFileService : FigmaFileService
     {
+        public FigmaRemoteFileService(FigmaViewConverter[] figmaViewConverters) : base(figmaViewConverters)
+        {
+        }
+
         protected override string GetContentTemplate(string file)
         {
             return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
