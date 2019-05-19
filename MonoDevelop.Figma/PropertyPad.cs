@@ -39,7 +39,7 @@ namespace MonoDevelop.Figma
 
         public void Initialize()
         {
-
+            //this does nothing
         }
     }
 
