@@ -18,7 +18,8 @@ namespace ExampleFigma
             this.scrollViewWrapper = scrollViewWrapper;
             this.fileName = fileName;
 
-            fileService = new FigmaRemoteFileService();
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            fileService = new FigmaRemoteFileService(converters);
             rendererService = new FigmaRendererService(fileService);
         }
        

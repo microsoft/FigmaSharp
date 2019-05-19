@@ -33,15 +33,16 @@ namespace StandaloneDesigner
             outlinePanel = new OutlinePanel();
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileService = new FigmaRemoteFileService();
+
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+
+            fileService = new FigmaRemoteFileService(converters);
             surface = new FigmaDesignerSurface(figmaDelegate);
             // Do any additional setup after loading the view.
 
             var directory = Environment.GetEnvironmentVariable("DIRECTORY");
-
             var file = Path.Combine (directory, Environment.GetEnvironmentVariable("FILE"));
-
-            session = new FigmaDesignerSession();
+            session = new FigmaDesignerSession(converters);
             session.Reload(file, directory);
 
             var window = NSApplication.SharedApplication.Windows.FirstOrDefault();
