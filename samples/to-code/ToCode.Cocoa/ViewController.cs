@@ -48,7 +48,7 @@ namespace ToCode.Cocoa
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
             fileService = new FigmaRemoteFileService(converters);
             codeRenderer = new FigmaCodeRendererService(fileService);
-            fileService.Start("UeIJu6C1IQwPkdOut2IWRgGd", processImages: false);
+            fileService.Start("UeIJu6C1IQwPkdOut2IWRgGd", new FigmaFileServiceOptions() { AreImageProcessed = false, IsToViewProcessed = false });
            
             data = new FigmaNodeView(fileService.Response.document);
             figmaDelegate.ConvertToNodes(fileService.Response.document, data);

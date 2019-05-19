@@ -25,7 +25,7 @@ namespace ExampleFigma
        
         public void Initialize ()
         {
-            fileService.Start(fileName, 0);
+            fileService.Start(fileName, new FigmaFileServiceOptions() { StartPage = 0 });
             rendererService.Start();
 
             var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)

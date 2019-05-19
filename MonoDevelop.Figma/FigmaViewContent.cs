@@ -115,7 +115,7 @@ namespace MonoDevelop.Figma
 
         void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload();
+            session.Reload (fileOptions);
         }
 
         protected override Task OnSave()
@@ -289,9 +289,11 @@ namespace MonoDevelop.Figma
             RefreshAll();
         }
 
+        FigmaFileServiceOptions fileOptions = new FigmaFileServiceOptions ();
+
         void RefreshAll ()
         {
-            session.Reload();
+            session.Reload (fileOptions);
             if (outlinePad != null)
             {
                 var selectedView = surface.SelectedView;

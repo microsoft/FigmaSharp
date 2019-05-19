@@ -47,7 +47,7 @@ namespace FigmaSharp.Services
         public int Page { get; private set; }
         public bool ProcessImages { get; private set; }
 
-        public FigmaFileService(FigmaViewConverter[] figmaViewConverters)
+        protected FigmaFileService(FigmaViewConverter[] figmaViewConverters)
         {
             FigmaDefaultConverters = figmaViewConverters;
         }
@@ -57,15 +57,10 @@ namespace FigmaSharp.Services
             AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
         }
 
-        public async Task StartAsync(string file)
-        {
-            await Task.Run(() =>
-            {
-                Start(file);
-            });
-        }
+        public Task StartAsync(string file) => StartAsync(file, new FigmaFileServiceOptions());
+        public Task StartAsync(string file, FigmaFileServiceOptions options) => Task.Run(() => Start(file, options: options));
 
-        public void Refresh ()
+        public void Refresh (FigmaFileServiceOptions options)
         {
             try
             {
@@ -78,7 +73,7 @@ namespace FigmaSharp.Services
 
                 var canvas = Response.document.children[Page];
                 foreach (var item in canvas.children)
-                    GenerateViewsRecursively(item, null);
+                    GenerateViewsRecursively(item, null, options);
 
                 //Images
                 if (ProcessImages)
@@ -95,20 +90,23 @@ namespace FigmaSharp.Services
             }
         }
 
-        public void Start(string file, int page = 0, bool processImages = true)
+        public void Start(string file) =>
+            Start(file, new FigmaFileServiceOptions());
+
+        public void Start(string file, FigmaFileServiceOptions options)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
-          
-            ProcessImages = processImages;
-            Page = page;
+
+            ProcessImages = options.AreImageProcessed;
+            Page = options.StartPage;
             File = file;
 
             try
             {
                 var template = GetContentTemplate(file);
                 Response = AppContext.Current.GetFigmaResponseFromContent(template);
-                Refresh();
+                Refresh(options);
             }
             catch (Exception ex)
             {
@@ -121,14 +119,14 @@ namespace FigmaSharp.Services
 
         protected abstract string GetContentTemplate(string file);
 
-        ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent)
+        ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent, FigmaFileServiceOptions options)
         {
             foreach (var customViewConverter in customViewConverters)
             {
                 if (customViewConverter.CanConvert(currentNode))
                 {
-                    var currentView = customViewConverter.ConvertTo(currentNode, parent);
-                    var currentCode = customViewConverter.ConvertToCode(currentNode, parent);
+                    var currentView = options.IsToViewProcessed ? customViewConverter.ConvertTo(currentNode, parent) : null;
+                    var currentCode = options.IsToCodeProcessed ? customViewConverter.ConvertToCode(currentNode, parent) : null;
                     var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, Code = currentCode, ParentView = parent };
                     return currentElement;
                 }
@@ -138,17 +136,17 @@ namespace FigmaSharp.Services
         }
 
         //TODO: This 
-        void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent)
+        void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent, FigmaFileServiceOptions options)
         {
             Console.WriteLine("[{0}({1})] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
             bool navigateChild = true;
 
-            var currentProcessedNode = GetProcessedNode(currentNode, CustomViewConverters, parent);
+            var currentProcessedNode = GetProcessedNode(currentNode, CustomViewConverters, parent, options);
 
             if (currentProcessedNode == null)
             {
-                currentProcessedNode = GetProcessedNode(currentNode, FigmaDefaultConverters, parent);
+                currentProcessedNode = GetProcessedNode(currentNode, FigmaDefaultConverters, parent, options);
             }
             else
             {
@@ -174,7 +172,7 @@ namespace FigmaSharp.Services
             {
                 foreach (var item in nodeContainer.children)
                 {
-                    GenerateViewsRecursively(item, currentProcessedNode);
+                    GenerateViewsRecursively(item, currentProcessedNode, options);
                 }
             }
         }
@@ -239,5 +237,13 @@ namespace FigmaSharp.Services
                 }
             }
         }
+    }
+
+    public class FigmaFileServiceOptions
+    {
+        public bool IsToCodeProcessed { get; set; } = true;
+        public bool IsToViewProcessed { get; set; } = true;
+        public bool AreImageProcessed { get; set; } = true;
+        public int StartPage { get; set; } = 0;
     }
 }
