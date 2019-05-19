@@ -18,7 +18,9 @@ namespace ExampleFigmaMac
             this.scrollViewWrapper = scrollViewWrapper;
             this.fileName = fileName;
 
-            fileService = new FigmaRemoteFileService();
+
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            fileService = new FigmaRemoteFileService(converters);
 
             var nativeConverters = Resources.GetConverters();
             fileService.CustomViewConverters.AddRange(nativeConverters);

@@ -137,8 +137,8 @@ namespace MonoDevelop.Figma
                 DocumentTitle = fileDescriptor.FilePath.FileName;
 
                 figmaDelegate = new FigmaDesignerDelegate();
-
-                session = new FigmaDesignerSession();
+                var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+                session = new FigmaDesignerSession(converters);
                 //session.ModifiedChanged += HandleModifiedChanged;
                 session.ReloadFinished += Session_ReloadFinished;
 
