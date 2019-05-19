@@ -9,10 +9,6 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerDelegate : IFigmaDesignerDelegate
     {
-        public FigmaDesignerDelegate()
-        {
-        }
-
         public void RemoveAllErrorWindows(IWindowWrapper windowWrapper)
         {
             var window = windowWrapper.NativeObject as NSWindow;
@@ -32,7 +28,13 @@ namespace FigmaSharp.Designer
             {
                 return window;
             }
-            return NSApplication.SharedApplication.Windows.FirstOrDefault(s => s.ToString().Contains("GdkQuartzWindow"));
+            foreach (var win in NSApplication.SharedApplication.DangerousWindows)
+            {
+                if (win.ToString().Contains("GdkQuartzWindow")) {
+                    return win;
+                }
+            }
+            return null;
         }
 
         public void StartHoverSelection(IWindowWrapper currentWindow)
