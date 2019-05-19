@@ -48,9 +48,9 @@ namespace FigmaSharp.Designer
         public List<ProcessedNode> ProcessedNodes => fileService.NodesProcessed;
         public ProcessedNode[] MainViews => rendererService.MainViews;
 
-        public FigmaDesignerSession()
+        public FigmaDesignerSession(FigmaViewConverter[] figmaViewConverters)
         {
-            fileService = new FigmaLocalFileService();
+            fileService = new FigmaLocalFileService(figmaViewConverters);
             rendererService = new FigmaRendererService(fileService);
         }
 

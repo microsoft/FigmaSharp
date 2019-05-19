@@ -44,10 +44,10 @@ namespace FigmaSharp
         readonly FigmaManifestResourceFileService fileService;
         readonly FigmaRendererService rendererService;
 
-        public FigmaFile (string file)
+        public FigmaFile (string file, FigmaViewConverter[] figmaViewConverters)
 		{
             this.file = file;
-            fileService = new FigmaManifestResourceFileService();
+            fileService = new FigmaManifestResourceFileService (figmaViewConverters);
             rendererService = new FigmaRendererService(fileService);
         }
 

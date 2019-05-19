@@ -44,7 +44,9 @@ namespace ToCode.Cocoa
             scrollView.RightAnchor.ConstraintEqualToAnchor(treeHierarchyContainer.RightAnchor).Active = true;
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileService = new FigmaRemoteFileService();
+
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            fileService = new FigmaRemoteFileService(converters);
             codeRenderer = new FigmaCodeRendererService(fileService);
             fileService.Start("UeIJu6C1IQwPkdOut2IWRgGd", processImages: false);
            
