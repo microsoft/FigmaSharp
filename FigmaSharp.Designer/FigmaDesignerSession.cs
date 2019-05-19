@@ -56,9 +56,9 @@ namespace FigmaSharp.Designer
 
         public event EventHandler ReloadFinished;
 
-        public void Reload ()
+        public void Reload (FigmaFileServiceOptions options)
         {
-            fileService.Refresh();
+            fileService.Refresh(options);
             rendererService.Start();
             var resourcesDirectoryPath = Path.Combine(baseDirectory, "Resources");
             ReloadImages(resourcesDirectoryPath);
