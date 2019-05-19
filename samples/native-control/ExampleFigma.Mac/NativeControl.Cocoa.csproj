@@ -122,7 +122,7 @@
       <Name>FigmaSharp.NativeControls.Cocoa</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{02552F2B-5667-4457-AFF2-F6778BD0F9CB}</Project>
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
