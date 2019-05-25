@@ -32,7 +32,7 @@ namespace FigmaSharp.Tests
         {
             Init();
             var enumeratedFiles = Directory.EnumerateFiles(directory, "*.dll").ToArray();
-            ModuleService.LoadModule(enumeratedFiles);
+            ModuleService.LoadModule(ModuleService.Platform.MAC, enumeratedFiles);
 
             Assert.IsTrue(ModuleService.Converters.Count > 0);
         }
