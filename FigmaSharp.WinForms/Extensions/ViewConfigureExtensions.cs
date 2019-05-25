@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public static class ViewConfigureExtensions
     {

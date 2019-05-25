@@ -26,7 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.NativeControls.WinForms
 {
     public static class Resources
     {

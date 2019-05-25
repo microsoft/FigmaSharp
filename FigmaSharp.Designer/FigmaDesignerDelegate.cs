@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Foundation;
 using CoreGraphics;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Designer
 {

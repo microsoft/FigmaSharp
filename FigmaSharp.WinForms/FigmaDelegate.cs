@@ -1,4 +1,5 @@
 ﻿using FigmaSharp.Converters;
+using FigmaSharp.WinForms.Converters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,7 +7,7 @@ using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public class FigmaDelegate : IFigmaDelegate
     {

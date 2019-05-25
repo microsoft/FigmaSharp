@@ -29,8 +29,9 @@
 using System;
 using System.Text;
 using AppKit;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {

@@ -3,7 +3,7 @@ using System.Reflection;
 using Foundation;
 using UIKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public static class FigmaViewsHelper
     {

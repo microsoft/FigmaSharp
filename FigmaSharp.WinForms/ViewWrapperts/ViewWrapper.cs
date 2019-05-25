@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public class ViewWrapper : IViewWrapper
     {

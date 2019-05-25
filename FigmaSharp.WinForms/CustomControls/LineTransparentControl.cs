@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public class LineTransparentControl : TransparentControl
     {

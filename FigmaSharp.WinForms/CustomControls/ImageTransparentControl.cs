@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public class ImageTransparentControl : TransparentControl
     {

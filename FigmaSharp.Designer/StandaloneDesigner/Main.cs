@@ -1,6 +1,7 @@
 ﻿using System;
 using AppKit;
 using FigmaSharp;
+using FigmaSharp.Cocoa;
 
 namespace StandaloneDesigner
 {

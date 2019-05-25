@@ -26,7 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.NativeControls.iOS
 {
     public static class Resources
     {

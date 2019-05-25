@@ -31,7 +31,7 @@ using System.Linq;
 using CoreGraphics;
 using UIKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {

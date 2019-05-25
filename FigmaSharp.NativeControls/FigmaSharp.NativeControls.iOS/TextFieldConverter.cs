@@ -28,8 +28,9 @@
 using System.Linq;
 using FigmaSharp.NativeControls.Base;
 using UIKit;
+using FigmaSharp.iOS;
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.NativeControls.iOS
 {
     public class TextFieldConverter : TextFieldConverterBase
     {

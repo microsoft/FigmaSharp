@@ -26,8 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.WinForms.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {

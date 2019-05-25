@@ -28,8 +28,9 @@
 
 using System;
 using System.Text;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.iOS.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {

@@ -29,7 +29,7 @@
 using AppKit;
 using CoreGraphics;
 
-namespace FigmaSharp
+namespace FigmaSharp.Cocoa
 {
     public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {

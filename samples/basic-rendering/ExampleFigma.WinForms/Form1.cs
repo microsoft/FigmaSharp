@@ -1,6 +1,7 @@
 ﻿using ExampleFigma;
 using ExampleFigmaWinForms.Properties;
 using FigmaSharp;
+using FigmaSharp.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

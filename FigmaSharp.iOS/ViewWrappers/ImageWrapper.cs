@@ -28,7 +28,7 @@
 
 using UIKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public class ImageWrapper : IImageWrapper
     {

@@ -34,7 +34,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FigmaSharp.Converters;
 using System.Drawing;
-namespace FigmaSharp
+
+namespace FigmaSharp.WinForms
 {
     public static class FigmaExtensions
     {

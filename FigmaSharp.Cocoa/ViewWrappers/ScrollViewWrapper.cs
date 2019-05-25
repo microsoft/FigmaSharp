@@ -30,7 +30,7 @@ using AppKit;
 using CoreGraphics;
 using System.Linq;
 
-namespace FigmaSharp
+namespace FigmaSharp.Cocoa
 {
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {

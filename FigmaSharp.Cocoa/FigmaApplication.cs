@@ -1,4 +1,4 @@
-﻿namespace FigmaSharp
+﻿namespace FigmaSharp.Cocoa
 {
     public class FigmaApplication
     {

@@ -26,9 +26,10 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using UIKit;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.iOS.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
