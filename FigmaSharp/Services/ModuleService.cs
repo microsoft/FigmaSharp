@@ -36,6 +36,18 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp.Services
 {
+    public class PlatformCustomViewConverter
+    {
+        public PlatformCustomViewConverter (string platform, CustomViewConverter converter)
+        {
+            Platform = platform;
+            Converter = converter;
+        }
+
+        public string Platform { get; private set; }
+        public CustomViewConverter Converter { get; private set; }
+    }
+
     public static class ModuleService
     {
         public static class Platform
@@ -45,7 +57,7 @@ namespace FigmaSharp.Services
             public static string WinForms = "winforms";
         }
 
-        public static List<CustomViewConverter> Converters = new List<CustomViewConverter>();
+        public static List<PlatformCustomViewConverter> Converters = new List<PlatformCustomViewConverter>();
 
         public static void LoadModules (string directory, string platform)
         {
@@ -94,10 +106,10 @@ namespace FigmaSharp.Services
             Console.WriteLine("Platform: {0}", manifest.platform);
 
             var enumeratedFiles = Directory.EnumerateFiles(directory, "*.dll").ToArray();
-            LoadModule(enumeratedFiles);
+            LoadModule(platform, enumeratedFiles);
         }
 
-        public static void LoadModule(params string[] filePaths)
+        public static void LoadModule(string platform, params string[] filePaths)
         {
             Dictionary<Assembly, string> instanciableTypes = new Dictionary<Assembly, string>();
 
@@ -128,7 +140,6 @@ namespace FigmaSharp.Services
             {
                 try
                 {
-                   
                     //we get all the type converters from the selected assembly
                     var interfaceType = typeof(CustomViewConverter);
                     var types = assemblyTypes.Key.GetTypes()
@@ -145,7 +156,7 @@ namespace FigmaSharp.Services
                         try
                         {
                             if (Activator.CreateInstance(type) is CustomViewConverter element)
-                                Converters.Add(element);
+                                Converters.Add(new PlatformCustomViewConverter (platform, element));
                         }
                         catch (Exception ex)
                         {
