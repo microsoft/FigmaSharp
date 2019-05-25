@@ -1,6 +1,7 @@
 ﻿
 using UIKit;
 using FigmaSharp;
+using FigmaSharp.iOS;
 
 namespace ExampleFigma.IOS
 {

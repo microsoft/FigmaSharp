@@ -28,7 +28,7 @@
 
 using AppKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.Cocoa
 {
     public class ImageWrapper : IImageWrapper
     {

@@ -27,8 +27,9 @@
  */
 
 using System.Windows.Forms;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.WinForms.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {

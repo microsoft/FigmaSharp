@@ -33,6 +33,7 @@ using System.Linq;
 using FigmaSharp.Converters;
 using FigmaSharp.Services;
 using System.Collections.Generic;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Designer
 {

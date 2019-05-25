@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using FigmaSharp.Converters;
+using FigmaSharp.iOS.Converters;
 using Foundation;
 using UIKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public class FigmaDelegate : IFigmaDelegate
     {

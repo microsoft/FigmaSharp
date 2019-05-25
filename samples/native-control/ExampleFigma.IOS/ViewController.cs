@@ -3,6 +3,8 @@ using CoreAnimation;
 using CoreGraphics;
 using ExampleFigmaMac;
 using FigmaSharp;
+using FigmaSharp.iOS;
+using FigmaSharp.NativeControls.iOS;
 using FigmaSharp.Services;
 using UIKit;
 
@@ -27,7 +29,9 @@ namespace ExampleFigma.IOS
             var fileName = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
 
-            manager = new ExampleViewManager(scrollViewWrapper, fileName);
+            var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            var nativeConverters = Resources.GetConverters();
+            manager = new ExampleViewManager(scrollViewWrapper, fileName, figmaConverters, nativeConverters);
             manager.Initialize();
         }
 

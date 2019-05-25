@@ -5,6 +5,7 @@ using Foundation;
 using System.Linq;
 using System.Globalization;
 using System.Threading;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Designer
 {

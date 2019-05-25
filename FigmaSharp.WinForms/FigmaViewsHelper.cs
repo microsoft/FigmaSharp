@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Reflection;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public static class FigmaViewsHelper
     {

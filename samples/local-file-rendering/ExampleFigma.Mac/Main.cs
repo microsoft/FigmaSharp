@@ -7,6 +7,7 @@ using FigmaSharp;
 using System.Net;
 using Foundation;
 using FigmaSharp.Services;
+using FigmaSharp.Cocoa;
 
 namespace ExampleFigmaMac
 {

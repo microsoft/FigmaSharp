@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AppKit;
+using FigmaSharp.Cocoa;
 using Foundation;
 
 namespace FigmaSharp

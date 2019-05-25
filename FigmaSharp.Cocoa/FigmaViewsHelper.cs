@@ -34,7 +34,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace FigmaSharp
+namespace FigmaSharp.Cocoa
 {
     public static class FigmaViewsHelper
     {

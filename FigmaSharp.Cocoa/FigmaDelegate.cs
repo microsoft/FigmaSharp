@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using AppKit;
-using FigmaSharp.Converters;
+using FigmaSharp.Cocoa.Converters;
 
-namespace FigmaSharp
+namespace FigmaSharp.Cocoa
 {
     public class FigmaDelegate : IFigmaDelegate
     {

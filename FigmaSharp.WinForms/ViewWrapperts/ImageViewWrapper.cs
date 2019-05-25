@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {

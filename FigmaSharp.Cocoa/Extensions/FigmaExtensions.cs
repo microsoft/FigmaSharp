@@ -39,7 +39,7 @@ using CoreAnimation;
 using FigmaSharp.Converters;
 using System.Text;
 
-namespace FigmaSharp
+namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {

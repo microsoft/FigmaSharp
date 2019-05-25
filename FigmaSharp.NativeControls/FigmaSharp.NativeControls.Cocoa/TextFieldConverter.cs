@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * CustomTextFieldConverter.cs
  * 
  * Author:
@@ -30,8 +30,9 @@ using FigmaSharp.NativeControls.Base;
 using System;
 using System.Linq;
 using System.Text;
+using FigmaSharp.Cocoa;
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.NativeControls.Cocoa
 {
     public class TextFieldConverter : TextFieldConverterBase
     {

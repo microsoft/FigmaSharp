@@ -27,9 +27,10 @@
  */
 
 using System.Text;
+using FigmaSharp.Converters;
 using UIKit;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.iOS.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {

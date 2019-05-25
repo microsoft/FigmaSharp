@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     public class ImageWrapper : IImageWrapper
     {

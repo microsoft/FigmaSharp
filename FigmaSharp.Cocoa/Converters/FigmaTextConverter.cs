@@ -27,8 +27,9 @@
 */
 
 using System.Text;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {

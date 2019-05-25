@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.WinForms.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {

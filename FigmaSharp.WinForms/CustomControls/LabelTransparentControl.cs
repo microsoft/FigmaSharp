@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms
 {
     /// <summary>
     /// A label that can be transparent.

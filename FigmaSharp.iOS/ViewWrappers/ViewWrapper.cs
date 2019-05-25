@@ -29,7 +29,7 @@
 using System.Collections.Generic;
 using UIKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public class ViewWrapper : IViewWrapper
     {

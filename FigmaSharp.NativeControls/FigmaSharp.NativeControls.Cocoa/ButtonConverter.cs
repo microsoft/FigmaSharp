@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * CustomButtonConverter.cs 
  * 
  * Author:
@@ -29,8 +29,9 @@ using AppKit;
 using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
-using System;
-namespace FigmaSharp.NativeControls
+using FigmaSharp.Cocoa;
+
+namespace FigmaSharp.NativeControls.Cocoa
 {
     public class ButtonConverter : ButtonConverterBase
     {

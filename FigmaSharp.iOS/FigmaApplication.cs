@@ -1,4 +1,4 @@
-﻿namespace FigmaSharp
+﻿namespace FigmaSharp.iOS
 {
     public class FigmaApplication
     {

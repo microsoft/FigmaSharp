@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using AppKit;
@@ -6,6 +6,8 @@ using CoreGraphics;
 using FigmaSharp;
 using System.Net;
 using Foundation;
+using FigmaSharp.Cocoa;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace ExampleFigmaMac
 {
@@ -49,7 +51,11 @@ namespace ExampleFigmaMac
             scrollView.DocumentView = contentView;
 
 			var file = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
-            var manager = new ExampleViewManager(scrollViewWrapper, file);
+
+            var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            var nativeConverters = Resources.GetConverters();
+
+            var manager = new ExampleViewManager(scrollViewWrapper, file, figmaConverters, nativeConverters);
             manager.Initialize();
 
             mainWindow.MakeKeyAndOrderFront(null);

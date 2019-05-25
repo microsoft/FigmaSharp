@@ -8,6 +8,7 @@ using System.Linq;
 using MonoDevelop.Figma;
 using CoreGraphics;
 using FigmaSharp.Services;
+using FigmaSharp.Cocoa;
 
 namespace StandaloneDesigner
 {

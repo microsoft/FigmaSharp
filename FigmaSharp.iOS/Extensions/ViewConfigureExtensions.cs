@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using CoreGraphics;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public static class ViewConfigureExtensions
     {

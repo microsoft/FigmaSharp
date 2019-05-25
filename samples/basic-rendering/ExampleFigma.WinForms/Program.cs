@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExampleFigmaWinForms.Properties;
 using FigmaSharp;
+using FigmaSharp.WinForms;
 
 namespace ExampleFigmaWinForms
 {

@@ -3,7 +3,7 @@ using CoreGraphics;
 using CoreText;
 using UIKit;
 
-namespace FigmaSharp
+namespace FigmaSharp.iOS
 {
     public static class FigmaExtensions
     {
