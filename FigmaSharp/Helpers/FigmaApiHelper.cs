@@ -51,14 +51,20 @@ namespace FigmaSharp
                 var resources = assembly.GetManifestResourceNames();
                 using (var stream = assembly.GetManifestResourceStream(fullResourceName))
                 {
+                    if (stream == null)
+                    {
+                        Console.WriteLine("Resource '{0}' not found in assembly '{1}'", resource, assembly.FullName);
+                        return null;
+                    }
                     using (TextReader tr = new StreamReader(stream))
                     {
                         return tr.ReadToEnd();
                     };
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Console.WriteLine("Cannot read resource '{0}' in assembly '{1}'", resource, ex);
                 return null;
             }
         }
