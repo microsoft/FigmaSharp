@@ -70,5 +70,10 @@
       <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="figma.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
