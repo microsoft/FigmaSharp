@@ -57,16 +57,6 @@
     <Compile Include="TextFieldConverter.cs" />
     <Compile Include="ButtonConverter.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="DatePickerConverter.cs" />
-    <Compile Include="ListViewConverter.cs" />
-    <Compile Include="MapViewConverter.cs" />
-    <Compile Include="WebViewConverter.cs" />
-    <Compile Include="SliderViewConverter.cs" />
-    <Compile Include="ToggleConverter.cs" />
-    <Compile Include="OptionBoxConverter.cs" />
-    <Compile Include="CheckBoxConverter.cs" />
-    <Compile Include="PopupButtonConverter.cs" />
-    <Compile Include="StepperConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
@@ -81,6 +71,11 @@
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="figma.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

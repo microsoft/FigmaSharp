@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * CustomButtonConverter.cs 
  * 
  * Author:
@@ -38,27 +38,7 @@ namespace FigmaSharp.NativeControls
 				converters = new CustomViewConverter[]
 				{
 					new ButtonConverter (),
-					 new CheckBoxConverter (),
-					  new DatePickerConverter (),
-						new ListViewConverter (),
-						 new MapViewConverter (),
-
-
-
-					 new OptionBoxConverter (),
-					 	 new PopupButtonConverter (),
-
-					 new SliderViewConverter (),
-
-
-					 new StepperConverter (),
-					
-						
-					new TextFieldConverter (),
-						  new ToggleConverter (),
-					 new WebViewConverter (),
-					
-					
+					new TextFieldConverter ()
 				};
 			}
 
