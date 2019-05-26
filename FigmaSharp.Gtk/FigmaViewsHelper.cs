@@ -73,7 +73,7 @@ namespace FigmaSharp.GtkSharp
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(string.Format ("new {0}() {{", nameof (Label)));
-            builder.AppendLine(string.Format ("    Text = \"{0}\",", text));
+            builder.Append(string.Format ("Text = \"{0}\",", text));
             //builder.AppendLine(string.Format ("Direction = {0},", textDirection.ToDesignerString ()));
             builder.Append("}");
             return builder.ToString();

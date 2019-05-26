@@ -14,13 +14,14 @@ namespace FigmaSharp.Services
         FigmaViewConverter[] figmaConverters;
         FigmaViewConverter[] customConverters;
 
-        public FigmaCodeRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
+        public FigmaCodeRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters,
+            FigmaCodePositionConverter codePositionConverter, FigmaCodeAddChildConverter codeAddChildConverter)
         {
             this.customConverters = figmaViewConverters.Where(s => !s.IsLayer).ToArray();
             this.figmaConverters = figmaViewConverters.Where(s => s.IsLayer).ToArray(); ;
             this.figmaProvider = figmaProvider;
-            codePositionConverter = AppContext.Current.GetPositionConverter();
-            codeAddChildConverter = AppContext.Current.GetAddChildConverter();
+            this.codePositionConverter = codePositionConverter;
+            this.codeAddChildConverter = codeAddChildConverter;
         }
 
         FigmaViewConverter GetConverter(FigmaNode node, FigmaViewConverter[] converters)
@@ -35,29 +36,49 @@ namespace FigmaSharp.Services
             return null;
         }
 
-        public string GetCode (FigmaNode node, bool recursively = false)
+        public void GetCode (StringBuilder builder, FigmaNode node, string name, string parent)
         {
+            if (parent == null)
+            {
+                identifiers.Clear();
+            }
+
             var converter = GetConverter(node, customConverters);
+
+            bool navigateChild = true;
             if (converter == null)
             {
                 converter = GetConverter(node, figmaConverters);
             }
+            else
+            {
+                navigateChild = false;
+            }
 
             if (converter != null)
             {
-                var builder = new StringBuilder();
                 var code = converter.ConvertToCode(node);
-                var name = TryAddIdentifier(node.GetType());
-                builder.AppendLine(code.Replace("[NAME]", name));
 
-                if (recursively)
+                if (name == null)
                 {
-                    Recursively(builder, name, node);
+                    name = TryAddIdentifier(node.GetType());
                 }
-                return builder.ToString();
+
+                builder.AppendLine(code.Replace("[NAME]", name));
+                if (parent != null)
+                {
+                    builder.AppendLine(codeAddChildConverter.ConvertToCode(parent, name, node));
+                    builder.AppendLine(codePositionConverter.ConvertToCode(parent, name, node));
+                }
             }
 
-            return string.Empty;
+            if (navigateChild && node is IFigmaNodeContainer nodeContainer)
+            {
+                foreach (var item in nodeContainer.children)
+                {
+                    GetCode(builder, item, null, name);
+                }
+            }
         }
 
 		string TryAddIdentifier (Type type)
@@ -90,20 +111,19 @@ namespace FigmaSharp.Services
 
 		Dictionary<string, int> identifiers = new Dictionary<string, int> ();
 
-        public void Recursively (StringBuilder builder, string parent, FigmaNode parentNode)
-        {
-            //we start to process all nodes
-            var children = figmaProvider.Nodes.Where(s => s.Parent == parentNode);
-            foreach (var child in children)
-            {
-				var name = TryAddIdentifier (child.GetType ());
-                var code = GetCode(child, true);
-                builder.AppendLine(code.Replace ("[NAME]", name));
-                builder.AppendLine(codePositionConverter.ConvertToCode(name, child));
-                builder.AppendLine(codeAddChildConverter.ConvertToCode (parent, name, child));
-                Recursively(builder, name, child);
-            }
-
-        }
+    //    public void Recursively (StringBuilder builder, string parent, FigmaNode parentNode)
+    //    {
+    //        //we start to process all nodes
+    //        var children = figmaProvider.Nodes.Where(s => s.Parent == parentNode);
+    //        foreach (var child in children)
+    //        {
+				//var name = TryAddIdentifier (child.GetType ());
+        //        var code = GetCode(child, name, true);
+        //        builder.AppendLine(code.Replace ("[NAME]", name));
+        //        builder.AppendLine(codeAddChildConverter.ConvertToCode(parent, name, child));
+        //        builder.AppendLine(codePositionConverter.ConvertToCode (parent, name, child));
+        //        Recursively(builder, name, child);
+        //    }
+        //}
     }
 }

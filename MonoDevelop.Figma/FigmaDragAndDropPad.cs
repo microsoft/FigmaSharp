@@ -29,6 +29,7 @@
 
 using System;
 using FigmaSharp;
+using Microsoft.VisualStudio.Text.Editor;
 using MonoDevelop.Components;
 using MonoDevelop.DesignerSupport.Toolbox;
 using MonoDevelop.Ide;
@@ -41,7 +42,7 @@ namespace MonoDevelop.Figma
     {
         Gtk.Widget widget;
         FigmaDragAndDropContent dragPad;
-        TemplateToolboxNode selected;
+        TextToolboxNode selected;
         IPadWindow window;
 
         protected override void Initialize(IPadWindow window)
@@ -79,8 +80,16 @@ namespace MonoDevelop.Figma
             {
                 if (!string.IsNullOrEmpty (e))
                 {
-                    selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = e });
-                    CurrentConsumer.ConsumeItem(selected);
+                    try
+                    {
+                        var editor = IdeApp.Workbench.ActiveDocument.GetContent<ITextView>();
+                        var position = editor.Caret.Position.BufferPosition.Position;
+                        editor.TextBuffer.Insert(position, e);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
             };
 
@@ -127,7 +136,8 @@ namespace MonoDevelop.Figma
         void onActiveDocChanged (object sender, DocumentEventArgs e)
 		{
 			if (IdeApp.Workbench.ActiveDocument != null) {
-				CurrentConsumer = IdeApp.Workbench.ActiveDocument.GetContent<IToolboxConsumer> ();
+
+                CurrentConsumer = IdeApp.Workbench.ActiveDocument.GetContent<IToolboxConsumer> ();
 			} else {
 				CurrentConsumer = null;
 			}

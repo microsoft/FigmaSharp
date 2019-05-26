@@ -61,7 +61,6 @@ namespace FigmaSharp.NativeControls.GtkSharp
 			if (currentNode is IFigmaDocumentContainer instance) {
 				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "title");
 				if (figmaText != null) {
-					//view.AlphaValue = figmaText.opacity;
 					//view.Font = figmaText.style.ToFont ();
 					view.Label = figmaText.characters;
 				}
@@ -82,16 +81,57 @@ namespace FigmaSharp.NativeControls.GtkSharp
         public override string ConvertToCode(FigmaNode currentNode)
         {
             var builder = new StringBuilder();
-            var name = "buttonView";
-            builder.AppendLine($"var {name} = new {nameof(Button)}();");
+            var name = "[NAME]";
+            builder.AppendLine($"var {name} = new Gtk.{nameof(Button)}();");
             builder.Configure(name, currentNode);
 
-			if (currentNode is IFigmaDocumentContainer instance) {
-				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
-				if (figmaText != null) {
-					builder.AppendLine (string.Format ("{0}.Label = \"{1}\";", name, figmaText.characters));
-				}
-			}
+            var keyValues = GetKeyValues(currentNode);
+            foreach (var key in keyValues)
+            {
+                if (key.Key == "type")
+                {
+                    continue;
+                }
+
+                if (key.Key == "enabled")
+                {
+                    var sensitive = (key.Value == "true").ToDesignerString();
+                    builder.AppendLine(string.Format("{0}.Sensitive = \"{1}\";", name, sensitive));
+                }
+                else if (key.Key == "size")
+                {
+                    //TODO: not implemented
+                }
+                else if (key.Key == "style")
+                {
+                    //TODO: not implemented
+                }
+                else if (key.Key == "buttontype")
+                {
+                    //TODO: not implemented
+                }
+            }
+            if (currentNode is IFigmaDocumentContainer instance)
+            {
+                var figmaText = instance.children.OfType<FigmaText>().FirstOrDefault(s => s.name == "title");
+                if (figmaText != null)
+                {
+                    builder.AppendLine(string.Format("{0}.Text = \"{1}\";", name, figmaText.characters));
+                }
+
+                var image = instance.children.OfType<FigmaVectorEntity>().FirstOrDefault(s => s.name == "image");
+                if (image != null)
+                {
+                    var paint = image.fills.OfType<FigmaPaint>().FirstOrDefault();
+                    if (paint != null)
+                    {
+                        //TODO: not implemented
+                        //var query = new FigmaImageQuery ()
+                        //FigmaApiHelper.GetFigmaImage (new FigmaImageQuery ())
+                    }
+                }
+            }
+
             return builder.ToString();
         }
     }

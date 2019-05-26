@@ -83,7 +83,7 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override string ConvertToCode(FigmaNode currentNode)
         {
             var builder = new StringBuilder();
-            var name = "buttonView";
+            var name = "[NAME]";
             builder.AppendLine($"var {name} = new {nameof(NSButton)}();");
             builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.ToString ()));
             builder.Configure(name, currentNode);

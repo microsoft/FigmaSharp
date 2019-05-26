@@ -39,6 +39,7 @@ using MonoDevelop.Ide;
 using System.Collections.Generic;
 using MonoDevelop.Ide.Gui.Dialogs;
 using System.IO;
+using System.Text;
 
 namespace MonoDevelop.Figma
 {
@@ -116,8 +117,9 @@ namespace MonoDevelop.Figma
 
             outlinePanel.DoubleClick += (sender, node) =>
             {
-                var code = codeRenderer.GetCode(node, true);
-                SelectCode?.Invoke(this, code);
+                StringBuilder builder = new StringBuilder();
+                codeRenderer.GetCode(builder, node, null, null);
+                SelectCode?.Invoke(this, builder.ToString ());
             };
 
             outlinePanel.StartDrag += (sender, e) =>
@@ -144,7 +146,10 @@ namespace MonoDevelop.Figma
             var converters = ModuleService.Converters.Where(s => s.Platform == platform)
               .Select(s => s.Converter)
               .ToArray();
-            codeRenderer = new FigmaCodeRendererService(fileProvider, converters);
+
+            var addChildConverter = ModuleService.AddChildConverters.FirstOrDefault(s => s.Platform == platform).Converter;
+            var codePositionConverter = ModuleService.CodePositionConverters.FirstOrDefault(s => s.Platform == platform).Converter;
+            codeRenderer = new FigmaCodeRendererService(fileProvider, converters, codePositionConverter, addChildConverter);
         }
 
         public override void SetFrameSize(CGSize newSize)

@@ -33,7 +33,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class MacFigmaCodePositionConverter : FigmaCodePositionConverter
     {
-        public override string ConvertToCode (string name, FigmaNode current)
+        public override string ConvertToCode (string parent, string name, FigmaNode current)
         {
             if (current is IAbsoluteBoundingBox absoluteBounding && current.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
             {

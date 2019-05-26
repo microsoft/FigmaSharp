@@ -77,7 +77,7 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override string ConvertToCode(FigmaNode currentNode)
         {
 			StringBuilder builder = new StringBuilder ();
-			var name = "textView";
+			var name = "[NAME]";
 			builder.AppendLine ($"var {name} = new {nameof (NSTextField)}();");
 			if (currentNode is IFigmaDocumentContainer container) 
 			{

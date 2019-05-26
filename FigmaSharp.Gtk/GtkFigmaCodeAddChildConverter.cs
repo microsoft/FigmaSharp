@@ -4,7 +4,7 @@
     {
         public override string ConvertToCode(string parent, string current, FigmaNode currentNode)
         {
-            return "";
+            return string.Format("{0}.Add({1});", parent, current);
         }
     }
 }
