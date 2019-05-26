@@ -65,16 +65,28 @@ namespace MonoDevelop.Figma
 			mainVBox.PackStart (tokenValueEntry, false, false, 10);
 
 			tokenValueEntry.WidthRequest = 350;
+            tokenValueEntry.Text = FigmaRuntime.Token;
 
-			tokenValueEntry.Changed += NeedsStoreValue;
+            tokenValueEntry.Changed += NeedsStoreValue;
 			tokenValueEntry.FocusOutEvent += NeedsStoreValue;
 
-			ShowAll ();
+            var refreshLabel = new Label() { Text = GettextCatalog.GetString("Reloads all the converters in the assembly folder") };
+            mainVBox.PackStart(refreshLabel, false, false, 10);
+            reloadButton = new Button() { Label = "Go!" };
+            mainVBox.PackStart(reloadButton, false, false, 10);
+            reloadButton.Activated += RefresButton_Activated;
 
-			tokenValueEntry.Text = FigmaRuntime.Token;
+            ShowAll();
 		}
 
-		void NeedsStoreValue (object sender, EventArgs e)
+        Button reloadButton;
+
+        private void RefresButton_Activated(object sender, EventArgs e)
+        {
+           
+        }
+
+        void NeedsStoreValue (object sender, EventArgs e)
 		{
 			FigmaRuntime.Token = tokenValueEntry.Text;
 		}
@@ -83,7 +95,12 @@ namespace MonoDevelop.Figma
 		{
 			FigmaRuntime.Token = tokenValueEntry.Text;
 		}
-	}
+
+        public override void Dispose()
+        {
+            reloadButton.Activated -= RefresButton_Activated;
+        }
+    }
 
 	class FigmaOptionsPanel : OptionsPanel
 	{

@@ -126,7 +126,7 @@ namespace MonoDevelop.Figma
 
         internal static void Initialize(FigmaDesignerSession session)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
