@@ -10,6 +10,7 @@ Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added la
 | Cocoa (with Xamarin.Mac)    | Implemented               |
 | Xamarin.Forms               | In progress…              |
 | WPF                         | In progress…              |
+| Gtk                         | In progress…              |
 | WinForms                    | Not implemented           |
 
 
