@@ -59,20 +59,23 @@ namespace FigmaSharp.Services
             {
                 if (child.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
                 {
-                    child.View.X = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
-                   
+                    parentNode.View.AddChild(child.View);
+
+                    var x = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+                    float y;
                     if (AppContext.Current.IsYAxisFlipped)
                     {
                         var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
                         var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
-                        child.View.Y = parentY - actualY;
+                        y = parentY - actualY;
                     }
                     else
                     {
-                        child.View.Y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
+                        y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
                     }
+
+                    child.View.SetPosition(x, y);
                 }
-                parentNode.View.AddChild(child.View);
 
                 Recursively(child);
             }

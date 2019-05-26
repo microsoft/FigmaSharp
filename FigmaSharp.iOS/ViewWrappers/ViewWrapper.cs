@@ -50,24 +50,6 @@ namespace FigmaSharp.iOS
         readonly List<IViewWrapper> children = new List<IViewWrapper>();
         public IReadOnlyList<IViewWrapper> Children => children;
 
-        public float X
-        {
-            get => (float)nativeView.Frame.X;
-            set
-            {
-                //layer.Bounds = new CoreGraphics.CGRect(0, 0, 150, 150);
-                //Position = new CGPoint(50, 50);
-                nativeView.Frame = new CoreGraphics.CGRect(value, nativeView.Frame.Y, nativeView.Frame.Width, nativeView.Frame.Height);
-            }
-        }
-        public float Y
-        {
-            get => (float)nativeView.Frame.Y;
-            set
-            {
-                nativeView.Frame = new CoreGraphics.CGRect(nativeView.Frame.X, value, nativeView.Frame.Width, nativeView.Frame.Height);
-            }
-        }
         public float Width
         {
             get => (float)nativeView.Frame.Width;
@@ -144,6 +126,11 @@ namespace FigmaSharp.iOS
             {
                 nativeView.BecomeFirstResponder();
             }
+        }
+
+        public void SetPosition(float x, float y)
+        {
+            nativeView.Frame = new CoreGraphics.CGRect(x, y, nativeView.Frame.Width, nativeView.Frame.Height);
         }
     }
 }

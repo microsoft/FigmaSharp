@@ -26,25 +26,6 @@ namespace FigmaSharp.WinForms
 
         public object NativeObject => nativeView;
 
-
-        public float X
-        {
-            get => (float)nativeView.Location.X;
-            set
-            {
-                //layer.Bounds = new CoreGraphics.CGRect(0, 0, 150, 150);
-                //Position = new CGPoint(50, 50);
-                nativeView.Left = (int) value;
-            }
-        }
-        public float Y
-        {
-            get => (float)nativeView.Location.Y;
-            set
-            {
-                nativeView.Top = (int)value;
-            }
-        }
         public float Width
         {
             get => (float)nativeView.Width;
@@ -104,6 +85,12 @@ namespace FigmaSharp.WinForms
         public void MakeFirstResponder()
         {
 
+        }
+
+        public void SetPosition(float x, float y)
+        {
+            nativeView.Left = (int)x;
+            nativeView.Top = (int)y;
         }
     }
 }

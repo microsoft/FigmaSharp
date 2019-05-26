@@ -51,27 +51,15 @@ namespace ExampleFigmaMac
 
             scrollView.DocumentView = contentView;
 
-            Refresh(contentView);
+            manager = new ExampleViewManager(scrollViewWrapper);
+            manager.Initialize();
 
             mainWindow.MakeKeyAndOrderFront(null);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
         }
 
-        static void Refresh(NSView contentView)
-        {
-            ReadRemoteFigmaFile (contentView); //Example reading remote file
-        }
-
         static NSScrollView scrollView;
         static ExampleViewManager manager;
-
-        //Example 2
-        static void ReadRemoteFigmaFile(NSView contentView)
-        {
-            var fileName = "nWFYvx7YMBEtPAgAydX66e";
-            manager = new ExampleViewManager(scrollViewWrapper, fileName);
-            manager.Initialize();
-        }
     }
 }

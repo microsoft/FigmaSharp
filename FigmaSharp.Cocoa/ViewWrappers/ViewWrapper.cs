@@ -50,21 +50,6 @@ namespace FigmaSharp.Cocoa
         readonly List<IViewWrapper> children = new List<IViewWrapper>();
         public IReadOnlyList<IViewWrapper> Children => children;
 
-        public float X {
-            get => (float) nativeView.Frame.X;
-            set {
-                nativeView.SetFrameOrigin(new CoreGraphics.CGPoint(value, nativeView.Frame.Y));
-            } 
-        }
-        public float Y
-        {
-            get =>  (float)(nativeView.Frame.Y);
-            set
-            {
-                nativeView.SetFrameOrigin(new CoreGraphics.CGPoint( nativeView.Frame.X, value));
-            }
-        }
-
         public float Width
         {
             get => (float)nativeView.Frame.Width;
@@ -147,6 +132,11 @@ namespace FigmaSharp.Cocoa
         public void MakeFirstResponder()
         {
             nativeView.Window.MakeFirstResponder(nativeView);
+        }
+
+        public void SetPosition(float x, float y)
+        {
+            nativeView.SetFrameOrigin(new CoreGraphics.CGPoint(x, y));
         }
     }
 }
