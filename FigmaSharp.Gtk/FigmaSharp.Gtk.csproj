@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{03E72A72-2DCF-4177-B049-2112CD58A4AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FigmaSharp.Gtk</RootNamespace>
+    <AssemblyName>FigmaSharp.Gtk</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Cairo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FigmaApplication.cs" />
+    <Compile Include="FigmaDelegate.cs" />
+    <Compile Include="FigmaViewsHelper.cs" />
+    <Compile Include="ViewWrappers\ImageViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ImageWrapper.cs" />
+    <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ViewWrapper.cs" />
+    <Compile Include="Converters\FigmaElipseConverter.cs" />
+    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
+    <Compile Include="Converters\FigmaLineConverter.cs" />
+    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
+    <Compile Include="Converters\FigmaTextConverter.cs" />
+    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
+    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
+    <Compile Include="GtkFigmaCodePositionConverter.cs" />
+    <Compile Include="GtkFigmaCodeAddChildConverter.cs" />
+    <Compile Include="Extensions\FigmaExtensions.cs" />
+    <Compile Include="Extensions\ViewConfigureExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewWrappers\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
