@@ -119,7 +119,7 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading resource");
+                Console.WriteLine($"Error reading remote resources. Ensure you added NewtonSoft nuget?");
                 Console.WriteLine(ex);
             }
         }

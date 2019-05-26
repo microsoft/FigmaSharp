@@ -27,12 +27,11 @@ namespace ExampleFigma.IOS
 
             View.Layer.BackgroundColor = UIColor.Black.CGColor;
 
-            var fileName = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
 
             var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters().Union (Resources.GetConverters()).ToArray ();
 
-            manager = new ExampleViewManager(scrollViewWrapper, fileName, figmaConverters);
+            manager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
             manager.Initialize();
         }
 
