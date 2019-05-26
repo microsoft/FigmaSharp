@@ -47,9 +47,9 @@ namespace FigmaSharp.NativeControls.GtkSharp
 				if (key.Key == "enabled") {
 					view.Sensitive = key.Value == "true";
 				} else if (key.Key == "size") {
-					//view.ControlSize = ToEnum<NSControlSize> (key.Value);
-				}
-			}
+                    //TODO: not implemented
+                }
+            }
 
 			if (currentNode is IFigmaDocumentContainer container) {
 				var placeholderView = container.children.OfType<FigmaText> ()
@@ -76,15 +76,54 @@ namespace FigmaSharp.NativeControls.GtkSharp
         public override string ConvertToCode(FigmaNode currentNode)
         {
 			StringBuilder builder = new StringBuilder ();
-			var name = "textView";
-			builder.AppendLine ($"var {name} = new {nameof (Entry)}();");
-			if (currentNode is IFigmaDocumentContainer container) 
-			{
-				var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
-	            .FirstOrDefault ();
-				builder.AppendLine (string.Format ("{0}.Text = \"{1}\";", name, figmaText.characters));
-			}
-            builder.Configure(name, currentNode);
+			var name = "[NAME]";
+			builder.AppendLine ($"var {name} = new Gtk.{nameof (Entry)}();");
+
+            var keyValues = GetKeyValues(currentNode);
+            foreach (var key in keyValues)
+            {
+                if (key.Key == "type")
+                {
+                    continue;
+                }
+                if (key.Key == "enabled")
+                {
+                    var sensitive = (key.Value == "true").ToDesignerString();
+                    builder.AppendLine(string.Format("{0}.Sensitive = \"{1}\";", name, sensitive));
+                }
+                else if (key.Key == "size")
+                {
+                    //TODO: not implemented
+                }
+            }
+
+            if (currentNode is IFigmaDocumentContainer container)
+            {
+                var placeholderView = container.children.OfType<FigmaText>()
+            .FirstOrDefault(s => s.name == "placeholderstring");
+                if (placeholderView != null)
+                {
+                    //TODO: not implemented
+                    //view.PlaceholderString = placeholderView.characters;
+                }
+
+                var figmaText = container.children.OfType<FigmaText>()
+                   .FirstOrDefault(s => s.name == "text");
+                if (figmaText != null)
+                {
+                    builder.AppendLine(string.Format("{0}.Text = \"{1}\";", name, figmaText.characters));
+                    builder.Configure(name, currentNode);
+                }
+                else
+                {
+                    builder.Configure(name, currentNode);
+                }
+            }
+            else
+            {
+                builder.Configure(name, currentNode);
+            }
+           
             return builder.ToString();
         }
     }

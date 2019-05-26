@@ -28,6 +28,7 @@
 
 using FigmaSharp.Converters;
 using Gtk;
+using System.Text;
 
 namespace FigmaSharp.GtkSharp.Converters
 {
@@ -54,7 +55,12 @@ namespace FigmaSharp.GtkSharp.Converters
 
         public override string ConvertToCode(FigmaNode currentNode)
         {
-            return string.Empty;
+            StringBuilder builder = new StringBuilder();
+            var name = "[NAME]";
+            builder.AppendLine($"var {name} = new Gtk.{nameof(Fixed)}();");
+
+            builder.Configure(name, (FigmaRectangleVector)currentNode);
+            return builder.ToString();
         }
     }
 }

@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Text;
 using FigmaSharp.Converters;
 using Gtk;
 
@@ -38,13 +39,16 @@ namespace FigmaSharp.GtkSharp.Converters
             var model = (FigmaFrameEntity)currentNode;
             var view = new Fixed();
             view.Configure(model);
-
             return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)
         {
-            return string.Empty;
+            StringBuilder builder = new StringBuilder();
+            var name = "[NAME]";
+            builder.AppendLine($"var {name} = new Gtk.{nameof(Fixed)}();");
+            builder.Configure(name, (FigmaFrameEntity)currentNode);
+            return builder.ToString();
         }
     }
 }

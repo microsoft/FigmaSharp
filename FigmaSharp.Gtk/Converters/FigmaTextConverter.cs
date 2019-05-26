@@ -26,6 +26,7 @@
 * USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System.Text;
 using FigmaSharp.Converters;
 using Gtk;
 
@@ -48,7 +49,12 @@ namespace FigmaSharp.GtkSharp.Converters
 
         public override string ConvertToCode(FigmaNode currentNode)
         {
-            return string.Empty;
+            var figmaText = ((FigmaText)currentNode);
+            StringBuilder builder = new StringBuilder();
+            var name = "[NAME]";
+            builder.AppendLine(string.Format("var {0} = {1};", name, FigmaViewsHelper.CreateLabelToDesignerString(figmaText.characters)));
+            builder.Configure(name, (FigmaText)currentNode);
+            return builder.ToString();
         }
     }
 }

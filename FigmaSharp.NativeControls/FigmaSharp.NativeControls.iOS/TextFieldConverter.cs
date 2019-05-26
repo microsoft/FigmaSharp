@@ -86,7 +86,7 @@ namespace FigmaSharp.NativeControls.iOS
 
         public override string ConvertToCode(FigmaNode currentNode)
         {
-            return string.Empty;
+            return "var [NAME] = new UITextField();";
         }
     }
 }

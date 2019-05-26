@@ -104,7 +104,7 @@ namespace FigmaSharp.NativeControls.iOS
 
         public override string ConvertToCode(FigmaNode currentNode)
         {
-            return "var view = new UIButton();";
+            return "var [NAME] = new UIButton();";
         }
     }
 }

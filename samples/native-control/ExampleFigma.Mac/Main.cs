@@ -57,7 +57,7 @@ namespace ExampleFigmaMac
                 .Union (FigmaSharp.AppContext.Current.GetFigmaConverters())
                 .ToArray ();
 
-            var manager = new ExampleViewManager(scrollViewWrapper, file, figmaConverters);
+            var manager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
             manager.Initialize();
 
             mainWindow.MakeKeyAndOrderFront(null);

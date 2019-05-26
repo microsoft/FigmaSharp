@@ -48,6 +48,30 @@ namespace FigmaSharp.Services
         public FigmaViewConverter Converter { get; private set; }
     }
 
+    public class PlatformFigmaCodeAddChildConverter
+    {
+        public PlatformFigmaCodeAddChildConverter(string platform, FigmaCodeAddChildConverter converter)
+        {
+            Platform = platform;
+            Converter = converter;
+        }
+
+        public string Platform { get; private set; }
+        public FigmaCodeAddChildConverter Converter { get; private set; }
+    }
+
+    public class PlatformFigmaCodePositionConverter
+    {
+        public PlatformFigmaCodePositionConverter(string platform, FigmaCodePositionConverter converter)
+        {
+            Platform = platform;
+            Converter = converter;
+        }
+
+        public string Platform { get; private set; }
+        public FigmaCodePositionConverter Converter { get; private set; }
+    }
+
     public static class ModuleService
     {
         public static class Platform
@@ -59,6 +83,8 @@ namespace FigmaSharp.Services
         }
 
         public static List<PlatformCustomViewConverter> Converters = new List<PlatformCustomViewConverter>();
+        public static List<PlatformFigmaCodeAddChildConverter> AddChildConverters = new List<PlatformFigmaCodeAddChildConverter>();
+        public static List<PlatformFigmaCodePositionConverter> CodePositionConverters = new List<PlatformFigmaCodePositionConverter>();
 
         public static void LoadModules (string directory)
         {
@@ -97,12 +123,6 @@ namespace FigmaSharp.Services
             var file = File.ReadAllText (manifestFilePath);
             var manifest = JsonConvert.DeserializeObject<FigmaAssemblyManifest>(file);
 
-            //if (manifest.platform != platform)
-            //{
-            //    Console.WriteLine("Error platform in {0} is '{1}' but should be '{2}'", file, manifest.platform, platform);
-            //    return;
-            //}
-           
             Console.WriteLine("Version: {0}", manifest.version);
             Console.WriteLine("Platform: {0}", manifest.platform);
 
@@ -139,39 +159,115 @@ namespace FigmaSharp.Services
 
             foreach (var assemblyTypes in instanciableTypes)
             {
-                try
-                {
-                    //we get all the type converters from the selected assembly
-                    var interfaceType = typeof(FigmaViewConverter);
-                    var types = assemblyTypes.Key.GetTypes()
-                        .Where(interfaceType.IsAssignableFrom);
-
-                    foreach (var type in types)
-                    {
-                        if (type.GetTypeInfo().IsAbstract)
-                        {
-                            Console.WriteLine("[{0}] Skipping {1} (abstract class).", assemblyTypes.Key, type);
-                            continue;
-                        }
-                        Console.WriteLine("[{0}] Creating instance {1}...", assemblyTypes.Key, type);
-                        try
-                        {
-                            if (Activator.CreateInstance(type) is FigmaViewConverter element)
-                                Converters.Add(new PlatformCustomViewConverter (platform, element));
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                        }
-                        Console.WriteLine("[{0}] Loaded.", type);
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
+                ProcessConverters(assemblyTypes.Key, platform);
+                ProcessAddChildConverters(assemblyTypes.Key, platform);
+                ProcessCodePositionConverters (assemblyTypes.Key, platform);
             }
 
             Console.WriteLine("[{0}] Finished.");
         }
+
+        public static void ProcessConverters (Assembly assembly, string platform)
+        {
+            try
+            {
+                //we get all the type converters from the selected assembly
+                var interfaceType = typeof(FigmaViewConverter);
+                var types = assembly.GetTypes()
+                    .Where(interfaceType.IsAssignableFrom);
+
+                foreach (var type in types)
+                {
+                    if (type.GetTypeInfo().IsAbstract)
+                    {
+                        Console.WriteLine("[{0}] Skipping {1} (abstract class).", assembly, type);
+                        continue;
+                    }
+                    Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
+                    try
+                    {
+                        if (Activator.CreateInstance(type) is FigmaViewConverter element)
+                            Converters.Add(new PlatformCustomViewConverter(platform, element));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    Console.WriteLine("[{0}] Loaded.", type);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public static void ProcessAddChildConverters(Assembly assembly, string platform)
+        {
+            try
+            {
+                //we get all the type converters from the selected assembly
+                var interfaceType = typeof(FigmaCodeAddChildConverter);
+                var types = assembly.GetTypes()
+                    .Where(interfaceType.IsAssignableFrom);
+
+                foreach (var type in types)
+                {
+                    if (type.GetTypeInfo().IsAbstract)
+                    {
+                        Console.WriteLine("[{0}] Skipping {1} (abstract class).", assembly, type);
+                        continue;
+                    }
+                    Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
+                    try
+                    {
+                        if (Activator.CreateInstance(type) is FigmaCodeAddChildConverter element)
+                            AddChildConverters.Add(new PlatformFigmaCodeAddChildConverter(platform, element));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    Console.WriteLine("[{0}] Loaded.", type);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public static void ProcessCodePositionConverters(Assembly assembly, string platform)
+        {
+            try
+            {
+                //we get all the type converters from the selected assembly
+                var interfaceType = typeof(FigmaCodePositionConverter);
+                var types = assembly.GetTypes()
+                    .Where(interfaceType.IsAssignableFrom);
+
+                foreach (var type in types)
+                {
+                    if (type.GetTypeInfo().IsAbstract)
+                    {
+                        Console.WriteLine("[{0}] Skipping {1} (abstract class).", assembly, type);
+                        continue;
+                    }
+                    Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
+                    try
+                    {
+                        if (Activator.CreateInstance(type) is FigmaCodePositionConverter element)
+                            CodePositionConverters.Add(new PlatformFigmaCodePositionConverter(platform, element));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    Console.WriteLine("[{0}] Loaded.", type);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
     }
 }
