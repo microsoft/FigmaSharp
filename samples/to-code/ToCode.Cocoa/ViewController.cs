@@ -13,7 +13,8 @@ namespace ToCode.Cocoa
     {
         FigmaNodeView data;
         OutlinePanel outlinePanel;
-        FigmaRemoteFileService fileService;
+        FigmaFileService fileService;
+        FigmaRemoteFileProvider fileProvider;
 
         FigmaDesignerDelegate figmaDelegate;
         FigmaCodeRendererService codeRenderer;
@@ -46,12 +47,15 @@ namespace ToCode.Cocoa
             figmaDelegate = new FigmaDesignerDelegate();
 
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-            fileService = new FigmaRemoteFileService(converters);
+
+            fileProvider = new FigmaRemoteFileProvider();
+
+            fileService = new FigmaFileService(fileProvider, converters);
             codeRenderer = new FigmaCodeRendererService(fileService);
             fileService.Start("UeIJu6C1IQwPkdOut2IWRgGd", new FigmaFileServiceOptions() { AreImageProcessed = false, IsToViewProcessed = false });
            
-            data = new FigmaNodeView(fileService.Response.document);
-            figmaDelegate.ConvertToNodes(fileService.Response.document, data);
+            data = new FigmaNodeView(fileProvider.Response.document);
+            figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
             outlinePanel.GenerateTree(data);
         }
 

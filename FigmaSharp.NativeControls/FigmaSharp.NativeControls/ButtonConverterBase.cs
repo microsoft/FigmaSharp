@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * CustomButtonConverter.cs 
  * 
  * Author:
@@ -28,7 +28,7 @@
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class ButtonConverterBase : CustomViewConverter
+    public abstract class ButtonConverterBase : FigmaViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {

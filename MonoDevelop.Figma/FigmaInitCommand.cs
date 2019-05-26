@@ -27,6 +27,8 @@
  */
 
 using FigmaSharp;
+using FigmaSharp.Cocoa;
+using FigmaSharp.Services;
 using Microsoft.CodeAnalysis;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
@@ -39,6 +41,7 @@ namespace MonoDevelop.Figma.Commands
     {
         protected override void Run()
         {
+            Resources.Init();
             PropertyPad.Instance.Initialize();
             FigmaApplication.Init(FigmaRuntime.Token);
         }

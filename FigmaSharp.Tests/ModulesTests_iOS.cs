@@ -17,7 +17,7 @@ namespace FigmaSharp.Tests
                 started = true;
                 var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 directory = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(directory)), "nativecontrols", "ios");
-                ModuleService.LoadModuleDirectory(directory, ModuleService.Platform.iOS);
+                ModuleService.LoadModuleDirectory(directory);
                 Assert.IsTrue(ModuleService.Converters.Count > 0);
             }
         }

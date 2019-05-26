@@ -39,19 +39,21 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSession
     {
-        readonly FigmaLocalFileService fileService;
+        readonly FigmaFileService fileService;
         readonly FigmaRendererService rendererService;
+        readonly FigmaLocalFileProvider fileProvider;
 
         public bool IsModified { get; internal set; }
 
-        public FigmaResponse Response => fileService.Response;
+        public FigmaResponse Response => fileProvider.Response;
 
         public List<ProcessedNode> ProcessedNodes => fileService.NodesProcessed;
         public ProcessedNode[] MainViews => rendererService.MainViews;
 
         public FigmaDesignerSession(FigmaViewConverter[] figmaViewConverters)
         {
-            fileService = new FigmaLocalFileService(figmaViewConverters);
+            fileProvider = new FigmaLocalFileProvider();
+            fileService = new FigmaFileService(fileProvider, figmaViewConverters);
             rendererService = new FigmaRendererService(fileService);
         }
 
@@ -134,7 +136,7 @@ namespace FigmaSharp.Designer
 
         public void Save(string fileName)
         {
-            fileService.Save(fileName);
+            fileProvider.Save(fileName);
         }
 
         public event EventHandler ModifiedChanged;
@@ -153,9 +155,9 @@ namespace FigmaSharp.Designer
 
         public void DeleteView(FigmaNode e)
         {
-            foreach (var canvas in fileService.Response.document.children)
+            foreach (var canvas in fileProvider.Response.document.children)
             {
-                if (DeleteNodeRecursively(canvas, fileService.Response.document, e))
+                if (DeleteNodeRecursively(canvas, fileProvider.Response.document, e))
                 {
                     return;
                 }

@@ -27,6 +27,7 @@
  */
 using AppKit;
 using FigmaSharp;
+using FigmaSharp.Cocoa;
 
 namespace MonoDevelop.Figma
 {

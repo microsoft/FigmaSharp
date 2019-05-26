@@ -38,14 +38,14 @@ namespace FigmaSharp.Services
 {
     public class PlatformCustomViewConverter
     {
-        public PlatformCustomViewConverter (string platform, CustomViewConverter converter)
+        public PlatformCustomViewConverter (string platform, FigmaViewConverter converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public CustomViewConverter Converter { get; private set; }
+        public FigmaViewConverter Converter { get; private set; }
     }
 
     public static class ModuleService
@@ -59,7 +59,7 @@ namespace FigmaSharp.Services
 
         public static List<PlatformCustomViewConverter> Converters = new List<PlatformCustomViewConverter>();
 
-        public static void LoadModules (string directory, string platform)
+        public static void LoadModules (string directory)
         {
             Console.WriteLine("Loading all directory modules from {0}", directory);
             if (!Directory.Exists(directory))
@@ -70,11 +70,11 @@ namespace FigmaSharp.Services
 
             foreach (var dir in System.IO.Directory.EnumerateDirectories(directory))
             {
-                LoadModuleDirectory(dir, platform);
+                LoadModuleDirectory(dir);
             }
         }
 
-        public static void LoadModuleDirectory (string directory, string platform)
+        public static void LoadModuleDirectory (string directory)
         {
             Console.WriteLine("Loading module directory: {0}", directory);
 
@@ -96,17 +96,17 @@ namespace FigmaSharp.Services
             var file = File.ReadAllText (manifestFilePath);
             var manifest = JsonConvert.DeserializeObject<FigmaAssemblyManifest>(file);
 
-            if (manifest.platform != platform)
-            {
-                Console.WriteLine("Error platform in {0} is '{1}' but should be '{2}'", file, manifest.platform, platform);
-                return;
-            }
+            //if (manifest.platform != platform)
+            //{
+            //    Console.WriteLine("Error platform in {0} is '{1}' but should be '{2}'", file, manifest.platform, platform);
+            //    return;
+            //}
            
             Console.WriteLine("Version: {0}", manifest.version);
             Console.WriteLine("Platform: {0}", manifest.platform);
 
             var enumeratedFiles = Directory.EnumerateFiles(directory, "*.dll").ToArray();
-            LoadModule(platform, enumeratedFiles);
+            LoadModule(manifest.platform, enumeratedFiles);
         }
 
         public static void LoadModule(string platform, params string[] filePaths)
@@ -141,7 +141,7 @@ namespace FigmaSharp.Services
                 try
                 {
                     //we get all the type converters from the selected assembly
-                    var interfaceType = typeof(CustomViewConverter);
+                    var interfaceType = typeof(FigmaViewConverter);
                     var types = assemblyTypes.Key.GetTypes()
                         .Where(interfaceType.IsAssignableFrom);
 
@@ -155,7 +155,7 @@ namespace FigmaSharp.Services
                         Console.WriteLine("[{0}] Creating instance {1}...", assemblyTypes.Key, type);
                         try
                         {
-                            if (Activator.CreateInstance(type) is CustomViewConverter element)
+                            if (Activator.CreateInstance(type) is FigmaViewConverter element)
                                 Converters.Add(new PlatformCustomViewConverter (platform, element));
                         }
                         catch (Exception ex)

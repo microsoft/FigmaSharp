@@ -48,6 +48,7 @@ using Gtk;
 using System.ComponentModel;
 using MonoDevelop.Components.PropertyGrid;
 using MonoDevelop.Ide.Gui.Documents;
+using FigmaSharp.Cocoa;
 
 namespace MonoDevelop.Figma
 {
@@ -57,7 +58,7 @@ namespace MonoDevelop.Figma
         FileExtension = ".figma",
         CanUseAsDefault = true,
         InsertBefore = "DefaultDisplayBinding")]
-    class FigmaViewContent : FileDocumentController, IOutlinedDocument, ICustomPropertyPadProvider
+    class FigmaFileDocumentController : FileDocumentController, IOutlinedDocument, ICustomPropertyPadProvider
     {
         FigmaDesignerSession session;
         IFigmaDesignerDelegate figmaDelegate;
@@ -73,7 +74,7 @@ namespace MonoDevelop.Figma
 
         readonly IScrollViewWrapper scrollViewWrapper;
 
-        public FigmaViewContent()
+        public FigmaFileDocumentController()
         {
 
             container = new NSStackView();
