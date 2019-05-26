@@ -13,7 +13,7 @@ namespace ExampleFigmaMac
         readonly FigmaRemoteFileProvider fileProvider;
 
         readonly FigmaViewRendererService fileService;
-        readonly FigmaRendererService rendererService;
+        readonly FigmaViewRendererDistributionService rendererService;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, string fileName, FigmaViewConverter[] converters)
         {
@@ -22,7 +22,7 @@ namespace ExampleFigmaMac
             fileProvider = new FigmaRemoteFileProvider();
             //var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
             fileService = new FigmaViewRendererService(fileProvider, converters);
-            rendererService = new FigmaRendererService(fileService);
+            rendererService = new FigmaViewRendererDistributionService(fileService);
         }
 
         public void Initialize()

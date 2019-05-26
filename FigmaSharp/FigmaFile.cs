@@ -42,7 +42,7 @@ namespace FigmaSharp
 		public IViewWrapper ContentView { get; private set; }
 
         readonly FigmaViewRendererService fileService;
-        readonly FigmaRendererService rendererService;
+        readonly FigmaViewRendererDistributionService rendererService;
         readonly FigmaManifestFileProvider figmaLocalFileProvider;
 
         public FigmaFile (string file, FigmaViewConverter[] figmaViewConverters)
@@ -51,7 +51,7 @@ namespace FigmaSharp
 
             figmaLocalFileProvider = new FigmaManifestFileProvider();
             fileService = new FigmaViewRendererService (figmaLocalFileProvider, figmaViewConverters);
-            rendererService = new FigmaRendererService(fileService);
+            rendererService = new FigmaViewRendererDistributionService(fileService);
         }
 
         public void Reload (bool includeImages = false)

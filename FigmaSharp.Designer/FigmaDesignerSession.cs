@@ -40,7 +40,7 @@ namespace FigmaSharp.Designer
     public class FigmaDesignerSession
     {
         readonly FigmaViewRendererService fileService;
-        readonly FigmaRendererService rendererService;
+        readonly FigmaViewRendererDistributionService rendererService;
         readonly FigmaLocalFileProvider fileProvider;
 
         public bool IsModified { get; internal set; }
@@ -54,7 +54,7 @@ namespace FigmaSharp.Designer
         {
             fileProvider = new FigmaLocalFileProvider();
             fileService = new FigmaViewRendererService(fileProvider, figmaViewConverters);
-            rendererService = new FigmaRendererService(fileService);
+            rendererService = new FigmaViewRendererDistributionService(fileService);
         }
 
         public event EventHandler ReloadFinished;
