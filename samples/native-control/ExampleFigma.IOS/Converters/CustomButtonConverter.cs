@@ -19,7 +19,7 @@ namespace ExampleFigma.IOS
             return new ViewWrapper(button);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

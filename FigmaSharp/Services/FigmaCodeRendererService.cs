@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,28 +7,57 @@ namespace FigmaSharp.Services
 {
     public class FigmaCodeRendererService
     {
-        protected FigmaFileService figmaFileService;
+        protected IFigmaFileProvider figmaProvider;
         FigmaCodePositionConverter codePositionConverter;
         FigmaCodeAddChildConverter codeAddChildConverter;
 
-        public FigmaCodeRendererService(FigmaFileService figmaFileService)
+        FigmaViewConverter[] figmaConverters;
+        FigmaViewConverter[] customConverters;
+
+        public FigmaCodeRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
         {
-            this.figmaFileService = figmaFileService;
+            this.customConverters = figmaViewConverters.Where(s => !s.IsLayer).ToArray();
+            this.figmaConverters = figmaViewConverters.Where(s => s.IsLayer).ToArray(); ;
+            this.figmaProvider = figmaProvider;
             codePositionConverter = AppContext.Current.GetPositionConverter();
             codeAddChildConverter = AppContext.Current.GetAddChildConverter();
         }
 
-        public string GetCode(FigmaNode node, bool recursively = false)
+        FigmaViewConverter GetConverter(FigmaNode node, FigmaViewConverter[] converters)
         {
-            var current = figmaFileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == node);
-            if (current == null) return string.Empty;
+            foreach (var customViewConverter in converters)
+            {
+                if (customViewConverter.CanConvert(node))
+                {
+                    return customViewConverter;
+                }
+            }
+            return null;
+        }
 
-			var name = TryAddIdentifier (node.GetType ());
+        public string GetCode (FigmaNode node, bool recursively = false)
+        {
+            var converter = GetConverter(node, customConverters);
+            if (converter == null)
+            {
+                converter = GetConverter(node, figmaConverters);
+            }
 
-			var builder = new StringBuilder();
-            builder.AppendLine(current.Code.Replace("[NAME]", name));
-            Recursively(builder, name, current);
-            return builder.ToString ();
+            if (converter != null)
+            {
+                var builder = new StringBuilder();
+                var code = converter.ConvertToCode(node);
+                var name = TryAddIdentifier(node.GetType());
+                builder.AppendLine(code.Replace("[NAME]", name));
+
+                if (recursively)
+                {
+                    Recursively(builder, name, node);
+                }
+                return builder.ToString();
+            }
+
+            return string.Empty;
         }
 
 		string TryAddIdentifier (Type type)
@@ -61,16 +90,17 @@ namespace FigmaSharp.Services
 
 		Dictionary<string, int> identifiers = new Dictionary<string, int> ();
 
-        public void Recursively (StringBuilder builder, string parent, ProcessedNode parentNode)
+        public void Recursively (StringBuilder builder, string parent, FigmaNode parentNode)
         {
             //we start to process all nodes
-            var children = figmaFileService.NodesProcessed.Where(s => s.ParentView == parentNode);
+            var children = figmaProvider.Nodes.Where(s => s.Parent == parentNode);
             foreach (var child in children)
             {
-				var name = TryAddIdentifier (child.FigmaNode.GetType ());
-				builder.AppendLine(child.Code.Replace ("[NAME]", name));
-                builder.AppendLine(codePositionConverter.ConvertToCode(name, parentNode, child));
-                builder.AppendLine(codeAddChildConverter.ConvertToCode (parent, name, parentNode, child));
+				var name = TryAddIdentifier (child.GetType ());
+                var code = GetCode(child, true);
+                builder.AppendLine(code.Replace ("[NAME]", name));
+                builder.AppendLine(codePositionConverter.ConvertToCode(name, child));
+                builder.AppendLine(codeAddChildConverter.ConvertToCode (parent, name, child));
                 Recursively(builder, name, child);
             }
 

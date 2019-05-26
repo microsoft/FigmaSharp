@@ -6,6 +6,8 @@ using FigmaSharp.Designer;
 using FigmaSharp.Services;
 using Foundation;
 using MonoDevelop.Figma;
+using System.Linq;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace ToCode.Cocoa
 {
@@ -13,7 +15,6 @@ namespace ToCode.Cocoa
     {
         FigmaNodeView data;
         OutlinePanel outlinePanel;
-        FigmaFileService fileService;
         FigmaRemoteFileProvider fileProvider;
 
         FigmaDesignerDelegate figmaDelegate;
@@ -46,13 +47,13 @@ namespace ToCode.Cocoa
 
             figmaDelegate = new FigmaDesignerDelegate();
 
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters()
+                .Union (Resources.GetConverters())
+                .ToArray ();
 
             fileProvider = new FigmaRemoteFileProvider();
-
-            fileService = new FigmaFileService(fileProvider, converters);
-            codeRenderer = new FigmaCodeRendererService(fileService);
-            fileService.Start("UeIJu6C1IQwPkdOut2IWRgGd", new FigmaFileServiceOptions() { AreImageProcessed = false, IsToViewProcessed = false });
+            fileProvider.Load("Dq1CFm7IrDi3UJC7KJ8zVjOt");
+            codeRenderer = new FigmaCodeRendererService(fileProvider, converters);
            
             data = new FigmaNodeView(fileProvider.Response.document);
             figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);

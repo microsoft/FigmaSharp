@@ -30,6 +30,6 @@ namespace FigmaSharp
 {
     public abstract class FigmaCodeAddChildConverter
     {
-        public abstract string ConvertToCode(string parent, string current, ProcessedNode parentNode, ProcessedNode currentNode);
+        public abstract string ConvertToCode(string parent, string current, FigmaNode currentNode);
     }
 }

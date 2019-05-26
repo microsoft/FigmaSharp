@@ -52,7 +52,7 @@ namespace FigmaSharp.WinForms.Converters
             return new ViewWrapper(currengroupView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

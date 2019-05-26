@@ -7,6 +7,7 @@ using FigmaSharp.iOS;
 using FigmaSharp.NativeControls.iOS;
 using FigmaSharp.Services;
 using UIKit;
+using System.Linq;
 
 namespace ExampleFigma.IOS
 {
@@ -29,9 +30,9 @@ namespace ExampleFigma.IOS
             var fileName = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
 
-            var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-            var nativeConverters = Resources.GetConverters();
-            manager = new ExampleViewManager(scrollViewWrapper, fileName, figmaConverters, nativeConverters);
+            var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters().Union (Resources.GetConverters()).ToArray ();
+
+            manager = new ExampleViewManager(scrollViewWrapper, fileName, figmaConverters);
             manager.Initialize();
         }
 

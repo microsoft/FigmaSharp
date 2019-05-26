@@ -41,7 +41,7 @@ namespace FigmaSharp.iOS.Converters
             return new ViewWrapper(currengroupView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

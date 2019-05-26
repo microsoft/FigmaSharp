@@ -99,9 +99,15 @@
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
+      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
+      <Name>FigmaSharp.NativeControls.Cocoa</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
       <Project>{4E7F6BD9-33C0-4544-9186-7FDCD0047F4B}</Project>
       <Name>FigmaSharp.Designer</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

@@ -90,7 +90,7 @@ namespace FigmaSharp.NativeControls.WinForms
             return new ViewWrapper(view);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

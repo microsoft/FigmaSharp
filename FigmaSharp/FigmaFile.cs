@@ -41,7 +41,7 @@ namespace FigmaSharp
         public FigmaResponse Document => figmaLocalFileProvider.Response;
 		public IViewWrapper ContentView { get; private set; }
 
-        readonly FigmaFileService fileService;
+        readonly FigmaViewRendererService fileService;
         readonly FigmaRendererService rendererService;
         readonly FigmaManifestFileProvider figmaLocalFileProvider;
 
@@ -50,7 +50,7 @@ namespace FigmaSharp
             this.file = file;
 
             figmaLocalFileProvider = new FigmaManifestFileProvider();
-            fileService = new FigmaFileService (figmaLocalFileProvider, figmaViewConverters);
+            fileService = new FigmaViewRendererService (figmaLocalFileProvider, figmaViewConverters);
             rendererService = new FigmaRendererService(fileService);
         }
 

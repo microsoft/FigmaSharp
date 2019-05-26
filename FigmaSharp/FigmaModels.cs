@@ -347,12 +347,13 @@ namespace FigmaSharp
     {
         public FigmaNode FigmaNode { get; set; }
         public IViewWrapper View { get; set; }
-        public string Code { get; set; }
         public ProcessedNode ParentView { get; set; }
     }
 
     public class FigmaNode
     {
+        public FigmaNode Parent { get; set; }
+
         public string id { get; set; }
         public string name { get; set; }
         public string type { get; set; }

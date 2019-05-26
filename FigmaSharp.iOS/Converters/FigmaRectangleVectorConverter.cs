@@ -44,7 +44,7 @@ namespace FigmaSharp.iOS.Converters
             return figmaImageView;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "imageView";

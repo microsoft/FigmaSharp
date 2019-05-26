@@ -30,6 +30,6 @@ namespace FigmaSharp
 {
     public abstract class FigmaCodePositionConverter
     {
-        public abstract string ConvertToCode(string name, ProcessedNode parentNode, ProcessedNode current);
+        public abstract string ConvertToCode(string name, FigmaNode current);
     }
 }

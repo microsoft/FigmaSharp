@@ -33,9 +33,9 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class MacFigmaCodePositionConverter : FigmaCodePositionConverter
     {
-        public override string ConvertToCode (string name, ProcessedNode parentNode, ProcessedNode current)
+        public override string ConvertToCode (string name, FigmaNode current)
         {
-            if (current.FigmaNode is IAbsoluteBoundingBox absoluteBounding && parentNode.FigmaNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
+            if (current is IAbsoluteBoundingBox absoluteBounding && current.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
             {
                 var x = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
 
@@ -50,7 +50,7 @@ namespace FigmaSharp.Cocoa.Converters
 
     public class MacFigmaCodeAddChildConverter : FigmaCodeAddChildConverter
     {
-        public override string ConvertToCode(string parent, string current, ProcessedNode parentNode, ProcessedNode currentNode)
+        public override string ConvertToCode(string parent, string current, FigmaNode currentNode)
         {
             return string.Format("{0}.AddSubview({1});", parent, current);
         }
@@ -66,7 +66,7 @@ namespace FigmaSharp.Cocoa.Converters
             return new ViewWrapper(figmaLineView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "[NAME]";
