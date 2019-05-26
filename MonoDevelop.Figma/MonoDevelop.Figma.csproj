@@ -21,7 +21,6 @@
     <AddinReference Include="MonoDevelop.DesignerSupport" />
   </ItemGroup>
       <ItemGroup>
-        <Folder Include="Services\" />
         <Folder Include="Resources\" />
       </ItemGroup>
       <ItemGroup>
