@@ -55,6 +55,7 @@ namespace FigmaSharp.Services
             public static string MAC = "mac";
             public static string iOS = "ios";
             public static string WinForms = "winforms";
+            public static string Gtk = "gtk";
         }
 
         public static List<PlatformCustomViewConverter> Converters = new List<PlatformCustomViewConverter>();

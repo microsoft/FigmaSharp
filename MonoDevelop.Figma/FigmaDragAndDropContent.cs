@@ -62,7 +62,9 @@ namespace MonoDevelop.Figma
         List<(string, string)> Options = new List<(string, string)>()
         {
             ("Cocoa", ModuleService.Platform.MAC), 
-            ("iOS" , ModuleService.Platform.iOS)
+            ("iOS" , ModuleService.Platform.iOS),
+            ("Gtk" , ModuleService.Platform.Gtk),
+            ("WinForms" , ModuleService.Platform.WinForms)
         };
 
         public FigmaDragAndDropContent()
