@@ -37,7 +37,7 @@ namespace FigmaSharp.Designer
             };
         }
 
-        public object NativeObject => this;
+        public object NativeObject => window;
 
         public void AddChildWindow(IWindowWrapper borderer)
         {

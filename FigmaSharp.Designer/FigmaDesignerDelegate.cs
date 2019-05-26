@@ -22,29 +22,13 @@ namespace FigmaSharp.Designer
 
         #region Hover selection
 
-        NSWindow GetWindow ()
-        {
-            var window = NSApplication.SharedApplication.MainWindow;
-            if (window != null)
-            {
-                return window;
-            }
-            foreach (var win in NSApplication.SharedApplication.DangerousWindows)
-            {
-                if (win.ToString().Contains("GdkQuartzWindow")) {
-                    return win;
-                }
-            }
-            return null;
-        }
-
         public void StartHoverSelection(IWindowWrapper currentWindow)
         {
             StopHoverSelection();
 
             clickMonitor = NSEvent.AddLocalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDown, (NSEvent theEvent) => {
 
-                var nativeWindow = GetWindow();
+                var nativeWindow = currentWindow.NativeObject as NSWindow;
 
                 if (theEvent.Window != nativeWindow)
                 {
