@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FigmaSharp.Services
 {
-    public class FigmaRendererService
+    public class FigmaViewRendererDistributionService
     {
         public ProcessedNode[] MainViews { get; private set; }
         protected FigmaViewRendererService figmaFileService;
 
-        public FigmaRendererService(FigmaViewRendererService figmaFileService)
+        public FigmaViewRendererDistributionService(FigmaViewRendererService figmaFileService)
         {
             this.figmaFileService = figmaFileService;
         }
