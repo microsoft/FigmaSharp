@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * FigmaViewContent.cs 
  * 
  * Author:
@@ -57,14 +57,14 @@ namespace MonoDevelop.Figma
             widget.Sensitive = true;
 
             widget.DragBegin += (o, args) => {
-                if (!isDragging)
-                {
-                    var processedNode = dragPad.GetProcessedNode(dragPad.SelectedNode);
-                    selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = processedNode.Code });
-                    CurrentConsumer.DragItem(selected, widget, args.Context);
-                    //DesignerSupport.Service.ToolboxService.DragSelectedItem(widget, args.Context);
-                    isDragging = true;
-                }
+                //if (!isDragging)
+                //{
+                //    var processedNode = dragPad.GetProcessedNode(dragPad.SelectedNode);
+                //    selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = processedNode.Code });
+                //    CurrentConsumer.DragItem(selected, widget, args.Context);
+                //    //DesignerSupport.Service.ToolboxService.DragSelectedItem(widget, args.Context);
+                //    isDragging = true;
+                //}
             };
 
             widget.DragEnd += (o, args) => {

@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 using System;
 using AppKit;
 using System.Linq;
@@ -38,7 +37,7 @@ using FigmaSharp.Designer;
 using FigmaSharp.Services;
 using MonoDevelop.Ide;
 using System.Collections.Generic;
-using System.Reflection;
+using MonoDevelop.Ide.Gui.Dialogs;
 using System.IO;
 
 namespace MonoDevelop.Figma
@@ -56,9 +55,15 @@ namespace MonoDevelop.Figma
         public const int TextType = 1;
         OutlinePanel outlinePanel;
         NSTextField fileTextField;
-        NSButton openFileButton, loadAssemblyButton;
+        NSButton openFileButton;
         NSScrollView scrollView;
         NSStackView toolbarBox;
+
+        List<(string, string)> Options = new List<(string, string)>()
+        {
+            ("Cocoa", ModuleService.Platform.MAC), 
+            ("iOS" , ModuleService.Platform.iOS)
+        };
 
         public FigmaDragAndDropContent()
         {
@@ -68,20 +73,27 @@ namespace MonoDevelop.Figma
             toolbarBox.AutoresizingMask = NSViewResizingMask.WidthSizable;
             toolbarBox.WantsLayer = true;
             fileTextField = new NSTextField();
-            fileTextField.StringValue = "UeIJu6C1IQwPkdOut2IWRgGd";
+            fileTextField.PlaceholderString = "Type the document id to load";
+            fileTextField.StringValue = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
             toolbarBox.AddArrangedSubview(fileTextField);
 
-            openFileButton = new NSButton() { Title = "Open" };
+            openFileButton = new NSButton() { Title = "" };
             openFileButton.BezelStyle = NSBezelStyle.RoundRect;
             toolbarBox.AddArrangedSubview(openFileButton);
 
             openFileButton.Activated += openFileButton_Activated;
 
-            loadAssemblyButton = new NSButton() { Title = "Load" };
-            loadAssemblyButton.BezelStyle = NSBezelStyle.RoundRect;
-            toolbarBox.AddArrangedSubview(loadAssemblyButton);
+            NSPopUpButton exportButton = new NSPopUpButton();
 
-            loadAssemblyButton.Activated += loadAssemblyButton_Activated;
+            var icon = (NSImage) FigmaSharp.AppContext.Current.GetImageFromManifest(this.GetType().Assembly, "pe-path-reveal@2x").NativeObject;
+            openFileButton.Image = icon;
+
+            foreach (var item in Options)
+            {
+                exportButton.AddItem(item.Item1);
+            }
+           
+            toolbarBox.AddArrangedSubview(exportButton);
 
             outlinePanel = new OutlinePanel();
             scrollView = outlinePanel.EnclosingScrollView;
@@ -96,13 +108,13 @@ namespace MonoDevelop.Figma
             scrollView.AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable; 
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileService = new FigmaRemoteFileService();
-            codeRenderer = new FigmaCodeRendererService(fileService);
+            fileProvider = new FigmaRemoteFileProvider();
 
-            outlinePanel.DoubleClick += (sender, e) =>
+            SetCodeRenderer(ModuleService.Platform.MAC);
+
+            outlinePanel.DoubleClick += (sender, node) =>
             {
-                var node = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == e);
-                var code = codeRenderer.GetCode(node.FigmaNode, true);
+                var code = codeRenderer.GetCode(node, true);
                 SelectCode?.Invoke(this, code);
             };
 
@@ -116,87 +128,21 @@ namespace MonoDevelop.Figma
                 DragBegin?.Invoke(this, EventArgs.Empty);
             };
 
-            RefreshUIStates(); 
-            // scrollView.SetContentHuggingPriorityForOrientation((int)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Vertical);
-        }
-
-        private void loadAssemblyButton_Activated(object sender, EventArgs e)
-        {
-            var fullpath = "/Users/jmedrano/FigmaSharp/FigmaSharp.NativeControls/FigmaSharp.NativeControls.Cocoa/bin/Debug";
-            List<string> modules = new List<string>();
-            modules.Add(fullpath + "/FigmaSharp.NativeControls.dll");
-            modules.Add (fullpath + "/FigmaSharp.NativeControls.Cocoa.dll");
-            ModulesService.LoadModule(modules.ToArray ());
-        }
-
-        public static class ModulesService
-        {
-            public static List<CustomViewConverter> Converters = new List<CustomViewConverter>();
-
-            public static void LoadModule(params string[] filePath)
+            exportButton.Activated += (sender, e) =>
             {
-                //var path = Path.GetDirectoryName(filePath);
+                var item = Options[(int)exportButton.IndexOfSelectedItem];
+                SetCodeRenderer(item.Item2);
+            };
 
-                Dictionary<Assembly, string> instanciableTypes = new Dictionary<Assembly, string>();
-
-                Console.WriteLine("Loading {0}...", string.Join (",",filePath));
-
-                //var enumeratedFiles = Directory.EnumerateFiles(path, "*.dll");
-                var enumeratedFiles = filePath;
-
-                foreach (var file in enumeratedFiles)
-                {
-                    var fileName = Path.GetFileName(file);
-                    Console.WriteLine("[{0}] Found.", fileName);
-                    try
-                    {
-                        var assembly = Assembly.LoadFile(file);
-                        instanciableTypes.Add(assembly, file);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("[{0}] Error loading.", fileName);
-                        //Console.WriteLine(ex);
-                    }
-                }
-
-                foreach (var assemblyTypes in instanciableTypes)
-                {
-                    try
-                    {
-                        var interfaceType = typeof(CustomViewConverter);
-                        var types = assemblyTypes.Key.GetTypes()
-                            .Where(interfaceType.IsAssignableFrom);
-
-                        Console.WriteLine("[{0}] Loaded.", assemblyTypes.Value);
-                        foreach (var type in types)
-                        {
-                            Console.WriteLine("[{0}] Creating instance {1}", assemblyTypes.Key, type);
-                            try
-                            {
-                                if (Activator.CreateInstance(type) is CustomViewConverter element)
-                                    Converters.Add(element);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex);
-                            }
-                            Console.WriteLine("[{0}] Loaded", type);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
-
-                Console.WriteLine("[{0}] Load finished.");
-            }
+            RefreshUIStates(); 
         }
 
-        public ProcessedNode GetProcessedNode (FigmaNode node)
+        void SetCodeRenderer (string platform)
         {
-            return fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == node);
+            var converters = ModuleService.Converters.Where(s => s.Platform == platform)
+              .Select(s => s.Converter)
+              .ToArray();
+            codeRenderer = new FigmaCodeRendererService(fileProvider, converters);
         }
 
         public override void SetFrameSize(CGSize newSize)
@@ -207,21 +153,27 @@ namespace MonoDevelop.Figma
             scrollView?.SetFrameSize(new CoreGraphics.CGSize(newSize.Width, newSize.Height - 30));
         }
 
-        FigmaRemoteFileService fileService;
+        FigmaRemoteFileProvider fileProvider;
         FigmaDesignerDelegate figmaDelegate;
         FigmaCodeRendererService codeRenderer;
         FigmaNodeView data;
 
         public void RefreshUIStates ()
         {
-            fileTextField.Enabled = openFileButton.Enabled = loadAssemblyButton.Enabled = !FigmaSharp.AppContext.Current.IsConfigured;
+            fileTextField.Enabled = openFileButton.Enabled = FigmaSharp.AppContext.Current.IsConfigured;
         }
 
         void openFileButton_Activated(object sender, EventArgs e)
         {
-            fileService.Start(fileTextField.StringValue, processImages: false);
-            data = new FigmaNodeView(fileService.Response.document);
-            figmaDelegate.ConvertToNodes(fileService.Response.document, data);
+            if (!FigmaSharp.AppContext.Current.IsConfigured)
+            {
+                MessageService.ShowError("Figma API is not configured");
+                return;
+            }
+
+            fileProvider.Load(fileTextField.StringValue);
+            data = new FigmaNodeView(fileProvider.Response.document);
+            figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
             outlinePanel.GenerateTree(data);
         }
 

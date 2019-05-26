@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
@@ -13,8 +13,27 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
+            <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
+        <Private>False</Private>        
+    </PackageReference>
   </ItemGroup>
       <ItemGroup>
     <AddinReference Include="MonoDevelop.DesignerSupport" />
   </ItemGroup>
+      <ItemGroup>
+        <Folder Include="Services\" />
+        <Folder Include="Resources\" />
+      </ItemGroup>
+      <ItemGroup>
+        <None Remove="Resources\pe-path-reveal.png" />
+        <None Remove="Resources\pe-path-reveal%402x.png" />
+        <None Remove="Resources\pe-path-reveal~dark.png" />
+        <None Remove="Resources\pe-path-reveal~dark%402x.png" />
+      </ItemGroup>
+      <ItemGroup>
+        <EmbeddedResource Include="Resources\pe-path-reveal.png" />
+        <EmbeddedResource Include="Resources\pe-path-reveal%402x.png" />
+        <EmbeddedResource Include="Resources\pe-path-reveal~dark.png" />
+        <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
+      </ItemGroup>
 </Project>

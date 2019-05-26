@@ -290,7 +290,7 @@ namespace MonoDevelop.Figma
             RefreshAll();
         }
 
-        FigmaFileServiceOptions fileOptions = new FigmaFileServiceOptions ();
+        FigmaViewRendererServiceOptions fileOptions = new FigmaViewRendererServiceOptions ();
 
         void RefreshAll ()
         {
