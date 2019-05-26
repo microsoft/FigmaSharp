@@ -10,16 +10,18 @@ namespace ExampleFigmaMac
     {
         string fileName;
         readonly IScrollViewWrapper scrollViewWrapper;
-        readonly FigmaRemoteFileService fileService;
+        readonly FigmaRemoteFileProvider fileProvider;
+
+        readonly FigmaFileService fileService;
         readonly FigmaRendererService rendererService;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, string fileName, FigmaViewConverter[] converters, CustomViewConverter[] customViewConverters)
         {
             this.scrollViewWrapper = scrollViewWrapper;
             this.fileName = fileName;
-
+            fileProvider = new FigmaRemoteFileProvider();
             //var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-            fileService = new FigmaRemoteFileService(converters);
+            fileService = new FigmaFileService(fileProvider, converters);
 
 
             fileService.CustomViewConverters.AddRange(customViewConverters);

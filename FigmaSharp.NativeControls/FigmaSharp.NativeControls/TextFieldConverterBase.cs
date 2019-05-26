@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * CustomTextFieldConverter.cs
  * 
  * Author:
@@ -28,7 +28,7 @@
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class TextFieldConverterBase : CustomViewConverter
+    public abstract class TextFieldConverterBase : FigmaViewConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {

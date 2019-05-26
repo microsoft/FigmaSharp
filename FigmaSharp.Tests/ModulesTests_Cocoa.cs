@@ -20,7 +20,7 @@ namespace FigmaSharp.Tests
                 started = true;
                 directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 directory = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(directory)), "nativecontrols", "cocoa");
-                ModuleService.LoadModuleDirectory(directory, ModuleService.Platform.MAC);
+                ModuleService.LoadModuleDirectory(directory);
                 Assert.IsTrue(ModuleService.Converters.Count > 0);
             }
         }
@@ -41,7 +41,7 @@ namespace FigmaSharp.Tests
         public void LoadDirectoryCocoa()
         {
             Init();
-            ModuleService.LoadModuleDirectory(directory, ModuleService.Platform.MAC);
+            ModuleService.LoadModuleDirectory(directory);
             Assert.IsTrue(ModuleService.Converters.Count > 0);
         }
     }

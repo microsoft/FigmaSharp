@@ -38,16 +38,19 @@ namespace FigmaSharp
 	{
 		string file;
 		public List<IImageViewWrapper> FigmaImages { get; private set; }
-        public FigmaResponse Document => fileService.Response;
+        public FigmaResponse Document => figmaLocalFileProvider.Response;
 		public IViewWrapper ContentView { get; private set; }
 
-        readonly FigmaManifestResourceFileService fileService;
+        readonly FigmaFileService fileService;
         readonly FigmaRendererService rendererService;
+        readonly FigmaManifestFileProvider figmaLocalFileProvider;
 
         public FigmaFile (string file, FigmaViewConverter[] figmaViewConverters)
 		{
             this.file = file;
-            fileService = new FigmaManifestResourceFileService (figmaViewConverters);
+
+            figmaLocalFileProvider = new FigmaManifestFileProvider();
+            fileService = new FigmaFileService (figmaLocalFileProvider, figmaViewConverters);
             rendererService = new FigmaRendererService(fileService);
         }
 

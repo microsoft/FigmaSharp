@@ -32,7 +32,93 @@ using System.Linq;
 
 namespace FigmaSharp.Services
 {
-    public abstract class FigmaFileService
+    public interface IFigmaFileProvider
+    {
+        FigmaResponse Response { get; }
+        void Load(string path);
+        void Save(string filePath);
+        string GetContentTemplate(string file);
+        void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
+    }
+
+    public class FigmaLocalFileProvider : FigmaFileProvider
+    {
+        public override string GetContentTemplate(string file)
+        {
+            return System.IO.File.ReadAllText(file);
+        }
+
+        public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        {
+            //not needed in local files
+        }
+    }
+
+    public class FigmaRemoteFileProvider : FigmaFileProvider
+    {
+        public override string GetContentTemplate(string file)
+        {
+            return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
+        }
+
+        public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        {
+            //Remote files need get the real image url to get the file
+            var vectorsIds = imageVectors.Select(s => s.Key.id);
+            var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectorsIds);
+            if (figmaImageResponse != null)
+            {
+                foreach (var imageResponse in figmaImageResponse.images)
+                {
+                    var image = imageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
+                    imageVectors[image] = imageResponse.Value;
+                }
+            }
+        }
+    }
+
+    public class FigmaManifestFileProvider : FigmaFileProvider
+    {
+        public override string GetContentTemplate(string file)
+        {
+            return AppContext.Current.GetManifestResource(null, file);
+        }
+
+        public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        {
+            //not needed in local files
+        }
+    }
+
+    public abstract class FigmaFileProvider : IFigmaFileProvider
+    {
+        public FigmaResponse Response { get; private set; }
+
+        public void Load (string path)
+        {
+            try
+            {
+                var template = GetContentTemplate(path);
+                Response = AppContext.Current.GetFigmaResponseFromContent(template);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading resource");
+                Console.WriteLine(ex);
+            }
+        }
+
+        public abstract string GetContentTemplate(string file);
+
+        public abstract void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
+
+        public void Save(string filePath)
+        {
+            AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
+        }
+    }
+
+    public class FigmaFileService
     {
         readonly public List<CustomViewConverter> CustomViewConverters = new List<CustomViewConverter>();
         readonly FigmaViewConverter[] FigmaDefaultConverters;
@@ -41,20 +127,15 @@ namespace FigmaSharp.Services
 
         public readonly Dictionary<FigmaVectorEntity, string> ImageVectors = new Dictionary<FigmaVectorEntity, string> ();
 
-        public FigmaResponse Response { get; private set; }
-
         public string File { get; private set; }
         public int Page { get; private set; }
         public bool ProcessImages { get; private set; }
+        IFigmaFileProvider figmaProvider;
 
-        protected FigmaFileService(FigmaViewConverter[] figmaViewConverters)
+        public FigmaFileService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
         {
+            this.figmaProvider = figmaProvider;
             FigmaDefaultConverters = figmaViewConverters;
-        }
-
-        public void Save(string filePath)
-        {
-            AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
         }
 
         public Task StartAsync(string file) => StartAsync(file, new FigmaFileServiceOptions());
@@ -71,14 +152,14 @@ namespace FigmaSharp.Services
 
                 Console.WriteLine($"Loading views for page {Page}..");
 
-                var canvas = Response.document.children[Page];
+                var canvas = figmaProvider.Response.document.children[Page];
                 foreach (var item in canvas.children)
                     GenerateViewsRecursively(item, null, options);
 
                 //Images
                 if (ProcessImages)
                 {
-                    OnStartImageProcessing(ImageVectors, File);
+                    figmaProvider.OnStartImageProcessing(ImageVectors, File);
                 }
 
                 Console.WriteLine("View generation finished.");
@@ -104,8 +185,7 @@ namespace FigmaSharp.Services
 
             try
             {
-                var template = GetContentTemplate(file);
-                Response = AppContext.Current.GetFigmaResponseFromContent(template);
+                figmaProvider.Load(file);
                 Refresh(options);
             }
             catch (Exception ex)
@@ -114,10 +194,6 @@ namespace FigmaSharp.Services
                 Console.WriteLine(ex);
             }
         }
-
-        protected abstract void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
-
-        protected abstract string GetContentTemplate(string file);
 
         ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent, FigmaFileServiceOptions options)
         {
@@ -173,67 +249,6 @@ namespace FigmaSharp.Services
                 foreach (var item in nodeContainer.children)
                 {
                     GenerateViewsRecursively(item, currentProcessedNode, options);
-                }
-            }
-        }
-    }
-
-    public class FigmaManifestResourceFileService : FigmaFileService
-    {
-        public FigmaManifestResourceFileService(FigmaViewConverter[] figmaViewConverters) : base(figmaViewConverters)
-        {
-        }
-
-        protected override string GetContentTemplate(string file)
-        {
-            return AppContext.Current.GetManifestResource(null, file);
-        }
-
-        protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
-        {
-          //not needed in local files
-        }
-    }
-
-    public class FigmaLocalFileService : FigmaFileService
-    {
-        public FigmaLocalFileService(FigmaViewConverter[] figmaViewConverters) : base(figmaViewConverters)
-        {
-        }
-
-        protected override string GetContentTemplate(string file)
-        {
-            return System.IO.File.ReadAllText(file);
-        }
-
-        protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
-        {
-            //not needed in local files
-        }
-    }
-
-    public class FigmaRemoteFileService : FigmaFileService
-    {
-        public FigmaRemoteFileService(FigmaViewConverter[] figmaViewConverters) : base(figmaViewConverters)
-        {
-        }
-
-        protected override string GetContentTemplate(string file)
-        {
-            return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
-        }
-
-        protected override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
-        {
-            //Remote files need get the real image url to get the file
-            var vectorsIds = imageVectors.Select(s => s.Key.id);
-            var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectorsIds);
-            if (figmaImageResponse != null)
-            {
-                foreach (var imageResponse in figmaImageResponse.images)
-                {
-                    var image = imageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
-                    imageVectors[image] = imageResponse.Value;
                 }
             }
         }
