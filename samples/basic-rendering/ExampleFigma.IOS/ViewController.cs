@@ -2,6 +2,7 @@
 using CoreAnimation;
 using CoreGraphics;
 using FigmaSharp;
+using FigmaSharp.iOS;
 using FigmaSharp.Services;
 using UIKit;
 
@@ -23,7 +24,7 @@ namespace ExampleFigma.IOS
 
             View.Layer.BackgroundColor = UIColor.Black.CGColor;
 
-            var fileName = Environment.GetEnvironmentVariable("FILE");
+            var fileName = "nWFYvx7YMBEtPAgAydX66e";
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
 
             manager = new ExampleViewManager(scrollViewWrapper, fileName);

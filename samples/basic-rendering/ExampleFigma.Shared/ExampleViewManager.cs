@@ -10,7 +10,7 @@ namespace ExampleFigma
     {
         string fileName;
         readonly IScrollViewWrapper scrollViewWrapper;
-        readonly FigmaFileService fileService;
+        readonly FigmaViewRendererService fileService;
         readonly FigmaRendererService rendererService;
         readonly FigmaRemoteFileProvider fileProvider;
 
@@ -20,13 +20,13 @@ namespace ExampleFigma
             this.fileName = fileName;
             fileProvider = new FigmaRemoteFileProvider();
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-            fileService = new FigmaFileService(fileProvider, converters);
+            fileService = new FigmaViewRendererService(fileProvider, converters);
             rendererService = new FigmaRendererService(fileService);
         }
        
         public void Initialize ()
         {
-            fileService.Start(fileName, new FigmaFileServiceOptions() { StartPage = 0 });
+            fileService.Start(fileName, new FigmaViewRendererServiceOptions() { StartPage = 0 });
             rendererService.Start();
 
             var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)

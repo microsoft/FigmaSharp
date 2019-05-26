@@ -39,7 +39,7 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSession
     {
-        readonly FigmaFileService fileService;
+        readonly FigmaViewRendererService fileService;
         readonly FigmaRendererService rendererService;
         readonly FigmaLocalFileProvider fileProvider;
 
@@ -53,13 +53,13 @@ namespace FigmaSharp.Designer
         public FigmaDesignerSession(FigmaViewConverter[] figmaViewConverters)
         {
             fileProvider = new FigmaLocalFileProvider();
-            fileService = new FigmaFileService(fileProvider, figmaViewConverters);
+            fileService = new FigmaViewRendererService(fileProvider, figmaViewConverters);
             rendererService = new FigmaRendererService(fileService);
         }
 
         public event EventHandler ReloadFinished;
 
-        public void Reload (FigmaFileServiceOptions options)
+        public void Reload (FigmaViewRendererServiceOptions options)
         {
             fileService.Refresh(options);
             rendererService.Start();

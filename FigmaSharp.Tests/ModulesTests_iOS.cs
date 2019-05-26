@@ -30,7 +30,7 @@ namespace FigmaSharp.Tests
             var figmaNode = new FigmaNode() { id = "button", name = "button" };
             var button = ModuleService.Converters.FirstOrDefault(s => s.Platform == ModuleService.Platform.iOS && s.Converter.CanConvert(figmaNode));
             Assert.IsNotNull(button);
-            var code = button.Converter.ConvertToCode(figmaNode, null);
+            var code = button.Converter.ConvertToCode(figmaNode);
             Assert.IsNotNull(code);
         }
     }

@@ -43,7 +43,7 @@ namespace FigmaSharp.Cocoa.Converters
             return wrapper;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             var figmaText = ((FigmaText)currentNode);
             StringBuilder builder = new StringBuilder();

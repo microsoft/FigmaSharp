@@ -30,13 +30,13 @@ namespace FigmaSharp.NativeControls.iOS
 {
     public static class Resources
     {
-        static CustomViewConverter[] converters;
+        static FigmaViewConverter[] converters;
 
-        public static CustomViewConverter[] GetConverters()
+        public static FigmaViewConverter[] GetConverters()
         {
             if (converters == null)
             {
-                converters = new CustomViewConverter[]
+                converters = new FigmaViewConverter[]
                 {
                     new ButtonConverter (),
                     new TextFieldConverter (),

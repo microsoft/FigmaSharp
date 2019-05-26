@@ -149,9 +149,8 @@ namespace FigmaSharp
 
        public static string GetFigmaFileContent (string file)
        {
-         return GetFigmaFileContent (file, AppContext.Current.Token);
+            return GetFigmaFileContent (file, AppContext.Current.Token);
        }
-
 
         public static string GetFigmaFileContent (string file, string personal_access_token)
         {
@@ -160,19 +159,11 @@ namespace FigmaSharp
             httpWebRequest.Method = "GET";
             httpWebRequest.Headers["x-figma-token"] = personal_access_token;
 
-            try
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                   return streamReader.ReadToEnd();
-                }
+               return streamReader.ReadToEnd();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            return null;
         }
     }
 }

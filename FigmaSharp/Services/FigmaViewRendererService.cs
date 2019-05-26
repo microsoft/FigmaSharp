@@ -34,6 +34,7 @@ namespace FigmaSharp.Services
 {
     public interface IFigmaFileProvider
     {
+        List<FigmaNode> Nodes { get; }
         FigmaResponse Response { get; }
         void Load(string path);
         void Save(string filePath);
@@ -93,18 +94,45 @@ namespace FigmaSharp.Services
     public abstract class FigmaFileProvider : IFigmaFileProvider
     {
         public FigmaResponse Response { get; private set; }
+        public List<FigmaNode> Nodes { get; } = new List<FigmaNode>();
 
         public void Load (string path)
         {
             try
             {
+                Nodes.Clear();
                 var template = GetContentTemplate(path);
                 Response = AppContext.Current.GetFigmaResponseFromContent(template);
+
+                foreach (var item in Response.document.children)
+                {
+                    ProcessNodeRecursively(item, null);
+                }
+            }
+            catch (System.Net.WebException ex)
+            {
+                if (!AppContext.Current.IsConfigured)
+                    Console.WriteLine($"Cannot connect to FigmaServer, TOKEN not configured.");
+                else
+                    Console.WriteLine($"Cannot connect to FigmaServer, wrong TOKEN?");
+                Console.WriteLine(ex);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading resource");
                 Console.WriteLine(ex);
+            }
+        }
+
+        void ProcessNodeRecursively (FigmaNode node, FigmaNode parent)
+        {
+            node.Parent = parent;
+            Nodes.Add(node);
+
+            if (node is IFigmaNodeContainer nodeContainer)
+            {
+                foreach (var item in nodeContainer.children)
+                    ProcessNodeRecursively(item, node);
             }
         }
 
@@ -118,12 +146,13 @@ namespace FigmaSharp.Services
         }
     }
 
-    public class FigmaFileService
+    public class FigmaViewRendererService
     {
-        readonly public List<CustomViewConverter> CustomViewConverters = new List<CustomViewConverter>();
         readonly FigmaViewConverter[] FigmaDefaultConverters;
 
-        public List<ProcessedNode> NodesProcessed = new List<ProcessedNode>();
+        readonly FigmaViewConverter[] FigmaCustomConverters;
+
+        public List<ProcessedNode> NodesProcessed = new List<ProcessedNode> ();
 
         public readonly Dictionary<FigmaVectorEntity, string> ImageVectors = new Dictionary<FigmaVectorEntity, string> ();
 
@@ -132,16 +161,17 @@ namespace FigmaSharp.Services
         public bool ProcessImages { get; private set; }
         IFigmaFileProvider figmaProvider;
 
-        public FigmaFileService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
+        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
         {
             this.figmaProvider = figmaProvider;
-            FigmaDefaultConverters = figmaViewConverters;
+            FigmaDefaultConverters = figmaViewConverters.Where (s => s.IsLayer).ToArray ();
+            FigmaCustomConverters = figmaViewConverters.Where(s => !s.IsLayer).ToArray();
         }
 
-        public Task StartAsync(string file) => StartAsync(file, new FigmaFileServiceOptions());
-        public Task StartAsync(string file, FigmaFileServiceOptions options) => Task.Run(() => Start(file, options: options));
+        public Task StartAsync(string file) => StartAsync(file, new FigmaViewRendererServiceOptions());
+        public Task StartAsync(string file, FigmaViewRendererServiceOptions options) => Task.Run(() => Start(file, options: options));
 
-        public void Refresh (FigmaFileServiceOptions options)
+        public void Refresh (FigmaViewRendererServiceOptions options)
         {
             try
             {
@@ -149,7 +179,6 @@ namespace FigmaSharp.Services
                 NodesProcessed.Clear();
 
                 Console.WriteLine($"Reading successfull");
-
                 Console.WriteLine($"Loading views for page {Page}..");
 
                 var canvas = figmaProvider.Response.document.children[Page];
@@ -172,9 +201,9 @@ namespace FigmaSharp.Services
         }
 
         public void Start(string file) =>
-            Start(file, new FigmaFileServiceOptions());
+            Start(file, new FigmaViewRendererServiceOptions());
 
-        public void Start(string file, FigmaFileServiceOptions options)
+        public void Start(string file, FigmaViewRendererServiceOptions options)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
@@ -195,15 +224,14 @@ namespace FigmaSharp.Services
             }
         }
 
-        ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent, FigmaFileServiceOptions options)
+        ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent, FigmaViewRendererServiceOptions options)
         {
             foreach (var customViewConverter in customViewConverters)
             {
                 if (customViewConverter.CanConvert(currentNode))
                 {
                     var currentView = options.IsToViewProcessed ? customViewConverter.ConvertTo(currentNode, parent) : null;
-                    var currentCode = options.IsToCodeProcessed ? customViewConverter.ConvertToCode(currentNode, parent) : null;
-                    var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, Code = currentCode, ParentView = parent };
+                    var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                     return currentElement;
                 }
 
@@ -212,13 +240,13 @@ namespace FigmaSharp.Services
         }
 
         //TODO: This 
-        void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent, FigmaFileServiceOptions options)
+        void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
         {
             Console.WriteLine("[{0}({1})] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
             bool navigateChild = true;
 
-            var currentProcessedNode = GetProcessedNode(currentNode, CustomViewConverters, parent, options);
+            var currentProcessedNode = GetProcessedNode(currentNode, FigmaCustomConverters, parent, options);
 
             if (currentProcessedNode == null)
             {
@@ -254,9 +282,9 @@ namespace FigmaSharp.Services
         }
     }
 
-    public class FigmaFileServiceOptions
+    public class FigmaViewRendererServiceOptions
     {
-        public bool IsToCodeProcessed { get; set; } = true;
+        //public bool IsToCodeProcessed { get; set; } = true;
         public bool IsToViewProcessed { get; set; } = true;
         public bool AreImageProcessed { get; set; } = true;
         public int StartPage { get; set; } = 0;

@@ -44,7 +44,7 @@ namespace FigmaSharp.iOS.Converters
             return wrapper;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

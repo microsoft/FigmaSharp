@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
@@ -37,7 +37,9 @@ namespace FigmaSharp
 
     public abstract class CustomViewConverter
     {
-		protected T ToEnum<T> (string value)
+        public virtual bool IsLayer { get; }
+
+        protected T ToEnum<T> (string value)
 		{
 			try {
 				foreach (T suit in (T[])Enum.GetValues (typeof (T))) {
@@ -97,6 +99,6 @@ namespace FigmaSharp
 
         public abstract IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent);
 
-        public abstract string ConvertToCode(FigmaNode currentNode, ProcessedNode parent);
+        public abstract string ConvertToCode(FigmaNode currentNode);
     }
 }

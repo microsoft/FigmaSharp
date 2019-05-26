@@ -42,7 +42,7 @@ namespace FigmaSharp.iOS.Converters
             return new ViewWrapper(figmaLineView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "lineView";

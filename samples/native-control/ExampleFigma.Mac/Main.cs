@@ -8,6 +8,7 @@ using System.Net;
 using Foundation;
 using FigmaSharp.Cocoa;
 using FigmaSharp.NativeControls.Cocoa;
+using System.Linq;
 
 namespace ExampleFigmaMac
 {
@@ -52,10 +53,11 @@ namespace ExampleFigmaMac
 
 			var file = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
 
-            var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-            var nativeConverters = Resources.GetConverters();
+            var figmaConverters = Resources.GetConverters()
+                .Union (FigmaSharp.AppContext.Current.GetFigmaConverters())
+                .ToArray ();
 
-            var manager = new ExampleViewManager(scrollViewWrapper, file, figmaConverters, nativeConverters);
+            var manager = new ExampleViewManager(scrollViewWrapper, file, figmaConverters);
             manager.Initialize();
 
             mainWindow.MakeKeyAndOrderFront(null);

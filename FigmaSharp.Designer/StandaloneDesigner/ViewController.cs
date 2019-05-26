@@ -25,7 +25,7 @@ namespace StandaloneDesigner
         }
 
         FigmaRemoteFileProvider fileProvider;
-        FigmaFileService fileService;
+        FigmaViewRendererService fileService;
         OutlinePanel outlinePanel;
         public override void ViewDidLoad()
         {
@@ -38,7 +38,7 @@ namespace StandaloneDesigner
 
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
             fileProvider = new FigmaRemoteFileProvider();
-            fileService = new FigmaFileService(fileProvider, converters);
+            fileService = new FigmaViewRendererService(fileProvider, converters);
             surface = new FigmaDesignerSurface(figmaDelegate);
             // Do any additional setup after loading the view.
 

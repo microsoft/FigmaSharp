@@ -30,6 +30,8 @@ namespace FigmaSharp.Converters
 {
     public abstract class FigmaVectorEntityConverterBase : FigmaViewConverter
     {
+        public override bool IsLayer => true;
+
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.GetType() == typeof(FigmaVectorEntity);

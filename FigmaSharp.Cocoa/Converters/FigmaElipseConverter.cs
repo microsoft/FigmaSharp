@@ -43,7 +43,7 @@ namespace FigmaSharp.Cocoa.Converters
             return new ViewWrapper(elipseView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "[NAME]";
