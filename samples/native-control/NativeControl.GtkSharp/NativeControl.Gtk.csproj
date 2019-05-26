@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{14FAB2B4-C4AE-4648-BA75-A50956ACFF74}</ProjectGuid>
+    <ProjectGuid>{52BE2EB0-7B17-4F27-AE71-9A5CBD9BBD81}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>BasicRendering.Gtk</RootNamespace>
-    <AssemblyName>BasicRendering.Gtk</AssemblyName>
+    <RootNamespace>NativeControl.GtkSharp</RootNamespace>
+    <AssemblyName>NativeControl.GtkSharp</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,9 +29,6 @@
     <Reference Include="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="gdk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="glib-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -50,28 +47,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="gtk-gui\gui.stetic">
-      <LogicalName>gui.stetic</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
-      <Name>FigmaSharp</Name>
+    <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
+      <Project>{E9891F05-7A3B-40A2-9388-505354D6D4C3}</Project>
+      <Name>FigmaSharp.NativeControls</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.Gtk\FigmaSharp.Gtk.csproj">
       <Project>{03E72A72-2DCF-4177-B049-2112CD58A4AC}</Project>
       <Name>FigmaSharp.Gtk</Name>
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Gtk\FigmaSharp.NativeControls.Gtk.csproj">
+      <Project>{26DF2553-FE08-45C1-B2CA-136666C8AD0A}</Project>
+      <Name>FigmaSharp.NativeControls.Gtk</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" Condition="Exists('..\ExampleFigma.Shared\ExampleFigma.Shared.projitems')" />
+  <Import Project="..\NativeControl.Shared\NativeControl.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControl.Shared\NativeControl.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
