@@ -24,10 +24,8 @@ namespace ExampleFigma.IOS
 
             View.Layer.BackgroundColor = UIColor.Black.CGColor;
 
-            var fileName = "nWFYvx7YMBEtPAgAydX66e";
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
-
-            manager = new ExampleViewManager(scrollViewWrapper, fileName);
+            manager = new ExampleViewManager(scrollViewWrapper);
             manager.Initialize();
         }
 

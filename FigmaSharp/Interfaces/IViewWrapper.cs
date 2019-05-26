@@ -41,8 +41,6 @@ namespace FigmaSharp
         string NodeName { get; set; }
         bool Hidden { get; set; }
 
-        float X { get; set; }
-        float Y { get; set; }
         float Width { get; set; }
         float Height { get; set; }
 
@@ -54,5 +52,6 @@ namespace FigmaSharp
         void ClearSubviews();
 
         void MakeFirstResponder();
+        void SetPosition(float x, float y);
     }
 }

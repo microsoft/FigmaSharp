@@ -91,8 +91,7 @@ namespace FigmaSharp
             float currentX = Margin;
             foreach (var child in ContentView.Children)
             {
-                child.X = currentX;
-                child.Y = 0;
+                child.SetPosition(currentX, 0);
                 currentX += child.Width + Margin;
             }
         }

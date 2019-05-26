@@ -20,13 +20,9 @@ namespace ExampleFigmaWinForms
         public Form1()
         {
             InitializeComponent ();
-            var fileName = "nWFYvx7YMBEtPAgAydX66e";
-            if (string.IsNullOrEmpty (fileName)) {
-                fileName = Settings.Default.FILE;
-            }
+         
             var scrollViewWrapper = new ScrollViewWrapper (ContainerPanel);
-
-            manager = new ExampleViewManager (scrollViewWrapper, fileName);
+            manager = new ExampleViewManager (scrollViewWrapper);
             manager.Initialize ();
         }
 

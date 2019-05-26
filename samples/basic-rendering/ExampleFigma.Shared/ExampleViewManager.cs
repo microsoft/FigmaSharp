@@ -8,16 +8,15 @@ namespace ExampleFigma
 {
     public class ExampleViewManager 
     {
-        string fileName;
+        const string fileName = "nWFYvx7YMBEtPAgAydX66e";
         readonly IScrollViewWrapper scrollViewWrapper;
         readonly FigmaViewRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;
         readonly FigmaRemoteFileProvider fileProvider;
 
-        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, string fileName)
+        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper)
         {
             this.scrollViewWrapper = scrollViewWrapper;
-            this.fileName = fileName;
             fileProvider = new FigmaRemoteFileProvider();
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
             fileService = new FigmaViewRendererService(fileProvider, converters);
@@ -45,11 +44,8 @@ namespace ExampleFigma
             foreach (var processedNode in mainNodes)
             {
                 var view = processedNode.View;
-
                 scrollViewWrapper.AddChild(view);
-
-                view.X = currentX;
-                view.Y = 0; //currentView.Height + currentHeight;
+                view.SetPosition(currentX, 0);
                 currentX += view.Width + Margin;
             }
         }
