@@ -17,8 +17,8 @@ namespace FigmaSharp.GtkSharp
             new FigmaLineConverter ()
         };
 
-        static readonly FigmaCodePositionConverter positionConverter = new GtkFigmaCodePositionConverter();
-        static readonly FigmaCodeAddChildConverter addChildConverter = new GtkFigmaCodeAddChildConverter();
+        static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
+        static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
 
         public bool IsYAxisFlipped => false;
         public bool SupportsImageInvoke => false;
@@ -91,8 +91,8 @@ namespace FigmaSharp.GtkSharp
 
         public void BeginInvoke(Action handler) => Gtk.Application.InvokeAction(handler);
 
-        public FigmaCodePositionConverter GetPositionConverter() => positionConverter;
+        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
 
-        public FigmaCodeAddChildConverter GetAddChildConverter() => addChildConverter;
+        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
     }
 }

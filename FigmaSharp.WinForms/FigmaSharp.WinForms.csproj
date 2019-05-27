@@ -70,6 +70,8 @@
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="FigmaDelegate.cs" />
     <Compile Include="CustomControls\ImageTransparentControl.cs" />
+    <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
+    <Compile Include="Converters\FigmaCodePositionConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

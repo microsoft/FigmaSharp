@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,30 +25,11 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Text;
-using AppKit;
-using FigmaSharp.Converters;
 
-namespace FigmaSharp.Cocoa.Converters
+namespace FigmaSharp
 {
-    public class FigmaLineConverter : FigmaLineConverterBase
+    public abstract class FigmaCodeAddChildConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
-        {
-            var figmaLineView = new NSView();
-            var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
-        }
-
-        public override string ConvertToCode(FigmaNode currentNode)
-        {
-            StringBuilder builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine($"var {name} = new {nameof(NSView)}();");
-
-            builder.Configure(name, (FigmaLine)currentNode);
-            return builder.ToString();
-        }
+        public abstract string ConvertToCode(string parent, string current, FigmaNode currentNode);
     }
 }

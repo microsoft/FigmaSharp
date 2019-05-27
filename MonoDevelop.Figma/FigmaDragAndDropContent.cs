@@ -147,8 +147,8 @@ namespace MonoDevelop.Figma
               .Select(s => s.Converter)
               .ToArray();
 
-            var addChildConverter = ModuleService.AddChildConverters.FirstOrDefault(s => s.Platform == platform).Converter;
-            var codePositionConverter = ModuleService.CodePositionConverters.FirstOrDefault(s => s.Platform == platform).Converter;
+            var addChildConverter = ModuleService.AddChildConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
+            var codePositionConverter = ModuleService.CodePositionConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
             codeRenderer = new FigmaCodeRendererService(fileProvider, converters, codePositionConverter, addChildConverter);
         }
 

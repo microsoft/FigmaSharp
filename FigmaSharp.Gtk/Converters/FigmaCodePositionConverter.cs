@@ -1,6 +1,6 @@
 ﻿namespace FigmaSharp.GtkSharp
 {
-    internal class GtkFigmaCodePositionConverter : FigmaCodePositionConverter
+    internal class FigmaCodePositionConverter : FigmaCodePositionConverterBase
     {
         public override string ConvertToCode(string parent, string name, FigmaNode current)
         {

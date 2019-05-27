@@ -10,6 +10,10 @@ namespace FigmaSharp.iOS
 {
     public class FigmaDelegate : IFigmaDelegate
     {
+
+        static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
+        static readonly FigmaCodeAddChildConverterBase addChildConverter = new Converters.FigmaCodeAddChildConverter();
+
         static readonly FigmaViewConverter[] figmaViewConverters = {
             new FigmaVectorViewConverter (),
             new FigmaFrameEntityConverter (),
@@ -69,15 +73,8 @@ namespace FigmaSharp.iOS
 
         public void BeginInvoke(Action handler) =>
             UIApplication.SharedApplication.InvokeOnMainThread(handler);
+        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
 
-        public FigmaCodePositionConverter GetPositionConverter()
-        {
-            throw new NotImplementedException();
-        }
-
-        public FigmaCodeAddChildConverter GetAddChildConverter()
-        {
-            throw new NotImplementedException();
-        }
+        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
     }
 }

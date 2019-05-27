@@ -18,8 +18,8 @@ namespace FigmaSharp.Cocoa
             new FigmaLineConverter ()
         };
 
-        static readonly FigmaCodePositionConverter positionConverter = new MacFigmaCodePositionConverter();
-        static readonly FigmaCodeAddChildConverter addChildConverter = new MacFigmaCodeAddChildConverter();
+        static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
+        static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
 
         public bool IsYAxisFlipped => true;
 
@@ -63,8 +63,8 @@ namespace FigmaSharp.Cocoa
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
-        public FigmaCodePositionConverter GetPositionConverter() => positionConverter;
+        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
 
-        public FigmaCodeAddChildConverter GetAddChildConverter() => addChildConverter;
+        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
     }
 }

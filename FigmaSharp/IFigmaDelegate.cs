@@ -19,7 +19,7 @@ namespace FigmaSharp
         IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef);
         IImageViewWrapper GetImageView(IImageWrapper image);
         void BeginInvoke(Action handler);
-        FigmaCodePositionConverter GetPositionConverter();
-        FigmaCodeAddChildConverter GetAddChildConverter();
+        FigmaCodePositionConverterBase GetPositionConverter();
+        FigmaCodeAddChildConverterBase GetAddChildConverter();
     }
 }

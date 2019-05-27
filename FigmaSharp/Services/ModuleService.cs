@@ -50,26 +50,26 @@ namespace FigmaSharp.Services
 
     public class PlatformFigmaCodeAddChildConverter
     {
-        public PlatformFigmaCodeAddChildConverter(string platform, FigmaCodeAddChildConverter converter)
+        public PlatformFigmaCodeAddChildConverter(string platform, FigmaCodeAddChildConverterBase converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public FigmaCodeAddChildConverter Converter { get; private set; }
+        public FigmaCodeAddChildConverterBase Converter { get; private set; }
     }
 
     public class PlatformFigmaCodePositionConverter
     {
-        public PlatformFigmaCodePositionConverter(string platform, FigmaCodePositionConverter converter)
+        public PlatformFigmaCodePositionConverter(string platform, FigmaCodePositionConverterBase converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public FigmaCodePositionConverter Converter { get; private set; }
+        public FigmaCodePositionConverterBase Converter { get; private set; }
     }
 
     public static class ModuleService
@@ -206,7 +206,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodeAddChildConverter);
+                var interfaceType = typeof(FigmaCodeAddChildConverterBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -220,7 +220,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodeAddChildConverter element)
+                        if (Activator.CreateInstance(type) is FigmaCodeAddChildConverterBase element)
                             AddChildConverters.Add(new PlatformFigmaCodeAddChildConverter(platform, element));
                     }
                     catch (Exception ex)
@@ -232,6 +232,7 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
             }
         }
 
@@ -240,7 +241,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodePositionConverter);
+                var interfaceType = typeof(FigmaCodePositionConverterBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -254,7 +255,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodePositionConverter element)
+                        if (Activator.CreateInstance(type) is FigmaCodePositionConverterBase element)
                             CodePositionConverters.Add(new PlatformFigmaCodePositionConverter(platform, element));
                     }
                     catch (Exception ex)

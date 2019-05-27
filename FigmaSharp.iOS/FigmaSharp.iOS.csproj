@@ -74,6 +74,8 @@
     <Compile Include="Converters\FigmaTextConverter.cs" />
     <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
     <Compile Include="Converters\FigmaVectorViewConverter.cs" />
+    <Compile Include="Converters\FigmaCodePositionConverter.cs" />
+    <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

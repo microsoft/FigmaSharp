@@ -54,10 +54,10 @@
     <Compile Include="Converters\FigmaTextConverter.cs" />
     <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
     <Compile Include="Converters\FigmaVectorViewConverter.cs" />
-    <Compile Include="GtkFigmaCodePositionConverter.cs" />
-    <Compile Include="GtkFigmaCodeAddChildConverter.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
+    <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
+    <Compile Include="Converters\FigmaCodePositionConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

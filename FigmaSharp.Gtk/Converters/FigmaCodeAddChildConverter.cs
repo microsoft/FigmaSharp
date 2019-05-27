@@ -1,6 +1,6 @@
 ﻿namespace FigmaSharp.GtkSharp
 {
-    internal class GtkFigmaCodeAddChildConverter : FigmaCodeAddChildConverter
+    internal class FigmaCodeAddChildConverter : FigmaCodeAddChildConverterBase
     {
         public override string ConvertToCode(string parent, string current, FigmaNode currentNode)
         {

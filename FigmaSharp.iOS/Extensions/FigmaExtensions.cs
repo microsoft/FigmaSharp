@@ -7,6 +7,16 @@ namespace FigmaSharp.iOS
 {
     public static class FigmaExtensions
     {
+        public static string ToDesignerString(this float value)
+        {
+            return string.Concat(value.ToString(), "f");
+        }
+
+        public static string ToDesignerString(this int value)
+        {
+            return string.Concat(value.ToString());
+        }
+
         static int[] app_kit_font_weights = {
             2,   // FontWeight100
       3,   // FontWeight200

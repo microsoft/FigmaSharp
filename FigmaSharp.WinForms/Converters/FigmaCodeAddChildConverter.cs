@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaViewExtensions.cs - Extension methods for NSViews
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,10 +26,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp
+namespace FigmaSharp.WinForms.Converters
 {
-    public abstract class FigmaCodePositionConverter
+    public class FigmaCodeAddChildConverter : FigmaCodeAddChildConverterBase
     {
-        public abstract string ConvertToCode(string parent, string name, FigmaNode current);
+        public override string ConvertToCode(string parent, string current, FigmaNode currentNode)
+        {
+            return string.Format("{0}.AddSubview({1});", parent, current);
+        }
     }
 }

@@ -88,12 +88,12 @@ namespace FigmaSharp.WinForms
             //To define
         }
 
-        public FigmaCodePositionConverter GetPositionConverter()
+        public FigmaCodePositionConverterBase GetPositionConverter()
         {
             throw new NotImplementedException();
         }
 
-        public FigmaCodeAddChildConverter GetAddChildConverter()
+        public FigmaCodeAddChildConverterBase GetAddChildConverter()
         {
             throw new NotImplementedException();
         }
