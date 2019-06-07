@@ -1,4 +1,4 @@
-# FigmaSharp + UI Kit  <img src="FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="FigmaSharp/blob/master/icons/image-logo.png" width="50" />
+﻿# FigmaSharp + UI Kit  <img src="FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="FigmaSharp/blob/master/icons/image-logo.png" width="50" />
 
 FigmaSharp turns your Figma designs into working code.
 ![](./FigmaSharp/blob/master/icons/figmasharp-show.gif)
@@ -18,35 +18,34 @@ Right now FigmaSharp only supports Cocoa, but more UI frameworks may be added la
 To get documents from [figma.com](https://www.figma.com/) you'll need to generate a `Personal Access Token`. Sign in to Figma and in the main menu, go to `Help and Account` -> `Account Settings` and `Create new token`. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
 
 
-```CSharp
+```csharp
 using FigmaSharp;
 
 namespace FigmaSharpExample
 {
     static class Main
     {
+        // Put your Figma token and URL here
         const string FIGMA_TOKEN = "13c44-b0f20d98-815c-48b7-83de-1f94504b98bd";
         const string FIGMA_URL = "https://www.figma.com/file/QzEga2172k21eMF2s4Nc5keY";
 
-        static void Main(string[] args)
+        static void Main (string[] args)
         {
-                FigmaEnvironment.SetAccessToken(FIGMA_TOKEN);
-                FigmaResponse response = FigmaHelper.GetFigmaDialogFromUrlFile(FIGMA_URL);
-
-                FigmaDocument document = response.Document;
+                FigmaEnvironment.SetAccessToken (FIGMA_TOKEN);
+                FigmaDocument document = FigmaDocument.FromUrl (FIGMA_URL);
         }
 
     }
 }
 ```
 
-`FigmaResponse` contains a `FigmaDocument`, which is a hierarchy of `FigmaNode`s, and metadata.
+`FigmaResponse` contains a `FigmaDocument`, which is a hierarchy of `FigmaNode`s, and some metadata.
 
 There are several ways to load Figma documents:
 
-* From a figma.com URL with [FigmaHelper.GetFigmaDialogFromUrlFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
-* From a local .figma file: FigmaHelper.GetFigmaDialogFromFilePath](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
-* From raw data: [FigmaHelper.GetFigmaDialogFromContent](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
+* From a figma.com URL with [FigmaDocument.FromUrl](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99)
+* From a local .figma file with [Figmadocument.FromFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105)
+* From raw data with [FigmaDocument.FromString](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111)
 
 
 # Using a FigmaDocument to generate a native user interface
@@ -85,12 +84,14 @@ namespace ExampleFigmaMac
 		}
 
 
+        const string FIGMA_TOKEN = "13c44-b0f20d98-815c-48b7-83de-1f94504b98bd";
+        const string FIGMA_URL = "https://www.figma.com/file/QzEga2172k21eMF2s4Nc5keY";
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
-			// Do any additional setup after loading the view.
-			FigmaEnvirontment.SetAccessToken ("YOUR TOKEN");
+			FigmaEnvirontment.SetAccessToken (FIGMA_TOKEN);
 
 			var stackView = new NSStackView () { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
 
@@ -108,35 +109,38 @@ namespace ExampleFigmaMac
 Hey I love all of this! but… why not create a standard type of file to pack all of this? I want work with local files in my project!!
 
 
-
 # Including Figma files in your project with FigmaFile.
 
 
 In your solution it will look like this:
 ```
-
 |
-+--+ MyDialog.figma
-   |
-   +-- MyDialog.figma.cs
-   |
-   +-- icon.png
-   +-- icon@2x.png
++--+ MyDialog.figma // json, optional
+   +-- MyDialog.figma.cs // definitions, partial class. needs to include a comment with a link to original Figma
+   +-- MyDialog.cs // logic changes, partial class
+   +--+ Images/
+      +-- icon.png
+      +-- icon@2x.png
 |
-
 ```
 
 `.figma` files are JSON files and are accompanied by a code-behind `.figma.cs` file.
 Image files need to be named like their corresponding Figma ID, and their Build Action should be `EmbeddedResource`.
 
 
+
 ```csharp
-public class MyDialog : FigmaFile
+// MyDialog.cs
+//
+//
+public partial class MyDialog : FigmaFile
 {
-	public MyDialog () : base ("MyDialog.figma")
-	{
-		Initialize ();
-                Reload (includeImages: true);
+    public MyDialog () : base ("MyDialog.figma")
+    {
+        Initialize ();
+        Reload (includeImages: true);
+
+        UpdatesCheckbox.State = NSCellStateValue.Off;
 	}
 }
 ```
@@ -145,7 +149,34 @@ public class MyDialog : FigmaFile
 `Reload ()` takes the initialized FigmaDocument and images and creates a native Cocoa `NSView` as `MyDialog.ContentView`, which you can now use in your macOS apps.
 
 
+```csharp
+// MyDialog.figma.cs
+// This file was generated from https://www.figma.com/file/QzEga2172k21eMF2s4Nc5keY on 17 May 2019 at 14:09
+//
+public partial class MyDialog
+{
+    NSWindow = Document.GetObjectByID ("323:3");
 
+        NSButton CancelButton = Document.GetObjectByID ("323:3");
+        NSButton DoneButton = Document.GetObjectByName ("button done");
+
+    NSButton DoneButton = Document.GetObjectByType (type: FigmaComponent.Button, "button done");
+
+    NSButton DoneButton = Document.Pages ["Dialogs"].GetObjectByName ("Name");
+    NSButton DoneButton = Document.Pages [2].GetObjectByName ("Name");
+    NSButton DoneButton = Document.Pages [2].Groups ["container"].GetObjectByName ("Name");
+
+
+    NSButton UpdatesCheckBox = Document.GetObjectByID ("1:12") {
+        State = NSCellStateValue.On,
+        Frame = New CGRect (100, 200, 100, 220),
+        Constraints = 
+    };
+    
+
+
+}
+```
 
 
 # Figma Local Exporter (only mac for now)
