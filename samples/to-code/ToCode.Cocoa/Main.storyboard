@@ -651,11 +651,11 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="FigmaToCode example" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Figma to Cocoa" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="0.0" y="0.0" width="1280" height="800"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="1280" height="800"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="1QK-qG-IL0"/>
                         </connections>
@@ -680,32 +680,32 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                                 <subviews>
                                     <customView fixedFrame="YES" id="grd-ar-Fjc">
-                                        <rect key="frame" x="0.0" y="0.0" width="237" height="270"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="168" height="270"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                     </customView>
                                     <customView id="OCw-PE-pI3">
-                                        <rect key="frame" x="247" y="0.0" width="233" height="270"/>
+                                        <rect key="frame" x="178" y="0.0" width="302" height="270"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmZ-he-ePv">
-                                                <rect key="frame" x="0.0" y="0.0" width="233" height="270"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="302" height="270"/>
                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HFT-jK-w91">
-                                                    <rect key="frame" x="0.0" y="0.0" width="233" height="270"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="302" height="270"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="f7w-4L-lCO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="233" height="270"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="302" height="270"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="233" height="270"/>
-                                                            <size key="maxSize" width="240" height="10000000"/>
+                                                            <size key="minSize" width="302" height="270"/>
+                                                            <size key="maxSize" width="308" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
                                                     </subviews>
                                                 </clipView>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="REw-Cp-3fh">
-                                                    <rect key="frame" x="217" y="0.0" width="16" height="270"/>
+                                                    <rect key="frame" x="286" y="0.0" width="16" height="270"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
