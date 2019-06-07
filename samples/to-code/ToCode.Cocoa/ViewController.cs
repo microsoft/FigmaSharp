@@ -57,7 +57,11 @@ namespace ToCode.Cocoa
         {
             var code = codeRenderer.GetCode(e, true);
             var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
+
             textField.Value = code;
+            NSFont monospaceFont = NSFont.FromFontName("Monaco", 11);
+            textField.SetFont(monospaceFont, new NSRange(0, code.Length));
+
             NSPasteboard.GeneralPasteboard.DeclareTypes(new string[] { NSPasteboard.NSStringType }, null);
             NSPasteboard.GeneralPasteboard.SetStringForType(code, NSPasteboard.NSStringType);
         }
