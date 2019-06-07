@@ -39,7 +39,9 @@ namespace FigmaSharp
 
         public void SetImage(IImageWrapper image)
         {
+            ((Image)nativeView).Aspect = Aspect.AspectFill;
             ((Image)nativeView).Source = image.NativeObject as ImageSource;
+            ((Image)nativeView).Margin = new Thickness(0);
         }
     }
 }

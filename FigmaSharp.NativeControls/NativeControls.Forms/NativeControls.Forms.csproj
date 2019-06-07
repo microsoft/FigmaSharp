@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.394984-pre10" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp.Forms\FigmaSharp.Forms.csproj" />
+    <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj" />
+  </ItemGroup>
+  <Import Project="..\..\samples\native-control\NativeControl.Shared\NativeControl.Shared.projitems" Label="Shared" Condition="Exists('..\..\samples\native-control\NativeControl.Shared\NativeControl.Shared.projitems')" />
+</Project>

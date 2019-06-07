@@ -55,7 +55,11 @@ namespace FigmaSharp
             get => (float)nativeView.X;
             set
             {
-                AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(value, nativeView.Y, nativeView.Width, nativeView.Height));
+                if (value > 0)
+                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(value, nativeView.Y, nativeView.Width, nativeView.Height));
+
+                // TODO:
+                nativeView.TranslationX = value;
             }
         }
         public float Y
@@ -63,7 +67,8 @@ namespace FigmaSharp
             get => (float)nativeView.Y;
             set
             {
-                AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, value, nativeView.Width, nativeView.Height));
+                if (value > 0)
+                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, value, nativeView.Width, nativeView.Height));
             }
         }
         public float Width
@@ -71,7 +76,10 @@ namespace FigmaSharp
             get => (float)nativeView.Width;
             set
             {
-                AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, nativeView.Y,value, nativeView.Height));
+                if (value > 0)
+                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, nativeView.Y, value, nativeView.Height));
+
+                nativeView.WidthRequest = value;
             }
         }
         public float Height
@@ -79,7 +87,10 @@ namespace FigmaSharp
             get => (float)nativeView.Height;
             set
             {
-                AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, nativeView.Y, nativeView.Width, value));
+                if (value > 0)
+                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, nativeView.Y, nativeView.Width, value));
+
+                nativeView.HeightRequest = value;
             }
         }
 
@@ -105,16 +116,6 @@ namespace FigmaSharp
                 layout.Children.Clear();
             }
             children.Clear();
-            //clean views from current container
-            //var views = nativeView.Subviews;
-            //foreach (var item in views)
-            //{
-            //    item.RemoveFromSuperview();
-            //}
-            //nativeView.RemoveConstraints(nativeView.Constraints);
-
-            //Figma doesn't calculate the bounds of our first level
-            //frameEntityResponse.FigmaMainNode.CalculateBounds();
         }
 
         public ViewWrapper(View nativeView)
@@ -150,10 +151,7 @@ namespace FigmaSharp
 
         public void MakeFirstResponder()
         {
-            //if (nativeView.CanBecomeFirstResponder)
-            //{
-            //    nativeView.BecomeFirstResponder();
-            //}
+            
         }
     }
 }

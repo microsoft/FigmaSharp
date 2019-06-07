@@ -35,15 +35,18 @@ namespace FigmaSharp
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
         readonly ScrollView scrollView;
+        readonly Grid scrollContent;
 
         public ScrollViewWrapper(ScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
+            this.scrollContent = new Grid();
+            scrollView.Content = scrollContent;
         }
 
         public override void AddChild(IViewWrapper view)
         {
-            scrollView.Content = view.NativeObject as View;
+            scrollContent.Children.Add(view.NativeObject as View);
         }
 
         public void AdjustToContent()
