@@ -28,11 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaFileExporter", "FigmaF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Local File", "Local File", "{666C61C6-011C-407F-8D85-98DFD189651C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalFile", "LocalFile", "{666C61C6-011C-407F-8D85-98DFD189651C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleLocalFile.Cocoa", "samples\local-file-rendering\ExampleFigma.Mac\ExampleLocalFile.Cocoa.csproj", "{B72209A6-B110-468F-B4BE-BE424397E632}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native Control", "Native Control", "{32C47342-CF7F-4FE6-A3BA-E12E5BE126E5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeControl", "NativeControl", "{32C47342-CF7F-4FE6-A3BA-E12E5BE126E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Designer", "FigmaSharp.Designer\FigmaSharp.Designer.csproj", "{4E7F6BD9-33C0-4544-9186-7FDCD0047F4B}"
 EndProject
