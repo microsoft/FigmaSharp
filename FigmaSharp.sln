@@ -72,6 +72,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControl.Gtk", "sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Tests", "FigmaSharp.Tests\FigmaSharp.Tests.csproj", "{97A18BDA-8AA6-40E6-9928-B30B49C134E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Forms", "FigmaSharp.Forms\FigmaSharp.Forms.csproj", "{31E20110-88EC-49E5-B179-974BF49001F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControls.Forms", "FigmaSharp.NativeControls\NativeControls.Forms\NativeControls.Forms.csproj", "{6038E912-DF9D-4A84-AA2C-9CC0A318567F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Forms", "samples\basic-rendering\BasicRendering.Forms\BasicRendering.Forms.csproj", "{0DE5278C-A0DA-43C1-8DE5-9E897DAE9479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Forms.Android", "samples\basic-rendering\BasicRendering.Forms.Android\BasicRendering.Forms.Android.csproj", "{768A352E-5DFE-4DF8-8EAD-B61483D2F762}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ExampleFigma.Shared\ExampleFigma.Shared.projitems*{461b4a01-c603-4c8a-9763-642197569e9a}*SharedItemsImports = 4
