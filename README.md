@@ -1,4 +1,4 @@
-# FigmaSharp   <img src="FigmaSharp/blob/master/icons/image-logo.png" data-canonical-src="FigmaSharp/blob/master/icons/image-logo.png" width="50" />
+# FigmaSharp
 
 *FigmaSharp converts Figma documents into .NET objects and provides the tools to turn them into working native UI views. Free and Open Source software under the [MIT LICENSE]().*
 
@@ -25,6 +25,8 @@ There are several ways to load Figma documents into your app:
 * [FigmaDocument.FromFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105) – to load from a local .figma file
 * [FigmaDocument.FromString](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111) – to load from raw data string
 
+Here's how to do it with a URL:
+
 ```csharp
 using System;
 using FigmaSharp;
@@ -50,7 +52,7 @@ This results in a `FigmaDocument`, which is a hierarchy of `FigmaNode`s, and som
 [Browse the documentation]() to learn more about everything you can do with a Figma document, .
 
 
-## Native views and controls
+## Rendering native views and controls
 
 This is where the real magic happens. Being able to use Figma documents in C# is nice enough, but we can go one step further and use them to draw native UI views.
 
@@ -63,9 +65,7 @@ Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g.
 
 * [NSView.FromFigmaFile](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
 * [NSView.FromFigmaUrl](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
-* [NSView.FromFigmaResource](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L65)
 * [NSView.FromFigmaString](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L80)
-* [NSView.FromFigmaFrameEntity](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L94)
 
 
 ```csharp
@@ -107,8 +107,6 @@ Our views are now drawn natively, but what about actual working controls?
 Using a [set of special Figma components](https://www.figma.com/file/QzEgq2772k2eeMF2sVNc3kEY/macOS-Components?node-id=7%3A1788), we can tell **FigmaSharp.Cocoa.NativeControls** what layers to render as real controls.
 
 
-
-
 ## Bundling Figma files
 
 It's not always possible nor desirable to connect to [figma.com]() to load your documents each time. Here's how you can bundle Figma documents and use them as resources using the `FigmaFile` [API]():
@@ -121,14 +119,13 @@ In your solution tree it should look something like this:
 
 ```
 |
-|--+ MyDialog.figma
-|  |
-|  |-- MyDialog.figma.cs
-|  |-- MyDialog.cs
-|  |
-|  |--+ Images/
-|     |-- icon.png
-|     |-- icon@2x.png
+|---+ MyDialog.figma
+|   |- MyDialog.figma.cs
+|   |- MyDialog.cs
+|
+|---+ Resources/
+|   |- icon.png
+|   |- icon@2x.png
 |
 ```
 
@@ -137,9 +134,6 @@ Let's take the `MyDialog.figma` file and render the view using Cocoa. We'll need
 
 ```csharp
 // MyDialog.figma.cs
-//
-// This file was generated on on 17 May 2019 at 14:09 using
-// https://www.figma.com/file/QzEga2172k21eMF2s4Nc5keY 
 
 using System;
 using AppKit;
@@ -168,18 +162,19 @@ public partial class MyDialog : FigmaFile
 }
 ```
 
-Here `Initialize ()`  creates  `MyDialog.Document` as a [FigmaDocument]().
+Here `Initialize ()`  sets  `FigmaFile.Document` as a [FigmaDocument]().
 
-`Reload ()` takes the initialized `FigmaDocument` and images and creates a native `NSView` as `MyDialog.ContentView`, which you can now use in your macOS app.
+`Reload ()` takes the initialized `FigmaDocument` and images and creates a native `NSView` as `FigmaFile.ContentView`, which you can now use in your Cocoa app.
 
-This process can be automated by using the [bundler]() tool.
+This process can be automated by using the [bundler]() tool included with the…
 
 
 ## Tools
 
-The **FigmaSharp.Tools** folder contains some simple tools that help you handle Figma files:
+The **FigmaSharp.Tools** folder contains some helpful tools for handling Figma files:
 
-- **Inspector** – preview how your Figma documents look when rendered natively and copy code snippets
+- **Inspector** – preview how your Figma document looks when rendered natively and copy snippets
+- **Code Generator** – turns a Figma document into code
 - **Bundler** – takes a figma.com URL and downloads the .figma file including all images and adds it to your project
 
  [This extension](https://www.nuget.org/packages/FigmaSharp/) integrates the inspector and bundler directly into [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) for ease of use.
