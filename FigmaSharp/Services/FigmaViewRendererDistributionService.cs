@@ -61,7 +61,7 @@ namespace FigmaSharp.Services
                 {
                     parentNode.View.AddChild(child.View);
 
-                    var x = absoluteBounding.absoluteBoundingBox.x -  parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+                    var x = Math.Max (absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x, 0);
                     float y;
                     if (AppContext.Current.IsYAxisFlipped)
                     {
@@ -74,7 +74,7 @@ namespace FigmaSharp.Services
                         y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
                     }
 
-                    child.View.SetPosition(x, y);
+                    child.View.SetAllocation(x, y, absoluteBounding.absoluteBoundingBox.width, absoluteBounding.absoluteBoundingBox.height);
                 }
 
                 Recursively(child);
