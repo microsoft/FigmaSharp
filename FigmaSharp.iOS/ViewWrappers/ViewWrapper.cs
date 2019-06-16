@@ -69,9 +69,16 @@ namespace FigmaSharp.iOS
             }
         }
 
-        public string Identifier { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string NodeName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public bool Hidden { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string Identifier { get => string.Empty; set { } }
+        public string NodeName { get => string.Empty; set { } }
+
+        public bool Hidden
+        {
+            get => nativeView.Hidden;
+            set => nativeView.Hidden = value;
+        }
+
+        public FigmaRectangle Allocation => new FigmaRectangle((float)nativeView.Frame.X, (float)nativeView.Frame.Y, (float)nativeView.Frame.Width, (float)nativeView.Frame.Height);
 
         protected UIView nativeView;
 
@@ -123,14 +130,17 @@ namespace FigmaSharp.iOS
         public void MakeFirstResponder()
         {
             if (nativeView.CanBecomeFirstResponder)
-            {
                 nativeView.BecomeFirstResponder();
-            }
         }
 
         public void SetPosition(float x, float y)
         {
             nativeView.Frame = new CoreGraphics.CGRect(x, y, nativeView.Frame.Width, nativeView.Frame.Height);
+        }
+
+        public void SetAllocation(float x, float y, float width, float height)
+        {
+            nativeView.Frame = new CoreGraphics.CGRect(x, y, width, height);
         }
     }
 }

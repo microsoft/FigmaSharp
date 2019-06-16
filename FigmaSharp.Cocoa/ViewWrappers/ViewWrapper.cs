@@ -85,6 +85,8 @@ namespace FigmaSharp.Cocoa
             set => nativeView.Hidden = value;
         }
 
+        public FigmaRectangle Allocation => new FigmaRectangle((float)nativeView.Frame.X, (float)nativeView.Frame.Y, (float)nativeView.Frame.Width, (float)nativeView.Frame.Height);
+
         protected NSView nativeView;
 
         public ViewWrapper() : this (new NSView ())
@@ -137,6 +139,11 @@ namespace FigmaSharp.Cocoa
         public void SetPosition(float x, float y)
         {
             nativeView.SetFrameOrigin(new CoreGraphics.CGPoint(x, y));
+        }
+
+        public void SetAllocation(float x, float y, float width, float height)
+        {
+            nativeView.Frame = new CoreGraphics.CGRect(x, y, width, height);
         }
     }
 }

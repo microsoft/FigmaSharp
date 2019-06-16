@@ -39,47 +39,16 @@ namespace FigmaSharp.GtkSharp
         protected readonly List<IViewWrapper> children = new List<IViewWrapper>();
         public virtual IReadOnlyList<IViewWrapper> Children => children;
 
-        public float X {
-            get => nativeView.Allocation.X;
-            set {
-                FixedParentContainer?.Put(nativeView, (int)value, (int)(Y == -1 ? 0 : Y) );
-            } 
-        }
-
-        //static Fixed GetFixed (Widget widget)
-        //{
-        //    return widget as Fixed ?? widget.Parent as Fixed;
-        //}
-
-        //static Fixed GetFixedParent(Fixed fixedWidger)
-        //{
-        //    if (fixedWidger.Parent is Fixed)
-        //    {
-        //        return (Fixed)fixedWidger.Parent;
-        //    }
-        //    return fixedWidger.Parent?.Parent as Fixed;
-        //}
-
-        //static Fixed GetFixedParent (Widget widget)
-        //{
-        //    var fixedContainter = GetFixed(widget);
-        //    if (fixedContainter == null)
-        //    {
-        //        return null;
-        //    }
-        //    return GetFixedParent(fixedContainter);
-        //}
-
         public Fixed FixedParentContainer => nativeView.Parent as Fixed;
 
-        public float Y
-        {
-            get => nativeView.Allocation.Y;
-            set
-            {
-                FixedParentContainer?.Put(nativeView,(int) (X == -1 ? 0 : X), (int)value);
-            }
-        }
+        //public float Y
+        //{
+        //    get => nativeView.Allocation.Y;
+        //    set
+        //    {
+        //        FixedParentContainer?.Put(nativeView,(int) (X == -1 ? 0 : X), (int)value);
+        //    }
+        //}
 
         public float Width
         {
@@ -115,6 +84,8 @@ namespace FigmaSharp.GtkSharp
             get => !nativeView.Visible;
             set => nativeView.Visible = !value;
         }
+
+        public FigmaRectangle Allocation => new FigmaRectangle(nativeView.Allocation.X, nativeView.Allocation.Y, nativeView.Allocation.Width, nativeView.Allocation.Height);
 
         protected Widget nativeView;
 
@@ -169,6 +140,11 @@ namespace FigmaSharp.GtkSharp
         public void SetPosition(float x, float y)
         {
             FixedParentContainer?.Move(nativeView, (int)x, (int)y);
+        }
+
+        public void SetAllocation(float x, float y, float width, float height)
+        {
+            FixedParentContainer?.Put(nativeView, (int)(x <= -1 ? 0 : x), (int)(y <= -1 ? 0 : y));
         }
     }
 }

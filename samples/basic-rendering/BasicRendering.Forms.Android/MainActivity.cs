@@ -15,7 +15,7 @@ namespace BasicRendering.Forms.Droid
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        const string FigmaToken = "INSERT YOUR FIGMA TOKEN HERE";
+        const string FigmaToken = "6192-6b8c676e-270f-4fff-ada3-7b6dd1cfde6d";
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

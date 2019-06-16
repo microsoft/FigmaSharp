@@ -88,5 +88,13 @@ namespace FigmaSharp.Cocoa
                 }
             }
         }
+
+        public void SetContentSize(float width, float height)
+        {
+            if (scrollView.DocumentView is NSView content)
+            {
+                content.SetFrameSize(new CGSize(width, height));
+            }
+        }
     }
 }

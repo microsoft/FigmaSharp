@@ -43,9 +43,11 @@ namespace FigmaSharp.WinForms
             }
         }
 
-        public string Identifier { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string NodeName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Hidden { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Identifier { get => string.Empty; set { } }
+        public string NodeName { get => string.Empty; set { } }
+        public bool Hidden { get => !nativeView.Visible; set => nativeView.Visible = !value; }
+
+        public FigmaRectangle Allocation => new FigmaRectangle(nativeView.Left, nativeView.Top, nativeView.Width, nativeView.Height);
 
         public virtual void AddChild(IViewWrapper view)
         {
@@ -67,7 +69,6 @@ namespace FigmaSharp.WinForms
             if (children.Contains(view))
             {
                 children.Remove(view);
-                var controls = nativeView.Controls.Cast<Control>();
                 nativeView.Controls.Remove((Control)view.NativeObject);
             }
         }
@@ -91,6 +92,13 @@ namespace FigmaSharp.WinForms
         {
             nativeView.Left = (int)x;
             nativeView.Top = (int)y;
+        }
+
+        public void SetAllocation(float x, float y, float width, float height)
+        {
+            SetPosition(x, y);
+            Width = width;
+            Height = height;
         }
     }
 }

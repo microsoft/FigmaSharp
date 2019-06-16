@@ -54,7 +54,7 @@ namespace FigmaSharp.iOS
             {
                 contentRect = contentRect.UnionWith(view.Frame);
             }
-            scrollView.ContentSize = contentRect.Size;
+            SetContentSize((float) contentRect.Width, (float)contentRect.Height);
         }
 
         public override void RemoveChild(IViewWrapper view)
@@ -62,6 +62,11 @@ namespace FigmaSharp.iOS
             if (scrollView.Subviews.Contains (view.NativeObject)) {
                 ((UIView)view.NativeObject).RemoveFromSuperview();
             }
+        }
+
+        public void SetContentSize(float width, float height)
+        {
+            scrollView.ContentSize = new CGSize(width, height);
         }
     }
 }
