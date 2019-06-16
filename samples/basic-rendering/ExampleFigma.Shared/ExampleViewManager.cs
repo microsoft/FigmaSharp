@@ -33,44 +33,11 @@ namespace ExampleFigma
                 .ToArray();
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-            var scrollSize = GetScrollSize (mainNodes);
-            scrollViewWrapper.SetContentSize (scrollSize.Item1, scrollSize.Item2);
-
             var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
             if (canvas != null)
                 scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
 
-            Reposition(mainNodes);
-        }
-
-        private Tuple<float, float> GetScrollSize(ProcessedNode[] mainNodes)
-        {
-            float width = 0;
-            float height = 0;
-            foreach (var processedNode in mainNodes)
-            {
-                var node = processedNode.FigmaNode;
-                if (node is IAbsoluteBoundingBox figmaNodeBounding)
-                {
-                    width += figmaNodeBounding.absoluteBoundingBox.width + Margin;
-                    height = Math.Max(height, figmaNodeBounding.absoluteBoundingBox.height);
-                }
-            }
-            return new Tuple<float, float>(width, height);
-        }
-
-        //Alignment 
-        const int Margin = 20;
-
-        public void Reposition(ProcessedNode[] mainNodes)
-        {
-            float currentX = Margin;
-            foreach (var processedNode in mainNodes)
-            {
-                var view = processedNode.View;
-                view.SetPosition(currentX, 0);
-                currentX += view.Width + Margin;
-            }
+            scrollViewWrapper.AdjustToContent();
         }
     }
 }
