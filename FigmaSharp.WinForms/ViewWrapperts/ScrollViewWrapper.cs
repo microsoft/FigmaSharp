@@ -43,15 +43,12 @@ namespace FigmaSharp.WinForms
 
         public void AdjustToContent()
         {
-            //CGRect contentRect = CGRect.Empty;
-            //foreach (var view in scrollView.Subviews)
-            //{
-            //    contentRect = contentRect.UnionWith(view.Frame);
-            //}
-            //if (scrollView.DocumentView is NSView content)
-            //{
-            //    content.SetFrameSize(contentRect.Size);
-            //}
+
+        }
+
+        public void SetContentSize(float width, float height)
+        {
+
         }
     }
 }

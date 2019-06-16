@@ -88,5 +88,10 @@ namespace FigmaSharp.GtkSharp
                 RemoveChild(child);
             };
         }
+
+        public void SetContentSize(float width, float height)
+        {
+            //not necessary in gtk
+        }
     }
 }
