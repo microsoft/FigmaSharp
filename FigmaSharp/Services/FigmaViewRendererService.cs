@@ -168,8 +168,8 @@ namespace FigmaSharp.Services
             FigmaCustomConverters = figmaViewConverters.Where(s => !s.IsLayer).ToArray();
         }
 
-        public Task StartAsync(string file) => StartAsync(file, new FigmaViewRendererServiceOptions());
-        public Task StartAsync(string file, FigmaViewRendererServiceOptions options) => Task.Run(() => Start(file, options: options));
+        public Task StartAsync(string file, IViewWrapper container) => StartAsync(file, container, new FigmaViewRendererServiceOptions());
+        public Task StartAsync(string file, IViewWrapper container, FigmaViewRendererServiceOptions options) => Task.Run(() => Start(file, container, options: options));
 
         public void Refresh (FigmaViewRendererServiceOptions options)
         {
@@ -181,9 +181,24 @@ namespace FigmaSharp.Services
                 Console.WriteLine($"Reading successfull");
                 Console.WriteLine($"Loading views for page {Page}..");
 
-                var canvas = figmaProvider.Response.document.children[Page];
+                var canvas = figmaProvider.Response.document.children.FirstOrDefault ();
+                var processedParentView = new ProcessedNode() { FigmaNode = canvas, View = container };
+                NodesProcessed.Add (processedParentView);
+
+                FigmaRectangle contentRect = FigmaRectangle.Zero;
+                foreach (var view in canvas.children)
+                {
+                    if (view is IAbsoluteBoundingBox box)
+                    {
+                        contentRect = contentRect.UnionWith(box.absoluteBoundingBox);
+                    }
+                }
+
+                //figma cambas
+                canvas.absoluteBoundingBox = contentRect;
+
                 foreach (var item in canvas.children)
-                    GenerateViewsRecursively(item, null, options);
+                    GenerateViewsRecursively(item, processedParentView, options);
 
                 //Images
                 if (ProcessImages)
@@ -200,13 +215,17 @@ namespace FigmaSharp.Services
             }
         }
 
-        public void Start(string file) =>
-            Start(file, new FigmaViewRendererServiceOptions());
+        IViewWrapper container;
 
-        public void Start(string file, FigmaViewRendererServiceOptions options)
+        public void Start(string file, IViewWrapper container) =>
+            Start(file, container, new FigmaViewRendererServiceOptions());
+
+        public void Start(string file, IViewWrapper container, FigmaViewRendererServiceOptions options)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
+
+            this.container = container;
 
             ProcessImages = options.AreImageProcessed;
             Page = options.StartPage;
@@ -276,7 +295,7 @@ namespace FigmaSharp.Services
             {
                 foreach (var item in nodeContainer.children)
                 {
-                    GenerateViewsRecursively(item, currentProcessedNode, options);
+                    GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
                 }
             }
         }

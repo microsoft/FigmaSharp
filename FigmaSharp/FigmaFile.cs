@@ -99,13 +99,13 @@ namespace FigmaSharp
         public void Initialize ()
 		{
             try {
-                fileService.Start(file);
+                ContentView = AppContext.Current.CreateEmptyView();
+
+                fileService.Start(file, ContentView);
 
                 rendererService.Start();
 
                 FigmaImages = new List<IImageViewWrapper> ();
-
-                ContentView = AppContext.Current.CreateEmptyView();
 
                 foreach (var items in rendererService.MainViews)
                 {
