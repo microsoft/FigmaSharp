@@ -28,7 +28,7 @@
 
 using Xamarin.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.Forms
 {
     public class ImageWrapper : IImageWrapper
     {

@@ -27,8 +27,9 @@
  */
 
 using System.Text;
+using FigmaSharp.Converters;
 using Xamarin.Forms;
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Forms.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {
@@ -40,7 +41,7 @@ namespace FigmaSharp.Converters
             return new ViewWrapper(figmaLineView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "lineView";

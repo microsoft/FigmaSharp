@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using FigmaSharp.Forms;
 using Foundation;
 using UIKit;
 
@@ -22,6 +22,8 @@ namespace BasicRendering.Forms.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

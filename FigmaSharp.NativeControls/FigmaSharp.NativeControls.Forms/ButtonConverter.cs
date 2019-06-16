@@ -2,8 +2,9 @@
 using System.Text;
 using FigmaSharp.NativeControls.Base;
 using Xamarin.Forms;
+using FigmaSharp.Forms;
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.NativeControls.Forms
 {
     public class ButtonConverter : ButtonConverterBase
     {
@@ -40,9 +41,9 @@ namespace FigmaSharp.NativeControls
             return new ViewWrapper(view);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
-            return string.Empty;
+            return "var [NAME] = new Button();";
         }
     }
 }

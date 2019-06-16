@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using ExampleFigma;
 using FigmaSharp;
+using FigmaSharp.Forms;
 using Xamarin.Forms;
 
 namespace BasicRendering.Forms
@@ -10,14 +11,12 @@ namespace BasicRendering.Forms
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        const string FigmaFileName = "INSERT YOUR FIGMA FILE IDENTIFIER HERE";
-
         public MainPage()
         {
             InitializeComponent();
 
             var scrollViewWrapper = new ScrollViewWrapper(ContainerPanel);
-            var manager = new ExampleViewManager(scrollViewWrapper, FigmaFileName);
+            var manager = new ExampleViewManager(scrollViewWrapper);
             manager.Initialize();
         }
     }
