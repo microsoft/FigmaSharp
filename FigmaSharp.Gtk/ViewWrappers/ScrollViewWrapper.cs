@@ -35,15 +35,22 @@ namespace FigmaSharp.GtkSharp
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
         readonly ScrolledWindow scrollView;
-        //IViewWrapper ViewPort;
 
         readonly Fixed currentContainer;
+
+        public FigmaColor BackgroundColor
+        {
+            get => viewPort?.Style.Background(StateType.Normal).ToFigmaColor ();
+            set => viewPort?.ModifyBg (StateType.Normal, value.ToGdkColor ());
+        }
+
+        private Viewport viewPort => scrollView.Children.OfType<Viewport>().FirstOrDefault();
 
         public ScrollViewWrapper(ScrolledWindow scrollView, Fixed fixedView) : base(scrollView)
         {
             this.scrollView = scrollView;
-            var viewportView = scrollView.Children.FirstOrDefault();
-            if (viewportView is Viewport viewport && viewport.Children[0] is Fixed viewPortFixedView)
+            var viewportView = viewPort;
+            if (viewportView != null && viewportView.Children[0] is Fixed viewPortFixedView)
             {
                 currentContainer = viewPortFixedView;
             } else {
@@ -53,16 +60,7 @@ namespace FigmaSharp.GtkSharp
 
         public void AdjustToContent()
         {
-            //CGRect contentRect = CGRect.Empty;
-            //scrollView.bou
-            //if (scrollView.DocumentView is NSView content)
-            //{
-            //    foreach (var view in content.Subviews)
-            //    {
-            //        contentRect = contentRect.UnionWith(view.Frame);
-            //    }
-            //    content.SetFrameSize(contentRect.Size);
-            //}
+            //not necessary in gtk
         }
 
         public override void AddChild(IViewWrapper view)

@@ -32,6 +32,11 @@ namespace FigmaSharp.Forms
             return new Color(color.r, color.g, color.b, color.a);
         }
 
+        public static FigmaColor ToFigmaColor(this Color color)
+        {
+            return new FigmaColor() { a = (float)color.A, r = (float)color.R, g = (float)color.G, b = (float)color.B };
+        }
+
         public static Rectangle ToCGRect(this FigmaRectangle rectangle)
         {
             return new Rectangle(rectangle.x, rectangle.y, rectangle.width, rectangle.height);

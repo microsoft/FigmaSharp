@@ -46,6 +46,11 @@ namespace FigmaSharp.WinForms
             return Color.FromArgb ((int)(color.a * 255), (int)(color.r * 255), (int)(color.g * 255), (int)(color.b * 255));
         }
 
+        public static FigmaColor ToFigmaColor(this Color color)
+        {
+            return new FigmaColor() { a = (float)color.A, r = (float)color.R, g = (float)color.G, b = (float)color.B };
+        }
+
         public static Font ToFont(this FigmaTypeStyle style)
         {
             string family = style.fontFamily;

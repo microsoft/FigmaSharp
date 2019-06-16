@@ -44,6 +44,11 @@ namespace FigmaSharp.iOS
             return UIColor.FromRGBA (color.r, color.g, color.b, color.a);
         }
 
+        public static FigmaColor ToFigmaColor(this UIColor color)
+        {
+            return new FigmaColor() { a = (float) color.CIColor.Alpha, r = (float)color.CIColor.Red,  g = (float)color.CIColor.Green, b = (float)color.CIColor.Blue };
+        }
+
         public static CGRect ToCGRect(this FigmaRectangle rectangle)
         {
             return new CGRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);

@@ -35,6 +35,12 @@ namespace FigmaSharp.WinForms
     {
         readonly ScrollableControl scrollView;
 
+        public FigmaColor BackgroundColor
+        {
+            get => scrollView.BackColor.ToFigmaColor();
+            set => scrollView.BackColor = value.ToColor();
+        }
+
         public ScrollViewWrapper(ScrollableControl scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;

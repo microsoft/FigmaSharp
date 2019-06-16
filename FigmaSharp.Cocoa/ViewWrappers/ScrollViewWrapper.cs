@@ -36,6 +36,12 @@ namespace FigmaSharp.Cocoa
     {
         readonly NSScrollView scrollView;
 
+        public FigmaColor BackgroundColor
+        {
+            get => scrollView.BackgroundColor.ToFigmaColor();
+            set => scrollView.BackgroundColor = value.ToNSColor();
+        }
+
         public ScrollViewWrapper(NSScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;

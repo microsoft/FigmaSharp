@@ -78,6 +78,11 @@ namespace FigmaSharp.Cocoa
             return NSColor.FromRgba(color.r, color.g, color.b, color.a);
         }
 
+        public static FigmaColor ToFigmaColor(this NSColor color)
+        {
+            return new FigmaColor() { a = (float)color.AlphaComponent, r = (float)color.RedComponent, g = (float)color.GreenComponent, b = (float)color.BlueComponent };
+        }
+
         public static string ToDesignerString(this float value)
         {
             return string.Concat (value.ToString(),"f");

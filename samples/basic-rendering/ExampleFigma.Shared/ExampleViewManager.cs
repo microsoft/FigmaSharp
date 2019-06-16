@@ -35,6 +35,10 @@ namespace ExampleFigma
             var scrollSize = GetScrollSize (mainNodes);
             scrollViewWrapper.SetContentSize (scrollSize.Item1, scrollSize.Item2);
 
+            var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+            if (canvas != null)
+                scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
+
             Reposition(mainNodes);
         }
 

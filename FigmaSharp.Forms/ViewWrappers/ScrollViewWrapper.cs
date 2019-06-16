@@ -46,6 +46,11 @@ namespace FigmaSharp.Forms
             scrollView.Orientation = ScrollOrientation.Both;
         }
 
+        public FigmaColor BackgroundColor {
+            get => scrollView.Content.BackgroundColor.ToFigmaColor ();
+            set => scrollView.Content.BackgroundColor = value.ToColor();
+        }
+
         public override void AddChild(IViewWrapper view)
         {
             children.Add(view);

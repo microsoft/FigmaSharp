@@ -42,6 +42,11 @@ namespace FigmaSharp.iOS
             this.scrollView = scrollView;
         }
 
+        public FigmaColor BackgroundColor { 
+            get => scrollView.BackgroundColor.ToFigmaColor ();
+            set => scrollView.BackgroundColor = value.ToUIColor();
+        }
+
         public override void AddChild(IViewWrapper view)
         {
             scrollView.AddSubview(view.NativeObject as UIView);

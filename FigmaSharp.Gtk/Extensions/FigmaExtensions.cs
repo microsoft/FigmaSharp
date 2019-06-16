@@ -53,9 +53,23 @@ namespace FigmaSharp.GtkSharp
             return new Gdk.Color (GetByteColor(color.r), GetByteColor (color.g), GetByteColor (color.b));
         }
 
+        public static FigmaColor ToFigmaColor(this Gdk.Color color)
+        {
+            return new FigmaColor() { 
+                a = (float)1, 
+                r = (float)color.Red / 255f, 
+                g = (float)color.Green/255f, 
+                b = (float)color.Blue/255f };
+        }
+
         static byte GetByteColor (double color)
         {
            return (byte)(color * 255);
+        }
+
+        static byte GetFigmaColor(double color)
+        {
+            return (byte)(color * 255);
         }
 
         public static string ToDesignerString(this float value)

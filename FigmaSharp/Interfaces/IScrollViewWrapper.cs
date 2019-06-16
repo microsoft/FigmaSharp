@@ -31,6 +31,8 @@ namespace FigmaSharp
 {
     public interface IScrollViewWrapper : IViewWrapper
     {
+        FigmaColor BackgroundColor { get; set; }
+
         void AdjustToContent();
         void SetContentSize(float width, float height);
     }
