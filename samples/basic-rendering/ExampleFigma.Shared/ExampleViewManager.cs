@@ -31,15 +31,34 @@ namespace ExampleFigma
             var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)
             .ToArray();
 
-            Reposition(mainNodes);
+            //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
+            var scrollSize = GetScrollSize (mainNodes);
+            scrollViewWrapper.SetContentSize (scrollSize.Item1, scrollSize.Item2);
 
-            scrollViewWrapper.AdjustToContent();
+            Reposition(mainNodes);
         }
+
+        private Tuple<float, float> GetScrollSize(ProcessedNode[] mainNodes)
+        {
+            float width = 0;
+            float height = 0;
+            foreach (var processedNode in mainNodes)
+            {
+                var node = processedNode.FigmaNode;
+                if (node is IAbsoluteBoundingBox figmaNodeBounding)
+                {
+                    width += figmaNodeBounding.absoluteBoundingBox.width + Margin;
+                    height = Math.Max(height, figmaNodeBounding.absoluteBoundingBox.height);
+                }
+            }
+            return new Tuple<float, float>(width, height);
+        }
+
+        //Alignment 
+        const int Margin = 20;
 
         public void Reposition(ProcessedNode[] mainNodes)
         {
-            //Alignment 
-            const int Margin = 20;
             float currentX = Margin;
             foreach (var processedNode in mainNodes)
             {

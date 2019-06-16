@@ -26,10 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace FigmaSharp
 {
@@ -323,7 +325,7 @@ namespace FigmaSharp
         public int count { get; set; }
     }
 
-	public class FigmaRectangle
+	public class FigmaRectangle : IEquatable<FigmaRectangle>
 	{
 		public float x { get; set; }
 		public float y { get; set; }
@@ -331,7 +333,45 @@ namespace FigmaSharp
 		public float height { get; set; }
 
 		public static FigmaRectangle Zero { get; set; } = new FigmaRectangle { x=0,y =0,width =0,height= 0 };
-	}
+
+        public FigmaRectangle ()
+        {
+
+        }
+
+        public FigmaRectangle(float x, float y, float width, float height)
+        {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+
+        public FigmaRectangle UnionWith (params FigmaRectangle[] allocation)
+        {
+            float xMin = allocation.Min(s => s.x);
+            float yMin = allocation.Min(s => s.y);
+            float xMax = allocation.Max(s => s.x + s.width);
+            float yMax = allocation.Max(s => s.y + s.height);
+            return new FigmaRectangle(xMin, yMin, xMax - xMin, yMax - yMin);
+        }
+
+        public bool Equals(FigmaRectangle other)
+        {
+            if (x != other.x || y != other.y || width != other.width || height != other.height)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (!(obj is FigmaRectangle)) return false;
+            return Equals((FigmaRectangle)obj);
+        }
+    }
 
     public class FigmaDocument : FigmaNode
     {

@@ -47,49 +47,64 @@ namespace FigmaSharp.Forms
             }
         }
 
-        readonly List<IViewWrapper> children = new List<IViewWrapper>();
+        protected readonly List<IViewWrapper> children = new List<IViewWrapper>();
         public IReadOnlyList<IViewWrapper> Children => children;
 
         public float X
         {
-            get => (float)nativeView.X;
+            get
+            {
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                return (float)bounds.X;
+            }
             set
             {
-                if (value > 0)
-                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(value, nativeView.Y, nativeView.Width, nativeView.Height));
-
-                // TODO:
-                nativeView.TranslationX = value;
+                if (value < 0)
+                {
+                    return;
+                }
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(value, bounds.Y, bounds.Width, bounds.Height));
             }
         }
         public float Y
         {
-            get => (float)nativeView.Y;
+            get
+            {
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                return (float)bounds.Y;
+            }
             set
             {
-                if (value > 0)
-                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, value, nativeView.Width, nativeView.Height));
+                if (value < 0)
+                {
+                    return;
+                }
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(bounds.X, value, bounds.Width, bounds.Height));
             }
         }
         public float Width
         {
-            get => (float)nativeView.Width;
+            get
+            {
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                return (float) bounds.Width;
+            }
             set
             {
-                if (value > 0)
-                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, nativeView.Y, value, nativeView.Height));
-
                 nativeView.WidthRequest = value;
             }
         }
         public float Height
         {
-            get => (float)nativeView.Height;
+            get
+            {
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                return (float)bounds.Height;
+            }
             set
             {
-                if (value > 0)
-                    AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(nativeView.X, nativeView.Y, nativeView.Width, value));
-
                 nativeView.HeightRequest = value;
             }
         }
@@ -105,6 +120,15 @@ namespace FigmaSharp.Forms
         public bool Hidden {
             get => !nativeView.IsVisible;
             set => nativeView.IsVisible = !value;
+        }
+
+        public FigmaRectangle Allocation
+        {
+            get
+            {
+                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+                return new FigmaRectangle((float) bounds.X, (float)bounds.Y, (float)bounds.Width, (float)bounds.Height);
+            }
         }
 
         protected View nativeView;
@@ -154,13 +178,15 @@ namespace FigmaSharp.Forms
             
         }
 
-        public void SetPosition(float x, float y)
+        public void SetPosition (float x, float y)
         {
-            AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(x, y, nativeView.Width, nativeView.Height));
+            var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
+            AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(x, y, bounds.Width, bounds.Height));
+        }
 
-            // TODO:
-            nativeView.TranslationX = x;
-            nativeView.TranslationY = y;
+        public void SetAllocation(float x, float y, float width, float height)
+        {
+            AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(x, y, width, height));
         }
     }
 

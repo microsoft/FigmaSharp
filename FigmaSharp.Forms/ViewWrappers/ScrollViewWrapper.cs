@@ -29,34 +29,40 @@
 using System;
 using System.Linq;
 using Xamarin.Forms;
+using FigmaSharp;
 
 namespace FigmaSharp.Forms
 {
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
         readonly ScrollView scrollView;
-        readonly Grid scrollContent;
+        readonly AbsoluteLayout scrollContent;
 
         public ScrollViewWrapper(ScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
-            this.scrollContent = new Grid();
+            this.scrollContent = new AbsoluteLayout();
             scrollView.Content = scrollContent;
+            scrollView.Orientation = ScrollOrientation.Both;
         }
 
         public override void AddChild(IViewWrapper view)
         {
+            children.Add(view);
             scrollContent.Children.Add(view.NativeObject as View);
         }
 
         public void AdjustToContent()
         {
-            //CGRect contentRect = CGRect.Empty;
-            //foreach (var view in scrollView.Subviews)
-            //{
-            //    contentRect = contentRect.UnionWith(view.Frame);
-            //}
-            //scrollView.ContentSize = contentRect.Size;
+            if (scrollView.Content == null)
+                return;
+
+            FigmaRectangle contentRect = FigmaRectangle.Zero;
+            foreach (var view in Children)
+            {
+                contentRect = contentRect.UnionWith(view.Allocation);
+            }
+            SetContentSize(contentRect.width, contentRect.height);
         }
 
         public override void RemoveChild(IViewWrapper view)
@@ -69,6 +75,12 @@ namespace FigmaSharp.Forms
             //if (scrollView.Subviews.Contains (view.NativeObject)) {
             //    ((UIView)view.NativeObject).RemoveFromSuperview();
             //}
+        }
+
+        public void SetContentSize(float width, float height)
+        {
+            scrollView.Content.WidthRequest = width;
+            scrollView.Content.HeightRequest = height;
         }
     }
 }

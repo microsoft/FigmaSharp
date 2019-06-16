@@ -32,5 +32,6 @@ namespace FigmaSharp
     public interface IScrollViewWrapper : IViewWrapper
     {
         void AdjustToContent();
+        void SetContentSize(float width, float height);
     }
 }

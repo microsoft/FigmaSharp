@@ -44,6 +44,8 @@ namespace FigmaSharp
         float Width { get; set; }
         float Height { get; set; }
 
+        FigmaRectangle Allocation { get; }
+
         void AddChild(IViewWrapper view);
         void CreateConstraints(FigmaNode current);
 
@@ -53,5 +55,6 @@ namespace FigmaSharp
 
         void MakeFirstResponder();
         void SetPosition(float x, float y);
+        void SetAllocation(float x, float y, float width, float height);
     }
 }
