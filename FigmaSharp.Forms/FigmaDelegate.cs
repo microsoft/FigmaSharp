@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Reflection;
 using FigmaSharp.Converters;
+using FigmaSharp.Forms.Converters;
 using Xamarin.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.Forms
 {
     public class FigmaDelegate : IFigmaDelegate
     {
@@ -60,19 +61,10 @@ namespace FigmaSharp
 
         public void BeginInvoke(Action handler) => Xamarin.Forms.Device.BeginInvokeOnMainThread(handler);
 
-        public FigmaCodePositionConverter GetPositionConverter()
-        {
-            throw new NotImplementedException();
-        }
+        static readonly FigmaCodePositionConverter positionConverter = new FigmaCodePositionConverter();
+        static readonly FigmaCodeAddChildConverter addChildConverter = new FigmaCodeAddChildConverter();
 
-        public FigmaCodeAddChildConverter GetAddChildConverter()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class EmptyView : View
-    {
-
+        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
+        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
     }
 }

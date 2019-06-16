@@ -30,7 +30,7 @@ using System;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.Forms
 {
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {

@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomButtonConverter.cs 
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,23 +26,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.NativeControls.iOS
+namespace FigmaSharp.Forms.Converters
 {
-    public static class Resources
+    public class FigmaCodeAddChildConverter : FigmaCodeAddChildConverterBase
     {
-        static FigmaViewConverter[] converters;
-
-        public static FigmaViewConverter[] GetConverters()
+        public override string ConvertToCode(string parent, string current, FigmaNode currentNode)
         {
-            if (converters == null)
-            {
-                converters = new FigmaViewConverter[]
-                {
-                    new ButtonConverter (),
-                    new TextFieldConverter (),
-                };
-            }
-            return converters;
+            return string.Format("{0}.AddSubview({1});", parent, current);
         }
     }
 }

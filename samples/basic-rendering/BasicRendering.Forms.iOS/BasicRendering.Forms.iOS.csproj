@@ -129,8 +129,18 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicRendering.Forms\BasicRendering.Forms.csproj">
-      <Project>{F176986A-3AE7-4745-B053-5168DF4E4FBC}</Project>
+      <Project>{53544C5B-7249-446A-A0A6-10EF5F411909}</Project>
       <Name>BasicRendering.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Forms\FigmaSharp.Forms.csproj">
+      <Project>{31E20110-88EC-49E5-B179-974BF49001F8}</Project>
+      <Name>FigmaSharp.Forms</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

@@ -26,8 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Forms.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
@@ -38,7 +39,7 @@ namespace FigmaSharp.Converters
             return null;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

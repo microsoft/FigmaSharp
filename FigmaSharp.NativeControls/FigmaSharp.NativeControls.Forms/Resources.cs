@@ -1,7 +1,6 @@
 ﻿using FigmaSharp;
-using FigmaSharp.NativeControls;
 
-namespace FigmaSharp.NativeControls
+namespace FigmaSharp.NativeControls.Forms
 {
     public static class Resources
     {
@@ -13,10 +12,10 @@ namespace FigmaSharp.NativeControls
             {
                 converters = new CustomViewConverter[]
                 {
-                    new ButtonConverter ()
+                    new ButtonConverter (),
+                    new TextFieldConverter ()
                 };
             }
-
             return converters;
         }
     }

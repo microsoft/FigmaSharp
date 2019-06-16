@@ -29,7 +29,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.Forms
 {
     public class ViewWrapper : IViewWrapper
     {
@@ -153,5 +153,19 @@ namespace FigmaSharp
         {
             
         }
+
+        public void SetPosition(float x, float y)
+        {
+            AbsoluteLayout.SetLayoutBounds(nativeView, new Rectangle(x, y, nativeView.Width, nativeView.Height));
+
+            // TODO:
+            nativeView.TranslationX = x;
+            nativeView.TranslationY = y;
+        }
+    }
+
+    public class EmptyView : View
+    {
+
     }
 }

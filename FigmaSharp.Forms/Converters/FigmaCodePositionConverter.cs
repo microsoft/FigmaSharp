@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomButtonConverter.cs 
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,23 +26,22 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.NativeControls.iOS
+namespace FigmaSharp.Forms.Converters
 {
-    public static class Resources
+    public class FigmaCodePositionConverter : FigmaCodePositionConverterBase
     {
-        static FigmaViewConverter[] converters;
-
-        public static FigmaViewConverter[] GetConverters()
+        public override string ConvertToCode(string parent, string name, FigmaNode current)
         {
-            if (converters == null)
+            if (current is IAbsoluteBoundingBox absoluteBounding && current.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
             {
-                converters = new FigmaViewConverter[]
-                {
-                    new ButtonConverter (),
-                    new TextFieldConverter (),
-                };
+                var x = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+
+                var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
+                var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
+                var y = parentY - actualY;
+                return "";
             }
-            return converters;
+            return string.Empty;
         }
     }
 }

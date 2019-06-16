@@ -2,7 +2,7 @@
 using System.Linq;
 using Xamarin.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.Forms
 {
     public static class ViewConfigureExtensions
     {

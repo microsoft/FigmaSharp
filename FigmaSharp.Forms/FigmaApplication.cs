@@ -1,4 +1,4 @@
-﻿namespace FigmaSharp
+﻿namespace FigmaSharp.Forms
 {
     public class FigmaApplication
     {

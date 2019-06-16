@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicRendering.Forms\BasicRendering.Forms.csproj">
-      <Project>{0DE5278C-A0DA-43C1-8DE5-9E897DAE9479}</Project>
+      <Project>{53544C5B-7249-446A-A0A6-10EF5F411909}</Project>
       <Name>BasicRendering.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">

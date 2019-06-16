@@ -27,9 +27,10 @@
  */
 
 using System.Text;
+using FigmaSharp.Converters;
 using Xamarin.Forms;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Forms.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
@@ -41,7 +42,7 @@ namespace FigmaSharp.Converters
             return new ImageViewWrapper(currengroupView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "imageView";

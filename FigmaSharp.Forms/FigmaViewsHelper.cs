@@ -2,7 +2,7 @@
 using System.Reflection;
 using Xamarin.Forms;
 
-namespace FigmaSharp
+namespace FigmaSharp.Forms
 {
     public static class FigmaViewsHelper
     {

@@ -28,8 +28,9 @@
 
 using System;
 using System.Text;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Forms.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
@@ -43,7 +44,7 @@ namespace FigmaSharp.Converters
             return wrapper;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }

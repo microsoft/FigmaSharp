@@ -27,8 +27,9 @@
  */
 
 using System.Text;
+using FigmaSharp.Converters;
 using Xamarin.Forms;
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Forms.Converters
 {
     public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
     {
@@ -42,7 +43,7 @@ namespace FigmaSharp.Converters
             return figmaImageView;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             StringBuilder builder = new StringBuilder();
             var name = "imageView";

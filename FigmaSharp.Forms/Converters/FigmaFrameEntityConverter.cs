@@ -26,9 +26,10 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using Xamarin.Forms;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Forms.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
     {
@@ -45,7 +46,7 @@ namespace FigmaSharp.Converters
             return new ViewWrapper(currengroupView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, ProcessedNode parent)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
             return string.Empty;
         }
