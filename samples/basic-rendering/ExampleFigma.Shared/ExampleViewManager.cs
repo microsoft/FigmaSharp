@@ -25,11 +25,12 @@ namespace ExampleFigma
        
         public void Initialize ()
         {
-            fileService.Start(fileName, new FigmaViewRendererServiceOptions() { StartPage = 0 });
+            fileService.Start(fileName, scrollViewWrapper, new FigmaViewRendererServiceOptions() { StartPage = 0 });
             rendererService.Start();
 
-            var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)
-            .ToArray();
+            var mainNodes = fileService.NodesProcessed
+                .Where (s => s.ParentView?.FigmaNode is FigmaCanvas)
+                .ToArray();
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
             var scrollSize = GetScrollSize (mainNodes);
@@ -67,7 +68,6 @@ namespace ExampleFigma
             foreach (var processedNode in mainNodes)
             {
                 var view = processedNode.View;
-                scrollViewWrapper.AddChild(view);
                 view.SetPosition(currentX, 0);
                 currentX += view.Width + Margin;
             }
