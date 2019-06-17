@@ -98,15 +98,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp.Wpf\FigmaSharp.Wpf.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp.Wpf\FigmaSharp.Wpf.csproj">
       <Project>{f7968a6f-1358-45fe-8be4-957ffbbe50ef}</Project>
       <Name>FigmaSharp.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
       <Project>{ad306162-8dad-4dbd-b264-bda8765cc107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\samples\basic-rendering\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" />
+  <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
