@@ -77,40 +77,18 @@ namespace FigmaSharp.Wpf
         {
             Configure(label, (FigmaNode)text);
 
-            label.HorizontalAlignment = text.style.textAlignHorizontal == "CENTER" ? HorizontalAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? HorizontalAlignment.Left : HorizontalAlignment.Right;
-            label.Opacity = text.opacity;
-
             label.ConfigureStyle(text.style);
+
+            label.HorizontalAlignment = text.style.textAlignHorizontal == "CENTER" ? HorizontalAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+            label.VerticalAlignment = text.style.textAlignVertical == "CENTER" ? VerticalAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+
+            label.Opacity = text.opacity;
 
             var fills = text.fills.FirstOrDefault();
             if (fills != null)
             {
                 label.Foreground = fills.color.ToColor();
             }
-
-            //if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
-            //{
-            //    var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
-            //    for (int i = 0; i < text.characterStyleOverrides.Length; i++)
-            //    {
-            //        var key = text.characterStyleOverrides[i].ToString();
-            //        if (!text.styleOverrideTable.ContainsKey(key))
-            //        {
-            //            continue;
-            //        }
-            //        var element = text.styleOverrideTable[key];
-            //        if (element.fontFamily == null)
-            //        {
-            //            continue;
-            //        }
-            //        var localFont = FigmaExtensions.ToNSFont(element);
-            //        var range = new NSRange(i, 1);
-            //        attributedText.AddAttribute(NSStringAttributeKey.Font, localFont, range);
-            //        attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
-            //    }
-
-            //    label.AttributedStringValue = attributedText;
-            //}
         }
     }
 }
