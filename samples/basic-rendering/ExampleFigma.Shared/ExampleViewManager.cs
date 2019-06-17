@@ -25,7 +25,8 @@ namespace ExampleFigma
        
         public void Initialize ()
         {
-            fileService.Start(fileName, scrollViewWrapper, new FigmaViewRendererServiceOptions() { StartPage = 0 });
+            fileService.Start(fileName, scrollViewWrapper);
+
             rendererService.Start();
 
             var mainNodes = fileService.NodesProcessed
