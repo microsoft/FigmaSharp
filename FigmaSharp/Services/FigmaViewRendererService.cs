@@ -281,7 +281,7 @@ namespace FigmaSharp.Services
                 NodesProcessed.Add(currentProcessedNode);
 
                 //Image processing
-                if (currentProcessedNode.FigmaNode is FigmaVectorEntity vectorEntity && vectorEntity.ImageSupported)
+                if (currentProcessedNode.FigmaNode is FigmaVectorEntity vectorEntity && vectorEntity.ImageSupported && currentProcessedNode.View is IImageViewWrapper)
                 {
                     ImageVectors.Add((FigmaVectorEntity)currentProcessedNode.FigmaNode, null);
                 }
