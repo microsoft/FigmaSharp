@@ -25,54 +25,7 @@ namespace FigmaSharp.Forms
         public static void Configure(this View view, FigmaElipse elipse)
         {
             Configure(view, (FigmaVectorEntity)elipse);
-
-            //var circleLayer = new CAShapeLayer();
-            ////var bezierPath = UIBezierPath.FromOval (new Rectangle(0, 0, elipse.absoluteBoundingBox.width, elipse.absoluteBoundingBox.height));
-            ////circleLayer.Path = bezierPath.ToGCPath();
-
-            //view.Layer.AddSublayer(circleLayer);
-
-            //var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
-            //if (fills != null)
-            //{
-            //    circleLayer.FillColor = fills.color.ToColor();
-            //}
-
-            //var strokes = elipse.strokes.FirstOrDefault();
-            //if (strokes != null)
-            //{
-            //    if (strokes.color != null)
-            //    {
-            //        circleLayer.BorderColor = strokes.color.ToColor().CGColor;
-            //    }
-            //}
         }
-
-        //public static CGPath ToGCPath(this UIBezierPath bezierPath)
-        //{
-        //    var path = new CGPath();
-        //    CGPoint[] points;
-        //    for (int i = 0; i < (int)bezierPath.RetainCount; i++)
-        //    {
-        //        var type = bezierPath. ElementAt(i, out points);
-        //        switch (type)
-        //        {
-        //            case UIBezierPathElement.MoveTo:
-        //                path.MoveToPoint(points[0]);
-        //                break;
-        //            case NSBezierPathElement.LineTo:
-        //                path.AddLineToPoint(points[0]);
-        //                break;
-        //            case NSBezierPathElement.CurveTo:
-        //                path.AddCurveToPoint(points[2], points[1], points[0]);
-        //                break;
-        //            case NSBezierPathElement.ClosePath:
-        //                path.CloseSubpath();
-        //                break;
-        //        }
-        //    }
-        //    return path;
-        //}
 
         public static void Configure(this View view, FigmaLine figmaLine)
         {
@@ -96,9 +49,6 @@ namespace FigmaSharp.Forms
                 view.BackgroundColor = child.fills[0].color.ToColor();
             }
 
-            //var currengroupView = new UIView() { TranslatesAutoresizingMaskIntoConstraints = false };
-            //currengroupView.Configure(rectangleVector);
-
             var strokes = child.strokes.FirstOrDefault();
             if (strokes != null)
             {
@@ -113,7 +63,6 @@ namespace FigmaSharp.Forms
         public static void Configure(this View view, FigmaRectangleVector child)
         {
             Configure(view, (FigmaVectorEntity)child);
-
             //view.Layer.CornerRadius = child.cornerRadius;
         }
 
@@ -121,11 +70,9 @@ namespace FigmaSharp.Forms
         {
             Configure(label, (FigmaNode)text);
 
-            label.HorizontalTextAlignment = text.style.textAlignHorizontal == "CENTER" ? TextAlignment.Start : text.style.textAlignHorizontal == "LEFT" ? TextAlignment.Start : TextAlignment.End;
+            label.HorizontalTextAlignment = text.style.textAlignHorizontal == "CENTER" ? TextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? TextAlignment.Start : TextAlignment.End;
             label.Opacity = text.opacity;
-            //label.l = NSLineBreakMode.ByWordWrapping;
-            //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
-
+           label.VerticalTextAlignment = text.style.textAlignVertical == "CENTER" ? TextAlignment.Center : text.style.textAlignHorizontal == "TOP" ? TextAlignment.Start : TextAlignment.End;
             var fills = text.fills.FirstOrDefault();
             if (fills != null)
             {
