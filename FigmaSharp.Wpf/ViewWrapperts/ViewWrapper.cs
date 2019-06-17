@@ -29,7 +29,7 @@ namespace FigmaSharp.Wpf
 
         public float Width
         {
-            get => (float)nativeView.ActualWidth;
+            get => (float)nativeView.Width;
             set
             {
                 nativeView.Width =  value;
