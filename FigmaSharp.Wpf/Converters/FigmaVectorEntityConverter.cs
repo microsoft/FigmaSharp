@@ -35,9 +35,9 @@ namespace FigmaSharp.Wpf.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var vector = ((FigmaVectorEntity)currentNode);
-            var currengroupView = new Image (); // { TranslatesAutoresizingMaskIntoConstraints = false };
+            var currengroupView = new Canvas(); // { TranslatesAutoresizingMaskIntoConstraints = false };
             currengroupView.Configure(vector);
-            return new ImageViewWrapper(currengroupView);
+            return new ViewWrapper(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

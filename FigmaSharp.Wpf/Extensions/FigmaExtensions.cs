@@ -35,6 +35,8 @@ using System.Threading.Tasks;
 using FigmaSharp.Converters;
 using System.Drawing;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace FigmaSharp.Wpf
 {
@@ -66,83 +68,30 @@ namespace FigmaSharp.Wpf
             return new FigmaColor() { a = (float)color.A, r = (float)color.R, g = (float)color.G, b = (float)color.B };
         }
 
-        //public static Font ToFont(this FigmaTypeStyle style)
-        //{
-        //    string family = style.fontFamily;
-        //    if (family == "SF UI Text")
-        //    {
-        //        family = ".SF NS Text";
-        //    }
-        //    else if (family == "SF Mono")
-        //    {
-        //        family = ".SF NS Display";
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
-        //    }
+        public static void ConfigureStyle (this Label label, FigmaTypeStyle style)
+        {
+            string family = style.fontFamily;
+            if (family == "SF UI Text")
+            {
+                family = ".SF NS Text";
+            }
+            else if (family == "SF Mono")
+            {
+                family = ".SF NS Display";
+            }
+            else
+            {
+                Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
+            }
 
-        //    var size = style.fontSize - 3;
-        //    var isBold = style.fontPostScriptName != null && style.fontPostScriptName.EndsWith ("-Bold");
-        //    var font = new Font (family, size, isBold ? FontStyle.Bold : FontStyle.Regular);
+            var size = style.fontSize - 3;
+            var isBold = style.fontPostScriptName != null && style.fontPostScriptName.EndsWith("-Bold");
 
-        //    if (font == null)
-        //    {
-        //        Console.WriteLine($"[ERROR] Font not found :{family}");
-        //        font = new Font ("Times New Roman", style.fontSize);
-        //    }
-        //    return font;
-        //}
-
-        //public static CGPoint GetRelativePosition(this IAbsoluteBoundingBox parent, IAbsoluteBoundingBox node)
-        //{
-        //    return new CGPoint(
-        //        node.absoluteBoundingBox.x - parent.absoluteBoundingBox.x,
-        //        node.absoluteBoundingBox.y - parent.absoluteBoundingBox.y
-        //    );
-        //}
-
-        //public static void CreateConstraints(this NSView view, NSView parent, FigmaLayoutConstraint constraints, FigmaRectangle absoluteBoundingBox, FigmaRectangle absoluteBoundBoxParent)
-        //{
-        //    System.Console.WriteLine("Create constraint  horizontal:{0} vertical:{1}", constraints.horizontal, constraints.vertical);
-
-        //    if (constraints.horizontal.Contains("RIGHT"))
-        //    {
-        //        var endPosition1 = absoluteBoundingBox.x + absoluteBoundingBox.width;
-        //        var endPosition2 = absoluteBoundBoxParent.x + absoluteBoundBoxParent.width;
-        //        var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
-        //        view.RightAnchor.ConstraintEqualToAnchor(parent.RightAnchor, -value).Active = true;
-
-        //        var value2 = absoluteBoundingBox.x - absoluteBoundBoxParent.x;
-        //        view.LeftAnchor.ConstraintEqualToAnchor(parent.LeftAnchor, value2).Active = true;
-        //    }
-
-        //    if (constraints.horizontal != "RIGHT")
-        //    {
-        //        var value2 = absoluteBoundingBox.x - absoluteBoundBoxParent.x;
-        //        view.LeftAnchor.ConstraintEqualToAnchor(parent.LeftAnchor, value2).Active = true;
-        //    }
-
-        //    if (constraints.horizontal.Contains("BOTTOM"))
-        //    {
-        //        var value = absoluteBoundingBox.y - absoluteBoundBoxParent.y;
-        //        view.TopAnchor.ConstraintEqualToAnchor(parent.TopAnchor, value).Active = true;
-
-        //        var endPosition1 = absoluteBoundingBox.y + absoluteBoundingBox.height;
-        //        var endPosition2 = absoluteBoundBoxParent.y + absoluteBoundBoxParent.height;
-        //        var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
-
-        //        view.BottomAnchor.ConstraintEqualToAnchor(parent.BottomAnchor, -value2).Active = true;
-        //    }
-
-        //    if (constraints.horizontal != "BOTTOM")
-        //    {
-        //        var value = absoluteBoundingBox.y - absoluteBoundBoxParent.y;
-        //        view.TopAnchor.ConstraintEqualToAnchor(parent.TopAnchor, value).Active = true;
-        //    }
-        //}
+            label.FontSize = size;
+            label.FontFamily = new FontFamily(family);
+            label.FontWeight = isBold ?  FontWeights.Bold : FontWeights.Regular;
+        }
 
         #endregion
-
     }
 }

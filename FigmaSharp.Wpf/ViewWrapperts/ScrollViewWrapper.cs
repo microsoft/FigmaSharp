@@ -50,7 +50,8 @@ namespace FigmaSharp.Wpf
 
             canvasContainer = new Canvas();
             scrollView.Content = canvasContainer;
-            //scrollView.AutoScroll = true;
+            scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+            scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
 
         public override void AddChild(IViewWrapper view)
@@ -77,7 +78,12 @@ namespace FigmaSharp.Wpf
 
         public void AdjustToContent()
         {
-
+            FigmaRectangle contentRect = FigmaRectangle.Zero;
+            foreach (var view in Children)
+            {
+                contentRect = contentRect.UnionWith(view.Allocation);
+            }
+            SetContentSize(contentRect.width, contentRect.height);
         }
 
         public void SetContentSize(float width, float height)

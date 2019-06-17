@@ -347,15 +347,13 @@ namespace FigmaSharp
             this.height = height;
         }
 
-        public FigmaRectangle UnionWith (params FigmaRectangle[] allocation)
+        public FigmaRectangle UnionWith (FigmaRectangle allocation)
         {
             //TODO: improve
-            var total = allocation.ToList();
-            total.Add(this);
-            float xMin = total.Min(s => s.x);
-            float yMin = total.Min(s => s.y);
-            float xMax = total.Max(s => s.x + s.width);
-            float yMax = total.Max(s => s.y + s.height);
+            float xMin = Math.Min(x, allocation.x);
+            float yMin = Math.Min(y, allocation.y);
+            float xMax = Math.Max(x + width, allocation.x + allocation.width);
+            float yMax = Math.Max(y + height, allocation.y + allocation.height);
             return new FigmaRectangle(xMin, yMin, xMax - xMin, yMax - yMin);
         }
 

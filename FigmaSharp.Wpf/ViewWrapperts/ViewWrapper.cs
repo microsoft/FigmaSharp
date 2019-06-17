@@ -50,7 +50,7 @@ namespace FigmaSharp.Wpf
 
         public FigmaRectangle Allocation {
             get {
-                return new FigmaRectangle((float)Canvas.GetLeft(nativeView), (float)Canvas.GetTop(nativeView), (float)nativeView.ActualWidth, (float) nativeView.ActualHeight);
+                return new FigmaRectangle((float)Canvas.GetLeft(nativeView), (float)Canvas.GetTop(nativeView), (float)nativeView.Width, (float) nativeView.Height);
             }
         }
 
