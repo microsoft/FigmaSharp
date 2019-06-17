@@ -70,7 +70,7 @@ namespace FigmaSharp.Designer
 
         string baseDirectory;
 
-        public void Reload(string fileName, string baseDirectory)
+        public void Reload(IViewWrapper contentView, string fileName, string baseDirector)
         {
             this.baseDirectory = baseDirectory;
             try
@@ -80,7 +80,7 @@ namespace FigmaSharp.Designer
                 {
                     throw new DirectoryNotFoundException(resourcesDirectoryPath);
                 }
-                fileService.Start(fileName);
+                fileService.Start(fileName, contentView);
                 rendererService.Start();
                 ReloadImages(resourcesDirectoryPath);
 

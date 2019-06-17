@@ -8,6 +8,8 @@ using Foundation;
 using MonoDevelop.Figma;
 using System.Linq;
 using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Cocoa.Converters;
+using System.Text;
 
 namespace ToCode.Cocoa
 {
@@ -53,7 +55,10 @@ namespace ToCode.Cocoa
 
             fileProvider = new FigmaRemoteFileProvider();
             fileProvider.Load("Dq1CFm7IrDi3UJC7KJ8zVjOt");
-            codeRenderer = new FigmaCodeRendererService(fileProvider, converters);
+
+            var addChildConverter = new FigmaCodeAddChildConverter();
+            var positionConverter = new FigmaCodePositionConverter();
+            codeRenderer = new FigmaCodeRendererService(fileProvider, converters, positionConverter, addChildConverter);
            
             data = new FigmaNodeView(fileProvider.Response.document);
             figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
@@ -62,11 +67,13 @@ namespace ToCode.Cocoa
 
         void OutlinePanel_RaiseFirstResponder(object sender, FigmaNode e)
         {
-            var code = codeRenderer.GetCode(e, true);
+            var builder = new StringBuilder();
+            codeRenderer.GetCode(builder, e, null, null);
             var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
-            textField.Value = code;
+            textField.Value = builder.ToString();
+
             NSPasteboard.GeneralPasteboard.DeclareTypes(new string[] { NSPasteboard.NSStringType }, null);
-            NSPasteboard.GeneralPasteboard.SetStringForType(code, NSPasteboard.NSStringType);
+            NSPasteboard.GeneralPasteboard.SetStringForType(textField.Value, NSPasteboard.NSStringType);
         }
 
         public override NSObject RepresentedObject

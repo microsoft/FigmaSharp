@@ -18,11 +18,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.iOS", "FigmaShar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeControls", "NativeControls", "{1998B69B-8AD6-4170-86D1-22CFF5685D8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControl.IOS", "samples\native-control\ExampleFigma.IOS\NativeControl.IOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControl.IOS", "samples\native-control\NativeControl.IOS\NativeControl.IOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BasicRendering.Shared", "samples\basic-rendering\ExampleFigma.Shared\BasicRendering.Shared.shproj", "{88CC3650-709A-4A60-A43B-0FE2F6C4098D}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BasicRendering.Shared", "samples\basic-rendering\BasicRendering.Shared\BasicRendering.Shared.shproj", "{88CC3650-709A-4A60-A43B-0FE2F6C4098D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.WinForms", "samples\basic-rendering\ExampleFigma.WinForms\BasicRendering.WinForms.csproj", "{461B4A01-C603-4C8A-9763-642197569E9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.WinForms", "samples\basic-rendering\BasicRendering.WinForms\BasicRendering.WinForms.csproj", "{461B4A01-C603-4C8A-9763-642197569E9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls", "FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj", "{E9891F05-7A3B-40A2-9388-505354D6D4C3}"
 EndProject
@@ -38,11 +38,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Local File", "Local File", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleLocalFile.Cocoa", "samples\local-file-rendering\ExampleFigma.Mac\ExampleLocalFile.Cocoa.csproj", "{B72209A6-B110-468F-B4BE-BE424397E632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Cocoa", "samples\basic-rendering\ExampleFigma.Mac\BasicRendering.Cocoa.csproj", "{6B3ED949-8155-4029-89B0-68AEC8EDC255}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Cocoa", "samples\basic-rendering\BasicRendering.Mac\BasicRendering.Cocoa.csproj", "{6B3ED949-8155-4029-89B0-68AEC8EDC255}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native Control", "Native Control", "{32C47342-CF7F-4FE6-A3BA-E12E5BE126E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControl.Cocoa", "samples\native-control\ExampleFigma.Mac\NativeControl.Cocoa.csproj", "{FF8B355E-D31A-493E-AFE5-AEC979CC50AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControl.Cocoa", "samples\native-control\NativeControl.Mac\NativeControl.Cocoa.csproj", "{FF8B355E-D31A-493E-AFE5-AEC979CC50AE}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NativeControl.Shared", "samples\native-control\NativeControl.Shared\NativeControl.Shared.shproj", "{04785BB0-C497-4FA1-B3C9-5EE37E8DC29E}"
 EndProject
@@ -58,11 +58,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToCode.Cocoa", "samples\to-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02319977-D222-4DA2-AE49-05EEF92B3DBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Gtk", "samples\basic-rendering\ExampleFigma.Gtk\BasicRendering.Gtk.csproj", "{14FAB2B4-C4AE-4648-BA75-A50956ACFF74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Gtk", "samples\basic-rendering\BasicRendering.Gtk\BasicRendering.Gtk.csproj", "{14FAB2B4-C4AE-4648-BA75-A50956ACFF74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Gtk", "FigmaSharp.Gtk\FigmaSharp.Gtk.csproj", "{03E72A72-2DCF-4177-B049-2112CD58A4AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.IOS", "samples\basic-rendering\ExampleFigma.IOS\BasicRendering.IOS.csproj", "{778B49FE-AEBE-4141-915A-53CE1F77DE33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls.WinForms", "FigmaSharp.NativeControls\FigmaSharp.NativeControls.WinForms\FigmaSharp.NativeControls.WinForms.csproj", "{35E78532-DDB1-4EF6-9559-9A47BD7175F2}"
 EndProject
@@ -81,6 +79,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls.Forms", "FigmaSharp.NativeControls\FigmaSharp.NativeControls.Forms\FigmaSharp.NativeControls.Forms.csproj", "{E3280347-4289-4538-875A-B6E40A23F7F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Forms", "FigmaSharp.Forms\FigmaSharp.Forms.csproj", "{F45C6DEB-045C-4F6E-881C-BB62C363A8F9}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.IOS", "samples\basic-rendering\BasicRendering.IOS\BasicRendering.IOS.csproj", "{0B46005F-5502-4AD3-9F0D-99A8CF486290}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -431,24 +431,6 @@ Global
 		{03E72A72-2DCF-4177-B049-2112CD58A4AC}.Release|iPhone.Build.0 = Release|Any CPU
 		{03E72A72-2DCF-4177-B049-2112CD58A4AC}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{03E72A72-2DCF-4177-B049-2112CD58A4AC}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Debug|iPhone.Build.0 = Debug|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.MacDebug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.MacDebug|Any CPU.Build.0 = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.MacDebug|iPhone.ActiveCfg = Release|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.MacDebug|iPhone.Build.0 = Release|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.MacDebug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.MacDebug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Release|Any CPU.ActiveCfg = Release|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Release|Any CPU.Build.0 = Release|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Release|iPhone.ActiveCfg = Release|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Release|iPhone.Build.0 = Release|iPhone
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{35E78532-DDB1-4EF6-9559-9A47BD7175F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35E78532-DDB1-4EF6-9559-9A47BD7175F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35E78532-DDB1-4EF6-9559-9A47BD7175F2}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -551,6 +533,24 @@ Global
 		{F45C6DEB-045C-4F6E-881C-BB62C363A8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F45C6DEB-045C-4F6E-881C-BB62C363A8F9}.MacDebug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F45C6DEB-045C-4F6E-881C-BB62C363A8F9}.MacDebug|Any CPU.Build.0 = Debug|Any CPU
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Debug|iPhone.Build.0 = Debug|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.MacDebug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.MacDebug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.MacDebug|iPhone.ActiveCfg = Release|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.MacDebug|iPhone.Build.0 = Release|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.MacDebug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.MacDebug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Release|Any CPU.Build.0 = Release|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Release|iPhone.ActiveCfg = Release|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Release|iPhone.Build.0 = Release|iPhone
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -575,7 +575,6 @@ Global
 		{B523812B-9A7A-4D22-905E-878F93DC8FCF} = {FBBB8608-7B63-4C07-9609-16DDEB01C081}
 		{DD591044-71E4-47D3-8580-3B995B59D9E6} = {B523812B-9A7A-4D22-905E-878F93DC8FCF}
 		{14FAB2B4-C4AE-4648-BA75-A50956ACFF74} = {0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}
-		{778B49FE-AEBE-4141-915A-53CE1F77DE33} = {0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}
 		{35E78532-DDB1-4EF6-9559-9A47BD7175F2} = {1998B69B-8AD6-4170-86D1-22CFF5685D8F}
 		{26DF2553-FE08-45C1-B2CA-136666C8AD0A} = {1998B69B-8AD6-4170-86D1-22CFF5685D8F}
 		{52BE2EB0-7B17-4F27-AE71-9A5CBD9BBD81} = {32C47342-CF7F-4FE6-A3BA-E12E5BE126E5}
@@ -584,6 +583,7 @@ Global
 		{768A352E-5DFE-4DF8-8EAD-B61483D2F762} = {0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}
 		{22A7E86F-4B2D-4AE0-8167-66B82C9BC6CC} = {0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}
 		{E3280347-4289-4538-875A-B6E40A23F7F6} = {1998B69B-8AD6-4170-86D1-22CFF5685D8F}
+		{0B46005F-5502-4AD3-9F0D-99A8CF486290} = {0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF39AB59-9991-4134-A69A-4A88A5503FC7}

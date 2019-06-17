@@ -64,6 +64,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" Condition="Exists('..\ExampleFigma.Shared\ExampleFigma.Shared.projitems')" />
+  <Import Project="..\BasicRendering.Shared\BasicRendering.Shared.projitems" Label="Shared" Condition="Exists('..\BasicRendering.Shared\BasicRendering.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

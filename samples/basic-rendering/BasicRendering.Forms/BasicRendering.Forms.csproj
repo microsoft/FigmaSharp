@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj" />
     <ProjectReference Include="..\..\..\FigmaSharp.Forms\FigmaSharp.Forms.csproj" />
-    <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\NativeControls.Forms\NativeControls.Forms.csproj" />
   </ItemGroup>
-  <Import Project="..\ExampleFigma.Shared\ExampleFigma.Shared.projitems" Label="Shared" Condition="Exists('..\ExampleFigma.Shared\ExampleFigma.Shared.projitems')" />
+  <Import Project="..\BasicRendering.Shared\BasicRendering.Shared.projitems" Label="Shared" Condition="Exists('..\BasicRendering.Shared\BasicRendering.Shared.projitems')" />
 </Project>

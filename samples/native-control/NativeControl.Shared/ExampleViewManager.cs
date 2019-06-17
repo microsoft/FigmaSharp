@@ -25,29 +25,10 @@ namespace ExampleFigmaMac
 
         public void Initialize()
         {
-            fileService.Start(fileName);
+            fileService.Start(fileName, scrollViewWrapper);
             rendererService.Start();
 
-            var mainNodes = fileService.NodesProcessed.Where(s => s.ParentView == null)
-            .ToArray();
-
-            Reposition(mainNodes);
-
             scrollViewWrapper.AdjustToContent();
-        }
-
-        public void Reposition(ProcessedNode[] mainNodes)
-        {
-            //Alignment 
-            const int Margin = 20;
-            float currentX = Margin;
-            foreach (var processedNode in mainNodes)
-            {
-                var view = processedNode.View;
-                scrollViewWrapper.AddChild(view);
-                view.SetPosition (currentX, 0);
-                currentX += view.Width + Margin;
-            }
         }
     }
 }

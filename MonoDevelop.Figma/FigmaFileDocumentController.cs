@@ -160,7 +160,7 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(fileName, project.BaseDirectory);
+                session.Reload(scrollViewWrapper, fileName, project.BaseDirectory);
             }
             await base.OnInitialize(modelDescriptor, status);
         }

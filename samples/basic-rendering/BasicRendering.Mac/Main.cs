@@ -7,8 +7,8 @@ using FigmaSharp;
 using System.Net;
 using Foundation;
 using FigmaSharp.Services;
-using ExampleFigma;
 using FigmaSharp.Cocoa;
+using ExampleFigma;
 
 namespace ExampleFigmaMac
 {

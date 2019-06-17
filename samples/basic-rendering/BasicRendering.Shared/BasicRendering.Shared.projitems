@@ -6,7 +6,7 @@
     <SharedGUID>{88CC3650-709A-4A60-A43B-0FE2F6C4098D}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>ExampleFigma.Shared</Import_RootNamespace>
+    <Import_RootNamespace>BasicRendering.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViewManager.cs" />
