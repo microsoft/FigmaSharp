@@ -4,13 +4,6 @@
 
 > Here at Microsoft we ❤️ [Figma](https://www.figma.com/). We use it for everything and anything. So much so, we thought why not use it to actually implement our user interfaces? Sounds crazy enough to work. Let's give this a go.
 
-| Framework                   | Status                    | 
-| --------------------------- | ------------------------- |
-| Cocoa (with Xamarin.Mac)    | Implemented               |
-| Xamarin.Forms               | In progress…              |
-| WPF                         | In progress…              |
-| Gtk                         | In progress…              |
-| WinForms                    | Not implemented           |
 
 ## Getting started
 
