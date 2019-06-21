@@ -56,13 +56,13 @@ Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Forms.iOS", 
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Gtk", "samples\basic-rendering\BasicRendering.Gtk\BasicRendering.Gtk.csproj", "{69DD053C-A8AD-4F32-8677-0577DD138152}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaSharp.Designer", "FigmaSharp.Designer\FigmaSharp.Designer.csproj", "{AD040882-33AF-4F73-97E6-001853D1B0B6}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaSharp.Designer", "FigmaSharp.Tools\FigmaSharp.Designer\FigmaSharp.Designer.csproj", "{AD040882-33AF-4F73-97E6-001853D1B0B6}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "StandaloneDesigner", "FigmaSharp.Designer\StandaloneDesigner\StandaloneDesigner.csproj", "{1D312D1E-4AFF-4591-9C1D-4AE3099F4A72}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "StandaloneDesigner", "FigmaSharp.Tools\FigmaSharp.Designer\StandaloneDesigner\StandaloneDesigner.csproj", "{1D312D1E-4AFF-4591-9C1D-4AE3099F4A72}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaFileExporter", "FigmaFileExporter\FigmaFileExporter.csproj", "{E9E63492-0454-4D9B-9B13-05986EBD29FF}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaFileExporter", "FigmaSharp.Tools\FigmaFileExporter\FigmaFileExporter.csproj", "{E9E63492-0454-4D9B-9B13-05986EBD29FF}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "MonoDevelop.Figma", "MonoDevelop.Figma\MonoDevelop.Figma.csproj", "{4A67DAE0-CC70-428B-9072-64FE15FB726F}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "MonoDevelop.Figma", "FigmaSharp.Tools\MonoDevelop.Figma\MonoDevelop.Figma.csproj", "{4A67DAE0-CC70-428B-9072-64FE15FB726F}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaSharp.NativeControls.iOS", "FigmaSharp.NativeControls\FigmaSharp.NativeControls.iOS\FigmaSharp.NativeControls.iOS.csproj", "{3FAD9C2B-64BB-483D-96F9-DB61FFE8CD73}"
 EndProject
