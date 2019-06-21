@@ -35,6 +35,18 @@ namespace FigmaSharp.Forms
 {
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
+        public IViewWrapper ContentView
+        {
+            get => new ViewWrapper(scrollView.Content);
+            set
+            {
+                if (value.NativeObject is View content)
+                {
+                    this.scrollView.Content = content;
+                }
+            }
+        }
+
         readonly ScrollView scrollView;
         readonly AbsoluteLayout scrollContent;
 
@@ -76,10 +88,6 @@ namespace FigmaSharp.Forms
             {
                 scrollView.Content = null;
             }
-           
-            //if (scrollView.Subviews.Contains (view.NativeObject)) {
-            //    ((UIView)view.NativeObject).RemoveFromSuperview();
-            //}
         }
 
         public void SetContentSize(float width, float height)

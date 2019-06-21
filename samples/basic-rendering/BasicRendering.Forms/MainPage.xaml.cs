@@ -11,12 +11,18 @@ namespace BasicRendering.Forms
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        class ContentView
+        {
+
+        }
+
         public MainPage()
         {
             InitializeComponent();
 
+            var content = new ViewWrapper (new AbsoluteLayout ());
             var scrollViewWrapper = new ScrollViewWrapper(ContainerPanel);
-            var manager = new ExampleViewManager(scrollViewWrapper);
+            var manager = new ExampleViewManager(scrollViewWrapper, content);
             manager.Initialize();
         }
     }

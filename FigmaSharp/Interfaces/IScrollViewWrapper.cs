@@ -35,5 +35,7 @@ namespace FigmaSharp
 
         void AdjustToContent();
         void SetContentSize(float width, float height);
+
+        IViewWrapper ContentView { get; set; }
     }
 }

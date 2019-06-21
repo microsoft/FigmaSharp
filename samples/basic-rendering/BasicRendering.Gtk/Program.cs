@@ -24,11 +24,9 @@ namespace BasicRendering.Gtk
 
             window.Add(scrollWindow);
 
-            var scrollWindowFixed = new Fixed();
-            scrollWindow.AddWithViewport(scrollWindowFixed);
-
-            var scrollViewWrapper = new ScrollViewWrapper(scrollWindow, null);
-            var manager = new ExampleViewManager(scrollViewWrapper);
+            var contentViewWrapper = new ViewWrapper(new Fixed());
+            var scrollViewWrapper = new ScrollViewWrapper(scrollWindow);
+            var manager = new ExampleViewManager(scrollViewWrapper, contentViewWrapper);
             manager.Initialize();
 
             window.ShowAll();

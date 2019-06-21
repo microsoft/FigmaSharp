@@ -37,13 +37,17 @@ namespace ExampleFigma
     {
         const string fileName = "YdrY6p8JHY2UaKlSFgOwwUnd";
         readonly IScrollViewWrapper scrollViewWrapper;
+        readonly IViewWrapper viewWrapper;
         readonly FigmaViewRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;
         readonly FigmaRemoteFileProvider fileProvider;
 
-        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper)
+        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, IViewWrapper viewWrapper)
         {
             this.scrollViewWrapper = scrollViewWrapper;
+            this.viewWrapper = viewWrapper;
+
+            scrollViewWrapper.ContentView = viewWrapper;
             fileProvider = new FigmaRemoteFileProvider();
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
             fileService = new FigmaViewRendererService(fileProvider, converters);
@@ -52,7 +56,7 @@ namespace ExampleFigma
        
         public void Initialize ()
         {
-            fileService.Start(fileName, scrollViewWrapper);
+            fileService.Start(fileName, this.viewWrapper);
 
             rendererService.Start();
 
