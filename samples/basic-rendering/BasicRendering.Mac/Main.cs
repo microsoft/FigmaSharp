@@ -23,7 +23,7 @@ namespace ExampleFigmaMac
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;          
 
-            var mainWindow = new NSWindow(new CGRect(0, 0, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            var mainWindow = new NSWindow(new CGRect(0, 0, 800, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
             mainWindow.Title = "Cocoa Basic Rendering Sample";
 			mainWindow.Center();
 
