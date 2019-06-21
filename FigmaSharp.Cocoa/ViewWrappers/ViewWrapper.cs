@@ -48,7 +48,7 @@ namespace FigmaSharp.Cocoa
         }
 
         readonly List<IViewWrapper> children = new List<IViewWrapper>();
-        public IReadOnlyList<IViewWrapper> Children => children;
+        public virtual IReadOnlyList<IViewWrapper> Children => children;
 
         public float Width
         {
