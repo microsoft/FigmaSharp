@@ -21,13 +21,11 @@ namespace ExampleFigmaMac
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
 
             NSApplication.Init();
-            NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
-          
-            var xPos = NSScreen.MainScreen.Frame.Width / 2;
-            var yPos = NSScreen.MainScreen.Frame.Height / 2;
+            NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;          
 
-            var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            var mainWindow = new NSWindow(new CGRect(0, 0, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
             mainWindow.Title = "Cocoa Basic Rendering Sample";
+			mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             scrollView = new NSScrollView()
