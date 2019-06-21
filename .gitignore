@@ -9,3 +9,4 @@ nuget.exe
 .vs
 .user
 *.user
+.DS_Store
