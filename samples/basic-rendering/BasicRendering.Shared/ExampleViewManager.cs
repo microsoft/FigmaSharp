@@ -37,6 +37,10 @@ namespace ExampleFigma
     {
         const string fileName = "YdrY6p8JHY2UaKlSFgOwwUnd";
 
+        readonly FigmaRemoteFileProvider fileProvider;
+
+        public string WindowTitle => fileProvider.Response.name;
+
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, IViewWrapper viewWrapper)
         {
             scrollViewWrapper.ContentView = viewWrapper;
@@ -44,13 +48,13 @@ namespace ExampleFigma
             //we get the default basic view converters from the current loaded toolkit
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
 
-            //TIP: the render consist in 2 steps:
-            //1) generate all the views, decorating and calculate sizes
-            //2) with this views we generate the hierarchy and position all the views based in the
-            //native toolkit positioning system
+			//TIP: the render consist in 2 steps:
+			//1) generate all the views, decorating and calculate sizes
+			//2) with this views we generate the hierarchy and position all the views based in the
+			//native toolkit positioning system
 
-            //in this case we want use a remote file provider (figma url from our document)
-            var fileProvider = new FigmaRemoteFileProvider();
+			//in this case we want use a remote file provider (figma url from our document)
+			fileProvider = new FigmaRemoteFileProvider();
 
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>

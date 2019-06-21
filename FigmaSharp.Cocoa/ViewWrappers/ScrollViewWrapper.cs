@@ -28,6 +28,7 @@
 
 using AppKit;
 using CoreGraphics;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FigmaSharp.Cocoa
@@ -35,6 +36,8 @@ namespace FigmaSharp.Cocoa
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
         readonly NSScrollView scrollView;
+        IViewWrapper contentScrollviewWrapper;
+        NSView contentScrollview;
 
         public FigmaColor BackgroundColor
         {
@@ -43,17 +46,16 @@ namespace FigmaSharp.Cocoa
         }
 
         public IViewWrapper ContentView {
-            get => new ViewWrapper((NSView)scrollView.DocumentView);
+            get => contentScrollviewWrapper;
             set
             {
                 if (value == null)
                 {
                     return;
                 }
-                if (value.NativeObject is NSView content)
-                {
-                    this.scrollView.DocumentView = content;
-                }
+                contentScrollview = (NSView)value.NativeObject;
+                contentScrollviewWrapper = value;
+                this.scrollView.DocumentView = contentScrollview;
             }
         }
 
@@ -62,47 +64,30 @@ namespace FigmaSharp.Cocoa
             this.scrollView = scrollView;
         }
 
-        public override void AddChild(IViewWrapper view)
-        {
-            if (scrollView.DocumentView is NSView content)
-            {
-                content.AddSubview(view.NativeObject as NSView);
-            }
-        }
+        public override IReadOnlyList<IViewWrapper> Children => contentScrollviewWrapper.Children;
+
+        public override void AddChild(IViewWrapper view) => contentScrollviewWrapper.AddChild(view);
+
+        public override void ClearSubviews() => contentScrollviewWrapper.ClearSubviews();
+
+        public override void RemoveChild (IViewWrapper view)=> contentScrollviewWrapper.ClearSubviews();
 
         public void AdjustToContent()
         {
-            CGRect contentRect = CGRect.Empty;
+            var items = Children;
 
-            if (scrollView.DocumentView is NSView content)
+            FigmaRectangle contentRect = FigmaRectangle.Zero;
+            for (int i = 0; i < items.Count; i++)
             {
-                foreach (var view in content.Subviews)
+                if (i == 0)
                 {
-                    contentRect = contentRect.UnionWith(view.Frame);
-                }
-                content.SetFrameSize(contentRect.Size);
-            }
-        }
-
-        public override void ClearSubviews()
-        {
-            if (scrollView.DocumentView is NSView content)
-            {
-                foreach (var item in content.Subviews)
+                    contentRect = items[i].Allocation;
+                } else
                 {
-                    item.RemoveFromSuperview();
+                    contentRect = contentRect.UnionWith(items[i].Allocation);
                 }
             }
-        }
-
-        public override void RemoveChild(IViewWrapper view)
-        {
-            if (scrollView.DocumentView is NSView content)
-            {
-                if (content.Subviews.Contains (view.NativeObject)) {
-                    ((NSView)view.NativeObject).RemoveFromSuperview();
-                }
-            }
+            SetContentSize(contentRect.width, contentRect.height);
         }
 
         public void SetContentSize(float width, float height)

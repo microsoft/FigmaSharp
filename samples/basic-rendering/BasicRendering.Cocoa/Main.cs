@@ -55,7 +55,6 @@ namespace LocalFile.Cocoa
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
 
             var mainWindow = new NSWindow(new CGRect(0, 0, 800, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
-            mainWindow.Title = "Cocoa Basic Rendering Sample";
             mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
@@ -77,7 +76,9 @@ namespace LocalFile.Cocoa
             var viewWrapper = new ViewWrapper(contentView);
             manager = new ExampleViewManager(scrollViewWrapper, viewWrapper);
 
+            mainWindow.Title = manager.WindowTitle;
             mainWindow.MakeKeyAndOrderFront(null);
+
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
         }
