@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{0F4964C7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalFile", "LocalFile", "{666C61C6-011C-407F-8D85-98DFD189651C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleLocalFile.Cocoa", "samples\local-file-rendering\ExampleFigma.Cocoa\ExampleLocalFile.Cocoa.csproj", "{B72209A6-B110-468F-B4BE-BE424397E632}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalFile.Cocoa", "samples\local-file-rendering\LocalFile.Cocoa\LocalFile.Cocoa.csproj", "{B72209A6-B110-468F-B4BE-BE424397E632}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeControls", "NativeControls", "{32C47342-CF7F-4FE6-A3BA-E12E5BE126E5}"
 EndProject
