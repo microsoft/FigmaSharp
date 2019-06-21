@@ -76,7 +76,6 @@ namespace ExampleFigmaMac
             var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
             var viewWrapper = new ViewWrapper(contentView);
             manager = new ExampleViewManager(scrollViewWrapper, viewWrapper);
-            manager.Initialize();
 
             mainWindow.MakeKeyAndOrderFront(null);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
