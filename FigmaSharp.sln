@@ -80,11 +80,11 @@ Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaSharp.WinForms", "Figm
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaSharp.Tests", "FigmaSharp.Tests\FigmaSharp.Tests.csproj", "{2D8D3E79-71AF-43CF-A4F6-826C99DDFEBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControls.iOS", "samples\native-control\NativeControl.IOS\NativeControls.iOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControls.iOS", "samples\native-control\NativeControl.iOS\NativeControls.iOS.csproj", "{72D9836A-F902-46A3-8E71-6B327C5D24BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeControls.Gtk", "samples\native-control\NativeControl.GtkSharp\NativeControls.Gtk.csproj", "{52BE2EB0-7B17-4F27-AE71-9A5CBD9BBD81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.IOS", "samples\basic-rendering\BasicRendering.IOS\BasicRendering.IOS.csproj", "{778B49FE-AEBE-4141-915A-53CE1F77DE33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.iOS", "samples\basic-rendering\BasicRendering.iOS\BasicRendering.iOS.csproj", "{778B49FE-AEBE-4141-915A-53CE1F77DE33}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Cocoa", "samples\basic-rendering\BasicRendering.Cocoa\BasicRendering.Cocoa.csproj", "{5E0B8B5F-DD10-4476-B2F3-6945A395DDC7}"
 EndProject
