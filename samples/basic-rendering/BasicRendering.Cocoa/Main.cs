@@ -41,19 +41,6 @@ using ExampleFigma;
 
 namespace ExampleFigmaMac
 {
-    class InvertedScrollView : NSScrollView
-    {
-        public InvertedScrollView ()
-        {
-            
-        }
-    }
-
-    class InvertedView : NSView
-    {
-        public override bool IsFlipped => true;
-    }
-
     static class MainClass
     {
         static ExampleViewManager manager;
@@ -72,7 +59,7 @@ namespace ExampleFigmaMac
             mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
-            scrollView = new InvertedScrollView()
+            scrollView = new NSScrollView()
             {
                 AutohidesScrollers = false,
                 AutomaticallyAdjustsContentInsets = false,
@@ -86,10 +73,7 @@ namespace ExampleFigmaMac
             stackView.AddArrangedSubview(scrollView);
             mainWindow.ContentView = stackView;
 
-            var contentView = new InvertedView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
-            contentView.WantsLayer = true;
-            contentView.Layer.BackgroundColor = NSColor.Red.CGColor;
-
+            var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
             var viewWrapper = new ViewWrapper(contentView);
             manager = new ExampleViewManager(scrollViewWrapper, viewWrapper);
             manager.Initialize();
