@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
+
 using AppKit;
 using CoreGraphics;
-using FigmaSharp;
-using System.Net;
 using Foundation;
+
+using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.NativeControls.Cocoa;
-using System.Linq;
 
 namespace ExampleFigmaMac
 {

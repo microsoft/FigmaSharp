@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using FigmaSharp;
 using FigmaSharp.Services;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace ExampleFigma
 {
     public class ExampleViewManager 
     {
-        const string fileName = "nWFYvx7YMBEtPAgAydX66e";
+        const string fileName = "YdrY6p8JHY2UaKlSFgOwwUnd";
         readonly IScrollViewWrapper scrollViewWrapper;
         readonly FigmaViewRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;

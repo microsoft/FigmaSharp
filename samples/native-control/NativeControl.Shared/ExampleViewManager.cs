@@ -1,8 +1,9 @@
-﻿using FigmaSharp;
+﻿using System;
+using System.Linq;
+
+using FigmaSharp;
 using FigmaSharp.NativeControls;
 using FigmaSharp.Services;
-using System;
-using System.Linq;
 
 namespace ExampleFigmaMac
 {

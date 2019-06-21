@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+
 using AppKit;
 using CoreGraphics;
-using FigmaSharp;
-using System.Net;
 using Foundation;
-using FigmaSharp.Services;
+
+using FigmaSharp;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Services;
 
 namespace ExampleFigmaMac
 {
@@ -21,12 +23,10 @@ namespace ExampleFigmaMac
 
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
-          
-            var xPos = NSScreen.MainScreen.Frame.Width / 2;
-            var yPos = NSScreen.MainScreen.Frame.Height / 2;
 
-            var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            var mainWindow = new NSWindow(new CGRect(0, 0, 800, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
             mainWindow.Title = "Cocoa Figma Local File Sample";
+			mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             scrollView = new NSScrollView()
