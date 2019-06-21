@@ -138,7 +138,7 @@
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.Forms\FigmaSharp.Forms.csproj">
-      <Project>{F67620EC-CA43-4EC2-A04E-ADC97036D3A2}</Project>
+      <Project>{FB7EE879-EE36-47EE-B026-AEEFA60C56FA}</Project>
       <Name>FigmaSharp.Forms</Name>
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>

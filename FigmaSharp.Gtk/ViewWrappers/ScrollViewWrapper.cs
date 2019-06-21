@@ -36,7 +36,7 @@ namespace FigmaSharp.GtkSharp
     {
         readonly ScrolledWindow scrollView;
 
-        readonly Fixed currentContainer;
+        Fixed currentContainer;
 
         public FigmaColor BackgroundColor
         {
@@ -46,16 +46,22 @@ namespace FigmaSharp.GtkSharp
 
         private Viewport viewPort => scrollView.Children.OfType<Viewport>().FirstOrDefault();
 
-        public ScrollViewWrapper(ScrolledWindow scrollView, Fixed fixedView) : base(scrollView)
+        public IViewWrapper ContentView
+        {
+            get => new ViewWrapper(currentContainer);
+            set
+            {
+                if (value.NativeObject is Fixed content)
+                {
+                    scrollView.AddWithViewport(content);
+                    currentContainer = content;
+                }
+            }
+        }
+        public ScrollViewWrapper(ScrolledWindow scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
             var viewportView = viewPort;
-            if (viewportView != null && viewportView.Children[0] is Fixed viewPortFixedView)
-            {
-                currentContainer = viewPortFixedView;
-            } else {
-                throw new System.Exception();
-            }
         }
 
         public void AdjustToContent()
@@ -84,7 +90,7 @@ namespace FigmaSharp.GtkSharp
             foreach (var child in elements)
             {
                 RemoveChild(child);
-            };
+            }
         }
 
         public void SetContentSize(float width, float height)

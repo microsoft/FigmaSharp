@@ -42,14 +42,20 @@ namespace FigmaSharp.Cocoa
             set => scrollView.BackgroundColor = value.ToNSColor();
         }
 
+        public IViewWrapper ContentView {
+            get => new ViewWrapper((NSView)scrollView.DocumentView);
+            set
+            {
+                if (value.NativeObject is NSView content)
+                {
+                    this.scrollView.DocumentView = content;
+                }
+            }
+        }
+
         public ScrollViewWrapper(NSScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
-
-            if (this.scrollView.DocumentView == null)
-            {
-                this.scrollView.DocumentView = new NSView();
-            }
         }
 
         public override void AddChild(IViewWrapper view)

@@ -186,14 +186,21 @@ namespace FigmaSharp.Services
                 NodesProcessed.Add (processedParentView);
 
                 FigmaRectangle contentRect = FigmaRectangle.Zero;
-                foreach (var view in canvas.children)
+                for (int i = 0; i < canvas.children.Length; i++)
                 {
-                    if (view is IAbsoluteBoundingBox box)
+                    if (canvas.children[i] is IAbsoluteBoundingBox box)
                     {
-                        contentRect = contentRect.UnionWith(box.absoluteBoundingBox);
+                        if (i == 0)
+                        {
+                            contentRect = box.absoluteBoundingBox;
+                        }
+                        else
+                        {
+                            contentRect = contentRect.UnionWith(box.absoluteBoundingBox);
+                        }
                     }
                 }
-
+          
                 //figma cambas
                 canvas.absoluteBoundingBox = contentRect;
 

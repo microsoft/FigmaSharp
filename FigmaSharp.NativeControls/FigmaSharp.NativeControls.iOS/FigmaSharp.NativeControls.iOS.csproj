@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
-      <Project>{E9891F05-7A3B-40A2-9388-505354D6D4C3}</Project>
+      <Project>{80D20B03-FF89-47CF-A676-B67B9DE2DAF2}</Project>
       <Name>FigmaSharp.NativeControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.iOS\FigmaSharp.iOS.csproj">
