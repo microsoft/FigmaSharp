@@ -36,20 +36,12 @@ namespace ExampleFigma
     public class ExampleViewManager 
     {
         const string fileName = "YdrY6p8JHY2UaKlSFgOwwUnd";
-        readonly IScrollViewWrapper scrollViewWrapper;
-        readonly IViewWrapper viewWrapper;
-        readonly FigmaViewRendererService rendererService;
-        readonly FigmaViewRendererDistributionService distributionService;
-        readonly FigmaRemoteFileProvider fileProvider;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, IViewWrapper viewWrapper)
         {
-            this.scrollViewWrapper = scrollViewWrapper;
-            this.viewWrapper = viewWrapper;
-
             scrollViewWrapper.ContentView = viewWrapper;
          
-            //we get the default specific view converters from each toolkit
+            //we get the default basic view converters from the current loaded toolkit
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
 
             //TIP: the render consist in 2 steps:
@@ -58,15 +50,15 @@ namespace ExampleFigma
             //native toolkit positioning system
 
             //in this case we want use a remote file provider (figma url from our document)
-            fileProvider = new FigmaRemoteFileProvider();
+            var fileProvider = new FigmaRemoteFileProvider();
 
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>
-            rendererService = new FigmaViewRendererService(fileProvider, converters);
-            rendererService.Start(fileName, this.viewWrapper);
+            var rendererService = new FigmaViewRendererService(fileProvider, converters);
+            rendererService.Start(fileName, viewWrapper);
 
             //now we have all the views processed and the relationship we can distribute all the views into the desired base view
-            distributionService = new FigmaViewRendererDistributionService(rendererService);
+            var distributionService = new FigmaViewRendererDistributionService(rendererService);
             distributionService.Start();
 
             //We want know the background color of the figma camvas and apply to our scrollview

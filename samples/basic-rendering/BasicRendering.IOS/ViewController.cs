@@ -25,7 +25,6 @@ namespace BasicRendering.IOS
             var contentView = new ViewWrapper(new UIView());
 
             manager = new ExampleViewManager(scrollViewWrapper, contentView);
-            manager.Initialize();
         }
 
         public override void DidReceiveMemoryWarning()
