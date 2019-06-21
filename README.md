@@ -1,4 +1,4 @@
-# FigmaSharp
+﻿# FigmaSharp
 
 *FigmaSharp converts Figma documents into .NET objects and provides the tools to turn them into working native UI views. Free and Open Source software under the [MIT LICENSE]().*
 
@@ -7,7 +7,12 @@
 
 ## Getting started
 
-To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**. Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**. This will be your only chance to copy the token, so make sure you keep a copy of this in a secure place.
+To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**.
+Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
+This will be your only chance to copy the token, so make sure you keep a copy in a secure place.
+
+To run the examples, open `FigmaSharp.sln` in [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/).
+In each example project's **Project Options**, go to **Run → Configurations → Default** and add an environment variable called `TOKEN`, then paste in your Personal Access Token.
 
 
 ## The FigmaSharp API
