@@ -9,11 +9,6 @@ namespace FigmaSharp.WinForms
     {
         protected Control nativeView;
 
-        public ViewWrapper() : this(new TransparentControl())
-        {
-
-        }
-
         public ViewWrapper(Control nativeView)
         {
             this.nativeView = nativeView;
@@ -22,7 +17,7 @@ namespace FigmaSharp.WinForms
         public IViewWrapper Parent => new ViewWrapper(nativeView.Parent);
 
         readonly List<IViewWrapper> children = new List<IViewWrapper>();
-        public IReadOnlyList<IViewWrapper> Children => children;
+        public virtual IReadOnlyList<IViewWrapper> Children => children;
 
         public object NativeObject => nativeView;
 

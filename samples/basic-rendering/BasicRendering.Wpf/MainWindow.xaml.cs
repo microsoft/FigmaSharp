@@ -29,8 +29,8 @@ namespace BasicRendering.Wpf
             InitializeComponent();
 
             var scrollViewWrapper = new ScrollViewWrapper(ContainerPanel);
-            manager = new ExampleViewManager(scrollViewWrapper);
-            manager.Initialize();
+            var container = new ViewWrapper(new Canvas());
+            manager = new ExampleViewManager(scrollViewWrapper, container);
         }
     }
 }

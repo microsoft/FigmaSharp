@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -34,6 +35,10 @@ namespace FigmaSharp.WinForms
     public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
     {
         readonly ScrollableControl scrollView;
+        TransparentControl canvasContainer;
+        IViewWrapper canvasContainerWrapper;
+
+        public override IReadOnlyList<IViewWrapper> Children => canvasContainerWrapper.Children;
 
         public FigmaColor BackgroundColor
         {
@@ -41,20 +46,45 @@ namespace FigmaSharp.WinForms
             set => scrollView.BackColor = value.ToColor();
         }
 
+        public IViewWrapper ContentView {
+            get => new ViewWrapper(canvasContainer);
+            set {
+
+                if (canvasContainer != null)
+                {
+                    scrollView.Controls.Remove(canvasContainer);
+                    canvasContainer = null;
+                    canvasContainerWrapper = null;
+                }
+
+                if (value != null && value.NativeObject is TransparentControl canvas)
+                {
+                    canvasContainer = canvas;
+                    canvasContainerWrapper = value;
+                    scrollView.Controls.Add (canvasContainer);
+                }
+            }
+        }
         public ScrollViewWrapper(ScrollableControl scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
             scrollView.AutoScroll = true;
         }
 
+        public override void AddChild(IViewWrapper view) => canvasContainerWrapper.AddChild(view);
+
+        public override void RemoveChild(IViewWrapper view) => canvasContainerWrapper.RemoveChild(view);
+
+
         public void AdjustToContent()
         {
-
+            System.Console.WriteLine("");
         }
 
         public void SetContentSize(float width, float height)
         {
-
+            canvasContainer.Width = (int) width;
+            canvasContainer.Height = (int)height;
         }
     }
 }

@@ -10,11 +10,6 @@ namespace FigmaSharp.Wpf
     {
         protected FrameworkElement nativeView;
 
-        public ViewWrapper() : this(new UserControl())
-        {
-
-        }
-
         public ViewWrapper(FrameworkElement nativeView)
         {
             this.nativeView = nativeView;
@@ -23,7 +18,7 @@ namespace FigmaSharp.Wpf
         public IViewWrapper Parent => new ViewWrapper(nativeView.Parent as FrameworkElement);
 
         protected readonly List<IViewWrapper> children = new List<IViewWrapper>();
-        public IReadOnlyList<IViewWrapper> Children => children;
+        public virtual IReadOnlyList<IViewWrapper> Children => children;
 
         public object NativeObject => nativeView;
 
@@ -44,8 +39,8 @@ namespace FigmaSharp.Wpf
             }
         }
 
-        public string Identifier { get => string.Empty; set { } }
-        public string NodeName { get => string.Empty; set { } }
+        public string Identifier { get => nativeView.Name; set { } }
+        public string NodeName { get => nativeView.Name; set { } }
         public bool Hidden { get => true; set { }  }
 
         public FigmaRectangle Allocation {
