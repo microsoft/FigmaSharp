@@ -39,7 +39,7 @@ namespace ExampleFigma
         readonly IScrollViewWrapper scrollViewWrapper;
         readonly FigmaViewRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;
-        public readonly FigmaRemoteFileProvider fileProvider;
+        readonly FigmaRemoteFileProvider fileProvider;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper)
         {
