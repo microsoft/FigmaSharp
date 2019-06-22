@@ -74,7 +74,7 @@ namespace FigmaSharp.WinForms
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
             FigmaApiHelper.GetFigmaResponseFromContent (template);
 
-        public IViewWrapper CreateEmptyView() => new ViewWrapper ();
+        public IViewWrapper CreateEmptyView() => new ViewWrapper (new TransparentControl ());
 
         public IImageViewWrapper GetImageView(IImageWrapper image)
         {

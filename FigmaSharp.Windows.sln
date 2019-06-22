@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -42,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Wpf", "sampl
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		samples\native-control\NativeControl.Shared\NativeControl.Shared.projitems*{04785bb0-c497-4fa1-b3c9-5ee37e8dc29e}*SharedItemsImports = 13
+		samples\native-controls\NativeControls.Shared\NativeControl.Shared.projitems*{04785bb0-c497-4fa1-b3c9-5ee37e8dc29e}*SharedItemsImports = 13
 		samples\basic-rendering\BasicRendering.Shared\BasicRendering.Shared.projitems*{461b4a01-c603-4c8a-9763-642197569e9a}*SharedItemsImports = 4
 		samples\basic-rendering\BasicRendering.Shared\BasicRendering.Shared.projitems*{88cc3650-709a-4a60-a43b-0fe2f6c4098d}*SharedItemsImports = 13
 		samples\basic-rendering\BasicRendering.Shared\BasicRendering.Shared.projitems*{d19ca994-f936-418c-be42-4699f80c651d}*SharedItemsImports = 4

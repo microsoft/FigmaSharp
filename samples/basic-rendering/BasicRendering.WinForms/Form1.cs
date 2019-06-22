@@ -22,8 +22,8 @@ namespace ExampleFigmaWinForms
             InitializeComponent ();
          
             var scrollViewWrapper = new ScrollViewWrapper (ContainerPanel);
-            manager = new ExampleViewManager (scrollViewWrapper);
-            manager.Initialize ();
+            var contentView = new ViewWrapper(new TransparentControl());
+            manager = new ExampleViewManager (scrollViewWrapper, contentView);
         }
 
         private void ContainerPanel_Scroll(object sender, ScrollEventArgs e)
