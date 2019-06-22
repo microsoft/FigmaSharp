@@ -38,7 +38,7 @@ using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.NativeControls.Cocoa;
 
-namespace ExampleFigmaMac
+namespace LocalFile.Cocoa
 {
     static class MainClass
     {

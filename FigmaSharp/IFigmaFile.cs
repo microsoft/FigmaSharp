@@ -7,7 +7,7 @@ namespace FigmaSharp
         List<IImageViewWrapper> FigmaImages { get; }
         FigmaResponse Document { get; }
 
-        void Initialize();
+        void InitializeComponent();
 
         void Reload(bool includeImages = false);
 

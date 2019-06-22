@@ -46,6 +46,10 @@ namespace FigmaSharp.Cocoa
             get => new ViewWrapper((NSView)scrollView.DocumentView);
             set
             {
+                if (value == null)
+                {
+                    return;
+                }
                 if (value.NativeObject is NSView content)
                 {
                     this.scrollView.DocumentView = content;

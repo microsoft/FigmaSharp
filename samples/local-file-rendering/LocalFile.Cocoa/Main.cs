@@ -36,13 +36,15 @@ using Foundation;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
+using LocalFile;
+using LocalFile.Shared;
 
-namespace ExampleFigmaMac
+namespace LocalFile.Cocoa
 {
     static class MainClass
     {
-        static IScrollViewWrapper scrollViewWrapper;
-         
+        static DocumentExample documentExample;
+
         static void Main(string[] args)
         {
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
@@ -55,42 +57,30 @@ namespace ExampleFigmaMac
 			mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
+            mainWindow.ContentView = stackView;
+
             scrollView = new NSScrollView()
             {
                 HasVerticalScroller = true,
                 HasHorizontalScroller = true,
-                AutomaticallyAdjustsContentInsets = false
-            };
-
-            scrollViewWrapper = new ScrollViewWrapper(scrollView);
-
+                AutomaticallyAdjustsContentInsets = false,
+                AutohidesScrollers = false,
+            };  
             stackView.AddArrangedSubview(scrollView);
-
-            scrollView.AutohidesScrollers = false;
-            scrollView.BackgroundColor = NSColor.Black;
-            scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
-            mainWindow.ContentView = stackView;
 
             var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
             contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-
             scrollView.DocumentView = contentView;
 
-            ReadStoryboardFigmaFile();
+            var scrollViewWrapper = new ScrollViewWrapper(scrollView);
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+            var storyboard = new FigmaStoryboard (converters);
+
+            documentExample = new DocumentExample(scrollViewWrapper, storyboard);
 
             mainWindow.MakeKeyAndOrderFront(null);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
-        }
-
-        //Example 1
-        static void ReadStoryboardFigmaFile()
-        {
-            var testStoryboard = new FigmaStoryboard();
-            scrollView.DocumentView = testStoryboard.ContentView.NativeObject as NSView;
-            //we need reload after set the content to ensure the scrollview
-            testStoryboard.Reload(true);
-            scrollViewWrapper.AdjustToContent();
         }
 
         static NSScrollView scrollView;
