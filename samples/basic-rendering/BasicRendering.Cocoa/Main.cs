@@ -56,6 +56,7 @@ namespace ExampleFigmaMac
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
 
             var mainWindow = new NSWindow(new CGRect(0, 0, 800, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            mainWindow.Title = "Cocoa Basic Rendering Sample";
             mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
@@ -81,9 +82,7 @@ namespace ExampleFigmaMac
             manager = new ExampleViewManager(scrollViewWrapper);
             manager.Initialize();
 
-            mainWindow.Title = manager.fileProvider.Response.name;
             mainWindow.MakeKeyAndOrderFront(null);
-
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
         }
