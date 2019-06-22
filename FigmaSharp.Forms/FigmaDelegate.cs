@@ -50,7 +50,7 @@ namespace FigmaSharp.Forms
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
             FigmaApiHelper.GetFigmaResponseFromContent(template);
 
-        public IViewWrapper CreateEmptyView() => new ViewWrapper(new EmptyView());
+        public IViewWrapper CreateEmptyView() => new ViewWrapper(new AbsoluteLayout());
 
         public IImageViewWrapper GetImageView(IImageWrapper image)
         {

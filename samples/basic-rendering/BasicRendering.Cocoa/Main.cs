@@ -39,7 +39,7 @@ using FigmaSharp.Services;
 
 using ExampleFigma;
 
-namespace ExampleFigmaMac
+namespace LocalFile.Cocoa
 {
     static class MainClass
     {

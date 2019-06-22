@@ -1,7 +1,7 @@
 ﻿using System;
 using CoreAnimation;
 using CoreGraphics;
-using ExampleFigmaMac;
+using LocalFile.Cocoa;
 using FigmaSharp;
 using FigmaSharp.iOS;
 using FigmaSharp.NativeControls.iOS;

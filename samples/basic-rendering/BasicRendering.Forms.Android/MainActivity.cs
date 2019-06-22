@@ -19,6 +19,8 @@ namespace BasicRendering.Forms.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            FigmaApplication.Init(FigmaToken);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -26,8 +28,6 @@ namespace BasicRendering.Forms.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
-            FigmaApplication.Init(FigmaToken);
 
             LoadApplication(new App());
         }

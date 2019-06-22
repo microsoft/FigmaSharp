@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Reflection;
 
 namespace FigmaSharp.Services
 {
@@ -80,14 +81,17 @@ namespace FigmaSharp.Services
 
     public class FigmaManifestFileProvider : FigmaFileProvider
     {
+        public Assembly Assembly { get; set; }
+
         public override string GetContentTemplate(string file)
         {
-            return AppContext.Current.GetManifestResource(null, file);
+            return AppContext.Current.GetManifestResource(Assembly, file);
         }
 
         public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
         {
             //not needed in local files
+
         }
     }
 

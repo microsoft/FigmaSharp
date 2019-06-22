@@ -1,24 +1,50 @@
 ﻿using System;
 using System.Reflection;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace FigmaSharp.Forms
 {
     public static class FigmaViewsHelper
     {
+        static string GetResourceDefaultName (Assembly assembly, string resourceName)
+        {
+            //TODO: not safe
+            var fullResourceName = string.Concat(assembly.GetName().Name, ".Resources.", resourceName);
+            return fullResourceName;
+        }
+
+        static bool IsResourceInAssembly(Assembly assembly, string fullResourceName) =>
+            assembly.GetManifestResourceNames().Any(s => s == fullResourceName);
+
+        static (string fullResourceName, Assembly assembly) GetAssemblyForResource (string resourceName, params Assembly[] assemblies)
+        {
+            string fullResourceName;
+            foreach (var assembly in assemblies)
+            {
+                fullResourceName = GetResourceDefaultName(assembly, resourceName);
+                if (IsResourceInAssembly(assembly, fullResourceName))
+                {
+                    return (fullResourceName, assembly);
+                }
+            }
+            return (null, null);
+        }
+
+
         public static ImageSource GetManifestImageResource(Assembly assembly, string resource)
         {
-            if (assembly == null)
-            {
-                //TODO: not safe
-                assembly = Assembly.GetEntryAssembly();
-            }
             try
             {
-                //TODO: not safe
-                var fullResourceName = string.Concat(assembly.GetName().Name, ".Resources.", resource);
+                //used for shared libraries
+                var entryAssembly = GetAssemblyForResource(resource, assembly, Assembly.GetEntryAssembly());
+                if (entryAssembly.assembly == null)
+                {
+                    throw new NullReferenceException($"resource name '{resource}' not found in the assembly resources");
+                }
+
                 //var resources = assembly.GetManifestResourceNames();
-                using (var stream = assembly.GetManifestResourceStream(fullResourceName))
+                using (var stream = entryAssembly.assembly.GetManifestResourceStream(entryAssembly.fullResourceName))
                 {
                     var imageSource = ImageSource.FromStream (() => stream);
                     return imageSource;

@@ -31,7 +31,7 @@ using FigmaSharp;
 using FigmaSharp.NativeControls;
 using FigmaSharp.Services;
 
-namespace ExampleFigmaMac
+namespace LocalFile.Cocoa
 {
     public class ExampleViewManager
     {

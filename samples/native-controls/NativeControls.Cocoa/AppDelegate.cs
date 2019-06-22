@@ -1,7 +1,7 @@
 ﻿using AppKit;
 using Foundation;
 
-namespace ExampleFigmaMac
+namespace LocalFile.Cocoa
 {
     [Register("AppDelegate")]
     public class AppDelegate : NSApplicationDelegate

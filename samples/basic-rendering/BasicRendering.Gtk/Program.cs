@@ -8,6 +8,8 @@ namespace BasicRendering.Gtk
 {
     class MainClass
     {
+        private static ExampleViewManager exampleViewManager;
+
         public static void Main(string[] args)
         {
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
@@ -25,7 +27,7 @@ namespace BasicRendering.Gtk
 
             var contentViewWrapper = new ViewWrapper(new Fixed());
             var scrollViewWrapper = new ScrollViewWrapper(scrollWindow);
-            var manager = new ExampleViewManager(scrollViewWrapper, contentViewWrapper);
+            exampleViewManager = new ExampleViewManager(scrollViewWrapper, contentViewWrapper);
 
             window.ShowAll();
 

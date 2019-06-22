@@ -1,5 +1,5 @@
 ﻿using System;
-using ExampleFigmaMac;
+using LocalFile.Cocoa;
 using FigmaSharp.GtkSharp;
 using Gtk;
 using System.Linq;
