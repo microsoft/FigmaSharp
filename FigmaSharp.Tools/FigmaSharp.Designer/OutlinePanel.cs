@@ -29,7 +29,7 @@
 using System;
 using FigmaSharp;
 
-namespace MonoDevelop.Figma
+namespace FigmaSharp.Designer
 {
     public class OutlinePanel
     {

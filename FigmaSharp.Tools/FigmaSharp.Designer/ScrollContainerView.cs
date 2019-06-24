@@ -28,7 +28,7 @@
 
 using AppKit;
 
-namespace MonoDevelop.Figma
+namespace FigmaSharp.Designer
 {
     public class ScrollContainerView : NSScrollView
     {
