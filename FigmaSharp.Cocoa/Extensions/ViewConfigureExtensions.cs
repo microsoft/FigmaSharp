@@ -101,21 +101,6 @@ namespace FigmaSharp.Cocoa
         public static void Configure(this NSView view, FigmaVectorEntity child)
         {
             Configure(view, (FigmaNode)child);
-
-            if (child.HasFills && child.fills[0].color != null)
-            {
-               view.Layer.BackgroundColor = child.fills[0].color.ToNSColor().CGColor;
-            }
-
-            //var strokes = child.strokes.FirstOrDefault();
-            //if (strokes != null)
-            //{
-            //    if (strokes.color != null)
-            //    {
-            //        view.Layer.BorderColor = strokes.color.ToNSColor().CGColor;
-            //    }
-            //    view.Layer.BorderWidth = child.strokeWeight;
-            //}
         }
 
         public static void Configure(this StringBuilder builder, string name, FigmaVectorEntity child)
@@ -142,7 +127,41 @@ namespace FigmaSharp.Cocoa
         {
             Configure(view, (FigmaVectorEntity)child);
 
-            view.Layer.CornerRadius = child.cornerRadius;
+            var shapeLayer = new CAShapeLayer
+            {
+                Path = NSBezierPath.FromRect(view.Bounds).ToCGPath(),
+                Frame = view.Layer.Frame
+            };
+
+            view.Layer = shapeLayer;
+
+            if (child.HasFills && child.fills[0].color != null)
+            {
+                shapeLayer.FillColor = child.fills[0].color.ToNSColor().CGColor;
+            } else
+            {
+                shapeLayer.FillColor = NSColor.Clear.CGColor;
+            }
+
+            if (child.strokeDashes != null)
+            {
+                var number = new NSNumber[child.strokeDashes.Length];
+                for (int i = 0; i < child.strokeDashes.Length; i++)
+                {
+                    number[i] = child.strokeDashes[i];
+                }
+                shapeLayer.LineDashPattern = number;
+            }
+
+            var strokes = child.strokes.FirstOrDefault();
+            if (strokes != null && strokes.color != null)
+            {
+                shapeLayer.StrokeColor = strokes.color.ToNSColor().CGColor;
+            }
+
+            shapeLayer.BackgroundColor = NSColor.Clear.CGColor;
+            shapeLayer.LineWidth = child.strokeWeight;
+            shapeLayer.CornerRadius = child.cornerRadius;
         }
 
         public static void Configure(this StringBuilder builder, string name, FigmaRectangleVector child)

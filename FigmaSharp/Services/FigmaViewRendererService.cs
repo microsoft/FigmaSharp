@@ -34,6 +34,19 @@ using System.Threading;
 
 namespace FigmaSharp.Services
 {
+    public class ImageProcessed
+    {
+        public ImageProcessed(FigmaVectorEntity node)
+        {
+            Node = node;
+        }
+
+        public FigmaVectorEntity Node { get; set; }
+        public string Url { get; set; }
+        public IImageWrapper Image { get; set; }
+        public IImageViewWrapper ViewWrapper { get; set; }
+    }
+
     public class FigmaViewRendererService
     {
         readonly FigmaViewConverter[] FigmaDefaultConverters;
@@ -41,7 +54,7 @@ namespace FigmaSharp.Services
 
         public List<ProcessedNode> NodesProcessed = new List<ProcessedNode> ();
 
-        public readonly Dictionary<FigmaVectorEntity, string> ImageVectors = new Dictionary<FigmaVectorEntity, string> ();
+        public readonly List<ImageProcessed> ImageVectors = new List<ImageProcessed>();
 
         public string File { get; private set; }
         public int Page { get; private set; }
@@ -103,16 +116,15 @@ namespace FigmaSharp.Services
                         {
                             if (vectorEntity.GetType () == typeof (FigmaVectorEntity))
                             {
-                                ImageVectors.Add(vectorEntity, null);
+                                ImageVectors.Add (new ImageProcessed (vectorEntity));
                             } else
                             {
                                 var figmaPaint = vectorEntity.fills.OfType<FigmaPaint>().FirstOrDefault();
                                 if (figmaPaint != null && figmaPaint.type == "IMAGE")
                                 {
-                                    ImageVectors.Add(vectorEntity, null);
+                                    ImageVectors.Add (new ImageProcessed (vectorEntity));
                                 }
                             }
-                           
                         }
                         //Image processing
                     }
@@ -137,35 +149,34 @@ namespace FigmaSharp.Services
             //loading views
             foreach (var vector in ImageVectors)
             {
-                Console.Write ("[{0}][{1}] Processing... ", vector.Key.id, vector.Key.name);
-                var processedNode = NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Key);
-                if (!string.IsNullOrEmpty(vector.Value))
+                Console.Write ("[{0}][{1}] Processing... ", vector.Node.id, vector.Node.name);
+                if (!string.IsNullOrEmpty(vector.Url))
                 {
-                    var imageWrapper = AppContext.Current.GetImage(vector.Value);
-                    if (processedNode.View is IImageViewWrapper imageViewWrapper)
-                    {
-                        AppContext.Current.BeginInvoke(() => {
-                            try
-                            {
-                                imageViewWrapper.SetImage(imageWrapper);
-                                Console.WriteLine("DONE");
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex);
-                            }
-                        });
-                    } else
-                    {
-                        Console.WriteLine("Current container is not a IImageView");
-                    }
-                } else
-                {
-                    Console.WriteLine("NO URL");
+                    vector.ViewWrapper = NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Node)?.View as IImageViewWrapper;
+                    vector.Image = AppContext.Current.GetImage(vector.Url);
+                    Thread.Sleep(50);
                 }
-
-                Thread.Sleep(100);
             }
+
+            AppContext.Current.BeginInvoke(() => {
+                foreach (var vector in ImageVectors)
+                {
+                    if (string.IsNullOrEmpty(vector.Url))
+                    {
+                        Console.WriteLine("NO URL");
+                        continue;
+                    }
+                    try
+                    {
+                        vector.ViewWrapper.SetImage(vector.Image);
+                        Console.WriteLine("DONE");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            });
             Console.WriteLine("Ended Image Binding process.");
         }
 
@@ -207,7 +218,6 @@ namespace FigmaSharp.Services
                     var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                     return currentElement;
                 }
-
             }
             return null;
         }

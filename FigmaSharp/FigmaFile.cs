@@ -90,10 +90,10 @@ namespace FigmaSharp
             {
                 foreach (var imageVector in imageVectors)
                 {
-                    var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Key.id);
+                    var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Node.id);
                     var image = AppContext.Current.GetImageFromManifest(figmaLocalFileProvider.Assembly, recoveredKey);
 
-                    var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Key);
+                    var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Node);
                     var wrapper = processedNode.View as IImageViewWrapper;
                     wrapper.SetImage(image);
                     FigmaImages.Add(wrapper);
