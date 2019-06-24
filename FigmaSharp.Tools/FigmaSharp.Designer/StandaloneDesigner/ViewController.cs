@@ -45,7 +45,7 @@ namespace StandaloneDesigner
             var directory = Environment.GetEnvironmentVariable("DIRECTORY");
             var file = Path.Combine (directory, Environment.GetEnvironmentVariable("FILE"));
             session = new FigmaDesignerSession(converters);
-            session.Reload(file, directory);
+            //session.Reload(file, directory);
 
             var window = NSApplication.SharedApplication.Windows.FirstOrDefault();
 

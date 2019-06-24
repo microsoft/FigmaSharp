@@ -26,13 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp;
 using System;
 using System.IO;
 using System.Linq;
-using FigmaSharp.Converters;
-using FigmaSharp.Services;
 using System.Collections.Generic;
+using FigmaSharp.Services;
+using FigmaSharp.Converters;
 using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Designer

@@ -53,9 +53,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -103,17 +100,19 @@
       <Project>{4E7F6BD9-33C0-4544-9186-7FDCD0047F4B}</Project>
       <Name>FigmaSharp.Designer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
       <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
       <Name>FigmaSharp.NativeControls.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
