@@ -7,11 +7,6 @@
     <Reference Include="Xamarin.Mac" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj" />
-    <ProjectReference Include="..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
-    <ProjectReference Include="..\FigmaSharp.Designer\FigmaSharp.Designer.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
             <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
         <Private>False</Private>        
@@ -34,5 +29,16 @@
         <EmbeddedResource Include="Resources\pe-path-reveal%402x.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal~dark.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
+      </ItemGroup>
+      <ItemGroup>
+        <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
+          <ReferenceSourceTarget></ReferenceSourceTarget>
+        </ProjectReference>
+        <ProjectReference Include="..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+          <ReferenceSourceTarget></ReferenceSourceTarget>
+        </ProjectReference>
+        <ProjectReference Include="..\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
+          <ReferenceSourceTarget></ReferenceSourceTarget>
+        </ProjectReference>
       </ItemGroup>
 </Project>
