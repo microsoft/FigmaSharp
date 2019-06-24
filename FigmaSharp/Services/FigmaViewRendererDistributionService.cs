@@ -3,6 +3,7 @@ using FigmaSharp;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace FigmaSharp.Services
 {
@@ -48,6 +49,7 @@ namespace FigmaSharp.Services
 							}
 						});
                     }
+                    Thread.Sleep(200);
                 }
             });
         }
