@@ -43,7 +43,7 @@ namespace FigmaSharp.Services
         void Load(string path);
         void Save(string filePath);
         string GetContentTemplate(string file);
-        void OnStartImageLinkProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
+        void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file);
     }
 
     public class FigmaLocalFileProvider : FigmaFileProvider
@@ -53,7 +53,7 @@ namespace FigmaSharp.Services
             return System.IO.File.ReadAllText(file);
         }
 
-        public override void OnStartImageLinkProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        public override void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file)
         {
             //not needed in local files
         }
@@ -68,16 +68,16 @@ namespace FigmaSharp.Services
             return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
         }
 
-        public override void OnStartImageLinkProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        public override void OnStartImageLinkProcessing(List<ImageProcessed> imagesProcessed, string file)
         {
-            if (imageVectors.Count == 0)
+            if (imagesProcessed.Count == 0)
             {
                 return;
             }
 
             Task.Run(() => {
                 //Remote files need get the real image url to get the file
-                var vectorsIds = imageVectors.Select(s => s.Key.id);
+                var vectorsIds = imagesProcessed.Select(s => s.Node.id);
 
                 //TODO: figma url has a limited character in urls we fixed the limit to 10 ids's for each call
                 var numberLoop = (vectorsIds.Count() / CallNumber) + 1;
@@ -93,14 +93,14 @@ namespace FigmaSharp.Services
                         string keys = string.Empty;
                         foreach (var imageResponse in figmaImageResponse.images)
                         {
-                            var image = imageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
-                            imageVectors[image] = imageResponse.Value;
+                            var imageProcessed = imagesProcessed.FirstOrDefault(s => s.Node.id == imageResponse.Key);
+                            imageProcessed.Url = imageResponse.Value;
                             keys += imageResponse.Key + " ";
 
                         }
                         Console.WriteLine(keys);
                     }
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                 }
 
                 Console.WriteLine("Ended image link processing");
@@ -108,7 +108,7 @@ namespace FigmaSharp.Services
                 OnImageLinkProcessed();
             });
         }
-        const int CallNumber = 200;
+        const int CallNumber = 250;
     }
 
     public class FigmaManifestFileProvider : FigmaFileProvider
@@ -120,7 +120,7 @@ namespace FigmaSharp.Services
             return AppContext.Current.GetManifestResource(Assembly, file);
         }
 
-        public override void OnStartImageLinkProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
+        public override void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file)
         {
             //not needed in local files
         }
@@ -189,7 +189,7 @@ namespace FigmaSharp.Services
 
         public abstract string GetContentTemplate(string file);
 
-        public abstract void OnStartImageLinkProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
+        public abstract void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file);
 
         public void Save(string filePath)
         {

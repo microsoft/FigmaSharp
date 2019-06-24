@@ -42,8 +42,7 @@ namespace FigmaSharp.Cocoa
 
         public void SetImage(IImageWrapper image)
         {
-            imageView.Layer.BackgroundColor = NSColor.Clear.CGColor;
-            imageView.Image = (NSImage) image.NativeObject;
+            imageView.Layer.Contents = ((NSImage)image.NativeObject).CGImage;
         }
     }
 }
