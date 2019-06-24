@@ -33,15 +33,17 @@ namespace FigmaSharp.Forms
 {
     public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
     {
+        Image imageView;
         public ImageViewWrapper(Image imageView) : base(imageView)
         {
+            this.imageView = imageView;
         }
 
         public void SetImage(IImageWrapper image)
         {
-            ((Image)nativeView).Aspect = Aspect.AspectFill;
-            ((Image)nativeView).Source = image.NativeObject as ImageSource;
-            ((Image)nativeView).Margin = new Thickness(0);
+            imageView.Aspect = Aspect.AspectFill;
+            imageView.Source = image.NativeObject as ImageSource;
+            imageView.Margin = new Thickness(0);
         }
     }
 }

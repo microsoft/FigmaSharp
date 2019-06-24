@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using AppKit;
 using FigmaSharp.Converters;
 
 namespace FigmaSharp.Cocoa.Converters
@@ -35,8 +36,9 @@ namespace FigmaSharp.Cocoa.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var vector = ((FigmaVector)currentNode);
-            Console.WriteLine(vector);
-            return null;
+            var currengroupView = new NSImageView();
+            currengroupView.Configure((FigmaRectangleVector)currentNode);
+            return new ImageViewWrapper(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

@@ -79,10 +79,10 @@ namespace FigmaSharp.Cocoa
             Configure(figmaLineView, (FigmaNode)figmaLine);
 
             var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
-            if (fills != null)
-            {
-                figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
-            }
+            //if (fills != null)
+            //{
+            //    figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
+            //}
 
             var absolute = figmaLine.absoluteBoundingBox;
             var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
@@ -107,15 +107,15 @@ namespace FigmaSharp.Cocoa
                view.Layer.BackgroundColor = child.fills[0].color.ToNSColor().CGColor;
             }
 
-            var strokes = child.strokes.FirstOrDefault();
-            if (strokes != null)
-            {
-                if (strokes.color != null)
-                {
-                    view.Layer.BorderColor = strokes.color.ToNSColor().CGColor;
-                }
-                view.Layer.BorderWidth = child.strokeWeight;
-            }
+            //var strokes = child.strokes.FirstOrDefault();
+            //if (strokes != null)
+            //{
+            //    if (strokes.color != null)
+            //    {
+            //        view.Layer.BorderColor = strokes.color.ToNSColor().CGColor;
+            //    }
+            //    view.Layer.BorderWidth = child.strokeWeight;
+            //}
         }
 
         public static void Configure(this StringBuilder builder, string name, FigmaVectorEntity child)

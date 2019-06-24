@@ -66,7 +66,7 @@ namespace LocalFile.Cocoa
 
             var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
             var viewWrapper = new ViewWrapper(contentView);
-            manager = new ExampleViewManager(scrollViewWrapper, viewWrapper);
+            manager = new ExampleViewManager(scrollViewWrapper);
 
             mainWindow.Title = manager.WindowTitle;
             mainWindow.MakeKeyAndOrderFront(null);

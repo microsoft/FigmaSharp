@@ -37,15 +37,12 @@ namespace FigmaSharp.GtkSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var model = (FigmaRectangleVector)currentNode;
-            if (model.HasFills)
+            if (model.HasFills && model.fills[0].type == "IMAGE" && model.fills[0] is FigmaPaint figmaPaint)
             {
-                if (model.fills[0].type == "IMAGE" && model.fills[0] is FigmaPaint figmaPaint)
-                {
-                    var imageView = new Image();
-                    var figmaImageView = new ImageViewWrapper(imageView);
-                    imageView.Configure(model);
-                    return figmaImageView;
-                }
+                var imageView = new Image();
+                var figmaImageView = new ImageViewWrapper(imageView);
+                imageView.Configure(model);
+                return figmaImageView;
             }
 
             var view = new Fixed();

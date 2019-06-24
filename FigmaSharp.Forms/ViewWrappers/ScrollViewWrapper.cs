@@ -30,6 +30,7 @@ using System;
 using System.Linq;
 using Xamarin.Forms;
 using FigmaSharp;
+using System.Collections.Generic;
 
 namespace FigmaSharp.Forms
 {
@@ -74,6 +75,8 @@ namespace FigmaSharp.Forms
             set => scrollView.Content.BackgroundColor = value.ToColor();
         }
 
+        public override IReadOnlyList<IViewWrapper> Children => scrollViewWrapper.Children;
+
         public override void AddChild(IViewWrapper view) =>
             scrollViewWrapper.AddChild(view);
 
@@ -82,10 +85,17 @@ namespace FigmaSharp.Forms
             if (scrollView.Content == null)
                 return;
 
+            var childs = Children;
             FigmaRectangle contentRect = FigmaRectangle.Zero;
-            foreach (var view in Children)
+            for (int i = 0; i < childs.Count; i++)
             {
-                contentRect = contentRect.UnionWith(view.Allocation);
+                if (i == 0)
+                {
+                    contentRect = childs.ElementAt(i).Allocation;
+                } else
+                {
+                    contentRect = contentRect.UnionWith (childs.ElementAt(i).Allocation);
+                }
             }
             SetContentSize(contentRect.width, contentRect.height);
         }
@@ -95,8 +105,8 @@ namespace FigmaSharp.Forms
 
         public void SetContentSize(float width, float height)
         {
-            scrollView.Content.WidthRequest = width;
-            scrollView.Content.HeightRequest = height;
+            scrollContent.WidthRequest = width;
+            scrollContent.HeightRequest = height;
         }
     }
 }

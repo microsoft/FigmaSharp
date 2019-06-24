@@ -30,130 +30,13 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace FigmaSharp.Services
 {
-    public interface IFigmaFileProvider
-    {
-        List<FigmaNode> Nodes { get; }
-        FigmaResponse Response { get; }
-        void Load(string path);
-        void Save(string filePath);
-        string GetContentTemplate(string file);
-        void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
-    }
-
-    public class FigmaLocalFileProvider : FigmaFileProvider
-    {
-        public override string GetContentTemplate(string file)
-        {
-            return System.IO.File.ReadAllText(file);
-        }
-
-        public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
-        {
-            //not needed in local files
-        }
-    }
-
-    public class FigmaRemoteFileProvider : FigmaFileProvider
-    {
-        public override string GetContentTemplate(string file)
-        {
-            return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
-        }
-
-        public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
-        {
-            //Remote files need get the real image url to get the file
-            var vectorsIds = imageVectors.Select(s => s.Key.id);
-            var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectorsIds);
-            if (figmaImageResponse != null)
-            {
-                foreach (var imageResponse in figmaImageResponse.images)
-                {
-                    var image = imageVectors.FirstOrDefault(s => s.Key.id == imageResponse.Key).Key;
-                    imageVectors[image] = imageResponse.Value;
-                }
-            }
-        }
-    }
-
-    public class FigmaManifestFileProvider : FigmaFileProvider
-    {
-        public Assembly Assembly { get; set; }
-
-        public override string GetContentTemplate(string file)
-        {
-            return AppContext.Current.GetManifestResource(Assembly, file);
-        }
-
-        public override void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file)
-        {
-            //not needed in local files
-
-        }
-    }
-
-    public abstract class FigmaFileProvider : IFigmaFileProvider
-    {
-        public FigmaResponse Response { get; private set; }
-        public List<FigmaNode> Nodes { get; } = new List<FigmaNode>();
-
-        public void Load (string path)
-        {
-            try
-            {
-                Nodes.Clear();
-                var template = GetContentTemplate(path);
-                Response = AppContext.Current.GetFigmaResponseFromContent(template);
-
-                foreach (var item in Response.document.children)
-                {
-                    ProcessNodeRecursively(item, null);
-                }
-            }
-            catch (System.Net.WebException ex)
-            {
-                if (!AppContext.Current.IsConfigured)
-                    Console.WriteLine($"Cannot connect to FigmaServer, TOKEN not configured.");
-                else
-                    Console.WriteLine($"Cannot connect to FigmaServer, wrong TOKEN?");
-                Console.WriteLine(ex);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error reading remote resources. Ensure you added NewtonSoft nuget?");
-                Console.WriteLine(ex);
-            }
-        }
-
-        void ProcessNodeRecursively (FigmaNode node, FigmaNode parent)
-        {
-            node.Parent = parent;
-            Nodes.Add(node);
-
-            if (node is IFigmaNodeContainer nodeContainer)
-            {
-                foreach (var item in nodeContainer.children)
-                    ProcessNodeRecursively(item, node);
-            }
-        }
-
-        public abstract string GetContentTemplate(string file);
-
-        public abstract void OnStartImageProcessing(Dictionary<FigmaVectorEntity, string> imageVectors, string file);
-
-        public void Save(string filePath)
-        {
-            AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
-        }
-    }
-
     public class FigmaViewRendererService
     {
         readonly FigmaViewConverter[] FigmaDefaultConverters;
-
         readonly FigmaViewConverter[] FigmaCustomConverters;
 
         public List<ProcessedNode> NodesProcessed = new List<ProcessedNode> ();
@@ -163,11 +46,11 @@ namespace FigmaSharp.Services
         public string File { get; private set; }
         public int Page { get; private set; }
         public bool ProcessImages { get; private set; }
-        IFigmaFileProvider figmaProvider;
+        IFigmaFileProvider fileProvider;
 
         public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
         {
-            this.figmaProvider = figmaProvider;
+            this.fileProvider = figmaProvider;
             FigmaDefaultConverters = figmaViewConverters.Where (s => s.IsLayer).ToArray ();
             FigmaCustomConverters = figmaViewConverters.Where(s => !s.IsLayer).ToArray();
         }
@@ -185,7 +68,7 @@ namespace FigmaSharp.Services
                 Console.WriteLine($"Reading successfull");
                 Console.WriteLine($"Loading views for page {Page}..");
 
-                var canvas = figmaProvider.Response.document.children.FirstOrDefault ();
+                var canvas = fileProvider.Response.document.children.FirstOrDefault ();
                 var processedParentView = new ProcessedNode() { FigmaNode = canvas, View = container };
                 NodesProcessed.Add (processedParentView);
 
@@ -212,9 +95,30 @@ namespace FigmaSharp.Services
                     GenerateViewsRecursively(item, processedParentView, options);
 
                 //Images
-                if (ProcessImages)
+                if (fileProvider.NeedsImageLinks && ProcessImages)
                 {
-                    figmaProvider.OnStartImageProcessing(ImageVectors, File);
+                    foreach (var processedNode in NodesProcessed)
+                    {
+                        if (processedNode.FigmaNode is FigmaVectorEntity vectorEntity)
+                        {
+                            if (vectorEntity.GetType () == typeof (FigmaVectorEntity))
+                            {
+                                ImageVectors.Add(vectorEntity, null);
+                            } else
+                            {
+                                var figmaPaint = vectorEntity.fills.OfType<FigmaPaint>().FirstOrDefault();
+                                if (figmaPaint != null && figmaPaint.type == "IMAGE")
+                                {
+                                    ImageVectors.Add(vectorEntity, null);
+                                }
+                            }
+                           
+                        }
+                        //Image processing
+                    }
+
+                    fileProvider.ImageLinksProcessed += FigmaProvider_ImageLinksProcessed;
+                    fileProvider.OnStartImageLinkProcessing(ImageVectors, File);
                 }
 
                 Console.WriteLine("View generation finished.");
@@ -224,6 +128,45 @@ namespace FigmaSharp.Services
                 Console.WriteLine($"Error reading resource");
                 Console.WriteLine(ex);
             }
+        }
+
+        void FigmaProvider_ImageLinksProcessed(object sender, EventArgs e)
+        {
+            Console.WriteLine("Starting Image Binding process...");
+            fileProvider.ImageLinksProcessed -= FigmaProvider_ImageLinksProcessed;
+            //loading views
+            foreach (var vector in ImageVectors)
+            {
+                Console.Write ("[{0}][{1}] Processing... ", vector.Key.id, vector.Key.name);
+                var processedNode = NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Key);
+                if (!string.IsNullOrEmpty(vector.Value))
+                {
+                    var imageWrapper = AppContext.Current.GetImage(vector.Value);
+                    if (processedNode.View is IImageViewWrapper imageViewWrapper)
+                    {
+                        AppContext.Current.BeginInvoke(() => {
+                            try
+                            {
+                                imageViewWrapper.SetImage(imageWrapper);
+                                Console.WriteLine("DONE");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
+                        });
+                    } else
+                    {
+                        Console.WriteLine("Current container is not a IImageView");
+                    }
+                } else
+                {
+                    Console.WriteLine("NO URL");
+                }
+
+                Thread.Sleep(100);
+            }
+            Console.WriteLine("Ended Image Binding process.");
         }
 
         IViewWrapper container;
@@ -244,7 +187,7 @@ namespace FigmaSharp.Services
 
             try
             {
-                figmaProvider.Load(file);
+                fileProvider.Load(file);
                 Refresh(options);
             }
             catch (Exception ex)
@@ -272,7 +215,7 @@ namespace FigmaSharp.Services
         //TODO: This 
         void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
         {
-            Console.WriteLine("[{0}({1})] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
+            Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
             bool navigateChild = true;
 
@@ -290,16 +233,10 @@ namespace FigmaSharp.Services
             if (currentProcessedNode != null)
             {
                 NodesProcessed.Add(currentProcessedNode);
-
-                //Image processing
-                if (currentProcessedNode.FigmaNode is FigmaVectorEntity vectorEntity && vectorEntity.ImageSupported && currentProcessedNode.View is IImageViewWrapper)
-                {
-                    ImageVectors.Add((FigmaVectorEntity)currentProcessedNode.FigmaNode, null);
-                }
             }
             else
             {
-                Console.WriteLine("[{1}({2})] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
+                Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
             if (navigateChild && currentNode is IFigmaNodeContainer nodeContainer)
@@ -314,7 +251,6 @@ namespace FigmaSharp.Services
 
     public class FigmaViewRendererServiceOptions
     {
-        //public bool IsToCodeProcessed { get; set; } = true;
         public bool IsToViewProcessed { get; set; } = true;
         public bool AreImageProcessed { get; set; } = true;
         public int StartPage { get; set; } = 0;

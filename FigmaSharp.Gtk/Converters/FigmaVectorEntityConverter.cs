@@ -36,9 +36,12 @@ namespace FigmaSharp.GtkSharp.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var model = (FigmaVectorEntity)currentNode;
-            var view = new Fixed (); // { TranslatesAutoresizingMaskIntoConstraints = false };
-            view.Configure(model);
-            return new ViewWrapper(view);
+
+            //var view = new Fixed (); // { TranslatesAutoresizingMaskIntoConstraints = false };
+            var imageView = new Image();
+            imageView.Configure(model);
+            var figmaImageView = new ImageViewWrapper(imageView);
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

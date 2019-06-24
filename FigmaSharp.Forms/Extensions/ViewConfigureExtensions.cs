@@ -44,20 +44,20 @@ namespace FigmaSharp.Forms
         {
             Configure(view, (FigmaNode)child);
 
-            if (child.HasFills && child.fills[0].color != null)
-            {
-                view.BackgroundColor = child.fills[0].color.ToColor();
-            }
+            //if (child.HasFills && child.fills[0].color != null)
+            //{
+            //    view.BackgroundColor = child.fills[0].color.ToColor();
+            //}
 
-            var strokes = child.strokes.FirstOrDefault();
-            if (strokes != null)
-            {
-                if (strokes.color != null)
-                {
-                    //view.BorderColor = strokes.color.ToColor();
-                }
-                //view.BorderWidth = child.strokeWeight;
-            }
+            //var strokes = child.strokes.FirstOrDefault();
+            //if (strokes != null)
+            //{
+            //    if (strokes.color != null)
+            //    {
+            //        //view.BorderColor = strokes.color.ToColor();
+            //    }
+            //    //view.BorderWidth = child.strokeWeight;
+            //}
         }
 
         public static void Configure(this View view, FigmaRectangleVector child)
