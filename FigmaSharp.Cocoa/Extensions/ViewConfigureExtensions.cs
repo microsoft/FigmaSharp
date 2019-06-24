@@ -188,8 +188,6 @@ namespace FigmaSharp.Cocoa
                     {
                         continue;
                     }
-
-
                     builder.AppendLine(string.Format("{0}.AddAttribute(NSStringAttributeKey.Font, {1}, new NSRange({2}, 1));", attributedTextName, element.ToNSFontDesignerString(), i));
 
                     string color = color = fills?.color?.ToDesignerString(); ;
@@ -215,6 +213,10 @@ namespace FigmaSharp.Cocoa
             label.AlphaValue = text.opacity;
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
             //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
+            if (label.Cell is VerticalAlignmentTextCell cell)
+            {
+                cell.VerticalAligment = text.style.textAlignVertical == "CENTER" ? VerticalTextAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalTextAlignment.Top : VerticalTextAlignment.Bottom;
+            }
 
             var fills = text.fills.FirstOrDefault();
             if (fills != null)
