@@ -76,7 +76,7 @@ namespace FigmaSharp.Cocoa
 
         public static void Configure(this NSView figmaLineView, FigmaLine figmaLine)
         {
-            Configure(figmaLineView, (FigmaVectorEntity)figmaLine);
+            Configure(figmaLineView, (FigmaNode)figmaLine);
 
             var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
             if (fills != null)
