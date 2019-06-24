@@ -118,7 +118,6 @@ namespace FigmaSharp
             else if (jsonObject["type"].Value<string>() == "BOOLEAN_OPERATION")
             {
                 figmaObject = jsonObject.ToObject<FigmaBoolean>();
-                return figmaObject;
             }
             else
             {

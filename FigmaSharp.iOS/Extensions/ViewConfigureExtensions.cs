@@ -106,23 +106,23 @@ namespace FigmaSharp.iOS
         {
             Configure(view, (FigmaNode)child);
 
-            if (child.HasFills && child.fills[0].color != null)
-            {
-                view.Layer.BackgroundColor = child.fills[0].color.ToUIColor().CGColor;
-            }
+            //if (child.HasFills && child.fills[0].color != null)
+            //{
+            //    view.Layer.BackgroundColor = child.fills[0].color.ToUIColor().CGColor;
+            //}
 
             //var currengroupView = new UIView() { TranslatesAutoresizingMaskIntoConstraints = false };
             //currengroupView.Configure(rectangleVector);
 
-            var strokes = child.strokes.FirstOrDefault();
-            if (strokes != null)
-            {
-                if (strokes.color != null)
-                {
-                    view.Layer.BorderColor = strokes.color.ToUIColor().CGColor;
-                }
-                view.Layer.BorderWidth = child.strokeWeight;
-            }
+            //var strokes = child.strokes.FirstOrDefault();
+            //if (strokes != null)
+            //{
+            //    if (strokes.color != null)
+            //    {
+            //        view.Layer.BorderColor = strokes.color.ToUIColor().CGColor;
+            //    }
+            //    view.Layer.BorderWidth = child.strokeWeight;
+            //}
         }
 
         public static void Configure(this UIView view, FigmaRectangleVector child)

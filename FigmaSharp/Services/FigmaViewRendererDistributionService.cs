@@ -29,29 +29,6 @@ namespace FigmaSharp.Services
                 MainViews[i] = mainNodes[i];
                 Recursively(mainNodes[i]);
             }
-
-            //loading views
-            Task.Run(() =>
-            {
-                foreach (var vector in figmaFileService.ImageVectors)
-                {
-                    var processedNode = figmaFileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Key);
-                    if (!string.IsNullOrEmpty(vector.Value))
-                    {
-                        var image = AppContext.Current.GetImage(vector.Value);
-                        var wrapper = processedNode.View as IImageViewWrapper;
-
-						AppContext.Current.BeginInvoke (() => {
-							try {
-							    wrapper.SetImage (image);
-							} catch (Exception ex) {
-								Console.WriteLine (ex);
-							}
-						});
-                    }
-                    Thread.Sleep(200);
-                }
-            });
         }
 
         void Recursively(ProcessedNode parentNode)
