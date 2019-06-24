@@ -58,15 +58,7 @@ namespace LocalFile.Cocoa
             mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
-            scrollView = new NSScrollView()
-            {
-                AutohidesScrollers = false,
-                AutomaticallyAdjustsContentInsets = false,
-                BackgroundColor = NSColor.Black,
-                HasHorizontalScroller = true,
-                HasVerticalScroller = true,
-                ScrollerStyle = NSScrollerStyle.Overlay
-            };
+            scrollView = new NSScrollView();
 
             scrollViewWrapper = new ScrollViewWrapper(scrollView);
             stackView.AddArrangedSubview(scrollView);

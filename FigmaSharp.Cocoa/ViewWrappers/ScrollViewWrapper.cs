@@ -62,6 +62,14 @@ namespace FigmaSharp.Cocoa
         public ScrollViewWrapper(NSScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
+
+            contentScrollview = scrollView.DocumentView as NSView;
+            if (contentScrollview == null)
+            {
+                contentScrollview = new NSView();
+                this.scrollView.DocumentView = contentScrollview;
+            }
+            contentScrollviewWrapper = new ViewWrapper (contentScrollview);
         }
 
         public override IReadOnlyList<IViewWrapper> Children => contentScrollviewWrapper.Children;

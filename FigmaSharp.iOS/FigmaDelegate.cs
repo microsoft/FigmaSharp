@@ -62,7 +62,7 @@ namespace FigmaSharp.iOS
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
             FigmaApiHelper.GetFigmaResponseFromContent(template);
 
-        public IViewWrapper CreateEmptyView() => new ViewWrapper();
+        public IViewWrapper CreateEmptyView() => new ViewWrapper(new UIView ());
 
         public IImageViewWrapper GetImageView(IImageWrapper image)
         {

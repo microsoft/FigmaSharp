@@ -25,9 +25,8 @@ namespace BasicRendering.Gtk
 
             window.Add(scrollWindow);
 
-            var contentViewWrapper = new ViewWrapper(new Fixed());
             var scrollViewWrapper = new ScrollViewWrapper(scrollWindow);
-            exampleViewManager = new ExampleViewManager(scrollViewWrapper, contentViewWrapper);
+            exampleViewManager = new ExampleViewManager(scrollViewWrapper);
 
             window.ShowAll();
 
