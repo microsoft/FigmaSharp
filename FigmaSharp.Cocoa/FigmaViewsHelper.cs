@@ -69,17 +69,16 @@ namespace FigmaSharp.Cocoa
 
         public static NSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
         {
-            var label = new NSTextField()
-            {
-                StringValue = text ?? "",
-                Font = font ?? GetSystemFont(false),
-                Editable = false,
-                Bordered = false,
-                Bezeled = false,
-                DrawsBackground = false,
-                Selectable = false,
-                Alignment = alignment
-            };
+            var label = new NSTextField();
+            label.Cell = new VerticalAlignmentTextCell();
+            label.StringValue = text ?? "";
+            label.Font = font ?? GetSystemFont(false);
+            label.Editable = false;
+            label.Bordered = false;
+            label.Bezeled = false;
+            label.DrawsBackground = false;
+            label.Selectable = false;
+            label.Alignment = alignment;
             return label;
         }
 
