@@ -70,6 +70,12 @@ namespace FigmaSharp.Cocoa
                 this.scrollView.DocumentView = contentScrollview;
             }
             contentScrollviewWrapper = new ViewWrapper (contentScrollview);
+
+            this.scrollView.HasVerticalScroller = true;
+            this.scrollView.HasHorizontalScroller = true;
+            this.scrollView.AutomaticallyAdjustsContentInsets = false;
+            this.scrollView.AutohidesScrollers = false;
+            this.scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
         }
 
         public override IReadOnlyList<IViewWrapper> Children => contentScrollviewWrapper.Children;

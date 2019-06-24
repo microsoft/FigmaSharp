@@ -59,18 +59,8 @@ namespace LocalFile.Cocoa
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
             mainWindow.ContentView = stackView;
 
-            scrollView = new NSScrollView()
-            {
-                HasVerticalScroller = true,
-                HasHorizontalScroller = true,
-                AutomaticallyAdjustsContentInsets = false,
-                AutohidesScrollers = false,
-            };  
+            scrollView = new NSScrollView();
             stackView.AddArrangedSubview(scrollView);
-
-            var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
-            contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-            scrollView.DocumentView = contentView;
 
             var scrollViewWrapper = new ScrollViewWrapper(scrollView);
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
