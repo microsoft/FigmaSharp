@@ -22,9 +22,7 @@ namespace BasicRendering.IOS
             View.Layer.BackgroundColor = UIColor.Black.CGColor;
 
             var scrollViewWrapper = new ScrollViewWrapper(MainScrollView);
-            var contentView = new ViewWrapper(new UIView());
-
-            manager = new ExampleViewManager(scrollViewWrapper, contentView);
+            manager = new ExampleViewManager(scrollViewWrapper);
         }
 
         public override void DidReceiveMemoryWarning()

@@ -47,18 +47,14 @@ namespace FigmaSharp.WinForms
         }
 
         public IViewWrapper ContentView {
-            get => new ViewWrapper(canvasContainer);
+            get => canvasContainerWrapper;
             set {
-
-                if (canvasContainer != null)
-                {
-                    scrollView.Controls.Remove(canvasContainer);
-                    canvasContainer = null;
-                    canvasContainerWrapper = null;
-                }
 
                 if (value != null && value.NativeObject is TransparentControl canvas)
                 {
+                    if (canvasContainer != null)
+                        scrollView.Controls.Remove(canvasContainer);
+
                     canvasContainer = canvas;
                     canvasContainerWrapper = value;
                     scrollView.Controls.Add (canvasContainer);

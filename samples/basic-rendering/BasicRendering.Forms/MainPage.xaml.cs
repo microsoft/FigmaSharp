@@ -16,10 +16,8 @@ namespace BasicRendering.Forms
         public MainPage()
         {
             InitializeComponent();
-
-            var content = new ViewWrapper (new AbsoluteLayout ());
             var scrollViewWrapper = new ScrollViewWrapper(ContainerPanel);
-            exampleViewManager = new ExampleViewManager(scrollViewWrapper, content);
+            exampleViewManager = new ExampleViewManager(scrollViewWrapper);
         }
     }
 }

@@ -82,11 +82,6 @@ namespace FigmaSharp.iOS
 
         protected UIView nativeView;
 
-        public ViewWrapper() : this (new UIView ())
-        {
-
-        }
-
         public virtual void ClearSubviews()
         {
             //clean views from current container

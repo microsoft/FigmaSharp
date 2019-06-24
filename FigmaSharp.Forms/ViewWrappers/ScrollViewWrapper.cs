@@ -37,24 +37,35 @@ namespace FigmaSharp.Forms
     {
         public IViewWrapper ContentView
         {
-            get => new ViewWrapper(scrollView.Content);
+            get => scrollViewWrapper;
             set
             {
-                if (value.NativeObject is View content)
+                if (value.NativeObject is AbsoluteLayout content)
                 {
                     this.scrollView.Content = content;
+                    scrollViewWrapper = value;
+                    scrollContent = content;
                 }
             }
         }
 
-        readonly ScrollView scrollView;
-        readonly AbsoluteLayout scrollContent;
+        ScrollView scrollView;
+        AbsoluteLayout scrollContent;
+        IViewWrapper scrollViewWrapper;
 
         public ScrollViewWrapper(ScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
-            this.scrollContent = new AbsoluteLayout();
-            scrollView.Content = scrollContent;
+
+            if (scrollView.Content is AbsoluteLayout abs)
+            {
+                this.scrollContent = abs;
+            } else
+            {
+                this.scrollContent = new AbsoluteLayout();
+                scrollView.Content = scrollContent;
+            }
+            scrollViewWrapper = new ViewWrapper(scrollContent);
             scrollView.Orientation = ScrollOrientation.Both;
         }
 
@@ -63,11 +74,8 @@ namespace FigmaSharp.Forms
             set => scrollView.Content.BackgroundColor = value.ToColor();
         }
 
-        public override void AddChild(IViewWrapper view)
-        {
-            children.Add(view);
-            scrollContent.Children.Add(view.NativeObject as View);
-        }
+        public override void AddChild(IViewWrapper view) =>
+            scrollViewWrapper.AddChild(view);
 
         public void AdjustToContent()
         {
@@ -82,13 +90,8 @@ namespace FigmaSharp.Forms
             SetContentSize(contentRect.width, contentRect.height);
         }
 
-        public override void RemoveChild(IViewWrapper view)
-        {
-            if (scrollView.Content == view.NativeObject)
-            {
-                scrollView.Content = null;
-            }
-        }
+        public override void RemoveChild(IViewWrapper view) =>
+            scrollViewWrapper.RemoveChild(view);
 
         public void SetContentSize(float width, float height)
         {

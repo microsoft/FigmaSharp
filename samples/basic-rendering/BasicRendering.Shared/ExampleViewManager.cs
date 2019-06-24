@@ -35,16 +35,14 @@ namespace ExampleFigma
 {
     public class ExampleViewManager 
     {
-        const string fileName = "YdrY6p8JHY2UaKlSFgOwwUnd";
+        const string fileName = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
 
         readonly FigmaRemoteFileProvider fileProvider;
 
         public string WindowTitle => fileProvider.Response.name;
 
-        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, IViewWrapper viewWrapper)
+        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper)
         {
-            scrollViewWrapper.ContentView = viewWrapper;
-         
             //we get the default basic view converters from the current loaded toolkit
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
 
@@ -59,7 +57,7 @@ namespace ExampleFigma
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>
             var rendererService = new FigmaViewRendererService(fileProvider, converters);
-            rendererService.Start(fileName, viewWrapper);
+            rendererService.Start(fileName, scrollViewWrapper);
 
             //now we have all the views processed and the relationship we can distribute all the views into the desired base view
             var distributionService = new FigmaViewRendererDistributionService(rendererService);

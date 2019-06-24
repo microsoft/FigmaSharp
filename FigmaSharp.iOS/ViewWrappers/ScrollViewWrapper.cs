@@ -38,16 +38,20 @@ namespace FigmaSharp.iOS
         readonly UIScrollView scrollView;
 
         UIView contentView;
+        IViewWrapper contentViewWrapper;
 
         public IViewWrapper ContentView
         {
-            get => new ViewWrapper(contentView);
+            get => contentViewWrapper;
             set
             {
                 if (value.NativeObject is UIView content)
                 {
                     contentView?.RemoveFromSuperview();
+
                     scrollView.AddSubview(content);
+                    contentView = content;
+                    contentViewWrapper = value;
                 }
             }
         }
@@ -58,12 +62,13 @@ namespace FigmaSharp.iOS
 
             if (scrollView.Subviews.Length == 0)
             {
-                contentView = new UIView();
+                contentView = new UIView() { Frame = scrollView.Frame };
                 scrollView.AddSubview(contentView);
             } else
             {
                 contentView = scrollView.Subviews.FirstOrDefault();
             }
+            contentViewWrapper = new ViewWrapper(contentView);
         }
 
         public FigmaColor BackgroundColor { 

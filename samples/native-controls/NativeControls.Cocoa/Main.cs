@@ -57,40 +57,22 @@ namespace LocalFile.Cocoa
             var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
             mainWindow.Title = "Cocoa Figma Local File Sample";
 
-            var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
-            scrollView = new NSScrollView()
-            {
-                HasVerticalScroller = true,
-                HasHorizontalScroller = true,
-                AutomaticallyAdjustsContentInsets = false
-            };
-
+            scrollView = new NSScrollView();
             scrollViewWrapper = new ScrollViewWrapper(scrollView);
 
-            stackView.AddArrangedSubview(scrollView);
-
-            scrollView.AutohidesScrollers = false;
-            scrollView.BackgroundColor = NSColor.Black;
-            scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
-            mainWindow.ContentView = stackView;
-
-            var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
-            contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-
-            scrollView.DocumentView = contentView;
+            mainWindow.ContentView = scrollView;
 
             var figmaConverters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters()
                 .Union (FigmaSharp.AppContext.Current.GetFigmaConverters())
                 .ToArray ();
 
-            var manager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
-            manager.Initialize();
+            exampleViewManager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
 
             mainWindow.MakeKeyAndOrderFront(null);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
         }
-
+        static ExampleViewManager exampleViewManager;
         static NSScrollView scrollView;
     }
 }
