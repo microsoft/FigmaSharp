@@ -69,6 +69,7 @@ namespace FigmaSharp.iOS
                 contentView = scrollView.Subviews.FirstOrDefault();
             }
             contentViewWrapper = new ViewWrapper(contentView);
+            scrollView.ScrollEnabled = true;
         }
 
         public FigmaColor BackgroundColor { 

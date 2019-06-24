@@ -56,7 +56,7 @@ namespace FigmaSharp.GtkSharp
                 {
                     if (currentContainer != null)
                     {
-                        scrollView.Remove(currentContainer);
+                        scrollView.Remove(scrollView.Child);
                     }
 
                     scrollView.AddWithViewport(content);
@@ -72,6 +72,9 @@ namespace FigmaSharp.GtkSharp
             currentContainer = new Fixed();
             scrollView.AddWithViewport(currentContainer);
             containerViewWrapper = new ViewWrapper(currentContainer);
+
+            this.scrollView.HscrollbarPolicy = PolicyType.Always;
+            this.scrollView.VscrollbarPolicy = PolicyType.Always;
         }
 
         public void AdjustToContent()

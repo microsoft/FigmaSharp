@@ -18,11 +18,7 @@ namespace BasicRendering.Gtk
             var window = new Window(WindowType.Toplevel);
             window.HeightRequest = window.WidthRequest = 700;
 
-            var scrollWindow = new ScrolledWindow {
-                HscrollbarPolicy = PolicyType.Always,
-                VscrollbarPolicy = PolicyType.Always
-            };
-
+            var scrollWindow = new ScrolledWindow();
             window.Add(scrollWindow);
 
             var scrollViewWrapper = new ScrollViewWrapper(scrollWindow);
