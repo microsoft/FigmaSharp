@@ -240,30 +240,52 @@ namespace FigmaSharp.Cocoa
             return app_kit_font_weights[select_weight];
         }
 
-        public static CGPath ToGCPath(this NSBezierPath bezierPath)
+        //TODO: we should move this to a shared place
+        public static CGPath ToCGPath(this NSBezierPath path)
         {
-            var path = new CGPath();
-            CGPoint[] points;
-            for (int i = 0; i < bezierPath.ElementCount; i++)
+            var numElements = path.ElementCount;
+            if (numElements == 0)
             {
-                var type = bezierPath.ElementAt(i, out points);
-                switch (type)
+                return null;
+            }
+
+            CGPath result = new CGPath();
+            bool didClosePath = true;
+
+
+            for (int i = 0; i < numElements; i++)
+            {
+                CGPoint[] points;
+                var element = path.ElementAt(i, out points);
+                if (element == NSBezierPathElement.MoveTo)
                 {
-                    case NSBezierPathElement.MoveTo:
-                        path.MoveToPoint(points[0]);
-                        break;
-                    case NSBezierPathElement.LineTo:
-                        path.AddLineToPoint(points[0]);
-                        break;
-                    case NSBezierPathElement.CurveTo:
-                        path.AddCurveToPoint(points[2], points[1], points[0]);
-                        break;
-                    case NSBezierPathElement.ClosePath:
-                        path.CloseSubpath();
-                        break;
+                    result.MoveToPoint(points[0].X, points[0].Y);
+                }
+                else if (element == NSBezierPathElement.LineTo)
+                {
+                    result.AddLineToPoint(points[0].X, points[0].Y);
+                    didClosePath = false;
+
+                }
+                else if (element == NSBezierPathElement.CurveTo)
+                {
+                    result.AddCurveToPoint(points[0].X, points[0].Y,
+                                            points[1].X, points[1].Y,
+                                            points[2].X, points[2].Y);
+                    didClosePath = false;
+                }
+                else if (element == NSBezierPathElement.ClosePath)
+                {
+                    result.CloseSubpath();
                 }
             }
-            return path;
+
+            // Be sure the path is closed or Quartz may not do valid hit detection.
+            if (!didClosePath)
+            {
+                result.CloseSubpath();
+            }
+            return result;
         }
 
 

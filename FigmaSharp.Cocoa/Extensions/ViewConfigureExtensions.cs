@@ -50,11 +50,11 @@ namespace FigmaSharp.Cocoa
 
         public static void Configure(this NSView view, FigmaElipse elipse)
         {
-            Configure(view, (FigmaVectorEntity)elipse);
+            Configure(view, (FigmaNode)elipse);
 
             var circleLayer = new CAShapeLayer();
             var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, elipse.absoluteBoundingBox.width, elipse.absoluteBoundingBox.height));
-            circleLayer.Path = bezierPath.ToGCPath();
+            circleLayer.Path = bezierPath.ToCGPath();
 
             view.Layer.AddSublayer(circleLayer);
 
