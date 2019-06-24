@@ -36,7 +36,7 @@ using Foundation;
 
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using FigmaSharp.NativeControls.Cocoa;
+using LocalFile.Shared;
 
 namespace LocalFile.Cocoa
 {
@@ -79,9 +79,7 @@ namespace LocalFile.Cocoa
 
             scrollView.DocumentView = contentView;
 
-			var file = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
-
-            var figmaConverters = Resources.GetConverters()
+            var figmaConverters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters()
                 .Union (FigmaSharp.AppContext.Current.GetFigmaConverters())
                 .ToArray ();
 

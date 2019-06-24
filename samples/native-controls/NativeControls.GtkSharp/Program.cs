@@ -1,9 +1,9 @@
 ﻿using System;
-using LocalFile.Cocoa;
 using FigmaSharp.GtkSharp;
 using Gtk;
 using System.Linq;
 using FigmaSharp.NativeControls.GtkSharp;
+using LocalFile.Shared;
 
 namespace NativeControl.GtkSharp
 {
@@ -29,8 +29,8 @@ namespace NativeControl.GtkSharp
             scrollWindow.AddWithViewport(scrollWindowFixed);
 
             var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters().Union(Resources.GetConverters()).ToArray();
-            var scrollViewWrapper = new ScrollViewWrapper(scrollWindow, null);
-            var manager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
+            var scrollViewWrapper = new ScrollViewWrapper(scrollWindow);
+            var manager = new ExampleViewManager (scrollViewWrapper, figmaConverters);
             manager.Initialize();
 
             window.ShowAll();

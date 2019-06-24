@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <RootNamespace>ExampleFigmaMac</RootNamespace>
     <AssemblyName>ExampleFigmaMac</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-            <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,14 +113,6 @@
     <EmbeddedResource Include="Resources\101-4.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
-      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
-      <Name>FigmaSharp.NativeControls.Cocoa</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
@@ -129,7 +121,18 @@
       <Project>{80D20B03-FF89-47CF-A676-B67B9DE2DAF2}</Project>
       <Name>FigmaSharp.NativeControls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
+      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
+      <Name>FigmaSharp.NativeControls.Cocoa</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
+    </ProjectReference>
   </ItemGroup>
+  <Import Project="..\NativeControls.Shared\NativeControl.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControl.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
      
 </Project>
