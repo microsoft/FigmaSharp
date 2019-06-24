@@ -5,7 +5,6 @@ using FigmaSharp;
 using FigmaSharp.Designer;
 using Foundation;
 using System.Linq;
-using MonoDevelop.Figma;
 using CoreGraphics;
 using FigmaSharp.Services;
 using FigmaSharp.Cocoa;
