@@ -1,13 +1,13 @@
 ﻿using System;
 using CoreAnimation;
 using CoreGraphics;
-using LocalFile.Cocoa;
 using FigmaSharp;
 using FigmaSharp.iOS;
 using FigmaSharp.NativeControls.iOS;
 using FigmaSharp.Services;
 using UIKit;
 using System.Linq;
+using LocalFile.Shared;
 
 namespace ExampleFigma.IOS
 {
