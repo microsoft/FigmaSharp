@@ -22,7 +22,7 @@ namespace FigmaSharp.Cocoa
         static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
         static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
 
-        public bool IsYAxisFlipped => true;
+        public bool IsVerticalAxisFlipped => true;
 
         public IImageWrapper GetImage (string url)
         {
