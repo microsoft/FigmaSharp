@@ -65,6 +65,10 @@ namespace FigmaSharp
             {
                 figmaObject = jsonObject.ToObject<FigmaCanvas>();
             }
+            else if (jsonObject["type"].Value<string>() == "SLICE")
+            {
+                figmaObject = jsonObject.ToObject<FigmaSlice>();
+            }
             else if (jsonObject["type"].Value<string>() == "FRAME")
             {
                 figmaObject = jsonObject.ToObject<FigmaFrameEntity>();

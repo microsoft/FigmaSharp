@@ -181,6 +181,13 @@ namespace FigmaSharp
         public FigmaColor color { get; set; }
     }
 
+    public class FigmaSlice : FigmaNode, IAbsoluteBoundingBox, IConstraints
+    {
+        public FigmaRectangle absoluteBoundingBox { get; set; }
+
+        public FigmaLayoutConstraint constraints { get; set; }
+    }
+
     public class FigmaFrameEntity : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints
     {
         public FigmaColor backgroundColor { get; set; }
