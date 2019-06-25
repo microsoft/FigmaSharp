@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaVectorViewConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,44 +25,23 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-using System;
 using AppKit;
-using CoreAnimation;
-using CoreGraphics;
+using FigmaSharp.Converters;
 
-namespace FigmaSharp.Cocoa
+namespace FigmaSharp.Cocoa.Converters
 {
-    public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
+    public class FigmaRegularPoligonConverter : FigmaRegularPoligonConverterBase
     {
-        readonly NSImageView imageView;
-        CALayer imageLayer;
-
-        public ImageViewWrapper(NSImageView imageView) : base(imageView)
+        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            this.imageView = imageView;
-            this.imageView.WantsLayer = true;
-
-            imageLayer = new CALayer();
-            imageView.Layer.AddSublayer(imageLayer);
+            var currengroupView = new NSImageView();
+            currengroupView.Configure((FigmaRegularPoligon)currentNode);
+            return new ImageViewWrapper(currengroupView);
         }
 
-        public void SetImage(IImageWrapper imageWrapper)
+        public override string ConvertToCode(FigmaNode currentNode)
         {
-            var image = ((NSImage)imageWrapper.NativeObject);
-
-            var desiredWidth = imageView.Frame.Width;
-            var desiredHeight = imageView.Frame.Height;
-
-            var xCalculated = (desiredWidth / 2f) - (image.Size.Width/2f);
-            var yCalculated = (desiredHeight / 2f) - (image.Size.Height / 2f);
-
-            imageLayer.Frame = new CGRect(xCalculated, yCalculated,
-                image.Size.Width,
-                image.Size.Height
-                 );
-            imageLayer.Contents = image.CGImage;
-            //imageLayer.ContentsScale = 0.5f;
+            return string.Empty;
         }
     }
 }

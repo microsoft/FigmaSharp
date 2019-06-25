@@ -59,7 +59,7 @@ namespace FigmaSharp.Cocoa
             view.Layer.AddSublayer(circleLayer);
 
             var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
-            if (fills != null)
+            if (fills != null && fills.color != null)
             {
                 circleLayer.FillColor = fills.color.ToNSColor().CGColor;
             }

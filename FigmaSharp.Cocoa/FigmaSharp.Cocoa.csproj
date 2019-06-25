@@ -64,6 +64,7 @@
     <Compile Include="Converters\FigmaCodePositionConverter.cs" />
     <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
     <Compile Include="Extensions\VerticalAlignmentTextCell.cs" />
+    <Compile Include="Converters\FigmaRegularPoligonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

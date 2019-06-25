@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * FigmaVectorViewConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,43 +26,15 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System;
-using AppKit;
-using CoreAnimation;
-using CoreGraphics;
-
-namespace FigmaSharp.Cocoa
+namespace FigmaSharp.Converters
 {
-    public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
+    public abstract class FigmaRegularPoligonConverterBase : FigmaViewConverter
     {
-        readonly NSImageView imageView;
-        CALayer imageLayer;
+        public override bool IsLayer => true;
 
-        public ImageViewWrapper(NSImageView imageView) : base(imageView)
+        public override bool CanConvert(FigmaNode currentNode)
         {
-            this.imageView = imageView;
-            this.imageView.WantsLayer = true;
-
-            imageLayer = new CALayer();
-            imageView.Layer.AddSublayer(imageLayer);
-        }
-
-        public void SetImage(IImageWrapper imageWrapper)
-        {
-            var image = ((NSImage)imageWrapper.NativeObject);
-
-            var desiredWidth = imageView.Frame.Width;
-            var desiredHeight = imageView.Frame.Height;
-
-            var xCalculated = (desiredWidth / 2f) - (image.Size.Width/2f);
-            var yCalculated = (desiredHeight / 2f) - (image.Size.Height / 2f);
-
-            imageLayer.Frame = new CGRect(xCalculated, yCalculated,
-                image.Size.Width,
-                image.Size.Height
-                 );
-            imageLayer.Contents = image.CGImage;
-            //imageLayer.ContentsScale = 0.5f;
+            return currentNode.GetType() == typeof(FigmaRegularPoligon);
         }
     }
 }
