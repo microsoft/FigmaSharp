@@ -34,19 +34,27 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
+    /// <summary>
+    /// Figma file.
+    /// </summary>
     public class FigmaFile : IFigmaFile
-	{
-		string file;
-		public List<IImageViewWrapper> FigmaImages { get; private set; }
+    {
+        string file;
+        public List<IImageViewWrapper> FigmaImages { get; private set; }
         public FigmaResponse Document => figmaLocalFileProvider.Response;
-		public IViewWrapper ContentView { get; private set; }
+        public IViewWrapper ContentView { get; private set; }
 
         readonly FigmaViewRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;
         readonly FigmaManifestFileProvider figmaLocalFileProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:FigmaSharp.FigmaFile"/> class.
+        /// </summary>
+        /// <param name="file">File.</param>
+        /// <param name="figmaViewConverters">Figma view converters.</param>
         public FigmaFile (string file, FigmaViewConverter[] figmaViewConverters)
-		{
+        {
             this.file = file;
 
             ContentView = AppContext.Current.CreateEmptyView();
@@ -58,8 +66,12 @@ namespace FigmaSharp
             rendererService = new FigmaViewRendererDistributionService(fileService);
         }
 
+        /// <summary>
+        /// Reload the specified includeImages.
+        /// </summary>
+        /// <param name="includeImages">If set to <c>true</c> include images.</param>
         public void Reload (bool includeImages = false)
-		{
+        {
             Console.WriteLine($"Loading views..");
             try
             {
@@ -81,6 +93,9 @@ namespace FigmaSharp
             }
         }
 
+        /// <summary>
+        /// Reloads the images.
+        /// </summary>
         public void ReloadImages ()
         {
             Console.WriteLine($"Loading images..");
@@ -101,9 +116,12 @@ namespace FigmaSharp
             }
         }
 
+        /// <summary>
+        /// Initializes the component.
+        /// </summary>
         public void InitializeComponent ()
-		{
+        {
             Reload(true);
         }
-	}
+    }
 }
