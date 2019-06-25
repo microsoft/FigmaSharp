@@ -134,38 +134,71 @@ namespace FigmaSharp.Cocoa
             return string.Format("NSFontManager.SharedFontManager.FontWithFamily(\"{0}\", {1}, {2}, {3})", family, traits.ToDesignerString (), w, style.fontSize);
         }
 
+        static nfloat GetFontWeight (FigmaTypeStyle style)
+        {
+            if (style.fontPostScriptName != null)
+            {
+                if (style.fontPostScriptName.EndsWith("-Bold"))
+                {
+                    return NSFontWeight.Regular;
+                }
+                if (style.fontPostScriptName.EndsWith("-Light"))
+                {
+                    return NSFontWeight.Light;
+                }
+                if (style.fontPostScriptName.EndsWith("-Thin"))
+                {
+                    return NSFontWeight.Thin;
+                }
+                if (style.fontPostScriptName.EndsWith("-SemiBold"))
+                {
+                    return NSFontWeight.Semibold;
+                }
+            }
+
+            return NSFontWeight.Regular;
+        }
+
+        static Dictionary<string, string> FontConversion = new Dictionary<string, string>()
+        {
+            { "SF UI Text", ".SF NS Text" },
+            { "SF Mono", ".SF NS Display" }
+        };
+
         public static NSFont ToNSFont(this FigmaTypeStyle style)
         {
             string family = style.fontFamily;
-            if (family == "SF UI Text")
+           
+            if (FontConversion.TryGetValue (family, out string newFamilyName))
             {
-                family = ".SF NS Text";
-            }
-            else if (family == "SF Mono")
-            {
-                family = ".SF NS Display";
-            }
-            else
-            {
-                Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
+                Console.WriteLine("{0} font was in the conversion dicctionary and was replaced by {1}.", family, newFamilyName);
+                family = newFamilyName;
             }
 
-            var font = NSFont.FromFontName(family, style.fontSize);
-            var w = ToAppKitFontWeight(style.fontWeight);
-            NSFontTraitMask traits = default(NSFontTraitMask);
-            if (style.fontPostScriptName != null && style.fontPostScriptName.EndsWith("-Bold"))
+            var fontDefault = NSFont.SystemFontOfSize(style.fontSize, GetFontWeight(style));
+            var traits = NSFontManager.SharedFontManager.TraitsOfFont(fontDefault);
+            var weight = Math.Max (ToAppKitFontWeight(style.fontWeight) - 2,1);
+
+            NSFont font = null;
+            try
             {
-                traits = NSFontTraitMask.Bold;
+                font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, weight, style.fontSize);
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             if (font == null)
             {
-                family = ".AppleSystemUIFont";
-            }
-            font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, w, style.fontSize);
-            if (font == null)
-            {
-                Console.WriteLine($"[ERROR] Font not found :{family}");
-                font = NSFont.LabelFontOfSize(style.fontSize);
+                try
+                {
+                    font = NSFontManager.SharedFontManager.FontWithFamily(fontDefault.FamilyName, traits, weight, style.fontSize);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
             return font;
         }

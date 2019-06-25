@@ -15,7 +15,6 @@ namespace FigmaSharp.Cocoa
             Configure(view, (FigmaNode)child);
 
             view.AlphaValue = child.opacity;
-            view.Layer.BackgroundColor = FigmaExtensions.ToNSColor(child.backgroundColor).CGColor;
         }
 
         public static void Configure(this StringBuilder builder, string name, FigmaNode child)
@@ -61,7 +60,10 @@ namespace FigmaSharp.Cocoa
             var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
             if (fills != null && fills.color != null)
             {
-                circleLayer.FillColor = fills.color.ToNSColor().CGColor;
+                circleLayer.FillColor = fills.color.MixOpacity(fills.opacity).ToNSColor().CGColor;
+            } else
+            {
+                circleLayer.FillColor = NSColor.Clear.CGColor;
             }
 
             var strokes = elipse.strokes.FirstOrDefault();
@@ -69,8 +71,18 @@ namespace FigmaSharp.Cocoa
             {
                 if (strokes.color != null)
                 {
-                    circleLayer.StrokeColor = strokes.color.ToNSColor().CGColor;
+                    circleLayer.StrokeColor = strokes.color.MixOpacity(strokes.opacity).ToNSColor().CGColor;
                 }
+            }
+
+            if (elipse.strokeDashes != null)
+            {
+                var number = new NSNumber[elipse.strokeDashes.Length];
+                for (int i = 0; i < elipse.strokeDashes.Length; i++)
+                {
+                    number[i] = elipse.strokeDashes[i];
+                }
+                circleLayer.LineDashPattern = number;
             }
 
             circleLayer.BackgroundColor = NSColor.Clear.CGColor;
@@ -81,13 +93,8 @@ namespace FigmaSharp.Cocoa
 
         public static void Configure(this NSView figmaLineView, FigmaLine figmaLine)
         {
+            //we draw a figma line from images or svg
             Configure(figmaLineView, (FigmaNode)figmaLine);
-
-            var fills = figmaLine.fills.OfType<FigmaPaint>().FirstOrDefault();
-            //if (fills != null)
-            //{
-            //    figmaLineView.Layer.BackgroundColor = fills.color.ToNSColor().CGColor;
-            //}
 
             var absolute = figmaLine.absoluteBoundingBox;
             var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
@@ -114,13 +121,14 @@ namespace FigmaSharp.Cocoa
         {
             Configure(builder, name, (FigmaNode)child);
 
-            if (child.HasFills && child.fills[0].color != null)
+            var fills = child.strokes.FirstOrDefault();
+            if (fills != null && fills.visible)
             {
                 builder.AppendLine(string.Format("{0}.Layer.BackgroundColor = {1};", name, child.fills[0].color.ToDesignerString (true)));
             }
 
             var strokes = child.strokes.FirstOrDefault();
-            if (strokes != null)
+            if (strokes != null && strokes.visible)
             {
                 if (strokes.color != null)
                 {
@@ -128,6 +136,11 @@ namespace FigmaSharp.Cocoa
                 }
                 builder.AppendLine(string.Format("{0}.Layer.BorderWidth = {1};", name, child.strokeWeight));
             }
+        }
+
+        static FigmaColor MixOpacity (this FigmaColor color, float opacity)
+        {
+            return new FigmaColor { a = Math.Min(color.a, opacity), r = color.r, g = color.g, b = color.b };
         }
 
         public static void Configure(this NSView view, FigmaRectangleVector child)
@@ -139,17 +152,17 @@ namespace FigmaSharp.Cocoa
                 Path = NSBezierPath.FromRect(view.Bounds).ToCGPath(),
                 Frame = view.Layer.Frame
             };
-
             view.Layer = shapeLayer;
 
-            if (child.HasFills && child.fills[0].color != null)
+            var fill = child.fills?.FirstOrDefault();
+            if (fill != null && fill.visible && fill.color != null)
             {
-                shapeLayer.FillColor = child.fills[0].color.ToNSColor().CGColor;
+                shapeLayer.FillColor = fill.color.MixOpacity (fill.opacity).ToNSColor().CGColor;
             } else
             {
                 shapeLayer.FillColor = NSColor.Clear.CGColor;
             }
-
+            
             if (child.strokeDashes != null)
             {
                 var number = new NSNumber[child.strokeDashes.Length];
@@ -160,14 +173,22 @@ namespace FigmaSharp.Cocoa
                 shapeLayer.LineDashPattern = number;
             }
 
-            var strokes = child.strokes.FirstOrDefault();
-            if (strokes != null && strokes.color != null)
-            {
-                shapeLayer.StrokeColor = strokes.color.ToNSColor().CGColor;
-            }
-
-            shapeLayer.BackgroundColor = NSColor.Clear.CGColor;
+            //shapeLayer.BackgroundColor = child.col
             shapeLayer.LineWidth = child.strokeWeight * 2;
+
+            var strokes = child.strokes.FirstOrDefault();
+            if (strokes != null && strokes.visible)
+            {
+                if (strokes.color != null)
+                {
+                    shapeLayer.StrokeColor = strokes.color.MixOpacity (strokes.opacity).ToNSColor().CGColor;
+                    if (shapeLayer.LineWidth == 0)
+                    {
+                        shapeLayer.LineWidth = 1f;
+                    }
+                }
+            }
+            
             shapeLayer.CornerRadius = child.cornerRadius;
             view.AlphaValue = child.opacity;
         }
@@ -217,7 +238,7 @@ namespace FigmaSharp.Cocoa
                     }
                     builder.AppendLine(string.Format("{0}.AddAttribute(NSStringAttributeKey.Font, {1}, new NSRange({2}, 1));", attributedTextName, element.ToNSFontDesignerString(), i));
 
-                    string color = color = fills?.color?.ToDesignerString(); ;
+                    string color = fills?.color?.ToDesignerString();
 
                     if (element.fills != null && element.fills.Any ())
                     {
@@ -246,7 +267,7 @@ namespace FigmaSharp.Cocoa
             }
 
             var fills = text.fills.FirstOrDefault();
-            if (fills != null)
+            if (fills != null && fills.visible)
             {
                 label.TextColor = FigmaExtensions.ToNSColor(fills.color);
             }
@@ -256,20 +277,36 @@ namespace FigmaSharp.Cocoa
                 var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
                 for (int i = 0; i < text.characterStyleOverrides.Length; i++)
                 {
-                    var key = text.characterStyleOverrides[i].ToString();
-                    if (!text.styleOverrideTable.ContainsKey(key))
-                    {
-                        continue;
-                    }
-                    var element = text.styleOverrideTable[key];
-                    if (element.fontFamily == null)
-                    {
-                        continue;
-                    }
-                    var localFont = FigmaExtensions.ToNSFont(element);
                     var range = new NSRange(i, 1);
-                    attributedText.AddAttribute(NSStringAttributeKey.Font, localFont, range);
-                    attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
+
+                    var key = text.characterStyleOverrides[i].ToString();
+                    if (!text.styleOverrideTable.ContainsKey(key) )
+                    {
+                        //we want the default values
+                        attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, label.TextColor, range);
+                        attributedText.AddAttribute(NSStringAttributeKey.Font, label.Font, range);
+                        continue;
+                    }
+
+                    //if there is a style to override
+                    var styleOverrided = text.styleOverrideTable[key];
+
+                    //set the color
+                    NSColor fontColorOverrided = label.TextColor;
+                    var fillOverrided = styleOverrided.fills?.FirstOrDefault();
+                    if (fillOverrided != null && fillOverrided.visible)
+                        fontColorOverrided = fillOverrided.color.ToNSColor();
+
+                    attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, fontColorOverrided, range);
+
+                    //TODO: we can improve this
+                    //set the font for this character
+                    NSFont fontOverrided = label.Font;
+                    if (styleOverrided.fontFamily != null)
+                    {
+                        fontOverrided = FigmaExtensions.ToNSFont(styleOverrided);
+                    }
+                    attributedText.AddAttribute(NSStringAttributeKey.Font, fontOverrided, range);
                 }
 
                 label.AttributedStringValue = attributedText;

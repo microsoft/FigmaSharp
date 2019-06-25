@@ -68,16 +68,16 @@ namespace FigmaSharp.Services
             return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
         }
 
-        public override void OnStartImageLinkProcessing(List<ImageProcessed> imagesProcessed, string file)
+        public override void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file)
         {
-            if (imagesProcessed.Count == 0)
+            if (imageVectors.Count == 0)
             {
                 return;
             }
 
             Task.Run(() => {
                 //Remote files need get the real image url to get the file
-                var vectorsIds = imagesProcessed.Select(s => s.Node.id);
+                var vectorsIds = imageVectors.Select(s => s.Node.id);
 
                 //TODO: figma url has a limited character in urls we fixed the limit to 10 ids's for each call
                 var numberLoop = (vectorsIds.Count() / CallNumber) + 1;
@@ -93,7 +93,7 @@ namespace FigmaSharp.Services
                         string keys = string.Empty;
                         foreach (var imageResponse in figmaImageResponse.images)
                         {
-                            var imageProcessed = imagesProcessed.FirstOrDefault(s => s.Node.id == imageResponse.Key);
+                            var imageProcessed = imageVectors.FirstOrDefault(s => s.Node.id == imageResponse.Key);
                             imageProcessed.Url = imageResponse.Value;
                             keys += imageResponse.Key + " ";
 

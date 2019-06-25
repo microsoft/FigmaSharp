@@ -35,10 +35,10 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var figmaLineView = new NSView();
+            var figmaLineView = new NSImageView();
             var figmaLine = (FigmaLine)currentNode;
             figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
+            return new ImageViewWrapper(figmaLineView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

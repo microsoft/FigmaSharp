@@ -26,6 +26,7 @@
 * USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using System.Text;
 using FigmaSharp.Converters;
 
@@ -36,6 +37,8 @@ namespace FigmaSharp.Cocoa.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaText = ((FigmaText)currentNode);
+            Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);
+
             var font = figmaText.style.ToNSFont();
             var textField = FigmaViewsHelper.CreateLabel(figmaText.characters, font);
             textField.Configure(figmaText);
