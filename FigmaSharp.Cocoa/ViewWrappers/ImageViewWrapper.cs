@@ -47,22 +47,39 @@ namespace FigmaSharp.Cocoa
             imageView.Layer.AddSublayer(imageLayer);
         }
 
+
+        nfloat GetProportionalSecondSize (nfloat proportionalFirstSize, nfloat originalFirstSize,  nfloat originalSecondSize)
+        {
+            nfloat delta = proportionalFirstSize / originalFirstSize;
+            return delta * originalSecondSize;
+        }
+
+
         public void SetImage(IImageWrapper imageWrapper)
         {
             var image = ((NSImage)imageWrapper.NativeObject);
-
-            var desiredWidth = imageView.Frame.Width;
-            var desiredHeight = imageView.Frame.Height;
-
-            var xCalculated = (desiredWidth / 2f) - (image.Size.Width/2f);
-            var yCalculated = (desiredHeight / 2f) - (image.Size.Height / 2f);
-
-            imageLayer.Frame = new CGRect(xCalculated, yCalculated,
-                image.Size.Width,
-                image.Size.Height
-                 );
             imageLayer.Contents = image.CGImage;
-            //imageLayer.ContentsScale = 0.5f;
+
+
+            nfloat width, height;
+            if (image.Size.Width > image.Size.Height)
+            {
+                //max width
+                width = imageView.Frame.Width;
+                height = GetProportionalSecondSize (width, image.Size.Width, image.Size.Height);
+
+            } else
+            {
+
+                height = imageView.Frame.Height;
+                width = GetProportionalSecondSize(height, image.Size.Height, image.Size.Width);
+            }
+
+            //alignement
+            var xCalculated = (imageView.Frame.Width / 2f) - (width / 2f);
+            var yCalculated = (imageView.Frame.Height / 2f) - (height / 2f);
+
+            imageLayer.Frame = new CGRect(xCalculated, yCalculated, width, height);
         }
     }
 }
