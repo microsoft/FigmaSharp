@@ -18,7 +18,7 @@ namespace ExampleFigma.IOS
             // Note: this .ctor should not contain any initialization logic.
         }
 
-        ExampleViewManager manager;
+        ExampleViewManager exampleViewManager;
 
         public override void ViewDidLoad()
         {
@@ -31,8 +31,7 @@ namespace ExampleFigma.IOS
 
             var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters().Union (Resources.GetConverters()).ToArray ();
 
-            manager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
-            manager.Initialize();
+            exampleViewManager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
         }
 
         public override void DidReceiveMemoryWarning()

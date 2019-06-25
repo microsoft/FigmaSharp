@@ -30,12 +30,12 @@ namespace NativeControl.GtkSharp
 
             var figmaConverters = FigmaSharp.AppContext.Current.GetFigmaConverters().Union(Resources.GetConverters()).ToArray();
             var scrollViewWrapper = new ScrollViewWrapper(scrollWindow);
-            var manager = new ExampleViewManager (scrollViewWrapper, figmaConverters);
-            manager.Initialize();
-
+            exampleViewManager = new ExampleViewManager (scrollViewWrapper, figmaConverters);
             window.ShowAll();
 
             Application.Run();
         }
+
+        static ExampleViewManager exampleViewManager;
     }
 }

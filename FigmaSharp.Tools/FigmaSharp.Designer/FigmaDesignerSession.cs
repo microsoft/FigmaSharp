@@ -106,7 +106,7 @@ namespace FigmaSharp.Designer
                 {
                     try
                     {
-                        var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Key.id);
+                        var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Node.id);
                         string filePath = Path.Combine(resourcesDirectory, string.Concat(recoveredKey, format));
 
                         if (!File.Exists(filePath))
@@ -114,7 +114,7 @@ namespace FigmaSharp.Designer
                             throw new FileNotFoundException(filePath);
                         }
 
-                        var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Key);
+                        var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Node);
                         var wrapper = processedNode.View as IImageViewWrapper;
 
                         var image = new ImageWrapper(new NSImage(filePath));
