@@ -111,7 +111,7 @@ namespace FigmaSharp
             }
         }
 
-        public bool IsYAxisFlipped => figmaDelegate.IsYAxisFlipped;
+        public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
 
         #endregion
     }

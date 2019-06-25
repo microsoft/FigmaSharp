@@ -63,7 +63,7 @@ namespace FigmaSharp.Services
 
                     var x = Math.Max (absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x, 0);
                     float y;
-                    if (AppContext.Current.IsYAxisFlipped)
+                    if (AppContext.Current.IsVerticalAxisFlipped)
                     {
                         var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
                         var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;

@@ -6,7 +6,7 @@ namespace FigmaSharp
 {
     public interface IFigmaDelegate
     {
-        bool IsYAxisFlipped { get; }
+        bool IsVerticalAxisFlipped { get; }
 
         IViewWrapper CreateEmptyView();
         FigmaViewConverter[] GetFigmaConverters();
