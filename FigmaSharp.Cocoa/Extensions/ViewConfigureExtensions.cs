@@ -75,6 +75,8 @@ namespace FigmaSharp.Cocoa
 
             circleLayer.BackgroundColor = NSColor.Clear.CGColor;
             circleLayer.LineWidth = elipse.strokeWeight;
+
+            view.AlphaValue = elipse.opacity;
         }
 
         public static void Configure(this NSView figmaLineView, FigmaLine figmaLine)
@@ -99,6 +101,8 @@ namespace FigmaSharp.Cocoa
             var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualToConstant(lineHeight);
             constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
             constraintHeight.Active = true;
+
+            figmaLineView.AlphaValue = figmaLine.opacity;
         }
 
         public static void Configure(this NSView view, FigmaVectorEntity child)
@@ -163,8 +167,9 @@ namespace FigmaSharp.Cocoa
             }
 
             shapeLayer.BackgroundColor = NSColor.Clear.CGColor;
-            shapeLayer.LineWidth = child.strokeWeight;
+            shapeLayer.LineWidth = child.strokeWeight * 2;
             shapeLayer.CornerRadius = child.cornerRadius;
+            view.AlphaValue = child.opacity;
         }
 
         public static void Configure(this StringBuilder builder, string name, FigmaRectangleVector child)
