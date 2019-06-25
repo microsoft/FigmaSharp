@@ -39,14 +39,29 @@ namespace FigmaSharp
     /// </summary>
     public class FigmaFile : IFigmaFile
     {
-        string file;
+        /// <summary>
+        /// Gets the figma images.
+        /// </summary>
+        /// <value>The figma images.</value>
         public List<IImageViewWrapper> FigmaImages { get; private set; }
+
+        /// <summary>
+        /// Gets the document.
+        /// </summary>
+        /// <value>The document.</value>
         public FigmaResponse Document => figmaLocalFileProvider.Response;
+
+        /// <summary>
+        /// Gets the content view.
+        /// </summary>
+        /// <value>The content view.</value>
         public IViewWrapper ContentView { get; private set; }
 
         readonly FigmaViewRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;
         readonly FigmaManifestFileProvider figmaLocalFileProvider;
+
+        string file;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:FigmaSharp.FigmaFile"/> class.
