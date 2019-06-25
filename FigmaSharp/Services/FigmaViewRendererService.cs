@@ -114,7 +114,7 @@ namespace FigmaSharp.Services
                     {
                         if (processedNode.FigmaNode is FigmaVectorEntity vectorEntity)
                         {
-                            if (vectorEntity.GetType () == typeof (FigmaVectorEntity))
+                            if (vectorEntity.GetType () == typeof (FigmaVectorEntity) || vectorEntity.GetType() == typeof(FigmaRegularPoligon))
                             {
                                 ImageVectors.Add (new ImageProcessed (vectorEntity));
                             } else

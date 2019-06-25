@@ -9,6 +9,7 @@ namespace FigmaSharp.Cocoa
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly FigmaViewConverter[] figmaViewConverters = {
+            new FigmaRegularPoligonConverter (),
             new FigmaVectorViewConverter (),
             new FigmaFrameEntityConverter (),
             new FigmaTextConverter (),
