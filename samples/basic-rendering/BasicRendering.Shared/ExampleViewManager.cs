@@ -35,7 +35,7 @@ namespace ExampleFigma
 {
     public class ExampleViewManager 
     {
-        const string fileName = "Dq1CFm7IrDi3UJC7KJ8zVjOt";
+        const string fileName = "CobaSo7LmEYsuGZB0ED0ewSs";
 
         readonly FigmaRemoteFileProvider fileProvider;
 
