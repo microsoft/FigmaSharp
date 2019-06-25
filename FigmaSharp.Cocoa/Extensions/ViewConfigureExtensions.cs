@@ -69,9 +69,12 @@ namespace FigmaSharp.Cocoa
             {
                 if (strokes.color != null)
                 {
-                    circleLayer.BorderColor = strokes.color.ToNSColor().CGColor;
+                    circleLayer.StrokeColor = strokes.color.ToNSColor().CGColor;
                 }
             }
+
+            circleLayer.BackgroundColor = NSColor.Clear.CGColor;
+            circleLayer.LineWidth = elipse.strokeWeight;
         }
 
         public static void Configure(this NSView figmaLineView, FigmaLine figmaLine)
