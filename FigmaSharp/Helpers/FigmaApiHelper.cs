@@ -103,7 +103,8 @@ namespace FigmaSharp
         public static FigmaImageResponse GetFigmaImages(string fileId, IEnumerable<string> ids)
         {
             var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
-            return GetFigmaImage(query);
+			query.Scale = "2";
+			return GetFigmaImage(query);
         }
 
 
