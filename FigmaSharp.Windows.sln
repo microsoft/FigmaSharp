@@ -43,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Wpf", "sampl
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalFile.Shared", "samples\local-file-rendering\LocalFile.Shared\LocalFile.Shared.shproj", "{DE4BA22B-5240-4253-8CDE-18FD4E46E256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalFile.Wpf", "LocalFile.Wpf\LocalFile.Wpf.csproj", "{E86603F0-6913-414E-AD32-AAD76AB69C61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalFile.Wpf", "samples\local-file-rendering\LocalFile.Wpf\LocalFile.Wpf.csproj", "{E86603F0-6913-414E-AD32-AAD76AB69C61}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
