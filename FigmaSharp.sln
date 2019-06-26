@@ -70,7 +70,7 @@ Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Forms.Androi
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Forms.iOS", "samples\basic-rendering\BasicRendering.Forms.iOS\BasicRendering.Forms.iOS.csproj", "{51DA944A-895D-4D85-AB21-2BEB4DF6B45C}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.IOS", "samples\basic-rendering\BasicRendering.IOS\BasicRendering.IOS.csproj", "{05BFCEEB-1901-4BD2-AFDA-2FFFC320F745}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.iOS", "samples\basic-rendering\BasicRendering.iOS\BasicRendering.iOS.csproj", "{05BFCEEB-1901-4BD2-AFDA-2FFFC320F745}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Gtk", "samples\basic-rendering\BasicRendering.Gtk\BasicRendering.Gtk.csproj", "{AA9792BA-28DA-4EF2-BA3B-AD307AB68365}"
 EndProject
