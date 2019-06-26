@@ -48,6 +48,14 @@
       }
     ],
     "dest": "_site",
+    "globalMetadata": {
+      "_appTitle": "FigmaSharp",
+      "_gitContribute": {
+        "repo": "https://github.com/netonmj/FigmaSharp",
+        "branch": "master",
+        "apiSpecFolder": "docs"
+      }
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
