@@ -90,7 +90,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Gtk", "sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalFile.Gtk", "samples\local-file-rendering\LocalFile.Gtk\LocalFile.Gtk.csproj", "{1970A5A5-D918-4A23-8590-814EF0CA1D31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalFile.IOS", "samples\local-file-rendering\LocalFile.IOS\LocalFile.IOS.csproj", "{331716C4-F53E-44FD-9798-2FA4797C6644}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalFile.iOS", "samples\local-file-rendering\LocalFile.iOS\LocalFile.iOS.csproj", "{331716C4-F53E-44FD-9798-2FA4797C6644}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalFile.Shared", "samples\local-file-rendering\LocalFile.Shared\LocalFile.Shared.shproj", "{DE4BA22B-5240-4253-8CDE-18FD4E46E256}"
 EndProject
