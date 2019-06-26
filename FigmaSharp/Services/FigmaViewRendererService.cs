@@ -117,7 +117,7 @@ namespace FigmaSharp.Services
                             //TODO: this should be replaced by svg
                             if (vectorEntity.GetType () == typeof (FigmaVectorEntity)
                                 || vectorEntity.GetType () == typeof (FigmaLine)
-                                || vectorEntity.GetType() == typeof(FigmaRegularPoligon))
+                                || vectorEntity.GetType() == typeof(FigmaRegularPolygon))
                             {
                                 ImageVectors.Add (new ImageProcessed (vectorEntity));
                             } else

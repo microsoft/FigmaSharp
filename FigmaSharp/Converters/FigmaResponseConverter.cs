@@ -108,7 +108,7 @@ namespace FigmaSharp
             }
             else if (jsonObject["type"].Value<string>() == "REGULAR_POLYGON")
             {
-                figmaObject = jsonObject.ToObject<FigmaRegularPoligon>();
+                figmaObject = jsonObject.ToObject<FigmaRegularPolygon>();
                 return figmaObject;
             }
             else if (jsonObject["type"].Value<string>() == "INSTANCE")

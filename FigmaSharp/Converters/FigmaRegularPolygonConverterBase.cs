@@ -28,13 +28,13 @@
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaRegularPoligonConverterBase : FigmaViewConverter
+    public abstract class FigmaRegularPolygonConverterBase : FigmaViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaRegularPoligon);
+            return currentNode.GetType() == typeof(FigmaRegularPolygon);
         }
     }
 }

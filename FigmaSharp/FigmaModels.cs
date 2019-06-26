@@ -50,7 +50,7 @@ namespace FigmaSharp
         public float componentIdString { get; set; }
     }
 
-    public class FigmaRegularPoligon : FigmaVectorEntity
+    public class FigmaRegularPolygon : FigmaVectorEntity
     {
         public override bool ImageSupported => false;
     }

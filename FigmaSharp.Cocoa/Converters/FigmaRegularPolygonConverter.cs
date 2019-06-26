@@ -30,12 +30,12 @@ using FigmaSharp.Converters;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaRegularPoligonConverter : FigmaRegularPoligonConverterBase
+    public class FigmaRegularPolygonConverter : FigmaRegularPolygonConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var currengroupView = new NSImageView();
-            currengroupView.Configure((FigmaRegularPoligon)currentNode);
+            currengroupView.Configure((FigmaRegularPolygon)currentNode);
             return new ImageViewWrapper(currengroupView);
         }
 
