@@ -1,0 +1,1172 @@
+{
+  "homepages": [],
+  "source_base_path": "/Users/hbons/Microsoft/GitHub/FigmaSharp/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.AppContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.AppContext.html",
+          "hash": "QS2jP6+c6Q1XZZVXJIMd4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaElipseConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaElipseConverterBase.html",
+          "hash": "QMUPejx7a8+WAuYzgJ8IaA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaFrameEntityConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaFrameEntityConverterBase.html",
+          "hash": "fnl1ieNyCr3Hykgim8p3ew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaLineConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaLineConverterBase.html",
+          "hash": "Cq5SR3RT+lK6mDFHu21Wmw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaRectangleVectorConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaRectangleVectorConverterBase.html",
+          "hash": "fG/azB/XF8sVWJq3J9zPEw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaRegularPoligonConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaRegularPoligonConverterBase.html",
+          "hash": "vLu443pOac1H/lJROOlEgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaResourceConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaResourceConverter.html",
+          "hash": "964Vbga05mJin5IR1lo3vA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaTextConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaTextConverterBase.html",
+          "hash": "fXRd4FIGlMZBSizHLswreQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaVectorEntityConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaVectorEntityConverterBase.html",
+          "hash": "ePVydRwtEbOtEcocoshiCw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.FigmaVectorViewConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.FigmaVectorViewConverterBase.html",
+          "hash": "vFmgxexkiG9CXipeVLJChA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Converters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Converters.html",
+          "hash": "cal7k78DzhQu8sDJSC54Tg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.CustomViewConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.CustomViewConverter.html",
+          "hash": "DbFtdTPQN7eccIwDNlZM5Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaApiHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaApiHelper.html",
+          "hash": "ZIgVBY3IkKS48Aqp61V3Mw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaAssemblyManifest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaAssemblyManifest.html",
+          "hash": "mWQDPqInnU7XoMvrU2hgkg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaBackground.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaBackground.html",
+          "hash": "xO0cTcVcnj5tU0DK/pdWVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaBlendMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaBlendMode.html",
+          "hash": "iTbfA41h3knzLoPT9pXIEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaBoolean.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaBoolean.html",
+          "hash": "V96l4NFNCB0GEfa6kv/bJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaCanvas.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaCanvas.html",
+          "hash": "wlFnPcidTR3BQn/FziHu9A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaCodeAddChildConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaCodeAddChildConverterBase.html",
+          "hash": "KhuAnF5nDsTg9+nJcXxYaQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaCodePositionConverterBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaCodePositionConverterBase.html",
+          "hash": "+tXLRAjUq+uAl5g3H92meA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaColor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaColor.html",
+          "hash": "NhJwM5pLRdwaLmNIZ5N4KQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaColorStop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaColorStop.html",
+          "hash": "7KFFRUOu/dYdjFdlVKF6AQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaComponent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaComponent.html",
+          "hash": "Sc34sbzFKhbXOGk78nGvQA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaConstraint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaConstraint.html",
+          "hash": "KP0g9y8MDN/Kyi9wxEky1w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaDocument.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaDocument.html",
+          "hash": "zGoZi80VWZ5wWbTzATvoEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaEasingType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaEasingType.html",
+          "hash": "EiUebT9XuaITc3eIm3n3GA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaEffect.html",
+          "hash": "OVIYsfj0+XyZn7AV4vApew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaElipse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaElipse.html",
+          "hash": "vMB4o/ZIreTjxkvnhHMzhA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaExportSetting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaExportSetting.html",
+          "hash": "9uG0cQOpxUq/iegU4lF0nQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaFile.html",
+          "hash": "8ZrWW812wRK3MVfh0kDOeA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaFrameEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaFrameEntity.html",
+          "hash": "pwOZSG4ZoSRMj+6NwALKmA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaFrameEntityResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaFrameEntityResponse.html",
+          "hash": "PTWbwdZNic3qWaZrAvaE5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaGroup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaGroup.html",
+          "hash": "ikZEj3+SFCQWOA/leBTqMw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaImageQuery.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaImageQuery.html",
+          "hash": "v9WnokMMSJHHkH/yftX1HA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaImageResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaImageResponse.html",
+          "hash": "6/a+f/xz52BAQ/HZrNAbGg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaInstance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaInstance.html",
+          "hash": "fVfmqBo639ysrTbY3tfFiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaLayoutConstraint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaLayoutConstraint.html",
+          "hash": "e2pefI94qrmqXC9tMhksrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaLayoutGrid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaLayoutGrid.html",
+          "hash": "+LFQOucrdHKwWKrYIj3xiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaLine.html",
+          "hash": "WTWSiYfkeywHk4WNAJMZRQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaNode.html",
+          "hash": "3RmNVuUU4FLO9sc5vL4zXw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaNodeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaNodeExtensions.html",
+          "hash": "iZSAVRG7cwXsNXbvrj0+TQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaPaint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaPaint.html",
+          "hash": "b4j5WIVG/Xz3yLc37fPHVw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaPath.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaPath.html",
+          "hash": "6Zsa/cnqHmlvoEmYhCaqng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaRectangle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaRectangle.html",
+          "hash": "zJwfTZa1EHXWVwPk8LRy+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaRectangleVector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaRectangleVector.html",
+          "hash": "h+2s3UKLa+uK4a6MEAQPEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaRegularPoligon.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaRegularPoligon.html",
+          "hash": "el0MTgfyxUgrAF4Eauye8Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaResponse.html",
+          "hash": "LwFgmpEzgp1K+N9TpzW0qg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaResponseConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaResponseConverter.html",
+          "hash": "dr6t7M37VzOFikdupI7q6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaSlice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaSlice.html",
+          "hash": "ETCWswJSjGZJueCyYLNOyA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaStar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaStar.html",
+          "hash": "G7JYLlKmHW/jKx/eA4A0rg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaText.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaText.html",
+          "hash": "DjRxn2fi7uVkEwVUr86M0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaTransform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaTransform.html",
+          "hash": "cRCow1jp6qo+mqNlw+Uc3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaTypeStyle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaTypeStyle.html",
+          "hash": "06703b4/WYbX48qtrWVCDw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaVector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaVector.html",
+          "hash": "7iXL5dB6yGUtfHMv216y2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaVectorEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaVectorEntity.html",
+          "hash": "QVuaK35l2KWCnwJ8AaKRUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FigmaViewConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FigmaViewConverter.html",
+          "hash": "FmTb2dwxGMC0nDQxP4UKCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.FileHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.FileHelper.html",
+          "hash": "99JJdQJZXlyvyaTb1Jh6cQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IAbsoluteBoundingBox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IAbsoluteBoundingBox.html",
+          "hash": "SeHygWQSOxZB5GJ7qpL2mg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IConstraints.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IConstraints.html",
+          "hash": "RKGyUpWKqmg67uaUU6zzKg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IFigmaApplication.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IFigmaApplication.html",
+          "hash": "NYweD032at5+dOgXCJRq2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IFigmaDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IFigmaDelegate.html",
+          "hash": "PYVoYn58oxqmaKdgiBUbgQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IFigmaDocumentContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IFigmaDocumentContainer.html",
+          "hash": "mVdWB37arl/xIvjyy5k6jg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IFigmaFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IFigmaFile.html",
+          "hash": "MiEn3KjcB2dKcByMtpgQlw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IFigmaNodeContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IFigmaNodeContainer.html",
+          "hash": "0g5Sv7DWVWDD0JGcUOz9dQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IImageViewWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IImageViewWrapper.html",
+          "hash": "PfSydymdtUS/VkTzj37AhQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IImageWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IImageWrapper.html",
+          "hash": "oPYE+Ya1lI5jwEXqPv57Fg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IObjectWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IObjectWrapper.html",
+          "hash": "f/kU5BtD8oa7rxWqjGYufw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IScrollViewWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IScrollViewWrapper.html",
+          "hash": "EHhgXyySuZ7ZK9JI3XfKXg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.IViewWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.IViewWrapper.html",
+          "hash": "yi7jscaXIFt8nFuAmk4V3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.ProcessedNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.ProcessedNode.html",
+          "hash": "cyW8ZVgAntAI6jUd1Z6krA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaCodeRendererService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaCodeRendererService.html",
+          "hash": "vmdW+bVupbiKv/W7qrQDjw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaFileProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaFileProvider.html",
+          "hash": "ebAwWgHVS6yVZAx7hAOHhA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaLocalFileProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaLocalFileProvider.html",
+          "hash": "X6JqvzrUANo4Ft5MhqpxbQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaManifestFileProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaManifestFileProvider.html",
+          "hash": "vuT7NUtAcXtcgNruMoaXqQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaRemoteFileProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaRemoteFileProvider.html",
+          "hash": "n9s37Z9MJ/E6KfC/Zq9VaA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaViewRendererDistributionService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaViewRendererDistributionService.html",
+          "hash": "7FtBMGXRI+soQFp1TKL/zw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaViewRendererService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaViewRendererService.html",
+          "hash": "29Xohf/H1jLBR++rRPYuZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.FigmaViewRendererServiceOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.FigmaViewRendererServiceOptions.html",
+          "hash": "h/kOXYw1tDLFPB+H34LRuw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.IFigmaFileProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.IFigmaFileProvider.html",
+          "hash": "EDtcKv6Oa/n0ByB3vIhY+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.ImageProcessed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.ImageProcessed.html",
+          "hash": "oY+2qETaN4hp7+p9jdOT5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.ModuleService.Platform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.ModuleService.Platform.html",
+          "hash": "Hb1Ptu4tpgEJosum2rnuDg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.ModuleService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.ModuleService.html",
+          "hash": "kQ/sO71Kc1stCndlJ672JA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.PlatformCustomViewConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.PlatformCustomViewConverter.html",
+          "hash": "5TAy3dI3qwuqT/1OfxEIiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.PlatformFigmaCodeAddChildConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.PlatformFigmaCodeAddChildConverter.html",
+          "hash": "KJQbKb9PAFAMemcKeNuVvA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.PlatformFigmaCodePositionConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.PlatformFigmaCodePositionConverter.html",
+          "hash": "UrYF8Oo6ZmvD566x5Sk77Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.Services.html",
+          "hash": "EwJWG12tZHX2cBUXuxll2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FigmaSharp.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FigmaSharp.html",
+          "hash": "0N+lIyWyTZ8ijRSAibJ8Gg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "MO/jMu156WbQsdj6e2OBiw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "nEoPidOxfj30ogkiwsA3nw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "TCF6JjkcLxuT0WN3oT+A0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "U88Su8nZC7TmQYG4xBHlXw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "k+/dkjFuwAVS32HduMpmBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 87,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
