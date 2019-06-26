@@ -54,8 +54,8 @@ namespace LocalFile.Cocoa
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
 
-            var mainWindow = new NSWindow(new CGRect(0, 0, 540, 800), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false)
-            mainWindow.WillClose += delegate { NSRunningApplication.CurrentApplication.Terminate(); }
+            var mainWindow = new NSWindow(new CGRect(0, 0, 540, 800), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
+            mainWindow.WillClose += delegate { NSRunningApplication.CurrentApplication.Terminate(); };
             mainWindow.Center();
 
             var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
