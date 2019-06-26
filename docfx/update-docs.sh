@@ -1,4 +1,3 @@
 #!/bin/sh
 
-docfx --intermediateFolder ./obj/.cache/build/ && cp -R ./_site ../docs && rm -Rf ./_site
-
+docfx && rm -Rf ../docs/ && cp -R ./_site ../docs
