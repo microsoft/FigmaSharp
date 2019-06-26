@@ -66,7 +66,7 @@ Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Forms.Androi
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Forms.iOS", "samples\basic-rendering\BasicRendering.Forms.iOS\BasicRendering.Forms.iOS.csproj", "{E6102B86-E556-4377-9C05-1570C0DE1A63}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.IOS", "samples\basic-rendering\BasicRendering.IOS\BasicRendering.IOS.csproj", "{CB84521D-31BA-4604-A3A4-ACAD43BA5F20}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.iOS", "samples\basic-rendering\BasicRendering.iOS\BasicRendering.iOS.csproj", "{CB84521D-31BA-4604-A3A4-ACAD43BA5F20}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BasicRendering.Gtk", "samples\basic-rendering\BasicRendering.Gtk\BasicRendering.Gtk.csproj", "{3DA391F2-2D9E-4CC5-B0EB-18560F91F113}"
 EndProject
@@ -76,7 +76,7 @@ Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "LocalFile.Forms", "samples\
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "LocalFile.Gtk", "samples\local-file-rendering\LocalFile.Gtk\LocalFile.Gtk.csproj", "{1460810C-ACAE-4E95-AF45-67910CEFABF1}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "LocalFile.IOS", "samples\local-file-rendering\LocalFile.IOS\LocalFile.IOS.csproj", "{8589C6BB-2C46-42E5-BFEA-FBC31930165D}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "LocalFile.iOS", "samples\local-file-rendering\LocalFile.iOS\LocalFile.iOS.csproj", "{8589C6BB-2C46-42E5-BFEA-FBC31930165D}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FigmaSharp.NativeControls.Forms", "FigmaSharp.NativeControls\FigmaSharp.NativeControls.Forms\FigmaSharp.NativeControls.Forms.csproj", "{97000B61-E504-4C9B-B5A8-81CB903D38C0}"
 EndProject
