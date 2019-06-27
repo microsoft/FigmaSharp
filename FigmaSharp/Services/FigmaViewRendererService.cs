@@ -32,6 +32,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp.Services
 {
     public class ImageProcessed

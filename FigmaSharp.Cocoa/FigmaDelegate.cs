@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+
 using AppKit;
+
 using FigmaSharp.Cocoa.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Cocoa
 {

@@ -32,6 +32,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp.Services
 {
     public interface IFigmaFileProvider

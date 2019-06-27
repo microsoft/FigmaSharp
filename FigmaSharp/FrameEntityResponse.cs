@@ -26,6 +26,8 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp
 {
     public class FigmaFrameEntityResponse

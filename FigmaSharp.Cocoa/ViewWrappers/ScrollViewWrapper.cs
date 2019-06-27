@@ -26,10 +26,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using AppKit;
-using CoreGraphics;
 using System.Collections.Generic;
 using System.Linq;
+
+using AppKit;
+using CoreGraphics;
+
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Cocoa
 {

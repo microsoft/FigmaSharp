@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp.Services
 {
     public class FigmaCodeRendererService

@@ -29,6 +29,8 @@
 using System;
 using System.Collections.Generic;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp
 {
     public abstract class FigmaViewConverter : CustomViewConverter

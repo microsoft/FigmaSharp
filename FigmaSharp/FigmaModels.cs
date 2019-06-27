@@ -33,7 +33,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace FigmaSharp
+namespace FigmaSharp.Models
 {
     public class FigmaElipse : FigmaVectorEntity
     {
