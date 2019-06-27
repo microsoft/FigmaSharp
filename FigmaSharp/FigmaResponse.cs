@@ -26,9 +26,20 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System.Collections.Generic;
+using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
+    public class FigmaResponse
+    {
+        public string name { get; set; }
+        public string lastModified { get; set; }
+        public string version { get; set; }
+        public FigmaDocument document { get; set; }
+        public int schemaVersion { get; set; }
+    }
+
+
     public class FigmaImageResponse
     {
         public string err { get; set; }
