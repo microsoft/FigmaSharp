@@ -1,0 +1,859 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FigmaVectorEntity
+   | FigmaSharp </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FigmaVectorEntity
+   | FigmaSharp ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="FigmaSharp.Models.FigmaVectorEntity">
+  
+  
+  <h1 id="FigmaSharp_Models_FigmaVectorEntity" data-uid="FigmaSharp.Models.FigmaVectorEntity" class="text-break">Class FigmaVectorEntity
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="FigmaSharp.Models.FigmaNode.html">FigmaNode</a></div>
+    <div class="level2"><span class="xref">FigmaVectorEntity</span></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaBoolean.html">FigmaBoolean</a></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaElipse.html">FigmaElipse</a></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaLine.html">FigmaLine</a></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaRectangleVector.html">FigmaRectangleVector</a></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaRegularPolygon.html">FigmaRegularPolygon</a></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaStar.html">FigmaStar</a></div>
+      <div class="level3"><a class="xref" href="FigmaSharp.Models.FigmaText.html">FigmaText</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="FigmaSharp.Models.IAbsoluteBoundingBox.html">IAbsoluteBoundingBox</a></div>
+    <div><a class="xref" href="FigmaSharp.Models.IConstraints.html">IConstraints</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="FigmaSharp.Models.FigmaNode.html#FigmaSharp_Models_FigmaNode_Parent">FigmaNode.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="FigmaSharp.Models.FigmaNode.html#FigmaSharp_Models_FigmaNode_id">FigmaNode.id</a>
+    </div>
+    <div>
+      <a class="xref" href="FigmaSharp.Models.FigmaNode.html#FigmaSharp_Models_FigmaNode_name">FigmaNode.name</a>
+    </div>
+    <div>
+      <a class="xref" href="FigmaSharp.Models.FigmaNode.html#FigmaSharp_Models_FigmaNode_type">FigmaNode.type</a>
+    </div>
+    <div>
+      <a class="xref" href="FigmaSharp.Models.FigmaNode.html#FigmaSharp_Models_FigmaNode_visible">FigmaNode.visible</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="FigmaSharp.Models.html">FigmaSharp.Models</a></h6>
+  <h6><strong>Assembly</strong>: FigmaSharp.dll</h6>
+  <h5 id="FigmaSharp_Models_FigmaVectorEntity_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_absoluteBoundingBox.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.absoluteBoundingBox%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L253">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_absoluteBoundingBox_" data-uid="FigmaSharp.Models.FigmaVectorEntity.absoluteBoundingBox*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_absoluteBoundingBox" data-uid="FigmaSharp.Models.FigmaVectorEntity.absoluteBoundingBox">absoluteBoundingBox</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaRectangle absoluteBoundingBox { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaRectangle.html">FigmaRectangle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_blendMode.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.blendMode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L241">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_blendMode_" data-uid="FigmaSharp.Models.FigmaVectorEntity.blendMode*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_blendMode" data-uid="FigmaSharp.Models.FigmaVectorEntity.blendMode">blendMode</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaBlendMode blendMode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaBlendMode.html">FigmaBlendMode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_constraints.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.constraints%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L243">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_constraints_" data-uid="FigmaSharp.Models.FigmaVectorEntity.constraints*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_constraints" data-uid="FigmaSharp.Models.FigmaVectorEntity.constraints">constraints</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaLayoutConstraint constraints { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaLayoutConstraint.html">FigmaLayoutConstraint</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_effects.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.effects%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L254">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_effects_" data-uid="FigmaSharp.Models.FigmaVectorEntity.effects*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_effects" data-uid="FigmaSharp.Models.FigmaVectorEntity.effects">effects</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaEffect[] effects { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaEffect.html">FigmaEffect</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_exportSettings.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.exportSettings%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L240">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_exportSettings_" data-uid="FigmaSharp.Models.FigmaVectorEntity.exportSettings*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_exportSettings" data-uid="FigmaSharp.Models.FigmaVectorEntity.exportSettings">exportSettings</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaExportSetting[] exportSettings { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaExportSetting.html">FigmaExportSetting</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_fillGeometry.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.fillGeometry%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L259">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_fillGeometry_" data-uid="FigmaSharp.Models.FigmaVectorEntity.fillGeometry*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_fillGeometry" data-uid="FigmaSharp.Models.FigmaVectorEntity.fillGeometry">fillGeometry</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaPath[] fillGeometry { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaPath.html">FigmaPath</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_fills.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.fills%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L258">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_fills_" data-uid="FigmaSharp.Models.FigmaVectorEntity.fills*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_fills" data-uid="FigmaSharp.Models.FigmaVectorEntity.fills">fills</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaPaint[] fills { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaPaint.html">FigmaPaint</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_HasFills.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.HasFills%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L266">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_HasFills_" data-uid="FigmaSharp.Models.FigmaVectorEntity.HasFills*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_HasFills" data-uid="FigmaSharp.Models.FigmaVectorEntity.HasFills">HasFills</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasFills { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_ImageSupported.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.ImageSupported%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L238">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_ImageSupported_" data-uid="FigmaSharp.Models.FigmaVectorEntity.ImageSupported*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_ImageSupported" data-uid="FigmaSharp.Models.FigmaVectorEntity.ImageSupported">ImageSupported</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool ImageSupported { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_isMask.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.isMask%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L257">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_isMask_" data-uid="FigmaSharp.Models.FigmaVectorEntity.isMask*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_isMask" data-uid="FigmaSharp.Models.FigmaVectorEntity.isMask">isMask</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool isMask { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_opacity.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.opacity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L249">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_opacity_" data-uid="FigmaSharp.Models.FigmaVectorEntity.opacity*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_opacity" data-uid="FigmaSharp.Models.FigmaVectorEntity.opacity">opacity</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore | DefaultValueHandling.Populate | DefaultValueHandling.IgnoreAndPopulate)]
+public float opacity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_preserveRatio.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.preserveRatio%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L242">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_preserveRatio_" data-uid="FigmaSharp.Models.FigmaVectorEntity.preserveRatio*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_preserveRatio" data-uid="FigmaSharp.Models.FigmaVectorEntity.preserveRatio">preserveRatio</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool preserveRatio { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_relativeTransform.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.relativeTransform%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L256">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_relativeTransform_" data-uid="FigmaSharp.Models.FigmaVectorEntity.relativeTransform*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_relativeTransform" data-uid="FigmaSharp.Models.FigmaVectorEntity.relativeTransform">relativeTransform</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaTransform relativeTransform { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaTransform.html">FigmaTransform</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_size.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.size%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L255">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_size_" data-uid="FigmaSharp.Models.FigmaVectorEntity.size*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_size" data-uid="FigmaSharp.Models.FigmaVectorEntity.size">size</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaVector size { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaVector.html">FigmaVector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_strokeAlign.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.strokeAlign%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L263">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_strokeAlign_" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeAlign*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_strokeAlign" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeAlign">strokeAlign</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string strokeAlign { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_strokeDashes.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.strokeDashes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L264">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_strokeDashes_" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeDashes*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_strokeDashes" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeDashes">strokeDashes</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float[] strokeDashes { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_strokeGeometry.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.strokeGeometry%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L262">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_strokeGeometry_" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeGeometry*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_strokeGeometry" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeGeometry">strokeGeometry</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaPath[] strokeGeometry { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaPath.html">FigmaPath</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_strokes.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.strokes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L260">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_strokes_" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokes*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_strokes" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokes">strokes</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaPaint[] strokes { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaPaint.html">FigmaPaint</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_strokeWeight.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.strokeWeight%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L261">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_strokeWeight_" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeWeight*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_strokeWeight" data-uid="FigmaSharp.Models.FigmaVectorEntity.strokeWeight">strokeWeight</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int strokeWeight { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_transitionDuration.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.transitionDuration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L246">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_transitionDuration_" data-uid="FigmaSharp.Models.FigmaVectorEntity.transitionDuration*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_transitionDuration" data-uid="FigmaSharp.Models.FigmaVectorEntity.transitionDuration">transitionDuration</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float transitionDuration { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_transitionEasing.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.transitionEasing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L247">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_transitionEasing_" data-uid="FigmaSharp.Models.FigmaVectorEntity.transitionEasing*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_transitionEasing" data-uid="FigmaSharp.Models.FigmaVectorEntity.transitionEasing">transitionEasing</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FigmaEasingType transitionEasing { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FigmaSharp.Models.FigmaEasingType.html">FigmaEasingType</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity_transitionNodeID.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity.transitionNodeID%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L245">View Source</a>
+  </span>
+  <a id="FigmaSharp_Models_FigmaVectorEntity_transitionNodeID_" data-uid="FigmaSharp.Models.FigmaVectorEntity.transitionNodeID*"></a>
+  <h4 id="FigmaSharp_Models_FigmaVectorEntity_transitionNodeID" data-uid="FigmaSharp.Models.FigmaVectorEntity.transitionNodeID">transitionNodeID</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string transitionNodeID { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="FigmaSharp.Models.IAbsoluteBoundingBox.html">IAbsoluteBoundingBox</a>
+  </div>
+  <div>
+      <a class="xref" href="FigmaSharp.Models.IConstraints.html">IConstraints</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="FigmaSharp.FigmaNodeExtensions.html#FigmaSharp_FigmaNodeExtensions_OfTypeImage_FigmaSharp_Models_FigmaNode_">FigmaNodeExtensions.OfTypeImage(FigmaNode)</a>
+  </div>
+  <div>
+      <a class="xref" href="FigmaSharp.FigmaNodeExtensions.html#FigmaSharp_FigmaNodeExtensions_Recursively_FigmaSharp_Models_FigmaNode_System_String_System_Collections_Generic_List_FigmaSharp_Models_FigmaNode__">FigmaNodeExtensions.Recursively(FigmaNode, String, List&lt;FigmaNode&gt;)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/netonmj/FigmaSharp/new/master/docs/new?filename=FigmaSharp_Models_FigmaVectorEntity.md&amp;value=---%0Auid%3A%20FigmaSharp.Models.FigmaVectorEntity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/netonjm/FigmaSharp/blob/restructure/FigmaSharp/FigmaModels.cs/#L236" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
