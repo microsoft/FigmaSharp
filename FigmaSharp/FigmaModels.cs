@@ -66,15 +66,6 @@ namespace FigmaSharp.Models
         public float[] rectangleCornerRadii { get; set; }
     }
 
-    public class FigmaResponse
-    {
-        public string name { get; set; }
-        public string lastModified { get; set; }
-        public string version { get; set; }
-        public FigmaDocument document { get; set; }
-        public int schemaVersion { get; set; }
-    }
-
     public class FigmaPaint
     {
         public string ID { get; internal set; }
