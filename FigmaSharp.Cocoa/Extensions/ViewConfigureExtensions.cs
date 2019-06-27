@@ -6,6 +6,8 @@ using Foundation;
 using System.Linq;
 using System.Text;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp.Cocoa
 {
     public static class ViewConfigureExtensions

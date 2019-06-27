@@ -33,6 +33,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp
 {
     public static class FigmaNodeExtensions

@@ -29,7 +29,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+
 using FigmaSharp.Converters;
+using FigmaSharp.Models;
 using FigmaSharp.Services;
 
 namespace FigmaSharp

@@ -29,6 +29,8 @@
 using System.Collections.Generic;
 using AppKit;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp.Cocoa
 {
     public class ViewWrapper : IViewWrapper

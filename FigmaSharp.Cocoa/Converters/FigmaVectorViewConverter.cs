@@ -27,7 +27,9 @@
  */
 using System;
 using AppKit;
+
 using FigmaSharp.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Cocoa.Converters
 {

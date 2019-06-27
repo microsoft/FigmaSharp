@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using FigmaSharp;
+using FigmaSharp.Models;
 using FigmaSharp.Services;
 
 namespace ExampleFigma

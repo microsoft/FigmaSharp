@@ -34,6 +34,8 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 
+using FigmaSharp.Models;
+
 namespace FigmaSharp
 {
     public static class FigmaApiHelper

@@ -25,19 +25,23 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Collections.Generic;
-using AppKit;
-using System.Linq;
-using CoreGraphics;
+
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
-using Foundation;
-using CoreAnimation;
-using FigmaSharp.Converters;
 using System.Text;
+
+using AppKit;
+using CoreAnimation;
+using CoreGraphics;
+using Foundation;
+
+using FigmaSharp.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Cocoa
 {
