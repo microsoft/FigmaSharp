@@ -1,4 +1,10 @@
-﻿# FigmaSharp
+ # FigmaSharp
+
+
+| Gitter Chat | Build Status
+|---|---|
+|  [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/FigmaSharp?utm_campaign=pr-badge&utm_content=badge&utm_medium=badge&utm_source=badge) | [![Build status](https://ci.appveyor.com/api/projects/status/g0e7y3ovfawqtyne?svg=true)](https://ci.appveyor.com/project/JoseMedrano/figmasharp) |
+
 
 *FigmaSharp converts Figma documents into .NET objects and provides the tools to turn them into working native UI views. Free and Open Source software under the [MIT LICENSE]().*
 
