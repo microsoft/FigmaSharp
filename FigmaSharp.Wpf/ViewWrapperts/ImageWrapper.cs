@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Media;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf
 {

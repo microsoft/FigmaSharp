@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf
 {
@@ -25,7 +26,7 @@ namespace FigmaSharp.Wpf
             new FigmaLineConverter ()
         };
 
-        public bool IsYAxisFlipped => false;
+        public bool IsVerticalAxisFlipped => false;
 
         public FigmaDelegate()
         {

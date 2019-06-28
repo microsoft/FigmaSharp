@@ -34,6 +34,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FigmaSharp.Converters;
 using System.Drawing;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.WinForms
 {

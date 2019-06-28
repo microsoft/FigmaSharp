@@ -30,6 +30,7 @@ using FigmaSharp;
 using FigmaSharp.NativeControls.Base;
 using System.Windows.Forms;
 using FigmaSharp.WinForms;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.WinForms
 {

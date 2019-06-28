@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-
+using FigmaSharp.Models;
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase

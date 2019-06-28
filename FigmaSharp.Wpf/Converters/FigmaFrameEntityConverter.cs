@@ -28,7 +28,7 @@
 
 using FigmaSharp.Converters;
 using System.Windows.Controls;
-
+using FigmaSharp.Models;
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
