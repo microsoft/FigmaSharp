@@ -31,6 +31,7 @@ using System.Linq;
 using Xamarin.Forms;
 using FigmaSharp;
 using System.Collections.Generic;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Forms
 {

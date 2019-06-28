@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using MonoDevelop.Ide.Gui.Dialogs;
 using System.IO;
 using System.Text;
+using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {

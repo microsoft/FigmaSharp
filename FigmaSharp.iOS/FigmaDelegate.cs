@@ -5,6 +5,7 @@ using FigmaSharp.Converters;
 using FigmaSharp.iOS.Converters;
 using Foundation;
 using UIKit;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.iOS
 {
@@ -24,7 +25,7 @@ namespace FigmaSharp.iOS
             new FigmaLineConverter ()
         };
 
-        public bool IsYAxisFlipped => false;
+        public bool IsVerticalAxisFlipped => false;
 
         static UIImage FromUrl(string uri)
         {

@@ -29,6 +29,7 @@
 using System;
 using System.Text;
 using FigmaSharp.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.iOS.Converters
 {

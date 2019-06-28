@@ -4,6 +4,7 @@ using UIKit;
 using System.Linq;
 using Foundation;
 using CoreGraphics;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.iOS
 {

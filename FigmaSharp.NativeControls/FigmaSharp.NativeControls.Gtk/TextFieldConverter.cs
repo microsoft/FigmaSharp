@@ -31,6 +31,8 @@ using System.Linq;
 using System.Text;
 using FigmaSharp.GtkSharp;
 using Gtk;
+using FigmaSharp.Models;
+
 namespace FigmaSharp.NativeControls.GtkSharp
 {
     public class TextFieldConverter : TextFieldConverterBase

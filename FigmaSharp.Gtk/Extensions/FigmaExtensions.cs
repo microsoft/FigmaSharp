@@ -35,6 +35,7 @@ using System.Threading.Tasks;
 using FigmaSharp.Converters;
 using System.Text;
 using Gtk;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.GtkSharp
 {

@@ -28,6 +28,7 @@
 
 using FigmaSharp.Converters;
 using Xamarin.Forms;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Forms.Converters
 {

@@ -30,6 +30,7 @@ using System.Linq;
 using FigmaSharp;
 using FigmaSharp.NativeControls;
 using FigmaSharp.Services;
+using FigmaSharp.Models;
 
 namespace LocalFile.Shared
 {

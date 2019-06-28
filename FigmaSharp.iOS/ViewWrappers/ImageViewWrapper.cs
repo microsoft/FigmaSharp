@@ -26,7 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
+using FigmaSharp.Models;
 using UIKit;
 
 namespace FigmaSharp.iOS

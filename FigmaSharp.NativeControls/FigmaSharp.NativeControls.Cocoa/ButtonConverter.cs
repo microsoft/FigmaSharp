@@ -30,6 +30,7 @@ using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {

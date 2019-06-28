@@ -1,4 +1,6 @@
-﻿namespace FigmaSharp.GtkSharp
+﻿using FigmaSharp.Models;
+
+namespace FigmaSharp.GtkSharp
 {
     internal class FigmaCodeAddChildConverter : FigmaCodeAddChildConverterBase
     {

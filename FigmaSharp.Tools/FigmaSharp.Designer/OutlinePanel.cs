@@ -28,6 +28,7 @@
 
 using System;
 using FigmaSharp;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Designer
 {

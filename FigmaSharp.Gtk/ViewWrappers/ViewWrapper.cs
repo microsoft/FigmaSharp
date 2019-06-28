@@ -28,6 +28,7 @@
 
 using System.Collections.Generic;
 using Gtk;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.GtkSharp
 {

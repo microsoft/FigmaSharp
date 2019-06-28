@@ -27,6 +27,7 @@
  */
 
 using System.Collections.Generic;
+using FigmaSharp.Models;
 using Xamarin.Forms;
 
 namespace FigmaSharp.Forms

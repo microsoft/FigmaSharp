@@ -30,6 +30,7 @@ using System;
 using FigmaSharp;
 using FigmaSharp.Designer;
 using Xwt.GtkBackend;
+using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {

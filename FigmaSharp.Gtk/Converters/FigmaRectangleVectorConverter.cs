@@ -29,6 +29,7 @@
 using FigmaSharp.Converters;
 using Gtk;
 using System.Text;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.GtkSharp.Converters
 {

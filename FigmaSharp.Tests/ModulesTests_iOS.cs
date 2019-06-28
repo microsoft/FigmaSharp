@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.IO;
 using System.Reflection;
 using System.Linq;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Tests
 {
