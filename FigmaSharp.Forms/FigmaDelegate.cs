@@ -19,7 +19,7 @@ namespace FigmaSharp.Forms
             new FigmaLineConverter ()
         };
 
-        public bool IsYAxisFlipped => false;
+        public bool IsVerticalAxisFlipped => false;
 
         public IImageWrapper GetImage (string url)
         {

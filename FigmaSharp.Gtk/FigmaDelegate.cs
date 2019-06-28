@@ -20,7 +20,7 @@ namespace FigmaSharp.GtkSharp
         static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
         static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
 
-        public bool IsYAxisFlipped => false;
+        public bool IsVerticalAxisFlipped => false;
         public bool SupportsImageInvoke => false;
 
         byte[] DownloadImage (string url)

@@ -27,7 +27,7 @@
  */
 
 using FigmaSharp.Converters;
-using Xamarin.Forms;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Forms.Converters
 {
@@ -35,7 +35,7 @@ namespace FigmaSharp.Forms.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var elipseView = new EmptyView(); // { TranslatesAutoresizingMaskIntoConstraints = false };
+            var elipseView = new EmptyView();
             var elipse = (FigmaElipse)currentNode;
             elipseView.Configure(elipse);
             return new ViewWrapper(elipseView);

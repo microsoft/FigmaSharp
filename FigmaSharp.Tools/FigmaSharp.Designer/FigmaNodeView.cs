@@ -1,4 +1,5 @@
-﻿
+﻿using FigmaSharp.Models;
+
 namespace FigmaSharp
 {
     public class FigmaNodeView : Node

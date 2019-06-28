@@ -28,6 +28,7 @@
 
 using System.Collections.Generic;
 using UIKit;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.iOS
 {

@@ -29,6 +29,7 @@ using System.Linq;
 using FigmaSharp.NativeControls.Base;
 using Xamarin.Forms;
 using FigmaSharp.Forms;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Forms
 {

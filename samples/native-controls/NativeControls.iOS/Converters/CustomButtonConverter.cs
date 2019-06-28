@@ -2,6 +2,7 @@
 using UIKit;
 using FigmaSharp;
 using FigmaSharp.iOS;
+using FigmaSharp.Models;
 
 namespace ExampleFigma.IOS
 {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Foundation;
 using CoreGraphics;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Designer
 {

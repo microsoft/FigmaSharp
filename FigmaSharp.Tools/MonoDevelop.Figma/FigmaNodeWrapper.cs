@@ -28,6 +28,7 @@
 using FigmaSharp;
 using MonoDevelop.Core.Serialization;
 using System.Collections;
+using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {

@@ -29,6 +29,7 @@
 using System;
 using System.Linq;
 using CoreGraphics;
+using FigmaSharp.Models;
 using UIKit;
 
 namespace FigmaSharp.iOS

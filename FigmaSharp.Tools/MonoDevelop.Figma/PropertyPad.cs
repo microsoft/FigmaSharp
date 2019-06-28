@@ -11,6 +11,7 @@ using MonoDevelop.DesignerSupport;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Commands;
 using MonoDevelop.Ide.Gui;
+using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {

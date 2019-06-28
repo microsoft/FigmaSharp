@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Designer
 {

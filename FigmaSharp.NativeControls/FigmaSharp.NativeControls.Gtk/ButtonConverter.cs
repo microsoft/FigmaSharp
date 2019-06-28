@@ -30,6 +30,7 @@ using Gtk;
 using System.Linq;
 using System.Text;
 using FigmaSharp.GtkSharp;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.GtkSharp
 {

@@ -49,6 +49,7 @@ using System.ComponentModel;
 using MonoDevelop.Components.PropertyGrid;
 using MonoDevelop.Ide.Gui.Documents;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {

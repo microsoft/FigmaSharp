@@ -9,6 +9,7 @@ using FigmaSharp.NativeControls.Cocoa;
 using FigmaSharp.Cocoa.Converters;
 using System.Text;
 using FigmaSharp.Designer;
+using FigmaSharp.Models;
 
 namespace ToCode.Cocoa
 {

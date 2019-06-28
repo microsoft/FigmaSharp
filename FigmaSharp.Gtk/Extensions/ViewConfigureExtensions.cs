@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using FigmaSharp.Models;
 using Gtk;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.GtkSharp
 {

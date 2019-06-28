@@ -2,6 +2,7 @@
 using CoreGraphics;
 using CoreText;
 using UIKit;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.iOS
 {
