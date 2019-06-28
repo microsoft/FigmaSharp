@@ -30,6 +30,9 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
+    /// <summary>
+    /// FigmaResponse contains the raw data requested from a figma.com URL.
+    /// </summary>
     public class FigmaResponse
     {
         public string name { get; set; }
@@ -39,7 +42,9 @@ namespace FigmaSharp
         public int schemaVersion { get; set; }
     }
 
-
+    /// <summary>
+    /// FigmaImageResponse contains a list of URLs to images requested from a figma.com URL.
+    /// </summary>
     public class FigmaImageResponse
     {
         public string err { get; set; }

@@ -33,6 +33,11 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
+
+    /// <summary>
+    /// An AppContext contains configuration (such as the authentication token)
+    /// and code converters for the current application.
+    /// </summary>
     public class AppContext : IFigmaDelegate
     {
         IFigmaDelegate figmaDelegate;
@@ -101,6 +106,11 @@ namespace FigmaSharp
         #region Static
 
         static AppContext current;
+
+        /// <summary>
+        /// The shared AppContext for the application.
+        /// </summary>
+        /// <value>The current.</value>
         public static AppContext Current
         {
             get
