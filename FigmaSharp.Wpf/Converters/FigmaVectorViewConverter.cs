@@ -27,6 +27,7 @@
  */
 using System;
 using FigmaSharp.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf.Converters
 {

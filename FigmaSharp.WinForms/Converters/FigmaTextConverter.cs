@@ -25,6 +25,7 @@
 * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 * USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+using FigmaSharp.Models;
 
 using System.Windows.Forms;
 using FigmaSharp.Converters;

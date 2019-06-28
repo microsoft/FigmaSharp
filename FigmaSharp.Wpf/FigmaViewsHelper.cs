@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf
 {

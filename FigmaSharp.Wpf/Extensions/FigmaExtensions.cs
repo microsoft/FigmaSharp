@@ -37,6 +37,7 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf
 {

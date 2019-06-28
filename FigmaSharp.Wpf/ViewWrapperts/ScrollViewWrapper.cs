@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf
 {
