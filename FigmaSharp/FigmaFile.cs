@@ -37,7 +37,7 @@ using FigmaSharp.Services;
 namespace FigmaSharp
 {
     /// <summary>
-    /// Figma file.
+    /// Use FigmaFile to load a FigmaDocument from a .figma file bundled in your project.
     /// </summary>
     public class FigmaFile : IFigmaFile
     {
