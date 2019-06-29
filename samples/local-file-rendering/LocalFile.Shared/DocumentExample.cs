@@ -36,7 +36,7 @@ namespace LocalFile.Shared
             scrollViewWrapper.ContentView = storyboard.ContentView;
 
             //we need reload after set the content to ensure the scrollview
-            storyboard.Reload(true);
+            storyboard.Reload();
 
             //now we want recalculate all the bounds based in all the views generated
             scrollViewWrapper.AdjustToContent();

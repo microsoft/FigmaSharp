@@ -9,14 +9,15 @@ using CoreGraphics;
 using FigmaSharp.Services;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using System.Reflection;
 
 namespace StandaloneDesigner
 {
     public partial class ViewController : NSViewController
     {
-        FigmaDesignerSurface surface;
+        FigmaDesignerSurface designerSurface;
         FigmaDesignerSession session;
-        IFigmaDesignerDelegate figmaDelegate;
+        IFigmaDesignerDelegate designerDelegate;
 
         ScrollViewWrapper scrollViewWrapper;
 
@@ -24,8 +25,9 @@ namespace StandaloneDesigner
         {
         }
 
-        FigmaRemoteFileProvider fileProvider;
-        FigmaViewRendererService fileService;
+        FigmaViewRendererDistributionService distributionService;
+        FigmaManifestFileProvider fileProvider;
+        FigmaViewRendererService rendererService;
         OutlinePanel outlinePanel;
         public override void ViewDidLoad()
         {
@@ -34,24 +36,29 @@ namespace StandaloneDesigner
             scrollViewWrapper = new ScrollViewWrapper(scrollview);
             outlinePanel = new OutlinePanel();
 
-            figmaDelegate = new FigmaDesignerDelegate();
-
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-            fileProvider = new FigmaRemoteFileProvider();
-            fileService = new FigmaViewRendererService(fileProvider, converters);
-            surface = new FigmaDesignerSurface(figmaDelegate);
-            // Do any additional setup after loading the view.
 
-            var directory = Environment.GetEnvironmentVariable("DIRECTORY");
-            var file = Path.Combine (directory, Environment.GetEnvironmentVariable("FILE"));
-            session = new FigmaDesignerSession(converters);
-            //session.Reload(file, directory);
+            //we load all the services
+            fileProvider = new FigmaManifestFileProvider(this.GetType ().Assembly);
+            rendererService = new FigmaViewRendererService(fileProvider, converters);
+            distributionService = new FigmaViewRendererDistributionService(rendererService);
 
-            var window = NSApplication.SharedApplication.Windows.FirstOrDefault();
+            designerDelegate = new FigmaDesignerDelegate();
 
-            surface.SetWindow(window as WindowWrapper);
+            //figma session handles
+            session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
+            designerSurface = new FigmaDesignerSurface(designerDelegate, session);
 
-            surface.StartHoverSelection();
+            // we set to our surface current window to listen changes on it
+            var window = NSApplication.SharedApplication.DangerousWindows
+                .FirstOrDefault (s => s is WindowWrapper) as WindowWrapper;
+            designerSurface.SetWindow(window);
+
+            //time to reload a figma document in the current session
+            session.Reload(scrollViewWrapper, "FigmaStoryboard.figma", new FigmaViewRendererServiceOptions());
+
+            //
+            designerSurface.StartHoverSelection();
            
             var second = new NSWindow(new CGRect(0, 0, 300, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
             window.AddChildWindow(second, NSWindowOrderingMode.Above);

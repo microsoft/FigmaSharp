@@ -39,50 +39,34 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSession
     {
-        readonly FigmaViewRendererService fileService;
-        readonly FigmaViewRendererDistributionService rendererService;
-        readonly FigmaLocalFileProvider fileProvider;
+        readonly FigmaViewRendererService rendererService;
+        readonly FigmaViewRendererDistributionService distributionService;
+        readonly IFigmaFileProvider fileProvider;
 
         public bool IsModified { get; internal set; }
 
         public FigmaResponse Response => fileProvider.Response;
 
-        public List<ProcessedNode> ProcessedNodes => fileService.NodesProcessed;
-        public ProcessedNode[] MainViews => rendererService.MainViews;
+        public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
+        public ProcessedNode[] MainViews => distributionService.MainViews;
 
-        public FigmaDesignerSession(FigmaViewConverter[] figmaViewConverters)
+        public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
         {
-            fileProvider = new FigmaLocalFileProvider();
-            fileService = new FigmaViewRendererService(fileProvider, figmaViewConverters);
-            rendererService = new FigmaViewRendererDistributionService(fileService);
+            fileProvider = figmaFileProvider;
+            rendererService = figmaViewRendererService;
+            distributionService = figmaViewRendererDistributionService;
         }
 
         public event EventHandler ReloadFinished;
 
-        public void Reload (FigmaViewRendererServiceOptions options)
-        {
-            fileService.Refresh(options);
-            rendererService.Start();
-            var resourcesDirectoryPath = Path.Combine(baseDirectory, "Resources");
-            ReloadImages(resourcesDirectoryPath);
-            ReloadFinished?.Invoke(this, EventArgs.Empty);
-        }
-
         string baseDirectory;
 
-        public void Reload(IViewWrapper contentView, string fileName, string baseDirector)
+        public void Reload (IViewWrapper contentView, string file, FigmaViewRendererServiceOptions options)
         {
-            this.baseDirectory = baseDirectory;
             try
             {
-                var resourcesDirectoryPath = Path.Combine(baseDirectory, "Resources");
-                if (!Directory.Exists(resourcesDirectoryPath))
-                {
-                    throw new DirectoryNotFoundException(resourcesDirectoryPath);
-                }
-                fileService.Start(fileName, contentView);
-                rendererService.Start();
-                ReloadImages(resourcesDirectoryPath);
+                rendererService.Start(file, contentView, options);
+                distributionService.Start();
 
                 ReloadFinished?.Invoke(this, EventArgs.Empty);
             }
@@ -93,44 +77,6 @@ namespace FigmaSharp.Designer
             catch (System.Exception ex)
             {
                 Console.WriteLine(ex);
-            }
-        }
-
-        public void ReloadImages(string resourcesDirectory, string format = ".png")
-        {
-            Console.WriteLine($"Loading images..");
-
-            var imageVectors = fileService.ImageVectors;
-            if (imageVectors?.Count > 0)
-            {
-                foreach (var imageVector in imageVectors)
-                {
-                    try
-                    {
-                        var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Node.id);
-                        string filePath = Path.Combine(resourcesDirectory, string.Concat(recoveredKey, format));
-
-                        if (!File.Exists(filePath))
-                        {
-                            throw new FileNotFoundException(filePath);
-                        }
-
-                        var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Node);
-                        var wrapper = processedNode.View as IImageViewWrapper;
-
-                        var image = new ImageWrapper(new NSImage(filePath));
-                        wrapper.SetImage(image);
-                    }
-                    catch (FileNotFoundException ex)
-                    {
-                        Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    //FigmaImages.Add(wrapper);
-                }
             }
         }
 

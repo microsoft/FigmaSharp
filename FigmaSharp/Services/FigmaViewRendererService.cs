@@ -110,28 +110,19 @@ namespace FigmaSharp.Services
                     GenerateViewsRecursively(item, processedParentView, options);
 
                 //Images
-                if (fileProvider.NeedsImageLinks && ProcessImages)
+                if (ProcessImages)
                 {
                     foreach (var processedNode in NodesProcessed)
                     {
                         if (processedNode.FigmaNode is FigmaVectorEntity vectorEntity)
                         {
                             //TODO: this should be replaced by svg
-                            if (vectorEntity.GetType () == typeof (FigmaVectorEntity)
-                                || vectorEntity.GetType () == typeof (FigmaLine)
-                                || vectorEntity.GetType() == typeof(FigmaRegularPolygon))
+                            if (vectorEntity.HasImage ())
                             {
-                                ImageVectors.Add (new ImageProcessed (vectorEntity));
-                            } else
-                            {
-                                var figmaPaint = vectorEntity.fills.OfType<FigmaPaint>().FirstOrDefault();
-                                if (figmaPaint != null && figmaPaint.type == "IMAGE")
-                                {
-                                    ImageVectors.Add (new ImageProcessed (vectorEntity));
-                                }
+                                var imageProcessed = new ImageProcessed(vectorEntity) { ViewWrapper = processedNode.View as IImageViewWrapper };
+                                ImageVectors.Add(imageProcessed);
                             }
                         }
-                        //Image processing
                     }
 
                     fileProvider.ImageLinksProcessed += FigmaProvider_ImageLinksProcessed;
@@ -149,39 +140,6 @@ namespace FigmaSharp.Services
 
         void FigmaProvider_ImageLinksProcessed(object sender, EventArgs e)
         {
-            Console.WriteLine("Starting Image Binding process...");
-            fileProvider.ImageLinksProcessed -= FigmaProvider_ImageLinksProcessed;
-            //loading views
-            foreach (var vector in ImageVectors)
-            {
-                Console.Write ("[{0}][{1}] Processing... ", vector.Node.id, vector.Node.name);
-                if (!string.IsNullOrEmpty(vector.Url))
-                {
-                    vector.ViewWrapper = NodesProcessed.FirstOrDefault(s => s.FigmaNode == vector.Node)?.View as IImageViewWrapper;
-                    vector.Image = AppContext.Current.GetImage(vector.Url);
-                    Thread.Sleep(50);
-                }
-            }
-
-            AppContext.Current.BeginInvoke(() => {
-                foreach (var vector in ImageVectors)
-                {
-                    if (string.IsNullOrEmpty(vector.Url))
-                    {
-                        Console.WriteLine("NO URL");
-                        continue;
-                    }
-                    try
-                    {
-                        vector.ViewWrapper.SetImage(vector.Image);
-                        Console.WriteLine("DONE");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
-            });
             Console.WriteLine("Ended Image Binding process.");
         }
 

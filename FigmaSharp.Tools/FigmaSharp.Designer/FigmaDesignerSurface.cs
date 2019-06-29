@@ -92,13 +92,16 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public FigmaDesignerSurface(IFigmaDesignerDelegate figmaDelegate)
+        public FigmaDesignerSurface(IFigmaDesignerDelegate figmaDelegate, FigmaDesignerSession session)
         {
             viewSelectedOverlayWindow = figmaDelegate.CreateOverlayWindow();
             Delegate = figmaDelegate;
 
             figmaDelegate.HoverSelecting += FigmaDelegate_HoverSelecting;
             figmaDelegate.HoverSelectionEnded += FigmaDelegate_HoverSelectionEnded;
+
+
+            Session = session;
         }
 
         void FigmaDelegate_HoverSelectionEnded(object sender, IViewWrapper e)
