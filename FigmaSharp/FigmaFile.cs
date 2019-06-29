@@ -78,7 +78,7 @@ namespace FigmaSharp
             FigmaImages = new List<IImageViewWrapper>();
 
             var assembly = System.Reflection.Assembly.GetCallingAssembly();
-            figmaLocalFileProvider = new FigmaManifestFileProvider() { Assembly = assembly };
+            figmaLocalFileProvider = new FigmaManifestFileProvider(assembly);
             fileService = new FigmaViewRendererService (figmaLocalFileProvider, figmaViewConverters);
             rendererService = new FigmaViewRendererDistributionService(fileService);
         }
@@ -86,8 +86,7 @@ namespace FigmaSharp
         /// <summary>
         /// Reload the specified includeImages.
         /// </summary>
-        /// <param name="includeImages">If set to <c>true</c> include images.</param>
-        public void Reload (bool includeImages = false)
+        public void Reload ()
         {
             Console.WriteLine($"Loading views..");
             try
@@ -95,41 +94,11 @@ namespace FigmaSharp
                 FigmaImages.Clear();
                 fileService.Start(file, ContentView);
                 rendererService.Start();
-
-                ReloadImages();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading resource");
                 Console.WriteLine(ex);
-            }
-
-            if (includeImages)
-            {
-                ReloadImages();
-            }
-        }
-
-        /// <summary>
-        /// Reloads the images.
-        /// </summary>
-        public void ReloadImages ()
-        {
-            Console.WriteLine($"Loading images..");
-
-            var imageVectors = fileService.ImageVectors;
-            if (imageVectors?.Count > 0)
-            {
-                foreach (var imageVector in imageVectors)
-                {
-                    var recoveredKey = FigmaResourceConverter.FromResource(imageVector.Node.id);
-                    var image = AppContext.Current.GetImageFromManifest(figmaLocalFileProvider.Assembly, recoveredKey);
-
-                    var processedNode = fileService.NodesProcessed.FirstOrDefault(s => s.FigmaNode == imageVector.Node);
-                    var wrapper = processedNode.View as IImageViewWrapper;
-                    wrapper.SetImage(image);
-                    FigmaImages.Add(wrapper);
-                }
             }
         }
 
@@ -138,7 +107,7 @@ namespace FigmaSharp
         /// </summary>
         public void InitializeComponent ()
         {
-            Reload(true);
+            Reload ();
         }
     }
 }

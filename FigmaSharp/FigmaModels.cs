@@ -35,14 +35,19 @@ using System.Linq;
 
 namespace FigmaSharp.Models
 {
+    public interface INodeImage
+    {
+        bool HasImage();
+    }
+
     public class FigmaElipse : FigmaVectorEntity
     {
-        public override bool ImageSupported => false;
+        public override bool HasImage() => true;
     }
 
     public class FigmaStar : FigmaVectorEntity
     {
-        public override bool ImageSupported => false;
+        public override bool HasImage() => true;
     }
 
     public class FigmaInstance : FigmaFrameEntity
@@ -52,18 +57,20 @@ namespace FigmaSharp.Models
 
     public class FigmaRegularPolygon : FigmaVectorEntity
     {
-        public override bool ImageSupported => false;
+        public override bool HasImage() => true;
     }
 
     public class FigmaLine : FigmaVectorEntity
     {
-        public override bool ImageSupported => false;
+        public override bool HasImage() => true;
     }
 
     public class FigmaRectangleVector : FigmaVectorEntity
     {
         public float cornerRadius { get; set; }
         public float[] rectangleCornerRadii { get; set; }
+
+        public override bool HasImage() => true;
     }
 
     public class FigmaPaint
@@ -226,7 +233,11 @@ namespace FigmaSharp.Models
 
     public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints
     {
-        public virtual bool ImageSupported => true;
+        public virtual bool HasImage ()
+        {
+            var figmaPaint = fills.OfType<FigmaPaint>().FirstOrDefault();
+            return figmaPaint != null && figmaPaint.type == "IMAGE";
+        }
 
         public FigmaExportSetting[] exportSettings { get; set; }
         public FigmaBlendMode blendMode { get; set; }
@@ -269,7 +280,6 @@ namespace FigmaSharp.Models
 
     public class FigmaBoolean : FigmaVectorEntity, IFigmaNodeContainer
     {
-        public override bool ImageSupported => false;
         public FigmaNode[] children { get; set; }
         public string booleanOperation { get; set; }
     }
@@ -405,7 +415,6 @@ namespace FigmaSharp.Models
 
     public class FigmaText : FigmaVectorEntity
     {
-        public override bool ImageSupported => false;
         public string characters { get; set; }
         public FigmaTypeStyle style { get; set; }
         public int[] characterStyleOverrides { get; set; }

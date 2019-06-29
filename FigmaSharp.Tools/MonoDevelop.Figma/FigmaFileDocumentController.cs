@@ -117,7 +117,7 @@ namespace MonoDevelop.Figma
 
         void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload (fileOptions);
+            session.Reload (scrollViewWrapper, fileName, fileOptions);
         }
 
         protected override Task OnSave()
@@ -126,6 +126,10 @@ namespace MonoDevelop.Figma
             HasUnsavedChanges = false;
             return Task.FromResult(true);
         }
+
+        FigmaManifestFileProvider fileProvider;
+        FigmaViewRendererService rendererService;
+        FigmaViewRendererDistributionService distributionService;
 
         protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
         {
@@ -140,11 +144,16 @@ namespace MonoDevelop.Figma
 
                 figmaDelegate = new FigmaDesignerDelegate();
                 var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-                session = new FigmaDesignerSession(converters);
+
+                fileProvider = new FigmaManifestFileProvider(this.GetType ().Assembly);
+                rendererService = new FigmaViewRendererService(fileProvider, converters);
+                distributionService = new FigmaViewRendererDistributionService(rendererService);
+
+                session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
                 //session.ModifiedChanged += HandleModifiedChanged;
                 session.ReloadFinished += Session_ReloadFinished;
 
-                surface = new FigmaDesignerSurface(figmaDelegate)
+                surface = new FigmaDesignerSurface(figmaDelegate, session)
                 {
                     Session = session
                 };
@@ -161,7 +170,7 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(scrollViewWrapper, fileName, project.BaseDirectory);
+                session.Reload(scrollViewWrapper, fileName, new FigmaViewRendererServiceOptions ());
             }
             await base.OnInitialize(modelDescriptor, status);
         }
@@ -293,7 +302,7 @@ namespace MonoDevelop.Figma
 
         void RefreshAll ()
         {
-            session.Reload (fileOptions);
+            session.Reload (fileName, fileOptions);
             if (outlinePad != null)
             {
                 var selectedView = surface.SelectedView;

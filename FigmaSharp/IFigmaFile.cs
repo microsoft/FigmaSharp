@@ -10,8 +10,6 @@ namespace FigmaSharp
 
         void InitializeComponent();
 
-        void Reload(bool includeImages = false);
-
-        void ReloadImages();
+        void Reload ();
     }
 }
