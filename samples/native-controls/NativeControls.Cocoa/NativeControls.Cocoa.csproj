@@ -82,35 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="FigmaStoryboard.figma.cs">
-      <DependentUpon>FigmaStoryboard.figma</DependentUpon>
-      <LogicalName>Storyboard.figma.cs</LogicalName>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <EmbeddedResource Include="FigmaStoryboard.figma">
-      <IncludeInPackage>true</IncludeInPackage>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\101-13.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\101-45.png" />
-    <EmbeddedResource Include="Resources\101-43.png" />
-    <EmbeddedResource Include="Resources\101-42.png" />
-    <EmbeddedResource Include="Resources\101-39.png" />
-    <EmbeddedResource Include="Resources\101-33.png" />
-    <EmbeddedResource Include="Resources\101-30.png" />
-    <EmbeddedResource Include="Resources\101-29.png" />
-    <EmbeddedResource Include="Resources\101-28.png" />
-    <EmbeddedResource Include="Resources\101-27.png" />
-    <EmbeddedResource Include="Resources\101-25.png" />
-    <EmbeddedResource Include="Resources\101-24.png" />
-    <EmbeddedResource Include="Resources\101-23.png" />
-    <EmbeddedResource Include="Resources\101-16.png" />
-    <EmbeddedResource Include="Resources\101-8.png" />
-    <EmbeddedResource Include="Resources\101-4.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
