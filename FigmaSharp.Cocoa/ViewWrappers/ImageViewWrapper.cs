@@ -47,7 +47,6 @@ namespace FigmaSharp.Cocoa
             imageView.Layer.AddSublayer(imageLayer);
         }
 
-
         nfloat GetProportionalSecondSize (nfloat proportionalFirstSize, nfloat originalFirstSize,  nfloat originalSecondSize)
         {
             nfloat delta = proportionalFirstSize / originalFirstSize;
@@ -60,7 +59,6 @@ namespace FigmaSharp.Cocoa
             var image = ((NSImage)imageWrapper.NativeObject);
             imageLayer.Contents = image.CGImage;
 
-
             nfloat width, height;
             if (image.Size.Width > image.Size.Height)
             {
@@ -70,7 +68,6 @@ namespace FigmaSharp.Cocoa
 
             } else
             {
-
                 height = imageView.Frame.Height;
                 width = GetProportionalSecondSize(height, image.Size.Height, image.Size.Width);
             }

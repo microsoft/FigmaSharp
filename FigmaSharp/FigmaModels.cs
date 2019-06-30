@@ -52,7 +52,9 @@ namespace FigmaSharp.Models
 
     public class FigmaInstance : FigmaFrameEntity
     {
-        public float componentIdString { get; set; }
+        public string componentId { get; set; }
+
+        public FigmaComponent Component { get; set; }
     }
 
     public class FigmaRegularPolygon : FigmaVectorEntity
@@ -385,11 +387,6 @@ namespace FigmaSharp.Models
     public class FigmaDocument : FigmaNode
     {
         public FigmaCanvas[] children { get; set; }
-    }
-
-    public class FigmaComponent : FigmaFrameEntity
-    {
-    
     }
 
     public class ProcessedNode

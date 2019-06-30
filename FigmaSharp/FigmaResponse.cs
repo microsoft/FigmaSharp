@@ -30,15 +30,34 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
+    public class FigmaComponent
+    {
+        public string key { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+    }
+
+    public class FigmaStyle
+    {
+        public string key { get; set; }
+        public string name { get; set; }
+        public string styleType { get; set; }
+    }
+
     /// <summary>
     /// FigmaResponse contains the raw data requested from a figma.com URL.
     /// </summary>
     public class FigmaResponse
     {
+        public FigmaDocument document { get; set; }
+
+        public Dictionary<string, FigmaComponent> components { get; set; }
+        public Dictionary<string, FigmaStyle> styles { get; set; }
+
         public string name { get; set; }
         public string lastModified { get; set; }
         public string version { get; set; }
-        public FigmaDocument document { get; set; }
+        public string thumbnailUrl { get; set; }
         public int schemaVersion { get; set; }
     }
 
