@@ -259,6 +259,14 @@ namespace FigmaSharp.Services
             node.Parent = parent;
             Nodes.Add(node);
 
+            if (node is FigmaInstance instance)
+            {
+                if (Response.components.TryGetValue(instance.componentId, out var figmaComponent))
+                {
+                    instance.Component = figmaComponent;
+                }
+            }
+
             if (node is IFigmaNodeContainer nodeContainer)
             {
                 foreach (var item in nodeContainer.children)
