@@ -39,6 +39,7 @@ namespace FigmaSharp
         public override bool CanConvert(Type objectType)
         {
             return typeof(FigmaNode).IsAssignableFrom(objectType) ||
+            typeof(FigmaComponent) == objectType ||
             typeof(FigmaVector) == objectType;
         }
 
@@ -54,6 +55,10 @@ namespace FigmaSharp
                 if (objectType == typeof (FigmaVector))
                 {
                     return jsonObject.ToObject<FigmaVector>();
+                }
+                if (objectType == typeof(FigmaComponent))
+                {
+                    return jsonObject.ToObject<FigmaComponent>();
                 }
 
                 throw new NotImplementedException(objectType.ToString ());
@@ -119,7 +124,7 @@ namespace FigmaSharp
             }
             else if (jsonObject["type"].Value<string>() == "COMPONENT")
             {
-                figmaObject = jsonObject.ToObject<FigmaComponent>();
+                figmaObject = jsonObject.ToObject<FigmaComponentEntity>();
             }
             else if (jsonObject["type"].Value<string>() == "BOOLEAN_OPERATION")
             {
@@ -140,5 +145,4 @@ namespace FigmaSharp
             throw new NotImplementedException();
         }
     }
-
 }

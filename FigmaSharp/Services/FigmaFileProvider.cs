@@ -229,9 +229,9 @@ namespace FigmaSharp.Services
             {
                 Nodes.Clear();
 
-                var template = GetContentTemplate(file);
+                var contentTemplate = GetContentTemplate(file);
 
-                Response = AppContext.Current.GetFigmaResponseFromContent(template);
+                Response = AppContext.Current.GetFigmaResponseFromContent(contentTemplate);
 
                 foreach (var item in Response.document.children)
                 {

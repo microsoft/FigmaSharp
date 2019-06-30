@@ -28,7 +28,7 @@
 using System.Collections.Generic;
 using FigmaSharp.Models;
 
-namespace FigmaSharp
+namespace FigmaSharp.Models
 {
     public class FigmaComponent
     {

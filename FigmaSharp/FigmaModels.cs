@@ -394,6 +394,12 @@ namespace FigmaSharp.Models
         public FigmaNode FigmaNode { get; set; }
         public IViewWrapper View { get; set; }
         public ProcessedNode ParentView { get; set; }
+
+    }
+
+    public class FigmaComponentEntity : FigmaFrameEntity
+    {
+
     }
 
     public class FigmaNode
