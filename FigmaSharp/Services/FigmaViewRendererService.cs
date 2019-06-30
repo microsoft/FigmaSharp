@@ -171,15 +171,13 @@ namespace FigmaSharp.Services
             }
         }
 
-        ProcessedNode GetProcessedNode(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent, FigmaViewRendererServiceOptions options)
+        CustomViewConverter GetProcessedConverter (FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters, ProcessedNode parent, FigmaViewRendererServiceOptions options)
         {
             foreach (var customViewConverter in customViewConverters)
             {
                 if (customViewConverter.CanConvert(currentNode))
                 {
-                    var currentView = options.IsToViewProcessed ? customViewConverter.ConvertTo(currentNode, parent) : null;
-                    var currentElement = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
-                    return currentElement;
+                    return customViewConverter;
                 }
             }
             return null;
@@ -190,29 +188,30 @@ namespace FigmaSharp.Services
         {
             Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
-            bool navigateChild = true;
+            bool scanChildren = true;
 
-            var currentProcessedNode = GetProcessedNode(currentNode, FigmaCustomConverters, parent, options);
+            var converter = GetProcessedConverter(currentNode, FigmaCustomConverters, parent, options);
 
-            if (currentProcessedNode == null)
+            if (converter == null)
             {
-                currentProcessedNode = GetProcessedNode(currentNode, FigmaDefaultConverters, parent, options);
-            }
-            else
-            {
-                navigateChild = false;
+                converter = GetProcessedConverter (currentNode, FigmaDefaultConverters, parent, options);
             }
 
-            if (currentProcessedNode != null)
+            ProcessedNode currentProcessedNode = null;
+            if (converter != null)
             {
+                var currentView = options.IsToViewProcessed ? converter.ConvertTo(currentNode, parent) : null;
+                currentProcessedNode = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                 NodesProcessed.Add(currentProcessedNode);
-            }
-            else
+
+                scanChildren = converter.ScanChildren (currentNode);
+            } else
             {
+                scanChildren = false;
                 Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
-            if (navigateChild && currentNode is IFigmaNodeContainer nodeContainer)
+            if (scanChildren && currentNode is IFigmaNodeContainer nodeContainer)
             {
                 foreach (var item in nodeContainer.children)
                 {
