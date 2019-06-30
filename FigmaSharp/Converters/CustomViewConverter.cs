@@ -37,9 +37,22 @@ namespace FigmaSharp
     {
     }
 
+    public abstract class FigmaInstanceConverter : FigmaViewConverter
+    {
+        public override bool ScanChildren(FigmaNode currentNode)
+        {
+            return false;
+        }
+    }
+
     public abstract class CustomViewConverter
     {
         public virtual bool IsLayer { get; }
+
+        public virtual bool ScanChildren (FigmaNode currentNode)
+        {
+            return !(currentNode is FigmaInstance);
+        }
 
         protected T ToEnum<T> (string value)
 		{
@@ -97,7 +110,7 @@ namespace FigmaSharp
 			return identifier == name;
 		}
 
-        public abstract bool CanConvert(FigmaNode currentNode);
+        public abstract bool CanConvert (FigmaNode currentNode);
 
         public abstract IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent);
 
