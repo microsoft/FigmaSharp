@@ -117,6 +117,7 @@ namespace FigmaSharp.Cocoa
         public static void Configure(this NSView view, FigmaVectorEntity child)
         {
             Configure(view, (FigmaNode)child);
+            view.AlphaValue = child.opacity;
         }
 
         public static void Configure(this StringBuilder builder, string name, FigmaVectorEntity child)
