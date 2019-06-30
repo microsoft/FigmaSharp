@@ -7,81 +7,100 @@ namespace FigmaDocumentExporter.Shell
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            Console.WriteLine($"FIGMA FILE EXPORTER");
-            Console.WriteLine($"===================");
-
+            const string noimages = "--noimages";
             const string outputFile = "downloaded.figma";
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("Figma Remote File Importer");
+            Console.WriteLine("--------------------------");
+            Console.WriteLine();
+
+            Console.ForegroundColor = default(ConsoleColor);
+
+            #region Parameters
 
             if (args.Length == 0)
             {
-                Console.WriteLine($"Error. NO PARAMETERS DEFINED");
-                Console.WriteLine($"");
-                Console.WriteLine($"dotnet FigmaFileExporter.dll [document_id] {{output_directory}} {{figma_api}}");
-                Console.WriteLine($"");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error. No parameters defined");
+                Console.ForegroundColor = default(ConsoleColor);
+
+                Console.WriteLine("");
+                Console.WriteLine($"dotnet FigmaFileExporter.dll [document_id] [figma_token] {{output_directory}} {{{noimages}}}");
+                Console.WriteLine("");
                 return;
             }
 
-            var fileId = args[0];
-
-            string outputDirectory = null;
+            string token = null;
             if (args.Length > 1)
             {
-                outputDirectory = args[1];
-                if (!Directory.Exists(outputDirectory))
-                {
-                    Directory.CreateDirectory(outputDirectory);
-                }
+                token = args[1];
+            }
+
+            if (string.IsNullOrEmpty(token))
+            {
+                Console.WriteLine("Error. Figma Token is not defined.");
+                return;
+            }
+
+            Console.WriteLine($"Token: {token}");
+
+            string outputDirectory = null;
+            if (args.Length > 2 && Directory.Exists(outputDirectory))
+            {
+                outputDirectory = args[2];
             }
 
             if (outputDirectory == null)
             {
+                Console.WriteLine("Output directory is not defined. Using current directory like default.");
                 outputDirectory = Directory.GetCurrentDirectory();
             }
 
             Console.WriteLine($"Default Directory: {outputDirectory}");
 
-            string token = null;
-            if (args.Length > 2)
-            {
-                token = args[2];
-            }
+            var processImages = !args.Any(s => s.ToLower() == noimages);
 
-            if (token == null)
-            {
-                token = Environment.GetEnvironmentVariable("FIGMA_TOKEN");
-            }
-
-            Console.WriteLine($"TOKEN: {outputDirectory}");
+            #endregion
 
             FigmaSharp.AppContext.Current.SetAccessToken(token);
 
-            Console.WriteLine($"Downloading content from file : {fileId}");
-            var content = FigmaApiHelper.GetFigmaFileContent(fileId);
+            var fileId = args[0];
 
             var outputFilePath = Path.Combine(outputDirectory, outputFile);
             if (File.Exists(outputFilePath))
             {
                 File.Delete(outputFilePath);
             }
-            Console.WriteLine($"Writing content into '{outputFilePath}'");
+
+            Console.WriteLine();
+            Console.WriteLine("[Import] Starting from remote document '{0}' ({1} images) in local file: {2}", fileId, processImages ? "with" : "without", outputFilePath);
+
+
+            var content = FigmaApiHelper.GetFigmaFileContent(fileId);
             File.WriteAllText(outputFilePath, content);
-            Console.WriteLine($"DONE.");
 
-            var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent(content);
-            var mainNode = figmaResponse.document.children.FirstOrDefault();
-            var figmaModelImages = mainNode.OfTypeImage().ToArray();
-            var figmaImageIds = figmaModelImages.Select(s => s.id).ToArray();
+            Console.WriteLine("[Import] Success.");
 
-            if (figmaImageIds.Length > 0)
+            if (processImages)
             {
-                File.WriteAllText(outputFilePath, content);
-                var figmaImageResponse = FigmaApiHelper.GetFigmaImages(fileId, figmaImageIds);
-                FileHelper.SaveFiles(outputDirectory, ".png", figmaImageResponse.images);
+                var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent(content);
+             
+                var mainNode = figmaResponse.document.children.FirstOrDefault();
+                var figmaModelImages = mainNode.OfTypeImage().ToArray();
+
+                Console.WriteLine("[Import] Downloading {0} image/s...", figmaModelImages.Length);
+
+                var figmaImageIds = figmaModelImages.Select(s => s.id).ToArray();
+                if (figmaImageIds.Length > 0)
+                {
+                    var figmaImageResponse = FigmaApiHelper.GetFigmaImages(fileId, figmaImageIds);
+                    FileHelper.SaveFiles(outputDirectory, ".png", figmaImageResponse.images);
+                }
+                Console.WriteLine("[Import] Success.");
             }
-            Console.WriteLine("Process finished successfull ({0} images processed)", figmaImageIds.Length);
         }
     }
 }
