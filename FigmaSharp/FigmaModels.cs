@@ -235,8 +235,7 @@ namespace FigmaSharp.Models
     {
         public virtual bool HasImage ()
         {
-            var figmaPaint = fills.OfType<FigmaPaint>().FirstOrDefault();
-            return figmaPaint != null && figmaPaint.type == "IMAGE";
+            return true;
         }
 
         public FigmaExportSetting[] exportSettings { get; set; }
