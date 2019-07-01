@@ -39,17 +39,17 @@ namespace LocalFile.Shared
         const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
         readonly FigmaRemoteFileProvider fileProvider;
 
-        readonly FigmaViewRendererService rendererService;
+        public readonly FigmaViewRendererService RendererService;
         readonly FigmaViewRendererDistributionService distributionService;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, FigmaViewConverter[] converters)
         {
             fileProvider = new FigmaRemoteFileProvider();
-            rendererService = new FigmaViewRendererService(fileProvider, converters);
+            RendererService = new FigmaViewRendererService(fileProvider, converters);
           
-            rendererService.Start(fileName, scrollViewWrapper.ContentView);
+            RendererService.Start(fileName, scrollViewWrapper.ContentView);
 
-            distributionService = new FigmaViewRendererDistributionService(rendererService);
+            distributionService = new FigmaViewRendererDistributionService(RendererService);
             distributionService.Start();
 
             //We want know the background color of the figma camvas and apply to our scrollview
