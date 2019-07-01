@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using FigmaSharp.Converters;
 using FigmaSharp.Forms.Converters;
+using FigmaSharp.Models;
 using Xamarin.Forms;
 
 namespace FigmaSharp.Forms

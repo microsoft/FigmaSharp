@@ -302,7 +302,7 @@ namespace MonoDevelop.Figma
 
         void RefreshAll ()
         {
-            session.Reload (fileName, fileOptions);
+            session.Reload (scrollViewWrapper, fileName, fileOptions);
             if (outlinePad != null)
             {
                 var selectedView = surface.SelectedView;

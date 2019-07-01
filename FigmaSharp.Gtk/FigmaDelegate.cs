@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using FigmaSharp.GtkSharp.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.GtkSharp
 {
