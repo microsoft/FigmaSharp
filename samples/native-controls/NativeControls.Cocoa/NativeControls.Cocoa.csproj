@@ -9,8 +9,7 @@
     <RootNamespace>NativeControls.Cocoa</RootNamespace>
     <AssemblyName>NativeControls.Cocoa</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -105,7 +104,6 @@
       <Name>FigmaSharp.NativeControls.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" 
-          Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
+  <Import Project="..\NativeControls.Shared\NativeControl.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControl.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
