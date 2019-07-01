@@ -62,23 +62,6 @@ namespace LocalFile.Cocoa
 
             exampleViewManager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
 
-            var rendererService = exampleViewManager.rendererService;
-
-            var urlTextField = rendererService.FindNativeViewByName<NSTextField>("FigmaUrlTextField");
-            var bundleButton = rendererService.FindNativeViewByName<NSButton> ("Bundle");
-            var cancelButton = rendererService.FindNativeViewByName<NSButton> ("Cancel");
-
-            cancelButton.Activated += (s, e) =>
-            {
-                urlTextField.StringValue = "You pressed cancel";
-            };
-          
-            bundleButton.Activated += (s,e) =>
-            {
-                urlTextField.StringValue = "You pressed bundle";
-            };
-
-
             mainWindow.MakeKeyAndOrderFront(null);
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
