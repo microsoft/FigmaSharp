@@ -129,5 +129,6 @@
       <Name>FigmaSharp.NativeControls.iOS</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
