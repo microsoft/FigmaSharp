@@ -29,7 +29,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class ButtonConverterBase : FigmaInstanceConverter
+    public abstract class RadioConverterBase : FigmaInstanceConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
@@ -37,12 +37,12 @@ namespace FigmaSharp.NativeControls.Base
             {
                 switch (figmaInstance.ToControlType())
                 {
-                    case NativeControlType.ButtonLarge:
-                    case NativeControlType.ButtonLargeDark:
-                    case NativeControlType.ButtonStandard:
-                    case NativeControlType.ButtonStandardDark:
-                    case NativeControlType.ButtonSmall:
-                    case NativeControlType.ButtonSmallDark:
+                    case NativeControlType.RadioSmall:
+                    case NativeControlType.RadioSmallDark:
+                    case NativeControlType.RadioStandard:
+                    case NativeControlType.RadioStandardDark:
+
+                    case NativeControlType.RadioSingleStandard:
                         return true;
                 }
             }

@@ -29,7 +29,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class ButtonConverterBase : FigmaInstanceConverter
+    public abstract class ComboBoxConverterBase : FigmaInstanceConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
@@ -37,12 +37,10 @@ namespace FigmaSharp.NativeControls.Base
             {
                 switch (figmaInstance.ToControlType())
                 {
-                    case NativeControlType.ButtonLarge:
-                    case NativeControlType.ButtonLargeDark:
-                    case NativeControlType.ButtonStandard:
-                    case NativeControlType.ButtonStandardDark:
-                    case NativeControlType.ButtonSmall:
-                    case NativeControlType.ButtonSmallDark:
+                    case NativeControlType.ComboBoxSmall:
+                    case NativeControlType.ComboBoxSmallDark:
+                    case NativeControlType.ComboBoxStandard:
+                    case NativeControlType.ComboBoxStandardDark:
                         return true;
                 }
             }

@@ -34,34 +34,62 @@ using System.Linq;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class PopUpButtonConverter : PopUpButtonConverterBase
+    public class RadioConverter : RadioConverterBase
     {
+        public override bool ScanChildren(FigmaNode currentNode)
+        {
+            return false;
+        }
+
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var view = new NSPopUpButton();
-
             var figmaInstance = (FigmaInstance)currentNode;
+
+            var view = new NSButton();
+            view.Title = "";
+            //view.BezelStyle = NSBezelStyle.Rounded;
+            view.SetButtonType(NSButtonType.Radio);
+
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
             {
-                case NativeControlType.PopUpButtonSmall:
-                case NativeControlType.PopUpButtonSmallDark:
-                    view.ControlSize = NSControlSize.Small;
-                    break;
-                case NativeControlType.PopUpButtonStandard:
-                case NativeControlType.PopUpButtonStandardDark:
+                case NativeControlType.ButtonLarge:
+                case NativeControlType.ButtonLargeDark:
                     view.ControlSize = NSControlSize.Regular;
+                    break;
+                case NativeControlType.ButtonStandard:
+                case NativeControlType.ButtonStandardDark:
+                    view.ControlSize = NSControlSize.Regular;
+                    break;
+                case NativeControlType.ButtonSmall:
+                case NativeControlType.ButtonSmallDark:
+                    view.ControlSize = NSControlSize.Small;
                     break;
             }
 
             var label = figmaInstance.children
-                   .OfType<FigmaText>()
-                   .FirstOrDefault(s => s.name == "lbl");
+                  .OfType<FigmaText>()
+                  .FirstOrDefault();
 
             if (label != null)
             {
-                view.AddItem(label.characters);
+                view.Title = label.characters;
                 view.Font = label.style.ToNSFont();
+            }
+
+            //first figma 
+            var group = figmaInstance.children
+                .OfType<FigmaGroup>()
+                .FirstOrDefault();
+
+            if (group != null)
+            {
+              
+
+                if (group.name == "Disabled")
+                {
+                    view.Enabled = false;
+                }
             }
 
             if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal))
