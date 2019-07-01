@@ -25,15 +25,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-
 using AppKit;
 using CoreGraphics;
-using Foundation;
-
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using LocalFile.Shared;

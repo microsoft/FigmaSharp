@@ -37,7 +37,6 @@ namespace LocalFile.Shared
     public class ExampleViewManager
     {
         const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
-        readonly IScrollViewWrapper scrollViewWrapper;
         readonly FigmaRemoteFileProvider fileProvider;
 
         readonly FigmaViewRendererService rendererService;
@@ -45,7 +44,6 @@ namespace LocalFile.Shared
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, FigmaViewConverter[] converters)
         {
-            this.scrollViewWrapper = scrollViewWrapper;
             fileProvider = new FigmaRemoteFileProvider();
             rendererService = new FigmaViewRendererService(fileProvider, converters);
           

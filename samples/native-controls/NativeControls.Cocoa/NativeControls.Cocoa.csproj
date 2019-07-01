@@ -6,8 +6,8 @@
     <ProjectGuid>{ff8b355e-d31a-493e-afe5-aec979cc50ae}</ProjectGuid>
      <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
    <OutputType>Exe</OutputType>
-    <RootNamespace>ExampleFigmaMac</RootNamespace>
-    <AssemblyName>ExampleFigmaMac</AssemblyName>
+    <RootNamespace>NativeControls.Cocoa</RootNamespace>
+    <AssemblyName>NativeControls.Cocoa</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
      <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
      <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
@@ -92,20 +92,20 @@
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
       <Project>{80D20B03-FF89-47CF-A676-B67B9DE2DAF2}</Project>
       <Name>FigmaSharp.NativeControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
-      <ReferenceSourceTarget></ReferenceSourceTarget>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
       <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
       <Name>FigmaSharp.NativeControls.Cocoa</Name>
-      <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" 
+          Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
