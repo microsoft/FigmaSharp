@@ -9,7 +9,8 @@
     <RootNamespace>ExampleFigmaMac</RootNamespace>
     <AssemblyName>ExampleFigmaMac</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -106,6 +107,5 @@
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
