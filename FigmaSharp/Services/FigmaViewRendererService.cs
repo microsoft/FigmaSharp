@@ -61,6 +61,31 @@ namespace FigmaSharp.Services
         public string File { get; private set; }
         public int Page { get; private set; }
         public bool ProcessImages { get; private set; }
+
+        public T FindViewByName<T> (string name) where T : IViewWrapper
+        {
+            foreach (var node in NodesProcessed)
+            {
+                if (node.View is T && node.FigmaNode.name == name)
+                {
+                    return (T)node.View;
+                }
+            }
+            return default(T);
+        }
+
+        public IViewWrapper FindViewByName (string name)
+        {
+            foreach (var node in NodesProcessed)
+            {
+                if (node.FigmaNode.name == name)
+                {
+                    return node.View;
+                }
+            }
+            return null;
+        }
+
         IFigmaFileProvider fileProvider;
 
         public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters)
