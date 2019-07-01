@@ -106,7 +106,6 @@
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\NativeControls.Shared\NativeControl.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControl.Shared.projitems')" />
+  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-     
 </Project>
