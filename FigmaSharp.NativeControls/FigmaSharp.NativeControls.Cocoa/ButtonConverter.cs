@@ -65,7 +65,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup>()
-                .FirstOrDefault();
+                .FirstOrDefault(s => s.visible);
 
             if (group != null)
             {
