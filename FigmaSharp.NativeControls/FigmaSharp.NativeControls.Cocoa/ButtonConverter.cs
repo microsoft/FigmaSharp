@@ -31,6 +31,7 @@ using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using System;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -38,47 +39,57 @@ namespace FigmaSharp.NativeControls.Cocoa
     {
 		public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
+            var figmaInstance = (FigmaInstance)currentNode;
+
             var view = new NSButton();
 			view.Title = "";
-
-			view.Configure(currentNode);
             view.BezelStyle = NSBezelStyle.Rounded;
 
-			var keyValues = GetKeyValues (currentNode);
-			foreach (var key in keyValues) {
-				if (key.Key == "type") {
-					continue;
-				}
+            var controlType = figmaInstance.ToControlType();
+            switch (controlType)
+            {
+                case NativeControlType.ButtonLarge:
+                case NativeControlType.ButtonLargeDark:
+                    view.ControlSize = NSControlSize.Regular;
+                    break;
+                case NativeControlType.ButtonStandard:
+                case NativeControlType.ButtonStandardDark:
+                    view.ControlSize = NSControlSize.Regular;
+                    break;
+                case NativeControlType.ButtonSmall:
+                case NativeControlType.ButtonSmallDark:
+                    view.ControlSize = NSControlSize.Small;
+                    break;
+            }
 
-				if (key.Key == "enabled") {
-					view.Enabled = key.Value == "true";
-				} else if (key.Key == "size") {
-					view.ControlSize = ToEnum<NSControlSize> (key.Value);
-				} else if (key.Key == "style") {
-					view.BezelStyle = ToEnum<NSBezelStyle> (key.Value);
-				} else if (key.Key == "buttontype") {
-					view.SetButtonType (ToEnum<NSButtonType> (key.Value));
-				}
-			}
-			if (currentNode is IFigmaDocumentContainer instance) {
-				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "title");
-				if (figmaText != null) {
-					view.AlphaValue = figmaText.opacity;
-					view.Font = figmaText.style.ToNSFont ();
-					view.Title = figmaText.characters;
-				}
+            //first figma 
+            var group = figmaInstance.children
+                .OfType<FigmaGroup>()
+                .FirstOrDefault();
 
-				var image = instance.children.OfType<FigmaVectorEntity> ().FirstOrDefault (s => s.name == "image");
-				if (image != null) {
-					var paint = image.fills.OfType<FigmaPaint> ().FirstOrDefault ();
-					if (paint != null) {
-						//var query = new FigmaImageQuery ()
-						//FigmaApiHelper.GetFigmaImage (new FigmaImageQuery ())
-					}
-				}
-			}
-          
-			return new ViewWrapper(view);
+            if (group != null)
+            {
+                var label = group.children
+                    .OfType<FigmaText>()
+                    .FirstOrDefault();
+
+                if (label != null)
+                {
+                    view.Title = label.characters;
+                    view.Font = label.style.ToNSFont();
+                }
+
+                if (group.name == "Disabled")
+                {
+                    view.Enabled = false;
+                }
+            }
+
+            if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal))
+            {
+                view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+            }
+            return new ViewWrapper(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

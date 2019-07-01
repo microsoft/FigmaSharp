@@ -28,11 +28,22 @@
 using FigmaSharp.Models;
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class TextFieldConverterBase : FigmaViewConverter
+    public abstract class TextFieldConverterBase : FigmaInstanceConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-			return ContainsType (currentNode, "textfield");
+            if (currentNode is FigmaInstance figmaInstance)
+            {
+                switch (figmaInstance.ToControlType())
+                {
+                    case NativeControlType.TextFieldSmall:
+                    case NativeControlType.TextFieldSmallDark:
+                    case NativeControlType.TextFieldStandard:
+                    case NativeControlType.TextFieldStandardDark:
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }

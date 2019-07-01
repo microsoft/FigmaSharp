@@ -27,7 +27,6 @@
  */
 using AppKit;
 using FigmaSharp.NativeControls.Base;
-using System;
 using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
@@ -39,38 +38,43 @@ namespace FigmaSharp.NativeControls.Cocoa
     {
 		public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
+            var instance = (FigmaInstance)currentNode;
+
             var view = new NSTextField();
 
-			var keyValues = GetKeyValues (currentNode);
-			foreach (var key in keyValues) {
-				if (key.Key == "type") {
-					continue;
-				} 
-				if (key.Key == "enabled") {
-					view.Enabled = key.Value == "true";
-				} else if (key.Key == "size") {
-					view.ControlSize = ToEnum<NSControlSize> (key.Value);
-				}
-			}
+            var figmaInstance = (FigmaInstance)currentNode;
+            var controlType = figmaInstance.ToControlType();
+            switch (controlType)
+            {
+                case NativeControlType.TextFieldSmall:
+                case NativeControlType.TextFieldSmallDark:
+                    view.ControlSize = NSControlSize.Small;
+                    break;
+                case NativeControlType.TextFieldStandard:
+                case NativeControlType.TextFieldStandardDark:
+                    view.ControlSize = NSControlSize.Regular;
+                    break;
+            }
 
-			if (currentNode is IFigmaDocumentContainer container) {
-				var placeholderView = container.children.OfType<FigmaText> ()
-			.FirstOrDefault (s => s.name == "placeholderstring");
-				if (placeholderView != null) {
-					view.PlaceholderString = placeholderView.characters;
-				}
+            var texts = instance.children
+                .OfType<FigmaText>();
 
-				var textFieldView = container.children.OfType<FigmaText> ()
-				   .FirstOrDefault (s => s.name == "text");
-				if (textFieldView != null) {
-					view.StringValue = textFieldView.characters;
-					view.Configure (textFieldView);
-				} else {
-					view.Configure (currentNode);
-				}
-			} else {
-				view.Configure (currentNode);
-			}
+            var text = texts.FirstOrDefault (s => s.name == "lbl");
+            if (text != null)
+            {
+                view.StringValue = text.characters;
+                view.Configure(text);
+            }
+
+            var placeholder = texts.FirstOrDefault(s => s.name == "placeholder");
+            if (placeholder != null)
+                view.PlaceholderString = placeholder.characters;
+
+
+            if (controlType.ToString().EndsWith("Dark", System.StringComparison.Ordinal))
+            {
+                view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+            }
 
             return new ViewWrapper(view);
         }

@@ -30,38 +30,27 @@ using FigmaSharp.NativeControls.Base;
 using System;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using System.Linq;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class PopUpButtonConverter : PopUpButtonConverterBase
+    public class ComboBoxConverter : ComboBoxConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var view = new NSPopUpButton();
+            var view = new NSComboBox();
 
             var figmaInstance = (FigmaInstance)currentNode;
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
             {
-                case NativeControlType.PopUpButtonSmall:
-                case NativeControlType.PopUpButtonSmallDark:
+                case NativeControlType.ComboBoxSmall:
+                case NativeControlType.ComboBoxSmallDark:
                     view.ControlSize = NSControlSize.Small;
                     break;
-                case NativeControlType.PopUpButtonStandard:
-                case NativeControlType.PopUpButtonStandardDark:
+                case NativeControlType.ComboBoxStandard:
+                case NativeControlType.ComboBoxStandardDark:
                     view.ControlSize = NSControlSize.Regular;
                     break;
-            }
-
-            var label = figmaInstance.children
-                   .OfType<FigmaText>()
-                   .FirstOrDefault(s => s.name == "lbl");
-
-            if (label != null)
-            {
-                view.AddItem(label.characters);
-                view.Font = label.style.ToNSFont();
             }
 
             if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal))
