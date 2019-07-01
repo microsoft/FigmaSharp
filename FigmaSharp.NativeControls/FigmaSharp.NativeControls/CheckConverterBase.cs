@@ -25,28 +25,28 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using FigmaSharp.Models;
 
-namespace FigmaSharp.NativeControls.Cocoa
+namespace FigmaSharp.NativeControls.Base
 {
-	public static class Resources
-	{
-		static FigmaViewConverter[] converters;
+    public abstract class CheckConverterBase : FigmaInstanceConverter
+    {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            if (currentNode is FigmaInstance figmaInstance)
+            {
+                switch (figmaInstance.ToControlType())
+                {
+                    case NativeControlType.CheckboxSmall:
+                    case NativeControlType.CheckboxSmallDark:
+                    case NativeControlType.CheckboxStandard:
+                    case NativeControlType.CheckboxStandardDark:
 
-		public static FigmaViewConverter[] GetConverters ()
-		{
-			if (converters == null) {
-				converters = new FigmaViewConverter[]
-				{
-                    new CheckConverter (),
-                    new ComboBoxConverter (),
-                    new PopUpButtonConverter (),
-                    new RadioConverter (),
-					new ButtonConverter (),
-					new TextFieldConverter ()
-				};
-			}
-
-			return converters;
-		}
-	}
+                    case NativeControlType.RadioSingleStandard:
+                        return true;
+                }
+            }
+            return false;
+        }
+    }
 }

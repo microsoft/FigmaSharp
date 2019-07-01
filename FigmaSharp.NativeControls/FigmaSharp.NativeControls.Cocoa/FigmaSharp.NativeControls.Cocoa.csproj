@@ -60,6 +60,7 @@
     <Compile Include="ComboBoxConverter.cs" />
     <Compile Include="RadioConverter.cs" />
     <Compile Include="PopUpButtonConverter.cs" />
+    <Compile Include="CheckConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
