@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicRendering.Forms\BasicRendering.Forms.csproj">
-      <Project>{A247FC21-91EF-474D-92CC-486647A91A11}</Project>
+      <Project>{A7D40952-7EBC-4B5D-8C00-60FE283029A5}</Project>
       <Name>BasicRendering.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
@@ -106,7 +106,7 @@
       <Name>FigmaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FigmaSharp.Forms\FigmaSharp.Forms.csproj">
-      <Project>{84224A3B-5383-4AC4-AF43-1C0D37738057}</Project>
+      <Project>{2E4FA124-6026-4034-9BFC-760E39E08D3B}</Project>
       <Name>FigmaSharp.Forms</Name>
     </ProjectReference>
   </ItemGroup>
