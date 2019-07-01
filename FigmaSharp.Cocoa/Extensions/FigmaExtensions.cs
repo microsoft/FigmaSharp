@@ -47,6 +47,30 @@ namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {
+        public static T FindNativeViewByName<T>(this Services.FigmaViewRendererService rendererService, string name)
+        {
+            foreach (var node in rendererService.NodesProcessed)
+            {
+                if (node.View.NativeObject is T && node.FigmaNode.name == name)
+                {
+                    return (T)node.View.NativeObject;
+                }
+            }
+            return default(T);
+        }
+
+        public static NSView FindNativeViewByName(this Services.FigmaViewRendererService rendererService, string name)
+        {
+            foreach (var node in rendererService.NodesProcessed)
+            {
+                if ( node.FigmaNode.name == name)
+                {
+                    return (NSView)node.View.NativeObject;
+                }
+            }
+            return null;
+        }
+
         public static NSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
         {
             var label = new NSTextField()
