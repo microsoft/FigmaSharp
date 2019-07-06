@@ -299,9 +299,9 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Version" id="9rR-0a-lOy">
+                            <menuItem title="Versions" id="9rR-0a-lOy">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Version" id="nFI-MI-qFK">
+                                <menu key="submenu" title="Versions" id="nFI-MI-qFK">
                                     <items>
                                         <menuItem title="Getting Versions…" enabled="NO" id="79d-ZQ-lkD">
                                             <modifierMask key="keyEquivalentModifierMask"/>

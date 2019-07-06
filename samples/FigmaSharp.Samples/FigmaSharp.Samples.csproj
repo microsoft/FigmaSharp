@@ -68,7 +68,6 @@
     <ImageAsset Include="Assets.xcassets\Contents.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="Helpers\" />
     <Folder Include="Views\" />
   </ItemGroup>
@@ -93,6 +92,7 @@
     <Compile Include="Views\MyWindowController.designer.cs">
       <DependentUpon>MyWindowController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\VersionMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
