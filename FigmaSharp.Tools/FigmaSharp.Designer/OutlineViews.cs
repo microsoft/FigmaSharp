@@ -42,9 +42,9 @@ namespace FigmaSharp
             AutosaveTableColumns = false;
             FocusRingType = NSFocusRingType.None;
             IndentationPerLevel = 16;
-            RowHeight = 17;
+            RowHeight = 32;
             NSTableColumn column = new NSTableColumn ("Values");
-            column.Title = "Document";
+            column.Title = "Layers";
             AddColumn (column);
             OutlineTableColumn = column;
             Delegate = new OutlineViewDelegate ();
