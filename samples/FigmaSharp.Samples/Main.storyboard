@@ -58,10 +58,10 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Open Location…" keyEquivalent="l" id="IAo-SY-fd9">
+                                        <menuItem title="Open Location…" keyEquivalent="l" id="tEB-fw-rMY">
                                             <connections>
-                                                <action selector="openDocument:" target="Ady-hI-5gd" id="bVn-NM-KNZ"/>
-                                                <segue destination="WaF-y5-496" kind="show" id="rru-ET-djW"/>
+                                                <action selector="openDocument:" target="Ady-hI-5gd" id="muG-vF-xhu"/>
+                                                <segue destination="WaF-y5-496" kind="show" id="3Db-uC-Tfc"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open Recent" id="YD0-ex-AWB">
@@ -371,7 +371,7 @@
         <scene sceneID="l7G-kG-DjR">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="WaF-y5-496" sceneMemberID="viewController">
-                    <window key="window" title="Open Location" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Qdj-Uz-pZ5">
+                    <window key="window" title="Open Location" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Qdj-Uz-pZ5" customClass="OpenLocationWindow">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="301" width="558" height="222"/>
@@ -385,10 +385,10 @@
             </objects>
             <point key="canvasLocation" x="667" y="238.5"/>
         </scene>
-        <!--Open Location Controller-->
+        <!--Open Location View Controller-->
         <scene sceneID="vPX-Rw-bgZ">
             <objects>
-                <viewController id="Y53-w2-X6i" customClass="OpenLocationController" sceneMemberID="viewController">
+                <viewController id="Y53-w2-X6i" customClass="OpenLocationViewController" sceneMemberID="viewController">
                     <view key="view" id="tAp-t8-mUp">
                         <rect key="frame" x="0.0" y="0.0" width="558" height="222"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -496,8 +496,8 @@ Gw
         <!--Window Controller-->
         <scene sceneID="FGq-xg-hEP">
             <objects>
-                <windowController id="qmD-kN-bD5" customClass="MyWindowController" sceneMemberID="viewController">
-                    <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="csp-8t-ctO">
+                <windowController id="qmD-kN-bD5" customClass="DocumentWindowController" sceneMemberID="viewController">
+                    <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="csp-8t-ctO" customClass="DocumentWindow">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="317" width="640" height="480"/>
@@ -575,9 +575,9 @@ Gw
                         </connections>
                     </window>
                     <connections>
-                        <outlet property="PagePopUpButton" destination="fWU-rn-Zi4" id="iFG-gR-jZE"/>
-                        <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="jVn-Q7-TUo"/>
-                        <outlet property="TitleTextField" destination="zI9-VO-MN3" id="e6n-qS-ovu"/>
+                        <outlet property="PagePopUpButton" destination="fWU-rn-Zi4" id="SI2-eg-muq"/>
+                        <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="ZWE-0H-D3R"/>
+                        <outlet property="TitleTextField" destination="zI9-VO-MN3" id="zIy-c7-78l"/>
                         <segue destination="kAC-hG-JBc" kind="relationship" relationship="window.shadowedContentViewController" id="rg3-ZZ-CIr"/>
                     </connections>
                 </windowController>
@@ -585,10 +585,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="1440" y="424"/>
         </scene>
-        <!--Document Controller-->
+        <!--Document View Controller-->
         <scene sceneID="9Jh-cp-1WU">
             <objects>
-                <viewController id="kAC-hG-JBc" customClass="DocumentController" sceneMemberID="viewController">
+                <viewController id="kAC-hG-JBc" customClass="DocumentViewController" sceneMemberID="viewController">
                     <view key="view" id="qf5-jq-9Hz">
                         <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>

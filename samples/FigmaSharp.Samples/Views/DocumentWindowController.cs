@@ -8,10 +8,9 @@ using AppKit;
 
 namespace FigmaSharp.Samples
 {
-    public partial class MyWindowController : NSWindowController
+    public partial class DocumentWindowController : NSWindowController
     {
-
-        public MyWindowController (IntPtr handle) : base (handle)
+        public DocumentWindowController(IntPtr handle) : base(handle)
         {
         }
 
@@ -36,18 +35,7 @@ namespace FigmaSharp.Samples
 
             TitleTextField.StringValue = "Opening “DhOTs1gwx837ysnG3X6RZqZm”…";
 
-            var menu = new VersionMenu();
-            menu.AddItem("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now); ;
-            menu.AddItem("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now); ;
-            menu.AddItem("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now); ;
-            menu.AddItem("4", DateTime.Now);
-            menu.AddItem("5", DateTime.Now.AddDays(-7));
-            menu.AddItem("6", DateTime.Now.AddDays(-14));
-            menu.UseAsVersionsMenu();
 
-            menu.VersionSelected += delegate (string id) {
-                Console.WriteLine(id);
-            };
         }
     }
 }

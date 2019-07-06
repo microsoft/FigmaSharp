@@ -7,10 +7,10 @@
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>FigmaSharp.Samples</RootNamespace>
-    <AssemblyName>FigmaSharp</AssemblyName>
+    <AssemblyName>FigmaSharp.Samples</AssemblyName>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
-    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +30,7 @@
     <HttpClientHandler></HttpClientHandler>
     <LinkMode></LinkMode>
     <XamMacArch></XamMacArch>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,28 +45,15 @@
     <IncludeMonoRuntime>true</IncludeMonoRuntime>
     <UseSGen>true</UseSGen>
     <UseRefCounting>true</UseRefCounting>
-    <LinkMode>SdkOnly</LinkMode>
+    <LinkMode>None</LinkMode>
     <HttpClientHandler></HttpClientHandler>
     <XamMacArch></XamMacArch>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-128.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-128%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-16.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-256.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-256%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-32.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-512.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png" />
-    <ImageAsset Include="Assets.xcassets\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -80,22 +68,36 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Helpers\TokenStore.cs" />
     <Compile Include="Helpers\FigmaLink.cs" />
-    <Compile Include="Views\OpenLocationController.cs" />
-    <Compile Include="Views\OpenLocationController.designer.cs">
-      <DependentUpon>OpenLocationController.cs</DependentUpon>
+    <Compile Include="Views\OpenLocationViewController.cs" />
+    <Compile Include="Views\OpenLocationViewController.designer.cs">
+      <DependentUpon>OpenLocationViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\DocumentController.cs" />
+    <Compile Include="Views\DocumentViewController.cs" />
     <Compile Include="Views\DocumentController.designer.cs">
-      <DependentUpon>DocumentController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MyWindowController.cs" />
-    <Compile Include="Views\MyWindowController.designer.cs">
-      <DependentUpon>MyWindowController.cs</DependentUpon>
+      <DependentUpon>DocumentViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\VersionMenu.cs" />
+    <Compile Include="Views\DocumentWindow.cs" />
+    <Compile Include="Views\DocumentWindow.designer.cs">
+      <DependentUpon>DocumentWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OpenLocationWindow.cs" />
+    <Compile Include="Views\OpenLocationWindow.designer.cs">
+      <DependentUpon>OpenLocationWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DocumentWindowController.cs" />
+    <Compile Include="Views\DocumentWindowController.designer.cs">
+      <DependentUpon>DocumentWindowController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

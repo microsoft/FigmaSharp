@@ -26,24 +26,71 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
+
+using FigmaSharp;
+using FigmaSharp.Services;
 
 using AppKit;
 using Foundation;
 
 namespace FigmaSharp.Samples
 {
-    public partial class DocumentController : NSViewController
+    public partial class DocumentViewController : NSViewController
     {
-        public DocumentController(IntPtr handle) : base(handle)
+        readonly string ID;
+        readonly string Token;
+
+
+        public DocumentViewController(IntPtr handle) : base(handle)
         {
+        }
+
+
+        public DocumentViewController(string id, string token)
+        {
+            ID = id;
+            Token = token;
         }
 
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
             Spinner.StartAnimation(this);
+
+            new Thread(() => Load("", "")).Start ();
+        }
+
+
+        public void Load(string version_id, string page_id)
+        {
+          //  Spinner.Hidden = false;
+          //  Spinner.StartAnimation(this);
+          /*
+            var converters = AppContext.Current.GetFigmaConverters();
+
+            file_provider = new FigmaRemoteFileProvider();
+
+            var rendererService = new FigmaViewRendererService(file_provider, converters);
+            rendererService.Start(Id, scrollViewWrapper);
+
+            var distributionService = new FigmaViewRendererDistributionService(rendererService);
+            distributionService.Start();
+
+            //We want know the background color of the figma camvas and apply to our scrollview
+            var canvas = file_provider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+            if (canvas != null)
+                scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
+
+            //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
+            scrollViewWrapper.AdjustToContent();
+
+    */
+
+           // Spinner.Hidden = true;
+          //  Spinner.StopAnimation(this);
         }
 
 

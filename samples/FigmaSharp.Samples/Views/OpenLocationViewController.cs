@@ -32,9 +32,13 @@ using Foundation;
 
 namespace FigmaSharp.Samples
 {
-    public partial class OpenLocationController : NSViewController
+    public partial class OpenLocationViewController : NSViewController
     {
-        public OpenLocationController(IntPtr handle) : base(handle)
+        public event LinkOpenedHandler LinkOpened = delegate { };
+        public delegate void LinkOpenedHandler(string link, string token);
+
+
+        public OpenLocationViewController(IntPtr handle) : base(handle)
         {
         }
 
@@ -42,9 +46,6 @@ namespace FigmaSharp.Samples
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            NSDocumentController.SharedDocumentController.NoteNewRecentDocumentURL (new NSUrl("/Users/hbons/Downloads/images.png"));
-            Console.WriteLine("n:" + NSDocumentController.SharedDocumentController.RecentDocumentUrls.Length);
 
 
             LinkComboBox.Changed += delegate {
@@ -87,9 +88,8 @@ namespace FigmaSharp.Samples
                 token = TokenTextField.StringValue.Trim();
                 TokenStore.SharedTokenStore.SetToken(token);
 
-                // new ExampleController();
-                // controller.Open (link, token)
-                // 
+                string link = LinkComboBox.StringValue.Trim();
+                LinkOpened(link, token);
             };
 
 
