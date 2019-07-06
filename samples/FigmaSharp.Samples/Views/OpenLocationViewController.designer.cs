@@ -9,8 +9,8 @@ using System.CodeDom.Compiler;
 
 namespace FigmaSharp.Samples
 {
-	[Register ("OpenLocationController")]
-	partial class OpenLocationController
+	[Register ("OpenLocationViewController")]
+	partial class OpenLocationViewController
 	{
 		[Outlet]
 		AppKit.NSButton CancelButton { get; set; }

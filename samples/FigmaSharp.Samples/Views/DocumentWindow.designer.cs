@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Visual Studio to store outlets and
 // actions made in the UI designer. If it is removed, they will be lost.
@@ -9,18 +9,12 @@ using System.CodeDom.Compiler;
 
 namespace FigmaSharp.Samples
 {
-	[Register ("DocumentViewController")]
-	partial class DocumentViewController
+	[Register ("DocumentWindow")]
+	partial class DocumentWindow
 	{
-		[Outlet]
-		AppKit.NSProgressIndicator Spinner { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (Spinner != null) {
-				Spinner.Dispose ();
-				Spinner = null;
-			}
 		}
 	}
 }

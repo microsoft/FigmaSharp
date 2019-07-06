@@ -55,14 +55,14 @@ namespace FigmaSharp.Samples
         }
 
 
-        public void Reset ()
+        public void Reset()
         {
-            List<NSMenuItem> named_version_items = new List<NSMenuItem>();
-            List<NSMenuItem> other_version_items = new List<NSMenuItem>();
+            named_version_items = new List<NSMenuItem>();
+            other_version_items = new List<NSMenuItem>();
         }
 
 
-        void ResetStates ()
+        void ResetStates()
         {
             current_item.State = NSCellStateValue.Off;
 
@@ -85,14 +85,11 @@ namespace FigmaSharp.Samples
                 VersionSelected (id);
             };
 
-            if (!string.IsNullOrEmpty(name))
-            {
+            if (!string.IsNullOrEmpty(name)) {
                 item.Title = name;
                 named_version_items.Add(item);
 
-            }
-            else
-            {
+            } else {
                 item.Title = timestamp.ToString("r");
                 other_version_items.Add(item);
             }
@@ -118,8 +115,8 @@ namespace FigmaSharp.Samples
                 menu.AddItem(item);
 
             menu.AddItem(NSMenuItem.SeparatorItem);
-
             menu.AddItem(new NSMenuItem("Other") { Enabled = false });
+
             foreach (NSMenuItem item in other_version_items)
                 menu.AddItem(item);
 
