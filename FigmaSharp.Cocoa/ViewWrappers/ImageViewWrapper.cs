@@ -59,24 +59,9 @@ namespace FigmaSharp.Cocoa
             var image = ((NSImage)imageWrapper.NativeObject);
             imageLayer.Contents = image.CGImage;
 
-            nfloat width, height;
-            if (image.Size.Width > image.Size.Height)
-            {
-                //max width
-                width = imageView.Frame.Width;
-                height = GetProportionalSecondSize (width, image.Size.Width, image.Size.Height);
-
-            } else
-            {
-                height = imageView.Frame.Height;
-                width = GetProportionalSecondSize(height, image.Size.Height, image.Size.Width);
-            }
-
-            //alignement
-            var xCalculated = (imageView.Frame.Width / 2f) - (width / 2f);
-            var yCalculated = (imageView.Frame.Height / 2f) - (height / 2f);
-
-            imageLayer.Frame = new CGRect(xCalculated, yCalculated, width, height);
+            imageLayer.Frame = new CGRect(0, 0, Width, Height);
+            imageLayer.AnchorPoint = new CGPoint(0.5f, 0.5f);
+            imageLayer.Position = new CGPoint(imageView.Layer.Bounds.GetMidX(), imageView.Layer.Bounds.GetMidY());
         }
     }
 }

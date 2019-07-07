@@ -37,10 +37,10 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var currengroupView = new NSView();
+            var currengroupView = new NSImageView();
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
             currengroupView.Configure(figmaFrameEntity);
-            return new ViewWrapper(currengroupView);
+            return new ImageViewWrapper(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)
