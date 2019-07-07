@@ -126,10 +126,10 @@ namespace FigmaSharp.Services
                 {
                     foreach (var processedNode in NodesProcessed)
                     {
-                        if (processedNode.FigmaNode is FigmaVectorEntity vectorEntity)
+                        if (processedNode.FigmaNode is IFigmaImage figmaImage)
                         {
                             //TODO: this should be replaced by svg
-                            if (vectorEntity.HasImage ())
+                            if (figmaImage.HasImage ())
                             {
                                 ImageVectors.Add(processedNode);
                             }

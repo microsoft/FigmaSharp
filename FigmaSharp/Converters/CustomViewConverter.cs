@@ -51,7 +51,8 @@ namespace FigmaSharp
 
         public virtual bool ScanChildren (FigmaNode currentNode)
         {
-            return !(currentNode is FigmaInstance);
+            return true;
+            //return !(currentNode is FigmaInstance);
         }
 
         protected T ToEnum<T> (string value)

@@ -42,12 +42,12 @@ namespace FigmaSharp.Models
 
     public class FigmaElipse : FigmaVectorEntity
     {
-        public override bool HasImage() => true;
+        
     }
 
     public class FigmaStar : FigmaVectorEntity
     {
-        public override bool HasImage() => true;
+        
     }
 
     public class FigmaInstance : FigmaFrameEntity
@@ -55,24 +55,27 @@ namespace FigmaSharp.Models
         public string componentId { get; set; }
 
         public FigmaComponent Component { get; set; }
+
+        public override bool HasImage()
+        {
+            return false;
+        }
     }
 
     public class FigmaRegularPolygon : FigmaVectorEntity
     {
-        public override bool HasImage() => true;
+        
     }
 
     public class FigmaLine : FigmaVectorEntity
     {
-        public override bool HasImage() => true;
+        
     }
 
     public class FigmaRectangleVector : FigmaVectorEntity
     {
         public float cornerRadius { get; set; }
         public float[] rectangleCornerRadii { get; set; }
-
-        public override bool HasImage() => true;
     }
 
     public class FigmaPaint
@@ -165,7 +168,10 @@ namespace FigmaSharp.Models
 
     public class FigmaGroup : FigmaFrameEntity
     {
-
+        public override bool HasImage()
+        {
+            return false;
+        }
     }
    
 	public interface IFigmaDocumentContainer : IFigmaNodeContainer, IAbsoluteBoundingBox
@@ -188,8 +194,13 @@ namespace FigmaSharp.Models
         public FigmaLayoutConstraint constraints { get; set; }
     }
 
-    public class FigmaFrameEntity : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints
+    public class FigmaFrameEntity : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
     {
+        public virtual bool HasImage()
+        {
+            return false;
+        }
+
         public FigmaColor backgroundColor { get; set; }
         public FigmaExportSetting[] exportSettings { get; set; }
         public string blendMode { get; set; }
@@ -233,7 +244,12 @@ namespace FigmaSharp.Models
         FigmaLayoutConstraint constraints { get; set; }
     }
 
-    public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints
+    public interface IFigmaImage
+    {
+        bool HasImage();
+    }
+
+    public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
     {
         public virtual bool HasImage ()
         {
@@ -283,6 +299,11 @@ namespace FigmaSharp.Models
     {
         public FigmaNode[] children { get; set; }
         public string booleanOperation { get; set; }
+
+        public override bool HasImage()
+        {
+            return false;
+        }
     }
 
     public class FigmaTransform
@@ -417,6 +438,10 @@ namespace FigmaSharp.Models
 
     public class FigmaText : FigmaVectorEntity
     {
+        public override bool HasImage()
+        {
+            return false;
+        }
         public string characters { get; set; }
         public FigmaTypeStyle style { get; set; }
         public int[] characterStyleOverrides { get; set; }
