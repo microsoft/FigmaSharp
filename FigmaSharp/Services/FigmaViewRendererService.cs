@@ -36,19 +36,6 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-    public class ImageProcessed
-    {
-        public ImageProcessed(FigmaVectorEntity node)
-        {
-            Node = node;
-        }
-
-        public FigmaVectorEntity Node { get; set; }
-        public string Url { get; set; }
-        public IImageWrapper Image { get; set; }
-        public IImageViewWrapper ViewWrapper { get; set; }
-    }
-
     public class FigmaViewRendererService
     {
         readonly FigmaViewConverter[] FigmaDefaultConverters;
@@ -56,7 +43,7 @@ namespace FigmaSharp.Services
 
         public List<ProcessedNode> NodesProcessed = new List<ProcessedNode> ();
 
-        public readonly List<ImageProcessed> ImageVectors = new List<ImageProcessed>();
+        public readonly List<ProcessedNode> ImageVectors = new List<ProcessedNode>();
 
         public string File { get; private set; }
         public int Page { get; private set; }
@@ -144,8 +131,7 @@ namespace FigmaSharp.Services
                             //TODO: this should be replaced by svg
                             if (vectorEntity.HasImage ())
                             {
-                                var imageProcessed = new ImageProcessed(vectorEntity) { ViewWrapper = processedNode.View as IImageViewWrapper };
-                                ImageVectors.Add(imageProcessed);
+                                ImageVectors.Add(processedNode);
                             }
                         }
                     }

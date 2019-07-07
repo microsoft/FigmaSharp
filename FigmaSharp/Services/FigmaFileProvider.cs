@@ -48,7 +48,7 @@ namespace FigmaSharp.Services
         void Load(string file);
         void Save(string filePath);
         string GetContentTemplate(string file);
-        void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file);
+        void OnStartImageLinkProcessing(List<ProcessedNode> imageVectors, string file);
     }
 
     public class FigmaLocalFileProvider : FigmaFileProvider
@@ -67,27 +67,30 @@ namespace FigmaSharp.Services
 
         public string ImageFormat { get; set; } = ".png";
 
-        public override void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file)
+        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file)
         {
             //not needed in local files
             Console.WriteLine($"Loading images..");
            
-            if (imageVectors.Count > 0)
+            if (imageFigmaNodes.Count > 0)
             {
-                foreach (var vector in imageVectors)
+                foreach (var vector in imageFigmaNodes)
                 {
                     try
                     {
-                        var recoveredKey = FigmaResourceConverter.FromResource(vector.Node.id);
+                        var recoveredKey = FigmaResourceConverter.FromResource(vector.FigmaNode.id);
                         string filePath = Path.Combine(ResourcesDirectory, string.Concat(recoveredKey, ImageFormat));
 
                         if (!System.IO.File.Exists(filePath))
                         {
                             throw new FileNotFoundException(filePath);
                         }
-                        vector.Url = filePath;
-                        vector.Image = AppContext.Current.GetImageFromFilePath(filePath);
-                        vector.ViewWrapper?.SetImage(vector.Image);
+                      
+                        if (vector.View is IImageViewWrapper imageView)
+                        {
+                            var image = AppContext.Current.GetImageFromFilePath(filePath);
+                            imageView.SetImage(image);
+                        }
                     }
                     catch (FileNotFoundException ex)
                     {
@@ -114,52 +117,96 @@ namespace FigmaSharp.Services
             return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
         }
 
-        public override void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file)
+        public IEnumerable<string> GetKeys (List<FigmaImageResponse> responses, string image)
         {
-            if (imageVectors.Count == 0)
+            foreach (var item in responses)
             {
+                foreach (var keys in item.images.Where(s => s.Value == image))
+                {
+                    yield return keys.Key;
+                }
+            }
+        }
+
+        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file)
+        {
+            if (imageFigmaNodes.Count == 0)
+            {
+                OnImageLinkProcessed();
                 return;
             }
 
             Task.Run(() => {
-                //Remote files need get the real image url to get the file
-                //var vectorsIds = imageVectors.Select(s => s.Node.id);
 
-                var totalImages = imageVectors.Count();
-                //TODO: figma url has a limited character in urls we fixed the limit to 10 ids's for each call
-                var numberLoop = (totalImages / CallNumber) + 1;
-
-                Console.WriteLine("Detected a total of {0} possible images.  ", totalImages);
-                for (int i = 0; i < numberLoop; i++)
+                try
                 {
-                    var vectors = imageVectors.Skip(i * CallNumber).Take(CallNumber);
-                    Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
-                    var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectors.Select(s => s.Node.id));
-                    if (figmaImageResponse != null)
-                    {
-                        foreach (var imageResponse in figmaImageResponse.images)
-                        {
-                            var vector = vectors.FirstOrDefault(s => s.Node.id == imageResponse.Key);
-                            Console.Write("[{0}:{1}:{2}] {3}...", vector.Node.GetType (), vector.Node.id, vector.Node.name, imageResponse.Value);
-                            if (imageResponse.Value != null)
-                            {
-                                vector.Url = imageResponse.Value;
-                                vector.Image = AppContext.Current.GetImage(vector.Url);
+                    var totalImages = imageFigmaNodes.Count();
+                    //TODO: figma url has a limited character in urls we fixed the limit to 10 ids's for each call
+                    var numberLoop = (totalImages / CallNumber) + 1;
 
+                    //var imageCache = new Dictionary<string, List<string>>();
+                    List<Tuple<string, List<string>>> imageCacheResponse = new List<Tuple<string, List<string>>>();
+                    Console.WriteLine("Detected a total of {0} possible images.  ", totalImages);
+
+                    var images = new List<string>();
+                    for (int i = 0; i < numberLoop; i++)
+                    {
+                        var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
+                        Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
+                        var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectors.Select(s => s.FigmaNode.id));
+
+                        if (figmaImageResponse != null)
+                        {
+                            foreach (var image in figmaImageResponse.images)
+                            {
+                                if (image.Value == null)
+                                {
+                                    continue;
+                                }
+
+                                var img = imageCacheResponse.FirstOrDefault(s => image.Value == s.Item1);
+                                if (img?.Item1 != null)
+                                {
+                                    img.Item2.Add(image.Key);
+                                }
+                                else
+                                {
+                                    imageCacheResponse.Add(new Tuple<string, List<string>>(image.Value, new List<string>() { image.Key }));
+                                }
+                            }
+                        }
+                    }
+
+                    Console.WriteLine("Removing dupplicates...");
+
+                    //get images not dupplicates
+                    Console.WriteLine("Finished image to download {0}", images.Count);
+
+                    //with all the keys now we get the dupplicated images
+                    foreach (var imageUrl in imageCacheResponse)
+                    {
+                        var imageWrapper = AppContext.Current.GetImage(imageUrl.Item1);
+                        foreach (var figmaNodeId in imageUrl.Item2)
+                        {
+                            var vector = imageFigmaNodes.FirstOrDefault(s => s.FigmaNode.id == figmaNodeId);
+                            Console.Write("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
+
+                            if (vector != null && vector.View is IImageViewWrapper imageView)
+                            {
                                 AppContext.Current.BeginInvoke(() =>
                                 {
-                                    vector.ViewWrapper?.SetImage(vector.Image);
+                                    imageView.SetImage(imageWrapper);
                                 });
-                                Console.Write("OK \n");
-                            } else
-                            {
-                                Console.Write("NULL IMAGE \n");
                             }
-                            //Thread.Sleep(30);
+                            Console.Write("OK \n");
                         }
                     }
                 }
-
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+               
                 OnImageLinkProcessed();
             });
         }
@@ -180,19 +227,20 @@ namespace FigmaSharp.Services
             return AppContext.Current.GetManifestResource(Assembly, file);
         }
 
-        public override void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file)
+        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file)
         {
             Console.WriteLine($"Loading images..");
 
-            if (imageVectors.Count > 0)
+            if (imageFigmaNodes.Count > 0)
             {
-                foreach (var vector in imageVectors)
+                foreach (var vector in imageFigmaNodes)
                 {
-                    var recoveredKey = FigmaResourceConverter.FromResource(vector.Node.id);
+                    var recoveredKey = FigmaResourceConverter.FromResource(vector.FigmaNode.id);
                     var image = AppContext.Current.GetImageFromManifest(Assembly, recoveredKey);
-                    vector.Image = image;
-                    vector.Url = recoveredKey;
-                    vector.ViewWrapper?.SetImage(vector.Image);
+                    if (image != null && vector.View is IImageViewWrapper imageView)
+                    {
+                        imageView.SetImage(image);
+                    }
                 }
             }
 
@@ -276,7 +324,7 @@ namespace FigmaSharp.Services
 
         public abstract string GetContentTemplate(string file);
 
-        public abstract void OnStartImageLinkProcessing(List<ImageProcessed> imageVectors, string file);
+        public abstract void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file);
 
         public void Save(string filePath)
         {
