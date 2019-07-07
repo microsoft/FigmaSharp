@@ -215,7 +215,8 @@ namespace FigmaSharp.Services
                 currentProcessedNode = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                 NodesProcessed.Add(currentProcessedNode);
 
-                scanChildren = converter.ScanChildren (currentNode);
+                //TODO: this need to be improved, handles special cases for native controls
+                scanChildren = currentNode is FigmaInstance && options.ScanChildrenFromFigmaInstances ? true : converter.ScanChildren (currentNode);
             } else
             {
                 scanChildren = false;
@@ -237,5 +238,10 @@ namespace FigmaSharp.Services
         public bool IsToViewProcessed { get; set; } = true;
         public bool AreImageProcessed { get; set; } = true;
         public int StartPage { get; set; } = 0;
+
+        /// <summary>
+        /// Allows configure in rederer process all children subviews from FigmaInstances (Components)
+        /// </summary>
+        public bool ScanChildrenFromFigmaInstances { get; set; } = true;
     }
 }

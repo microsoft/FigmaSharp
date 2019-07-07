@@ -46,8 +46,9 @@ namespace LocalFile.Shared
         {
             fileProvider = new FigmaRemoteFileProvider();
             RendererService = new FigmaViewRendererService(fileProvider, converters);
-          
-            RendererService.Start(fileName, scrollViewWrapper.ContentView);
+
+            var options = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false }; 
+            RendererService.Start(fileName, scrollViewWrapper.ContentView, options);
 
             distributionService = new FigmaViewRendererDistributionService(RendererService);
             distributionService.Start();
