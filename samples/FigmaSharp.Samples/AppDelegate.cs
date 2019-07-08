@@ -36,7 +36,7 @@ namespace FigmaSharp.Samples
     [Register("AppDelegate")]
     public class AppDelegate : NSApplicationDelegate
     {
-        List<DocumentViewController> DocumentControllers = new List<DocumentViewController>();
+        List<DocumentWindowController> document_window_controllers = new List<DocumentWindowController>();
 
 
         public AppDelegate()
@@ -44,23 +44,18 @@ namespace FigmaSharp.Samples
         }
 
 
+
         public override void DidFinishLaunching(NSNotification notification)
         {
-            var menu = new VersionMenu();
-            menu.AddItem("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now);
-            menu.AddItem("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now);
-            menu.AddItem("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now);
-            menu.AddItem("4", DateTime.Now);
-            menu.AddItem("5", DateTime.Now.AddDays(-7));
-            menu.AddItem("6", DateTime.Now.AddDays(-14));
-            menu.UseAsVersionsMenu();
-
-            menu.VersionSelected += delegate (string id) {
-                Console.WriteLine(id);
+            OpenLocationViewController.LinkOpened += delegate (string link, string token) {
+                Console.WriteLine(link + token);
             };
 
-        }
+            var storyboard = NSStoryboard.FromName("Main", null);
+            var controller = (DocumentWindowController)storyboard.InstantiateControllerWithIdentifier("DocumentWindow");
 
+            document_window_controllers.Add(controller);
+        }
 
 
         public override void WillTerminate(NSNotification notification)

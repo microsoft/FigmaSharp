@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 
-using Foundation;
 using AppKit;
+using CoreGraphics;
 
 namespace FigmaSharp.Samples
 {
@@ -15,9 +15,10 @@ namespace FigmaSharp.Samples
         }
 
 
+        public static int WindowCount { get; private set; }
+
         public override void WindowDidLoad()
         {
-            base.WindowDidLoad();
 
             PagePopUpButton.Menu.AddItem(new NSMenuItem("Page 1"));
             PagePopUpButton.Menu.AddItem(new NSMenuItem("Page 2"));
@@ -35,7 +36,30 @@ namespace FigmaSharp.Samples
 
             TitleTextField.StringValue = "Opening “DhOTs1gwx837ysnG3X6RZqZm”…";
 
+            Console.WriteLine ((Window.ContentViewController as DocumentViewController).test);
 
+            WindowCount++;
+
+            int offset = 38;
+
+            CGRect frame = Window.Frame;
+            frame.X += offset * WindowCount;
+            frame.Y -= offset * WindowCount;
+            Window.SetFrame (frame, display: true);
+
+            base.WindowDidLoad();
+
+            /*
+            var alert = new NSAlert()
+            {
+                AlertStyle = NSAlertStyle.Warning,
+                MessageText = "Could not open “DhOTs1gwx837ysnG3X6RZqZm”",
+                InformativeText = "Please check if your Figma Link and Personal Access Token are correct",
+            };
+
+            alert.AddButton("Close");
+            alert.RunSheetModal(Window);
+            */           
         }
     }
 }

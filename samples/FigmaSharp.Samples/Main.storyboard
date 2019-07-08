@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
@@ -303,7 +303,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Versions" id="nFI-MI-qFK">
                                     <items>
-                                        <menuItem title="Getting Versions…" enabled="NO" id="79d-ZQ-lkD">
+                                        <menuItem title="No Version History" enabled="NO" id="79d-ZQ-lkD">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openDocument:" target="Ady-hI-5gd" id="OZr-RB-CyV"/>
@@ -347,10 +347,23 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="API Documentation" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="Wiki" id="FKE-Sm-Kum" userLabel="Wiki">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                                 <segue destination="qmD-kN-bD5" kind="show" id="qpu-Wi-Xlr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="API Documentation" id="Nw0-eg-q2J">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showHelp:" target="Ady-hI-5gd" id="6su-KZ-h1z"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Source Code" id="CAs-ei-MFB">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showHelp:" target="Ady-hI-5gd" id="g8n-Nv-QgC"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -365,7 +378,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="591" y="-143"/>
+            <point key="canvasLocation" x="692" y="-97"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="l7G-kG-DjR">
@@ -430,6 +443,9 @@
 DQ
 </string>
                                 </buttonCell>
+                                <connections>
+                                    <segue destination="qmD-kN-bD5" kind="show" id="Ewi-eQ-WU2"/>
+                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6mP-H2-i21">
                                 <rect key="frame" x="33" y="167" width="149" height="17"/>
@@ -583,7 +599,7 @@ Gw
                 </windowController>
                 <customObject id="mhM-RN-F0i" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440" y="424"/>
+            <point key="canvasLocation" x="1388" y="347"/>
         </scene>
         <!--Document View Controller-->
         <scene sceneID="9Jh-cp-1WU">
@@ -608,10 +624,13 @@ Gw
                 </viewController>
                 <customObject id="lDY-4l-kRL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440" y="1073"/>
+            <point key="canvasLocation" x="1388" y="1005"/>
         </scene>
     </scenes>
     <resources>
         <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="qpu-Wi-Xlr"/>
+    </inferredMetricsTieBreakers>
 </document>
