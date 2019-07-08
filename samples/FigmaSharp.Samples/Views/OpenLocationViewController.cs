@@ -34,7 +34,7 @@ namespace FigmaSharp.Samples
 {
     public partial class OpenLocationViewController : NSViewController
     {
-        public event LinkOpenedHandler LinkOpened = delegate { };
+        public static event LinkOpenedHandler LinkOpened = delegate { };
         public delegate void LinkOpenedHandler(string link, string token);
 
 

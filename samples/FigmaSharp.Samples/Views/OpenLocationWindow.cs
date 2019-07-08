@@ -12,5 +12,5 @@ namespace FigmaSharp.Samples
 		public OpenLocationWindow (IntPtr handle) : base (handle)
 		{
 		}
-	}
+    }
 }

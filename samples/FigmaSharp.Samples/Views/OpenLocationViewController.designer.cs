@@ -21,8 +21,8 @@ namespace FigmaSharp.Samples
 		[Outlet]
 		AppKit.NSButton OpenButton { get; set; }
 
-		[Outlet]
-		AppKit.NSView OpenLocationWindow { get; set; }
+        [Outlet]
+        AppKit.NSView OpenLocationWindow { get; set; }
 
 		[Outlet]
 		AppKit.NSTextField TokenStatusTextField { get; set; }
