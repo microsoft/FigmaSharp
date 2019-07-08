@@ -31,6 +31,7 @@
     <LinkMode>None</LinkMode>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
+    <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -97,6 +98,17 @@
       <Name>FigmaSharp.Cocoa</Name>
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Background.mp3">
+      <IncludeInPackage>false</IncludeInPackage>
+    </BundleResource>
+    <BundleResource Include="Coin.mp3">
+      <IncludeInPackage>false</IncludeInPackage>
+    </BundleResource>
+    <BundleResource Include="GameOver.mp3">
+      <IncludeInPackage>false</IncludeInPackage>
+    </BundleResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

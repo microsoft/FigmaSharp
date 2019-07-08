@@ -6,6 +6,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Cocoa;
 using System.Collections.Generic;
 using System.Linq;
+using Foundation;
 
 namespace Game.Cocoa
 {
@@ -26,7 +27,6 @@ namespace Game.Cocoa
 
         public override void KeyDown(NSEvent theEvent)
         {
-          
             if (theEvent.KeyCode == (ushort)NSKey.LeftArrow)
             {
                 MovePlayer(new CGPoint(playerTile.Frame.X - WalkModifier, playerTile.Frame.Y));
@@ -85,7 +85,7 @@ namespace Game.Cocoa
             {
                 if (spike.Frame.IntersectsWith(playerTile.Frame))
                 {
-                    KillPlayer();
+                    PlayerDied();
                     return;
                 }
             }
@@ -97,13 +97,14 @@ namespace Game.Cocoa
                     gemsTiles.Remove(gem);
                     gem.RemoveFromSuperview();
                     points++;
+                    coinSound.Play();
                     break;
                 }
             }
             pointsLabel.StringValue = points.ToString ();
         }
 
-        void KillPlayer ()
+        void PlayerDied ()
         {
             playerTile.SetFrameOrigin(startingPoint);
             var lastLive = heartTiles.FirstOrDefault();
@@ -112,9 +113,13 @@ namespace Game.Cocoa
                 heartTiles.Remove(lastLive);
                 lastLive.RemoveFromSuperview();
             }
+            gameOverSound.Play();
         }
 
         CGPoint startingPoint;
+        AVFoundation.AVAudioPlayer backgroundMusic;
+        AVFoundation.AVAudioPlayer coinSound;
+        AVFoundation.AVAudioPlayer gameOverSound;
 
         public GameWindow(CGRect rect) : base(rect, NSWindowStyle.Titled | NSWindowStyle.Closable, NSBackingStore.Buffered, false)
         {
@@ -128,6 +133,18 @@ namespace Game.Cocoa
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>
             var rendererService = new FigmaViewRendererService(fileProvider, converters);
+
+            //play background music
+            var backgroundMusicPath = new NSUrl(NSBundle.MainBundle.PathForResource("Background", "mp3"));
+            backgroundMusic = AVFoundation.AVAudioPlayer.FromUrl(backgroundMusicPath, out NSError error);
+            backgroundMusic.NumberOfLoops = -1;
+            backgroundMusic.Play();
+
+            var gameOverSoundPath = new NSUrl(NSBundle.MainBundle.PathForResource("GameOver", "mp3"));
+            gameOverSound = AVFoundation.AVAudioPlayer.FromUrl(gameOverSoundPath, out error);
+         
+            var coinMusicPath = new NSUrl(NSBundle.MainBundle.PathForResource("Coin", "mp3"));
+            coinSound = AVFoundation.AVAudioPlayer.FromUrl(coinMusicPath, out error);
 
             //we want load the entire level 1
             IViewWrapper view = rendererService.RenderByName<IViewWrapper>("Level1");
