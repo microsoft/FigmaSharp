@@ -39,13 +39,13 @@ namespace LocalFile.Shared
         const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
         readonly FigmaRemoteFileProvider fileProvider;
 
-        public readonly FigmaViewRendererService RendererService;
+        public readonly FigmaFileRendererService RendererService;
         readonly FigmaViewRendererDistributionService distributionService;
 
         public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, FigmaViewConverter[] converters)
         {
             fileProvider = new FigmaRemoteFileProvider();
-            RendererService = new FigmaViewRendererService(fileProvider, converters);
+            RendererService = new FigmaFileRendererService(fileProvider, converters);
 
             var options = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false }; 
             RendererService.Start(fileName, scrollViewWrapper.ContentView, options);

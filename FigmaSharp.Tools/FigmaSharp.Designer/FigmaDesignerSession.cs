@@ -39,7 +39,7 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSession
     {
-        readonly FigmaViewRendererService rendererService;
+        readonly FigmaFileRendererService rendererService;
         readonly FigmaViewRendererDistributionService distributionService;
         readonly IFigmaFileProvider fileProvider;
 
@@ -50,7 +50,7 @@ namespace FigmaSharp.Designer
         public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
         public ProcessedNode[] MainViews => distributionService.MainViews;
 
-        public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
+        public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaFileRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
         {
             fileProvider = figmaFileProvider;
             rendererService = figmaViewRendererService;
@@ -61,7 +61,7 @@ namespace FigmaSharp.Designer
 
         string baseDirectory;
 
-        public void Reload (IViewWrapper contentView, string file, FigmaViewRendererServiceOptions options)
+        public void Reload(IViewWrapper contentView, string file, FigmaViewRendererServiceOptions options)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace FigmaSharp.Designer
             return processed?.View;
         }
 
-        public FigmaNode GetModel (IViewWrapper e)
+        public FigmaNode GetModel(IViewWrapper e)
         {
             var processed = ProcessedNodes.FirstOrDefault(s => s.View.NativeObject == e.NativeObject);
             return processed?.FigmaNode;
@@ -121,7 +121,7 @@ namespace FigmaSharp.Designer
 
             return dest;
         }
-        bool DeleteNodeRecursively (FigmaNode current, FigmaNode parent, FigmaNode toDelete)
+        bool DeleteNodeRecursively(FigmaNode current, FigmaNode parent, FigmaNode toDelete)
         {
             if (current == toDelete)
             {
@@ -130,7 +130,8 @@ namespace FigmaSharp.Designer
                     var index = Array.FindIndex(parentDocument.children, row => row == current);
                     parentDocument.children = RemoveAt<FigmaCanvas>(parentDocument.children, index);
                     return true;
-                } else if (parent is IFigmaNodeContainer parentNodeContainer)
+                }
+                else if (parent is IFigmaNodeContainer parentNodeContainer)
                 {
                     var index = Array.FindIndex(parentNodeContainer.children, row => row == current);
                     parentNodeContainer.children = RemoveAt<FigmaNode>(parentNodeContainer.children, index);

@@ -416,6 +416,8 @@ namespace FigmaSharp.Models
         public IViewWrapper View { get; set; }
         public ProcessedNode ParentView { get; set; }
 
+        public override string ToString() =>
+            FigmaNode?.ToString() ?? base.ToString();
     }
 
     public class FigmaComponentEntity : FigmaFrameEntity
@@ -434,6 +436,11 @@ namespace FigmaSharp.Models
         [DefaultValue (true)]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public bool visible { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}:{1}:{2}]", type, id, name);
+        }
     }
 
     public class FigmaText : FigmaVectorEntity

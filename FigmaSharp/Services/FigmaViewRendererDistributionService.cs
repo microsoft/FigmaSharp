@@ -9,9 +9,9 @@ namespace FigmaSharp.Services
     public class FigmaViewRendererDistributionService
     {
         public ProcessedNode[] MainViews { get; private set; }
-        protected FigmaViewRendererService figmaFileService;
+        protected FigmaRendererService figmaFileService;
 
-        public FigmaViewRendererDistributionService(FigmaViewRendererService figmaFileService)
+        public FigmaViewRendererDistributionService(FigmaRendererService figmaFileService)
         {
             this.figmaFileService = figmaFileService;
         }
