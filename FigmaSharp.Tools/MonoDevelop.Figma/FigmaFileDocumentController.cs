@@ -117,7 +117,7 @@ namespace MonoDevelop.Figma
 
         void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload (scrollViewWrapper, fileName, fileOptions);
+            session.Reload(scrollViewWrapper, fileName, fileOptions);
         }
 
         protected override Task OnSave()
@@ -128,7 +128,7 @@ namespace MonoDevelop.Figma
         }
 
         FigmaManifestFileProvider fileProvider;
-        FigmaViewRendererService rendererService;
+        FigmaFileRendererService rendererService;
         FigmaViewRendererDistributionService distributionService;
 
         protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
@@ -145,8 +145,8 @@ namespace MonoDevelop.Figma
                 figmaDelegate = new FigmaDesignerDelegate();
                 var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
 
-                fileProvider = new FigmaManifestFileProvider(this.GetType ().Assembly);
-                rendererService = new FigmaViewRendererService(fileProvider, converters);
+                fileProvider = new FigmaManifestFileProvider(this.GetType().Assembly);
+                rendererService = new FigmaFileRendererService(fileProvider, converters);
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
 
                 session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
@@ -170,21 +170,22 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(scrollViewWrapper, fileName, new FigmaViewRendererServiceOptions ());
+                session.Reload(scrollViewWrapper, fileName, new FigmaViewRendererServiceOptions());
             }
             await base.OnInitialize(modelDescriptor, status);
         }
-        
+
         void Surface_FocusedViewChanged(object sender, IViewWrapper e)
         {
             var model = session.GetModel(e);
-            if (outlinePad != null) {
+            if (outlinePad != null)
+            {
                 outlinePad.Focus(model);
             }
-            PropertyPad.Instance.Control.CurrentObject = GetWrapper (model);
+            PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
         }
 
-        FigmaNodeWrapper GetWrapper (FigmaNode node)
+        FigmaNodeWrapper GetWrapper(FigmaNode node)
         {
             if (node is FigmaFrameEntity figmaFrameEntity)
             {
@@ -217,7 +218,8 @@ namespace MonoDevelop.Figma
         {
             scrollViewWrapper.ClearSubviews();
 
-            foreach (var items in session.MainViews) {
+            foreach (var items in session.MainViews)
+            {
                 scrollViewWrapper.AddChild(items.View);
             }
 
@@ -298,11 +300,11 @@ namespace MonoDevelop.Figma
             RefreshAll();
         }
 
-        FigmaViewRendererServiceOptions fileOptions = new FigmaViewRendererServiceOptions ();
+        FigmaViewRendererServiceOptions fileOptions = new FigmaViewRendererServiceOptions();
 
-        void RefreshAll ()
+        void RefreshAll()
         {
-            session.Reload (scrollViewWrapper, fileName, fileOptions);
+            session.Reload(scrollViewWrapper, fileName, fileOptions);
             if (outlinePad != null)
             {
                 var selectedView = surface.SelectedView;

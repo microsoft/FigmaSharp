@@ -48,7 +48,7 @@ namespace FigmaSharp.Services
         void Load(string file);
         void Save(string filePath);
         string GetContentTemplate(string file);
-        void OnStartImageLinkProcessing(List<ProcessedNode> imageVectors, string file);
+        void OnStartImageLinkProcessing(List<ProcessedNode> imageVectors);
     }
 
     public class FigmaLocalFileProvider : FigmaFileProvider
@@ -67,7 +67,7 @@ namespace FigmaSharp.Services
 
         public string ImageFormat { get; set; } = ".png";
 
-        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file)
+        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes)
         {
             //not needed in local files
             Console.WriteLine($"Loading images..");
@@ -128,7 +128,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file)
+        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes)
         {
             if (imageFigmaNodes.Count == 0)
             {
@@ -153,7 +153,7 @@ namespace FigmaSharp.Services
                     {
                         var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
                         Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
-                        var figmaImageResponse = FigmaApiHelper.GetFigmaImages(file, vectors.Select(s => s.FigmaNode.id));
+                        var figmaImageResponse = FigmaApiHelper.GetFigmaImages(File, vectors.Select(s => s.FigmaNode.id));
 
                         if (figmaImageResponse != null)
                         {
@@ -227,7 +227,7 @@ namespace FigmaSharp.Services
             return AppContext.Current.GetManifestResource(Assembly, file);
         }
 
-        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file)
+        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes)
         {
             Console.WriteLine($"Loading images..");
 
@@ -324,7 +324,7 @@ namespace FigmaSharp.Services
 
         public abstract string GetContentTemplate(string file);
 
-        public abstract void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes, string file);
+        public abstract void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes);
 
         public void Save(string filePath)
         {

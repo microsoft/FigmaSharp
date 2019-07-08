@@ -27,7 +27,7 @@ namespace StandaloneDesigner
 
         FigmaViewRendererDistributionService distributionService;
         FigmaManifestFileProvider fileProvider;
-        FigmaViewRendererService rendererService;
+        FigmaFileRendererService rendererService;
         OutlinePanel outlinePanel;
         public override void ViewDidLoad()
         {
@@ -40,7 +40,7 @@ namespace StandaloneDesigner
 
             //we load all the services
             fileProvider = new FigmaManifestFileProvider(this.GetType ().Assembly);
-            rendererService = new FigmaViewRendererService(fileProvider, converters);
+            rendererService = new FigmaFileRendererService(fileProvider, converters);
             distributionService = new FigmaViewRendererDistributionService(rendererService);
 
             designerDelegate = new FigmaDesignerDelegate();

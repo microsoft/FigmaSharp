@@ -57,7 +57,7 @@ namespace ExampleFigma
 
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>
-            var rendererService = new FigmaViewRendererService(fileProvider, converters);
+            var rendererService = new FigmaFileRendererService(fileProvider, converters);
             rendererService.Start(fileName, scrollViewWrapper);
 
             //now we have all the views processed and the relationship we can distribute all the views into the desired base view
