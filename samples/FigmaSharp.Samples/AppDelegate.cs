@@ -36,25 +36,13 @@ namespace FigmaSharp.Samples
     [Register("AppDelegate")]
     public class AppDelegate : NSApplicationDelegate
     {
-        List<DocumentWindowController> document_window_controllers = new List<DocumentWindowController>();
-
-
         public AppDelegate()
         {
         }
 
 
-
         public override void DidFinishLaunching(NSNotification notification)
         {
-            OpenLocationViewController.LinkOpened += delegate (string link, string token) {
-                Console.WriteLine(link + token);
-            };
-
-            var storyboard = NSStoryboard.FromName("Main", null);
-            var controller = (DocumentWindowController)storyboard.InstantiateControllerWithIdentifier("DocumentWindow");
-
-            document_window_controllers.Add(controller);
         }
 
 

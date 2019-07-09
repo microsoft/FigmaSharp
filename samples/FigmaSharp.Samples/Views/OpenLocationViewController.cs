@@ -34,8 +34,7 @@ namespace FigmaSharp.Samples
 {
     public partial class OpenLocationViewController : NSViewController
     {
-        public static event LinkOpenedHandler LinkOpened = delegate { };
-        public delegate void LinkOpenedHandler(string link, string token);
+        public string Token;
 
 
         public OpenLocationViewController(IntPtr handle) : base(handle)
@@ -85,15 +84,26 @@ namespace FigmaSharp.Samples
             OpenButton.Activated += delegate {
                 View.Window.Close();
 
-                token = TokenTextField.StringValue.Trim();
-                TokenStore.SharedTokenStore.SetToken(token);
+                Token = TokenTextField.StringValue.Trim();
+                TokenStore.SharedTokenStore.SetToken(Token);
 
                 string link = LinkComboBox.StringValue.Trim();
-                LinkOpened(link, token);
+
+                PerformSegue("OpenLocationSegue", this);
             };
 
 
             OpenButton.Enabled = CheckFormIsFilled();
+        }
+
+
+        public override void PrepareForSegue(NSStoryboardSegue segue, NSObject sender)
+        {
+            if (segue.DestinationController is DocumentWindowController document_window_controller) {
+                Console.WriteLine("SEGUE ACTIVATED");
+                document_window_controller.test = "dsfdsfds";
+
+            }
         }
 
 

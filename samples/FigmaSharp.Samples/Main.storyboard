@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
@@ -444,7 +444,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <segue destination="qmD-kN-bD5" kind="show" id="Ewi-eQ-WU2"/>
+                                    <segue destination="qmD-kN-bD5" kind="show" identifier="OpenLocationSegue" id="Rxn-cW-H5f"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6mP-H2-i21">
@@ -631,6 +631,6 @@ Gw
         <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qpu-Wi-Xlr"/>
+        <segue reference="Rxn-cW-H5f"/>
     </inferredMetricsTieBreakers>
 </document>
