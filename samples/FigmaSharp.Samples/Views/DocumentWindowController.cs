@@ -54,10 +54,6 @@ namespace FigmaSharp.Samples
 
             base.WindowDidLoad();
             Console.WriteLine("test: " + test);
-
-
-
-
         }
     }
 }
