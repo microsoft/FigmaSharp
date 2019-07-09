@@ -89,9 +89,8 @@
     <Compile Include="Views\DocumentWindowController.designer.cs">
       <DependentUpon>DocumentWindowController.cs</DependentUpon>
     </Compile>
-    <Compile Include="OpenLocationSegue.cs" />
-    <Compile Include="OpenLocationSegue.designer.cs">
-      <DependentUpon>OpenLocationSegue.cs</DependentUpon>
+    <Compile Include="AppDelegate.designer.cs">
+      <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

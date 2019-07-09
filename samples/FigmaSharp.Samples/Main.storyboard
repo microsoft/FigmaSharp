@@ -347,23 +347,22 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="Wiki" id="FKE-Sm-Kum" userLabel="Wiki">
+                                        <menuItem title="Wiki" id="Nw0-eg-q2J">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
-                                                <segue destination="qmD-kN-bD5" kind="show" id="qpu-Wi-Xlr"/>
+                                                <action selector="WikiClicked:" target="Voe-Tx-rLC" id="Eip-6K-8gs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="API Documentation" id="Nw0-eg-q2J">
+                                        <menuItem title="API Documentation" id="HD5-Gi-6bB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="6su-KZ-h1z"/>
+                                                <action selector="APIDocumentationClicked:" target="Voe-Tx-rLC" id="GYb-bz-NDB"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Source Code" id="CAs-ei-MFB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="g8n-Nv-QgC"/>
+                                                <action selector="SourceCodeClicked:" target="Voe-Tx-rLC" id="Ol9-mY-q4d"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -630,7 +629,4 @@ Gw
     <resources>
         <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Rxn-cW-H5f"/>
-    </inferredMetricsTieBreakers>
 </document>
