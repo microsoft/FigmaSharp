@@ -9,9 +9,16 @@ using System.CodeDom.Compiler;
 
 namespace FigmaSharp.Samples
 {
-	[Register ("OpenLocationSegue")]
-	partial class OpenLocationSegue
+	partial class AppDelegate
 	{
+		[Action ("APIDocumentationClicked:")]
+		partial void APIDocumentationClicked (Foundation.NSObject sender);
+
+		[Action ("SourceCodeClicked:")]
+		partial void SourceCodeClicked (Foundation.NSObject sender);
+
+		[Action ("WikiClicked:")]
+		partial void WikiClicked (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

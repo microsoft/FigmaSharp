@@ -34,7 +34,7 @@ using Foundation;
 namespace FigmaSharp.Samples
 {
     [Register("AppDelegate")]
-    public class AppDelegate : NSApplicationDelegate
+    public partial class AppDelegate : NSApplicationDelegate
     {
         public AppDelegate()
         {
@@ -43,12 +43,35 @@ namespace FigmaSharp.Samples
 
         public override void DidFinishLaunching(NSNotification notification)
         {
+            
         }
 
 
         public override void WillTerminate(NSNotification notification)
         {
-            // Insert code here to tear down your application
+        }
+
+
+        string wiki_address = "https://github.com/netonjm/FigmaSharp/wiki";
+        string api_documentation_address = "https://netonjm.github.io/FigmaSharp/api/";
+        string source_code_address = "https://github.com/netonjm/FigmaSharp";
+
+        partial void WikiClicked(NSObject sender)
+        {
+            var url = new NSUrl(wiki_address);
+            NSWorkspace.SharedWorkspace.OpenUrl(url);
+        }
+
+        partial void APIDocumentationClicked(NSObject sender)
+        {
+            var url = new NSUrl(api_documentation_address);
+            NSWorkspace.SharedWorkspace.OpenUrl(url);
+        }
+
+        partial void SourceCodeClicked(NSObject sender)
+        {
+            var url = new NSUrl(source_code_address);
+            NSWorkspace.SharedWorkspace.OpenUrl(url);
         }
     }
 }
