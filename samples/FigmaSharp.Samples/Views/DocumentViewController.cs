@@ -41,8 +41,6 @@ namespace FigmaSharp.Samples
     {
         readonly string ID;
         readonly string Token;
-        public string test = "this is a test";
-
 
         public DocumentViewController(IntPtr handle) : base(handle)
         {
@@ -53,7 +51,6 @@ namespace FigmaSharp.Samples
         {
             ID = id;
             Token = token;
-
         }
 
 
@@ -74,6 +71,14 @@ namespace FigmaSharp.Samples
             menu.VersionSelected += delegate (string version_id) {
                 Load(version_id, null);
             };
+
+            //Console.WriteLine("test: " + (View.Window.WindowControllerWindowController as DocumentWindowController).test);
+
+            //  var parent = (OpenLocationViewController) pare;
+            //  Console.WriteLine(parent.Token);
+
+            // var parent = (OpenLocationViewController) parent.;
+            // Console.WriteLine(parent.Token);
 
             Load(ID, Token);
         }
@@ -114,7 +119,17 @@ namespace FigmaSharp.Samples
 
         void ShowError ()
         {
+            /*
+var alert = new NSAlert()
+{
+    AlertStyle = NSAlertStyle.Warning,
+    MessageText = "Could not open “DhOTs1gwx837ysnG3X6RZqZm”",
+    InformativeText = "Please check if your Figma Link and Personal Access Token are correct",
+};
 
+alert.AddButton("Close");
+alert.RunSheetModal(Window);
+*/
         }
 
 

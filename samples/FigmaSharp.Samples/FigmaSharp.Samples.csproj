@@ -89,6 +89,10 @@
     <Compile Include="Views\DocumentWindowController.designer.cs">
       <DependentUpon>DocumentWindowController.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenLocationSegue.cs" />
+    <Compile Include="OpenLocationSegue.designer.cs">
+      <DependentUpon>OpenLocationSegue.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">

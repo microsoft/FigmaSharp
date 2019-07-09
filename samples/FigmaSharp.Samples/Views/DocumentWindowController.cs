@@ -17,6 +17,8 @@ namespace FigmaSharp.Samples
 
         public static int WindowCount { get; private set; }
 
+        public string test;
+
         public override void WindowDidLoad()
         {
 
@@ -36,7 +38,6 @@ namespace FigmaSharp.Samples
 
             TitleTextField.StringValue = "Opening “DhOTs1gwx837ysnG3X6RZqZm”…";
 
-            Console.WriteLine ((Window.ContentViewController as DocumentViewController).test);
 
             WindowCount++;
 
@@ -47,19 +48,16 @@ namespace FigmaSharp.Samples
             frame.Y -= offset * WindowCount;
             Window.SetFrame (frame, display: true);
 
+
+
+
+
             base.WindowDidLoad();
+            Console.WriteLine("test: " + test);
 
-            /*
-            var alert = new NSAlert()
-            {
-                AlertStyle = NSAlertStyle.Warning,
-                MessageText = "Could not open “DhOTs1gwx837ysnG3X6RZqZm”",
-                InformativeText = "Please check if your Figma Link and Personal Access Token are correct",
-            };
 
-            alert.AddButton("Close");
-            alert.RunSheetModal(Window);
-            */           
+
+
         }
     }
 }
