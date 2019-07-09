@@ -102,7 +102,7 @@ namespace FigmaSharp.Samples
             if (segue.DestinationController is DocumentWindowController document_window_controller) {
                 Console.WriteLine("SEGUE ACTIVATED");
                 document_window_controller.test = "dsfdsfds";
-
+                Console.WriteLine("test: " + document_window_controller.test);
             }
         }
 
