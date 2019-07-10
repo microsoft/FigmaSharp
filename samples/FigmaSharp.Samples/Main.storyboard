@@ -383,7 +383,7 @@
         <scene sceneID="l7G-kG-DjR">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="WaF-y5-496" sceneMemberID="viewController">
-                    <window key="window" title="Open Location" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Qdj-Uz-pZ5" customClass="OpenLocationWindow">
+                    <window key="window" title="Open Location" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Qdj-Uz-pZ5">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="301" width="558" height="222"/>
@@ -512,7 +512,7 @@ Gw
         <scene sceneID="FGq-xg-hEP">
             <objects>
                 <windowController id="qmD-kN-bD5" customClass="DocumentWindowController" sceneMemberID="viewController">
-                    <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="csp-8t-ctO" customClass="DocumentWindow">
+                    <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="csp-8t-ctO">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="317" width="640" height="480"/>
@@ -534,6 +534,9 @@ Gw
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                     </button>
+                                    <connections>
+                                        <action selector="RefreshClicked:" target="qmD-kN-bD5" id="he4-XR-IPe"/>
+                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="815A7408-E296-476E-A40B-09DA766A5965" label="Title" paletteLabel="Title" sizingBehavior="auto" id="nwy-jM-blc">
                                     <nil key="toolTip"/>
@@ -575,6 +578,13 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="F5DFBB6B-E4C4-4998-B7FE-6DFD7D82076A" explicitItemIdentifier="RefreshSpinner" label="RefreshSpinner" paletteLabel="RefreshSpinner" tag="-1" sizingBehavior="auto" id="zk5-q5-OOS">
+                                    <nil key="toolTip"/>
+                                    <progressIndicator key="view" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="Ohc-c8-to8">
+                                        <rect key="frame" x="36" y="14" width="16" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </progressIndicator>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="NHv-Gm-Lms"/>
@@ -590,6 +600,7 @@ Gw
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="MainToolbar" destination="z7L-HX-hhV" id="1Xy-J8-wDQ"/>
                         <outlet property="PagePopUpButton" destination="fWU-rn-Zi4" id="SI2-eg-muq"/>
                         <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="ZWE-0H-D3R"/>
                         <outlet property="TitleTextField" destination="zI9-VO-MN3" id="zIy-c7-78l"/>

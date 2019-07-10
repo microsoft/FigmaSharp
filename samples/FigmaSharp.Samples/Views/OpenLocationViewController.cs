@@ -34,7 +34,9 @@ namespace FigmaSharp.Samples
 {
     public partial class OpenLocationViewController : NSViewController
     {
-        public string Token;
+        string Token;
+        string LinkID;
+
 
 
         public OpenLocationViewController(IntPtr handle) : base(handle)
@@ -87,7 +89,7 @@ namespace FigmaSharp.Samples
                 Token = TokenTextField.StringValue.Trim();
                 TokenStore.SharedTokenStore.SetToken(Token);
 
-                string link = LinkComboBox.StringValue.Trim();
+                LinkID = LinkComboBox.StringValue.Trim();
 
                 PerformSegue("OpenLocationSegue", this);
             };
@@ -97,13 +99,15 @@ namespace FigmaSharp.Samples
         }
 
 
+
         public override void PrepareForSegue(NSStoryboardSegue segue, NSObject sender)
         {
-            if (segue.DestinationController is DocumentWindowController document_window_controller) {
-                Console.WriteLine("SEGUE ACTIVATED");
+                var document_window_controller = (DocumentWindowController) segue.DestinationController;
+                
                 document_window_controller.test = "dsfdsfds";
-                Console.WriteLine("test: " + document_window_controller.test);
-            }
+                document_window_controller.ConfigureDocument(Token, LinkID);
+                
+                Console.WriteLine("OpenLocationViewController: " + document_window_controller.test);
         }
 
 
