@@ -73,18 +73,10 @@
       <DependentUpon>OpenLocationViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\DocumentViewController.cs" />
-    <Compile Include="Views\DocumentController.designer.cs">
+    <Compile Include="Views\DocumentViewController.designer.cs">
       <DependentUpon>DocumentViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\VersionMenu.cs" />
-    <Compile Include="Views\DocumentWindow.cs" />
-    <Compile Include="Views\DocumentWindow.designer.cs">
-      <DependentUpon>DocumentWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OpenLocationWindow.cs" />
-    <Compile Include="Views\OpenLocationWindow.designer.cs">
-      <DependentUpon>OpenLocationWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\DocumentWindowController.cs" />
     <Compile Include="Views\DocumentWindowController.designer.cs">
       <DependentUpon>DocumentWindowController.cs</DependentUpon>

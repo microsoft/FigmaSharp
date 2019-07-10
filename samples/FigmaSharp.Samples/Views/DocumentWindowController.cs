@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using AppKit;
 using CoreGraphics;
+using Foundation;
 
 namespace FigmaSharp.Samples
 {
@@ -19,6 +20,9 @@ namespace FigmaSharp.Samples
 
         public string test;
 
+
+
+
         public override void WindowDidLoad()
         {
 
@@ -32,11 +36,8 @@ namespace FigmaSharp.Samples
                 Console.WriteLine(PagePopUpButton.SelectedItem.Title);
             };
 
-            RefreshButton.Activated += delegate {
-                Console.WriteLine("Refresh clicked");
-            };
 
-            TitleTextField.StringValue = "Opening “DhOTs1gwx837ysnG3X6RZqZm”…";
+
 
 
             WindowCount++;
@@ -49,11 +50,33 @@ namespace FigmaSharp.Samples
             Window.SetFrame (frame, display: true);
 
 
-
-
-
             base.WindowDidLoad();
-            Console.WriteLine("test: " + test);
+        }
+
+
+        public void ConfigureDocument(string token, string link_id)
+        {
+            TitleTextField.StringValue = string.Format("Opening “{0}”…", link_id);
+
+            (Window.ContentViewController as DocumentViewController).Token = token;
+            (Window.ContentViewController as DocumentViewController).Link_ID = link_id;
+        }
+
+
+        partial void RefreshClicked(NSObject sender)
+        {
+            if (MainToolbar.VisibleItems[1].Identifier != "RefreshSpinner") {
+                MainToolbar.InsertItem("RefreshSpinner", 1);
+               (MainToolbar.VisibleItems[1].View as NSProgressIndicator).StartAnimation(this);
+            
+            } else {
+                (MainToolbar.VisibleItems[1].View as NSProgressIndicator).StopAnimation(this);
+                MainToolbar.RemoveItem(1);
+            }
+
+           // RefreshSpinner.View.Hidden = true;
+           //RefreshSpinner.
+            (Window.ContentViewController as DocumentViewController).Reload();
         }
     }
 }
