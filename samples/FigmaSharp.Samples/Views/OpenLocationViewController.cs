@@ -34,8 +34,10 @@ namespace FigmaSharp.Samples
 {
     public partial class OpenLocationViewController : NSViewController
     {
-        string Token;
-        string LinkID;
+        string keychain_token;
+
+        string token_message;
+        string token_message_unsaved = "This token will be saved in your keychain.";
 
 
         public OpenLocationViewController(IntPtr handle) : base(handle)
@@ -47,58 +49,62 @@ namespace FigmaSharp.Samples
         {
             base.ViewDidLoad();
 
-
-            LinkComboBox.Changed += delegate {
-                LinkComboBox.StringValue = FigmaLink.TryParseID(LinkComboBox.StringValue);
-                OpenButton.Enabled = CheckFormIsFilled();
-            };
-
-
-            string token = "";
-            string token_message = TokenStatusTextField.StringValue;
-            string token_message_unsaved = "This token will be saved in your keychain.";
-
-            TokenTextField.Changed += delegate {
-                OpenButton.Enabled = CheckFormIsFilled();
-
-                if (TokenTextField.StringValue == token)
-                    TokenStatusTextField.StringValue = token_message;
-                else
-                    TokenStatusTextField.StringValue = token_message_unsaved;
-            };
-
+            token_message = TokenStatusTextField.StringValue;
 
             try {
-                token = TokenStore.SharedTokenStore.GetToken();
-                TokenTextField.StringValue = token;
+                keychain_token = TokenStore.SharedTokenStore.GetToken();
+                TokenTextField.StringValue = keychain_token;
 
             } catch {
                 TokenStatusTextField.StringValue = token_message_unsaved;
                 Console.WriteLine("No token found in keychain.");
             }
 
-
+            TokenTextField.Changed += TokenTextFieldChanged;
+            LinkComboBox.Changed += LinkComboboxChanged;
             CancelButton.Activated += delegate { View.Window.Close(); };
 
-            OpenButton.Activated += delegate {
-                View.Window.Close();
+            OpenButton.Activated += OpenButtonActivated;
+            OpenButton.Enabled = CheckFormIsFilled();
+        }
 
-                Token = TokenTextField.StringValue.Trim();
-                TokenStore.SharedTokenStore.SetToken(Token);
 
-                LinkID = LinkComboBox.StringValue.Trim();
+        void TokenTextFieldChanged(Object sender, EventArgs args)
+        {
+            string token_message = TokenStatusTextField.StringValue;
 
-                PerformSegue("OpenLocationSegue", this);
-            };
+            if (TokenTextField.StringValue == keychain_token)
+                TokenStatusTextField.StringValue = token_message;
+            else
+                TokenStatusTextField.StringValue = token_message_unsaved;
 
             OpenButton.Enabled = CheckFormIsFilled();
         }
 
 
+        void LinkComboboxChanged(object sender, EventArgs args)
+        {
+            LinkComboBox.StringValue = FigmaLink.TryParseID(LinkComboBox.StringValue);
+            OpenButton.Enabled = CheckFormIsFilled();
+        }
+
+
+        void OpenButtonActivated(Object sender, EventArgs args)
+        {
+            View.Window.Close();
+            PerformSegue("OpenLocationSegue", this);
+        }
+
+
         public override void PrepareForSegue(NSStoryboardSegue segue, NSObject sender)
         {
-                var document_window_controller = (DocumentWindowController) segue.DestinationController;
-                document_window_controller.LoadDocument(Token, LinkID);
+            string token = TokenTextField.StringValue.Trim();
+            TokenStore.SharedTokenStore.SetToken(token);
+
+            string link_id = LinkComboBox.StringValue.Trim();
+
+            var document_window_controller = (DocumentWindowController) segue.DestinationController;
+            document_window_controller.LoadDocument(token, link_id);
         }
 
 
