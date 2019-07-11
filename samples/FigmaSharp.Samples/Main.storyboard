@@ -377,7 +377,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="692" y="-97"/>
+            <point key="canvasLocation" x="667" y="-63"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="l7G-kG-DjR">
@@ -479,7 +479,7 @@ Gw
                                 <rect key="frame" x="191" y="71" width="338" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="left" title="✓  Saved in your keychain" id="38N-GE-Rnu">
-                                    <font key="font" size="11" name=".SFNSSymbols-Regular"/>
+                                    <font key="font" metaFont="systemBold" size="11"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -527,7 +527,7 @@ Gw
                                     <button key="view" verticalHuggingPriority="750" id="iXD-EU-bKJ">
                                         <rect key="frame" x="0.0" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">r</string>
@@ -543,7 +543,7 @@ Gw
                                     <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zI9-VO-MN3" userLabel="TitleTextField">
                                         <rect key="frame" x="0.0" y="14" width="133" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Figma Document" id="JWs-jX-Yls">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Untitled" id="JWs-jX-Yls">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -557,14 +557,13 @@ Gw
                                     <popUpButton key="view" verticalHuggingPriority="750" id="fWU-rn-Zi4" userLabel="PopUpButton">
                                         <rect key="frame" x="0.0" y="14" width="100" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UE1-MP-Sxw" userLabel="Cell">
+                                        <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UE1-MP-Sxw" userLabel="Cell">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="htg-1M-Blp"/>
                                         </popUpButtonCell>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Dtm-Aa-SvJ"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="8jD-Ch-646"/>
                                 <toolbarItem implicitItemIdentifier="E4D4A187-85E2-47D9-84A0-1A811F2874D5" label="Label" paletteLabel="Label" sizingBehavior="auto" id="Y1v-Tf-uql">
                                     <nil key="toolTip"/>
@@ -572,16 +571,16 @@ Gw
                                         <rect key="frame" x="0.0" y="14" width="49" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Page:" id="15S-mK-Y1y">
-                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="F5DFBB6B-E4C4-4998-B7FE-6DFD7D82076A" explicitItemIdentifier="RefreshSpinner" label="RefreshSpinner" paletteLabel="RefreshSpinner" tag="-1" sizingBehavior="auto" id="zk5-q5-OOS">
+                                <toolbarItem implicitItemIdentifier="F5DFBB6B-E4C4-4998-B7FE-6DFD7D82076A" explicitItemIdentifier="Spinner" label="Spinner" paletteLabel="Spinner" tag="-1" sizingBehavior="auto" id="zk5-q5-OOS">
                                     <nil key="toolTip"/>
                                     <progressIndicator key="view" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="Ohc-c8-to8">
-                                        <rect key="frame" x="36" y="14" width="16" height="16"/>
+                                        <rect key="frame" x="16" y="14" width="16" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </progressIndicator>
                                 </toolbarItem>

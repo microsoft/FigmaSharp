@@ -38,12 +38,6 @@ namespace FigmaSharp.Samples
 {
     public partial class DocumentViewController : NSViewController
     {
-        public string Link_ID = "";
-        public string Token = "";
-
-        // FileProvider etc.
-
-
         public DocumentViewController(IntPtr handle) : base(handle)
         {
         }
@@ -55,26 +49,7 @@ namespace FigmaSharp.Samples
         }
 
 
-        public void Load(string version_id, string page_id)
-        {
-            ToggleSpinnerState(toggle_on: true);
-
-            // load figma document
-
-            UpdateVersionMenu();
-            UpdatePagesPopupButton();
-
-            ToggleSpinnerState(toggle_on: false);
-        }
-
-
-        public void Reload()
-        {
-            Load(Link_ID, Token);
-        }
-
-
-        void ToggleSpinnerState (bool toggle_on)
+        public void ToggleSpinnerState (bool toggle_on)
         {
             if (toggle_on) {
                 Spinner.Hidden = false;
@@ -87,46 +62,7 @@ namespace FigmaSharp.Samples
         }
 
 
-        void UpdateVersionMenu()
-        {
-            var menu = new VersionMenu();
-
-            menu.VersionSelected += delegate (string version_id) {
-                Load(version_id, null);
-            };
-
-            menu.AddItem("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now);
-            menu.AddItem("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now);
-            menu.AddItem("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now);
-            menu.AddItem("4", DateTime.Now);
-            menu.AddItem("5", DateTime.Now.AddDays(-7));
-            menu.AddItem("6", DateTime.Now.AddDays(-14));
-
-            menu.UseAsVersionsMenu();
-        }
-
-
-        void UpdatePagesPopupButton()
-        {
-
-        }
-
-
-        void ShowError ()
-        {
-            /*
-                var alert = new NSAlert()
-                {
-                    AlertStyle = NSAlertStyle.Warning,
-                    MessageText = "Could not open “DhOTs1gwx837ysnG3X6RZqZm”",
-                    InformativeText = "Please check if your Figma Link and Personal Access Token are correct",
-                };
-
-                alert.AddButton("Close");
-                //alert.RunSheetModal(View.Window);
-                            NSApplication.SharedApplication.BeginSheet();
-            */
-        }
+       //(View.Window.WindowController as DocumentWindowController).Test();
 
 
         public override NSObject RepresentedObject

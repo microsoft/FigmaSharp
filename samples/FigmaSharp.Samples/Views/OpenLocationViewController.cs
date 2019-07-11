@@ -38,7 +38,6 @@ namespace FigmaSharp.Samples
         string LinkID;
 
 
-
         public OpenLocationViewController(IntPtr handle) : base(handle)
         {
         }
@@ -79,9 +78,7 @@ namespace FigmaSharp.Samples
             }
 
 
-            CancelButton.Activated += delegate {
-                View.Window.Close();
-            };
+            CancelButton.Activated += delegate { View.Window.Close(); };
 
             OpenButton.Activated += delegate {
                 View.Window.Close();
@@ -94,20 +91,14 @@ namespace FigmaSharp.Samples
                 PerformSegue("OpenLocationSegue", this);
             };
 
-
             OpenButton.Enabled = CheckFormIsFilled();
         }
-
 
 
         public override void PrepareForSegue(NSStoryboardSegue segue, NSObject sender)
         {
                 var document_window_controller = (DocumentWindowController) segue.DestinationController;
-                
-                document_window_controller.test = "dsfdsfds";
-                document_window_controller.ConfigureDocument(Token, LinkID);
-                
-                Console.WriteLine("OpenLocationViewController: " + document_window_controller.test);
+                document_window_controller.LoadDocument(Token, LinkID);
         }
 
 
