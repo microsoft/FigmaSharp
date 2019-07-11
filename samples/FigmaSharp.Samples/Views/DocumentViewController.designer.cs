@@ -13,6 +13,9 @@ namespace FigmaSharp.Samples
 	partial class DocumentViewController
 	{
 		[Outlet]
+		AppKit.NSScrollView MainScrollView { get; set; }
+
+		[Outlet]
 		AppKit.NSProgressIndicator Spinner { get; set; }
 		
 		void ReleaseDesignerOutlets ()
@@ -20,6 +23,11 @@ namespace FigmaSharp.Samples
 			if (Spinner != null) {
 				Spinner.Dispose ();
 				Spinner = null;
+			}
+
+			if (MainScrollView != null) {
+				MainScrollView.Dispose ();
+				MainScrollView = null;
 			}
 		}
 	}
