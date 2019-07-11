@@ -91,7 +91,7 @@ namespace FigmaSharp.Samples
 
         void OpenButtonActivated(Object sender, EventArgs args)
         {
-            View.Window.Close();
+            View.Window.IsVisible = false;
             PerformSegue("OpenLocationSegue", this);
         }
 
@@ -105,6 +105,10 @@ namespace FigmaSharp.Samples
 
             var document_window_controller = (DocumentWindowController) segue.DestinationController;
             document_window_controller.LoadDocument(token, link_id);
+
+            document_window_controller.Window.WillClose += delegate {
+                View.Window.IsVisible = true;
+            };
         }
 
 

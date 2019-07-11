@@ -8,6 +8,10 @@ using AppKit;
 using CoreGraphics;
 using Foundation;
 
+using FigmaSharp;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+
 namespace FigmaSharp.Samples
 {
     public partial class DocumentWindowController : NSWindowController
@@ -15,12 +19,18 @@ namespace FigmaSharp.Samples
         public static int WindowCount { get; private set; }
         const int NEW_WINDOW_OFFSET = 38;
 
+        public string Title
+        {
+            get { return TitleTextField.StringValue; }
+            set { TitleTextField.StringValue = value; }
+        }
+
 
         public string Token = "";
 
         public string Link_ID = "";
-        public string Version_ID = "Current";
-        public string Page_ID = "Page 1";
+        public string Version_ID = null;
+        public string Page_ID = null;
 
 
         // FileProvider etc.
@@ -31,9 +41,10 @@ namespace FigmaSharp.Samples
         }
 
 
-        public string Title {
-            get { return TitleTextField.StringValue; }
-            set { TitleTextField.StringValue = value; }
+        public override void WindowDidLoad()
+        {
+            PositionWindow();
+            base.WindowDidLoad();
         }
 
 
@@ -46,13 +57,6 @@ namespace FigmaSharp.Samples
         }
 
 
-        public override void WindowDidLoad()
-        {
-            PositionWindow();
-            base.WindowDidLoad();
-        }
-
-
         void Load(string version_id, string page_id)
         {
             Title = string.Format("Opening “{0}”…", Link_ID);
@@ -61,10 +65,14 @@ namespace FigmaSharp.Samples
             RefreshButton.Enabled = false;
 
             new Thread(() => {
-                Thread.Sleep(2000);
+                Thread.Sleep(50000);
 
                 this.InvokeOnMainThread(() => {
+                    ShowError();
                     Title = Link_ID;
+
+                    NSView figma_view = CreateFigmaView();
+                    Window.ContentView.AddSubview(figma_view);
 
                     UpdateVersionMenu();
                     UpdatePagesPopupButton();
@@ -82,13 +90,20 @@ namespace FigmaSharp.Samples
 
         public void Reload()
         {
-            Load(Link_ID, Token);
+            Load(null, null);
         }
+
+
+        NSView CreateFigmaView()
+        {
+            return new NSView();
+        }
+
 
 
         void UpdatePagesPopupButton()
         {
-            PagePopUpButton.AddItem("1");
+            PagePopUpButton.AddItem("Page 1");
             PagePopUpButton.Activated += delegate {
                 Console.WriteLine(PagePopUpButton.SelectedItem.Title);
             };
@@ -120,7 +135,7 @@ namespace FigmaSharp.Samples
             RefreshButton.Enabled = false;
 
             new Thread(() => {
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
 
                 this.InvokeOnMainThread(() => {
                     RefreshButton.Enabled = true;
@@ -161,17 +176,17 @@ namespace FigmaSharp.Samples
 
         void ShowError()
         {
-            /*
-            var alert = new NSAlert()
-            {
+            var alert = new NSAlert() {
                 AlertStyle = NSAlertStyle.Warning,
-                MessageText = "Could not open “DhOTs1gwx837ysnG3X6RZqZm”",
-                InformativeText = "Please check if your Figma Link and Personal Access Token are correct",
+                MessageText = string.Format("Could not open “{0}”", Link_ID),
+                InformativeText = "Please check if the provided Figma Link and Personal Access Token are correct.",
             };
 
             alert.AddButton("Close");
-            alert.BeginSheetForResponse(alert.Window, null);
-            */
+            alert.RunSheetModal(Window);
+
+            WindowCount--;
+            Window.PerformClose(this);
         }
     }
 }

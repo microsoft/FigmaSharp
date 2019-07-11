@@ -28,9 +28,6 @@
 using System;
 using System.Threading;
 
-using FigmaSharp;
-using FigmaSharp.Services;
-
 using AppKit;
 using Foundation;
 
@@ -60,9 +57,6 @@ namespace FigmaSharp.Samples
                 Spinner.StopAnimation(this);
             }
         }
-
-
-       //(View.Window.WindowController as DocumentWindowController).Test();
 
 
         public override NSObject RepresentedObject
