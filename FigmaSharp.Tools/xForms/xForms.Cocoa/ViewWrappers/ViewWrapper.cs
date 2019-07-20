@@ -107,15 +107,6 @@ namespace FigmaSharp.Cocoa
             nativeView.AddSubview(view.NativeObject as NSView);
         }
 
-        public virtual void CreateConstraints(FigmaNode actual)
-        {
-            if (actual == null)
-            {
-                return;
-            }
-
-        }
-
         public virtual void ClearSubviews()
         {
             foreach (var item in nativeView.Subviews)

@@ -9,7 +9,7 @@
     <RootNamespace>BasicRendering.Cocoa</RootNamespace>
     <AssemblyName>BasicRendering.Cocoa</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -94,6 +94,14 @@
     <ProjectReference Include="..\..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
       <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
       <Name>FigmaSharp.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms\xForms.csproj">
+      <Project>{11127048-A260-473D-B5D7-3240F90EF410}</Project>
+      <Name>xForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms.Cocoa\xForms.Cocoa.csproj">
+      <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
+      <Name>xForms.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\BasicRendering.Shared\BasicRendering.Shared.projitems" Label="Shared" Condition="Exists('..\BasicRendering.Shared\BasicRendering.Shared.projitems')" />

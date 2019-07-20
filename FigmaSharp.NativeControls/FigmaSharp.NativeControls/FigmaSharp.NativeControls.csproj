@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp.Tools\xForms\xForms\xForms.csproj" />
   </ItemGroup>
 </Project>

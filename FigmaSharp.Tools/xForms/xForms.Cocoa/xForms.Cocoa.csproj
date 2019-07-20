@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</ProjectGuid>
+    <ProjectGuid>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>FigmaSharp.Cocoa</RootNamespace>
-    <AssemblyName>FigmaSharp.Cocoa</AssemblyName>
-    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+    <RootNamespace>xForms.Cocoa</RootNamespace>
+    <AssemblyName>xForms.Cocoa</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,11 +24,15 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
+    <HttpClientHandler></HttpClientHandler>
+    <LinkMode></LinkMode>
+    <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <EnableCodeSigning>false</EnableCodeSigning>
@@ -36,6 +40,9 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
+    <HttpClientHandler></HttpClientHandler>
+    <LinkMode></LinkMode>
+    <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
@@ -45,40 +52,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FigmaViewsHelper.cs" />
-    <Compile Include="FigmaDelegate.cs" />
-    <Compile Include="Converters\FigmaElipseConverter.cs" />
-    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
-    <Compile Include="Converters\FigmaLineConverter.cs" />
-    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
-    <Compile Include="Converters\FigmaTextConverter.cs" />
-    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
-    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
-    <Compile Include="FigmaApplication.cs" />
-    <Compile Include="Extensions\FigmaExtensions.cs" />
-    <Compile Include="Extensions\ViewConfigureExtensions.cs" />
-    <Compile Include="Converters\FigmaCodePositionConverter.cs" />
-    <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
-    <Compile Include="Extensions\VerticalAlignmentTextCell.cs" />
-    <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
+    <Compile Include="ViewWrappers\ImageViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ImageWrapper.cs" />
+    <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ViewWrapper.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp.Tools\xForms\xForms\xForms.csproj">
+    <Folder Include="ViewWrappers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\xForms\xForms.csproj">
       <Project>{11127048-A260-473D-B5D7-3240F90EF410}</Project>
       <Name>xForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp.Tools\xForms\xForms.Cocoa\xForms.Cocoa.csproj">
-      <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
-      <Name>xForms.Cocoa</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-    <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

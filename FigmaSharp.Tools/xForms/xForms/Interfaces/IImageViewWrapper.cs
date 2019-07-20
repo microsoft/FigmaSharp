@@ -25,11 +25,9 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-
 namespace FigmaSharp
 {
-    public interface IImageViewWrapper : IViewWrapper
+	public interface IImageViewWrapper : IViewWrapper
     {
         void SetImage(IImageWrapper image);
     }

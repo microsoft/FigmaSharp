@@ -47,7 +47,6 @@ namespace FigmaSharp
         FigmaRectangle Allocation { get; }
 
         void AddChild(IViewWrapper view);
-        void CreateConstraints(FigmaNode current);
 
         void RemoveChild(IViewWrapper view);
 

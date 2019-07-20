@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FigmaSharp.NativeControls.Cocoa</RootNamespace>
     <AssemblyName>FigmaSharp.NativeControls.Cocoa</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -74,6 +74,14 @@
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp.Tools\xForms\xForms\xForms.csproj">
+      <Project>{11127048-A260-473D-B5D7-3240F90EF410}</Project>
+      <Name>xForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp.Tools\xForms\xForms.Cocoa\xForms.Cocoa.csproj">
+      <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
+      <Name>xForms.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -105,11 +105,6 @@
       <Name>FigmaSharp</Name>
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.Tools\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
-      <Project>{4E7F6BD9-33C0-4544-9186-7FDCD0047F4B}</Project>
-      <Name>FigmaSharp.Designer</Name>
-      <ReferenceSourceTarget></ReferenceSourceTarget>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

@@ -272,7 +272,7 @@ namespace FigmaSharp.Cocoa
             var fills = text.fills.FirstOrDefault();
             if (fills != null && fills.visible)
             {
-                label.TextColor = FigmaExtensions.ToNSColor(fills.color);
+                label.TextColor = fills.color.ToNSColor();
             }
 
             if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
