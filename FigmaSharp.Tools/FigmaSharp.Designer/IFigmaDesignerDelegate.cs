@@ -27,6 +27,7 @@
  */
 using System;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Designer
 {
@@ -39,9 +40,9 @@ namespace FigmaSharp.Designer
         void StopHoverSelection();
         IBorderedWindow CreateOverlayWindow();
 
-        event EventHandler<IViewWrapper> HoverSelecting;
+        event EventHandler<IView> HoverSelecting;
 
-        event EventHandler<IViewWrapper> HoverSelectionEnded;
+        event EventHandler<IView> HoverSelectionEnded;
 
         void ConvertToNodes(FigmaNode figmaNode, FigmaNodeView node);
     }

@@ -6,6 +6,8 @@ using Foundation;
 using CoreGraphics;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Designer
 {
@@ -57,7 +59,7 @@ namespace FigmaSharp.Designer
                 var selected = GetHoverSelectedView();
                 if (selected != null)
                 {
-                    HoverSelectionEnded?.Invoke(this, new ViewWrapper(selected));
+                    HoverSelectionEnded?.Invoke(this, new View(selected));
                 }
                 else
                 {
@@ -107,7 +109,7 @@ namespace FigmaSharp.Designer
             var selectedView = GetHoverSelectedView();
             if (selectedView != null)
             {
-                HoverSelecting?.Invoke(this, new ViewWrapper(selectedView));
+                HoverSelecting?.Invoke(this, new View(selectedView));
             }
         }
 
@@ -121,7 +123,7 @@ namespace FigmaSharp.Designer
             var selectedView = GetHoverSelectedView();
             if (selectedView != null)
             {
-                HoverSelecting?.Invoke(this, new ViewWrapper(selectedView));
+                HoverSelecting?.Invoke(this, new View(selectedView));
             }
         }
 
@@ -192,8 +194,8 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public event EventHandler<IViewWrapper> HoverSelecting;
-        public event EventHandler<IViewWrapper> HoverSelectionEnded;
+        public event EventHandler<IView> HoverSelecting;
+        public event EventHandler<IView> HoverSelectionEnded;
 
         #endregion
 

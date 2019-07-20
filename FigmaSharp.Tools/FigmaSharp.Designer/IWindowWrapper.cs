@@ -26,13 +26,14 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Designer
 {
-    public interface IWindowWrapper : IObjectWrapper
+    public interface IWindowWrapper : IObject
     {
-        IViewWrapper ContentView { get; set; }
-        IViewWrapper FirstResponder { get; }
+        IView ContentView { get; set; }
+        IView FirstResponder { get; }
         bool HasParentWindow { get; }
 
         event EventHandler LostFocus;

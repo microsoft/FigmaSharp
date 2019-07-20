@@ -1,13 +1,15 @@
 ﻿using System;
 using AppKit;
 using CoreGraphics;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Designer
 {
     internal class BorderedWindow : WindowWrapper, IBorderedWindow
     {
         readonly NSBox box;
-        IViewWrapper ObjContent { get; set; }
+        IView ObjContent { get; set; }
 
         public NSColor BorderColor
         {
@@ -53,7 +55,7 @@ namespace FigmaSharp.Designer
 
         }
 
-        public BorderedWindow(IViewWrapper content, NSColor borderColor, NSBorderType borderType = NSBorderType.LineBorder, float borderWidth = 3) : this((content.NativeObject as NSView).Frame, borderColor, NSColor.Clear, borderType, borderWidth)
+        public BorderedWindow(IView content, NSColor borderColor, NSBorderType borderType = NSBorderType.LineBorder, float borderWidth = 3) : this((content.NativeObject as NSView).Frame, borderColor, NSColor.Clear, borderType, borderWidth)
         {
             ObjContent = content;
         }
@@ -69,7 +71,7 @@ namespace FigmaSharp.Designer
             ShowsToolbarButton = false;
             IgnoresMouseEvents = true;
             box = new NSBox { BoxType = NSBoxType.NSBoxCustom };
-            ContentView = box;
+            ContentView = new View (box);
             FillColor = fillColor;
             BorderWidth = borderWidth;
             BorderColor = borderColor;
@@ -91,7 +93,7 @@ namespace FigmaSharp.Designer
           
         }
 
-        public void AlignWith(IViewWrapper view)
+        public void AlignWith(IView view)
         {
             var frame = (view.NativeObject as NSView).AccessibilityFrame;
             SetFrame(frame, true);
