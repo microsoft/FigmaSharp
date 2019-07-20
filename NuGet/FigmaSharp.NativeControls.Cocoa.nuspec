@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FigmaSharp.NativeControls.Cocoa</id>
+    <title>FigmaSharp.NativeControls.Cocoa</title>
+    <version>0.6-alpha</version>
+    <authors>Jose Medrano</authors>
+    <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
+    <projectUrl>https://www.microsoft.com/es-es/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/netonjm/FigmaSharp/master/icons/image-logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Say hello to #FigmaSharp and enhance your .NET applications taking advantage of Figma's component system creating beautiful views in your application!</description>
+	 <releaseNotes>https://www.microsoft.com/es-es/</releaseNotes>
+    <copyright>Jose Medrano.</copyright>
+    <tags>figma designer design</tags>
+    <dependencies>
+      <dependency id="FigmaSharp" version="0.6-alpha" />
+      <dependency id="FigmaSharp.Cocoa" version="0.6-alpha" />
+      <dependency id="FigmaSharp.Views" version="0.6-alpha" />
+      <dependency id="FigmaSharp.Views.Cocoa" version="0.6-alpha" />
+      <dependency id="Newtonsoft.Json" version="12.0.1" />
+      <dependency id="System.Drawing.Common" version="4.5.1" /> 
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\bin\Release\*.dll" target="lib/net472" />
+  </files>
+
+</package>

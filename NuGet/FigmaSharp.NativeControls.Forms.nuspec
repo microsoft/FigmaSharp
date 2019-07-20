@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FigmaSharp.NativeControls.Forms</id>
+    <title>FigmaSharp.NativeControls.Forms</title>
+    <version>0.6.0-alpha</version>
+    <authors>Jose Medrano</authors>
+    <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
+    <projectUrl>https://www.microsoft.com/es-es/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/netonjm/FigmaSharp/master/icons/image-logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Say hello to #FigmaSharp and enhance your .NET applications taking advantage of Figma's component system creating beautiful views in your application!</description>
+	 <releaseNotes>https://www.microsoft.com/es-es/</releaseNotes>
+    <copyright>Jose Medrano.</copyright>
+    <tags>figma designer design</tags>
+    <dependencies>
+      <dependency id="FigmaSharp" version="0.6.0-alpha" />
+      <dependency id="FigmaSharp.Forms" version="0.6.0-alpha" />
+      <dependency id="FigmaSharp.Views" version="0.6.0-alpha" />
+      <dependency id="FigmaSharp.Views.Forms" version="0.6.0-alpha" />
+      <dependency id="Newtonsoft.Json" version="12.0.1" />
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="..\FigmaSharp\FigmaSharp.Forms\bin\Release\netstandard2.0\*.dll" target="lib/netstandard2.0" />
+  </files>
+
+</package>

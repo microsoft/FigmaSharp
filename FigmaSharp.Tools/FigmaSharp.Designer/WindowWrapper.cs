@@ -6,11 +6,13 @@ using System.Linq;
 using System.Globalization;
 using System.Threading;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Designer
 {
     [Register("WindowWrapper")]
-    public class WindowInternalWrapper : IWindowWrapper
+    public class WindowInternalWrapper : IWindow
     {
         NSWindow window;
         public WindowInternalWrapper (NSWindow window)
@@ -49,13 +51,13 @@ namespace FigmaSharp.Designer
             return window.ChildWindows.Contains(debugOverlayWindow.NativeObject as NSWindow);
         }
 
-        IViewWrapper IWindowWrapper.ContentView
+        public IView ContentView
         {
             get
             {
                 if (window.ContentView is NSView view)
                 {
-                    return new ViewWrapper(view);
+                    return new View(view);
                 }
                 return null;
             }
@@ -65,13 +67,13 @@ namespace FigmaSharp.Designer
             }
         }
 
-        IViewWrapper IWindowWrapper.FirstResponder
+        public IView FirstResponder
         {
             get
             {
                 if (window.FirstResponder is NSView view)
                 {
-                    return new ViewWrapper(view);
+                    return new View(view);
                 }
                 return null;
             }
@@ -81,6 +83,22 @@ namespace FigmaSharp.Designer
         public float FrameY => (float)window.Frame.Y;
         public float FrameWidth => (float)window.Frame.Width;
         public float FrameHeight => (float)window.Frame.Height;
+
+        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Color BackgroundColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Borderless { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Resizable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsFullSizeContentView { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsClosable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Size Size { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsOpaque { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool MovableByWindowBackground { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool ShowCloseButton { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool ShowZoomButton { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool ShowMiniaturizeButton { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool ShowTitle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsDark { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IView Content { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void AlignRight(IWindowWrapper toView, int pixels)
         {
@@ -129,6 +147,36 @@ namespace FigmaSharp.Designer
         public void Close()
         {
             window.Close();
+        }
+
+        public void AddChild(IWindow window)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveChild(IWindow window)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowDialog()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Center()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
 
         public event EventHandler ResizeRequested;
@@ -198,29 +246,29 @@ namespace FigmaSharp.Designer
             return this.ChildWindows.Contains(debugOverlayWindow.NativeObject as NSWindow);
         }
 
-        IViewWrapper IWindowWrapper.ContentView
+        public IView ContentView
         {
             get
             {
                 if (ContentView is NSView view)
                 {
-                    return new ViewWrapper(view);
+                    return new View(view);
                 }
                 return null;
             }
             set
             {
-                ContentView = value.NativeObject as NSView;
+                ContentView = value;
             }
         }
 
-        IViewWrapper IWindowWrapper.FirstResponder
+        public IView FirstResponder
         {
             get
             {
                 if (FirstResponder is NSView view)
                 {
-                    return new ViewWrapper(view);
+                    return new View(view);
                 }
                 return null;
             }

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
   </ItemGroup>
-
 </Project>

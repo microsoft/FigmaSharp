@@ -34,6 +34,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Converters;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Designer
 {
@@ -61,7 +62,7 @@ namespace FigmaSharp.Designer
 
         string baseDirectory;
 
-        public void Reload(IViewWrapper contentView, string file, FigmaViewRendererServiceOptions options)
+        public void Reload(IView contentView, string file, FigmaViewRendererServiceOptions options)
         {
             try
             {
@@ -87,13 +88,13 @@ namespace FigmaSharp.Designer
 
         public event EventHandler ModifiedChanged;
 
-        public IViewWrapper GetViewWrapper(FigmaNode e)
+        public IView GetViewWrapper(FigmaNode e)
         {
             var processed = ProcessedNodes.FirstOrDefault(s => s.FigmaNode == e);
             return processed?.View;
         }
 
-        public FigmaNode GetModel(IViewWrapper e)
+        public FigmaNode GetModel(IView e)
         {
             var processed = ProcessedNodes.FirstOrDefault(s => s.View.NativeObject == e.NativeObject);
             return processed?.FigmaNode;

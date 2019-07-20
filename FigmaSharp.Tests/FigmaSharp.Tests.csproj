@@ -35,12 +35,5 @@
     <Compile Include="ModulesTests_iOS.cs" />
     <Compile Include="ModulesTests_Cocoa.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
-      <Name>FigmaSharp</Name>
-      <ReferenceSourceTarget></ReferenceSourceTarget>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

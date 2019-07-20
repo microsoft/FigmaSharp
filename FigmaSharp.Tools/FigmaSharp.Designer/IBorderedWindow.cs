@@ -25,6 +25,8 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using FigmaSharp.Views;
+
 namespace FigmaSharp.Designer
 {
     public interface IBorderedWindow : IWindowWrapper
@@ -32,7 +34,7 @@ namespace FigmaSharp.Designer
         float BorderWidth { get; set; }
         bool Visible { get; set; }
         void SetParentWindow(IWindowWrapper selectedWindow);
-        void AlignWith(IViewWrapper view);
+        void AlignWith(IView view);
         void AlignWindowWithContentView();
         void OrderFront();
     }

@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using FigmaSharp;
+using FigmaSharp.Views;
 using System;
 using System.Linq;
 
@@ -33,7 +34,7 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSurface
     {
-        public event EventHandler<IViewWrapper> FocusedViewChanged;
+        public event EventHandler<IView> FocusedViewChanged;
 
         public event EventHandler ReloadFinished;
         internal IFigmaDesignerDelegate Delegate;
@@ -65,8 +66,8 @@ namespace FigmaSharp.Designer
             ReloadFinished?.Invoke(this, EventArgs.Empty);
         }
 
-        IObjectWrapper nativeObject;
-        public IViewWrapper SelectedView => nativeObject as IViewWrapper;
+        IObject nativeObject;
+        public IView SelectedView => nativeObject as IView;
         IWindowWrapper selectedWindow;
 
         readonly IBorderedWindow viewSelectedOverlayWindow;
@@ -104,12 +105,12 @@ namespace FigmaSharp.Designer
             Session = session;
         }
 
-        void FigmaDelegate_HoverSelectionEnded(object sender, IViewWrapper e)
+        void FigmaDelegate_HoverSelectionEnded(object sender, IView e)
         {
             HoverSelectView(e);
         }
 
-        void FigmaDelegate_HoverSelecting(object sender, IViewWrapper e)
+        void FigmaDelegate_HoverSelecting(object sender, IView e)
         {
             HoverSelectView(e);
         }
@@ -157,7 +158,7 @@ namespace FigmaSharp.Designer
             IsFirstResponderOverlayVisible = IsFirstResponderOverlayVisible;
         }
 
-        public void ChangeFocusedView(IObjectWrapper nextView)
+        public void ChangeFocusedView(IObject nextView)
         {
             if (selectedWindow == null || nextView == null || SelectedView == nextView)
             {
@@ -176,7 +177,7 @@ namespace FigmaSharp.Designer
             }
         }
 
-        void HoverSelectView(IViewWrapper viewWrapper)
+        void HoverSelectView(IView viewWrapper)
         {
             if (viewWrapper == null || !Exists(viewWrapper))
             {
@@ -186,7 +187,7 @@ namespace FigmaSharp.Designer
             ChangeFocusedView(viewWrapper);
         }
 
-        bool Exists(IViewWrapper viewWrapper)
+        bool Exists(IView viewWrapper)
         {
             foreach (var item in session.ProcessedNodes)
             {

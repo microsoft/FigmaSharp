@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FigmaSharp.Views.Cocoa</id>
+    <version>0.6-alpha</version>
+    <title>Xamarin Mac view implementation of Lite.Forms a small abstraction to build native UIs easily</title>
+    <authors>Jose Medrano</authors>
+    <owners>Jose Medrano</owners>
+    <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
+    <projectUrl>https://www.microsoft.com/es-es/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/netonjm/FigmaSharp/master/icons/image-logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Small abstraction to build native UIs easily.</description>
+    <copyright>netonjm</copyright>
+    <tags>abstraction forms cocoa wpf</tags>
+    <dependencies>
+      <dependency id="FigmaSharp.Views" version="0.6-alpha" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\bin\Release\*.dll" target="lib/net472" />
+  </files>
+
+</package>

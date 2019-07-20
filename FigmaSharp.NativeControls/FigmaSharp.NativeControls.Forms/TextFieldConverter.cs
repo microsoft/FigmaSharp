@@ -30,12 +30,14 @@ using FigmaSharp.NativeControls.Base;
 using Xamarin.Forms;
 using FigmaSharp.Forms;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.NativeControls.Forms
 {
     public class TextFieldConverter : TextFieldConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var view = new Entry();
             var keyValues = GetKeyValues(currentNode);
@@ -82,10 +84,10 @@ namespace FigmaSharp.NativeControls.Forms
                 view.Configure(currentNode);
             }
 
-            return new ViewWrapper(view);
+            return new FigmaSharp.Views.Forms.View(view);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode)
+        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             return "var [NAME] = new Entry();";
         }

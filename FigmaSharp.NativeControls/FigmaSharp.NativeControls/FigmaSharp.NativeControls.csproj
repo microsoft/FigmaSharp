@@ -9,8 +9,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
   </ItemGroup>
 </Project>

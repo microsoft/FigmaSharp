@@ -4,7 +4,7 @@ ARGS:=/p:Configuration="${CONFIG}" $(ARGS)
 
 all:
 	echo "Building FigmaSharp..."
-	msbuild FigmaSharp.sln $(ARGS)
+	msbuild FigmaSharp.Views.sln $(ARGS)
 
 clean:
 	find . -type d -name bin -exec rm -rf {} \;
@@ -12,42 +12,51 @@ clean:
 	find . -type d -name packages -exec rm -rf {} \;
 
 pack:
-	msbuild MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:CreatePackage=true
+	msbuild FigmaSharp.Views.sln $(ARGS) /p:CreatePackage=true
 
 install:
-	msbuild MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:InstallAddin=true
+	msbuild FigmaSharp.Views.sln $(ARGS) /p:InstallAddin=true
 
 check-dependencies:
-	#if test "x$(CONFIG)" = "xDebug" || test "x$(CONFIG)" = "xRelease"; then \
-	#	./bot-provisioning/system_dependencies.sh || exit 1; \
-	#fi
+	#updating the submodules
+	git submodule update --init --recursive
 
-nuget-download:
-	# nuget restoring
-	if [ ! -f src/.nuget/nuget.exe ]; then \
-		mkdir -p src/.nuget ; \
+	if [ ! -f ./nuget.exe ]; then \
 	    echo "nuget.exe not found! downloading latest version" ; \
 	    curl -O https://dist.nuget.org/win-x86-commandline/latest/nuget.exe ; \
-	    mv nuget.exe src/.nuget/ ; \
 	fi
 
 submodules: nuget-download
 	echo "Restoring FigmaSharp..."
-	msbuild FigmaSharp.sln /t:Restore
+	msbuild FigmaSharp.Views.sln /t:Restore
 
 sdk: nuget-download
 	mono src/.nuget/nuget.exe pack FigmaSharp.nuspec
 
-template:
-	./install.sh
-	rm -rf src/IDE/Xamarin.VisualStudio.IoT.Mac/templates/Xamarin.Templates.IoT.0.0.1.nupkg
-	mv Xamarin.Templates.IoT.0.0.1.nupkg src/IDE/Xamarin.VisualStudio.IoT.Mac/templates
+package: check-dependencies
+	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /t:Restore
+	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /t:Restore
+	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release /t:Restore
 
-vsts:
-	echo "THIS TARGET IS ONLY TO GENERATE THE PACKAGE FOR VSTS"
-	msbuild src/IDE/Xamarin.VisualStudio.IoT.Mac/Xamarin.VisualStudio.IoT.csproj $(ARGS) /p:CreatePackage=true
-	echo "DONE!"
+	mono nuget.exe restore FigmaSharp.sln
+	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release
+	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release
+	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release
 
+	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls/FigmaSharp.NativeControls.csproj /p:Configuration=Release
+	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Cocoa/FigmaSharp.NativeControls.Cocoa.csproj /p:Configuration=Release
+	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Forms/FigmaSharp.NativeControls.Forms.csproj /p:Configuration=Release
 
+	mono nuget.exe pack NuGet/FigmaSharp.Views.nuspec
+	mono nuget.exe pack NuGet/FigmaSharp.Views.Cocoa.nuspec
+	mono nuget.exe pack NuGet/FigmaSharp.Views.Forms.nuspec
+
+	mono nuget.exe pack NuGet/FigmaSharp.nuspec
+	mono nuget.exe pack NuGet/FigmaSharp.Cocoa.nuspec
+	mono nuget.exe pack NuGet/FigmaSharp.Forms.nuspec
+
+	mono nuget.exe pack NuGet/FigmaSharp.NativeControls.nuspec
+	mono nuget.exe pack NuGet/FigmaSharp.NativeControls.Cocoa.nuspec
+	mono nuget.exe pack NuGet/FigmaSharp.NativeControls.Forms.nuspec
 
 .PHONY: all clean pack install submodules sdk nuget-download check-dependencies

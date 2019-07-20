@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AppKit;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Views;
 using Foundation;
 
 namespace FigmaSharp
@@ -114,7 +115,7 @@ namespace FigmaSharp
 
     public class NodeView : Node
     {
-        static string GetName (IViewWrapper view)
+        static string GetName (IView view)
         {
             var name = string.Format("{0} ({1})", view.NodeName, view.Identifier ?? "N.I");
             if (view.Hidden) {
@@ -124,9 +125,9 @@ namespace FigmaSharp
         }
 
 
-        public readonly IViewWrapper Wrapper;
+        public readonly IView Wrapper;
 
-        public NodeView (IViewWrapper view) : base (GetName (view))
+        public NodeView (IView view) : base (GetName (view))
         {
             this.Wrapper = view;
         }

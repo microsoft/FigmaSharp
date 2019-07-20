@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</ProjectGuid>
+    <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FigmaSharp.Views.Cocoa</RootNamespace>
+    <AssemblyName>FigmaSharp.Views.Cocoa</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <HttpClientHandler></HttpClientHandler>
+    <LinkMode></LinkMode>
+    <XamMacArch></XamMacArch>
+    <AOTMode>None</AOTMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <HttpClientHandler></HttpClientHandler>
+    <LinkMode></LinkMode>
+    <XamMacArch></XamMacArch>
+    <AOTMode>None</AOTMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Mac" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewWrappers\ImageView.cs" />
+    <Compile Include="ViewWrappers\Image.cs" />
+    <Compile Include="ViewWrappers\ScrollView.cs" />
+    <Compile Include="ViewWrappers\View.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ViewWrappers\StackView.cs" />
+    <Compile Include="ViewWrappers\Window.cs" />
+    <Compile Include="ViewsHelper.cs" />
+    <Compile Include="VerticalAlignmentTextCell.cs" />
+    <Compile Include="ViewWrappers\Label.cs" />
+    <Compile Include="ViewWrappers\TextBox.cs" />
+    <Compile Include="ViewWrappers\Button.cs" />
+    <Compile Include="ViewWrappers\ComboBox.cs" />
+    <Compile Include="ViewWrappers\CheckBox.cs" />
+    <Compile Include="ViewWrappers\RadioBox.cs" />
+    <Compile Include="FlippedViews.cs" />
+    <Compile Include="ViewWrappers\Slider.cs" />
+    <Compile Include="ViewWrappers\Spinner.cs" />
+    <Compile Include="ViewWrappers\SearchBox.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewWrappers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+</Project>

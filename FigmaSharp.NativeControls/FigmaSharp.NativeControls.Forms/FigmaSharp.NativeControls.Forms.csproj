@@ -5,10 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.394984-pre10" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp.Forms\FigmaSharp.Forms.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Forms\FigmaSharp.Forms.csproj" />
     <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Forms\FigmaSharp.Views.Forms.csproj" />
   </ItemGroup>
 </Project>
