@@ -31,36 +31,36 @@ using CoreGraphics;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using LocalFile.Shared;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-    static class MainClass
+
+	static class MainClass
     {
-        static IScrollViewWrapper scrollViewWrapper;
-         
+        static IScrollView scrollView;
+		
         static void Main(string[] args)
         {
             FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
 
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
-          
-            var xPos = NSScreen.MainScreen.Frame.Width / 2;
-            var yPos = NSScreen.MainScreen.Frame.Height / 2;
 
-            var mainWindow = new NSWindow(new CGRect(xPos, yPos, 300, 368), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
-            mainWindow.Title = "Cocoa Figma Local File Sample";
+			scrollView = new ScrollView ();
 
-            scrollView = new NSScrollView();
-            scrollViewWrapper = new ScrollViewWrapper(scrollView);
+			var mainWindow = new Window(new Rectangle(0, 0, 300, 368))
+			{
+				Title = "Cocoa Figma Local File Sample",
+				Content = scrollView
+			};
 
-            mainWindow.ContentView = scrollView;
-
-            var figmaConverters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters()
+			var figmaConverters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters()
                 .Union (FigmaSharp.AppContext.Current.GetFigmaConverters())
                 .ToArray ();
 
-            exampleViewManager = new ExampleViewManager(scrollViewWrapper, figmaConverters);
+            exampleViewManager = new ExampleViewManager(scrollView, figmaConverters);
 
             var rendererService = exampleViewManager.RendererService;
             var urlTextField = rendererService.FindNativeViewByName<NSTextField>("FigmaUrlTextField");
@@ -85,12 +85,13 @@ namespace LocalFile.Cocoa
                 };
             }
 
-            mainWindow.MakeKeyAndOrderFront(null);
+			mainWindow.Show ();
+
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
         }
+
         static ExampleViewManager exampleViewManager;
-        static NSScrollView scrollView;
     }
 }
 

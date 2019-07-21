@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using FigmaSharp.Models;
+using LiteForms;
 
 namespace FigmaSharp
 {
@@ -113,7 +114,7 @@ namespace FigmaSharp
 
         public abstract bool CanConvert (FigmaNode currentNode);
 
-        public abstract IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent);
+        public abstract IView ConvertTo(FigmaNode currentNode, ProcessedNode parent);
 
         public abstract string ConvertToCode(FigmaNode currentNode);
     }

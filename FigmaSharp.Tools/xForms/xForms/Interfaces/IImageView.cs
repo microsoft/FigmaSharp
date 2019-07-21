@@ -25,35 +25,10 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-using System.Collections.Generic;
-using FigmaSharp.Models;
-
-namespace FigmaSharp
+namespace LiteForms
 {
-    public interface IViewWrapper : IObjectWrapper
+	public interface IImageView : IView
     {
-        IViewWrapper Parent { get; }
-
-        IReadOnlyList<IViewWrapper> Children { get; }
-
-        string Identifier { get; set; }
-        string NodeName { get; set; }
-        bool Hidden { get; set; }
-
-        float Width { get; set; }
-        float Height { get; set; }
-
-        FigmaRectangle Allocation { get; }
-
-        void AddChild(IViewWrapper view);
-
-        void RemoveChild(IViewWrapper view);
-
-        void ClearSubviews();
-
-        void MakeFirstResponder();
-        void SetPosition(float x, float y);
-        void SetAllocation(float x, float y, float width, float height);
+        void SetImage(IImage image);
     }
 }

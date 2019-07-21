@@ -29,28 +29,28 @@
 using System.Collections.Generic;
 using AppKit;
 
-using FigmaSharp.Models;
+using LiteForms;
 
-namespace FigmaSharp.Cocoa
+namespace LiteForms.Cocoa
 {
-    public class ViewWrapper : IViewWrapper
+    public class View : IView
     {
         public object NativeObject => nativeView;
 
-        public IViewWrapper Parent
+        public IView Parent
         {
             get
             {
                 if (nativeView.Superview != null)
                 {
-                    return new ViewWrapper(nativeView.Superview);
+                    return new View(nativeView.Superview);
                 }
                 return null;
             }
         }
 
-        readonly List<IViewWrapper> children = new List<IViewWrapper>();
-        public virtual IReadOnlyList<IViewWrapper> Children => children;
+        readonly List<IView> children = new List<IView>();
+        public virtual IReadOnlyList<IView> Children => children;
 
         public float Width
         {
@@ -87,27 +87,37 @@ namespace FigmaSharp.Cocoa
             set => nativeView.Hidden = value;
         }
 
-        public FigmaRectangle Allocation => new FigmaRectangle((float)nativeView.Frame.X, (float)nativeView.Frame.Y, (float)nativeView.Frame.Width, (float)nativeView.Frame.Height);
+        public Rectangle Allocation => new Rectangle((float)nativeView.Frame.X, (float)nativeView.Frame.Y, (float)nativeView.Frame.Width, (float)nativeView.Frame.Height);
 
         protected NSView nativeView;
 
-        public ViewWrapper() : this (new NSView ())
+        public View() : this (new NSView ())
         {
 
         }
 
-        public ViewWrapper(NSView nativeView)
+        public View(NSView nativeView)
         {
             this.nativeView = nativeView;
         }
 
-        public virtual void AddChild(IViewWrapper view)
+        public void AddChild(IView view)
         {
             children.Add(view);
-            nativeView.AddSubview(view.NativeObject as NSView);
-        }
+			OnAddChild(view);
+		}
 
-        public virtual void ClearSubviews()
+		protected virtual void OnAddChild (IView view)
+		{
+			nativeView.AddSubview(view.NativeObject as NSView);
+		}
+
+		protected virtual void OnRemoveChild(IView view)
+		{
+			((NSView)view.NativeObject).RemoveFromSuperview();
+		}
+
+		public virtual void ClearSubviews()
         {
             foreach (var item in nativeView.Subviews)
             {
@@ -115,13 +125,13 @@ namespace FigmaSharp.Cocoa
             }
         }
 
-        public virtual void RemoveChild(IViewWrapper view)
+        public virtual void RemoveChild(IView view)
         {
             if (children.Contains (view))
             {
                 children.Remove(view);
-                ((NSView)view.NativeObject).RemoveFromSuperview();
-            }
+				OnRemoveChild(view);
+			}
         }
 
         public void MakeFirstResponder()

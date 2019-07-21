@@ -32,12 +32,14 @@ using System.Text;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using System;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
     public class ButtonConverter : ButtonConverterBase
     {
-		public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaInstance = (FigmaInstance)currentNode;
 
@@ -89,7 +91,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             {
                 view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
             }
-            return new ViewWrapper(view);
+            return new View(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

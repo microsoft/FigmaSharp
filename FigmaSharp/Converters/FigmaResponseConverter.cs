@@ -29,7 +29,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-
+using LiteForms;
 using FigmaSharp.Models;
 
 namespace FigmaSharp
@@ -95,7 +95,7 @@ namespace FigmaSharp
             }
             else if (jsonObject["type"].Value<string>() == "RECTANGLE")
             {
-                figmaObject = jsonObject.ToObject<FigmaRectangleVector>();
+                figmaObject = jsonObject.ToObject<RectangleVector>();
                 return figmaObject;
             }
             else if (jsonObject["type"].Value<string>() == "LINE")

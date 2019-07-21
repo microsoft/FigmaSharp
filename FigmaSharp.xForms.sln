@@ -36,11 +36,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.BasicRendering", "sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Cocoa", "samples\Game.Cocoa\Game.Cocoa.csproj", "{7758A5FE-D62E-4BC1-B6E7-20EB33945DF1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xForms", "xForms", "{58B58CFF-5380-45AF-9205-A4DBC427AE1D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LiteForms", "LiteForms", "{58B58CFF-5380-45AF-9205-A4DBC427AE1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xForms", "FigmaSharp.Tools\xForms\xForms\xForms.csproj", "{11127048-A260-473D-B5D7-3240F90EF410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteForms", "FigmaSharp.Tools\xForms\xForms\LiteForms.csproj", "{11127048-A260-473D-B5D7-3240F90EF410}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xForms.Cocoa", "FigmaSharp.Tools\xForms\xForms.Cocoa\xForms.Cocoa.csproj", "{3E0633F6-BD50-4D09-8601-A143F6CFDD44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteForms.Cocoa", "FigmaSharp.Tools\xForms\xForms.Cocoa\LiteForms.Cocoa.csproj", "{3E0633F6-BD50-4D09-8601-A143F6CFDD44}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

@@ -39,20 +39,20 @@ namespace FigmaSharp.Services
                 {
                     parentNode.View.AddChild(child.View);
 
-                    var x = Math.Max (absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x, 0);
+                    var x = Math.Max (absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X, 0);
                     float y;
                     if (AppContext.Current.IsVerticalAxisFlipped)
                     {
-                        var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
-                        var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
+                        var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.Y + parentAbsoluteBoundingBox.absoluteBoundingBox.Height;
+                        var actualY = absoluteBounding.absoluteBoundingBox.Y + absoluteBounding.absoluteBoundingBox.Height;
                         y = parentY - actualY;
                     }
                     else
                     {
-                        y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
+                        y = absoluteBounding.absoluteBoundingBox.Y - parentAbsoluteBoundingBox.absoluteBoundingBox.Y;
                     }
 
-                    child.View.SetAllocation(x, y, Math.Max (absoluteBounding.absoluteBoundingBox.width, 1), Math.Max (1, absoluteBounding.absoluteBoundingBox.height));
+                    child.View.SetAllocation(x, y, Math.Max (absoluteBounding.absoluteBoundingBox.Width, 1), Math.Max (1, absoluteBounding.absoluteBoundingBox.Height));
                 }
 
                 Recursively(child);

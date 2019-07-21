@@ -30,17 +30,19 @@ using AppKit;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaLineView = new NSImageView();
             var figmaLine = (FigmaLine)currentNode;
             figmaLineView.Configure(figmaLine);
-            return new ImageViewWrapper(figmaLineView);
+            return new ImageView(figmaLineView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

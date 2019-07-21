@@ -6,8 +6,8 @@
     <ProjectGuid>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>xForms.Cocoa</RootNamespace>
-    <AssemblyName>xForms.Cocoa</AssemblyName>
+    <RootNamespace>LiteForms.Cocoa</RootNamespace>
+    <AssemblyName>LiteForms.Cocoa</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
   </PropertyGroup>
@@ -52,19 +52,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewWrappers\ImageViewWrapper.cs" />
-    <Compile Include="ViewWrappers\ImageWrapper.cs" />
-    <Compile Include="ViewWrappers\ScrollViewWrapper.cs" />
-    <Compile Include="ViewWrappers\ViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ImageView.cs" />
+    <Compile Include="ViewWrappers\Image.cs" />
+    <Compile Include="ViewWrappers\ScrollView.cs" />
+    <Compile Include="ViewWrappers\View.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ViewWrappers\StackView.cs" />
+    <Compile Include="ViewWrappers\Window.cs" />
+    <Compile Include="ViewsHelper.cs" />
+    <Compile Include="VerticalAlignmentTextCell.cs" />
+    <Compile Include="ViewWrappers\Label.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\xForms\xForms.csproj">
+    <ProjectReference Include="..\xForms\LiteForms.csproj">
       <Project>{11127048-A260-473D-B5D7-3240F90EF410}</Project>
-      <Name>xForms</Name>
+      <Name>LiteForms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

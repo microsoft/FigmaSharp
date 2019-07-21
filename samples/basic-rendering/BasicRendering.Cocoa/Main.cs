@@ -36,7 +36,8 @@ using Foundation;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
-
+using LiteForms;
+using LiteForms.Cocoa;
 using ExampleFigma;
 
 namespace LocalFile.Cocoa
@@ -44,8 +45,7 @@ namespace LocalFile.Cocoa
     static class MainClass
     {
         static ExampleViewManager manager;
-        static IScrollViewWrapper scrollViewWrapper;
-        static NSScrollView scrollView;
+        static IScrollView scrollView;
 
         static void Main(string[] args)
         {
@@ -54,23 +54,22 @@ namespace LocalFile.Cocoa
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
 
-            var mainWindow = new NSWindow(new CGRect(0, 0, 540, 800), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
-            mainWindow.WillClose += delegate { NSRunningApplication.CurrentApplication.Terminate(); };
-            mainWindow.Center();
+			var stackView = new StackView() { Orientation = LayoutOrientation.Vertical };
 
-            var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
-            scrollView = new NSScrollView();
+			var mainWindow = new Window(new Rectangle(0, 0, 540, 800))
+			{
+				Content = stackView
+			};
 
-            scrollViewWrapper = new ScrollViewWrapper(scrollView);
-            stackView.AddArrangedSubview(scrollView);
-            mainWindow.ContentView = stackView;
+			mainWindow.Closing += delegate { NSRunningApplication.CurrentApplication.Terminate(); };
 
-            var contentView = new NSView { Frame = new CGRect(CGPoint.Empty, mainWindow.Frame.Size) };
-            var viewWrapper = new ViewWrapper(contentView);
-            manager = new ExampleViewManager(scrollViewWrapper);
+			scrollView = new ScrollView();
+			stackView.AddChild (scrollView);
+
+            manager = new ExampleViewManager(scrollView);
 
             mainWindow.Title = manager.WindowTitle;
-            mainWindow.MakeKeyAndOrderFront(null);
+			mainWindow.Show();
 
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();

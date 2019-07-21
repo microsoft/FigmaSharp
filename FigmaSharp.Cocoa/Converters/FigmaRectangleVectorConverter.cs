@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaRectangleVectorConverter.cs
+ * RectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,16 +30,18 @@ using AppKit;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
+    public class RectangleVectorConverter : RectangleVectorConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var currengroupView = new NSImageView();
-            currengroupView.Configure((FigmaRectangleVector)currentNode);
-            return new ImageViewWrapper(currengroupView);
+            currengroupView.Configure((RectangleVector)currentNode);
+            return new ImageView(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)
@@ -48,7 +50,7 @@ namespace FigmaSharp.Cocoa.Converters
             var name = "[NAME]";
             builder.AppendLine($"var {name} = new {nameof(NSImageView)}();");
 
-            builder.Configure(name, (FigmaRectangleVector)currentNode);
+            builder.Configure(name, (RectangleVector)currentNode);
             return builder.ToString();
         }
     }

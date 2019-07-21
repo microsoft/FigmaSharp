@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-
+using LiteForms;
 using FigmaSharp.Models;
 
 namespace FigmaSharp
@@ -10,16 +10,16 @@ namespace FigmaSharp
     {
         bool IsVerticalAxisFlipped { get; }
 
-        IViewWrapper CreateEmptyView();
+        IView CreateEmptyView();
         FigmaViewConverter[] GetFigmaConverters();
-        IImageWrapper GetImage(string url);
-        IImageWrapper GetImageFromFilePath(string filePath);
+        IImage GetImage(string url);
+        IImage GetImageFromFilePath(string filePath);
         string GetFigmaFileContent(string file, string token);
         FigmaResponse GetFigmaResponseFromContent(string template);
         string GetManifestResource(Assembly assembly, string file);
 
-        IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef);
-        IImageViewWrapper GetImageView(IImageWrapper image);
+        IImage GetImageFromManifest(Assembly assembly, string imageRef);
+        IImageView GetImageView(IImage image);
         void BeginInvoke(Action handler);
         FigmaCodePositionConverterBase GetPositionConverter();
         FigmaCodeAddChildConverterBase GetAddChildConverter();

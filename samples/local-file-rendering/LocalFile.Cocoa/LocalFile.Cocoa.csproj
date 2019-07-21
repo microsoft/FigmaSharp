@@ -54,9 +54,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />    
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -75,7 +74,6 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
@@ -92,13 +90,13 @@
       <Project>{AD306162-8DAD-4DBD-B264-BDA8765CC107}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms\xForms.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms\LiteForms.csproj">
       <Project>{11127048-A260-473D-B5D7-3240F90EF410}</Project>
-      <Name>xForms</Name>
+      <Name>LiteForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms.Cocoa\xForms.Cocoa.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms.Cocoa\LiteForms.Cocoa.csproj">
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
-      <Name>xForms.Cocoa</Name>
+      <Name>LiteForms.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

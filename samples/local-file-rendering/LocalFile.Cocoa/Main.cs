@@ -38,6 +38,8 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
 using LocalFile;
 using LocalFile.Shared;
+using LiteForms.Cocoa;
+using LiteForms;
 
 namespace LocalFile.Cocoa
 {
@@ -52,27 +54,29 @@ namespace LocalFile.Cocoa
             NSApplication.Init();
             NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
 
-            var mainWindow = new NSWindow(new CGRect(0, 0, 800, 600), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false);
-            mainWindow.Title = "Cocoa Figma Local File Sample";
-			mainWindow.Center();
+			var stackView = new StackView() { Orientation = LayoutOrientation.Vertical };
 
-            var stackView = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Vertical };
-            mainWindow.ContentView = stackView;
+			var frame = new Rectangle(0, 0, 800, 600);
+			var mainWindow = new Window(frame)
+			{
+				Title = "Cocoa Figma Local File Sample",
+				Content = stackView
+			};
+          
+            scrollView = new ScrollView();
+			stackView.AddChild(scrollView);
 
-            scrollView = new NSScrollView();
-            stackView.AddArrangedSubview(scrollView);
-
-            var scrollViewWrapper = new ScrollViewWrapper(scrollView);
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+			var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
             var storyboard = new FigmaStoryboard (converters);
 
-            documentExample = new DocumentExample(scrollViewWrapper, storyboard);
+            documentExample = new DocumentExample(scrollView, storyboard);
 
-            mainWindow.MakeKeyAndOrderFront(null);
+			mainWindow.Show();
+
             NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
             NSApplication.SharedApplication.Run();
         }
 
-        static NSScrollView scrollView;
+        static ScrollView scrollView;
     }
 }

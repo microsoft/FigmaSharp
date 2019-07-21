@@ -31,15 +31,18 @@ using AppKit;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 
+using LiteForms;
+using LiteForms.Cocoa;
+
 namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var currengroupView = new NSImageView();
             currengroupView.Configure((FigmaVectorEntity)currentNode);
-            return new ImageViewWrapper(currengroupView);
+            return new ImageView(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaRectangleVectorConverter.cs
+ * RectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -27,16 +27,17 @@
  */
 
 using FigmaSharp.Models;
+using LiteForms;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaRectangleVectorConverterBase : FigmaViewConverter
+    public abstract class RectangleVectorConverterBase : FigmaViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaRectangleVector);
+            return currentNode.GetType() == typeof(RectangleVector);
         }
     }
 }

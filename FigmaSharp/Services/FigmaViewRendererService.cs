@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-
+using LiteForms;
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
@@ -44,10 +44,10 @@ namespace FigmaSharp.Services
         public List<ProcessedNode> NodesProcessed = new List<ProcessedNode>();
         public readonly List<ProcessedNode> ImageVectors = new List<ProcessedNode>();
 
-        protected IViewWrapper container;
+        protected IView container;
         protected IFigmaFileProvider fileProvider;
 
-        public T FindViewByName<T>(string name) where T : IViewWrapper
+        public T FindViewByName<T>(string name) where T : IView
         {
             foreach (var node in NodesProcessed)
             {
@@ -59,7 +59,18 @@ namespace FigmaSharp.Services
             return default(T);
         }
 
-        public IViewWrapper FindViewByName(string name)
+		public IEnumerable<T> FindViewsByName<T>(string name)
+		{
+			foreach (var node in NodesProcessed)
+			{
+				if (node.View.NativeObject is T && node.FigmaNode.name == name)
+				{
+					yield return (T)node.View.NativeObject;
+				}
+			}
+		}
+
+		public IView FindViewByName(string name)
         {
             foreach (var node in NodesProcessed)
             {
@@ -109,7 +120,7 @@ namespace FigmaSharp.Services
             FigmaCustomConverters = figmaViewConverters.Where(s => !s.IsLayer).ToArray();
         }
 
-        public void ProcessFromNode (FigmaNode figmaNode, IViewWrapper viewWrapper, FigmaViewRendererServiceOptions options)
+        public void ProcessFromNode (FigmaNode figmaNode, IView View, FigmaViewRendererServiceOptions options)
         {
             try
             {
@@ -117,10 +128,10 @@ namespace FigmaSharp.Services
                 if (figmaNode is FigmaCanvas canvas)
                 {
                     //var canvas = fileProvider.Response.document.children.FirstOrDefault();
-                    var processedParentView = new ProcessedNode() { FigmaNode = figmaNode, View = viewWrapper };
+                    var processedParentView = new ProcessedNode() { FigmaNode = figmaNode, View = View };
                     NodesProcessed.Add(processedParentView);
 
-                    FigmaRectangle contentRect = FigmaRectangle.Zero;
+                    Rectangle contentRect = Rectangle.Zero;
                     for (int i = 0; i < canvas.children.Length; i++)
                     {
                         if (canvas.children[i] is IAbsoluteBoundingBox box)
@@ -252,13 +263,13 @@ namespace FigmaSharp.Services
         {
         }
 
-        public Task StartAsync(string file, IViewWrapper container) => StartAsync(file, container, new FigmaViewRendererServiceOptions());
-        public Task StartAsync(string file, IViewWrapper container, FigmaViewRendererServiceOptions options) => Task.Run(() => Start(file, container, options: options));
+        public Task StartAsync(string file, IView container) => StartAsync(file, container, new FigmaViewRendererServiceOptions());
+        public Task StartAsync(string file, IView container, FigmaViewRendererServiceOptions options) => Task.Run(() => Start(file, container, options: options));
 
-        public void Start(string file, IViewWrapper container) =>
+        public void Start(string file, IView container) =>
             Start(file, container, new FigmaViewRendererServiceOptions());
 
-        public void Start(string file, IViewWrapper container, FigmaViewRendererServiceOptions options)
+        public void Start(string file, IView container, FigmaViewRendererServiceOptions options)
         {
             Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
             Console.WriteLine($"Reading {file} from resources..");
@@ -287,12 +298,12 @@ namespace FigmaSharp.Services
         {
         }
 
-        public T RenderByName<T>(string figmaName) where T : IViewWrapper
+        public T RenderByName<T>(string figmaName) where T : IView
         {
             return RenderByName <T>(figmaName, new FigmaViewRendererServiceOptions());
         }
 
-        public T RenderByName<T>(string figmaName, FigmaViewRendererServiceOptions options) where T: IViewWrapper
+        public T RenderByName<T>(string figmaName, FigmaViewRendererServiceOptions options) where T: IView
         {
             var node = FindNodeByName(figmaName);
             if (node == null)
@@ -313,27 +324,27 @@ namespace FigmaSharp.Services
                 {
                     parentNode.View.AddChild(child.View);
 
-                    var x = Math.Max(absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x, 0);
+                    var x = Math.Max(absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X, 0);
                     float y;
                     if (AppContext.Current.IsVerticalAxisFlipped)
                     {
-                        var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
-                        var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
+                        var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.Y + parentAbsoluteBoundingBox.absoluteBoundingBox.Height;
+                        var actualY = absoluteBounding.absoluteBoundingBox.Y + absoluteBounding.absoluteBoundingBox.Height;
                         y = parentY - actualY;
                     }
                     else
                     {
-                        y = absoluteBounding.absoluteBoundingBox.y - parentAbsoluteBoundingBox.absoluteBoundingBox.y;
+                        y = absoluteBounding.absoluteBoundingBox.Y - parentAbsoluteBoundingBox.absoluteBoundingBox.Y;
                     }
 
-                    child.View.SetAllocation(x, y, Math.Max(absoluteBounding.absoluteBoundingBox.width, 1), Math.Max(1, absoluteBounding.absoluteBoundingBox.height));
+                    child.View.SetAllocation(x, y, Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1), Math.Max(1, absoluteBounding.absoluteBoundingBox.Height));
                 }
 
                 Recursively(child);
             }
         }
 
-        public void Start(string figmaName, IViewWrapper container, FigmaViewRendererServiceOptions options)
+        public void Start(string figmaName, IView container, FigmaViewRendererServiceOptions options)
         {
             Console.WriteLine("[FigmaViewRenderer] Starting process..");
             Console.WriteLine($"Reading {figmaName} from resources..");

@@ -42,12 +42,13 @@ using Foundation;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using LiteForms;
 
 namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {
-        public static T FindNativeViewByName<T>(this Services.FigmaViewRendererService rendererService, string name)
+        public static T FindNativeViewByName<T>(this Services.FigmaRendererService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -59,7 +60,7 @@ namespace FigmaSharp.Cocoa
             return default(T);
         }
 
-        public static IEnumerable<T> FindNativeViewsByName<T>(this Services.FigmaViewRendererService rendererService, string name)
+        public static IEnumerable<T> FindNativeViewsByName<T>(this Services.FigmaRendererService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -70,7 +71,7 @@ namespace FigmaSharp.Cocoa
             }
         }
 
-        public static IEnumerable<T> FindNativeViewsStartsWith<T>(this Services.FigmaViewRendererService rendererService, string name, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        public static IEnumerable<T> FindNativeViewsStartsWith<T>(this Services.FigmaRendererService rendererService, string name, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -81,7 +82,7 @@ namespace FigmaSharp.Cocoa
             }
         }
 
-        public static NSView FindNativeViewByName(this Services.FigmaViewRendererService rendererService, string name)
+        public static NSView FindNativeViewByName(this Services.FigmaRendererService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -138,7 +139,7 @@ namespace FigmaSharp.Cocoa
             return string.Format ("{0}.{1}", nameof(NSTextAlignment), alignment.ToString());
         }
 
-        public static string ToDesignerString(this FigmaColor color, bool cgColor = false)
+        public static string ToDesignerString(this xColor color, bool cgColor = false)
         {
             var cg = cgColor ? ".CGColor" : "";
             return $"NSColor.FromRgba({color.r.ToDesignerString ()}, {color.g.ToDesignerString ()}, {color.b.ToDesignerString ()}, {color.a.ToDesignerString ()}){cg}";
@@ -147,11 +148,6 @@ namespace FigmaSharp.Cocoa
         public static string ToDesignerString(this bool value)
         {
             return value ? "true" : "false";
-        }
-
-        public static CGRect ToCGRect(this FigmaRectangle rectangle)
-        {
-            return new CGRect(0, 0, rectangle.width, rectangle.height);
         }
 
         public static string ToDesignerString(this NSFontTraitMask mask)
@@ -164,7 +160,21 @@ namespace FigmaSharp.Cocoa
             //return string.Format("{0}.{1}", nameof(NSFontTraitMask), mask.ToString());
         }
 
-        public static string ToNSFontDesignerString(this FigmaTypeStyle style)
+		public static string CreateLabelToDesignerString(string text, NSTextAlignment alignment = NSTextAlignment.Left)
+		{
+			StringBuilder builder = new StringBuilder();
+			builder.Append(string.Format("new {0}() {{", nameof(NSTextField)));
+			builder.AppendLine(string.Format("    StringValue = \"{0}\",", text));
+			builder.AppendLine("Editable = false,");
+			builder.AppendLine("Bordered = false,");
+			builder.AppendLine("Bezeled = false,");
+			builder.AppendLine("DrawsBackground = false,");
+			builder.AppendLine(string.Format("Alignment = {0},", alignment.ToDesignerString()));
+			builder.Append("}");
+			return builder.ToString();
+		}
+
+		public static string ToNSFontDesignerString(this FigmaTypeStyle style)
         {
             var font = style.ToNSFont();
             var family = font.FamilyName;
@@ -246,39 +256,39 @@ namespace FigmaSharp.Cocoa
         public static CGPoint GetRelativePosition(this IAbsoluteBoundingBox parent, IAbsoluteBoundingBox node)
         {
             return new CGPoint(
-                node.absoluteBoundingBox.x - parent.absoluteBoundingBox.x,
-                node.absoluteBoundingBox.y - parent.absoluteBoundingBox.y
+                node.absoluteBoundingBox.X - parent.absoluteBoundingBox.X,
+                node.absoluteBoundingBox.Y - parent.absoluteBoundingBox.Y
             );
         }
 
-        public static void CreateConstraints(this NSView view, NSView parent, FigmaLayoutConstraint constraints, FigmaRectangle absoluteBoundingBox, FigmaRectangle absoluteBoundBoxParent)
+        public static void CreateConstraints(this NSView view, NSView parent, FigmaLayoutConstraint constraints, Rectangle absoluteBoundingBox, Rectangle absoluteBoundBoxParent)
         {
             System.Console.WriteLine("Create constraint  horizontal:{0} vertical:{1}", constraints.horizontal, constraints.vertical);
 
             if (constraints.horizontal.Contains("RIGHT"))
             {
-                var endPosition1 = absoluteBoundingBox.x + absoluteBoundingBox.width;
-                var endPosition2 = absoluteBoundBoxParent.x + absoluteBoundBoxParent.width;
+                var endPosition1 = absoluteBoundingBox.X + absoluteBoundingBox.Width;
+                var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
                 var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
                 view.RightAnchor.ConstraintEqualToAnchor(parent.RightAnchor, -value).Active = true;
 
-                var value2 = absoluteBoundingBox.x - absoluteBoundBoxParent.x;
+                var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
                 view.LeftAnchor.ConstraintEqualToAnchor(parent.LeftAnchor, value2).Active = true;
             }
 
             if (constraints.horizontal != "RIGHT")
             {
-                var value2 = absoluteBoundingBox.x - absoluteBoundBoxParent.x;
+                var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
                 view.LeftAnchor.ConstraintEqualToAnchor(parent.LeftAnchor, value2).Active = true;
             }
 
             if (constraints.horizontal.Contains("BOTTOM"))
             {
-                var value = absoluteBoundingBox.y - absoluteBoundBoxParent.y;
+                var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
                 view.TopAnchor.ConstraintEqualToAnchor(parent.TopAnchor, value).Active = true;
 
-                var endPosition1 = absoluteBoundingBox.y + absoluteBoundingBox.height;
-                var endPosition2 = absoluteBoundBoxParent.y + absoluteBoundBoxParent.height;
+                var endPosition1 = absoluteBoundingBox.Y + absoluteBoundingBox.Height;
+                var endPosition2 = absoluteBoundBoxParent.Y + absoluteBoundBoxParent.Height;
                 var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
 
                 view.BottomAnchor.ConstraintEqualToAnchor(parent.BottomAnchor, -value2).Active = true;
@@ -286,7 +296,7 @@ namespace FigmaSharp.Cocoa
 
             if (constraints.horizontal != "BOTTOM")
             {
-                var value = absoluteBoundingBox.y - absoluteBoundBoxParent.y;
+                var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
                 view.TopAnchor.ConstraintEqualToAnchor(parent.TopAnchor, value).Active = true;
             }
         }

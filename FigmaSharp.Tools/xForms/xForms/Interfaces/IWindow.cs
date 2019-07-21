@@ -1,6 +1,4 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
- * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
  *
@@ -26,17 +24,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
-
-namespace FigmaSharp
+namespace LiteForms
 {
-    public interface IScrollViewWrapper : IViewWrapper
-    {
-        FigmaColor BackgroundColor { get; set; }
-
-        void AdjustToContent();
-        void SetContentSize(float width, float height);
-
-        IViewWrapper ContentView { get; set; }
-    }
+	public interface IWindow : IObject
+	{
+		void AddChild(IWindow window);
+		void RemoveChild(IWindow window);
+	}
 }
+

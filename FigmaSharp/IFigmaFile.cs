@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using FigmaSharp.Models;
+using LiteForms;
 
 namespace FigmaSharp
 {
     public interface IFigmaFile
     {
-        List<IImageViewWrapper> FigmaImages { get; }
+        List<IImageView> FigmaImages { get; }
         FigmaResponse Document { get; }
 
         void InitializeComponent();

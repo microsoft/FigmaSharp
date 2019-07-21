@@ -32,17 +32,19 @@ using AppKit;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var elipseView = new NSView();// { TranslatesAutoresizingMaskIntoConstraints = false };
             var elipse = (FigmaElipse)currentNode;
             elipseView.Configure(elipse);
-            return new ViewWrapper(elipseView);
+            return new View(elipseView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaViewExtensions.cs - Extension methods for NSViews
+ * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,13 +25,16 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using LiteForms;
-using FigmaSharp.Models;
 
-namespace FigmaSharp
+namespace LiteForms
 {
-    public abstract class FigmaCodeAddChildConverterBase
+    public interface IScrollView : IView
     {
-        public abstract string ConvertToCode(string parent, string current, FigmaNode currentNode);
+        xColor BackgroundColor { get; set; }
+
+        void AdjustToContent();
+        void SetContentSize(float width, float height);
+
+        IView ContentView { get; set; }
     }
 }

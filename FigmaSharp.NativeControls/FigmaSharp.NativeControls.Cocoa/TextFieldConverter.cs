@@ -31,12 +31,14 @@ using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
     public class TextFieldConverter : TextFieldConverterBase
     {
-		public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var instance = (FigmaInstance)currentNode;
 
@@ -76,7 +78,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
             }
 
-            return new ViewWrapper(view);
+            return new View(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

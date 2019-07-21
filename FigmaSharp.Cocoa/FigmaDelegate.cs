@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using AppKit;
-
+using LiteForms;
+using LiteForms.Cocoa;
 using FigmaSharp.Cocoa.Converters;
 using FigmaSharp.Models;
 
@@ -17,7 +18,7 @@ namespace FigmaSharp.Cocoa
             new FigmaFrameEntityConverter (),
             new FigmaTextConverter (),
             new FigmaVectorEntityConverter (),
-            new FigmaRectangleVectorConverter (),
+            new RectangleVectorConverter (),
             new FigmaElipseConverter (),
             new FigmaLineConverter ()
         };
@@ -27,28 +28,28 @@ namespace FigmaSharp.Cocoa
 
         public bool IsVerticalAxisFlipped => true;
 
-        public IImageWrapper GetImage (string url)
+        public IImage GetImage (string url)
         {
             var image = new NSImage(new Foundation.NSUrl(url));
-            return new ImageWrapper(image);
+            return new Image(image);
         }
 
-        public IImageWrapper GetImageFromManifest (Assembly assembly, string imageRef)
+        public IImage GetImageFromManifest (Assembly assembly, string imageRef)
         {
-            var assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef));
-            return new ImageWrapper (assemblyImage);
+            var assemblyImage = ViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef));
+            return new Image (assemblyImage);
         }
 
-        public IImageWrapper GetImageFromFilePath(string filePath)
+        public IImage GetImageFromFilePath(string filePath)
         {
            var image = new NSImage(filePath);
-           return new ImageWrapper(image);
+           return new Image(image);
         }
 
-        public IImageViewWrapper GetImageView(IImageWrapper imageWrapper)
+        public IImageView GetImageView(IImage Image)
         {
-            var wrapper = new ImageViewWrapper(new NSImageView());
-            wrapper.SetImage(imageWrapper);
+            var wrapper = new ImageView(new NSImageView());
+            wrapper.SetImage(Image);
             return wrapper;
         }
 
@@ -57,7 +58,7 @@ namespace FigmaSharp.Cocoa
         public string GetFigmaFileContent(string file, string token) =>
              FigmaApiHelper.GetFigmaFileContent(file, token);
 
-        public IViewWrapper CreateEmptyView() => new ViewWrapper();
+        public IView CreateEmptyView() => new View();
 
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
             FigmaApiHelper.GetFigmaResponseFromContent(template);

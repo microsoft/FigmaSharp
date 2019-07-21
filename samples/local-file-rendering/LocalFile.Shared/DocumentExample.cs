@@ -25,21 +25,22 @@
  */
 
 using FigmaSharp;
+using LiteForms;
 
 namespace LocalFile.Shared
 {
     public class DocumentExample
     {
-        public DocumentExample(IScrollViewWrapper scrollViewWrapper, FigmaFile storyboard)
+        public DocumentExample(IScrollView scrollView, FigmaFile storyboard)
         {
             //we set our storyboard like the content view of the scrollview
-            scrollViewWrapper.ContentView = storyboard.ContentView;
+            scrollView.ContentView = storyboard.ContentView;
 
             //we need reload after set the content to ensure the scrollview
             storyboard.Reload();
 
             //now we want recalculate all the bounds based in all the views generated
-            scrollViewWrapper.AdjustToContent();
+            scrollView.AdjustToContent();
         }
     }
 }

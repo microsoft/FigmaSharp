@@ -7,20 +7,22 @@ using FigmaSharp.Cocoa;
 using System.Collections.Generic;
 using System.Linq;
 using Foundation;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace Game.Cocoa
 {
-    public class GameWindow : NSWindow
+    public class GameWindow : Window
     {
         const int WalkModifier = 13;
       
-        NSImageView[] spikesTiles;
-        NSImageView[] wallTiles;
+        ImageView[] spikesTiles;
+		ImageView[] wallTiles;
 
-        List<NSImageView> gemsTiles;
-        List<NSImageView> heartTiles;
-        NSTextField pointsLabel;
-        NSView playerTile;
+        List<ImageView> gemsTiles;
+        List<ImageView> heartTiles;
+        Label pointsLabel;
+		ImageView playerTile;
         int points = 0;
 
         #region Player Movement
@@ -29,25 +31,29 @@ namespace Game.Cocoa
         {
             if (theEvent.KeyCode == (ushort)NSKey.LeftArrow)
             {
-                MovePlayer(new CGPoint(playerTile.Frame.X - WalkModifier, playerTile.Frame.Y));
+				var frame = playerTile.Allocation;
+				MovePlayer(new CGPoint(frame.X - WalkModifier, frame.Y));
                 return;
             }
 
             if (theEvent.KeyCode == (ushort)NSKey.RightArrow)
             {
-                MovePlayer(new CGPoint(playerTile.Frame.X + WalkModifier, playerTile.Frame.Y));
+				var frame = playerTile.Allocation;
+				MovePlayer(new CGPoint(frame.X + WalkModifier, frame.Y));
                 return;
             }
 
             if (theEvent.KeyCode == (ushort)NSKey.UpArrow)
             {
-                MovePlayer(new CGPoint(playerTile.Frame.X, playerTile.Frame.Y + WalkModifier));
+				var frame = playerTile.Allocation;
+				MovePlayer(new CGPoint(frame.X, frame.Y + WalkModifier));
                 return;
             }
 
             if (theEvent.KeyCode == (ushort)NSKey.DownArrow)
             {
-                MovePlayer(new CGPoint(playerTile.Frame.X, playerTile.Frame.Y - WalkModifier));
+				var frame = playerTile.Allocation;
+				MovePlayer(new CGPoint(frame.X, frame.Y - WalkModifier));
                 return;
             }
 
@@ -92,16 +98,16 @@ namespace Game.Cocoa
 
             foreach (var gem in gemsTiles)
             {
-                if (gem.Frame.IntersectsWith (playerTile.Frame))
+                if (gem.Allocation.IntersectsWith (playerTile.Allocation))
                 {
                     gemsTiles.Remove(gem);
-                    gem.RemoveFromSuperview();
+                    gem.RemoveFromParent ();
                     points++;
                     coinSound.Play();
                     break;
                 }
             }
-            pointsLabel.StringValue = points.ToString ();
+            pointsLabel.Text StringValue = points.ToString ();
         }
 
         void PlayerDied ()
@@ -121,7 +127,7 @@ namespace Game.Cocoa
         AVFoundation.AVAudioPlayer coinSound;
         AVFoundation.AVAudioPlayer gameOverSound;
 
-        public GameWindow(CGRect rect) : base(rect, NSWindowStyle.Titled | NSWindowStyle.Closable, NSBackingStore.Buffered, false)
+        public GameWindow(Rectangle rect) : base(rect)
         {
             //we get the default basic view converters from the current loaded toolkit
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
@@ -131,7 +137,7 @@ namespace Game.Cocoa
             fileProvider.Load("Jv8kwhoRsrmtJDsSHcTgWGYu");
 
             //we initialize our renderer service, this uses all the converters passed
-            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>
+            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
             var rendererService = new FigmaViewRendererService(fileProvider, converters);
 
             //play background music
@@ -147,26 +153,25 @@ namespace Game.Cocoa
             coinSound = AVFoundation.AVAudioPlayer.FromUrl(coinMusicPath, out error);
 
             //we want load the entire level 1
-            IViewWrapper view = rendererService.RenderByName<IViewWrapper>("Level1");
+            IView view = rendererService.FindViewByName <IView>("Level1");
+			Content = view;
 
-            ContentView = view.NativeObject as NSView;
+            playerTile = rendererService.FindViewByName<ImageView>("Player");
 
-            playerTile = rendererService.FindNativeViewByName<NSImageView>("Player");
+            startingPoint = playerTile.Allocation.Location;
 
-            startingPoint = playerTile.Frame.Location;
+            pointsLabel = rendererService.FindViewByName<Label>("Points");
 
-            pointsLabel = rendererService.FindNativeViewByName<NSTextField>("Points");
-
-            gemsTiles = rendererService.FindNativeViewsByName<NSImageView>("Gem")
+            gemsTiles = rendererService.FindViewsByName<ImageView>("Gem")
                 .ToList ();
 
-            wallTiles = rendererService.FindNativeViewsStartsWith<NSImageView>("Tile")
+            wallTiles = rendererService.FindViewsByName<ImageView>("Tile")
                 .ToArray();
 
-            spikesTiles = rendererService.FindNativeViewsStartsWith<NSImageView>("Spikes")
+            spikesTiles = rendererService.FindViewByName<ImageView>("Spikes")
                 .ToArray();
 
-            heartTiles = rendererService.FindNativeViewsStartsWith<NSImageView>("Heart")
+            heartTiles = rendererService.FindViewByName<ImageView>("Heart")
                 .OrderBy(s => s.Frame.X)
                 .ToList();
 

@@ -34,9 +34,9 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace FigmaSharp.Cocoa
+namespace LiteForms.Cocoa
 {
-    public static class FigmaViewsHelper
+    public static class ViewsHelper
     {
         public static NSImage GetManifestImageResource(Assembly assembly, string resource)
         {
@@ -80,20 +80,6 @@ namespace FigmaSharp.Cocoa
             label.Selectable = false;
             label.Alignment = alignment;
             return label;
-        }
-
-        public static string CreateLabelToDesignerString(string text, NSTextAlignment alignment = NSTextAlignment.Left)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(string.Format ("new {0}() {{", nameof (NSTextField)));
-            builder.AppendLine(string.Format ("    StringValue = \"{0}\",", text));
-            builder.AppendLine("Editable = false,");
-            builder.AppendLine("Bordered = false,");
-            builder.AppendLine("Bezeled = false,");
-            builder.AppendLine("DrawsBackground = false,");
-            builder.AppendLine(string.Format ("Alignment = {0},", alignment.ToDesignerString ()));
-            builder.Append("}");
-            return builder.ToString();
         }
 
         public static NSFont GetSystemFont(bool bold, float size = 0.0f)

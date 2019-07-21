@@ -26,11 +26,33 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using AppKit;
 
-namespace FigmaSharp
+namespace LiteForms.Cocoa
 {
-    public interface IImageWrapper : IObjectWrapper
-    {
+	public class StackView : View, IStackView
+	{
+		NSStackView stackView;
 
-    }
+		public LayoutOrientation Orientation
+		{
+			get => stackView.Orientation.ToOrientation();
+			set => stackView.Orientation = value.ToOrientation();
+		}
+
+		public StackView() : this(new NSStackView())
+		{
+
+		}
+
+		public StackView(NSStackView stackView) : base(stackView)
+		{
+			this.stackView = stackView;
+		}
+
+		protected override void OnAddChild(IView view)
+		{
+			stackView.AddArrangedSubview(view.NativeObject as NSView);
+		}
+	}
 }

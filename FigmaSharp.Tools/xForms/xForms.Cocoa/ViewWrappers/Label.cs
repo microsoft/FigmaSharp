@@ -26,11 +26,31 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using AppKit;
 
-namespace FigmaSharp
+namespace LiteForms.Cocoa
 {
-    public interface IObjectWrapper
-    {
-        object NativeObject { get; }
-    }
+	public class Label : View, ILabel
+	{
+		NSTextField textField;
+
+		public Label() : this(ViewsHelper.CreateLabel(string.Empty))
+		{
+
+		}
+
+		public Label(NSTextField textField) : base(textField)
+		{
+			this.textField = textField;
+		}
+
+		public string Text
+		{
+			get => textField.StringValue;
+			set
+			{
+				textField.StringValue = value ?? "";
+			}
+		}
+	}
 }

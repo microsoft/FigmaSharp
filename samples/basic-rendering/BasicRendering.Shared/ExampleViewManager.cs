@@ -32,6 +32,8 @@ using FigmaSharp;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
+using LiteForms;
+
 namespace ExampleFigma
 {
     public class ExampleViewManager 
@@ -42,7 +44,7 @@ namespace ExampleFigma
 
         public string WindowTitle => fileProvider.Response.name;
 
-        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper)
+        public ExampleViewManager(IScrollView scrollView)
         {
             //we get the default basic view converters from the current loaded toolkit
             var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
@@ -56,9 +58,9 @@ namespace ExampleFigma
 			fileProvider = new FigmaRemoteFileProvider();
 
             //we initialize our renderer service, this uses all the converters passed
-            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IViewWrapper, FigmaParentModel>
+            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
             var rendererService = new FigmaFileRendererService(fileProvider, converters);
-            rendererService.Start(fileName, scrollViewWrapper);
+            rendererService.Start(fileName, scrollView);
 
             //now we have all the views processed and the relationship we can distribute all the views into the desired base view
             var distributionService = new FigmaViewRendererDistributionService(rendererService);
@@ -67,10 +69,10 @@ namespace ExampleFigma
             //We want know the background color of the figma camvas and apply to our scrollview
             var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
             if (canvas != null)
-                scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
+                scrollView.BackgroundColor = canvas.backgroundColor;
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-            scrollViewWrapper.AdjustToContent();
+            scrollView.AdjustToContent();
         }
     }
 }

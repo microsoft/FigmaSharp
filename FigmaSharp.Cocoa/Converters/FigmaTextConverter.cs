@@ -32,19 +32,22 @@ using System.Text;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 
+using LiteForms;
+using LiteForms.Cocoa;
+
 namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaText = ((FigmaText)currentNode);
             Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);
 
             var font = figmaText.style.ToNSFont();
-            var textField = FigmaViewsHelper.CreateLabel(figmaText.characters, font);
+            var textField = ViewsHelper.CreateLabel(figmaText.characters, font);
             textField.Configure(figmaText);
-            var wrapper = new ViewWrapper(textField);
+            var wrapper = new View(textField);
             return wrapper;
         }
 
@@ -53,7 +56,7 @@ namespace FigmaSharp.Cocoa.Converters
             var figmaText = ((FigmaText)currentNode);
             StringBuilder builder = new StringBuilder();
             var name = "[NAME]";
-            builder.AppendLine(string.Format ("var {0} = {1};", name, FigmaViewsHelper.CreateLabelToDesignerString (figmaText.characters)));
+            builder.AppendLine(string.Format ("var {0} = {1};", name, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
 
             var nsFont = figmaText.style.ToNSFont();
             builder.AppendLine(string.Format("{0}.Font = {1};", name, figmaText.style.ToNSFontDesignerString()));

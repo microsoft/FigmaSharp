@@ -32,6 +32,8 @@ using FigmaSharp.NativeControls;
 using FigmaSharp.Services;
 using FigmaSharp.Models;
 
+using LiteForms;
+
 namespace LocalFile.Shared
 {
     public class ExampleViewManager
@@ -42,13 +44,13 @@ namespace LocalFile.Shared
         public readonly FigmaFileRendererService RendererService;
         readonly FigmaViewRendererDistributionService distributionService;
 
-        public ExampleViewManager(IScrollViewWrapper scrollViewWrapper, FigmaViewConverter[] converters)
+        public ExampleViewManager(IScrollView scrollView, FigmaViewConverter[] converters)
         {
             fileProvider = new FigmaRemoteFileProvider();
             RendererService = new FigmaFileRendererService(fileProvider, converters);
 
             var options = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false }; 
-            RendererService.Start(fileName, scrollViewWrapper.ContentView, options);
+            RendererService.Start(fileName, scrollView.ContentView, options);
 
             distributionService = new FigmaViewRendererDistributionService(RendererService);
             distributionService.Start();
@@ -56,10 +58,10 @@ namespace LocalFile.Shared
             //We want know the background color of the figma camvas and apply to our scrollview
             var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
             if (canvas != null)
-                scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
+                scrollView.BackgroundColor = canvas.backgroundColor;
 
 
-            scrollViewWrapper.AdjustToContent();
+            scrollView.AdjustToContent();
         }
     }
 }

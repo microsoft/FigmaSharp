@@ -31,12 +31,14 @@ using System;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using System.Linq;
+using LiteForms;
+using LiteForms.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
     public class PopUpButtonConverter : PopUpButtonConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var view = new NSPopUpButton();
 
@@ -69,7 +71,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
             }
 
-            return new ViewWrapper(view);
+            return new View(view);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

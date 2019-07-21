@@ -36,10 +36,10 @@ namespace FigmaSharp.Cocoa.Converters
         {
             if (current is IAbsoluteBoundingBox absoluteBounding && current.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
             {
-                var x = absoluteBounding.absoluteBoundingBox.x - parentAbsoluteBoundingBox.absoluteBoundingBox.x;
+                var x = absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X;
 
-                var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.y + parentAbsoluteBoundingBox.absoluteBoundingBox.height;
-                var actualY = absoluteBounding.absoluteBoundingBox.y + absoluteBounding.absoluteBoundingBox.height;
+                var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.Y + parentAbsoluteBoundingBox.absoluteBoundingBox.Height;
+                var actualY = absoluteBounding.absoluteBoundingBox.Y + absoluteBounding.absoluteBoundingBox.Height;
                 var y = parentY - actualY;
                 return string.Format("{0}.SetFrameOrigin(new {1}.{2}({3}, {4}));", name, nameof(CoreGraphics), nameof(CoreGraphics.CGPoint), x.ToDesignerString(), y.ToDesignerString());
             }

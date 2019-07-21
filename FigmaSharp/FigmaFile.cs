@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
+using LiteForms;
 
 namespace FigmaSharp
 {
@@ -45,7 +46,7 @@ namespace FigmaSharp
         /// Gets the figma images.
         /// </summary>
         /// <value>The figma images.</value>
-        public List<IImageViewWrapper> FigmaImages { get; private set; }
+        public List<IImageView> FigmaImages { get; private set; }
 
         /// <summary>
         /// Gets the document.
@@ -57,7 +58,7 @@ namespace FigmaSharp
         /// Gets the content view.
         /// </summary>
         /// <value>The content view.</value>
-        public IViewWrapper ContentView { get; private set; }
+        public IView ContentView { get; private set; }
 
         readonly FigmaFileRendererService fileService;
         readonly FigmaViewRendererDistributionService rendererService;
@@ -75,7 +76,7 @@ namespace FigmaSharp
             this.file = file;
 
             ContentView = AppContext.Current.CreateEmptyView();
-            FigmaImages = new List<IImageViewWrapper>();
+            FigmaImages = new List<IImageView>();
 
             var assembly = System.Reflection.Assembly.GetCallingAssembly();
             figmaLocalFileProvider = new FigmaManifestFileProvider(assembly);

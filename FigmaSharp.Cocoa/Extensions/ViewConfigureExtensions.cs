@@ -5,7 +5,8 @@ using CoreGraphics;
 using Foundation;
 using System.Linq;
 using System.Text;
-
+using LiteForms;
+using LiteForms.Cocoa;
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Cocoa
@@ -32,8 +33,8 @@ namespace FigmaSharp.Cocoa
                 builder.AppendLine(string.Format("{0}.SetFrameSize(new {1}({2}, {3}));", 
                     name, 
                     nameof (CGSize), 
-                    container.absoluteBoundingBox.width.ToDesignerString (), 
-                    container.absoluteBoundingBox.height.ToDesignerString ()
+                    container.absoluteBoundingBox.Width.ToDesignerString (), 
+                    container.absoluteBoundingBox.Height.ToDesignerString ()
                     ));
             }
         }
@@ -45,7 +46,7 @@ namespace FigmaSharp.Cocoa
 
             if (child is IAbsoluteBoundingBox container)
             {
-                view.SetFrameSize(new CGSize(container.absoluteBoundingBox.width, container.absoluteBoundingBox.height));
+                view.SetFrameSize(new CGSize(container.absoluteBoundingBox.Width, container.absoluteBoundingBox.Height));
             }
         }
 
@@ -54,7 +55,7 @@ namespace FigmaSharp.Cocoa
             Configure(view, (FigmaNode)elipse);
 
             var circleLayer = new CAShapeLayer();
-            var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, elipse.absoluteBoundingBox.width, elipse.absoluteBoundingBox.height));
+            var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, elipse.absoluteBoundingBox.Width, elipse.absoluteBoundingBox.Height));
             circleLayer.Path = bezierPath.ToCGPath();
 
             view.Layer.AddSublayer(circleLayer);
@@ -99,13 +100,13 @@ namespace FigmaSharp.Cocoa
             Configure(figmaLineView, (FigmaNode)figmaLine);
 
             var absolute = figmaLine.absoluteBoundingBox;
-            var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
+            var lineWidth = absolute.Width == 0 ? figmaLine.strokeWeight : absolute.Width;
 
             var constraintWidth = figmaLineView.WidthAnchor.ConstraintEqualToConstant(lineWidth);
             constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
             constraintWidth.Active = true;
 
-            var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
+            var lineHeight = absolute.Height == 0 ? figmaLine.strokeWeight : absolute.Height;
 
             var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualToConstant(lineHeight);
             constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
@@ -141,12 +142,12 @@ namespace FigmaSharp.Cocoa
             }
         }
 
-        static FigmaColor MixOpacity (this FigmaColor color, float opacity)
+        static xColor MixOpacity (this xColor color, float opacity)
         {
-            return new FigmaColor { a = Math.Min(color.a, opacity), r = color.r, g = color.g, b = color.b };
+            return new xColor { a = Math.Min(color.a, opacity), r = color.r, g = color.g, b = color.b };
         }
 
-        public static void Configure(this NSView view, FigmaRectangleVector child)
+        public static void Configure(this NSView view, RectangleVector child)
         {
             Configure(view, (FigmaVectorEntity)child);
 
@@ -196,7 +197,7 @@ namespace FigmaSharp.Cocoa
             view.AlphaValue = child.opacity;
         }
 
-        public static void Configure(this StringBuilder builder, string name, FigmaRectangleVector child)
+        public static void Configure(this StringBuilder builder, string name, RectangleVector child)
         {
             Configure(builder, name, (FigmaVectorEntity)child);
 

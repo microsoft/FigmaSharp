@@ -32,24 +32,24 @@ using System.Linq;
 using AppKit;
 using CoreGraphics;
 
-using FigmaSharp.Models;
+using LiteForms;
 
-namespace FigmaSharp.Cocoa
+namespace LiteForms.Cocoa
 {
-    public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
+    public class ScrollView : View, IScrollView
     {
         readonly NSScrollView scrollView;
-        IViewWrapper contentScrollviewWrapper;
+        IView contentScrollView;
         NSView contentScrollview;
 
-        public FigmaColor BackgroundColor
+        public xColor BackgroundColor
         {
-            get => scrollView.BackgroundColor.ToFigmaColor();
+            get => scrollView.BackgroundColor.ToxColor();
             set => scrollView.BackgroundColor = value.ToNSColor();
         }
 
-        public IViewWrapper ContentView {
-            get => contentScrollviewWrapper;
+        public IView ContentView {
+            get => contentScrollView;
             set
             {
                 if (value == null)
@@ -57,12 +57,16 @@ namespace FigmaSharp.Cocoa
                     return;
                 }
                 contentScrollview = (NSView)value.NativeObject;
-                contentScrollviewWrapper = value;
+                contentScrollView = value;
                 this.scrollView.DocumentView = contentScrollview;
             }
         }
 
-        public ScrollViewWrapper(NSScrollView scrollView) : base(scrollView)
+		public ScrollView () : this (new NSScrollView ())
+		{
+		}
+
+        public ScrollView(NSScrollView scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
 
@@ -72,7 +76,7 @@ namespace FigmaSharp.Cocoa
                 contentScrollview = new NSView();
                 this.scrollView.DocumentView = contentScrollview;
             }
-            contentScrollviewWrapper = new ViewWrapper (contentScrollview);
+            contentScrollView = new View (contentScrollview);
 
             this.scrollView.HasVerticalScroller = true;
             this.scrollView.HasHorizontalScroller = true;
@@ -81,19 +85,19 @@ namespace FigmaSharp.Cocoa
             this.scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
         }
 
-        public override IReadOnlyList<IViewWrapper> Children => contentScrollviewWrapper.Children;
+        public override IReadOnlyList<IView> Children => contentScrollView.Children;
 
-        public override void AddChild(IViewWrapper view) => contentScrollviewWrapper.AddChild(view);
+        protected override void OnAddChild(IView view) => contentScrollView.AddChild(view);
 
-        public override void ClearSubviews() => contentScrollviewWrapper.ClearSubviews();
+        public override void ClearSubviews() => contentScrollView.ClearSubviews();
 
-        public override void RemoveChild (IViewWrapper view)=> contentScrollviewWrapper.ClearSubviews();
+		protected override void OnRemoveChild (IView view)=> contentScrollView.ClearSubviews();
 
         public void AdjustToContent()
         {
             var items = Children;
 
-            FigmaRectangle contentRect = FigmaRectangle.Zero;
+            Rectangle contentRect = Rectangle.Zero;
             for (int i = 0; i < items.Count; i++)
             {
                 if (i == 0)
@@ -104,7 +108,7 @@ namespace FigmaSharp.Cocoa
                     contentRect = contentRect.UnionWith(items[i].Allocation);
                 }
             }
-            SetContentSize(contentRect.width, contentRect.height);
+            SetContentSize(contentRect.Width, contentRect.Height);
         }
 
         public void SetContentSize(float width, float height)

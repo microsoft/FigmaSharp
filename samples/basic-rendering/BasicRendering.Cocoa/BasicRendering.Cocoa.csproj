@@ -95,13 +95,13 @@
       <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
       <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms\xForms.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms\LiteForms.csproj">
       <Project>{11127048-A260-473D-B5D7-3240F90EF410}</Project>
-      <Name>xForms</Name>
+      <Name>LiteForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms.Cocoa\xForms.Cocoa.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp.Tools\xForms\xForms.Cocoa\LiteForms.Cocoa.csproj">
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
-      <Name>xForms.Cocoa</Name>
+      <Name>LiteForms.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\BasicRendering.Shared\BasicRendering.Shared.projitems" Label="Shared" Condition="Exists('..\BasicRendering.Shared\BasicRendering.Shared.projitems')" />

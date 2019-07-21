@@ -26,42 +26,11 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System;
-using AppKit;
-using CoreAnimation;
-using CoreGraphics;
 
-namespace FigmaSharp.Cocoa
+namespace LiteForms
 {
-    public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
+    public interface IObject
     {
-        readonly NSImageView imageView;
-        CALayer imageLayer;
-
-        public ImageViewWrapper(NSImageView imageView) : base(imageView)
-        {
-            this.imageView = imageView;
-            this.imageView.WantsLayer = true;
-
-            imageLayer = new CALayer();
-            imageView.Layer.AddSublayer(imageLayer);
-        }
-
-        nfloat GetProportionalSecondSize (nfloat proportionalFirstSize, nfloat originalFirstSize,  nfloat originalSecondSize)
-        {
-            nfloat delta = proportionalFirstSize / originalFirstSize;
-            return delta * originalSecondSize;
-        }
-
-
-        public void SetImage(IImageWrapper imageWrapper)
-        {
-            var image = ((NSImage)imageWrapper.NativeObject);
-            imageLayer.Contents = image.CGImage;
-
-            imageLayer.Frame = new CGRect(0, 0, Width, Height);
-            imageLayer.AnchorPoint = new CGPoint(0.5f, 0.5f);
-            imageLayer.Position = new CGPoint(imageView.Layer.Bounds.GetMidX(), imageView.Layer.Bounds.GetMidY());
-        }
+        object NativeObject { get; }
     }
 }
