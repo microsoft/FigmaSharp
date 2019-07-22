@@ -47,7 +47,7 @@ namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {
-        public static T FindNativeViewByName<T>(this Services.FigmaViewRendererService rendererService, string name)
+        public static T FindNativeViewByName<T>(this Services.FigmaRendererService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -59,7 +59,7 @@ namespace FigmaSharp.Cocoa
             return default(T);
         }
 
-        public static IEnumerable<T> FindNativeViewsByName<T>(this Services.FigmaViewRendererService rendererService, string name)
+        public static IEnumerable<T> FindNativeViewsByName<T>(this Services.FigmaRendererService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -70,7 +70,7 @@ namespace FigmaSharp.Cocoa
             }
         }
 
-        public static IEnumerable<T> FindNativeViewsStartsWith<T>(this Services.FigmaViewRendererService rendererService, string name, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        public static IEnumerable<T> FindNativeViewsStartsWith<T>(this Services.FigmaRendererService rendererService, string name, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -81,7 +81,7 @@ namespace FigmaSharp.Cocoa
             }
         }
 
-        public static NSView FindNativeViewByName(this Services.FigmaViewRendererService rendererService, string name)
+        public static NSView FindNativeViewByName(this Services.FigmaRendererService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
