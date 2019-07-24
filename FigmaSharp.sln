@@ -96,9 +96,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.iOS", "FigmaShar
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.BasicRendering", "samples\basic-rendering\BasicRendering.Shared\Shared.BasicRendering.shproj", "{88CC3650-709A-4A60-A43B-0FE2F6C4098D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Cocoa", "samples\Game.Cocoa\Game.Cocoa.csproj", "{7758A5FE-D62E-4BC1-B6E7-20EB33945DF1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Samples", "samples\FigmaSharp.Samples\FigmaSharp.Samples.csproj", "{96EC7ED1-203D-4833-BEE0-9E597CA3BF65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Cocoa", "samples\Game.Cocoa\Game.Cocoa.csproj", "{7758A5FE-D62E-4BC1-B6E7-20EB33945DF1}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

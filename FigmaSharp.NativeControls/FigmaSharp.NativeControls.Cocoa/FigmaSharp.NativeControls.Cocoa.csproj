@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FigmaSharp.NativeControls.Cocoa</RootNamespace>
     <AssemblyName>FigmaSharp.NativeControls.Cocoa</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -28,6 +28,7 @@
     <XamMacArch></XamMacArch>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
+    <PlatformTarget>anycpu</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
