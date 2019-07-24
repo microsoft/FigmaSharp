@@ -106,9 +106,9 @@ namespace FigmaSharp.Samples
             var document_window_controller = (DocumentWindowController) segue.DestinationController;
             document_window_controller.LoadDocument(token, link_id);
 
-            document_window_controller.Window.WillClose += delegate {
-                View.Window.IsVisible = true;
-            };
+            //document_window_controller.Window.WillClose += delegate {
+            //    View.Window.IsVisible = true;
+            //};
         }
 
 
