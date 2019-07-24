@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct" initialViewController="WaF-y5-496">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
@@ -89,11 +89,7 @@
                                                 <action selector="undo:" target="Ady-hI-5gd" id="D92-CJ-5Yr"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Redo" keyEquivalent="Z" id="UPb-PV-Q6f">
-                                            <connections>
-                                                <action selector="redo:" target="Ady-hI-5gd" id="djX-ob-MDv"/>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem title="Redo" keyEquivalent="Z" id="UPb-PV-Q6f"/>
                                         <menuItem isSeparatorItem="YES" id="nuu-R9-vhJ"/>
                                         <menuItem title="Cut" keyEquivalent="x" id="OQB-BW-qxV">
                                             <connections>
@@ -158,11 +154,7 @@
                                                             <action selector="performFindPanelAction:" target="Ady-hI-5gd" id="a8T-vJ-uTb"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Jump to Selection" keyEquivalent="j" id="zac-7s-8rF">
-                                                        <connections>
-                                                            <action selector="centerSelectionInVisibleArea:" target="Ady-hI-5gd" id="jIP-bc-Qjt"/>
-                                                        </connections>
-                                                    </menuItem>
+                                                    <menuItem title="Jump to Selection" keyEquivalent="j" id="zac-7s-8rF"/>
                                                 </items>
                                             </menu>
                                         </menuItem>
@@ -258,21 +250,12 @@
                                                 <items>
                                                     <menuItem title="Make Upper Case" id="Zqn-8F-Frd">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="uppercaseWord:" target="Ady-hI-5gd" id="XWq-9T-9tl"/>
-                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Make Lower Case" id="0Hl-QI-BI2">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="lowercaseWord:" target="Ady-hI-5gd" id="fjE-yf-DBi"/>
-                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Capitalize" id="w7n-sH-Kel">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="capitalizeWord:" target="Ady-hI-5gd" id="OX7-f5-yFo"/>
-                                                        </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
