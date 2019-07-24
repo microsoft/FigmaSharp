@@ -601,7 +601,7 @@ Gw
         <scene sceneID="9Jh-cp-1WU">
             <objects>
                 <viewController id="kAC-hG-JBc" customClass="DocumentViewController" sceneMemberID="viewController">
-                    <view key="view" id="qf5-jq-9Hz">
+                    <view key="view" id="qf5-jq-9Hz" customClass="FileContainerView">
                         <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>

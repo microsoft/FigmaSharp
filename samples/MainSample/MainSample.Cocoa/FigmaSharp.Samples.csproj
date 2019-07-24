@@ -85,6 +85,10 @@
     <Compile Include="AppDelegate.designer.cs">
       <DependentUpon>AppDelegate.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileContainerView.cs" />
+    <Compile Include="FileContainerView.designer.cs">
+      <DependentUpon>FileContainerView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard">

@@ -96,22 +96,19 @@ namespace FigmaSharp.Samples
 
                 this.InvokeOnMainThread(() => {
 
-                    FigmaApplication.Init(Token);
-
                     AppContext.Current.SetAccessToken(Token);
 
                     var converters = AppContext.Current.GetFigmaConverters();
-
 
                     Console.WriteLine("TOKEN: " + Token);
                     my_scroll_view = new NSScrollView();
 
                     ScrollViewWrapper wrapper = new ScrollViewWrapper(my_scroll_view);
 
-                    var fileProvider = new FigmaRemoteFileProvider();
+					var fileProvider = new FigmaRemoteFileProvider();
+					var rendererService = new FigmaFileRendererService(fileProvider, converters);
 
-                    var rendererService = new FigmaViewRendererService(fileProvider, converters);
-                    rendererService.Start(Link_ID, wrapper, new FigmaViewRendererServiceOptions ());
+					rendererService.Start(Link_ID, wrapper);
 
                     var distributionService = new FigmaViewRendererDistributionService(rendererService);
                     distributionService.Start();
@@ -129,16 +126,13 @@ namespace FigmaSharp.Samples
                     ////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
                     wrapper.AdjustToContent();
 
-
-
-
-
                     Title = Link_ID;
 
-                    NSView figma_view = CreateFigmaView();
-                    Window.ContentView.AddSubview(figma_view);
+					var scroll = (NSScrollView) wrapper.NativeObject;
+					Window.ContentView.AddSubview (scroll);
+					scroll.Frame = Window.ContentView.Bounds;
 
-                    UpdateVersionMenu();
+					UpdateVersionMenu();
                     UpdatePagesPopupButton();
 
                     RefreshButton.Enabled = true;
@@ -157,14 +151,6 @@ namespace FigmaSharp.Samples
             Load(null, null);
         }
 
-
-        NSView CreateFigmaView()
-        {
-            return new NSView();
-        }
-
-
-
         void UpdatePagesPopupButton()
         {
             PagePopUpButton.AddItem("Page 1");
@@ -172,7 +158,6 @@ namespace FigmaSharp.Samples
                 Console.WriteLine(PagePopUpButton.SelectedItem.Title);
             };
         }
-
 
         void UpdateVersionMenu()
         {
