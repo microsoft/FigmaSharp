@@ -75,5 +75,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
