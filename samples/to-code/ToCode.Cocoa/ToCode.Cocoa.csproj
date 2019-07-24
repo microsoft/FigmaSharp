@@ -110,5 +110,17 @@
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\component.pdf" />
+    <BundleResource Include="Resources\frame.pdf" />
+    <BundleResource Include="Resources\group.pdf" />
+    <BundleResource Include="Resources\instance.pdf" />
+    <BundleResource Include="Resources\line.pdf" />
+    <BundleResource Include="Resources\oval.pdf" />
+    <BundleResource Include="Resources\polygon.pdf" />
+    <BundleResource Include="Resources\rectangle.pdf" />
+    <BundleResource Include="Resources\slice.pdf" />
+    <BundleResource Include="Resources\text.pdf" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
