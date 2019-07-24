@@ -13,5 +13,12 @@
             var applicationDelegate = new FigmaDelegate();
             AppContext.Current.Configuration(applicationDelegate, token);
         }
-    }
+
+		public static void Init()
+		{
+			//Figma initialization
+			var applicationDelegate = new FigmaDelegate();
+			AppContext.Current.Configuration(applicationDelegate);
+		}
+	}
 }

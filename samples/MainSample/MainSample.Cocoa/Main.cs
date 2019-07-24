@@ -34,7 +34,8 @@ namespace FigmaSharp.Samples
     {
         static void Main(string[] args)
         {
-            NSApplication.Init();
+			FigmaApplication.Init();
+			NSApplication.Init();
             NSApplication.Main(args);
         }
     }

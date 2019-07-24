@@ -57,7 +57,12 @@ namespace FigmaSharp
             figmaDelegate = currentDelegate;
         }
 
-        public void SetAccessToken(string token)
+		public void Configuration(IFigmaDelegate currentDelegate)
+		{
+			figmaDelegate = currentDelegate;
+		}
+
+		public void SetAccessToken(string token)
         {
             Token = token;
         }
