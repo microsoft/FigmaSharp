@@ -289,9 +289,9 @@ namespace FigmaSharp.Services
             catch (System.Net.WebException ex)
             {
                 if (!AppContext.Current.IsConfigured)
-                    Console.WriteLine($"Cannot connect to FigmaServer, TOKEN not configured.");
+                    Console.Error.WriteLine($"Cannot connect to Figma server: TOKEN not configured.");
                 else
-                    Console.WriteLine($"Cannot connect to FigmaServer, wrong TOKEN?");
+                    Console.Error.WriteLine($"Cannot connect to Figma server: wrong TOKEN?");
 
                 Console.WriteLine(ex);
             }
