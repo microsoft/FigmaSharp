@@ -130,7 +130,13 @@ namespace FigmaSharp.Samples
                     ////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
                     wrapper.AdjustToContent();
                     // TODO: scroll to middle
+                    if (fileProvider.Response == null)
+                    {
+                        (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
+                        ShowError();
 
+                        return;
+                    }
                     string document_name = fileProvider.Response.name;
                     Title = document_name;
                     Window.Title = document_name;
