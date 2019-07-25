@@ -109,16 +109,22 @@ namespace FigmaSharp.Samples
 
             menu.AddItem(current_item);
             menu.AddItem(NSMenuItem.SeparatorItem);
-            menu.AddItem(new NSMenuItem("Labels") { Enabled = false });
 
-            foreach (NSMenuItem item in named_version_items)
-                menu.AddItem(item);
+            if (named_version_items.Count == 0 && other_version_items.Count == 0) {
+                menu.AddItem(new NSMenuItem("No Version History") { Enabled = false });
+            
+            } else {
+                menu.AddItem(new NSMenuItem("Labels") { Enabled = false });
 
-            menu.AddItem(NSMenuItem.SeparatorItem);
-            menu.AddItem(new NSMenuItem("Autosaves") { Enabled = false });
+                foreach (NSMenuItem item in named_version_items)
+                    menu.AddItem(item);
 
-            foreach (NSMenuItem item in other_version_items)
-                menu.AddItem(item);
+                menu.AddItem(NSMenuItem.SeparatorItem);
+                menu.AddItem(new NSMenuItem("Autosaves") { Enabled = false });
+
+                foreach (NSMenuItem item in other_version_items)
+                    menu.AddItem(item);
+            }
 
             menu.Update();
         }

@@ -104,23 +104,26 @@ namespace FigmaSharp.Samples
                     Console.WriteLine("TOKEN: " + Token);
                     my_scroll_view = new NSScrollView();
 
+
                     ScrollViewWrapper wrapper = new ScrollViewWrapper(my_scroll_view);
 
                     fileProvider = new FigmaRemoteFileProvider();
 					var rendererService = new FigmaFileRendererService(fileProvider, converters);
 
 					rendererService.Start(Link_ID, wrapper);
-
+                    
                     var distributionService = new FigmaViewRendererDistributionService(rendererService);
                     distributionService.Start();
 
                     fileProvider.ImageLinksProcessed += (s, e) => 
                     {
-                        // done
+                        Console.WriteLine("LOADING DONE");
                     };
 
-                    //We want know the background color of the figma camvas and apply to our scrollview
                     var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+                    //fileProvider.Nodes.OfType<FigmaCanvas>().Where(name => "User Testing");
+                   
+
                     if (canvas != null)
                         wrapper.BackgroundColor = canvas.backgroundColor;
 
@@ -131,8 +134,12 @@ namespace FigmaSharp.Samples
                     Title = document_name;
                     Window.Title = document_name;
 
-					var scroll = (NSScrollView) wrapper.NativeObject;
-					Window.ContentView.AddSubview (scroll);
+
+                    var scroll = (NSScrollView)wrapper.NativeObject;
+                    scroll.ScrollerStyle = NSScrollerStyle.Overlay;
+                    scroll.AutohidesScrollers = true;
+
+                    Window.ContentView.AddSubview (scroll);
 					scroll.Frame = Window.ContentView.Bounds;
 
 					UpdateVersionMenu();
@@ -174,12 +181,14 @@ namespace FigmaSharp.Samples
                 Load(version_id, null);
             };
 
+            /*
             menu.AddItem("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now);
             menu.AddItem("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now);
             menu.AddItem("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now);
             menu.AddItem("4", DateTime.Now);
             menu.AddItem("5", DateTime.Now.AddDays(-7));
             menu.AddItem("6", DateTime.Now.AddDays(-14));
+            */
 
             menu.UseAsVersionsMenu();
         }
