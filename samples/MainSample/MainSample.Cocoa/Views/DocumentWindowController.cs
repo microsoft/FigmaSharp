@@ -94,8 +94,8 @@ namespace FigmaSharp.Samples
             RefreshButton.Enabled = false;
 
             new Thread(() => {
-
-                this.InvokeOnMainThread(() => {
+                this.InvokeOnMainThread(() =>
+                {
 
                     AppContext.Current.SetAccessToken(Token);
 
@@ -108,27 +108,28 @@ namespace FigmaSharp.Samples
                     ScrollViewWrapper wrapper = new ScrollViewWrapper(my_scroll_view);
 
                     fileProvider = new FigmaRemoteFileProvider();
-					var rendererService = new FigmaFileRendererService(fileProvider, converters);
+                    var rendererService = new FigmaFileRendererService(fileProvider, converters);
 
-					rendererService.Start(Link_ID, wrapper);
-                    
+                    rendererService.Start(Link_ID, wrapper);
+
                     var distributionService = new FigmaViewRendererDistributionService(rendererService);
                     distributionService.Start();
 
-                    fileProvider.ImageLinksProcessed += (s, e) => 
+                    fileProvider.ImageLinksProcessed += (s, e) =>
                     {
                         Console.WriteLine("LOADING DONE");
                     };
 
                     var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
                     //fileProvider.Nodes.OfType<FigmaCanvas>().Where(name => "User Testing");
-                   
+
 
                     if (canvas != null)
                         wrapper.BackgroundColor = canvas.backgroundColor;
 
                     ////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
                     wrapper.AdjustToContent();
+                    // TODO: scroll to middle
 
                     string document_name = fileProvider.Response.name;
                     Title = document_name;
@@ -139,18 +140,18 @@ namespace FigmaSharp.Samples
                     scroll.ScrollerStyle = NSScrollerStyle.Overlay;
                     scroll.AutohidesScrollers = true;
 
-                    Window.ContentView.AddSubview (scroll);
-					scroll.Frame = Window.ContentView.Bounds;
+                    Window.ContentView.AddSubview(scroll);
+                    scroll.Frame = Window.ContentView.Bounds;
 
-					UpdateVersionMenu();
+                    UpdateVersionMenu();
                     UpdatePagesPopupButton();
 
                     RefreshButton.Enabled = true;
                     PagePopUpButton.Enabled = true;
 
                     (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
-
                 });
+   
 
             }).Start();
         }
@@ -200,16 +201,16 @@ namespace FigmaSharp.Samples
             RefreshButton.Enabled = false;
 
             new Thread(() => {
-                Thread.Sleep(1000);
+                                
 
                 this.InvokeOnMainThread(() => {
+                Load(Version_ID, null);
+
                     RefreshButton.Enabled = true;
                     ToggleSpinnerState(toggle_on: false);
                 });
 
             }).Start();
-
-            // Reload();
         }
 
 
