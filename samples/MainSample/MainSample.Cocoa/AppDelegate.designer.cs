@@ -14,6 +14,9 @@ namespace FigmaSharp.Samples
 		[Action ("APIDocumentationClicked:")]
 		partial void APIDocumentationClicked (Foundation.NSObject sender);
 
+		[Action ("ClearRecentsClicked:")]
+		partial void ClearRecentsClicked (Foundation.NSObject sender);
+
 		[Action ("SourceCodeClicked:")]
 		partial void SourceCodeClicked (Foundation.NSObject sender);
 

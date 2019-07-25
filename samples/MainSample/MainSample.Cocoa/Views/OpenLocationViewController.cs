@@ -26,6 +26,7 @@
 
 
 using System;
+using System.Collections.Generic;
 
 using AppKit;
 using Foundation;
@@ -64,8 +65,51 @@ namespace FigmaSharp.Samples
             LinkComboBox.Changed += LinkComboboxChanged;
             CancelButton.Activated += delegate { View.Window.Close(); };
 
+            PopulateLinkComboBox();
+
             OpenButton.Activated += OpenButtonActivated;
             OpenButton.Enabled = CheckFormIsFilled();
+        }
+
+
+        void PopulateLinkComboBox ()
+        {
+            string[] recents = GetRecents();
+
+            if (recents != null) {
+                foreach (string recent_item in GetRecents())
+                    LinkComboBox.Add(new NSString(recent_item));
+            }
+
+            LinkComboBox.StringValue = "" + NSUserDefaults.StandardUserDefaults.StringForKey(LAST_DOCUMENT_KEY);
+        }
+
+
+        const string RECENT_DOCUMENTS_KEY = "recent_documents";
+        const string LAST_DOCUMENT_KEY = "last_document";
+
+        string[] GetRecents ()
+        {
+            return NSUserDefaults.StandardUserDefaults.StringArrayForKey(RECENT_DOCUMENTS_KEY);
+        }
+
+
+        void AddRecent (string link_id)
+        {
+            List<string> recent_documents = new List<string>();
+            var list = NSUserDefaults.StandardUserDefaults.StringArrayForKey(RECENT_DOCUMENTS_KEY);
+
+            if (list != null)
+                recent_documents.AddRange(list);
+
+            if (!recent_documents.Contains(link_id)) {
+                recent_documents.Add(link_id);
+
+                NSUserDefaults.StandardUserDefaults.SetValueForKey(NSArray.FromStrings(recent_documents.ToArray()), new NSString(RECENT_DOCUMENTS_KEY));
+            }
+
+            PopulateLinkComboBox();
+            NSUserDefaults.StandardUserDefaults.Synchronize();
         }
 
 
@@ -102,6 +146,9 @@ namespace FigmaSharp.Samples
             TokenStore.SharedTokenStore.SetToken(token);
 
             string link_id = LinkComboBox.StringValue.Trim();
+
+            NSUserDefaults.StandardUserDefaults.SetValueForKey(new NSString(link_id), new NSString(LAST_DOCUMENT_KEY));
+            AddRecent(link_id);
 
             var document_window_controller = (DocumentWindowController) segue.DestinationController;
             document_window_controller.LoadDocument(token, link_id);

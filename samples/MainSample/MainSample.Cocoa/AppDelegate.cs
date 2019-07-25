@@ -73,5 +73,12 @@ namespace FigmaSharp.Samples
             var url = new NSUrl(source_code_address);
             NSWorkspace.SharedWorkspace.OpenUrl(url);
         }
+
+
+        partial void ClearRecentsClicked(NSObject sender)
+        {
+            NSUserDefaults.StandardUserDefaults.RemoveObject("recent_documents");
+            NSUserDefaults.StandardUserDefaults.RemoveObject("last_document");
+        }
     }
 }
