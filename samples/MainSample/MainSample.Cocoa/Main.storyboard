@@ -64,6 +64,7 @@
                                                 <segue destination="WaF-y5-496" kind="show" id="3Db-uC-Tfc"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="25E-n1-40q"/>
                                         <menuItem title="Clear Recents" id="OLG-qV-uYT" userLabel="Clear Recents">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
