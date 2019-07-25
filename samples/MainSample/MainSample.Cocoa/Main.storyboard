@@ -539,9 +539,9 @@ Gw
                                 <toolbarItem implicitItemIdentifier="B7EEED89-F9CB-4140-B5DF-4A5347FA7BEC" label="Page" paletteLabel="Page" id="skh-lC-i6L">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="100" height="24"/>
-                                    <size key="maxSize" width="100" height="24"/>
+                                    <size key="maxSize" width="128" height="24"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="fWU-rn-Zi4" userLabel="PopUpButton">
-                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <rect key="frame" x="0.0" y="14" width="128" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UE1-MP-Sxw" userLabel="Cell">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

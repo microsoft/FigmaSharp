@@ -84,6 +84,7 @@ namespace FigmaSharp.Samples
 
 
         NSScrollView my_scroll_view;
+        FigmaFileProvider fileProvider;
 
         void Load(string version_id, string page_id)
         {
@@ -105,7 +106,7 @@ namespace FigmaSharp.Samples
 
                     ScrollViewWrapper wrapper = new ScrollViewWrapper(my_scroll_view);
 
-					var fileProvider = new FigmaRemoteFileProvider();
+                    fileProvider = new FigmaRemoteFileProvider();
 					var rendererService = new FigmaFileRendererService(fileProvider, converters);
 
 					rendererService.Start(Link_ID, wrapper);
@@ -126,8 +127,9 @@ namespace FigmaSharp.Samples
                     ////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
                     wrapper.AdjustToContent();
 
-                    Title = fileProvider.Response.name;
-                    Window.Title = fileProvider.Response.name;
+                    string document_name = fileProvider.Response.name;
+                    Title = document_name;
+                    Window.Title = document_name;
 
 					var scroll = (NSScrollView) wrapper.NativeObject;
 					Window.ContentView.AddSubview (scroll);
@@ -152,13 +154,17 @@ namespace FigmaSharp.Samples
             Load(null, null);
         }
 
+
         void UpdatePagesPopupButton()
         {
-            PagePopUpButton.AddItem("Page 1");
+            foreach (FigmaCanvas canvas in fileProvider.Nodes.OfType<FigmaCanvas>())
+                PagePopUpButton.AddItem(canvas.name);
+
             PagePopUpButton.Activated += delegate {
                 Console.WriteLine(PagePopUpButton.SelectedItem.Title);
             };
         }
+
 
         void UpdateVersionMenu()
         {
