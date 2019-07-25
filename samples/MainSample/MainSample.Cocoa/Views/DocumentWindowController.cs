@@ -126,7 +126,8 @@ namespace FigmaSharp.Samples
                     ////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
                     wrapper.AdjustToContent();
 
-                    Title = Link_ID;
+                    Title = fileProvider.Response.name;
+                    Window.Title = fileProvider.Response.name;
 
 					var scroll = (NSScrollView) wrapper.NativeObject;
 					Window.ContentView.AddSubview (scroll);
