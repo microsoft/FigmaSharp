@@ -59,8 +59,6 @@ namespace FigmaSharp.Samples
         public string Page_ID = null;
 
 
-        // FileProvider etc.
-
 
         public DocumentWindowController(IntPtr handle) : base(handle)
         {
@@ -93,69 +91,83 @@ namespace FigmaSharp.Samples
             (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: true);
             RefreshButton.Enabled = false;
 
+            AppContext.Current.SetAccessToken(Token);
+            var converters = AppContext.Current.GetFigmaConverters();
+
+            my_scroll_view = new NSScrollView();
+            ScrollViewWrapper wrapper = new ScrollViewWrapper(my_scroll_view);
+
+
+
             new Thread(() => {
+
+
                 this.InvokeOnMainThread(() =>
                 {
-
-                    AppContext.Current.SetAccessToken(Token);
-
-                    var converters = AppContext.Current.GetFigmaConverters();
-
-                    Console.WriteLine("TOKEN: " + Token);
-                    my_scroll_view = new NSScrollView();
-
-
-                    ScrollViewWrapper wrapper = new ScrollViewWrapper(my_scroll_view);
-
                     fileProvider = new FigmaRemoteFileProvider();
                     var rendererService = new FigmaFileRendererService(fileProvider, converters);
 
                     rendererService.Start(Link_ID, wrapper);
-
                     var distributionService = new FigmaViewRendererDistributionService(rendererService);
                     distributionService.Start();
 
-                    fileProvider.ImageLinksProcessed += (s, e) =>
-                    {
-                        Console.WriteLine("LOADING DONE");
+                    fileProvider.ImageLinksProcessed += (s, e) => {
+                        this.InvokeOnMainThread(() =>
+                        {
+                            Console.WriteLine("LOADING DONE");
+
+
+
+
+                            if (fileProvider.Response == null)
+                            {
+                                (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
+                                ShowError();
+                                return;
+                            }
+
+                            FigmaCanvas canvas;
+
+                            if (!string.IsNullOrEmpty(page_id))
+                                canvas = (FigmaCanvas)fileProvider.Nodes.First(x => x.name == page_id);
+                            else
+                                canvas = (FigmaCanvas)fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+
+                            wrapper.BackgroundColor = canvas.backgroundColor;
+                            wrapper.AdjustToContent();
+                            // TODO: scroll to middle
+
+
+                            var scroll = (NSScrollView)wrapper.NativeObject;
+                            scroll.ScrollerStyle = NSScrollerStyle.Overlay;
+                            scroll.AutohidesScrollers = true;
+                            Window.ContentView.AddSubview(scroll);
+                            scroll.Frame = Window.ContentView.Bounds;
+
+                            Title = fileProvider.Response.name;
+                            Window.Title = fileProvider.Response.name;
+
+                            UpdateVersionMenu();
+                            UpdatePagesPopupButton();
+
+                            RefreshButton.Enabled = true;
+                            PagePopUpButton.Enabled = true;
+
+                            (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
+
+
+
+
+
+
+                        });
+
+
+
                     };
 
-                    var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
-                    //fileProvider.Nodes.OfType<FigmaCanvas>().Where(name => "User Testing");
 
-
-                    if (canvas != null)
-                        wrapper.BackgroundColor = canvas.backgroundColor;
-
-                    ////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-                    wrapper.AdjustToContent();
-                    // TODO: scroll to middle
-                    if (fileProvider.Response == null)
-                    {
-                        (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
-                        ShowError();
-
-                        return;
-                    }
-                    string document_name = fileProvider.Response.name;
-                    Title = document_name;
-                    Window.Title = document_name;
-
-
-                    var scroll = (NSScrollView)wrapper.NativeObject;
-                    scroll.ScrollerStyle = NSScrollerStyle.Overlay;
-                    scroll.AutohidesScrollers = true;
-
-                    Window.ContentView.AddSubview(scroll);
-                    scroll.Frame = Window.ContentView.Bounds;
-
-                    UpdateVersionMenu();
-                    UpdatePagesPopupButton();
-
-                    RefreshButton.Enabled = true;
-                    PagePopUpButton.Enabled = true;
-
-                    (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
+       
                 });
    
 
@@ -165,7 +177,7 @@ namespace FigmaSharp.Samples
 
         public void Reload()
         {
-            Load(null, null);
+            Load(version_id: "", page_id: "");
         }
 
 
@@ -174,9 +186,8 @@ namespace FigmaSharp.Samples
             foreach (FigmaCanvas canvas in fileProvider.Nodes.OfType<FigmaCanvas>())
                 PagePopUpButton.AddItem(canvas.name);
 
-            PagePopUpButton.Activated += delegate {
-                Console.WriteLine(PagePopUpButton.SelectedItem.Title);
-            };
+            if (Page_ID != null)
+                PagePopUpButton.SelectItem(Page_ID);
         }
 
 
@@ -207,10 +218,8 @@ namespace FigmaSharp.Samples
             RefreshButton.Enabled = false;
 
             new Thread(() => {
-                                
-
                 this.InvokeOnMainThread(() => {
-                Load(Version_ID, null);
+                    Reload();
 
                     RefreshButton.Enabled = true;
                     ToggleSpinnerState(toggle_on: false);
@@ -220,16 +229,25 @@ namespace FigmaSharp.Samples
         }
 
 
+        partial void PageClicked(NSObject sender)
+        {
+            Page_ID = PagePopUpButton.TitleOfSelectedItem;
+            Load(version_id: "", page_id: PagePopUpButton.TitleOfSelectedItem);
+        }
+
+
         void ToggleSpinnerState(bool toggle_on)
         {
-            if (MainToolbar.VisibleItems[1].Identifier == "Spinner") {
-                (MainToolbar.VisibleItems[1].View as NSProgressIndicator).StopAnimation(this);
-                MainToolbar.RemoveItem(1);
+            const int spinner_position = 2;
+
+            if (MainToolbar.VisibleItems[spinner_position].Identifier == "Spinner") {
+                (MainToolbar.VisibleItems[spinner_position].View as NSProgressIndicator).StopAnimation(this);
+                MainToolbar.RemoveItem(spinner_position);
             }
 
             if (toggle_on) {
-                MainToolbar.InsertItem("Spinner", 1);
-                (MainToolbar.VisibleItems[1].View as NSProgressIndicator).StartAnimation(this);
+                MainToolbar.InsertItem("Spinner", spinner_position);
+                (MainToolbar.VisibleItems[spinner_position].View as NSProgressIndicator).StartAnimation(this);
             }
         }
 

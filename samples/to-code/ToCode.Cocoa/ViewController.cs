@@ -54,7 +54,7 @@ namespace ToCode.Cocoa
                 .ToArray ();
 
             fileProvider = new FigmaRemoteFileProvider();
-            fileProvider.Load("Dq1CFm7IrDi3UJC7KJ8zVjOt");
+            fileProvider.Load("CobaSo7LmEYsuGZB0ED0ewSs");
 
             var addChildConverter = new FigmaCodeAddChildConverter();
             var positionConverter = new FigmaCodePositionConverter();

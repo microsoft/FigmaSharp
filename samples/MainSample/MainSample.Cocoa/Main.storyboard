@@ -495,9 +495,9 @@ Gw
                     <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="csp-8t-ctO">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="317" width="640" height="480"/>
+                        <rect key="contentRect" x="245" y="317" width="720" height="480"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="320" height="320"/>
+                        <value key="minSize" type="size" width="480" height="320"/>
                         <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="z7L-HX-hhV">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" image="NSRefreshTemplate" id="NHv-Gm-Lms">
@@ -517,6 +517,24 @@ Gw
                                     <connections>
                                         <action selector="RefreshClicked:" target="qmD-kN-bD5" id="he4-XR-IPe"/>
                                     </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="1E10970B-EC24-4C84-8D3B-B64D84CC147D" label="Code" paletteLabel="Code" image="NSTouchBarTextLeftAlignTemplate" id="TNB-bp-Pzm">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="56" height="32"/>
+                                    <size key="maxSize" width="56" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="Qs9-wt-CEW">
+                                        <rect key="frame" x="0.0" y="14" width="56" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSTouchBarTextLeftAlignTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TWV-HR-eu9">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">r</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="CodeClicked:" target="qmD-kN-bD5" id="VbW-0b-6p2"/>
+                                        </connections>
+                                    </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="815A7408-E296-476E-A40B-09DA766A5965" label="Title" paletteLabel="Title" sizingBehavior="auto" id="nwy-jM-blc">
                                     <nil key="toolTip"/>
@@ -542,6 +560,9 @@ Gw
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="htg-1M-Blp"/>
                                         </popUpButtonCell>
+                                        <connections>
+                                            <action selector="PageClicked:" target="qmD-kN-bD5" id="kTT-qB-fu4"/>
+                                        </connections>
                                     </popUpButton>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="8jD-Ch-646"/>
@@ -567,6 +588,7 @@ Gw
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="NHv-Gm-Lms"/>
+                                <toolbarItem reference="TNB-bp-Pzm"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
                                 <toolbarItem reference="nwy-jM-blc"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
@@ -579,6 +601,7 @@ Gw
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="CodeButton" destination="Qs9-wt-CEW" id="HKe-Kg-o9V"/>
                         <outlet property="MainToolbar" destination="z7L-HX-hhV" id="1Xy-J8-wDQ"/>
                         <outlet property="PagePopUpButton" destination="fWU-rn-Zi4" id="SI2-eg-muq"/>
                         <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="ZWE-0H-D3R"/>
@@ -619,5 +642,6 @@ Gw
     </scenes>
     <resources>
         <image name="NSRefreshTemplate" width="11" height="15"/>
+        <image name="NSTouchBarTextLeftAlignTemplate" width="14" height="30"/>
     </resources>
 </document>

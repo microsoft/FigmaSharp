@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Visual Studio to store outlets and
 // actions made in the UI designer. If it is removed, they will be lost.
@@ -13,6 +13,9 @@ namespace FigmaSharp.Samples
     partial class DocumentWindowController
     {
         [Outlet]
+        AppKit.NSButton CodeButton { get; set; }
+
+        [Outlet]
         AppKit.NSToolbar MainToolbar { get; set; }
 
         [Outlet]
@@ -26,6 +29,12 @@ namespace FigmaSharp.Samples
 
         [Outlet]
         AppKit.NSTextField TitleTextField { get; set; }
+
+        [Action ("CodeClicked:")]
+        partial void CodeClicked (Foundation.NSObject sender);
+
+        [Action ("PageClicked:")]
+        partial void PageClicked (Foundation.NSObject sender);
 
         [Action ("RefreshClicked:")]
         partial void RefreshClicked (Foundation.NSObject sender);
@@ -45,6 +54,11 @@ namespace FigmaSharp.Samples
             if (RefreshButton != null) {
                 RefreshButton.Dispose ();
                 RefreshButton = null;
+            }
+
+            if (CodeButton != null) {
+                CodeButton.Dispose ();
+                CodeButton = null;
             }
 
             if (Spinner != null) {
