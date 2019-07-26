@@ -354,7 +354,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="667" y="-63"/>
+            <point key="canvasLocation" x="651" y="-62"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="l7G-kG-DjR">
@@ -363,7 +363,7 @@
                     <window key="window" title="Open Location" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Qdj-Uz-pZ5">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="301" width="558" height="222"/>
+                        <rect key="contentRect" x="245" y="301" width="526" height="222"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                     </window>
                     <connections>
@@ -372,7 +372,7 @@
                 </windowController>
                 <customObject id="fys-ne-ueE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="667" y="238.5"/>
+            <point key="canvasLocation" x="651" y="238"/>
         </scene>
         <!--Open Location View Controller-->
         <scene sceneID="vPX-Rw-bgZ">
@@ -497,7 +497,7 @@ Gw
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="317" width="720" height="480"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="480" height="320"/>
+                        <value key="minSize" type="size" width="720" height="480"/>
                         <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="z7L-HX-hhV">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" image="NSRefreshTemplate" id="NHv-Gm-Lms">
@@ -612,7 +612,7 @@ Gw
                 </windowController>
                 <customObject id="mhM-RN-F0i" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1388" y="347"/>
+            <point key="canvasLocation" x="1399" y="381"/>
         </scene>
         <!--Document View Controller-->
         <scene sceneID="9Jh-cp-1WU">
@@ -637,7 +637,7 @@ Gw
                 </viewController>
                 <customObject id="lDY-4l-kRL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1388" y="1005"/>
+            <point key="canvasLocation" x="1399" y="1045"/>
         </scene>
     </scenes>
     <resources>
