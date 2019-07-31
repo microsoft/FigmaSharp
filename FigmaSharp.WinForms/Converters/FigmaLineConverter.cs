@@ -36,10 +36,10 @@ namespace FigmaSharp.WinForms.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var figmaLineView = new TransparentControl ();
+            var figmaLineView = new ImageTransparentControl();
             var figmaLine = (FigmaLine)currentNode;
             figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
+            return new ImageViewWrapper(figmaLineView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

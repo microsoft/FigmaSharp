@@ -36,21 +36,9 @@ namespace FigmaSharp.WinForms.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var rectangleVector = ((FigmaRectangleVector)currentNode);
-            if (rectangleVector.HasFills)
-            {
-                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint figmaPaint)
-                {
-                    var imageView = new ImageTransparentControl();
-                    var figmaImageView = new ImageViewWrapper(imageView);
-                    imageView.Configure(rectangleVector);
-                    return figmaImageView;
-                }
-            }
-
-            var currengroupView = new TransparentControl ();
-            currengroupView.Configure(rectangleVector);
-            return new ViewWrapper(currengroupView);
+            var currengroupView = new ImageTransparentControl();
+            currengroupView.Configure((FigmaRectangleVector)currentNode);
+            return new ImageViewWrapper(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

@@ -43,6 +43,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
     <Compile Include="CustomControls\LabelTransparentControl.cs">
       <SubType>Component</SubType>
     </Compile>

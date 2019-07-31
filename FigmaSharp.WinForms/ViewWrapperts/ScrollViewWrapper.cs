@@ -65,6 +65,7 @@ namespace FigmaSharp.WinForms
         public ScrollViewWrapper(ScrollableControl scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
+            ContentView = new ViewWrapper(new TransparentControl());
             scrollView.AutoScroll = true;
         }
 
@@ -72,10 +73,22 @@ namespace FigmaSharp.WinForms
 
         public override void RemoveChild(IViewWrapper view) => canvasContainerWrapper.RemoveChild(view);
 
-
         public void AdjustToContent()
         {
-            System.Console.WriteLine("");
+            var children = Children;
+            FigmaRectangle contentRect = FigmaRectangle.Zero;
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (i == 0)
+                {
+                    contentRect = children[i].Allocation;
+                }
+                else
+                {
+                    contentRect = contentRect.UnionWith(children[i].Allocation);
+                }
+            }
+            SetContentSize(contentRect.width, contentRect.height);
         }
 
         public void SetContentSize(float width, float height)

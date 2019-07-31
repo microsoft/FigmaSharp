@@ -1,4 +1,5 @@
 ﻿using FigmaSharp.Converters;
+using FigmaSharp.Models;
 using FigmaSharp.WinForms.Converters;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace FigmaSharp.WinForms
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly FigmaViewConverter[] figmaViewConverters = {
+            new FigmaRegularPolygonConverter (),
             new FigmaVectorViewConverter (),
             new FigmaFrameEntityConverter (),
             new FigmaTextConverter (),
@@ -85,17 +87,14 @@ namespace FigmaSharp.WinForms
 
         public void BeginInvoke(Action handler)
         {
-            //To define
+            handler();
         }
 
-        public FigmaCodePositionConverterBase GetPositionConverter()
-        {
-            throw new NotImplementedException();
-        }
+        static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
+        static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
 
-        public FigmaCodeAddChildConverterBase GetAddChildConverter()
-        {
-            throw new NotImplementedException();
-        }
+        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
+
+        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
     }
 }

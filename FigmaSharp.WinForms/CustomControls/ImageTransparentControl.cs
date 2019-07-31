@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace FigmaSharp.WinForms
 {
@@ -11,11 +13,13 @@ namespace FigmaSharp.WinForms
             set
             {
                 image = value;
+                Invalidate();
             }
         }
 
         public ImageTransparentControl()
         {
+            ResizeRedraw = true;
         }
 
         protected override void CustomDraw(Graphics g)
@@ -24,7 +28,13 @@ namespace FigmaSharp.WinForms
 
             if (image != null)
             {
-                g.DrawImage(image, Location.X, Location.Y);
+                var destRect = new Rectangle(0, 0, Width, Height);
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
             }
         }
     }

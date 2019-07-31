@@ -36,8 +36,9 @@ namespace FigmaSharp.WinForms.Converters
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var vector = ((FigmaVector)currentNode);
-            Console.WriteLine(vector);
-            return null;
+            var currengroupView = new ImageTransparentControl();
+            currengroupView.Configure((FigmaRectangleVector)currentNode);
+            return new ImageViewWrapper(currengroupView);
         }
 
         public override string ConvertToCode(FigmaNode currentNode)
