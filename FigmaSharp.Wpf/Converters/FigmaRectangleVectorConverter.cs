@@ -29,28 +29,22 @@
 using FigmaSharp.Converters;
 using System.Windows.Controls;
 using FigmaSharp.Models;
+using System;
 
 namespace FigmaSharp.Wpf.Converters
 {
+
     public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var rectangleVector = ((FigmaRectangleVector)currentNode);
-            if (rectangleVector.HasFills)
-            {
-                if (rectangleVector.fills[0].type == "IMAGE" && rectangleVector.fills[0] is FigmaPaint)
-                {
-                    var imageView = new Image ();
-                    var figmaImageView = new ImageViewWrapper(imageView);
-                    imageView.Configure(rectangleVector);
-                    return figmaImageView;
-                }
-            }
+            var figmaEntity = (FigmaRectangleVector)currentNode;
 
-            var currengroupView = new Canvas ();
-            currengroupView.Configure(rectangleVector);
-            return new ViewWrapper(currengroupView);
+            var image = new CanvasImage();
+            var figmaImageView = new ImageViewWrapper();
+            image.Configure(figmaEntity);
+
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

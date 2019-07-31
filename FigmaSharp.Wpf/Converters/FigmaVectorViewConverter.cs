@@ -35,9 +35,12 @@ namespace FigmaSharp.Wpf.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var vector = ((FigmaVector)currentNode);
-            Console.WriteLine(vector);
-            return null;
+            var vector = ((FigmaRectangleVector)currentNode);
+
+            var image = new CanvasImage();
+            var figmaImageView = new ImageViewWrapper();
+            image.Configure(vector);
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

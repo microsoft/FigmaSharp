@@ -12,8 +12,13 @@ namespace FigmaSharp.Wpf.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var elipseView = new UserControl();
-            return new ViewWrapper (elipseView);
+            var figmaEntity = (FigmaElipse)currentNode;
+
+            var image = new CanvasImage();
+            var figmaImageView = new ImageViewWrapper();
+            image.Configure(figmaEntity);
+
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

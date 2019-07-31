@@ -35,10 +35,13 @@ namespace FigmaSharp.Wpf.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var currengroupView = new Canvas ();
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
-            currengroupView.Configure(figmaFrameEntity);
-            return new ViewWrapper(currengroupView);
+
+            var image = new CanvasImage();
+            var figmaImageView = new ImageViewWrapper();
+            image.Configure(figmaFrameEntity);
+
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

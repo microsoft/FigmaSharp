@@ -36,10 +36,12 @@ namespace FigmaSharp.Wpf.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var figmaLineView = new UserControl ();
             var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new ViewWrapper(figmaLineView);
+
+            var image = new CanvasImage();
+            var figmaImageView = new ImageViewWrapper();
+            image.Configure(figmaLine);
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)

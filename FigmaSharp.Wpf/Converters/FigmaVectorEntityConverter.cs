@@ -35,22 +35,12 @@ namespace FigmaSharp.Wpf.Converters
     {
         public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
-            var vector = ((FigmaVectorEntity)currentNode);
+            var figmaEntity = (FigmaVectorEntity)currentNode;
 
-            if (vector.HasFills)
-            {
-                if (vector.fills[0].type == "IMAGE" && vector.fills[0] is FigmaPaint)
-                {
-                    var imageView = new Image();
-                    var figmaImageView = new ImageViewWrapper(imageView);
-                    imageView.Configure(vector);
-                    return figmaImageView;
-                }
-            }
-
-            var currengroupView = new Canvas(); // { TranslatesAutoresizingMaskIntoConstraints = false };
-            currengroupView.Configure(vector);
-            return new ViewWrapper(currengroupView);
+            var image = new CanvasImage();
+            var figmaImageView = new ImageViewWrapper();
+            image.Configure(figmaEntity);
+            return figmaImageView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode)
