@@ -65,6 +65,8 @@ namespace FigmaSharp.Wpf
         {
             this.scrollView = scrollView;
 
+            ContentView = new ViewWrapper (new Canvas());
+
             scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
             scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
