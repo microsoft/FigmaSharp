@@ -17,6 +17,7 @@ namespace FigmaSharp.Wpf
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly FigmaViewConverter[] figmaViewConverters = {
+            new FigmaRegularPolygonConverter (),
             new FigmaVectorViewConverter (),
             new FigmaFrameEntityConverter (),
             new FigmaTextConverter (),

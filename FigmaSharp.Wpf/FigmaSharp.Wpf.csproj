@@ -51,6 +51,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
     <Compile Include="Views\CanvasImage.cs" />
     <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
     <Compile Include="Converters\FigmaCodePositionConverter.cs" />
