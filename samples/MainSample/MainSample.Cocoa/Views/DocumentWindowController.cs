@@ -90,6 +90,7 @@ namespace FigmaSharp.Samples
 
             (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: true);
             RefreshButton.Enabled = false;
+            CodeButton.Enabled = false;
 
             AppContext.Current.SetAccessToken(Token);
             var converters = AppContext.Current.GetFigmaConverters();
@@ -151,25 +152,15 @@ namespace FigmaSharp.Samples
                             UpdatePagesPopupButton();
 
                             RefreshButton.Enabled = true;
+                            CodeButton.Enabled = true;
                             PagePopUpButton.Enabled = true;
 
                             (Window.ContentViewController as DocumentViewController).ToggleSpinnerState(toggle_on: false);
 
 
-
-
-
-
                         });
-
-
-
                     };
-
-
-       
                 });
-   
 
             }).Start();
         }
@@ -216,13 +207,15 @@ namespace FigmaSharp.Samples
         {
             ToggleSpinnerState(toggle_on: true);
             RefreshButton.Enabled = false;
+            CodeButton.Enabled = false;
 
             new Thread(() => {
                 this.InvokeOnMainThread(() => {
                     Reload();
 
-                    RefreshButton.Enabled = true;
                     ToggleSpinnerState(toggle_on: false);
+                    RefreshButton.Enabled = true;
+                    CodeButton.Enabled = true;
                 });
 
             }).Start();

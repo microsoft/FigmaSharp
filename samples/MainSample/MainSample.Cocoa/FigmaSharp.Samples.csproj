@@ -89,6 +89,22 @@
     <Compile Include="FileContainerView.designer.cs">
       <DependentUpon>FileContainerView.cs</DependentUpon>
     </Compile>
+    <Compile Include="LayerBrowserWindowController.cs" />
+    <Compile Include="LayerBrowserWindowController.designer.cs">
+      <DependentUpon>LayerBrowserWindowController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayerBrowserViewController.cs" />
+    <Compile Include="LayerBrowserViewController.designer.cs">
+      <DependentUpon>LayerBrowserViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CodeWindowController.cs" />
+    <Compile Include="CodeWindowController.designer.cs">
+      <DependentUpon>CodeWindowController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CodeViewController.cs" />
+    <Compile Include="CodeViewController.designer.cs">
+      <DependentUpon>CodeViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard">
