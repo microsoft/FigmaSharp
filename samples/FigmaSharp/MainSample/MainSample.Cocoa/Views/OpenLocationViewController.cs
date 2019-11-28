@@ -32,95 +32,94 @@ using Foundation;
 
 namespace FigmaSharp.Samples
 {
-    public partial class OpenLocationViewController : NSViewController
-    {
-        string keychain_token;
+	public partial class OpenLocationViewController : NSViewController
+	{
+		string keychain_token;
 
-        string token_message;
-        string token_message_unsaved = "This token will be saved in your keychain.";
+		string token_message;
+		string token_message_unsaved = "This token will be saved in your keychain.";
 
-        public OpenLocationViewController(IntPtr handle) : base(handle)
-        {
-        }
+		public OpenLocationViewController (IntPtr handle) : base (handle)
+		{
+		}
 
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
+		public override void ViewDidLoad ()
+		{
+			base.ViewDidLoad ();
 
-            token_message = TokenStatusTextField.StringValue;
+			token_message = TokenStatusTextField.StringValue;
 
-            try {
-                keychain_token = TokenStore.SharedTokenStore.GetToken();
-                TokenTextField.StringValue = keychain_token;
+			try {
+				keychain_token = TokenStore.SharedTokenStore.GetToken ();
+				TokenTextField.StringValue = keychain_token;
 
-            } catch {
-                TokenStatusTextField.StringValue = token_message_unsaved;
-                Console.WriteLine("No token found in keychain.");
-            }
+			} catch {
+				TokenStatusTextField.StringValue = token_message_unsaved;
+				Console.WriteLine ("No token found in keychain.");
+			}
 
-            TokenTextField.Changed += TokenTextFieldChanged;
-            LinkComboBox.Changed += LinkComboboxChanged;
-            CancelButton.Activated += delegate { View.Window.Close(); };
+			TokenTextField.Changed += TokenTextFieldChanged;
+			LinkComboBox.Changed += LinkComboboxChanged;
+			CancelButton.Activated += delegate { View.Window.Close (); };
 
-            OpenButton.Activated += OpenButtonActivated;
-            OpenButton.Enabled = CheckFormIsFilled();
-        }
+			OpenButton.Activated += OpenButtonActivated;
+			OpenButton.Enabled = CheckFormIsFilled ();
+		}
 
-        void TokenTextFieldChanged(Object sender, EventArgs args)
-        {
-            string token_message = TokenStatusTextField.StringValue;
+		void TokenTextFieldChanged (Object sender, EventArgs args)
+		{
+			string token_message = TokenStatusTextField.StringValue;
 
-            if (TokenTextField.StringValue == keychain_token)
-                TokenStatusTextField.StringValue = token_message;
-            else
-                TokenStatusTextField.StringValue = token_message_unsaved;
+			if (TokenTextField.StringValue == keychain_token)
+				TokenStatusTextField.StringValue = token_message;
+			else
+				TokenStatusTextField.StringValue = token_message_unsaved;
 
-            OpenButton.Enabled = CheckFormIsFilled();
-        }
+			OpenButton.Enabled = CheckFormIsFilled ();
+		}
 
-		void LinkComboboxChanged(object sender, EventArgs args)
-        {
-            LinkComboBox.StringValue = FigmaLink.TryParseID(LinkComboBox.StringValue);
-            OpenButton.Enabled = CheckFormIsFilled();
-        }
+		void LinkComboboxChanged (object sender, EventArgs args)
+		{
+			LinkComboBox.StringValue = FigmaLink.TryParseID (LinkComboBox.StringValue);
+			OpenButton.Enabled = CheckFormIsFilled ();
+		}
 
-        void OpenButtonActivated(Object sender, EventArgs args)
-        {
-            View.Window.IsVisible = false;
-            PerformSegue("OpenLocationSegue", this);
-        }
+		void OpenButtonActivated (Object sender, EventArgs args)
+		{
+			View.Window.IsVisible = false;
+			PerformSegue ("OpenLocationSegue", this);
+		}
 
-        public override void PrepareForSegue(NSStoryboardSegue segue, NSObject sender)
-        {
-            string token = TokenTextField.StringValue.Trim();
-            TokenStore.SharedTokenStore.SetToken(token);
+		public override void PrepareForSegue (NSStoryboardSegue segue, NSObject sender)
+		{
+			string token = TokenTextField.StringValue.Trim ();
+			TokenStore.SharedTokenStore.SetToken (token);
 
-			string link_id = LinkComboBox.StringValue.Trim();
+			string link_id = LinkComboBox.StringValue.Trim ();
 
-            var windowController = (DocumentWindowController) segue.DestinationController;
-			var contentController = (DocumentViewController) windowController.ContentViewController;
+			var windowController = (DocumentWindowController)segue.DestinationController;
+			var contentController = (DocumentViewController)windowController.ContentViewController;
 
-			contentController.OnInitialize();
+			contentController.OnInitialize ();
 
-			contentController.LoadDocument(token, link_id);
-        }
+			contentController.LoadDocument (token, link_id);
+		}
 
-        bool CheckFormIsFilled()
-        {
-            return (!string.IsNullOrWhiteSpace(LinkComboBox.StringValue) &&
-                    !string.IsNullOrWhiteSpace(TokenTextField.StringValue));
-        }
+		bool CheckFormIsFilled ()
+		{
+			return (!string.IsNullOrWhiteSpace (LinkComboBox.StringValue) &&
+					!string.IsNullOrWhiteSpace (TokenTextField.StringValue));
+		}
 
-        public override NSObject RepresentedObject
-        {
-            get {
-                return base.RepresentedObject;
-            }
+		public override NSObject RepresentedObject {
+			get {
+				return base.RepresentedObject;
+			}
 
-            set {
-                base.RepresentedObject = value;
-                // Update the view, if already loaded.
-            }
-        }
-    }
+			set {
+				base.RepresentedObject = value;
+				// Update the view, if already loaded.
+			}
+		}
+	}
 }

@@ -28,15 +28,15 @@
 
 namespace FigmaSharp.Views
 {
-    public interface IRadioBox : IView
-    {
-        bool IsChecked { get; set; }
-        string Text { get; set; }
-    }
+	public interface IRadioBox : IView
+	{
+		bool IsChecked { get; set; }
+		string Text { get; set; }
+	}
 
-    public interface ICheckBox : IView
-    {
-        bool IsChecked { get; set; }
-        string Text { get; set; }
-    }
+	public interface ICheckBox : IView
+	{
+		bool IsChecked { get; set; }
+		string Text { get; set; }
+	}
 }

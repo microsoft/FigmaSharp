@@ -37,15 +37,15 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Views.Cocoa
 {
-    public static class ViewsHelper
-    {
-		public static int ToAppKitFontWeight(float font_weight)
+	public static class ViewsHelper
+	{
+		public static int ToAppKitFontWeight (float font_weight)
 		{
 			float weight = font_weight;
 			if (weight <= 50 || weight >= 950)
 				return 5;
 
-			var select_weight = (int)Math.Round(weight / 100) - 1;
+			var select_weight = (int)Math.Round (weight / 100) - 1;
 			return app_kit_font_weights[select_weight];
 		}
 
@@ -61,59 +61,51 @@ namespace FigmaSharp.Views.Cocoa
       12,  // FontWeight900
             };
 
-		public static NSFont GetSystemFont(bool bold, float size = 0.0f)
+		public static NSFont GetSystemFont (bool bold, float size = 0.0f)
 		{
-			if (size <= 0)
-			{
+			if (size <= 0) {
 				size = (float)NSFont.SystemFontSize;
 			}
 			if (bold)
-				return NSFont.BoldSystemFontOfSize(size);
-			return NSFont.SystemFontOfSize(size);
+				return NSFont.BoldSystemFontOfSize (size);
+			return NSFont.SystemFontOfSize (size);
 		}
 
-		public static NSImage GetManifestImageResource(Assembly assembly, string resource)
-        {
-            if (assembly == null)
-            {
-                //TODO: not safe
-                assembly = Assembly.GetEntryAssembly();
-            }
-            try
-            {
-                //TODO: not safe
-                var fullResourceName = string.Concat(assembly.GetName ().Name, ".Resources.", resource);
-                //var resources = assembly.GetManifestResourceNames();
-                using (var stream = assembly.GetManifestResourceStream(fullResourceName))
-                {
-                    return NSImage.FromStream(stream);
-                }
-            }
-            catch (System.ArgumentNullException)
-            {
-                Console.WriteLine("[ERROR] File '{0}' not found in Resources and/or not set Build action to EmbeddedResource", resource);
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex);
+		public static NSImage GetManifestImageResource (Assembly assembly, string resource)
+		{
+			if (assembly == null) {
+				//TODO: not safe
+				assembly = Assembly.GetEntryAssembly ();
+			}
+			try {
+				//TODO: not safe
+				var fullResourceName = string.Concat (assembly.GetName ().Name, ".Resources.", resource);
+				//var resources = assembly.GetManifestResourceNames();
+				using (var stream = assembly.GetManifestResourceStream (fullResourceName)) {
+					return NSImage.FromStream (stream);
+				}
+			} catch (System.ArgumentNullException) {
+				Console.WriteLine ("[ERROR] File '{0}' not found in Resources and/or not set Build action to EmbeddedResource", resource);
+			} catch (System.Exception ex) {
+				Console.WriteLine (ex);
 
-            }
-            return null;
-        }
+			}
+			return null;
+		}
 
-        public static FNSTextField CreateLabel(string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
-        {
-            var label = new FNSTextField();
-            label.Cell = new VerticalAlignmentTextCell();
-            label.StringValue = text ?? "";
-            label.Font = font ?? GetSystemFont(false);
-            label.Editable = false;
-            label.Bordered = false;
-            label.Bezeled = false;
-            label.DrawsBackground = false;
-            label.Selectable = false;
-            label.Alignment = alignment;
-            return label;
-        }
-    }
+		public static FNSTextField CreateLabel (string text, NSFont font = null, NSTextAlignment alignment = NSTextAlignment.Left)
+		{
+			var label = new FNSTextField ();
+			label.Cell = new VerticalAlignmentTextCell ();
+			label.StringValue = text ?? "";
+			label.Font = font ?? GetSystemFont (false);
+			label.Editable = false;
+			label.Bordered = false;
+			label.Bezeled = false;
+			label.DrawsBackground = false;
+			label.Selectable = false;
+			label.Alignment = alignment;
+			return label;
+		}
+	}
 }

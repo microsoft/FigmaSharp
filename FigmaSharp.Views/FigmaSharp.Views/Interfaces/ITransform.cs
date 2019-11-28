@@ -31,8 +31,8 @@ namespace FigmaSharp.Views
 	public interface ITransform : IObject
 	{
 		float RotateAngle { get; set; }
-		void Rotate(float angle);
-		void Scale(float x, float y);
-		void Translate(float x, float y);
+		void Rotate (float angle);
+		void Scale (float x, float y);
+		void Translate (float x, float y);
 	}
 }

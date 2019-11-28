@@ -29,9 +29,9 @@
 namespace FigmaSharp.Views
 {
 	public interface ILabel : IView
-    {
+	{
 		string Text { get; set; }
 
-        Color ForegroundColor { get; set; }
-    }
+		Color ForegroundColor { get; set; }
+	}
 }

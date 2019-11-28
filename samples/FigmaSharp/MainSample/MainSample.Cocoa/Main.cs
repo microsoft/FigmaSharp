@@ -30,13 +30,13 @@ using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Samples
 {
-    static class MainClass
-    {
-        static void Main(string[] args)
-        {
-			FigmaApplication.Init();
-			NSApplication.Init();
-            NSApplication.Main(args);
-        }
-    }
+	static class MainClass
+	{
+		static void Main (string[] args)
+		{
+			FigmaApplication.Init ();
+			NSApplication.Init ();
+			NSApplication.Main (args);
+		}
+	}
 }

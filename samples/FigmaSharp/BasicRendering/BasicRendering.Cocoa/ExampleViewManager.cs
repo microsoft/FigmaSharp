@@ -34,18 +34,18 @@ using FigmaSharp.Views;
 
 namespace ExampleFigma
 {
-    public class ExampleViewManager 
-    {
-        const string fileName = "CobaSo7LmEYsuGZB0ED0ewSs";
+	public class ExampleViewManager
+	{
+		const string fileName = "CobaSo7LmEYsuGZB0ED0ewSs";
 
-        readonly FigmaRemoteFileProvider fileProvider;
+		readonly FigmaRemoteFileProvider fileProvider;
 
-        public string WindowTitle => fileProvider.Response.name;
+		public string WindowTitle => fileProvider.Response.name;
 
-        public ExampleViewManager(IScrollView scrollView)
-        {
-            //we get the default basic view converters from the current loaded toolkit
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+		public ExampleViewManager (IScrollView scrollView)
+		{
+			//we get the default basic view converters from the current loaded toolkit
+			var converters = FigmaSharp.AppContext.Current.GetFigmaConverters ();
 
 			//TIP: the render consist in 2 steps:
 			//1) generate all the views, decorating and calculate sizes
@@ -53,24 +53,24 @@ namespace ExampleFigma
 			//native toolkit positioning system
 
 			//in this case we want use a remote file provider (figma url from our document)
-			fileProvider = new FigmaRemoteFileProvider();
+			fileProvider = new FigmaRemoteFileProvider ();
 
-            //we initialize our renderer service, this uses all the converters passed
-            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
-            var rendererService = new FigmaFileRendererService(fileProvider, converters);
-            rendererService.Start(fileName, scrollView);
+			//we initialize our renderer service, this uses all the converters passed
+			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
+			var rendererService = new FigmaFileRendererService (fileProvider, converters);
+			rendererService.Start (fileName, scrollView);
 
-            //now we have all the views processed and the relationship we can distribute all the views into the desired base view
-            var distributionService = new FigmaViewRendererDistributionService(rendererService);
-            distributionService.Start();
+			//now we have all the views processed and the relationship we can distribute all the views into the desired base view
+			var distributionService = new FigmaViewRendererDistributionService (rendererService);
+			distributionService.Start ();
 
-            //We want know the background color of the figma camvas and apply to our scrollview
-            var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
-            if (canvas != null)
-                scrollView.BackgroundColor = canvas.backgroundColor;
+			//We want know the background color of the figma camvas and apply to our scrollview
+			var canvas = fileProvider.Nodes.OfType<FigmaCanvas> ().FirstOrDefault ();
+			if (canvas != null)
+				scrollView.BackgroundColor = canvas.backgroundColor;
 
-            //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-            scrollView.AdjustToContent();
-        }
-    }
+			//NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
+			scrollView.AdjustToContent ();
+		}
+	}
 }

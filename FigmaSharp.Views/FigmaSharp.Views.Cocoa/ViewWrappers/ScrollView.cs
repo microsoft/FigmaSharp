@@ -35,87 +35,79 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Views.Cocoa
 {
-    public class ScrollView : View, IScrollView
-    {
-        readonly FNSScrollview scrollView;
-        IView contentScrollView;
-        NSView contentScrollview;
+	public class ScrollView : View, IScrollView
+	{
+		readonly FNSScrollview scrollView;
+		IView contentScrollView;
+		NSView contentScrollview;
 
-        public override Color BackgroundColor
-        {
-            get => scrollView.BackgroundColor.ToColor();
-            set => scrollView.BackgroundColor = value.ToNSColor();
-        }
+		public override Color BackgroundColor {
+			get => scrollView.BackgroundColor.ToColor ();
+			set => scrollView.BackgroundColor = value.ToNSColor ();
+		}
 
-        public IView ContentView {
-            get => contentScrollView;
-            set
-            {
-                if (value == null)
-                {
-                    return;
-                }
-                contentScrollview = (NSView)value.NativeObject;
-                contentScrollView = value;
-                this.scrollView.DocumentView = contentScrollview;
-            }
-        }
+		public IView ContentView {
+			get => contentScrollView;
+			set {
+				if (value == null) {
+					return;
+				}
+				contentScrollview = (NSView)value.NativeObject;
+				contentScrollView = value;
+				this.scrollView.DocumentView = contentScrollview;
+			}
+		}
 
-		public ScrollView () : this (new FNSScrollview())
+		public ScrollView () : this (new FNSScrollview ())
 		{
 		}
 
-        public ScrollView(FNSScrollview scrollView) : base(scrollView)
-        {
-            this.scrollView = scrollView;
+		public ScrollView (FNSScrollview scrollView) : base (scrollView)
+		{
+			this.scrollView = scrollView;
 
-            contentScrollview = scrollView.DocumentView as NSView;
-            if (contentScrollview == null)
-            {
-                contentScrollview = new FNSView();
-                this.scrollView.DocumentView = contentScrollview;
-            }
-            contentScrollView = new View (contentScrollview);
+			contentScrollview = scrollView.DocumentView as NSView;
+			if (contentScrollview == null) {
+				contentScrollview = new FNSView ();
+				this.scrollView.DocumentView = contentScrollview;
+			}
+			contentScrollView = new View (contentScrollview);
 
-            this.scrollView.HasVerticalScroller = true;
-            this.scrollView.HasHorizontalScroller = true;
-            this.scrollView.AutomaticallyAdjustsContentInsets = false;
-            this.scrollView.AutohidesScrollers = false;
-            this.scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
-        }
+			this.scrollView.HasVerticalScroller = true;
+			this.scrollView.HasHorizontalScroller = true;
+			this.scrollView.AutomaticallyAdjustsContentInsets = false;
+			this.scrollView.AutohidesScrollers = false;
+			this.scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
+		}
 
-        public override IReadOnlyList<IView> Children => contentScrollView.Children;
+		public override IReadOnlyList<IView> Children => contentScrollView.Children;
 
-        protected override void OnAddChild(IView view) => contentScrollView.AddChild(view);
+		protected override void OnAddChild (IView view) => contentScrollView.AddChild (view);
 
-        public override void ClearSubviews() => contentScrollView.ClearSubviews();
+		public override void ClearSubviews () => contentScrollView.ClearSubviews ();
 
-		protected override void OnRemoveChild (IView view)=> contentScrollView.ClearSubviews();
+		protected override void OnRemoveChild (IView view) => contentScrollView.ClearSubviews ();
 
-        public void AdjustToContent()
-        {
-            var items = Children;
+		public void AdjustToContent ()
+		{
+			var items = Children;
 
-            Rectangle contentRect = Rectangle.Zero;
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (i == 0)
-                {
-                    contentRect = items[i].Allocation;
-                } else
-                {
-                    contentRect = contentRect.UnionWith(items[i].Allocation);
-                }
-            }
-            SetContentSize(contentRect.Width, contentRect.Height);
-        }
+			Rectangle contentRect = Rectangle.Zero;
+			for (int i = 0; i < items.Count; i++) {
+				if (i == 0) {
+					contentRect = items[i].Allocation;
+				} else {
+					contentRect = contentRect.UnionWith (items[i].Allocation);
+				}
+			}
+			SetContentSize (contentRect.Width, contentRect.Height);
+		}
 
-        public void SetContentSize(float width, float height)
-        {
-            if (scrollView.DocumentView is NSView content)
-            {
-                content.SetFrameSize(new CGSize(width, height));
-            }
-        }
-    }
+		public void SetContentSize (float width, float height)
+		{
+			if (scrollView.DocumentView is NSView content) {
+				content.SetFrameSize (new CGSize (width, height));
+			}
+		}
+	}
 }

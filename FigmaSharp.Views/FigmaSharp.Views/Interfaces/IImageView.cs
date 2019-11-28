@@ -28,7 +28,7 @@
 namespace FigmaSharp.Views
 {
 	public interface IImageView : IView
-    {
-        IImage Image { get; set; }
-    }
+	{
+		IImage Image { get; set; }
+	}
 }

@@ -36,34 +36,34 @@ namespace FigmaSharp.Views.Native.Cocoa
 			set => IsMovableByWindowBackground = value;
 		}
 
-		public FNWindow()
+		public FNWindow ()
 		{
 		}
 
-		public FNWindow(NSCoder coder) : base(coder)
+		public FNWindow (NSCoder coder) : base (coder)
 		{
 		}
 
-		public FNWindow(CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation) : base(contentRect, aStyle, bufferingType, deferCreation)
+		public FNWindow (CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation) : base (contentRect, aStyle, bufferingType, deferCreation)
 		{
 		}
 
-		public FNWindow(CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation, NSScreen screen) : base(contentRect, aStyle, bufferingType, deferCreation, screen)
+		public FNWindow (CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation, NSScreen screen) : base (contentRect, aStyle, bufferingType, deferCreation, screen)
 		{
 		}
 
-		protected FNWindow(NSObjectFlag t) : base(t)
+		protected FNWindow (NSObjectFlag t) : base (t)
 		{
 		}
 
-		protected internal FNWindow(IntPtr handle) : base(handle)
+		protected internal FNWindow (IntPtr handle) : base (handle)
 		{
 		}
 
-		public override void KeyDown(NSEvent theEvent)
+		public override void KeyDown (NSEvent theEvent)
 		{
-			KeyDownPressed?.Invoke(this, (Key)theEvent.KeyCode);
-			base.KeyDown(theEvent);
+			KeyDownPressed?.Invoke (this, (Key)theEvent.KeyCode);
+			base.KeyDown (theEvent);
 		}
 	}
 
@@ -121,7 +121,7 @@ namespace FigmaSharp.Views.Native.Cocoa
 		public override bool IsFlipped => true;
 	}
 
-	public class FNSSlider: NSSlider, IFlippedView
+	public class FNSSlider : NSSlider, IFlippedView
 	{
 		public bool MouseDownMovesWindow { get; set; }
 		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;

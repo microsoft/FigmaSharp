@@ -35,51 +35,46 @@ namespace FigmaSharp.Views.Cocoa
 		FNSSearchField searchField;
 		public event EventHandler Changed;
 
-		public SearchBox() : this(new FNSSearchField())
+		public SearchBox () : this (new FNSSearchField ())
 		{
 
 		}
 
-		public SearchBox(FNSSearchField searchField) : base(searchField)
+		public SearchBox (FNSSearchField searchField) : base (searchField)
 		{
 			this.searchField = searchField;
 
 			searchField.Changed += TextField_Changed;
 		}
 
-		private void TextField_Changed(object sender, EventArgs e)
+		private void TextField_Changed (object sender, EventArgs e)
 		{
-			Changed?.Invoke(this, EventArgs.Empty);
+			Changed?.Invoke (this, EventArgs.Empty);
 		}
 
-		public string Text
-		{
+		public string Text {
 			get => searchField.StringValue;
-			set
-			{
+			set {
 				searchField.StringValue = value ?? "";
 			}
 		}
 
-		public string PlaceHolderString
-		{
+		public string PlaceHolderString {
 			get => searchField.PlaceholderString;
-			set
-			{
+			set {
 				searchField.PlaceholderString = value ?? "";
 			}
 		}
 
-		public Color ForegroundColor
-		{
-			get => searchField.TextColor.ToColor();
-			set => searchField.TextColor = value.ToNSColor();
+		public Color ForegroundColor {
+			get => searchField.TextColor.ToColor ();
+			set => searchField.TextColor = value.ToNSColor ();
 		}
 
-		public override void Dispose()
+		public override void Dispose ()
 		{
 			searchField.Changed -= TextField_Changed;
-			base.Dispose();
+			base.Dispose ();
 		}
 	}
 }

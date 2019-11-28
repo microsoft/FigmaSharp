@@ -36,33 +36,33 @@ using FigmaSharp.Views;
 
 namespace LocalFile.Shared
 {
-    public class ExampleViewManager
-    {
-        const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
-        readonly FigmaRemoteFileProvider fileProvider;
+	public class ExampleViewManager
+	{
+		const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
+		readonly FigmaRemoteFileProvider fileProvider;
 
-        public readonly FigmaFileRendererService RendererService;
-        readonly FigmaViewRendererDistributionService distributionService;
+		public readonly FigmaFileRendererService RendererService;
+		readonly FigmaViewRendererDistributionService distributionService;
 
-        public ExampleViewManager(IScrollView scrollView, FigmaViewConverter[] converters)
-        {
-            fileProvider = new FigmaRemoteFileProvider();
-            RendererService = new FigmaFileRendererService(fileProvider, converters);
+		public ExampleViewManager(IScrollView scrollView, FigmaViewConverter[] converters)
+		{
+			fileProvider = new FigmaRemoteFileProvider();
+			RendererService = new FigmaFileRendererService(fileProvider, converters);
 
-            var options = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false }; 
-            RendererService.Start(fileName, scrollView.ContentView, options);
+			var options = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false };
+			RendererService.Start(fileName, scrollView.ContentView, options);
 
-            distributionService = new FigmaViewRendererDistributionService(RendererService);
-            distributionService.Start();
+			distributionService = new FigmaViewRendererDistributionService(RendererService);
+			distributionService.Start();
 
-            //We want know the background color of the figma camvas and apply to our scrollview
-            var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
-            if (canvas != null)
-                scrollView.BackgroundColor = canvas.backgroundColor;
+			//We want know the background color of the figma camvas and apply to our scrollview
+			var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+			if (canvas != null)
+				scrollView.BackgroundColor = canvas.backgroundColor;
 
 
-            scrollView.AdjustToContent();
-        }
-    }
+			scrollView.AdjustToContent();
+		}
+	}
 }
 

@@ -35,34 +35,33 @@ using FigmaSharp.Views.Native.Cocoa;
 namespace FigmaSharp.Views.Cocoa
 {
 	public class ImageView : View, IImageView
-    {
-        readonly NSImageView imageView;
-        CALayer imageLayer;
+	{
+		readonly NSImageView imageView;
+		CALayer imageLayer;
 
-        public ImageView() : this (new FNSImageView())
-        {
+		public ImageView () : this (new FNSImageView ())
+		{
 
-        }
+		}
 
-        public ImageView(NSImageView imageView) : base(imageView)
-        {
-            this.imageView = imageView;
-            this.imageView.WantsLayer = true;
-            //imageLayer = new CALayer();
-            //imageLayer.BackgroundColor = NSColor.Blue.CGColor;
-            //imageView.Layer.AddSublayer(imageLayer);
-        }
+		public ImageView (NSImageView imageView) : base (imageView)
+		{
+			this.imageView = imageView;
+			this.imageView.WantsLayer = true;
+			//imageLayer = new CALayer();
+			//imageLayer.BackgroundColor = NSColor.Blue.CGColor;
+			//imageView.Layer.AddSublayer(imageLayer);
+		}
 
-        IImage image;
-        public IImage Image {
-            get { return image; }
-            set
-            {
-                image = value;
+		IImage image;
+		public IImage Image {
+			get { return image; }
+			set {
+				image = value;
 				var nativeImage = (NSImage)Image.NativeObject;
 				//imageView.Layer.Contents = nativeImage.CGImage;
 				imageView.Image = nativeImage;
 			}
-        }    
-    }
+		}
+	}
 }

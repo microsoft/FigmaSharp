@@ -36,10 +36,10 @@ namespace FigmaSharp.Views
 	}
 
 	public interface IButton : IView
-    {
+	{
 		bool Border { get; set; }
 		event EventHandler Clicked;
 		string Text { get; set; }
-        IImage Image { get; set; }
-    }
+		IImage Image { get; set; }
+	}
 }

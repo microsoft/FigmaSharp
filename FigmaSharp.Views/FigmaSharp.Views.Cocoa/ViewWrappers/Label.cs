@@ -31,29 +31,27 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Views.Cocoa
 {
-    public class Label : View, ILabel
+	public class Label : View, ILabel
 	{
 		FNSTextField textField;
 
-		public Label() : this(ViewsHelper.CreateLabel(string.Empty))
+		public Label () : this (ViewsHelper.CreateLabel (string.Empty))
 		{
 
 		}
 
-		public Label(FNSTextField textField) : base(textField)
+		public Label (FNSTextField textField) : base (textField)
 		{
 			this.textField = textField;
 		}
 
-		public string Text
-		{
+		public string Text {
 			get => textField.StringValue;
-			set
-			{
+			set {
 				textField.StringValue = value ?? "";
 			}
 		}
 
-        public Color ForegroundColor { get => textField.TextColor.ToColor(); set => textField.TextColor = value.ToNSColor(); }
-    }
+		public Color ForegroundColor { get => textField.TextColor.ToColor (); set => textField.TextColor = value.ToNSColor (); }
+	}
 }

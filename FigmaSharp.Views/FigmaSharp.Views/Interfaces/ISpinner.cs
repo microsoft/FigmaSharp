@@ -30,7 +30,7 @@ namespace FigmaSharp.Views
 {
 	public interface ISpinner : IView
 	{
-		void Start();
-		void Stop();
+		void Start ();
+		void Stop ();
 	}
 }

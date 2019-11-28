@@ -31,26 +31,25 @@ using Xamarin.Forms;
 
 namespace FigmaSharp.Views.Forms
 {
-    public class ImageView : FigmaSharp.Views.Forms.View, IImageView
-    {
+	public class ImageView : FigmaSharp.Views.Forms.View, IImageView
+	{
 		Xamarin.Forms.Image imageView;
-        public ImageView (Xamarin.Forms.Image imageView) : base(imageView)
-        {
-            this.imageView = imageView;
-			image = new FigmaSharp.Views.Forms.Image(imageView.Source);
+		public ImageView (Xamarin.Forms.Image imageView) : base (imageView)
+		{
+			this.imageView = imageView;
+			image = new FigmaSharp.Views.Forms.Image (imageView.Source);
 		}
 
 
 		IImage image;
 		public IImage Image {
 			get => image;
-			set
-			{
+			set {
 				image = value;
 				imageView.Aspect = Aspect.AspectFill;
 				imageView.Source = value.NativeObject as ImageSource;
-				imageView.Margin = new Thickness(0);
+				imageView.Margin = new Thickness (0);
 			}
 		}
-    }
+	}
 }

@@ -34,54 +34,54 @@ namespace FigmaSharp.Views.Cocoa
 {
 	public class StackView : View, IStackView
 	{
-        public Padding Padding {
-            get {
-                return new Padding((float) stackView.EdgeInsets.Top, (float)stackView.EdgeInsets.Left, (float)stackView.EdgeInsets.Bottom, (float)stackView.EdgeInsets.Right);
-            } set {
-                stackView.EdgeInsets = new NSEdgeInsets(value.Top, value.Left, value.Bottom, value.Right);
-            }
-        }
+		public Padding Padding {
+			get {
+				return new Padding ((float)stackView.EdgeInsets.Top, (float)stackView.EdgeInsets.Left, (float)stackView.EdgeInsets.Bottom, (float)stackView.EdgeInsets.Right);
+			}
+			set {
+				stackView.EdgeInsets = new NSEdgeInsets (value.Top, value.Left, value.Bottom, value.Right);
+			}
+		}
 
 		public float ItemSpacing {
-			get => (float) stackView.Spacing;
+			get => (float)stackView.Spacing;
 			set => stackView.Spacing = value;
 		}
 
 		FNSStackView stackView;
 
-		public LayoutOrientation Orientation
-		{
-			get => stackView.Orientation.ToOrientation();
-			set => stackView.Orientation = value.ToOrientation();
+		public LayoutOrientation Orientation {
+			get => stackView.Orientation.ToOrientation ();
+			set => stackView.Orientation = value.ToOrientation ();
 		}
 
-		public StackView() : this(new FNSStackView())
+		public StackView () : this (new FNSStackView ())
 		{
 
 		}
 
-		public StackView(FNSStackView stackView) : base(stackView)
+		public StackView (FNSStackView stackView) : base (stackView)
 		{
-            stackView.WantsLayer = true;
-            stackView.Distribution = NSStackViewDistribution.GravityAreas;
-            stackView.Alignment = NSLayoutAttribute.Top;
-            this.stackView = stackView;
+			stackView.WantsLayer = true;
+			stackView.Distribution = NSStackViewDistribution.GravityAreas;
+			stackView.Alignment = NSLayoutAttribute.Top;
+			this.stackView = stackView;
 		}
 
-		protected override void OnAddChild(IView view)
+		protected override void OnAddChild (IView view)
 		{
-			stackView.AddArrangedSubview(view.NativeObject as NSView);
+			stackView.AddArrangedSubview (view.NativeObject as NSView);
 		}
 
-		public void AddFlexibleSpace()
+		public void AddFlexibleSpace ()
 		{
-			var spaceView = new View();
+			var spaceView = new View ();
 			var space = NativeObject as NSView;
-			space.SetContentCompressionResistancePriority((float) NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Horizontal);
-			space.SetContentHuggingPriorityForOrientation((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Horizontal);
-			space.SetContentCompressionResistancePriority((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Vertical);
-			space.SetContentHuggingPriorityForOrientation((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Vertical);
-			AddChild(spaceView);
+			space.SetContentCompressionResistancePriority ((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Horizontal);
+			space.SetContentHuggingPriorityForOrientation ((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Horizontal);
+			space.SetContentCompressionResistancePriority ((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Vertical);
+			space.SetContentHuggingPriorityForOrientation ((float)NSLayoutPriority.DefaultLow, NSLayoutConstraintOrientation.Vertical);
+			AddChild (spaceView);
 		}
 	}
 }

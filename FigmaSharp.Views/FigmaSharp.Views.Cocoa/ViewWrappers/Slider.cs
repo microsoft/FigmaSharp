@@ -36,65 +36,57 @@ namespace FigmaSharp.Views.Cocoa
 	{
 		FNSSlider slider;
 
-		public float MaxValue
-		{
+		public float MaxValue {
 			get => (float)slider.MaxValue;
-			set
-			{
+			set {
 				slider.MaxValue = value;
 			}
 		}
 
-		public float MinValue
-		{
+		public float MinValue {
 			get => (float)slider.MinValue;
-			set
-			{
+			set {
 				slider.MinValue = value;
 			}
 		}
 
 		public event EventHandler ValueChanged;
 
-		public float Value
-		{
+		public float Value {
 			get => (float)slider.DoubleValue;
-			set
-			{
+			set {
 				slider.DoubleValue = value;
-				ValueChanged?.Invoke(this, EventArgs.Empty);
+				ValueChanged?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
-		public Slider() : this(new FNSSlider())
+		public Slider () : this (new FNSSlider ())
 		{
 
 		}
 
-		public Slider(FNSSlider slider) : base(slider)
+		public Slider (FNSSlider slider) : base (slider)
 		{
 			this.slider = slider;
 			this.slider.Activated += Slider_Activated;
 		}
 
-		private void Slider_Activated(object sender, EventArgs e)
+		private void Slider_Activated (object sender, EventArgs e)
 		{
-			ValueChanged?.Invoke(this, EventArgs.Empty);
+			ValueChanged?.Invoke (this, EventArgs.Empty);
 		}
 
-		public string Text
-		{
+		public string Text {
 			get => slider.StringValue;
-			set
-			{
+			set {
 				slider.StringValue = value ?? "";
 			}
 		}
 
-		public override void Dispose()
+		public override void Dispose ()
 		{
 			this.slider.Activated -= Slider_Activated;
-			base.Dispose();
+			base.Dispose ();
 		}
 	}
 }

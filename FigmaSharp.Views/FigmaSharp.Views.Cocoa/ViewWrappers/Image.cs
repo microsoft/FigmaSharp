@@ -30,27 +30,26 @@ using AppKit;
 
 namespace FigmaSharp.Views.Cocoa
 {
-    public class Image : IImage
-    {
-        public object NativeObject => image;
+	public class Image : IImage
+	{
+		public object NativeObject => image;
 
-        public Size Size {
-            get => new Size ((int) image.Size.Width, (int)image.Size.Height);
-            set
-            {
-                image.Size = new CoreGraphics.CGSize(value.Width, value.Height);
-            }
-        }
+		public Size Size {
+			get => new Size ((int)image.Size.Width, (int)image.Size.Height);
+			set {
+				image.Size = new CoreGraphics.CGSize (value.Width, value.Height);
+			}
+		}
 
-        protected NSImage image;
-        public Image(NSImage image)
-        {
-            this.image = image;
-        }
+		protected NSImage image;
+		public Image (NSImage image)
+		{
+			this.image = image;
+		}
 
-        public void Dispose()
-        {
-            
-        }
-    }
+		public void Dispose ()
+		{
+
+		}
+	}
 }

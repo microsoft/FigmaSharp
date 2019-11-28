@@ -29,32 +29,31 @@ using System;
 
 namespace FigmaSharp.Samples
 {
-    class FigmaLink
-    {
-        public static string TryParseID(string link)
-        {
-            try
-            {
-                Uri uri = new Uri(link);
+	class FigmaLink
+	{
+		public static string TryParseID (string link)
+		{
+			try {
+				Uri uri = new Uri (link);
 
-                string path = uri.AbsolutePath;
-                string prefix = "/file/";
+				string path = uri.AbsolutePath;
+				string prefix = "/file/";
 
-                if (path.StartsWith(prefix)) {
-                    string id = path.Substring(prefix.Length);
+				if (path.StartsWith (prefix)) {
+					string id = path.Substring (prefix.Length);
 
-                    if (id.Contains("/"))
-                        id = id.Substring(0, id.IndexOf("/"));
+					if (id.Contains ("/"))
+						id = id.Substring (0, id.IndexOf ("/"));
 
-                    Console.WriteLine("FigmaLink: Parsed: {0}", id);
-                    return id;
-                }
+					Console.WriteLine ("FigmaLink: Parsed: {0}", id);
+					return id;
+				}
 
-            } catch {
-                Console.WriteLine("FigmaLink: Could not parse: {0}", link);
-            }
+			} catch {
+				Console.WriteLine ("FigmaLink: Could not parse: {0}", link);
+			}
 
-            return link;
-        }
-    }
+			return link;
+		}
+	}
 }

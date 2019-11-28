@@ -30,10 +30,10 @@ using System;
 
 namespace FigmaSharp.Views
 {
-	public class Transform 
+	public class Transform
 	{
 		public float RotateAngle { get; set; }
 		public float Scale { get; set; }
-		public Point Translation { get; set; } = new Point();
+		public Point Translation { get; set; } = new Point ();
 	}
 }
