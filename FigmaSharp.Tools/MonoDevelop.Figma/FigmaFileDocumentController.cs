@@ -50,6 +50,9 @@ using MonoDevelop.Components.PropertyGrid;
 using MonoDevelop.Ide.Gui.Documents;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Native.Cocoa;
 
 namespace MonoDevelop.Figma
 {
@@ -73,7 +76,7 @@ namespace MonoDevelop.Figma
         Gtk.Widget _content;
         PropertyGrid grid;
 
-        readonly IScrollViewWrapper scrollViewWrapper;
+        readonly IScrollView scrollViewWrapper;
 
         public FigmaFileDocumentController()
         {
@@ -91,7 +94,7 @@ namespace MonoDevelop.Figma
             _content.CanFocus = true;
             _content.Sensitive = true;
 
-            var scrollView = new NSScrollView()
+            var scrollView = new FNSScrollview()
             {
                 HasVerticalScroller = true,
                 HasHorizontalScroller = true,
@@ -101,7 +104,7 @@ namespace MonoDevelop.Figma
             scrollView.BackgroundColor = NSColor.DarkGray;
             scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
 
-            scrollViewWrapper = new ScrollViewWrapper(scrollView);
+            scrollViewWrapper = new ScrollView (scrollView);
 
             var contentView = new NSView();
             contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
@@ -175,7 +178,7 @@ namespace MonoDevelop.Figma
             await base.OnInitialize(modelDescriptor, status);
         }
 
-        void Surface_FocusedViewChanged(object sender, IViewWrapper e)
+        void Surface_FocusedViewChanged(object sender, IView e)
         {
             var model = session.GetModel(e);
             if (outlinePad != null)
@@ -197,7 +200,7 @@ namespace MonoDevelop.Figma
                 return new FigmaTextWrapper(figmaText);
             }
 
-            if (node is FigmaRectangleVector figmaRectangleVector)
+            if (node is RectangleVector figmaRectangleVector)
             {
                 return new FigmaRectangleVectorWrapper(figmaRectangleVector);
             }

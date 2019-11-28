@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net471</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
   </PropertyGroup>
   <ItemGroup>
@@ -31,14 +31,10 @@
         <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
       </ItemGroup>
       <ItemGroup>
-        <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.csproj">
-          <ReferenceSourceTarget></ReferenceSourceTarget>
-        </ProjectReference>
-        <ProjectReference Include="..\..\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-          <ReferenceSourceTarget></ReferenceSourceTarget>
-        </ProjectReference>
-        <ProjectReference Include="..\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
-          <ReferenceSourceTarget></ReferenceSourceTarget>
-        </ProjectReference>
+        <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
+        <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
+        <ProjectReference Include="..\FigmaSharp.Designer\FigmaSharp.Designer.csproj" />
+        <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
+        <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj" />
       </ItemGroup>
 </Project>
