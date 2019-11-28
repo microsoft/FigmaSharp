@@ -36,31 +36,31 @@ namespace MonoDevelop.Figma
     {
         public IDictionary ExtendedProperties => null;
 
-        FigmaColor color;
-        public FigmaColorWrapper(FigmaColor color) 
+        Color color;
+        public FigmaColorWrapper(Color color) 
         {
             this.color = color;
         }
 
         public float R
         {
-            get => color.r;
-            set => color.r = value;
+            get => color.R;
+            set => color.R = value;
         }
         public float G
         {
-            get => color.g;
-            set => color.g = value;
+            get => color.G;
+            set => color.G = value;
         }
         public float B
         {
-            get => color.b;
-            set => color.b = value;
+            get => color.B;
+            set => color.B = value;
         }
         public float A
         {
-            get => color.a;
-            set => color.a = value;
+            get => color.A;
+            set => color.A = value;
         }
     }
 
@@ -86,17 +86,17 @@ namespace MonoDevelop.Figma
                 {
                     return "0;0;0;0";
                 }
-                return string.Format("{0};{1};{2};{3}", vector.backgroundColor.r, vector.backgroundColor.g, vector.backgroundColor.b, vector.backgroundColor.a);
+                return string.Format("{0};{1};{2};{3}", vector.backgroundColor.R, vector.backgroundColor.G, vector.backgroundColor.B, vector.backgroundColor.A);
             }
             set
             {
                 try
                 {
                     var splitted = value.Split(';');
-                    vector.backgroundColor.r = float.Parse (splitted[0]);
-                    vector.backgroundColor.g = float.Parse (splitted[1]);
-                    vector.backgroundColor.b = float.Parse (splitted[2]);
-                    vector.backgroundColor.a = float.Parse (splitted[3]);
+                    vector.backgroundColor.R = float.Parse (splitted[0]);
+                    vector.backgroundColor.G = float.Parse (splitted[1]);
+                    vector.backgroundColor.B = float.Parse (splitted[2]);
+                    vector.backgroundColor.A = float.Parse (splitted[3]);
                 }
                 catch (System.Exception)
                 {
@@ -125,48 +125,48 @@ namespace MonoDevelop.Figma
 
         public float X
         {
-            get => vector.absoluteBoundingBox?.x ?? 0;
+            get => vector.absoluteBoundingBox?.X ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.x = value;
+                    vector.absoluteBoundingBox.X = value;
                 }
             }
         }
 
         public float Y
         {
-            get => vector.absoluteBoundingBox?.y ?? 0;
+            get => vector.absoluteBoundingBox?.Y ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.y = value;
+                    vector.absoluteBoundingBox.Y = value;
                 }
             }
         }
 
         public float Width
         {
-            get => vector.absoluteBoundingBox?.width ?? 0;
+            get => vector.absoluteBoundingBox?.Width ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.width = value;
+                    vector.absoluteBoundingBox.Width = value;
                 }
             }
         }
 
         public float Heigth
         {
-            get => vector.absoluteBoundingBox?.height ?? 0;
+            get => vector.absoluteBoundingBox?.Height ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.height = value;
+                    vector.absoluteBoundingBox.Height = value;
                 }
             }
         }
@@ -174,8 +174,8 @@ namespace MonoDevelop.Figma
 
     class FigmaRectangleVectorWrapper : FigmaVectorEntityWrapper
     {
-        FigmaRectangleVector rectangleVector => (FigmaRectangleVector)node;
-        public FigmaRectangleVectorWrapper(FigmaRectangleVector node) : base(node)
+        RectangleVector rectangleVector => (RectangleVector)node;
+        public FigmaRectangleVectorWrapper(RectangleVector node) : base(node)
         {
         }
 
@@ -243,48 +243,48 @@ namespace MonoDevelop.Figma
 
         public float X
         {
-            get => vector.absoluteBoundingBox?.x ?? 0;
+            get => vector.absoluteBoundingBox?.X ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.x = value;
+                    vector.absoluteBoundingBox.X = value;
                 }
             }
         }
 
         public float Y
         {
-            get => vector.absoluteBoundingBox?.y ?? 0;
+            get => vector.absoluteBoundingBox?.Y ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.y = value;
+                    vector.absoluteBoundingBox.Y = value;
                 }
             }
         }
 
         public float Width
         {
-            get => vector.absoluteBoundingBox?.width ?? 0;
+            get => vector.absoluteBoundingBox?.Width ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.width = value;
+                    vector.absoluteBoundingBox.Width = value;
                 }
             }
         }
 
         public float Heigth
         {
-            get => vector.absoluteBoundingBox?.height ?? 0;
+            get => vector.absoluteBoundingBox?.Height ?? 0;
             set
             {
                 if (vector.absoluteBoundingBox != null)
                 {
-                    vector.absoluteBoundingBox.height = value;
+                    vector.absoluteBoundingBox.Height = value;
                 }
             }
         }
@@ -326,17 +326,17 @@ namespace MonoDevelop.Figma
                 {
                     return "0;0;0;0";
                 }
-                return string.Format("{0};{1};{2};{3}", vector.backgroundColor.r, vector.backgroundColor.g, vector.backgroundColor.b, vector.backgroundColor.a);
+                return string.Format("{0};{1};{2};{3}", vector.backgroundColor.R, vector.backgroundColor.G, vector.backgroundColor.B, vector.backgroundColor.A);
             }
             set
             {
                 try
                 {
                     var splitted = value.Split(';');
-                    vector.backgroundColor.r = float.Parse(splitted[0]);
-                    vector.backgroundColor.g = float.Parse(splitted[1]);
-                    vector.backgroundColor.b = float.Parse(splitted[2]);
-                    vector.backgroundColor.a = float.Parse(splitted[3]);
+                    vector.backgroundColor.R = float.Parse(splitted[0]);
+                    vector.backgroundColor.G = float.Parse(splitted[1]);
+                    vector.backgroundColor.B = float.Parse(splitted[2]);
+                    vector.backgroundColor.A = float.Parse(splitted[3]);
                 }
                 catch (System.Exception)
                 {

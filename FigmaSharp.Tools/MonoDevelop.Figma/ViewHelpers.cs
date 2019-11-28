@@ -28,6 +28,7 @@
 using AppKit;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Views.Cocoa;
 
 namespace MonoDevelop.Figma
 {
@@ -46,7 +47,7 @@ namespace MonoDevelop.Figma
 			var label = new NSTextField ()
 			{
 				StringValue = text ?? "",
-				Font = font ?? FigmaViewsHelper.GetSystemFont (false),
+				Font = font ?? ViewsHelper.GetSystemFont (false),
 				Editable = false,
 				Bordered = false,
 				Bezeled = false,

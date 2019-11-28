@@ -12,7 +12,7 @@ using FigmaSharp.Views.Cocoa;
 namespace FigmaSharp.Designer
 {
     [Register("WindowWrapper")]
-    public class WindowInternalWrapper : IWindow
+    public class WindowInternalWrapper : IWindowWrapper
     {
         NSWindow window;
         public WindowInternalWrapper (NSWindow window)
