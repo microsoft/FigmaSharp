@@ -35,31 +35,31 @@ namespace FigmaSharp.Views.Cocoa
 	{
 		FNSProgressIndicator progressIndicator;
 
-		public Spinner() : this(new FNSProgressIndicator())
+		public Spinner () : this (new FNSProgressIndicator ())
 		{
 
 		}
 
-		public Spinner(FNSProgressIndicator progressIndicator) : base(progressIndicator)
+		public Spinner (FNSProgressIndicator progressIndicator) : base (progressIndicator)
 		{
 			this.progressIndicator = progressIndicator;
 			progressIndicator.Style = NSProgressIndicatorStyle.Spinning;
 		}
 
-		public void Start()
+		public void Start ()
 		{
-			progressIndicator.StartAnimation(null);
+			progressIndicator.StartAnimation (null);
 		}
 
-		public void Stop()
+		public void Stop ()
 		{
-			progressIndicator.StopAnimation(null);
+			progressIndicator.StopAnimation (null);
 		}
 
-		public override void Dispose()
+		public override void Dispose ()
 		{
-			Stop();
-			base.Dispose();
+			Stop ();
+			base.Dispose ();
 		}
 	}
 }

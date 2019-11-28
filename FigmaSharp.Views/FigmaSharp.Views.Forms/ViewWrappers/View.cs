@@ -31,107 +31,89 @@ using Xamarin.Forms;
 
 namespace FigmaSharp.Views.Forms
 {
-    public class View : IView
-    {
-        public object NativeObject => nativeView;
+	public class View : IView
+	{
+		public object NativeObject => nativeView;
 
-        public IView Parent
-        {
-            get
-            {
-                if (nativeView.Parent is Xamarin.Forms.View parentView)
-                {
-                    return new View(parentView);
-                }
-                return null;
-            }
-        }
+		public IView Parent {
+			get {
+				if (nativeView.Parent is Xamarin.Forms.View parentView) {
+					return new View (parentView);
+				}
+				return null;
+			}
+		}
 
-        protected readonly List<IView> children = new List<IView>();
-        public virtual IReadOnlyList<IView> Children => children;
+		protected readonly List<IView> children = new List<IView> ();
+		public virtual IReadOnlyList<IView> Children => children;
 
-        public float X
-        {
-            get
-            {
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                return (float)bounds.X;
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    return;
-                }
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                AbsoluteLayout.SetLayoutBounds(nativeView, new Xamarin.Forms.Rectangle(value, bounds.Y, bounds.Width, bounds.Height));
-            }
-        }
+		public float X {
+			get {
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				return (float)bounds.X;
+			}
+			set {
+				if (value < 0) {
+					return;
+				}
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				AbsoluteLayout.SetLayoutBounds (nativeView, new Xamarin.Forms.Rectangle (value, bounds.Y, bounds.Width, bounds.Height));
+			}
+		}
 
-        public float Y
-        {
-            get
-            {
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                return (float)bounds.Y;
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    return;
-                }
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                AbsoluteLayout.SetLayoutBounds(nativeView, new Xamarin.Forms.Rectangle(bounds.X, value, bounds.Width, bounds.Height));
-            }
-        }
+		public float Y {
+			get {
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				return (float)bounds.Y;
+			}
+			set {
+				if (value < 0) {
+					return;
+				}
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				AbsoluteLayout.SetLayoutBounds (nativeView, new Xamarin.Forms.Rectangle (bounds.X, value, bounds.Width, bounds.Height));
+			}
+		}
 
-        public float Width
-        {
-            get
-            {
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                return (float) bounds.Width;
-            }
-            set
-            {
-                nativeView.WidthRequest = value;
-            }
-        }
+		public float Width {
+			get {
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				return (float)bounds.Width;
+			}
+			set {
+				nativeView.WidthRequest = value;
+			}
+		}
 
-        public float Height
-        {
-            get
-            {
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                return (float)bounds.Height;
-            }
-            set
-            {
-                nativeView.HeightRequest = value;
-            }
-        }
+		public float Height {
+			get {
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				return (float)bounds.Height;
+			}
+			set {
+				nativeView.HeightRequest = value;
+			}
+		}
 
-        public string Identifier {
-            get => nativeView.Id.ToString();
-            set { }
-        }
-        public string NodeName {
-            get => nativeView.GetType ().ToString ();
-            set { }
-        }
-        public bool Hidden {
-            get => !nativeView.IsVisible;
-            set => nativeView.IsVisible = !value;
-        }
+		public string Identifier {
+			get => nativeView.Id.ToString ();
+			set { }
+		}
+		public string NodeName {
+			get => nativeView.GetType ().ToString ();
+			set { }
+		}
+		public bool Hidden {
+			get => !nativeView.IsVisible;
+			set => nativeView.IsVisible = !value;
+		}
 
-        public Rectangle Allocation
-        {
-            get {
-                var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-                return new Rectangle((float) bounds.X, (float)bounds.Y, (float)bounds.Width, (float)bounds.Height);
-            }
-        }
+		public Rectangle Allocation {
+			get {
+				var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+				return new Rectangle ((float)bounds.X, (float)bounds.Y, (float)bounds.Width, (float)bounds.Height);
+			}
+		}
 
 		public bool IsDark {
 			get => false;
@@ -148,9 +130,8 @@ namespace FigmaSharp.Views.Forms
 		}
 
 		public Size Size {
-			get => new Size((float) nativeView.Width, (float)nativeView.Height);
-			set
-			{
+			get => new Size ((float)nativeView.Width, (float)nativeView.Height);
+			set {
 				nativeView.WidthRequest = value.Width;
 				nativeView.HeightRequest = value.Height;
 			}
@@ -158,15 +139,12 @@ namespace FigmaSharp.Views.Forms
 
 		public Size IntrinsicContentSize => Allocation.Size;
 
-		IView IView.Parent
-		{
-			get
-			{
-				if (nativeView.Parent is Xamarin.Forms.View parent)
-				{
-                    var lol = new AbsoluteLayout();
+		IView IView.Parent {
+			get {
+				if (nativeView.Parent is Xamarin.Forms.View parent) {
+					var lol = new AbsoluteLayout ();
 
-                    return new View(parent);
+					return new View (parent);
 				}
 				return null;
 			}
@@ -174,9 +152,9 @@ namespace FigmaSharp.Views.Forms
 		}
 
 		public virtual Color BackgroundColor {
-			get => nativeView.BackgroundColor.ToLiteColor();
+			get => nativeView.BackgroundColor.ToLiteColor ();
 			set {
-				nativeView.BackgroundColor = value.ToFormsColor();
+				nativeView.BackgroundColor = value.ToFormsColor ();
 			}
 		}
 
@@ -187,95 +165,91 @@ namespace FigmaSharp.Views.Forms
 
 		protected Xamarin.Forms.View nativeView;
 
-        public virtual void ClearSubviews()
-        {
-            if (nativeView is Layout<Xamarin.Forms.View> layout)
-                layout.Children.Clear();
-            children.Clear();
-        }
-
-        public View () : this (new AbsoluteLayout ())
-        {
-            
-        }
-
-        public View(Xamarin.Forms.View nativeView)
-        {
-            this.nativeView = nativeView;
-        }
-
-        public void AddChild(IView view)
-        {
-			if (!children.Contains(view))
-			{
-				children.Add(view);
-				OnAddChild(view);
-			}
-        }
-
-		public virtual void OnAddChild (IView view)
+		public virtual void ClearSubviews ()
 		{
 			if (nativeView is Layout<Xamarin.Forms.View> layout)
-			{
-				layout.Children.Add(view.NativeObject as Xamarin.Forms.View);
+				layout.Children.Clear ();
+			children.Clear ();
+		}
+
+		public View () : this (new AbsoluteLayout ())
+		{
+
+		}
+
+		public View (Xamarin.Forms.View nativeView)
+		{
+			this.nativeView = nativeView;
+		}
+
+		public void AddChild (IView view)
+		{
+			if (!children.Contains (view)) {
+				children.Add (view);
+				OnAddChild (view);
 			}
 		}
 
-		public virtual void RemoveChild(IView view)
-        {
-            if (children.Contains (view))
-            {
-				children.Remove(view);
-				OnRemoveChild(view);
-			}
-        }
-
-		public virtual void OnRemoveChild(IView view)
+		public virtual void OnAddChild (IView view)
 		{
-			if (nativeView is Layout<Xamarin.Forms.View> layout)
-			{
-				layout.Children.Remove(view.NativeObject as Xamarin.Forms.View);
+			if (nativeView is Layout<Xamarin.Forms.View> layout) {
+				layout.Children.Add (view.NativeObject as Xamarin.Forms.View);
+			}
+		}
+
+		public virtual void RemoveChild (IView view)
+		{
+			if (children.Contains (view)) {
+				children.Remove (view);
+				OnRemoveChild (view);
+			}
+		}
+
+		public virtual void OnRemoveChild (IView view)
+		{
+			if (nativeView is Layout<Xamarin.Forms.View> layout) {
+				layout.Children.Remove (view.NativeObject as Xamarin.Forms.View);
 			}
 		}
 
 		public void SetPosition (float x, float y)
-        {
-            var bounds = AbsoluteLayout.GetLayoutBounds(nativeView);
-            AbsoluteLayout.SetLayoutBounds(nativeView, new Xamarin.Forms.Rectangle(x, y, bounds.Width, bounds.Height));
-        }
-
-        public void SetAllocation(float x, float y, float width, float height)
-        {
-            AbsoluteLayout.SetLayoutBounds(nativeView, new Xamarin.Forms.Rectangle(x, y, (float)width, (float)height));
-        }
-
-		public void Focus()
 		{
-			nativeView.Focus();
+			var bounds = AbsoluteLayout.GetLayoutBounds (nativeView);
+			AbsoluteLayout.SetLayoutBounds (nativeView, new Xamarin.Forms.Rectangle (x, y, bounds.Width, bounds.Height));
 		}
 
-		public void SetPosition(Point origin) => SetPosition(origin.X, origin.Y);
-
-		public void SetAllocation(Point origin, Size size)
+		public void SetAllocation (float x, float y, float width, float height)
 		{
-			SetPosition(origin);
+			AbsoluteLayout.SetLayoutBounds (nativeView, new Xamarin.Forms.Rectangle (x, y, (float)width, (float)height));
 		}
 
-		public void OnChangeFrameSize(Size newSize)
+		public void Focus ()
+		{
+			nativeView.Focus ();
+		}
+
+		public void SetPosition (Point origin) => SetPosition (origin.X, origin.Y);
+
+		public void SetAllocation (Point origin, Size size)
+		{
+			SetPosition (origin);
+		}
+
+		public void OnChangeFrameSize (Size newSize)
 		{
 			foreach (var item in children) {
-				item.OnChangeFrameSize(newSize);
+				item.OnChangeFrameSize (newSize);
 			}
 		}
 
-		public virtual void Dispose()
+		public virtual void Dispose ()
 		{
-			
+
 		}
 	}
 
-    public class EmptyView : Xamarin.Forms.View
-    {
+	public class EmptyView : Xamarin.Forms.View
+	{
 
-    }
+	}
 }

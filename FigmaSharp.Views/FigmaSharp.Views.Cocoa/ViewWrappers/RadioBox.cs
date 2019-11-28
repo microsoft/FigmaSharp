@@ -32,59 +32,55 @@ using System;
 
 namespace FigmaSharp.Views.Cocoa
 {
-    public class RadioBox : View, IRadioBox
-    {
-        public event EventHandler ValueChanged;
+	public class RadioBox : View, IRadioBox
+	{
+		public event EventHandler ValueChanged;
 
 		FNSButton button;
 
-        public bool IsChecked
-        {
-            get => button.State == NSCellStateValue.On;
-            set
-            {
-                button.State = value ? NSCellStateValue.On : NSCellStateValue.Off;
-                ValueChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
+		public bool IsChecked {
+			get => button.State == NSCellStateValue.On;
+			set {
+				button.State = value ? NSCellStateValue.On : NSCellStateValue.Off;
+				ValueChanged?.Invoke (this, EventArgs.Empty);
+			}
+		}
 
-        public RadioBox() : this(new FNSButton())
-        {
+		public RadioBox () : this (new FNSButton ())
+		{
 
-        }
+		}
 
-        public RadioBox(FNSButton button) : base(button)
-        {
-            button.SetButtonType(NSButtonType.Radio);
-            button.Title = string.Empty;
+		public RadioBox (FNSButton button) : base (button)
+		{
+			button.SetButtonType (NSButtonType.Radio);
+			button.Title = string.Empty;
 
-            this.button = button;
-            this.button.Activated += Button_Activated;
-        }
+			this.button = button;
+			this.button.Activated += Button_Activated;
+		}
 
-        private void Button_Activated(object sender, EventArgs e)
-        {
-            ValueChanged?.Invoke(this, EventArgs.Empty);
-        }
+		private void Button_Activated (object sender, EventArgs e)
+		{
+			ValueChanged?.Invoke (this, EventArgs.Empty);
+		}
 
-        public string Text
-        {
-            get => button.Title;
-            set
-            {
-                button.Title = value ?? "";
-            }
-        }
+		public string Text {
+			get => button.Title;
+			set {
+				button.Title = value ?? "";
+			}
+		}
 
 		public bool Enabled {
 			get => button.Enabled;
 			set => button.Enabled = false;
 		}
 
-		public override void Dispose()
-        {
-            this.button.Activated -= Button_Activated;
-            base.Dispose();
-        }
-    }
+		public override void Dispose ()
+		{
+			this.button.Activated -= Button_Activated;
+			base.Dispose ();
+		}
+	}
 }

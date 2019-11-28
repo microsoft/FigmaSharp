@@ -32,51 +32,47 @@ using FigmaSharp.Views.Native.Cocoa;
 namespace FigmaSharp.Views.Cocoa
 {
 	public class TextBox : View, ITextBox
-    {
+	{
 		FNSTextField textField;
-        public event EventHandler Changed;
+		public event EventHandler Changed;
 
-        public TextBox() : this(new FNSTextField())
-        {
+		public TextBox () : this (new FNSTextField ())
+		{
 
-        }
+		}
 
-        public TextBox(FNSTextField textField) : base(textField)
-        {
-            this.textField = textField;
+		public TextBox (FNSTextField textField) : base (textField)
+		{
+			this.textField = textField;
 
-            textField.Changed += TextField_Changed;
-        }
+			textField.Changed += TextField_Changed;
+		}
 
-        private void TextField_Changed(object sender, EventArgs e)
-        {
-            Changed?.Invoke(this, EventArgs.Empty);
-        }
+		private void TextField_Changed (object sender, EventArgs e)
+		{
+			Changed?.Invoke (this, EventArgs.Empty);
+		}
 
-        public string Text
-        {
-            get => textField.StringValue;
-            set
-            {
-                textField.StringValue = value ?? "";
-            }
-        }
+		public string Text {
+			get => textField.StringValue;
+			set {
+				textField.StringValue = value ?? "";
+			}
+		}
 
-        public string PlaceHolderString
-        {
-            get => textField.PlaceholderString;
-            set
-            {
-                textField.PlaceholderString = value ?? "";
-            }
-        }
+		public string PlaceHolderString {
+			get => textField.PlaceholderString;
+			set {
+				textField.PlaceholderString = value ?? "";
+			}
+		}
 
-        public Color ForegroundColor { get => textField.TextColor.ToColor(); set => textField.TextColor = value.ToNSColor(); }
+		public Color ForegroundColor { get => textField.TextColor.ToColor (); set => textField.TextColor = value.ToNSColor (); }
 
-        public override void Dispose()
-        {
-            textField.Changed -= TextField_Changed;
-            base.Dispose();
-        }
-    }
+		public override void Dispose ()
+		{
+			textField.Changed -= TextField_Changed;
+			base.Dispose ();
+		}
+	}
 }

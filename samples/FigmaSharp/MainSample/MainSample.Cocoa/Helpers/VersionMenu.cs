@@ -32,95 +32,95 @@ using AppKit;
 
 namespace FigmaSharp.Samples
 {
-    class VersionMenu
-    {
-        NSMenuItem current_item = new NSMenuItem("Current");
+	class VersionMenu
+	{
+		NSMenuItem current_item = new NSMenuItem ("Current");
 
-        List<NSMenuItem> named_version_items = new List<NSMenuItem>();
-        List<NSMenuItem> other_version_items = new List<NSMenuItem>();
+		List<NSMenuItem> named_version_items = new List<NSMenuItem> ();
+		List<NSMenuItem> other_version_items = new List<NSMenuItem> ();
 
-        public event VersionSelectedHandler VersionSelected = delegate { };
-        public delegate void VersionSelectedHandler(string id);
-
-
-        public VersionMenu()
-        {
-            current_item.State = NSCellStateValue.On;
-            current_item.Activated += delegate {
-                ResetStates();
-
-                current_item.State = NSCellStateValue.On;
-                VersionSelected("Current");
-            };
-        }
+		public event VersionSelectedHandler VersionSelected = delegate { };
+		public delegate void VersionSelectedHandler (string id);
 
 
-        public void Reset()
-        {
-            named_version_items = new List<NSMenuItem>();
-            other_version_items = new List<NSMenuItem>();
-        }
+		public VersionMenu ()
+		{
+			current_item.State = NSCellStateValue.On;
+			current_item.Activated += delegate {
+				ResetStates ();
+
+				current_item.State = NSCellStateValue.On;
+				VersionSelected ("Current");
+			};
+		}
 
 
-        void ResetStates()
-        {
-            current_item.State = NSCellStateValue.Off;
-
-            foreach (NSMenuItem labeled_item in named_version_items)
-                labeled_item.State = NSCellStateValue.Off;
-
-            foreach (NSMenuItem labeled_item in other_version_items)
-                labeled_item.State = NSCellStateValue.Off;
-        }
+		public void Reset ()
+		{
+			named_version_items = new List<NSMenuItem> ();
+			other_version_items = new List<NSMenuItem> ();
+		}
 
 
-        public void AddItem(string id, string name, DateTime timestamp)
-        {
-            var item = new NSMenuItem();
+		void ResetStates ()
+		{
+			current_item.State = NSCellStateValue.Off;
 
-            item.Activated += delegate {
-                ResetStates();
+			foreach (NSMenuItem labeled_item in named_version_items)
+				labeled_item.State = NSCellStateValue.Off;
 
-                item.State = NSCellStateValue.On;
-                VersionSelected (id);
-            };
-
-            if (!string.IsNullOrEmpty(name)) {
-                item.Title = name;
-                named_version_items.Add(item);
-
-            } else {
-                item.Title = timestamp.ToString("r");
-                other_version_items.Add(item);
-            }
-        }
+			foreach (NSMenuItem labeled_item in other_version_items)
+				labeled_item.State = NSCellStateValue.Off;
+		}
 
 
-        public void AddItem(string id, DateTime timestamp)
-        {
-            AddItem(id, null, timestamp);
-        }
+		public void AddItem (string id, string name, DateTime timestamp)
+		{
+			var item = new NSMenuItem ();
+
+			item.Activated += delegate {
+				ResetStates ();
+
+				item.State = NSCellStateValue.On;
+				VersionSelected (id);
+			};
+
+			if (!string.IsNullOrEmpty (name)) {
+				item.Title = name;
+				named_version_items.Add (item);
+
+			} else {
+				item.Title = timestamp.ToString ("r");
+				other_version_items.Add (item);
+			}
+		}
 
 
-        public void UseAsVersionsMenu()
-        {
-            NSMenu menu = NSApplication.SharedApplication.MainMenu.ItemWithTitle("Versions").Submenu;
-            menu.RemoveAllItems();
+		public void AddItem (string id, DateTime timestamp)
+		{
+			AddItem (id, null, timestamp);
+		}
 
-            menu.AddItem(current_item);
-            menu.AddItem(NSMenuItem.SeparatorItem);
-            menu.AddItem(new NSMenuItem("Labels") { Enabled = false });
 
-            foreach (NSMenuItem item in named_version_items)
-                menu.AddItem(item);
+		public void UseAsVersionsMenu ()
+		{
+			NSMenu menu = NSApplication.SharedApplication.MainMenu.ItemWithTitle ("Versions").Submenu;
+			menu.RemoveAllItems ();
 
-            menu.AddItem(NSMenuItem.SeparatorItem);
-            menu.AddItem(new NSMenuItem("Autosaves") { Enabled = false });
+			menu.AddItem (current_item);
+			menu.AddItem (NSMenuItem.SeparatorItem);
+			menu.AddItem (new NSMenuItem ("Labels") { Enabled = false });
 
-            foreach (NSMenuItem item in other_version_items)
-                menu.AddItem(item);
+			foreach (NSMenuItem item in named_version_items)
+				menu.AddItem (item);
 
-            menu.Update();
-        }
-    }
+			menu.AddItem (NSMenuItem.SeparatorItem);
+			menu.AddItem (new NSMenuItem ("Autosaves") { Enabled = false });
+
+			foreach (NSMenuItem item in other_version_items)
+				menu.AddItem (item);
+
+			menu.Update ();
+		}
+	}
 }

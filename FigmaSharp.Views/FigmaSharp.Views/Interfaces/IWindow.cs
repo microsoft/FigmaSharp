@@ -28,10 +28,10 @@ using System;
 
 namespace FigmaSharp.Views
 {
-    public interface IWindow : IObject, IDisposable
+	public interface IWindow : IObject, IDisposable
 	{
-        string Title { get; set; }
-        Color BackgroundColor { get; set; }
+		string Title { get; set; }
+		Color BackgroundColor { get; set; }
 		bool Borderless { get; set; }
 		bool Resizable { get; set; }
 		bool IsFullSizeContentView { get; set; }
@@ -50,11 +50,11 @@ namespace FigmaSharp.Views
 
 		IView Content { get; set; }
 
-		void AddChild(IWindow window);
-		void RemoveChild(IWindow window);
-		void ShowDialog();
-		void Show();
-		void Center();
+		void AddChild (IWindow window);
+		void RemoveChild (IWindow window);
+		void ShowDialog ();
+		void Show ();
+		void Center ();
 	}
 }
 

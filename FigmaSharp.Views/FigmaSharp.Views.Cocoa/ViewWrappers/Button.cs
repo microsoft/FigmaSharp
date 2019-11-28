@@ -40,65 +40,61 @@ namespace FigmaSharp.Views.Cocoa
 			Text = "";
 		}
 
-		public ImageButton(FNSButton button) : base(button)
+		public ImageButton (FNSButton button) : base (button)
 		{
 
 		}
 	}
 
-    public class Button : View, IButton
-    {
-        public event EventHandler Clicked;
+	public class Button : View, IButton
+	{
+		public event EventHandler Clicked;
 
 		FNSButton button;
 
-        public bool Border { get => button.Bordered; set => button.Bordered = value; }
+		public bool Border { get => button.Bordered; set => button.Bordered = value; }
 
-        public Button() : this(new FNSButton())
-        {
+		public Button () : this (new FNSButton ())
+		{
 
-        }
+		}
 
-        public Button(FNSButton button) : base(button)
-        {
-            this.button = button;
-            this.button.Activated += Button_Activated;  
-        }
+		public Button (FNSButton button) : base (button)
+		{
+			this.button = button;
+			this.button.Activated += Button_Activated;
+		}
 
-        private void Button_Activated(object sender, EventArgs e)
-        {
-            Clicked?.Invoke(this, EventArgs.Empty);
-        }
+		private void Button_Activated (object sender, EventArgs e)
+		{
+			Clicked?.Invoke (this, EventArgs.Empty);
+		}
 
-        IImage image;
-        public IImage Image
-        {
-            get => image;
-            set
-            {
-                this.image = value;
-                button.Image = value.NativeObject as NSImage;
-            }
-        }
+		IImage image;
+		public IImage Image {
+			get => image;
+			set {
+				this.image = value;
+				button.Image = value.NativeObject as NSImage;
+			}
+		}
 
-        public string Text
-        {
-            get => button.Title;
-            set
-            {
-                button.Title = value ?? "";
-            }
-        }
+		public string Text {
+			get => button.Title;
+			set {
+				button.Title = value ?? "";
+			}
+		}
 
 		public bool Enabled {
 			get => button.Enabled;
 			set => button.Enabled = value;
 		}
 
-		public override void Dispose()
-        {
-            this.button.Activated -= Button_Activated;
-            base.Dispose();
-        }
-    }
+		public override void Dispose ()
+		{
+			this.button.Activated -= Button_Activated;
+			base.Dispose ();
+		}
+	}
 }

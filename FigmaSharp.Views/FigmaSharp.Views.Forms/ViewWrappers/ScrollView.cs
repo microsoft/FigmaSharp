@@ -33,83 +33,75 @@ using System.Collections.Generic;
 
 namespace FigmaSharp.Views.Forms
 {
-    public class ScrollView : View, IScrollView
-    {
-        public IView ContentView
-        {
-            get => scrollViewWrapper;
-            set
-            {
-                if (value.NativeObject is AbsoluteLayout content)
-                {
-                    this.scrollView.Content = content;
-                    scrollViewWrapper = value;
-                    scrollContent = content;
-                }
-            }
-        }
+	public class ScrollView : View, IScrollView
+	{
+		public IView ContentView {
+			get => scrollViewWrapper;
+			set {
+				if (value.NativeObject is AbsoluteLayout content) {
+					this.scrollView.Content = content;
+					scrollViewWrapper = value;
+					scrollContent = content;
+				}
+			}
+		}
 
-        Xamarin.Forms.ScrollView scrollView;
-        AbsoluteLayout scrollContent;
-        IView scrollViewWrapper;
+		Xamarin.Forms.ScrollView scrollView;
+		AbsoluteLayout scrollContent;
+		IView scrollViewWrapper;
 
-        public ScrollView(Xamarin.Forms.ScrollView scrollView) : base(scrollView)
-        {
-            this.scrollView = scrollView;
+		public ScrollView (Xamarin.Forms.ScrollView scrollView) : base (scrollView)
+		{
+			this.scrollView = scrollView;
 
-            if (scrollView.Content is AbsoluteLayout abs)
-            {
-                this.scrollContent = abs;
-            } else
-            {
-                this.scrollContent = new AbsoluteLayout();
-                scrollView.Content = scrollContent;
-            }
-            scrollViewWrapper = new View(scrollContent);
-            scrollView.Orientation = ScrollOrientation.Both;
-        }
+			if (scrollView.Content is AbsoluteLayout abs) {
+				this.scrollContent = abs;
+			} else {
+				this.scrollContent = new AbsoluteLayout ();
+				scrollView.Content = scrollContent;
+			}
+			scrollViewWrapper = new View (scrollContent);
+			scrollView.Orientation = ScrollOrientation.Both;
+		}
 
-        public override Color BackgroundColor {
-			get => scrollView.Content.BackgroundColor.ToLiteColor();
-			set => scrollView.Content.BackgroundColor = value.ToFormsColor();
-        }
+		public override Color BackgroundColor {
+			get => scrollView.Content.BackgroundColor.ToLiteColor ();
+			set => scrollView.Content.BackgroundColor = value.ToFormsColor ();
+		}
 
 		public override IReadOnlyList<IView> Children => scrollViewWrapper.Children;
 
-		public override void OnAddChild(IView view)
+		public override void OnAddChild (IView view)
 		{
-			scrollViewWrapper.AddChild(view);
+			scrollViewWrapper.AddChild (view);
 		}
 
-		public void AdjustToContent()
-        {
-            if (scrollView.Content == null)
-                return;
-
-            var childs = Children;
-            var contentRect = Rectangle.Zero;
-            for (int i = 0; i < childs.Count; i++)
-            {
-                if (i == 0)
-                {
-                    contentRect = childs.ElementAt(i).Allocation;
-                } else
-                {
-                    contentRect = contentRect.UnionWith (childs.ElementAt(i).Allocation);
-                }
-            }
-            SetContentSize(contentRect.Width, contentRect.Height);
-        }
-
-		public override void OnRemoveChild(IView view)
+		public void AdjustToContent ()
 		{
-			scrollViewWrapper.RemoveChild(view);
+			if (scrollView.Content == null)
+				return;
+
+			var childs = Children;
+			var contentRect = Rectangle.Zero;
+			for (int i = 0; i < childs.Count; i++) {
+				if (i == 0) {
+					contentRect = childs.ElementAt (i).Allocation;
+				} else {
+					contentRect = contentRect.UnionWith (childs.ElementAt (i).Allocation);
+				}
+			}
+			SetContentSize (contentRect.Width, contentRect.Height);
 		}
 
-		public void SetContentSize(float width, float height)
-        {
-            scrollContent.WidthRequest = width;
-            scrollContent.HeightRequest = height;
-        }
-    }
+		public override void OnRemoveChild (IView view)
+		{
+			scrollViewWrapper.RemoveChild (view);
+		}
+
+		public void SetContentSize (float width, float height)
+		{
+			scrollContent.WidthRequest = width;
+			scrollContent.HeightRequest = height;
+		}
+	}
 }

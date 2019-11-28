@@ -32,45 +32,44 @@ using Security;
 
 namespace FigmaSharp.Samples
 {
-    class TokenStore
-    {
-        public static TokenStore SharedTokenStore = new TokenStore ();
+	class TokenStore
+	{
+		public static TokenStore SharedTokenStore = new TokenStore ();
 
-        const string SERVICE = "FigmaSharp";
-        const string ACCOUNT = "Figma API Token";
-
-
-        public void SetToken (string token)
-        {
-            byte[] password_bytes = Encoding.UTF8.GetBytes (token);
-
-            SecStatusCode result = SecKeyChain.AddGenericPassword (
-                SERVICE, ACCOUNT, password_bytes);
-
-            if (result == SecStatusCode.DuplicateItem)
-            {
-                // TODO: Replace the token
-                // SecKeyChain.Remove ();
-                // StoreToken (token);
-                return;
-            }
-
-            if (result != SecStatusCode.Success)
-                throw new Exception ("Could not store token in Keychain");
-        }
+		const string SERVICE = "FigmaSharp";
+		const string ACCOUNT = "Figma API Token";
 
 
-        public string GetToken ()
-        {
-            byte[] password_bytes;
+		public void SetToken (string token)
+		{
+			byte[] password_bytes = Encoding.UTF8.GetBytes (token);
 
-            SecStatusCode result = SecKeyChain.FindGenericPassword (
-                SERVICE, ACCOUNT, out password_bytes);
+			SecStatusCode result = SecKeyChain.AddGenericPassword (
+				SERVICE, ACCOUNT, password_bytes);
 
-            if (result != SecStatusCode.Success)
-                throw new Exception ("Could not find token in Keychain");
+			if (result == SecStatusCode.DuplicateItem) {
+				// TODO: Replace the token
+				// SecKeyChain.Remove ();
+				// StoreToken (token);
+				return;
+			}
 
-            return Encoding.UTF8.GetString (password_bytes);
-        }
-    }
+			if (result != SecStatusCode.Success)
+				throw new Exception ("Could not store token in Keychain");
+		}
+
+
+		public string GetToken ()
+		{
+			byte[] password_bytes;
+
+			SecStatusCode result = SecKeyChain.FindGenericPassword (
+				SERVICE, ACCOUNT, out password_bytes);
+
+			if (result != SecStatusCode.Success)
+				throw new Exception ("Could not find token in Keychain");
+
+			return Encoding.UTF8.GetString (password_bytes);
+		}
+	}
 }

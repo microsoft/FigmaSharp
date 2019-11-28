@@ -35,61 +35,49 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.NativeControls.Forms
 {
-    public class TextFieldConverter : TextFieldConverterBase
-    {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
-        {
-            var view = new Entry();
-            var keyValues = GetKeyValues(currentNode);
+	public class TextFieldConverter : TextFieldConverterBase
+	{
+		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		{
+			var view = new Entry ();
+			var keyValues = GetKeyValues (currentNode);
 
-            foreach (var key in keyValues)
-            {
-                if (key.Key == "type")
-                {
-                    continue;
-                }
-                if (key.Key == "enabled")
-                {
-                    view.IsEnabled = key.Value == "true";
-                }
-                else if (key.Key == "size")
-                {
-                    //view.ControlSize = ToEnum<NSControlSize>(key.Value);
-                }
-            }
+			foreach (var key in keyValues) {
+				if (key.Key == "type") {
+					continue;
+				}
+				if (key.Key == "enabled") {
+					view.IsEnabled = key.Value == "true";
+				} else if (key.Key == "size") {
+					//view.ControlSize = ToEnum<NSControlSize>(key.Value);
+				}
+			}
 
-            if (currentNode is IFigmaDocumentContainer container)
-            {
-                var placeholderView = container.children.OfType<FigmaText>()
-            .FirstOrDefault(s => s.name == "placeholderstring");
-                if (placeholderView != null)
-                {
-                    view.Placeholder = placeholderView.characters;
-                }
+			if (currentNode is IFigmaDocumentContainer container) {
+				var placeholderView = container.children.OfType<FigmaText> ()
+			.FirstOrDefault (s => s.name == "placeholderstring");
+				if (placeholderView != null) {
+					view.Placeholder = placeholderView.characters;
+				}
 
-                var textFieldView = container.children.OfType<FigmaText>()
-                   .FirstOrDefault(s => s.name == "text");
-                if (textFieldView != null)
-                {
-                    view.Text = textFieldView.characters;
-                    view.Configure(textFieldView);
-                }
-                else
-                {
-                    view.Configure(currentNode);
-                }
-            }
-            else
-            {
-                view.Configure(currentNode);
-            }
+				var textFieldView = container.children.OfType<FigmaText> ()
+				   .FirstOrDefault (s => s.name == "text");
+				if (textFieldView != null) {
+					view.Text = textFieldView.characters;
+					view.Configure (textFieldView);
+				} else {
+					view.Configure (currentNode);
+				}
+			} else {
+				view.Configure (currentNode);
+			}
 
-            return new FigmaSharp.Views.Forms.View(view);
-        }
+			return new FigmaSharp.Views.Forms.View (view);
+		}
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
-        {
-            return "var [NAME] = new Entry();";
-        }
-    }
+		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		{
+			return "var [NAME] = new Entry();";
+		}
+	}
 }

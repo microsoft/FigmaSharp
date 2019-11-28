@@ -38,7 +38,7 @@ namespace FigmaSharp.Views.Forms
 			Text = "";
 		}
 
-		public ImageButton(Xamarin.Forms.Button button) : base(button)
+		public ImageButton (Xamarin.Forms.Button button) : base (button)
 		{
 
 		}
@@ -46,93 +46,80 @@ namespace FigmaSharp.Views.Forms
 
 	public class ExtendedButton : Xamarin.Forms.Button
 	{
-		public static BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create<ExtendedButton, Xamarin.Forms.TextAlignment>(x => x.HorizontalTextAlignment, Xamarin.Forms.TextAlignment.Center);
-		public Xamarin.Forms.TextAlignment HorizontalTextAlignment
-		{
-			get
-			{
-				return (Xamarin.Forms.TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+		public static BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create<ExtendedButton, Xamarin.Forms.TextAlignment> (x => x.HorizontalTextAlignment, Xamarin.Forms.TextAlignment.Center);
+		public Xamarin.Forms.TextAlignment HorizontalTextAlignment {
+			get {
+				return (Xamarin.Forms.TextAlignment)GetValue (HorizontalTextAlignmentProperty);
 			}
-			set
-			{
-				SetValue(HorizontalTextAlignmentProperty, value);
+			set {
+				SetValue (HorizontalTextAlignmentProperty, value);
 			}
 		}
 	}
 
 	public class Button : View, IButton
-    {
-        public event EventHandler Clicked;
+	{
+		public event EventHandler Clicked;
 
 		Xamarin.Forms.Button button;
 
 		public float BorderWidth {
-			get => (float) button.BorderWidth;
-			set
-			{
+			get => (float)button.BorderWidth;
+			set {
 				button.BorderWidth = value;
 			}
 		}
 
-        public bool Border {
+		public bool Border {
 			get => button.BorderWidth > 0;
 			set => button.BorderWidth = value ? BorderWidth : 0;
 		}
 
-        public Button() : this(new ExtendedButton())
-        {
-
-        }
-
-		public TextAlignment TextHorizontalAlignment
+		public Button () : this (new ExtendedButton ())
 		{
-			get
-			{
-				if (button is ExtendedButton extendedButton)
-				{
-					return (TextAlignment)(int) extendedButton.HorizontalTextAlignment;
+
+		}
+
+		public TextAlignment TextHorizontalAlignment {
+			get {
+				if (button is ExtendedButton extendedButton) {
+					return (TextAlignment)(int)extendedButton.HorizontalTextAlignment;
 				}
 				return TextAlignment.Center;
 			}
-			set
-			{
-				if (button is ExtendedButton extendedButton)
-				{
+			set {
+				if (button is ExtendedButton extendedButton) {
 					extendedButton.HorizontalTextAlignment = (Xamarin.Forms.TextAlignment)value;
 				}
 			}
 		}
 
-        public Button(Xamarin.Forms.Button button) : base(button)
-        {
-            this.button = button;
-            this.button.Clicked += Button_Activated;
+		public Button (Xamarin.Forms.Button button) : base (button)
+		{
+			this.button = button;
+			this.button.Clicked += Button_Activated;
 		}
 
-        private void Button_Activated(object sender, EventArgs e)
-        {
-            Clicked?.Invoke(this, EventArgs.Empty);
-        }
+		private void Button_Activated (object sender, EventArgs e)
+		{
+			Clicked?.Invoke (this, EventArgs.Empty);
+		}
 
-        IImage image;
-        public IImage Image
-        {
-            get => image;
-            set
-            {
-                this.image = value;
-                button.ImageSource = value.NativeObject as Xamarin.Forms.ImageSource;
-            }
-        }
+		IImage image;
+		public IImage Image {
+			get => image;
+			set {
+				this.image = value;
+				button.ImageSource = value.NativeObject as Xamarin.Forms.ImageSource;
+			}
+		}
 
-        public string Text
-        {
-            get => button.Text;
-            set
-            {
-                button.Text = value ?? "";
-            }
-        }
+		public string Text {
+			get => button.Text;
+			set {
+				button.Text = value ?? "";
+			}
+		}
 
 		public bool Enabled {
 			get => button.IsEnabled;
@@ -141,13 +128,13 @@ namespace FigmaSharp.Views.Forms
 
 		public Color TextColor {
 			get => button.TextColor.ToLiteColor ();
-			set => button.TextColor = value.ToFormsColor();
+			set => button.TextColor = value.ToFormsColor ();
 		}
 
-		public override void Dispose()
-        {
-            this.button.Clicked -= Button_Activated;
-            base.Dispose();
-        }
-    }
+		public override void Dispose ()
+		{
+			this.button.Clicked -= Button_Activated;
+			base.Dispose ();
+		}
+	}
 }

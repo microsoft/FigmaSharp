@@ -28,9 +28,9 @@
 
 namespace FigmaSharp.Views
 {
-    public interface IComboBox
-    {
-        void AddItem(string Text);
-        void RemoveItem(string Text);
-    }
+	public interface IComboBox
+	{
+		void AddItem (string Text);
+		void RemoveItem (string Text);
+	}
 }

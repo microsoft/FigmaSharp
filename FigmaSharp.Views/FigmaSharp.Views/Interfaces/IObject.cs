@@ -31,8 +31,8 @@ using System;
 
 namespace FigmaSharp.Views
 {
-    public interface IObject : IDisposable
-    {
-        object NativeObject { get; }
-    }
+	public interface IObject : IDisposable
+	{
+		object NativeObject { get; }
+	}
 }

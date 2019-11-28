@@ -32,83 +32,78 @@ using System;
 
 namespace FigmaSharp.Views.Cocoa
 {
-    public class ComboBox : View, IComboBox
-    {
-        public event EventHandler SelectionIndexChanged;
+	public class ComboBox : View, IComboBox
+	{
+		public event EventHandler SelectionIndexChanged;
 
 		FNSPopUpButton combo;
 
-        public ComboBox() : this(new FNSPopUpButton())
-        {
+		public ComboBox () : this (new FNSPopUpButton ())
+		{
 
-        }
+		}
 
-        public ComboBox(FNSPopUpButton textField) : base(textField)
-        {
-            this.combo = textField;
-            this.combo.Activated += Combo_Activated;
-        }
+		public ComboBox (FNSPopUpButton textField) : base (textField)
+		{
+			this.combo = textField;
+			this.combo.Activated += Combo_Activated;
+		}
 
-        public string SelectedItem {
-            get => combo.SelectedItem?.Title;
-            set
-            {
-                var index = GetIndex(value);
-                if (index == -1)
-                {
-                    return;
-                }
-                SelectedIndex = index;
-            }
-        }
+		public string SelectedItem {
+			get => combo.SelectedItem?.Title;
+			set {
+				var index = GetIndex (value);
+				if (index == -1) {
+					return;
+				}
+				SelectedIndex = index;
+			}
+		}
 
-        public int GetIndex (string title)
-        {
-            var itm = combo.ItemWithTitle(title);
-            if (itm == null)
-            {
-                return -1;
-            }
-            return (int) combo.IndexOfItem(itm);
-        }
+		public int GetIndex (string title)
+		{
+			var itm = combo.ItemWithTitle (title);
+			if (itm == null) {
+				return -1;
+			}
+			return (int)combo.IndexOfItem (itm);
+		}
 
-        public int SelectedIndex
-        {
-            get => (int) combo.IndexOfSelectedItem;
-            set
-            {
-                if (value == SelectedIndex)
-                    return;
+		public int SelectedIndex {
+			get => (int)combo.IndexOfSelectedItem;
+			set {
+				if (value == SelectedIndex)
+					return;
 
-                combo.SelectItem(value);
-                SelectionIndexChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
+				combo.SelectItem (value);
+				SelectionIndexChanged?.Invoke (this, EventArgs.Empty);
+			}
+		}
 
-        private void Combo_Activated(object sender, EventArgs e)
-        {
-            SelectionIndexChanged?.Invoke(this, EventArgs.Empty);
-        }
+		private void Combo_Activated (object sender, EventArgs e)
+		{
+			SelectionIndexChanged?.Invoke (this, EventArgs.Empty);
+		}
 
-        public void AddItem(string Text)
-        {
-            this.combo.AddItem(Text);
-        }
+		public void AddItem (string Text)
+		{
+			this.combo.AddItem (Text);
+		}
 
-        public void RemoveItem(string Text)
-        {
-            this.combo.RemoveItem(Text);
-        }
+		public void RemoveItem (string Text)
+		{
+			this.combo.RemoveItem (Text);
+		}
 
-        public void ClearItems()
-        {
-            combo.RemoveAllItems();
-        }
+		public void ClearItems ()
+		{
+			combo.RemoveAllItems ();
+		}
 
-        public override void Dispose()
-        {
-            this.combo.Activated -= Combo_Activated;
-            base.Dispose();
-        }
-    }
+		public override void Dispose ()
+		{
+			this.combo.Activated -= Combo_Activated;
+			base.Dispose ();
+		}
+	}
 }

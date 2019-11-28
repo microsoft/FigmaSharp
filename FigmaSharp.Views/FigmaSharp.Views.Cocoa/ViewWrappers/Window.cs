@@ -36,28 +36,24 @@ namespace FigmaSharp.Views.Cocoa
 	{
 		public event EventHandler<Key> KeyDown;
 		public event EventHandler Closing;
-        public event EventHandler Resize;
+		public event EventHandler Resize;
 
 		NSObject resizeNotification;
 		FNWindow window;
 
-		public bool IsDark
-		{
-			get => NSAppearance.CurrentAppearance == NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
-			set => NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+		public bool IsDark {
+			get => NSAppearance.CurrentAppearance == NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			set => NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
 		}
 
-		public string Title
-		{
+		public string Title {
 			get => window.Title;
 			set => window.Title = value;
 		}
 
-        public bool Resizable
-        {
-            get => window.StyleMask.HasFlag(NSWindowStyle.Resizable);
-			set
-			{
+		public bool Resizable {
+			get => window.StyleMask.HasFlag (NSWindowStyle.Resizable);
+			set {
 				if (value) {
 					if (!Resizable)
 						window.StyleMask &= NSWindowStyle.Resizable;
@@ -66,112 +62,84 @@ namespace FigmaSharp.Views.Cocoa
 						window.StyleMask &= ~NSWindowStyle.Resizable;
 				}
 			}
-        }
+		}
 
-		public bool IsClosable
-		{
-			get => window.StyleMask.HasFlag(NSWindowStyle.Closable);
-			set
-			{
-				if (value)
-				{
+		public bool IsClosable {
+			get => window.StyleMask.HasFlag (NSWindowStyle.Closable);
+			set {
+				if (value) {
 					if (!IsClosable)
 						window.StyleMask &= NSWindowStyle.Closable;
-				}
-				else
-				{
+				} else {
 					if (IsClosable)
 						window.StyleMask &= ~NSWindowStyle.Closable;
 				}
 			}
 		}
 
-		public bool IsFullSizeContentView
-		{
-			get => window.StyleMask.HasFlag(NSWindowStyle.FullSizeContentView);
-			set
-			{
-				if (value)
-				{
+		public bool IsFullSizeContentView {
+			get => window.StyleMask.HasFlag (NSWindowStyle.FullSizeContentView);
+			set {
+				if (value) {
 					if (!IsFullSizeContentView)
 						window.StyleMask &= NSWindowStyle.FullSizeContentView;
-				}
-				else
-				{
+				} else {
 					if (IsFullSizeContentView)
 						window.StyleMask &= ~NSWindowStyle.FullSizeContentView;
 				}
 			}
 		}
 
-		public bool Borderless
-		{
-			get => window.StyleMask.HasFlag(NSWindowStyle.Borderless);
-			set
-			{
-				if (value)
-				{
+		public bool Borderless {
+			get => window.StyleMask.HasFlag (NSWindowStyle.Borderless);
+			set {
+				if (value) {
 					if (!Borderless)
 						window.StyleMask &= NSWindowStyle.Borderless;
-				}
-				else
-				{
-					if (Borderless)
-					{
+				} else {
+					if (Borderless) {
 						window.StyleMask &= ~NSWindowStyle.Borderless;
 					}
 				}
 			}
 		}
 
-		public bool MovableByWindowBackground
-		{
+		public bool MovableByWindowBackground {
 			get => window.MovableByWindowBackground;
-			set
-			{
+			set {
 				window.MovableByWindowBackground = value;
 			}
 		}
 
-		public bool IsOpaque
-		{
+		public bool IsOpaque {
 			get => window.IsOpaque;
-			set
-			{
+			set {
 				window.IsOpaque = value;
 			}
 		}
 
-		public bool ShowCloseButton
-		{
-			get => !window.StandardWindowButton(NSWindowButton.CloseButton).Hidden;
-			set => window.StandardWindowButton(NSWindowButton.CloseButton).Hidden = !value;
+		public bool ShowCloseButton {
+			get => !window.StandardWindowButton (NSWindowButton.CloseButton).Hidden;
+			set => window.StandardWindowButton (NSWindowButton.CloseButton).Hidden = !value;
 		}
 
-		public bool ShowZoomButton
-		{
-			get => !window.StandardWindowButton(NSWindowButton.ZoomButton).Hidden;
-			set => window.StandardWindowButton(NSWindowButton.ZoomButton).Hidden = !value;
+		public bool ShowZoomButton {
+			get => !window.StandardWindowButton (NSWindowButton.ZoomButton).Hidden;
+			set => window.StandardWindowButton (NSWindowButton.ZoomButton).Hidden = !value;
 		}
 
-		public bool ShowMiniaturizeButton
-		{
-			get => !window.StandardWindowButton(NSWindowButton.MiniaturizeButton).Hidden;
-			set => window.StandardWindowButton(NSWindowButton.MiniaturizeButton).Hidden = !value;
+		public bool ShowMiniaturizeButton {
+			get => !window.StandardWindowButton (NSWindowButton.MiniaturizeButton).Hidden;
+			set => window.StandardWindowButton (NSWindowButton.MiniaturizeButton).Hidden = !value;
 		}
 
-		public bool ShowTitle
-		{
-			get =>  !window.TitlebarAppearsTransparent;
-			set
-			{
-				if (value)
-				{
+		public bool ShowTitle {
+			get => !window.TitlebarAppearsTransparent;
+			set {
+				if (value) {
 					if (!ShowTitle)
 						window.StyleMask &= NSWindowStyle.Titled;
-				}
-				else
-				{
+				} else {
 					if (ShowTitle)
 						window.StyleMask &= ~NSWindowStyle.Titled;
 				}
@@ -181,54 +149,50 @@ namespace FigmaSharp.Views.Cocoa
 			}
 		}
 
-		public Window (Rectangle rectangle) : this(new FNWindow(rectangle.ToCGRect(), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false))
+		public Window (Rectangle rectangle) : this (new FNWindow (rectangle.ToCGRect (), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false))
 		{
-          
+
 		}
 
-		public Window(FNWindow window)
+		public Window (FNWindow window)
 		{
 			this.window = window;
 
 			this.window.AutorecalculatesKeyViewLoop = true;
-			window.ContentView = new FNSView();
+			window.ContentView = new FNSView ();
 
 
 			content = new View (window.ContentView);
 			window.KeyDownPressed += OnKeyDownPressed;
 
 			this.window.WillClose += Window_WillClose;
-            resizeNotification = NSNotificationCenter.DefaultCenter.AddObserver(NSWindow.DidResizeNotification, (s) =>
-           {
-               if (s.Object == window)
-                   Resize?.Invoke(this, EventArgs.Empty);
-           });
+			resizeNotification = NSNotificationCenter.DefaultCenter.AddObserver (NSWindow.DidResizeNotification, (s) => {
+				if (s.Object == window)
+					Resize?.Invoke (this, EventArgs.Empty);
+			});
 		}
 
 		protected virtual void OnKeyDownPressed (object sender, Key args)
 		{
-			KeyDown?.Invoke(this, args);
+			KeyDown?.Invoke (this, args);
 		}
 
 		public Size Size {
-			get => window.Frame.Size.ToLiteSize();
-			set
-			{
-				window.SetFrame(new CoreGraphics.CGRect(window.Frame.Location, value.ToCGSize()), true);
+			get => window.Frame.Size.ToLiteSize ();
+			set {
+				window.SetFrame (new CoreGraphics.CGRect (window.Frame.Location, value.ToCGSize ()), true);
 			}
 		}
 
-		private void Window_WillClose(object sender, EventArgs e)
+		private void Window_WillClose (object sender, EventArgs e)
 		{
-			Closing?.Invoke(this, EventArgs.Empty);
+			Closing?.Invoke (this, EventArgs.Empty);
 		}
 
 		IView content;
-		public IView Content
-		{
+		public IView Content {
 			get => content;
-			set
-			{
+			set {
 				content = value;
 				this.window.ContentView = content.NativeObject as NSView;
 			}
@@ -237,19 +201,18 @@ namespace FigmaSharp.Views.Cocoa
 		public object NativeObject => window;
 
 		public Color BackgroundColor {
-			get => window.BackgroundColor.ToColor();
-			set
-			{
-				window.BackgroundColor = value.ToNSColor();
+			get => window.BackgroundColor.ToColor ();
+			set {
+				window.BackgroundColor = value.ToNSColor ();
 			}
 		}
 
-		public void AddChild(IWindow window)
+		public void AddChild (IWindow window)
 		{
 			//To implement
 		}
 
-		public void RemoveChild(IWindow window)
+		public void RemoveChild (IWindow window)
 		{
 			//To implement
 		}
@@ -261,18 +224,18 @@ namespace FigmaSharp.Views.Cocoa
 
 		public void Show ()
 		{
-			window.MakeKeyAndOrderFront(null);
+			window.MakeKeyAndOrderFront (null);
 		}
 
-		public void Dispose()
+		public void Dispose ()
 		{
 			this.window.WillClose -= Window_WillClose;
-            NSNotificationCenter.DefaultCenter.RemoveObserver(resizeNotification);
-        }
+			NSNotificationCenter.DefaultCenter.RemoveObserver (resizeNotification);
+		}
 
-		public void Center()
+		public void Center ()
 		{
-			window.Center();
+			window.Center ();
 		}
 	}
 }

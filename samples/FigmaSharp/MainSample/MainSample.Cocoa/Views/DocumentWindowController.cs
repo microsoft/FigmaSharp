@@ -41,38 +41,37 @@ using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Samples
 {
-    public partial class DocumentWindowController : NSWindowController
-    {
-        public static int WindowCount { get; private set; }
-        const int NEW_WINDOW_OFFSET = 38;
+	public partial class DocumentWindowController : NSWindowController
+	{
+		public static int WindowCount { get; private set; }
+		const int NEW_WINDOW_OFFSET = 38;
 
-        public string Title
-        {
-            get { return TitleTextField.StringValue; }
-            set { TitleTextField.StringValue = value; }
-        }
+		public string Title {
+			get { return TitleTextField.StringValue; }
+			set { TitleTextField.StringValue = value; }
+		}
 
 		public event EventHandler<string> VersionSelected;
 
 		public event EventHandler RefreshRequested;
 
-		public DocumentWindowController(IntPtr handle) : base(handle)
-        {
-        }
-
-		public override void WindowDidLoad()
-        {
-            PositionWindow();
-            base.WindowDidLoad();
+		public DocumentWindowController (IntPtr handle) : base (handle)
+		{
 		}
 
-		public void UpdatePagesPopupButton()
-        {
-            PagePopUpButton.AddItem("Page 1");
-            PagePopUpButton.Activated += delegate {
-                Console.WriteLine(PagePopUpButton.SelectedItem.Title);
-            };
-        }
+		public override void WindowDidLoad ()
+		{
+			PositionWindow ();
+			base.WindowDidLoad ();
+		}
+
+		public void UpdatePagesPopupButton ()
+		{
+			PagePopUpButton.AddItem ("Page 1");
+			PagePopUpButton.Activated += delegate {
+				Console.WriteLine (PagePopUpButton.SelectedItem.Title);
+			};
+		}
 
 		public void EnableButtons (bool enable)
 		{
@@ -80,68 +79,66 @@ namespace FigmaSharp.Samples
 			PagePopUpButton.Enabled = enable;
 		}
 
-        public void UpdateVersionMenu()
-        {
-            var menu = new VersionMenu();
-
-            menu.VersionSelected += delegate (string version_id) {
-				VersionSelected?.Invoke(this, version_id);
-            };
-
-            menu.AddItem("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now);
-            menu.AddItem("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now);
-            menu.AddItem("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now);
-            menu.AddItem("4", DateTime.Now);
-            menu.AddItem("5", DateTime.Now.AddDays(-7));
-            menu.AddItem("6", DateTime.Now.AddDays(-14));
-
-            menu.UseAsVersionsMenu();
-        }
-
-        partial void RefreshClicked(NSObject sender)
-        {
-			RefreshRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-		public void ToggleSpinnerState(bool toggle_on)
+		public void UpdateVersionMenu ()
 		{
-			if (MainToolbar.VisibleItems[1].Identifier == "Spinner")
-			{
-				(MainToolbar.VisibleItems[1].View as NSProgressIndicator).StopAnimation(this);
-				MainToolbar.RemoveItem(1);
+			var menu = new VersionMenu ();
+
+			menu.VersionSelected += delegate (string version_id) {
+				VersionSelected?.Invoke (this, version_id);
+			};
+
+			menu.AddItem ("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now);
+			menu.AddItem ("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now);
+			menu.AddItem ("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now);
+			menu.AddItem ("4", DateTime.Now);
+			menu.AddItem ("5", DateTime.Now.AddDays (-7));
+			menu.AddItem ("6", DateTime.Now.AddDays (-14));
+
+			menu.UseAsVersionsMenu ();
+		}
+
+		partial void RefreshClicked (NSObject sender)
+		{
+			RefreshRequested?.Invoke (this, EventArgs.Empty);
+		}
+
+		public void ToggleSpinnerState (bool toggle_on)
+		{
+			if (MainToolbar.VisibleItems[1].Identifier == "Spinner") {
+				(MainToolbar.VisibleItems[1].View as NSProgressIndicator).StopAnimation (this);
+				MainToolbar.RemoveItem (1);
 			}
 
-			if (toggle_on)
-			{
-				MainToolbar.InsertItem("Spinner", 1);
-				(MainToolbar.VisibleItems[1].View as NSProgressIndicator).StartAnimation(this);
+			if (toggle_on) {
+				MainToolbar.InsertItem ("Spinner", 1);
+				(MainToolbar.VisibleItems[1].View as NSProgressIndicator).StartAnimation (this);
 			}
 		}
 
-		void PositionWindow()
-        {
-            WindowCount++;
-            CGRect frame = Window.Frame;
+		void PositionWindow ()
+		{
+			WindowCount++;
+			CGRect frame = Window.Frame;
 
-            frame.X += NEW_WINDOW_OFFSET * WindowCount;
-            frame.Y -= NEW_WINDOW_OFFSET * WindowCount;
+			frame.X += NEW_WINDOW_OFFSET * WindowCount;
+			frame.Y -= NEW_WINDOW_OFFSET * WindowCount;
 
-            Window.SetFrame(frame, display: true);
-        }
+			Window.SetFrame (frame, display: true);
+		}
 
-        public void ShowError(string linkId)
-        {
-            var alert = new NSAlert() {
-                AlertStyle = NSAlertStyle.Warning,
-                MessageText = string.Format("Could not open “{0}”", linkId),
-                InformativeText = "Please check if the provided Figma Link and Personal Access Token are correct.",
-            };
+		public void ShowError (string linkId)
+		{
+			var alert = new NSAlert () {
+				AlertStyle = NSAlertStyle.Warning,
+				MessageText = string.Format ("Could not open “{0}”", linkId),
+				InformativeText = "Please check if the provided Figma Link and Personal Access Token are correct.",
+			};
 
-            alert.AddButton("Close");
-            alert.RunSheetModal(Window);
+			alert.AddButton ("Close");
+			alert.RunSheetModal (Window);
 
-            WindowCount--;
-            Window.PerformClose(this);
-        }
-    }
+			WindowCount--;
+			Window.PerformClose (this);
+		}
+	}
 }

@@ -39,10 +39,10 @@ namespace FigmaSharp.Views
 	}
 
 	public interface ITextBox : IView
-    {
-        string Text { get; set; }
-        string PlaceHolderString { get; set; }
+	{
+		string Text { get; set; }
+		string PlaceHolderString { get; set; }
 
-        Color ForegroundColor { get; set; }
-    }
+		Color ForegroundColor { get; set; }
+	}
 }

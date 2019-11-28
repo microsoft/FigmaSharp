@@ -28,13 +28,13 @@ using System;
 
 namespace FigmaSharp.Views
 {
-    public interface IDeviceWindow : IObject, IDisposable
-    {
-        Color BackgroundColor { get; set; }
-        IView Content { get; set; }
+	public interface IDeviceWindow : IObject, IDisposable
+	{
+		Color BackgroundColor { get; set; }
+		IView Content { get; set; }
 
-        void AddChild(IWindow window);
-        void RemoveChild(IWindow window);
-    }
+		void AddChild (IWindow window);
+		void RemoveChild (IWindow window);
+	}
 }
 

@@ -30,13 +30,13 @@ namespace FigmaSharp
 {
 	public class Padding
 	{
-		public Padding() { }
+		public Padding () { }
 
-		public Padding(float value) : this(value, value, value, value)
+		public Padding (float value) : this (value, value, value, value)
 		{
 
 		}
-		public Padding(float top, float left, float bottom, float right)
+		public Padding (float top, float left, float bottom, float right)
 		{
 			Left = left;
 			Right = right;

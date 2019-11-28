@@ -30,10 +30,10 @@ using System.Collections.Generic;
 
 namespace FigmaSharp.Views
 {
-    public interface IView : IObject
-    {
-        float Width { get; set; }
-        float Height { get; set; }
+	public interface IView : IObject
+	{
+		float Width { get; set; }
+		float Height { get; set; }
 
 		bool Hidden { get; set; }
 		bool IsDark { get; set; }
@@ -44,7 +44,7 @@ namespace FigmaSharp.Views
 		float CornerRadius { get; set; }
 
 		bool MovableByWindowBackground { get; set; }
-	
+
 		Size Size { get; set; }
 		Rectangle Allocation { get; }
 		Size IntrinsicContentSize { get; }
@@ -52,20 +52,20 @@ namespace FigmaSharp.Views
 		IView Parent { get; set; }
 		Color BackgroundColor { get; set; }
 		AnchorStyles Anchor { get; set; }
-	
+
 		IReadOnlyList<IView> Children { get; }
 
-		void Focus();
-		void SetPosition(float x, float y);
-		void SetAllocation(float x, float y, float width, float height);
+		void Focus ();
+		void SetPosition (float x, float y);
+		void SetAllocation (float x, float y, float width, float height);
 
-		void SetPosition(Point origin);
-		void SetAllocation(Point origin, Size size);
+		void SetPosition (Point origin);
+		void SetAllocation (Point origin, Size size);
 
-		void AddChild(IView view);
-		void RemoveChild(IView view);
-		void ClearSubviews();
+		void AddChild (IView view);
+		void RemoveChild (IView view);
+		void ClearSubviews ();
 
-		void OnChangeFrameSize(Size newSize);
+		void OnChangeFrameSize (Size newSize);
 	}
 }

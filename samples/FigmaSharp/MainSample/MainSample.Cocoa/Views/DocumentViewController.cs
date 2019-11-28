@@ -37,8 +37,8 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Samples
 {
-    public partial class DocumentViewController : NSViewController
-    {
+	public partial class DocumentViewController : NSViewController
+	{
 		public string Token = "";
 
 		public string Link_ID = "";
@@ -50,29 +50,28 @@ namespace FigmaSharp.Samples
 
 		DocumentWindowController windowController;
 
-		public DocumentViewController(IntPtr handle) : base(handle)
-        {
+		public DocumentViewController (IntPtr handle) : base (handle)
+		{
 
-        }
+		}
 
-		public void Reload(string versionId = "", string pageId = "") => Load(versionId, pageId);
+		public void Reload (string versionId = "", string pageId = "") => Load (versionId, pageId);
 
 		public void LoadDocument (string token, string linkId, string versionId = "", string pageId = "")
 		{
 			Token = token;
 			Link_ID = linkId;
-			Load(version_id: versionId, page_id: pageId);
+			Load (version_id: versionId, page_id: pageId);
 		}
 
-		public void OnInitialize()
+		public void OnInitialize ()
 		{
-			if (scrollview == null)
-			{
+			if (scrollview == null) {
 				///View.AddSubview(progressIndicator);
 
-				scrollview = new ScrollView();
+				scrollview = new ScrollView ();
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
-				View.AddSubview(nativeScrollView);
+				View.AddSubview (nativeScrollView);
 				nativeScrollView.Frame = View.Bounds;
 
 				windowController = (DocumentWindowController)this.View.Window.WindowController;
@@ -81,96 +80,91 @@ namespace FigmaSharp.Samples
 			}
 		}
 
-		private void WindowController_VersionSelected(object sender, string versionId) => Reload(versionId);
-		private void WindowController_RefreshRequested(object sender, EventArgs e) => Reload();
+		private void WindowController_VersionSelected (object sender, string versionId) => Reload (versionId);
+		private void WindowController_RefreshRequested (object sender, EventArgs e) => Reload ();
 
 		//NSProgressIndicator progressIndicator;
 
-		void Load(string version_id, string page_id)
+		void Load (string version_id, string page_id)
 		{
-			if (string.IsNullOrEmpty(Link_ID)) {
+			if (string.IsNullOrEmpty (Link_ID)) {
 				return;
 			}
-			windowController.Title = string.Format("Opening “{0}”…", Link_ID);
+			windowController.Title = string.Format ("Opening “{0}”…", Link_ID);
 
-			ToggleSpinnerState(toggle_on: true);
-			windowController.EnableButtons(false);
+			ToggleSpinnerState (toggle_on: true);
+			windowController.EnableButtons (false);
 
-			scrollview.ClearSubviews();
+			scrollview.ClearSubviews ();
 
-			new Thread(() => {
+			new Thread (() => {
 
-				this.InvokeOnMainThread(() => {
+				this.InvokeOnMainThread (() => {
 
-					AppContext.Current.SetAccessToken(Token);
+					AppContext.Current.SetAccessToken (Token);
 
-					var converters = AppContext.Current.GetFigmaConverters();
+					var converters = AppContext.Current.GetFigmaConverters ();
 
-					Console.WriteLine("TOKEN: " + Token);
+					Console.WriteLine ("TOKEN: " + Token);
 
-					var fileProvider = new FigmaRemoteFileProvider();
-					var rendererService = new FigmaFileRendererService(fileProvider, converters);
+					var fileProvider = new FigmaRemoteFileProvider ();
+					var rendererService = new FigmaFileRendererService (fileProvider, converters);
 
-					rendererService.Start(Link_ID, scrollview);
+					rendererService.Start (Link_ID, scrollview);
 
-					var distributionService = new FigmaViewRendererDistributionService(rendererService);
-					distributionService.Start();
+					var distributionService = new FigmaViewRendererDistributionService (rendererService);
+					distributionService.Start ();
 
-					fileProvider.ImageLinksProcessed += (s, e) =>
-					{
+					fileProvider.ImageLinksProcessed += (s, e) => {
 						// done
 					};
 
 					//We want know the background color of the figma camvas and apply to our scrollview
-					var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
+					var canvas = fileProvider.Nodes.OfType<FigmaCanvas> ().FirstOrDefault ();
 					if (canvas != null)
 						scrollview.BackgroundColor = canvas.backgroundColor;
 
 					////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-					scrollview.AdjustToContent();
+					scrollview.AdjustToContent ();
 
 					windowController.Title = Link_ID;
 
-					windowController.UpdateVersionMenu();
-					windowController.UpdatePagesPopupButton();
-					windowController.EnableButtons(true);
+					windowController.UpdateVersionMenu ();
+					windowController.UpdatePagesPopupButton ();
+					windowController.EnableButtons (true);
 
-					ToggleSpinnerState(toggle_on: false);
+					ToggleSpinnerState (toggle_on: false);
 
 				});
 
-			}).Start();
+			}).Start ();
 		}
 
 		#region Spinner
 
-		public void ToggleSpinnerState(bool toggle_on)
+		public void ToggleSpinnerState (bool toggle_on)
 		{
-			if (toggle_on)
-			{
+			if (toggle_on) {
 				Spinner.Hidden = false;
-				Spinner.StartAnimation(this);
+				Spinner.StartAnimation (this);
 
-			}
-			else
-			{
+			} else {
 				Spinner.Hidden = true;
-				Spinner.StopAnimation(this);
+				Spinner.StopAnimation (this);
 			}
 		}
 
 		#endregion
 
-		public override NSObject RepresentedObject
-        {
-            get {
-                return base.RepresentedObject;
-            }
+		public override NSObject RepresentedObject {
+			get {
+				return base.RepresentedObject;
+			}
 
-            set {
-                base.RepresentedObject = value;
-                // Update the view, if already loaded.
-            }
-        }
-    }
+			set {
+				base.RepresentedObject = value;
+				// Update the view, if already loaded.
+			}
+		}
+	}
 }

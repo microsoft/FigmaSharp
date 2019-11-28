@@ -13,82 +13,79 @@ using FigmaSharp.Models;
 
 namespace ToCode.Cocoa
 {
-    public partial class ViewController : NSViewController
-    {
-        FigmaNodeView data;
-        OutlinePanel outlinePanel;
-        FigmaRemoteFileProvider fileProvider;
+	public partial class ViewController : NSViewController
+	{
+		FigmaNodeView data;
+		OutlinePanel outlinePanel;
+		FigmaRemoteFileProvider fileProvider;
 
-        FigmaDesignerDelegate figmaDelegate;
-        FigmaCodeRendererService codeRenderer;
+		FigmaDesignerDelegate figmaDelegate;
+		FigmaCodeRendererService codeRenderer;
 
-        public ViewController(IntPtr handle) : base(handle)
-        {
-        }
+		public ViewController (IntPtr handle) : base (handle)
+		{
+		}
 
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
+		public override void ViewDidLoad ()
+		{
+			base.ViewDidLoad ();
 
-            // Do any additional setup after loading the view.
-            outlinePanel = new OutlinePanel();
+			// Do any additional setup after loading the view.
+			outlinePanel = new OutlinePanel ();
 
-            var scrollView = outlinePanel.EnclosingScrollView;
+			var scrollView = outlinePanel.EnclosingScrollView;
 
-            outlinePanel.RaiseFirstResponder += OutlinePanel_RaiseFirstResponder;
+			outlinePanel.RaiseFirstResponder += OutlinePanel_RaiseFirstResponder;
 
-            treeHierarchyContainer.AddSubview(scrollView);
+			treeHierarchyContainer.AddSubview (scrollView);
 
-            treeHierarchyContainer.TranslatesAutoresizingMaskIntoConstraints = false;
-            scrollView.TranslatesAutoresizingMaskIntoConstraints = false;
+			treeHierarchyContainer.TranslatesAutoresizingMaskIntoConstraints = false;
+			scrollView.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            scrollView.TopAnchor.ConstraintEqualToAnchor(treeHierarchyContainer.TopAnchor).Active = true;
-            scrollView.BottomAnchor.ConstraintEqualToAnchor(treeHierarchyContainer.BottomAnchor).Active = true;
-            scrollView.LeftAnchor.ConstraintEqualToAnchor(treeHierarchyContainer.LeftAnchor).Active = true;
-            scrollView.RightAnchor.ConstraintEqualToAnchor(treeHierarchyContainer.RightAnchor).Active = true;
+			scrollView.TopAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.TopAnchor).Active = true;
+			scrollView.BottomAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.BottomAnchor).Active = true;
+			scrollView.LeftAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.LeftAnchor).Active = true;
+			scrollView.RightAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.RightAnchor).Active = true;
 
-            figmaDelegate = new FigmaDesignerDelegate();
+			figmaDelegate = new FigmaDesignerDelegate ();
 
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters()
-                .Union (Resources.GetConverters())
-                .ToArray ();
+			var converters = FigmaSharp.AppContext.Current.GetFigmaConverters ()
+				.Union (Resources.GetConverters ())
+				.ToArray ();
 
-            fileProvider = new FigmaRemoteFileProvider();
-            fileProvider.Load("Dq1CFm7IrDi3UJC7KJ8zVjOt");
+			fileProvider = new FigmaRemoteFileProvider ();
+			fileProvider.Load ("Dq1CFm7IrDi3UJC7KJ8zVjOt");
 
-            var addChildConverter = new FigmaCodeAddChildConverter();
-            var positionConverter = new FigmaCodePositionConverter();
-            codeRenderer = new FigmaCodeRendererService(fileProvider, converters, positionConverter, addChildConverter);
-           
-            data = new FigmaNodeView(fileProvider.Response.document);
-            figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
-            outlinePanel.GenerateTree(data);
-        }
+			var addChildConverter = new FigmaCodeAddChildConverter ();
+			var positionConverter = new FigmaCodePositionConverter ();
+			codeRenderer = new FigmaCodeRendererService (fileProvider, converters, positionConverter, addChildConverter);
 
-        void OutlinePanel_RaiseFirstResponder(object sender, FigmaNode e)
-        {
-            var builder = new StringBuilder();
-            codeRenderer.GetCode(builder, e, null, null);
-            var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
-            textField.Value = builder.ToString();
-            NSFont monospaceFont = NSFont.FromFontName("Monaco", 11);
-            textField.SetFont(monospaceFont, new NSRange(0, textField.Value.Length));
+			data = new FigmaNodeView (fileProvider.Response.document);
+			figmaDelegate.ConvertToNodes (fileProvider.Response.document, data);
+			outlinePanel.GenerateTree (data);
+		}
 
-            NSPasteboard.GeneralPasteboard.DeclareTypes(new string[] { NSPasteboard.NSStringType }, null);
-            NSPasteboard.GeneralPasteboard.SetStringForType(textField.Value, NSPasteboard.NSStringType);
-        }
+		void OutlinePanel_RaiseFirstResponder (object sender, FigmaNode e)
+		{
+			var builder = new StringBuilder ();
+			codeRenderer.GetCode (builder, e, null, null);
+			var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
+			textField.Value = builder.ToString ();
+			NSFont monospaceFont = NSFont.FromFontName ("Monaco", 11);
+			textField.SetFont (monospaceFont, new NSRange (0, textField.Value.Length));
 
-        public override NSObject RepresentedObject
-        {
-            get
-            {
-                return base.RepresentedObject;
-            }
-            set
-            {
-                base.RepresentedObject = value;
-                // Update the view, if already loaded.
-            }
-        }
-    }
+			NSPasteboard.GeneralPasteboard.DeclareTypes (new string[] { NSPasteboard.NSStringType }, null);
+			NSPasteboard.GeneralPasteboard.SetStringForType (textField.Value, NSPasteboard.NSStringType);
+		}
+
+		public override NSObject RepresentedObject {
+			get {
+				return base.RepresentedObject;
+			}
+			set {
+				base.RepresentedObject = value;
+				// Update the view, if already loaded.
+			}
+		}
+	}
 }

@@ -34,37 +34,36 @@ using FigmaSharp.Views;
 
 namespace LocalFile.Cocoa
 {
-    static class MainClass
-    {
-        static ExampleViewManager manager;
-        static IScrollView scrollView;
+	static class MainClass
+	{
+		static ExampleViewManager manager;
+		static IScrollView scrollView;
 
-        static void Main(string[] args)
-        {
-            FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+		static void Main (string[] args)
+		{
+			FigmaApplication.Init (Environment.GetEnvironmentVariable ("TOKEN"));
 
-            NSApplication.Init();
-            NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
+			NSApplication.Init ();
+			NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
 
-			var stackView = new StackView() { Orientation = LayoutOrientation.Vertical };
+			var stackView = new StackView () { Orientation = LayoutOrientation.Vertical };
 
-			var mainWindow = new Window(new Rectangle(0, 0, 540, 800))
-			{
+			var mainWindow = new Window (new Rectangle (0, 0, 540, 800)) {
 				Content = stackView
 			};
 
-			mainWindow.Closing += delegate { NSRunningApplication.CurrentApplication.Terminate(); };
+			mainWindow.Closing += delegate { NSRunningApplication.CurrentApplication.Terminate (); };
 
-			scrollView = new ScrollView();
+			scrollView = new ScrollView ();
 			stackView.AddChild (scrollView);
 
-            manager = new ExampleViewManager(scrollView);
+			manager = new ExampleViewManager (scrollView);
 
-            mainWindow.Title = manager.WindowTitle;
-			mainWindow.Show();
+			mainWindow.Title = manager.WindowTitle;
+			mainWindow.Show ();
 
-            NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
-            NSApplication.SharedApplication.Run();
-        }
-    }
+			NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
+			NSApplication.SharedApplication.Run ();
+		}
+	}
 }

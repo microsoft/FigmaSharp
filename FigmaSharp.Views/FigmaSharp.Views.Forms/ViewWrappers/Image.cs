@@ -31,24 +31,24 @@ using Xamarin.Forms;
 
 namespace FigmaSharp.Views.Forms
 {
-    public class Image : IImage
-    {
-        public object NativeObject => image;
+	public class Image : IImage
+	{
+		public object NativeObject => image;
 
 		public Size Size {
-			get => new Size(0, 0);
+			get => new Size (0, 0);
 			set { }
 		}
 
 		protected ImageSource image;
-        public Image(ImageSource image)
-        {
-            this.image = image;
-        }
-
-		public void Dispose()
+		public Image (ImageSource image)
 		{
-			
+			this.image = image;
+		}
+
+		public void Dispose ()
+		{
+
 		}
 	}
 }

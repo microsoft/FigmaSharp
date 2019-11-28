@@ -34,36 +34,34 @@ namespace FigmaSharp.Views.Forms
 	{
 		public event EventHandler<Key> KeyDown;
 		public event EventHandler Closing;
-        public event EventHandler Resize;
+		public event EventHandler Resize;
 
-        ContentPage window;
-		
-		public DeviceWindow() : this(new ContentPage())
+		ContentPage window;
+
+		public DeviceWindow () : this (new ContentPage ())
 		{
-          
+
 		}
 
-		public DeviceWindow(ContentPage window)
+		public DeviceWindow (ContentPage window)
 		{
 			this.window = window;
-            Content = new FigmaSharp.Views.Forms.View();
+			Content = new FigmaSharp.Views.Forms.View ();
 		}
 
 		protected virtual void OnKeyDownPressed (object sender, Key args)
 		{
-			KeyDown?.Invoke(this, args);
+			KeyDown?.Invoke (this, args);
 		}
 
 		public Size Size {
-            get => new Size((float) window.Width, (float)window.Height);
+			get => new Size ((float)window.Width, (float)window.Height);
 		}
 
-        IView content;
-		public IView Content
-		{
+		IView content;
+		public IView Content {
 			get => content;
-			set
-			{
+			set {
 				content = value;
 				this.window.Content = content.NativeObject as Xamarin.Forms.View;
 			}
@@ -72,27 +70,26 @@ namespace FigmaSharp.Views.Forms
 		public object NativeObject => window;
 
 		public Color BackgroundColor {
-            get => window.BackgroundColor.ToLiteColor();
-			set
-			{
-                window.BackgroundColor = value.ToFormsColor();
+			get => window.BackgroundColor.ToLiteColor ();
+			set {
+				window.BackgroundColor = value.ToFormsColor ();
 			}
 		}
 
-		public void AddChild(IWindow window)
+		public void AddChild (IWindow window)
 		{
 			//To implement
 		}
 
-		public void RemoveChild(IWindow window)
+		public void RemoveChild (IWindow window)
 		{
 			//To implement
 		}
 
-		public void Dispose()
+		public void Dispose ()
 		{
-		
-        }
+
+		}
 	}
 }
 
