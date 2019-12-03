@@ -59,8 +59,6 @@ This is where the real magic happens. Being able to use Figma documents in C# is
 Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g. WPF, Windows, WinForms) may be added later (contribute!).
 
 
-### Cocoa
-
 **FigmaSharp.Cocoa** provides renderers and some helper methods to generate `NSView`s from Figma documents dynamically to use in your macOS apps.
 
 * [NSView.FromFigmaFile](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
@@ -93,13 +91,14 @@ namespace CocoaExample
             base.ViewDidLoad ();
             FigmaEnvironment.SetAccessToken (FIGMA_TOKEN);
             
-            List<FigmaImageView> figmaImageViews; 
+            List<FigmaImageView> figmaImageViews;
             View = NSView.FromFigmaUrl (FIGMA_URL, out figmaImageViews);
             figmaImageViews.Load (FIGMA_URL);
         }
     }
 }
 ```
+
 
 ## Template generation
 
