@@ -21,9 +21,9 @@ In each example project's **Project Options**, go to **Run → Configurations �
 
 There are several ways to load Figma documents into your app:
 
-* [FigmaDocument.FromUrl](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99) – to load from a figma.com  URL
-* [FigmaDocument.FromFile](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105) – to load from a local .figma file
-* [FigmaDocument.FromString](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111) – to load from raw data string
+* [FigmaDocument.FromUrl()](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99) – to load from a figma.com  URL
+* [FigmaDocument.FromFile()](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105) – to load from a local .figma file
+* [FigmaDocument.FromString()](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111) – to load from raw data string
 
 Here's how to do it with a URL:
 
@@ -61,9 +61,9 @@ Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g.
 
 **FigmaSharp.Cocoa** provides renderers and some helper methods to generate `NSView`s from Figma documents dynamically to use in your macOS apps.
 
-* [NSView.FromFigmaFile](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
-* [NSView.FromFigmaUrl](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
-* [NSView.FromFigmaString](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L80)
+* [NSView.FromFigmaFile()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
+* [NSView.FromFigmaUrl()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
+* [NSView.FromFigmaString()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L80)
 
 
 ```csharp
