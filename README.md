@@ -101,11 +101,9 @@ namespace CocoaExample
 }
 ```
 
+## Generate code
 
-### Cocoa.NativeControls
-
-Our views are now drawn natively, but what about actual working controls?
-Using a [set of special Figma components](https://www.figma.com/file/QzEgq2772k2eeMF2sVNc3kEY/macOS-Components?node-id=7%3A1788), we can tell **FigmaSharp.Cocoa.NativeControls** what layers to render as real controls.
+It's not always possible nor desirable to connect to [figma.com]() to load your documents each time. Here's how you can bundle Figma documents and use them as resources using the `FigmaFile` [API]():
 
 
 ## Bundling Figma files
@@ -174,7 +172,7 @@ public partial class MyDialog : FigmaFile
 
 Here `Initialize ()`  sets  `FigmaFile.Document` as a [FigmaDocument]().
 
-`Reload ()` takes the initialized `FigmaDocument` and images and creates a native `NSView` as `FigmaFile.ContentView`, which you can now use in your Cocoa app.
+`Load ()` takes the initialized `FigmaDocument` and images and creates a native `NSView` as `FigmaFile.ContentView`, which you can now use in your Cocoa app. When you set the `withControls:` argument to true, any component in the Figma document that was used from this [set of special Figma components](https://www.figma.com/file/QzEgq2772k2eeMF2sVNc3kEY/macOS-Components?node-id=7%3A1788) will render as working native Cocoa controls.
 
 This process can be automated by using the [bundler]() tool included with the…
 
@@ -183,8 +181,7 @@ This process can be automated by using the [bundler]() tool included with the…
 
 The **FigmaSharp.Tools** folder contains some helpful tools for handling Figma files:
 
-- **Inspector** – preview how your Figma document looks when rendered natively and copy snippets
-- **Code Generator** – turns a Figma document into code
+- **Inspector** – preview how your Figma document looks when rendered natively
 - **Bundler** – takes a figma.com URL and downloads the .figma file including all images and adds it to your project
 
  [This extension](https://www.nuget.org/packages/FigmaSharp/) integrates the inspector and bundler directly into [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) for ease of use.
