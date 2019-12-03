@@ -70,9 +70,10 @@ Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g.
 
 ```csharp
 using System;
-
 using AppKit;
+
 using FigmaSharp;
+using FigmaSharp.Views;
 using FigmaSharp.Cocoa;
 
 namespace CocoaExample
@@ -111,7 +112,7 @@ Using a [set of special Figma components](https://www.figma.com/file/QzEgq2772k2
 
 It's not always possible nor desirable to connect to [figma.com]() to load your documents each time. Here's how you can bundle Figma documents and use them as resources using the `FigmaFile` [API]():
 
-`.figma` files are essentially JSON files and are accompanied by a code-behind `.figma.cs` file that defines all the UI objects. Image files need to be named like their corresponding Figma object ID.
+`.figma` files are essentially JSON files aqcuired from the Figma REST API and are accompanied by a `.figma.cs` file that defines all the UI objects. Image files need to be named like their corresponding Figma object ID.
 
 Make sure the name part of each file is the same and and their **Build Action** should be set to `EmbeddedResource`.
 
@@ -140,16 +141,19 @@ using AppKit;
 
 public partial class MyDialog
 {
-    ContentView;
+    NSTextField Title;
+    NSTexfield Description;
+
+    NSButton CancelButton;       
+    NSButton DoneButton;
 }
 ```
 
 ```csharp
 // MyDialog.cs
 
-using System;
-
 using FigmaSharp;
+using FigmaSharp.Views;
 using FigmaSharp.Cocoa;
 
 public partial class MyDialog : FigmaFile
@@ -157,7 +161,9 @@ public partial class MyDialog : FigmaFile
     public MyDialog () : base ("MyDialog.figma")
     {
         Initialize ();
-        Reload (includeImages: true);
+        
+        Load (withImages: true,
+              withControls: true);
     }
 }
 ```
