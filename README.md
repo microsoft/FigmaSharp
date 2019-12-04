@@ -19,12 +19,7 @@ In each example project's **Project Options**, go to **Run → Configurations �
 
 ## The FigmaSharp API
 
-There are several ways to load Figma documents into your app:
-
-* [FigmaDocument.FromUrl()](FigmaSharp/Helpers/FigmaApiHelper.cs#L95-L99) – to load from a figma.com  URL
-* [FigmaDocument.FromFile()](FigmaSharp/Helpers/FigmaApiHelper.cs#L101-L105) – to load from a local .figma file
-* [FigmaDocument.FromString()](FigmaSharp/blob/master/FigmaSharp/Helpers/FigmaApiHelper.cs#L107-L111) – to load from raw data string
-
+There are several ways to load Figma documents into your app: from a [Url](), [File](), or [String]().
 Here's how to do it with a URL:
 
 ```csharp
@@ -57,9 +52,6 @@ This results in a `FigmaDocument`, which is a hierarchy of `FigmaNode`s, and som
 This is where the real magic happens. Being able to use Figma documents in C# is nice enough, but we can go one step further and use them to draw native UI views.
 
 Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g. WPF, Windows, WinForms) may be added later (contribute!).
-
-
-**FigmaSharp.Cocoa** provides renderers and some helper methods to generate `NSView`s from Figma documents dynamically to use in your macOS apps.
 
 * [NSView.FromFigmaFile()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
 * [NSView.FromFigmaUrl()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
