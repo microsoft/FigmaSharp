@@ -183,8 +183,3 @@ The **FigmaSharp.Tools** folder contains some helpful tools for handling Figma f
 - **Bundler** – takes a figma.com URL and downloads the .figma file including all images and adds it to your project
 
  [This extension](https://www.nuget.org/packages/FigmaSharp/) integrates the inspector and bundler directly into [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) for ease of use.
-
-
-## Contributing
-
-Enjoy and hack the planet!
