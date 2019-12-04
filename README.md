@@ -46,12 +46,12 @@ namespace FigmaSharpExample
 This results in a `FigmaDocument`, which is a hierarchy of `FigmaNode`s, and some metadata.
 [Browse the documentation]() to learn more about everything you can do with a Figma document, .
 
+## FigmaSharp.Cocoa
 
-## Rendering native views and controls
+This is where the real magic happens. Being able to use Figma documents in C# is nice enough, but we can go one step further and use them to draw native UI views. Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g. WPF, Windows, WinForms) may be added later (contribute!).
 
-This is where the real magic happens. Being able to use Figma documents in C# is nice enough, but we can go one step further and use them to draw native UI views.
 
-Currently FigmaSharp only supports Cocoa using [Xamarin.Mac](), but others (e.g. WPF, Windows, WinForms) may be added later (contribute!).
+### Rendering native views and controls
 
 * [NSView.FromFigmaFile()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L44)
 * [NSView.FromFigmaUrl()](FigmaSharp/blob/master/FigmaSharp.Cocoa/FigmaViewExtensions.cs#L55)
@@ -92,7 +92,7 @@ namespace CocoaExample
 ```
 
 
-## Template generation
+### Template generation
 
 It's not always possible nor desirable to connect to [figma.com]() to load your documents each time. Here's how you can generate template code from a Figma document using the `FigmaFile` [API]().
 
@@ -156,7 +156,7 @@ Here `Initialize ()`  sets  `FigmaFile.Document` as a [FigmaDocument]().
 `Load ()` takes the initialized `FigmaDocument` and images and creates a native `NSView` as `FigmaFile.ContentView`, which you can now use in your Cocoa app. When you set the `withControls:` argument to true, any component in the Figma document that was used from this [set of special Figma components](https://www.figma.com/file/QzEgq2772k2eeMF2sVNc3kEY/macOS-Components?node-id=7%3A1788) will render as working native Cocoa controls.
 
 
-## Bundling Figma files
+### Bundling Figma files
 
 The logic here is the same as before, but instead of generating a template the `.figma` file is included in the solution, and the generation of the views is done at runtime.
 
