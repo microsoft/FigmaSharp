@@ -149,9 +149,12 @@ public partial class MyDialog : FigmaFile
     public MyDialog () : base ("MyDialog.figma")
     {
         Initialize ();
-        
         Load (withImages: true,
               withControls: true);
+              
+        DoneButton += delegate {
+            // Application logic
+        };
     }
 }
 ```
