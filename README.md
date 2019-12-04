@@ -172,7 +172,7 @@ In your solution tree it should look something like this:
 |
 ```
 
-This bundling and template generation can be automated by using the [bundler]() tool included with the…
+We recommend using the Bundler tool for bundling and template generation included in the…
 
 
 ## Tools
