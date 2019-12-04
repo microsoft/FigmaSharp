@@ -15,6 +15,11 @@ To get documents from [figma.com](https://www.figma.com/) you'll need to generat
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
 This will be your only chance to copy the token, so make sure you keep a copy in a secure place.
 
+We recommend trying out automatic builds of the example app and Visual Studio extension on the [Releases](/releases) page. 
+
+
+# Building from source
+
 Restore the external dependencies by running `git submodule update --init --recursive`.
 
 To run the examples, open `FigmaSharp.sln` in [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/).
@@ -158,6 +163,7 @@ public partial class MyDialog : FigmaFile
 Here `Initialize ()`  sets  `FigmaFile.Document` as a [FigmaDocument]().
 
 `Load ()` takes the initialized `FigmaDocument` and images and creates a native `NSView` as `FigmaFile.ContentView`, which you can now use in your Cocoa app. When you set the `withControls:` argument to true, any component in the Figma document that was used from this [set of special Figma components](https://www.figma.com/file/QzEgq2772k2eeMF2sVNc3kEY/macOS-Components?node-id=7%3A1788) will render as working native Cocoa controls.
+
 
 
 ### 3. Bundling Figma files
