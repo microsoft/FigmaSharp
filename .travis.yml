@@ -1,0 +1,13 @@
+language: csharp
+
+matrix:
+    - os: osx
+      sudo: required
+
+before_install:
+  - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg
+  - sudo installer -pkg xamarin.mac*.pkg -target /
+
+script:
+  - msbuild /p:Configuration=FigmaSharp.Samples FigmaSharp.Views.sln
+
