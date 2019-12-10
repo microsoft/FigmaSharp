@@ -17,58 +17,58 @@ namespace Game.Cocoa
 	}
 
 	public class GameWindow : Window
-    {
-        const int WalkModifier = 13;
-      
-        IImageView[] spikesTiles;
+	{
+		const int WalkModifier = 13;
+
+		IImageView[] spikesTiles;
 		IImageView[] wallTiles;
 
-        List<IImageView> gemsTiles;
-        List<IImageView> heartTiles;
-        ILabel pointsLabel;
+		List<IImageView> gemsTiles;
+		List<IImageView> heartTiles;
+		ILabel pointsLabel;
 		IImageView playerTile;
-        int points = 0;
+		int points = 0;
 
 		Point startingPoint;
 		IMusicPlayer backgroundMusic;
 		IMusicPlayer coinSound;
 		IMusicPlayer gameOverSound;
 
-        public GameWindow(Rectangle rect) : base(rect)
-        {
+		public GameWindow(Rectangle rect) : base(rect)
+		{
 			Resizable = false;
 
-            //we get the default basic view converters from the current loaded toolkit
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+			//we get the default basic view converters from the current loaded toolkit
+			var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
 
-            //in this case we want use a remote file provider (figma url from our document)
-            var fileProvider = new FigmaRemoteFileProvider();
-            fileProvider.Load("Jv8kwhoRsrmtJDsSHcTgWGYu");
+			//in this case we want use a remote file provider (figma url from our document)
+			var fileProvider = new FigmaRemoteFileProvider();
+			fileProvider.Load("Jv8kwhoRsrmtJDsSHcTgWGYu");
 
-            //we initialize our renderer service, this uses all the converters passed
-            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
-            var rendererService = new FigmaViewRendererService(fileProvider, converters);
+			//we initialize our renderer service, this uses all the converters passed
+			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
+			var rendererService = new FigmaViewRendererService(fileProvider, converters);
 
 			//play background music
-			backgroundMusic = new MusicPlayer ("Background", "mp3");
+			backgroundMusic = new MusicPlayer("Background", "mp3");
 			backgroundMusic.Play(-1);
 
 			coinSound = new MusicPlayer("Coin", "mp3");
 			gameOverSound = new MusicPlayer("GameOver", "mp3");
 
 			//we want load the entire level 1
-			IView view = rendererService.RenderByName <IView>("Level1");
+			IView view = rendererService.RenderByName<IView>("Level1");
 			Content = view;
 
-            playerTile = rendererService.FindViewStartsWith<IImageView>("Player");
+			playerTile = rendererService.FindViewStartsWith<IImageView>("Player");
 
-            startingPoint = playerTile.Allocation.Origin;
+			startingPoint = playerTile.Allocation.Origin;
 
-            pointsLabel = rendererService.FindViewByName<ILabel>("Points");
-            gemsTiles = rendererService.FindViewsStartsWith<IImageView>("Gem")
-                .ToList ();
-            wallTiles = rendererService.FindViewsStartsWith<IImageView>("Tile")
-                .ToArray();
+			pointsLabel = rendererService.FindViewByName<ILabel>("Points");
+			gemsTiles = rendererService.FindViewsStartsWith<IImageView>("Gem")
+				.ToList();
+			wallTiles = rendererService.FindViewsStartsWith<IImageView>("Tile")
+				.ToArray();
 			spikesTiles = rendererService.FindViewsStartsWith<IImageView>("Spikes")
 				.ToArray();
 			heartTiles = rendererService.FindViewsStartsWith<IImageView>("Heart")
@@ -79,13 +79,13 @@ namespace Game.Cocoa
 
 		void MovePlayerToPoint(Point point)
 		{
-			if (IsPlayerPositionCollidingWithAnyWall (point))
+			if (IsPlayerPositionCollidingWithAnyWall(point))
 				return;
 			playerTile.SetPosition(point.X, point.Y);
 			WorldUpdate();
 		}
 
-		bool IsPlayerPositionCollidingWithAnyWall (Point point)
+		bool IsPlayerPositionCollidingWithAnyWall(Point point)
 		{
 			var playerPosition = new Rectangle(point, playerTile.Size);
 			foreach (var gem in wallTiles)

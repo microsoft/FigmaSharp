@@ -28,7 +28,7 @@
 using AppKit;
 using FigmaSharp.Cocoa;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	static class MainClass
 	{

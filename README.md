@@ -7,11 +7,17 @@
 
 ![Gitter](https://badges.gitter.im/Join%20Chat.svg) [![Build Status](https://netonjm.visualstudio.com/FigmaSharp/_apis/build/status/FigmaSharp?branchName=master)](https://netonjm.visualstudio.com/FigmaSharp/_build/latest?definitionId=3&branchName=master)
 
+
 ## Getting started
 
 To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**.
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
 This will be your only chance to copy the token, so make sure you keep a copy in a secure place.
+
+We recommend trying out automatic builds of the example app and Visual Studio extension on the [Releases](/releases) page. 
+
+
+# Building from source
 
 Restore the external dependencies by running `git submodule update --init --recursive`.
 

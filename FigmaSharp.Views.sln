@@ -68,7 +68,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Designer", "Figm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{1581B8FF-72D1-4D3C-846E-25778FD74BD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Samples", "samples\FigmaSharp\MainSample\MainSample.Cocoa\FigmaSharp.Samples.csproj", "{96EC7ED1-203D-4833-BEE0-9E597CA3BF65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharpApp", "samples\FigmaSharp\MainSample\MainSample.Cocoa\FigmaSharpApp.csproj", "{96EC7ED1-203D-4833-BEE0-9E597CA3BF65}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.LocalFile", "samples\FigmaSharp\LocalFileRendering\LocalFile.Shared\Shared.LocalFile.shproj", "{DE4BA22B-5240-4253-8CDE-18FD4E46E256}"
 EndProject
