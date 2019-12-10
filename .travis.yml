@@ -8,5 +8,5 @@ before_install:
   - git submodule update --init --recursive
 
 script:
-  - msbuild FigmaSharp.Views.sln /t:FigmaSharp_Samples /p:Configuration=Release
+  - msbuild FigmaSharp.Views.sln /t:FigmaSharpApp /p:Configuration="Release"
 
