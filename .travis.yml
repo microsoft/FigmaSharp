@@ -1,8 +1,6 @@
 language: csharp
-
-matrix:
-    - os: osx
-      sudo: required
+os: osx
+sudo: required
 
 before_install:
   - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg
