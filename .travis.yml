@@ -5,6 +5,7 @@ sudo: required
 before_install:
   - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg
   - sudo installer -pkg xamarin.mac*.pkg -target /
+  - git submodule update --init --recursive
 
 script:
   - msbuild /p:Configuration=FigmaSharp.Samples FigmaSharp.Views.sln
