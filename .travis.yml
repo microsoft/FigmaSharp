@@ -9,6 +9,7 @@ before_install:
 
 script:
   - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:Configuration=Release /t:restore
+  - ls samples/FigmaSharp/MainSample/MainSample.Cocoa/
   - zip -r FigmaSharpApp.zip samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release/FigmaSharpApp.app
 
 deploy:
