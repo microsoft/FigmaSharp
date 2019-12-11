@@ -10,3 +10,16 @@ before_install:
 script:
   - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:Configuration=Release /t:restore
 
+after_script:
+  - zip -r FigmaSharpApp.zip samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release/FigmaSharpApp.app
+
+deploy:
+  provider: releases
+  on:
+    repo: hbons/FigmaSharp
+  file: FigmaSharpApp.zip
+  overwrite: true
+  skip_cleanup: true
+  api_key:
+    secure: Xwiq1cNGcLVU9L6iqO/rDQEXsg8CEkfOprDl0p1J7tRwazSBa4PTzHzqh544XP+CYracB2ICThugbpp55nnDtciu9Dy5LBrGInl1e0THm7U8+XdlDmMQKjzuZ4XM3YQHkFtNdBCpoNZGfz0mz47+pSU4ZQnv+ocd68fEdnlVZXG+TJOBLRtme2bDxh8c+eqQlmDRrIR4gRP5ip1Y4Zyq0XTL893Yl9n1SMJaw4XGYL0j94z7cjze1he5i6smZ+Kj73JQd6xdWYulbftySty3/KBNaGUnMkzXXoCifviFmk1U37pojZW90y25MFHfDV9N8djJHmfkd/vx9uYzFe4uYt3uQDkXkDw2s8yZRFrEXVrjfM6EJ/avRd4LWZvn7LzzpttBvMCLpYeKKNuiOsnwjEogX2aLF3kV/zj+sWuuA63h/osga9qww3o2DVEfsyjvgRXzKgiD8ZdE+zhc2OCNdZyAODVPfpgPjx4HwrXWazhLVZWKNXt0mXbWxMZl7xcuS+IVjt5tu5C2P5/RBRd3ci152y21NRyqy8hwmh6QYbbbKa9pG8nltkuLBP2Q/fdnyKp+aRRM5vq8qjp5pEhp9rVyOpJSIeKWkJyj4DXFUmLSrngq8b/LYphHmYrvwdL6iB1a7PnLCOIxTlkZsufmAoHLV+zE7dKMGdIe/n1imog=
+
