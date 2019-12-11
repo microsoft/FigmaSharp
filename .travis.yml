@@ -8,5 +8,5 @@ before_install:
   - git submodule update --init --recursive
 
 script:
-  - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:Configuration=Release
+  - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:Configuration=Release /t:restore
 
