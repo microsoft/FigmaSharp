@@ -8,8 +8,8 @@ before_install:
   - git submodule update --init --recursive
 
 script:
-  - mkdir bin
-  - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:Configuration=Release;OutputPath=bin/ /t:restore
+  - msbuild  samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /t:restore -v:diag
+  - ls -Rl
   - zip -r FigmaSharpApp.zip bin/Release/FigmaSharpApp.app
 
 deploy:
