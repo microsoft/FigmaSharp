@@ -6,7 +6,7 @@ using Foundation;
 using AppKit;
 using CoreGraphics;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	public partial class FileContainerView : NSView
 	{

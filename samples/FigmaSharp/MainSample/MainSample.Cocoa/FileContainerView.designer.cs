@@ -7,7 +7,7 @@
 using Foundation;
 using System.CodeDom.Compiler;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	[Register ("FileContainerView")]
 	partial class FileContainerView

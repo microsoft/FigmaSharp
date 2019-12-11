@@ -31,7 +31,7 @@ using System.Collections.Generic;
 using AppKit;
 using Foundation;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : NSApplicationDelegate

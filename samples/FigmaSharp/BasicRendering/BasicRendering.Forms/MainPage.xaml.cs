@@ -7,18 +7,18 @@ using FigmaSharp.Views;
 
 namespace BasicRendering.Forms
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
-    public partial class MainPage : FigmaRemoteContentPage
-    {
+	// Learn more about making custom code visible in the Xamarin.Forms previewer
+	// by visiting https://aka.ms/xamarinforms-previewer
+	[DesignTimeVisible(false)]
+	public partial class MainPage : FigmaRemoteContentPage
+	{
 		const string LoginPage = "Log-In Page";
 		const string ExhibitionPage = "Exhibition";
 		const string HomePage = "Home";
 		const string MenuPage = "Menu";
 
 		public MainPage()
-        {
+		{
 			InitializeFigmaComponent();
 
 			LoadDocument("fKugSkFGdwOF4vDsPGnJee");
@@ -26,7 +26,7 @@ namespace BasicRendering.Forms
 			//this converters are reused in all the renderings
 			AddConverter(new CustomButtonConverter(), new NavigationMenuButtonConverter());
 
-			ProcessTransitionNodeID (StartNodeID);
+			ProcessTransitionNodeID(StartNodeID);
 		}
 
 		void ProcessTransitionNodeID(string transitionNodeId)
@@ -59,11 +59,11 @@ namespace BasicRendering.Forms
 			}
 		}
 
-		void RenderViewWithConverters (FigmaSharp.Models.FigmaNode node, params FigmaViewConverter[] converters)
+		void RenderViewWithConverters(FigmaSharp.Models.FigmaNode node, params FigmaViewConverter[] converters)
 		{
 			if (converters != null && converters.Length > 0)
 				AddConverter(converters);
-			RenderByNode (node);
+			RenderByNode(node);
 			if (converters != null && converters.Length > 0)
 				RemoveConverter(converters);
 		}
@@ -72,7 +72,8 @@ namespace BasicRendering.Forms
 		{
 			if (view is ITransitableButton transitableButton)
 			{
-				transitableButton.Clicked += (s, e) => {
+				transitableButton.Clicked += (s, e) =>
+				{
 					if (s is IViewTransitable figmaTransition)
 					{
 						ProcessTransitionNodeID(figmaTransition.TransitionNodeID);
@@ -102,7 +103,8 @@ namespace BasicRendering.Forms
 			if (loginButton == null)
 				return;
 
-			loginButton.Clicked += (s, e) => {
+			loginButton.Clicked += (s, e) =>
+			{
 				var emailTextField = FindNativeViewByName<Entry>("EmailTextField");
 				var passwordTextField = FindNativeViewByName<Entry>("PasswordTextField");
 
@@ -127,8 +129,10 @@ namespace BasicRendering.Forms
 			RenderViewWithConverters(node);
 
 			var navigationMenuButton = RendererService.FindViewByName<IButton>("HomeNavigationMenuButton");
-			navigationMenuButton.Clicked += (s, e) => {
-				if (s is IViewTransitable figmaTransition) {
+			navigationMenuButton.Clicked += (s, e) =>
+			{
+				if (s is IViewTransitable figmaTransition)
+				{
 					ProcessTransitionNodeID(figmaTransition.TransitionNodeID);
 				}
 			};
@@ -157,7 +161,8 @@ namespace BasicRendering.Forms
 			RenderViewWithConverters(node);
 
 			var navigationMenuButton = RendererService.FindViewByName<IButton>("ExhibitionNavigationMenuButton");
-			navigationMenuButton.Clicked += (s, e) => {
+			navigationMenuButton.Clicked += (s, e) =>
+			{
 				if (s is IViewTransitable figmaTransition)
 				{
 					ProcessTransitionNodeID(figmaTransition.TransitionNodeID);
