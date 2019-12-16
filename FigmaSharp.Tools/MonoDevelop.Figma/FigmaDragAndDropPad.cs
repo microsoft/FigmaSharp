@@ -53,20 +53,20 @@ namespace MonoDevelop.Figma
             window.PadContentHidden += Container_PadHidden;
             window.PadContentShown += Container_PadShown;
 
-            widget = GtkMacInterop.NSViewToGtkWidget(dragPad);
-            widget.CanFocus = true;
-            widget.Sensitive = true;
+            widget = new Gtk.GtkNSViewHost (dragPad);
 
             widget.DragBegin += (o, args) => {
-                //if (!isDragging)
-                //{
-                //    var processedNode = dragPad.GetProcessedNode(dragPad.SelectedNode);
-                //    selected = new TemplateToolboxNode(new Ide.CodeTemplates.CodeTemplate() { Code = processedNode.Code });
-                //    CurrentConsumer.DragItem(selected, widget, args.Context);
-                //    //DesignerSupport.Service.ToolboxService.DragSelectedItem(widget, args.Context);
-                //    isDragging = true;
-                //}
-            };
+				if (!isDragging) {
+                    var code = dragPad.GetCode (dragPad.SelectedNode);
+
+                    selected = new TextToolboxNode (code);
+					
+                    DesignerSupport.DesignerSupport.Service.ToolboxService.SelectItem (selected);
+                    CurrentConsumer.DragItem (selected, widget, args.Context);
+                    //	DesignerSupport.Service..(widget, args.Context);
+                    isDragging = true;
+				}
+			};
 
             widget.DragEnd += (o, args) => {
                 isDragging = false;

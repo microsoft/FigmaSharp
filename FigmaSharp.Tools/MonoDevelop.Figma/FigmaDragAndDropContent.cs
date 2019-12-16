@@ -58,15 +58,23 @@ namespace MonoDevelop.Figma
         OutlinePanel outlinePanel;
         NSTextField fileTextField;
         NSButton openFileButton;
-        NSScrollView scrollView;
+
+		public string GetCode (FigmaNode selectedNode)
+		{
+            StringBuilder builder = new StringBuilder ();
+            codeRenderer.GetCode (builder, selectedNode, null, null);
+            return builder.ToString ();
+        }
+
+		NSScrollView scrollView;
         NSStackView toolbarBox;
 
         List<(string, string)> Options = new List<(string, string)>()
         {
             ("Cocoa", ModuleService.Platform.MAC), 
-            ("iOS" , ModuleService.Platform.iOS),
-            ("Gtk" , ModuleService.Platform.Gtk),
-            ("WinForms" , ModuleService.Platform.WinForms)
+            //("iOS" , ModuleService.Platform.iOS),
+            //("Gtk" , ModuleService.Platform.Gtk),
+            //("WinForms" , ModuleService.Platform.WinForms)
         };
 
         public FigmaDragAndDropContent()
@@ -114,13 +122,13 @@ namespace MonoDevelop.Figma
             figmaDelegate = new FigmaDesignerDelegate();
             fileProvider = new FigmaRemoteFileProvider();
 
-            SetCodeRenderer(ModuleService.Platform.MAC);
+            SetCocoaCodeRenderer ();
+            //SetCodeRenderer(ModuleService.Platform.MAC);
 
             outlinePanel.DoubleClick += (sender, node) =>
             {
-                StringBuilder builder = new StringBuilder();
-                codeRenderer.GetCode(builder, node, null, null);
-                SelectCode?.Invoke(this, builder.ToString ());
+                var code = GetCode (node);
+                SelectCode?.Invoke(this, code);
             };
 
             outlinePanel.StartDrag += (sender, e) =>
@@ -151,6 +159,16 @@ namespace MonoDevelop.Figma
             var addChildConverter = ModuleService.AddChildConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
             var codePositionConverter = ModuleService.CodePositionConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
             codeRenderer = new FigmaCodeRendererService(fileProvider, converters, codePositionConverter, addChildConverter);
+        }
+
+		void SetCocoaCodeRenderer ()
+		{
+            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters ()
+                .Concat (FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ()).ToArray ();
+
+            var addChildConverter = FigmaSharp.AppContext.Current.GetAddChildConverter ();
+            var codePositionConverter = FigmaSharp.AppContext.Current.GetPositionConverter ();
+            codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePositionConverter, addChildConverter);
         }
 
         public override void SetFrameSize(CGSize newSize)
