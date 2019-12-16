@@ -119,7 +119,22 @@ namespace MonoDevelop.Figma
                 converters = converters.Concat (FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ())
 					.ToArray ();
 
-                fileProvider = new FigmaManifestFileProvider(this.GetType().Assembly, filePath.FileName);
+                string assemblyPath = null;
+				//we need check the current configuration and check for the generated assembly path
+				if (Owner is DotNetProject dotNetProject) {
+                    var configuration = dotNetProject.GetConfiguration (IdeApp.Workspace.ActiveConfiguration);
+                    assemblyPath = dotNetProject.GetOutputFileName (IdeApp.Workspace.ActiveConfiguration);
+                }
+
+                System.Reflection.Assembly assembly;
+				try {
+                    assembly = File.Exists (assemblyPath) ? System.Reflection.Assembly.LoadFile (assemblyPath) : this.GetType ().Assembly;
+                } catch (Exception ex) {
+                    Console.WriteLine (ex);
+                    assembly = this.GetType ().Assembly;
+                }
+  
+                fileProvider = new FigmaManifestFileProvider(assembly, filePath.FileName);
 
                 rendererService = new FigmaFileRendererService (fileProvider, converters);
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
