@@ -82,7 +82,10 @@ namespace FigmaSharp.Designer
 
                 if (viewSelectedOverlayWindow != null)
                 {
-                    //viewSelectedOverlayWindow.SetParentWindow(selectedWindow);
+					//TODO: we need to improve this
+                    viewSelectedOverlayWindow.RemoveFromParent ();
+                    selectedWindow.AddChildWindow (viewSelectedOverlayWindow);
+
                     viewSelectedOverlayWindow.Visible = value;
                     if (SelectedView != null)
                     {

@@ -26,17 +26,17 @@ namespace FigmaSharp.Designer
 
         void Initialize()
         {
-            window.DidResize += (s, e) => {
-                ResizeRequested?.Invoke(this, EventArgs.Empty);
-            };
+            //window.DidResize += (s, e) => {
+            //    ResizeRequested?.Invoke(this, EventArgs.Empty);
+            //};
 
-            window.DidMove += (s, e) => {
-                MovedRequested?.Invoke(this, EventArgs.Empty);
-            };
+            //window.DidMove += (s, e) => {
+            //    MovedRequested?.Invoke(this, EventArgs.Empty);
+            //};
 
-            window.DidResignKey += (s, e) => {
-                LostFocus?.Invoke(this, EventArgs.Empty);
-            };
+            //window.DidResignKey += (s, e) => {
+            //    LostFocus?.Invoke(this, EventArgs.Empty);
+            //};
         }
 
         public object NativeObject => window;
@@ -67,7 +67,7 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public IView FirstResponder
+        public IView FocusedView
         {
             get
             {
@@ -194,6 +194,11 @@ namespace FigmaSharp.Designer
 
         public bool HasParentWindow => base.ParentWindow != null;
 
+        public void RemoveFromParent ()
+		{
+			this.ParentWindow?.RemoveChildWindow (this);
+		}
+
         public WindowWrapper(NSCoder coder) : base(coder)
         {
             Initialize();
@@ -246,23 +251,23 @@ namespace FigmaSharp.Designer
             return this.ChildWindows.Contains(debugOverlayWindow.NativeObject as NSWindow);
         }
 
-        public IView ContentView
+        IView content;
+        public IView Content
         {
             get
             {
-                if (ContentView is NSView view)
-                {
-                    return new View(view);
+				if (content == null) {
+                    content = new View (this.ContentView);
                 }
-                return null;
+                return content;
             }
             set
             {
-                ContentView = value;
+                content = value;
             }
         }
 
-        public IView FirstResponder
+        public IView FocusedView
         {
             get
             {

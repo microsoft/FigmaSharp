@@ -250,9 +250,10 @@ namespace FigmaSharp.Services
     {
         public Assembly Assembly { get; set; }
 
-        public FigmaManifestFileProvider (Assembly assembly)
+        public FigmaManifestFileProvider (Assembly assembly, string file)
         {
             Assembly = assembly;
+            File = file;
         }
 
         public override string GetContentTemplate(string file)
@@ -288,7 +289,7 @@ namespace FigmaSharp.Services
 
         public event EventHandler ImageLinksProcessed;
 
-        public FigmaResponse Response { get; private set; }
+        public FigmaResponse Response { get; protected set; }
         public List<FigmaNode> Nodes { get; } = new List<FigmaNode>();
 
         public bool ImageProcessed;
@@ -299,7 +300,7 @@ namespace FigmaSharp.Services
             ImageLinksProcessed?.Invoke(this, new EventArgs());
         }
 
-        public string File { get; private set; }
+        public string File { get; set; }
 
         public void Load(string file)
         {
@@ -330,7 +331,7 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading remote resources. Ensure you added NewtonSoft nuget?");
+                Console.WriteLine($"Error reading remote resources. Ensure you added NewtonSoft nuget or cannot parse the to json?");
                 Console.WriteLine(ex);
             }
         }

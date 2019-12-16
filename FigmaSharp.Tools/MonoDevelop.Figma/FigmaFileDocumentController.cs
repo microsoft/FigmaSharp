@@ -52,7 +52,6 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views.Native.Cocoa;
 
 namespace MonoDevelop.Figma
 {
@@ -70,8 +69,7 @@ namespace MonoDevelop.Figma
 
         FigmaDesignerOutlinePad outlinePad;
 
-        private FilePath fileName;
-        NSStackView container;
+        private FilePath filePath;
 
         Gtk.Widget _content;
         PropertyGrid grid;
@@ -80,37 +78,8 @@ namespace MonoDevelop.Figma
 
         public FigmaFileDocumentController()
         {
-
-            container = new NSStackView();
-
-            container.Spacing = 10;
-            container.WantsLayer = true;
-            container.Layer.BackgroundColor = NSColor.DarkGray.CGColor;
-
-            container.Distribution = NSStackViewDistribution.Fill;
-            container.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
-
-            _content = GtkMacInterop.NSViewToGtkWidget(container);
-            _content.CanFocus = true;
-            _content.Sensitive = true;
-
-            var scrollView = new FNSScrollview()
-            {
-                HasVerticalScroller = true,
-                HasHorizontalScroller = true,
-            };
-
-            scrollView.AutohidesScrollers = false;
-            scrollView.BackgroundColor = NSColor.DarkGray;
-            scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
-
-            scrollViewWrapper = new ScrollView (scrollView);
-
-            var contentView = new NSView();
-            contentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-            scrollView.DocumentView = contentView;
-
-            container.AddArrangedSubview(scrollView);
+            scrollViewWrapper = new ScrollView ();
+            _content = new GtkNSViewHost (scrollViewWrapper.NativeObject as NSView);
 
             _content.ShowAll();
 
@@ -120,12 +89,12 @@ namespace MonoDevelop.Figma
 
         void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload(scrollViewWrapper, fileName, fileOptions);
+            session.Reload(scrollViewWrapper, filePath.FileName, fileOptions);
         }
 
         protected override Task OnSave()
         {
-            session.Save(fileName);
+            session.Save(filePath);
             HasUnsavedChanges = false;
             return Task.FromResult(true);
         }
@@ -142,14 +111,17 @@ namespace MonoDevelop.Figma
             if (session == null)
             {
                 Owner = fileDescriptor.Owner;
-                fileName = fileDescriptor.FilePath;
+                filePath = fileDescriptor.FilePath;
                 DocumentTitle = fileDescriptor.FilePath.FileName;
 
                 figmaDelegate = new FigmaDesignerDelegate();
                 var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
+                converters = converters.Concat (FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ())
+					.ToArray ();
 
-                fileProvider = new FigmaManifestFileProvider(this.GetType().Assembly);
-                rendererService = new FigmaFileRendererService(fileProvider, converters);
+                fileProvider = new FigmaManifestFileProvider(this.GetType().Assembly, filePath.FileName);
+
+                rendererService = new FigmaFileRendererService (fileProvider, converters);
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
 
                 session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
@@ -173,7 +145,7 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(scrollViewWrapper, fileName, new FigmaViewRendererServiceOptions());
+                session.Reload(scrollViewWrapper, filePath.FileName, new FigmaViewRendererServiceOptions());
             }
             await base.OnInitialize(modelDescriptor, status);
         }
@@ -219,21 +191,14 @@ namespace MonoDevelop.Figma
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {
-            scrollViewWrapper.ClearSubviews();
+			var mainNodes = session.ProcessedNodes
+			   .Where (s => s.ParentView == null)
+			   .ToArray ();
 
-            foreach (var items in session.MainViews)
-            {
-                scrollViewWrapper.AddChild(items.View);
-            }
+			Reposition (mainNodes);
 
-            var mainNodes = session.ProcessedNodes
-               .Where(s => s.ParentView == null)
-               .ToArray();
-
-            Reposition(mainNodes);
-
-            //we need reload after set the content to ensure the scrollview
-            scrollViewWrapper.AdjustToContent();
+			//we need reload after set the content to ensure the scrollview
+			scrollViewWrapper.AdjustToContent();
         }
 
         public void Reposition(ProcessedNode[] mainNodes)
@@ -244,7 +209,6 @@ namespace MonoDevelop.Figma
             foreach (var processedNode in mainNodes)
             {
                 var view = processedNode.View;
-                scrollViewWrapper.AddChild(view);
                 view.SetPosition(currentX, 0);
                 currentX += view.Width + Margin;
             }
@@ -307,7 +271,7 @@ namespace MonoDevelop.Figma
 
         void RefreshAll()
         {
-            session.Reload(scrollViewWrapper, fileName, fileOptions);
+            session.Reload(scrollViewWrapper, filePath, fileOptions);
             if (outlinePad != null)
             {
                 var selectedView = surface.SelectedView;

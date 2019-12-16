@@ -71,7 +71,7 @@ namespace FigmaSharp.Designer
             ShowsToolbarButton = false;
             IgnoresMouseEvents = true;
             box = new NSBox { BoxType = NSBoxType.NSBoxCustom };
-            ContentView = new View (box);
+            Content = new View (box);
             FillColor = fillColor;
             BorderWidth = borderWidth;
             BorderColor = borderColor;
@@ -90,7 +90,6 @@ namespace FigmaSharp.Designer
             {
                 Console.WriteLine(ex);
             }
-          
         }
 
         public void AlignWith(IView view)

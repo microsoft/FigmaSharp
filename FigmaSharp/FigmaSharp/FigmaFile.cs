@@ -79,7 +79,7 @@ namespace FigmaSharp
             FigmaImages = new List<IImageView>();
 
             var assembly = System.Reflection.Assembly.GetCallingAssembly();
-            figmaLocalFileProvider = new FigmaManifestFileProvider(assembly);
+            figmaLocalFileProvider = new FigmaManifestFileProvider(assembly, file);
             fileService = new FigmaFileRendererService (figmaLocalFileProvider, figmaViewConverters);
             rendererService = new FigmaViewRendererDistributionService(fileService);
         }

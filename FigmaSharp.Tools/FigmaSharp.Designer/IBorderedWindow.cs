@@ -31,6 +31,7 @@ namespace FigmaSharp.Designer
 {
     public interface IBorderedWindow : IWindowWrapper
     {
+        void RemoveFromParent ();
         float BorderWidth { get; set; }
         bool Visible { get; set; }
         void SetParentWindow(IWindowWrapper selectedWindow);

@@ -32,8 +32,8 @@ namespace FigmaSharp.Designer
 {
     public interface IWindowWrapper : IObject
     {
-        IView ContentView { get; set; }
-        IView FirstResponder { get; }
+        IView Content { get; set; }
+        IView FocusedView { get; }
         bool HasParentWindow { get; }
 
         event EventHandler LostFocus;
