@@ -29,6 +29,7 @@
 
 using System;
 using FigmaSharp;
+using Gtk;
 using Microsoft.VisualStudio.Text.Editor;
 using MonoDevelop.Components;
 using MonoDevelop.DesignerSupport.Toolbox;
@@ -40,9 +41,14 @@ namespace MonoDevelop.Figma
 {
     public class FigmaDragAndDropPad : PadContent
     {
+        Gtk.TargetList targets = CreateDefaultTargeList ();
+
+        public const string ToolBoxDragDropFormat = "MonoDevelopToolBox";
+        private static TargetList CreateDefaultTargeList () =>
+            new Gtk.TargetList (new TargetEntry[] { new TargetEntry (ToolBoxDragDropFormat, TargetFlags.OtherWidget, 0) });
+
         Gtk.Widget widget;
         FigmaDragAndDropContent dragPad;
-        TextToolboxNode selected;
         IPadWindow window;
 
         protected override void Initialize(IPadWindow window)
@@ -56,64 +62,60 @@ namespace MonoDevelop.Figma
             widget = new Gtk.GtkNSViewHost (dragPad);
 
             widget.DragBegin += (o, args) => {
-				if (!isDragging) {
-                    var code = dragPad.GetCode (dragPad.SelectedNode);
-
-                    selected = new TextToolboxNode (code);
-					
-                    DesignerSupport.DesignerSupport.Service.ToolboxService.SelectItem (selected);
-                    CurrentConsumer.DragItem (selected, widget, args.Context);
-                    //	DesignerSupport.Service..(widget, args.Context);
+                if (!isDragging) {
+                    DesignerSupport.DesignerSupport.Service.ToolboxService.DragSelectedItem (widget, args.Context);
                     isDragging = true;
-				}
+                }
 			};
+
+            widget.DragDataGet += (object o, DragDataGetArgs args) => {
+                if (selectedNode is IDragDataToolboxNode node) {
+                    foreach (var format in node.Formats) {
+                        args.SelectionData.Set (Gdk.Atom.Intern (format, false), 8, node.GetData (format));
+                    }
+                }
+            };
 
             widget.DragEnd += (o, args) => {
                 isDragging = false;
-            };
-
-            widget.Focused += (s, e) => {
-                // toolbox
             };
 
             dragPad.SelectCode += (sender, e) =>
             {
                 if (!string.IsNullOrEmpty (e))
                 {
-                    try
-                    {
-                        var editor = IdeApp.Workbench.ActiveDocument.GetContent<ITextView>();
-                        var position = editor.Caret.Position.BufferPosition.Position;
-                        editor.TextBuffer.Insert(position, e);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
+                    var selected = new TextToolboxNode (e);
+                    DesignerSupport.DesignerSupport.Service.ToolboxService.SelectItem (selected);
+                    DesignerSupport.DesignerSupport.Service.ToolboxService.UseSelectedItem ();
                 }
             };
 
             dragPad.DragSourceSet += (s, e) => {
-                targets = new Gtk.TargetList();
+                targets = CreateDefaultTargeList ();
                 targets.AddTable(e);
             };
+
             dragPad.DragBegin += (object sender, EventArgs e) => {
-                if (!isDragging)
-                {
-                    Gtk.Drag.SourceUnset(widget);
+                var code = dragPad.GetCode (dragPad.SelectedNode);
+                selectedNode = new TextToolboxNode (code);
+                DesignerSupport.DesignerSupport.Service.ToolboxService.SelectItem (selectedNode);
 
-                    // Gtk.Application.CurrentEvent and other copied gdk_events seem to have a problem
-                    // when used as they use gdk_event_copy which seems to crash on de-allocating the private slice.
-                    IntPtr currentEvent = Components.GtkWorkarounds.GetCurrentEventHandle();
-                    Gtk.Drag.Begin(widget, targets, Gdk.DragAction.Copy | Gdk.DragAction.Move, 1, new Gdk.Event(currentEvent));
-
-                    // gtk_drag_begin does not store the event, so we're okay
-                    //Components.GtkWorkarounds.FreeEvent(currentEvent);
+                Gtk.Drag.SourceUnset (widget);
+                if (selectedNode is IDragDataToolboxNode node) {
+                    foreach (var format in node.Formats) {
+                        targets.Add (format, 0, 0);
+                    }
                 }
+                // Gtk.Application.CurrentEvent and other copied gdk_events seem to have a problem
+                // when used as they use gdk_event_copy which seems to crash on de-allocating the private slice.
+                IntPtr currentEvent = Components.GtkWorkarounds.GetCurrentEventHandle ();
+                Gtk.Drag.Begin (widget, targets, Gdk.DragAction.Copy | Gdk.DragAction.Move, 1, new Gdk.Event (currentEvent, false));
+
+				// gtk_drag_begin does not store the event, so we're okay
+				Components.GtkWorkarounds.FreeEvent (currentEvent);
             };
 
             widget.ShowAll();
-
 
             if (IdeApp.Workbench != null)
             {
@@ -122,6 +124,8 @@ namespace MonoDevelop.Figma
                 onActiveDocChanged(null, null);
             }
         }
+
+        TextToolboxNode selectedNode;
 
         private void Container_PadShown(object sender, EventArgs e)
         {
@@ -145,7 +149,6 @@ namespace MonoDevelop.Figma
 
         IToolboxConsumer CurrentConsumer;
 
-        Gtk.TargetList targets = new Gtk.TargetList();
         bool isDragging = false;
 
         public override void Dispose()
