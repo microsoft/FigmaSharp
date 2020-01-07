@@ -1,22 +1,27 @@
 language: csharp
+mono: beta
 os: osx
 sudo: required
 
 before_install:
-  - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg
+  - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-6.8.3.0.pkg
   - sudo installer -pkg xamarin.mac*.pkg -target /
   - git submodule update --init --recursive
 
 script:
-  - msbuild  samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /t:restore -v:diag
-  - ls -Rl
-  - zip -r FigmaSharpApp.zip bin/Release/FigmaSharpApp.app
+  - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
+
+before_deploy:
+  - cd samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release
+  - zip --recurse-paths FigmaSharpApp-${TRAVIS_COMMIT}.zip FigmaSharpApp.app
+  - mv FigmaSharpApp-${TRAVIS_COMMIT}.zip ${TRAVIS_BUILD_DIR}
 
 deploy:
   provider: releases
   on:
     repo: hbons/FigmaSharp
-  file: FigmaSharpApp.zip
+  file: ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
+  prerelease: true
   overwrite: true
   skip_cleanup: true
   api_key:
