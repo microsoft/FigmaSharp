@@ -4,23 +4,29 @@ os: osx
 sudo: required
 
 before_install:
-  - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-6.8.3.0.pkg
-  - sudo installer -pkg xamarin.mac*.pkg -target /
   - git submodule update --init --recursive
+  - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-6.8.3.0.pkg
+  - wget https://download.visualstudio.microsoft.com/download/pr/2aa9c320-b801-4fcb-af34-b01feb48f61d/2ff54bbeed83c42a0dc2c9fb9f3cc13a/visualstudioformac-8.4.0.2657.dmg
+  - sudo installer -pkg xamarin.mac*.pkg -target /
+  - hdiutil attach visualstudioformac-*.dmg
+  - cp -R /Volumes/Visual\ Studio/Visual\ Studio.app /Applications/
 
 script:
   - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
+  - msbuild FigmaSharp.Tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
 
 before_deploy:
-  - cd samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release
-  - zip --recurse-paths FigmaSharpApp-${TRAVIS_COMMIT}.zip FigmaSharpApp.app
-  - mv FigmaSharpApp-${TRAVIS_COMMIT}.zip ${TRAVIS_BUILD_DIR}
+  - cd ${TRAVIS_BUILD_DIR}/samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release
+  - zip --recurse-paths FigmaSharpApp-${TRAVIS_COMMIT}.zip FigmaSharpApp.app && mv FigmaSharpApp-${TRAVIS_COMMIT}.zip ${TRAVIS_BUILD_DIR}
+  - mv ${TRAVIS_BUILD_DIR}/FigmaSharp.Tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
 
 deploy:
   provider: releases
   on:
     repo: hbons/FigmaSharp
-  file: ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
+  file:
+    - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
+    - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
   prerelease: true
   overwrite: true
   skip_cleanup: true
