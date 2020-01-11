@@ -28,7 +28,7 @@
     <UseSGen>true</UseSGen>
     <UseRefCounting>true</UseRefCounting>
     <HttpClientHandler></HttpClientHandler>
-    <LinkMode></LinkMode>
+    <LinkMode>SdkOnly</LinkMode>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
