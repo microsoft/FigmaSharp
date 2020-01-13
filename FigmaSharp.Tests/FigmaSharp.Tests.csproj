@@ -32,8 +32,13 @@
         </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModulesTests_iOS.cs" />
-    <Compile Include="ModulesTests_Cocoa.cs" />
+    <Compile Include="CodeGeneratorTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
