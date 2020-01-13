@@ -13,7 +13,7 @@ namespace FigmaDocumentExporter.Shell
 			const string outputFile = "downloaded.figma";
 			Console.WriteLine ();
 			Console.ForegroundColor = ConsoleColor.DarkCyan;
-			Console.WriteLine ("Figma Remote File Importer");
+			Console.WriteLine ("Figma Remote File Exporter");
 			Console.WriteLine ("--------------------------");
 			Console.WriteLine ();
 
