@@ -70,6 +70,7 @@ namespace FigmaSharp
 			AppendLine (sb, $"public partial class {className}{baseClassName}");
 			OpenBracket (sb);
 		}
+
 		protected void ClosePublicPartialClass (StringBuilder sb) => CloseBracket (sb);
 
 		protected override string OnGenerate ()
@@ -93,9 +94,9 @@ namespace FigmaSharp
 		public List<string> Usings { get; } = new List<string> ();
 		public List<string> Comments { get; } = new List<string> ();
 
-		public FigmaManifest Manifest { get; } = new FigmaManifest ();
+		public FigmaManifest Manifest { get; set; }
 
-		public bool ShowManifestComments { get; set; } = true;
+		public bool ShowManifestComments => Manifest != null;
 
 		int CurrentTabIndex = 0;
 
