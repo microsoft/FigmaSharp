@@ -32,12 +32,12 @@ namespace FigmaSharp.Tests
         public void PartialDesignerClassGenerationTest ()
         {
             var codeGenerator = new FigmaPartialDesignerClass ();
-            codeGenerator.ShowManifestComments = true;
-
-            codeGenerator.Manifest.Date = DateTime.Now;
-            codeGenerator.Manifest.DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/";
-			codeGenerator.Manifest.DocumentVersion = 0.1f;
-			codeGenerator.Manifest.RemoteApiVersion = "1.1";
+            codeGenerator.Manifest = new FigmaManifest () {
+                Date = DateTime.Now,
+                DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
+                DocumentVersion = 0.1f,
+                RemoteApiVersion = "1.1"
+            };
 
             codeGenerator.Usings.Add ("AppKit"); 
             codeGenerator.ClassName = "MyGeneratedCustomView";
