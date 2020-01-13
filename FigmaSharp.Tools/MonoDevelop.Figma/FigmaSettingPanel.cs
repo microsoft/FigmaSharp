@@ -43,8 +43,11 @@ namespace MonoDevelop.Figma
             {
                 FigmaSharp.AppContext.Current.SetAccessToken(value);
                 PropertyService.Set(FigmaSetting, value);
-            }
+				TokenChanged?.Invoke (null, EventArgs.Empty);
+			}
 		}
+
+		public static event EventHandler TokenChanged;
 	}
 
 	class FigmaOptionsWidget : VBox

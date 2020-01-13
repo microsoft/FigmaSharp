@@ -44,7 +44,8 @@ using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {
-    class FigmaDragAndDropContent : NSView
+
+	class FigmaDragAndDropContent : NSView
     {
         public event EventHandler<string> SelectCode;
         public event EventHandler DragBegin;
@@ -68,7 +69,7 @@ namespace MonoDevelop.Figma
 
 		NSScrollView scrollView;
         NSStackView toolbarBox;
-
+        NSPopUpButton exportButton;
         List<(string, string)> Options = new List<(string, string)>()
         {
             ("Cocoa", ModuleService.Platform.MAC), 
@@ -95,7 +96,7 @@ namespace MonoDevelop.Figma
 
             openFileButton.Activated += openFileButton_Activated;
 
-            NSPopUpButton exportButton = new NSPopUpButton();
+            exportButton = new NSPopUpButton();
 
             var icon = (NSImage) FigmaSharp.AppContext.Current.GetImageFromManifest(this.GetType().Assembly, "pe-path-reveal@2x").NativeObject;
             openFileButton.Image = icon;
@@ -147,8 +148,23 @@ namespace MonoDevelop.Figma
                 SetCodeRenderer(item.Item2);
             };
 
-            RefreshUIStates(); 
+            RefreshEnabledStatement ();
+
+            FigmaRuntime.TokenChanged += FigmaRuntime_TokenChanged;
         }
+
+		protected override void Dispose (bool disposing)
+		{
+            FigmaRuntime.TokenChanged -= FigmaRuntime_TokenChanged;
+            base.Dispose (disposing);
+		}
+
+		private void FigmaRuntime_TokenChanged (object sender, EventArgs e)
+		{
+            RefreshEnabledStatement ();
+        }
+
+		internal void RefreshEnabledStatement () => exportButton.Enabled = fileTextField.Enabled = openFileButton.Enabled = FigmaSharp.AppContext.Current.IsConfigured;
 
         void SetCodeRenderer (string platform)
         {
@@ -184,10 +200,6 @@ namespace MonoDevelop.Figma
         FigmaCodeRendererService codeRenderer;
         FigmaNodeView data;
 
-        public void RefreshUIStates ()
-        {
-            fileTextField.Enabled = openFileButton.Enabled = FigmaSharp.AppContext.Current.IsConfigured;
-        }
 
         void openFileButton_Activated(object sender, EventArgs e)
         {

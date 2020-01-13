@@ -129,7 +129,7 @@ namespace MonoDevelop.Figma
 
         private void Container_PadShown(object sender, EventArgs e)
         {
-            dragPad.RefreshUIStates();
+            dragPad.RefreshEnabledStatement ();
             dragPad.Hidden = false;
         }
         private void Container_PadHidden(object sender, EventArgs e)
