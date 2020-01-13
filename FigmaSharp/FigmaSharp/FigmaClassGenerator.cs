@@ -93,6 +93,10 @@ namespace FigmaSharp
 		public List<string> Usings { get; } = new List<string> ();
 		public List<string> Comments { get; } = new List<string> ();
 
+		public FigmaManifest Manifest { get; } = new FigmaManifest ();
+
+		public bool ShowManifestComments { get; set; } = true;
+
 		int CurrentTabIndex = 0;
 
 		protected void RemoveTabLevel () => CurrentTabIndex--;
@@ -100,6 +104,10 @@ namespace FigmaSharp
 		protected void GenerateComments (StringBuilder builder)
 		{
 			builder.AppendLine ("/*");
+			if (ShowManifestComments) {
+				Manifest.ToComment (builder);
+				builder.AppendLine ("* ");
+			}
 			foreach (var current in Comments) {
 				builder.AppendLine ($"* {current}");
 			}

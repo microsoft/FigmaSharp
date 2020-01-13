@@ -2,6 +2,7 @@
 using NUnit;
 using NUnit.Framework;
 using FigmaSharp;
+using System.Text;
 
 namespace FigmaSharp.Tests
 {
@@ -9,9 +10,35 @@ namespace FigmaSharp.Tests
 	public class CodeGeneratorTests
 	{
         [Test]
+        public void ManifestTest ()
+        {
+            var DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/";
+            var RemoteApiVersion = "1.1";
+            var DocumentVersion = 0.3f;
+            var dateNow = DateTime.Now;
+
+            var manifest = new FigmaManifest () {
+                Date = dateNow,
+                DocumentUrl = DocumentUrl,
+                DocumentVersion = DocumentVersion,
+                RemoteApiVersion = RemoteApiVersion,
+            };
+            var builder = new StringBuilder ();
+            manifest.ToComment (builder);
+            Assert.IsNotNullOrEmpty (builder.ToString ());
+        }
+
+        [Test]
         public void PartialDesignerClassGenerationTest ()
         {
             var codeGenerator = new FigmaPartialDesignerClass ();
+            codeGenerator.ShowManifestComments = true;
+
+            codeGenerator.Manifest.Date = DateTime.Now;
+            codeGenerator.Manifest.DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/";
+			codeGenerator.Manifest.DocumentVersion = 0.1f;
+			codeGenerator.Manifest.RemoteApiVersion = "1.1";
+
             codeGenerator.Usings.Add ("AppKit"); 
             codeGenerator.ClassName = "MyGeneratedCustomView";
             codeGenerator.Namespace = "LocalFile.Cocoa";
