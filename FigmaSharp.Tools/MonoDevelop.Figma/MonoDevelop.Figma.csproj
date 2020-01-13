@@ -23,6 +23,7 @@
         <None Remove="Resources\pe-path-reveal%402x.png" />
         <None Remove="Resources\pe-path-reveal~dark.png" />
         <None Remove="Resources\pe-path-reveal~dark%402x.png" />
+<<<<<<< HEAD
         <None Remove="Resources\figma-frame~sel.png" />
         <None Remove="Resources\figma-slice~sel.png" />
         <None Remove="Resources\figma-rectangle~sel.png" />
@@ -103,12 +104,16 @@
         <None Remove="Resources\vs-prefs-figma.png" />
         <None Remove="Resources\pe-path-reveal~dark%402x.png" />
         <None Remove="Resources\pe-path-reveal%402x.png" />
+=======
+        <None Remove="AddFigmaDocument.figma" />
+>>>>>>> Adds a command to open Bundle tool
       </ItemGroup>
       <ItemGroup>
         <EmbeddedResource Include="Resources\pe-path-reveal.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal%402x.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal~dark.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
+<<<<<<< HEAD
         <EmbeddedResource Include="Resources\figma-frame~sel.png" />
         <EmbeddedResource Include="Resources\figma-slice~sel.png" />
         <EmbeddedResource Include="Resources\figma-rectangle~sel.png" />
@@ -189,6 +194,9 @@
         <EmbeddedResource Include="Resources\vs-prefs-figma.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
         <EmbeddedResource Include="Resources\pe-path-reveal%402x.png" />
+=======
+        <EmbeddedResource Include="AddFigmaDocument.figma" />
+>>>>>>> Adds a command to open Bundle tool
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />

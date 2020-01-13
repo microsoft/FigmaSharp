@@ -18,6 +18,17 @@
             <Class class = "MonoDevelop.Figma.FigmaPropertyProvider"/>
     </Extension>
     
+    <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad">
+        <CommandItem id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler" />
+    </Extension>
+    
+    <Extension path = "/MonoDevelop/Ide/Commands">
+        <Command id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+            _label = "Generate Figma Bundle"
+            defaultHandler = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+            _description = "Generates a figma bundle based in remote id"/>
+    </Extension>
+    
     <Extension path = "/MonoDevelop/Ide/Pads">
         <Pad id = "MonoDevelop.Figma.FigmaDragAndDropPad"
             class = "MonoDevelop.Figma.FigmaDragAndDropPad"
