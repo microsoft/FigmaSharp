@@ -59,5 +59,16 @@ namespace FigmaSharp
 
 			builder.AppendLine ($"{comment} {GetManifestDescription (nameof (ApiVersion)).Description}: {ApiVersion}");
 		}
+
+		public static FigmaManifest FromFilePath (string filePath)
+		{
+			return JsonConvert.DeserializeObject<FigmaManifest> (File.ReadAllText (filePath));
+		}
+
+		public void Save (string filePath)
+		{
+			File.WriteAllText (filePath, JsonConvert.SerializeObject (this));
+		}
+
 	}
 }

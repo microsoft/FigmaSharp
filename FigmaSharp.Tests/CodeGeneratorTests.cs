@@ -26,6 +26,23 @@ namespace FigmaSharp.Tests
             var builder = new StringBuilder ();
             manifest.ToComment (builder);
             Assert.IsNotNullOrEmpty (builder.ToString ());
+
+            var tempDirectory = Path.GetTempPath ();
+            var file = Path.Combine (tempDirectory, "manifest");
+
+            if (File.Exists (file))
+                File.Delete (file);
+
+            manifest.Save (file);
+
+			var copy = FigmaManifest.FromFilePath (file);
+            Assert.AreEqual (copy.DocumentVersion, manifest.DocumentVersion);
+            Assert.AreEqual (copy.Date, manifest.Date);
+            Assert.AreEqual (copy.DocumentUrl, manifest.DocumentUrl);
+            Assert.AreEqual (copy.RemoteApiVersion, manifest.RemoteApiVersion);
+
+            if (File.Exists (file))
+                File.Delete (file);
         }
 
         [Test]
