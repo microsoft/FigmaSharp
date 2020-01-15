@@ -34,6 +34,7 @@ using System.Linq;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
+using System.Text;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -50,7 +51,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var button = new RadioBox() { Text = "" };
 			var view = (NSButton)button.NativeObject;
-            //view.BezelStyle = NSBezelStyle.Rounded;
 
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
@@ -101,7 +101,65 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
-            return string.Empty;
+            var figmaInstance = (FigmaInstance)currentNode;
+
+            var builder = new StringBuilder ();
+            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+            builder.AppendLine ($"var {name} = new {typeof (NSButton).FullName}();");
+
+            builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
+            builder.AppendLine (string.Format ("{0}.SetButtonType ({1});", name, NSButtonType.Radio.GetFullName ()));
+            builder.Configure (name, currentNode);
+
+            var controlType = figmaInstance.ToControlType ();
+            switch (controlType) {
+                case NativeControlType.ButtonLarge:
+                case NativeControlType.ButtonLargeDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    break;
+                case NativeControlType.ButtonStandard:
+                case NativeControlType.ButtonStandardDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    break;
+                case NativeControlType.ButtonSmall:
+                case NativeControlType.ButtonSmallDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                    break;
+            }
+
+			var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
+
+            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label?.characters ?? ""));
+
+            //first figma 
+            var group = figmaInstance.children
+                .OfType<FigmaGroup> ()
+                .FirstOrDefault (s => s.visible);
+
+            if (group != null) {
+                if (group.name == "On") {
+                    //button.State = value ? NSCellStateValue.On : NSCellStateValue.Off
+                    builder.AppendLine (string.Format ("{0}.State = \"{1}\";", name, NSCellStateValue.On.GetFullName ()));
+                }
+
+                if (group.name == "Disabled") {
+                    builder.AppendLine (string.Format ("{0}.Enabled = {1};", name, false));
+                }
+            }
+
+            if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+                builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+            }
+
+            //if (currentNode is IFigmaDocumentContainer instance) {
+            //    var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
+            //    if (figmaText != null) {
+            //        builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
+            //        builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, figmaText.characters));
+            //        //button.Font = figmaText.style.ToNSFont();
+            //    }
+            //}
+            return builder.ToString ();
         }
     }
 }
