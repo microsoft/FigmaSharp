@@ -26,28 +26,36 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Linq;
+
 namespace FigmaSharp.NativeControls.Cocoa
 {
 	public static class Resources
 	{
+		static FigmaViewConverter[] allConverters;
 		static FigmaViewConverter[] converters;
 
-		public static FigmaViewConverter[] GetConverters ()
+		public static FigmaViewConverter[] GetConverters (bool includeAll = true)
 		{
 			if (converters == null) {
-				converters = new FigmaViewConverter[]
-				{
-                    new CheckConverter (),
-                    new ComboBoxConverter (),
-                    new PopUpButtonConverter (),
-                    new RadioConverter (),
+				converters = new FigmaViewConverter[] {
+					new CheckConverter (),
+					new ComboBoxConverter (),
+					new PopUpButtonConverter (),
+					new RadioConverter (),
 					new ButtonConverter (),
 					new TextFieldConverter (),
-                    //new WindowConverter ()
 				};
 			}
 
-			return converters;
+			if (includeAll) {
+				if (allConverters == null) {
+					allConverters = AppContext.Current.GetFigmaConverters ().Concat (converters).ToArray ();
+				}
+				return allConverters;
+			} else {
+				return converters;
+			}
 		}
 	}
 }

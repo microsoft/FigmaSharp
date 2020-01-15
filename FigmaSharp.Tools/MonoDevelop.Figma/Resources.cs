@@ -34,17 +34,6 @@ namespace MonoDevelop.Figma
 {
     static class Resources
     {
-        static FigmaSharp.FigmaViewConverter[] figmaViewConverters;
-        public static FigmaSharp.FigmaViewConverter[] DefaultConverters
-		{
-			get {
-                if (figmaViewConverters == null) {
-                    figmaViewConverters = FigmaSharp.AppContext.Current.GetFigmaConverters ().Concat (FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ()).ToArray ();
-                }
-                return figmaViewConverters;
-            }
-        }
-
         public static void Init ()
         {
             var userDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
