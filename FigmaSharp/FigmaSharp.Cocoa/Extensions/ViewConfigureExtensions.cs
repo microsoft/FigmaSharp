@@ -11,6 +11,11 @@ namespace FigmaSharp.Cocoa
 {
     public static class ViewConfigureExtensions
     {
+        public static string GetFullName (this Enum myEnum)
+        {
+            return string.Format ("{0}.{1}", myEnum.GetType ().Name, myEnum.ToString ());
+        }
+
         public static void Configure(this NSView view, FigmaFrameEntity child)
         {
             Configure(view, (FigmaNode)child);
