@@ -124,5 +124,8 @@
       <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="FigmaSharpApp.icns" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
