@@ -28,14 +28,22 @@
 	<string>Main</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-    		<dict>
-        		<key>CFBundleURLName</key>
-        		<string>FigmaSharp Preview</string>
-        		<key>CFBundleURLSchemes</key>
-        		<array>
-        			<string>figma-sharp:</string>
-        		</array>
-    		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>FigmaSharp Preview</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>figma-sharp:</string>
+			</array>
+			<key>CFBundleURLIconFile</key>
+			<string>FigmaSharpApp</string>
+		</dict>
 	</array>
+	<key></key>
+	<string></string>
+	<key>Icon</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string>FigmaSharpApp.icns</string>
 </dict>
 </plist>
