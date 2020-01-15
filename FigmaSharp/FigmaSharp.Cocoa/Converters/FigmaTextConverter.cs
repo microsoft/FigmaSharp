@@ -58,13 +58,8 @@ namespace FigmaSharp.Cocoa.Converters
         {
             var figmaText = ((FigmaText)currentNode);
             StringBuilder builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine(string.Format ("var {0} = {1};", name, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
-
-            var nsFont = figmaText.style.ToNSFont();
-            builder.AppendLine(string.Format("{0}.Font = {1};", name, figmaText.style.ToNSFontDesignerString()));
-
-            builder.Configure(name, (FigmaText)currentNode);
+            builder.AppendLine (string.Format ("var {0} = {1};", Resources.Ids.Conversion.NameIdentifier, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
+            builder.Configure(Resources.Ids.Conversion.NameIdentifier, (FigmaText)currentNode);
             return builder.ToString();
         }
     }

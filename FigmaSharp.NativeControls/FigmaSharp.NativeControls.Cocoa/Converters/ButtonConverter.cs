@@ -111,16 +111,15 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             var builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine($"var {name} = new {nameof(NSButton)}();");
-            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.ToString ()));
-            builder.Configure(name, currentNode);
+            builder.AppendLine($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {nameof(NSButton)}();");
+            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, NSBezelStyle.Rounded.ToString ()));
+            builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
 
 			if (currentNode is IFigmaDocumentContainer instance) {
 				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
 				if (figmaText != null) {
-					builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
-					builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, figmaText.characters));
+					builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, figmaText.opacity.ToDesignerString ()));
+					builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, figmaText.characters));
 					//button.Font = figmaText.style.ToNSFont();
 				}
 			}

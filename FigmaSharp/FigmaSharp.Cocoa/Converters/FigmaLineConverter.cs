@@ -50,10 +50,9 @@ namespace FigmaSharp.Cocoa.Converters
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine($"var {name} = new {nameof(NSView)}();");
+            builder.AppendLine($"var {Resources.Ids.Conversion.NameIdentifier} = new {nameof(NSView)}();");
 
-            builder.Configure(name, (FigmaLine)currentNode);
+            builder.Configure(Resources.Ids.Conversion.NameIdentifier, (FigmaLine)currentNode);
             return builder.ToString();
         }
     }

@@ -86,15 +86,14 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
 			StringBuilder builder = new StringBuilder ();
-			var name = "[NAME]";
-			builder.AppendLine ($"var {name} = new {nameof (NSTextField)}();");
+			builder.AppendLine ($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {nameof (NSTextField)}();");
 			if (currentNode is IFigmaDocumentContainer container) 
 			{
 				var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
 	   .FirstOrDefault ();
-				builder.AppendLine (string.Format ("{0}.StringValue = \"{1}\";", name, figmaText.characters));
+				builder.AppendLine (string.Format ("{0}.StringValue = \"{1}\";", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, figmaText.characters));
 			}
-            builder.Configure(name, currentNode);
+            builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
             return builder.ToString();
         }
     }
