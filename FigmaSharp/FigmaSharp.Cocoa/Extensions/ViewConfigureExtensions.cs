@@ -31,7 +31,7 @@ namespace FigmaSharp.Cocoa
             {
                 builder.AppendLine(string.Format("{0}.SetFrameSize(new {1}({2}, {3}));", 
                     name, 
-                    nameof (CGSize), 
+                    typeof (CGSize).FullName, 
                     container.absoluteBoundingBox.Width.ToDesignerString (), 
                     container.absoluteBoundingBox.Height.ToDesignerString ()
                     ));
