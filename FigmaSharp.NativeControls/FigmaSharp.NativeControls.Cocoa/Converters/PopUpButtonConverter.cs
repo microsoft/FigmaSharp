@@ -34,6 +34,7 @@ using System.Linq;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
+using System.Text;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -77,7 +78,38 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
-            return string.Empty;
+            var figmaInstance = (FigmaInstance)currentNode;
+
+            var builder = new StringBuilder ();
+            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+            builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
+
+            builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
+
+            builder.Configure (name, currentNode);
+
+            var controlType = figmaInstance.ToControlType ();
+            switch (controlType) {
+                case NativeControlType.PopUpButtonSmall:
+                case NativeControlType.PopUpButtonSmallDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                    break;
+                case NativeControlType.PopUpButtonStandard:
+                case NativeControlType.PopUpButtonStandardDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    break;
+            }
+
+            var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
+            if (label != null) {
+                builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
+            }
+
+            if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+                builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+            }
+
+            return builder.ToString ();
         }
     }
 }
