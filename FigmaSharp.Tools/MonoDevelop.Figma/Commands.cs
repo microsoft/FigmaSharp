@@ -41,11 +41,13 @@ namespace MonoDevelop.Figma.Commands
 {
 	public class FigmaOpenBundleFormCommandHandler : CommandHandler
 	{
+		const string AddFigmaDocumentSource = "AddFigmaDocument.figma";
+
 		protected override void Update (CommandInfo info)
 		{
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is IFolderItem;
 		}
-
+	
 		protected override void Run ()
 		{
 			var window = new Gtk.Dialog ();
@@ -53,11 +55,11 @@ namespace MonoDevelop.Figma.Commands
 			window.SetSizeRequest (200, 300);
 			window.Title = "Figma Bundle Generator";
 
-			var fileName = "AddFigmaDocument.figma";
-			var fileProvider = new FigmaManifestFileProvider (this.GetType ().Assembly, fileName);
-			fileProvider.Load (fileName);
+			var fileProvider = new FigmaManifestFileProvider (this.GetType ().Assembly, AddFigmaDocumentSource);
+			fileProvider.Load (AddFigmaDocumentSource);
 
-			var rendererService = new FigmaViewRendererService (fileProvider, Resources.DefaultConverters);
+			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
+			var rendererService = new FigmaViewRendererService (fileProvider, converters);
 			var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
 			var view = rendererService.RenderByName<IView> ("1.0. Bundle Figma Document", rendererOptions);
 

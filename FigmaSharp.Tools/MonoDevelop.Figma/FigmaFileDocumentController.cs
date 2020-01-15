@@ -115,8 +115,7 @@ namespace MonoDevelop.Figma
                 DocumentTitle = fileDescriptor.FilePath.FileName;
 
                 figmaDelegate = new FigmaDesignerDelegate();
-                var converters = Resources.DefaultConverters;
-
+              
                 string assemblyPath = null;
 				//we need check the current configuration and check for the generated assembly path
 				if (Owner is DotNetProject dotNetProject) {
@@ -134,6 +133,7 @@ namespace MonoDevelop.Figma
   
                 fileProvider = new FigmaManifestFileProvider(assembly, filePath.FileName);
 
+                var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
                 rendererService = new FigmaFileRendererService (fileProvider, converters);
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
 
