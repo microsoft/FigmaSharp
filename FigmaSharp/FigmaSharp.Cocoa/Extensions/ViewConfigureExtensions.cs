@@ -209,6 +209,7 @@ namespace FigmaSharp.Cocoa
 
             var alignment = FigmaExtensions.ToNSTextAlignment(text.style.textAlignHorizontal);
 
+            builder.AppendLine (string.Format ("{0}.Font = {1};", name, text.style.ToNSFontDesignerString ()));
             builder.AppendLine(string.Format("{0}.Alignment = {1};", name, alignment.ToDesignerString ()));
             builder.AppendLine(string.Format("{0}.AlphaValue = {1};", name, text.opacity.ToDesignerString ()));
 
