@@ -224,7 +224,7 @@ namespace FigmaSharp.Cocoa
 
             if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
             {
-                var attributedTextName = "attributedText" + DateTime.Now.ToString ("HHmmss");
+                var attributedTextName = string.Format ("{0}AttributedText", Resources.Ids.Conversion.NameIdentifier);
                 builder.AppendLine(string.Format("var {0} = new NSMutableAttributedString({1}.AttributedStringValue);", attributedTextName, name));
 
                 //var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
