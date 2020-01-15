@@ -179,9 +179,7 @@ namespace MonoDevelop.Figma
 
 		void SetCocoaCodeRenderer ()
 		{
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters ()
-                .Concat (FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ()).ToArray ();
-
+            var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
             var addChildConverter = FigmaSharp.AppContext.Current.GetAddChildConverter ();
             var codePositionConverter = FigmaSharp.AppContext.Current.GetPositionConverter ();
             codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePositionConverter, addChildConverter);

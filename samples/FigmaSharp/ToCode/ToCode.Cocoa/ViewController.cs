@@ -49,10 +49,7 @@ namespace ToCode.Cocoa
 
 			figmaDelegate = new FigmaDesignerDelegate ();
 
-			var converters = FigmaSharp.AppContext.Current.GetFigmaConverters ()
-				.Union (Resources.GetConverters ())
-				.ToArray ();
-
+			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
 			fileProvider = new FigmaRemoteFileProvider ();
 			fileProvider.Load ("Dq1CFm7IrDi3UJC7KJ8zVjOt");
 
