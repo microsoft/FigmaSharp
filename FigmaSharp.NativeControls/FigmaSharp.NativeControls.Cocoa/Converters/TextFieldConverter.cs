@@ -91,7 +91,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 			{
 				var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
 	   .FirstOrDefault ();
-				builder.AppendLine (string.Format ("{0}.StringValue = \"{1}\";", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, figmaText.characters));
+
+                var text = figmaText.characters ?? string.Empty;
+                var isMultiline = text.Contains ('\n');
+
+                builder.AppendLine (string.Format ("{0}.StringValue = {1}\"{2}\";",
+					FigmaSharp.Resources.Ids.Conversion.NameIdentifier,
+                    isMultiline ? "@" : "",
+                     isMultiline ? text.Replace ("\"", "\"\"") : text));
 			}
             builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
             return builder.ToString();

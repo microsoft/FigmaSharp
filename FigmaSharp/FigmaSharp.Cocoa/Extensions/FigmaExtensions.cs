@@ -118,8 +118,13 @@ namespace FigmaSharp.Cocoa
 		public static string CreateLabelToDesignerString(string text, NSTextAlignment alignment = NSTextAlignment.Left)
 		{
 			StringBuilder builder = new StringBuilder();
-			builder.Append(string.Format("new {0}() {{", nameof(NSTextField)));
-			builder.AppendLine(string.Format("    StringValue = \"{0}\",", text));
+
+            text = text ?? string.Empty;
+            var isMultiline = text.Contains ('\n');
+
+            builder.Append(string.Format("new {0}() {{", typeof(NSTextField).FullName));
+			builder.AppendLine(string.Format("    StringValue = {0}\"{1}\",", isMultiline ? "@" : "",
+                 isMultiline ? text.Replace ("\"", "\"\"") : text));
 			builder.AppendLine("Editable = false,");
 			builder.AppendLine("Bordered = false,");
 			builder.AppendLine("Bezeled = false,");
