@@ -18,15 +18,24 @@
             <Class class = "MonoDevelop.Figma.FigmaPropertyProvider"/>
     </Extension>
     
-    <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad">
-        <CommandItem id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler" />
+    <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">
+        <SeparatorItem
+                id="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+        />
+        <CommandItem 
+            id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertbefore="AddSectionEnd"
+        />
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Commands">
-        <Command id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
-            _label = "Generate Figma Bundle"
-            defaultHandler = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
-            _description = "Generates a figma bundle based in remote id"/>
+        <Category _name = "FigmaSharp" id = "FigmaSharp">
+            <Command id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+                _label = "Figma Bundle..."
+                defaultHandler = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+                _description = "Generates a figma bundle based in remote id"/>
+        </Category>    
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Pads">
