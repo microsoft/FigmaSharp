@@ -111,7 +111,7 @@ namespace FigmaSharp.Cocoa
             {
                 return string.Format("{0}.{1}", nameof(NSFontTraitMask), nameof (NSFontTraitMask.Bold));
             }
-            return "default(NSFontTraitMask)";
+            return string.Format ("default({0})", nameof (NSFontTraitMask));
             //return string.Format("{0}.{1}", nameof(NSFontTraitMask), mask.ToString());
         }
 
