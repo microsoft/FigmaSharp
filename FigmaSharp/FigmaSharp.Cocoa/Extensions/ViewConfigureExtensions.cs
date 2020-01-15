@@ -129,10 +129,10 @@ namespace FigmaSharp.Cocoa
         {
             Configure(builder, name, (FigmaNode)child);
 
-            var fills = child.strokes.FirstOrDefault();
-            if (fills != null && child.fills.Length > 0 && fills.visible)
+            var fills = child.fills.FirstOrDefault ();
+            if (fills != null && fills.visible && fills.color != null)
             {
-                builder.AppendLine(string.Format("{0}.Layer.BackgroundColor = {1};", name, child.fills[0].color.ToDesignerString (true)));
+                builder.AppendLine(string.Format("{0}.Layer.BackgroundColor = {1};", name, fills.color.ToDesignerString (true)));
             }
 
             var strokes = child.strokes.FirstOrDefault();
