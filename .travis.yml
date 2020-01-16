@@ -22,8 +22,6 @@ before_deploy:
 
 deploy:
   provider: releases
-  on:
-    repo: hbons/FigmaSharp
   file:
     - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
     - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
@@ -31,5 +29,6 @@ deploy:
   overwrite: true
   skip_cleanup: true
   api_key:
-    secure: Xwiq1cNGcLVU9L6iqO/rDQEXsg8CEkfOprDl0p1J7tRwazSBa4PTzHzqh544XP+CYracB2ICThugbpp55nnDtciu9Dy5LBrGInl1e0THm7U8+XdlDmMQKjzuZ4XM3YQHkFtNdBCpoNZGfz0mz47+pSU4ZQnv+ocd68fEdnlVZXG+TJOBLRtme2bDxh8c+eqQlmDRrIR4gRP5ip1Y4Zyq0XTL893Yl9n1SMJaw4XGYL0j94z7cjze1he5i6smZ+Kj73JQd6xdWYulbftySty3/KBNaGUnMkzXXoCifviFmk1U37pojZW90y25MFHfDV9N8djJHmfkd/vx9uYzFe4uYt3uQDkXkDw2s8yZRFrEXVrjfM6EJ/avRd4LWZvn7LzzpttBvMCLpYeKKNuiOsnwjEogX2aLF3kV/zj+sWuuA63h/osga9qww3o2DVEfsyjvgRXzKgiD8ZdE+zhc2OCNdZyAODVPfpgPjx4HwrXWazhLVZWKNXt0mXbWxMZl7xcuS+IVjt5tu5C2P5/RBRd3ci152y21NRyqy8hwmh6QYbbbKa9pG8nltkuLBP2Q/fdnyKp+aRRM5vq8qjp5pEhp9rVyOpJSIeKWkJyj4DXFUmLSrngq8b/LYphHmYrvwdL6iB1a7PnLCOIxTlkZsufmAoHLV+zE7dKMGdIe/n1imog=
-
+    secure: Q673xZSt9qqDa1EAJDghkiNU/2vl/lHEtrw6zK0Y9s6eMGetVNubzdjW7MsG4cdbR52fzES1PRf421AT5mGAe29/B51uoaxkkDTdVDcMxL2SM/Lw8N1B6WdfpxBPFHVQhF0L1nGufdu8yIuHoFZy1WrqtNpnrlM0TWRdV1xbt3yRXu1GgPFx+FXNN7GcAuXry+PJmz2CqE5OaxN7j8btQ1s/cQGjW4hLxrM5aGad19Xq97uO/kaWN2XmWD5Bv1AWm8ZsSoxyRB5KJAgj6DfwHLkGWDcbHlAyZsZDSYUgkqjXXfXEkzqOuWX1C+sQTN3KjRCjYiadcbvUsoG9Qg4pO8DSehFnxoprsNOfbyZn7BdP+1v+FCBXAO46l/TcrKsbe8RgdKqb/fSiopg+ZbHRkvXzZ+2wtqPROhRzJ43KtalAl4rnYT8cYScBRmL90QUjnos7DwGDQhWvaFhQJj2YzAYazjccz2gCUnD9IWzLkSa5X2PVN+XYJSdaYitsikl3RxbPmk+Aulp3bizpbX07fEc3NZdcWwGr0wZx8YsLQltzPyKZuOcqHp7EDwDqQzMApv+AYwyF4B9mf3vceNJY+/6vGU8J4eQ7L0Lv7W5LeD0T1YPVM7Tk3lEBmzxVJpain566X1p6J+Wbcv5Fqc+1ht/ssPPcFm87fAnGw55PwL4=
+  on:
+    repo: netonjm/FigmaSharp
