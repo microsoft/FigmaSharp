@@ -84,10 +84,7 @@ namespace LocalFile.Cocoa
 		{
 			const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
 
-			var converters = Resources.GetConverters()
-			.Union(FigmaSharp.AppContext.Current.GetFigmaConverters())
-			.ToArray();
-
+			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
 			fileProvider = new FigmaRemoteFileProvider();
 			fileProvider.Load(fileName);
 
@@ -145,10 +142,7 @@ namespace LocalFile.Cocoa
 			mainWindow.BackgroundColor = Color.Transparent;
 
 			//we add the control converters
-			var converters = Resources.GetConverters()
-			.Union(FigmaSharp.AppContext.Current.GetFigmaConverters())
-			.ToArray();
-
+			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
 			fileProvider = new FigmaRemoteFileProvider();
 			fileProvider.Load(document);
 
