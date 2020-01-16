@@ -6,7 +6,7 @@
 
 FigmaSharp converts Figma documents into .NET objects and provides the tools to turn them into working native UI views. Free and Open Source software under the [MIT LICENSE]().
 
-[![Build Status](https://travis-ci.org/hbons/FigmaSharp.svg?branch=master)](https://travis-ci.org/hbons/FigmaSharp)
+[![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
 
 
 # Getting started
