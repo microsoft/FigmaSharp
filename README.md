@@ -1,13 +1,15 @@
 # FigmaSharp
 
-*FigmaSharp converts Figma documents into .NET objects and provides the tools to turn them into working native UI views. Free and Open Source software under the [MIT LICENSE]().*
-
 > Here at Microsoft we ❤️ [Figma](https://www.figma.com/). We use it for everything and anything. So much so, we thought why not use it to actually implement our user interfaces? Sounds crazy enough to work. Let's give this a go.
 
+![Banner for FigmaSharp](.github/banner-light.png)
 
-![Gitter](https://badges.gitter.im/Join%20Chat.svg) [![Build Status](https://netonjm.visualstudio.com/FigmaSharp/_apis/build/status/FigmaSharp?branchName=master)](https://netonjm.visualstudio.com/FigmaSharp/_build/latest?definitionId=3&branchName=master)
+FigmaSharp converts Figma documents into .NET objects and provides the tools to turn them into working native UI views. Free and Open Source software under the [MIT LICENSE]().
 
-## Getting started
+[![Build Status](https://travis-ci.org/hbons/FigmaSharp.svg?branch=master)](https://travis-ci.org/hbons/FigmaSharp)
+
+
+# Getting started
 
 To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**.
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
