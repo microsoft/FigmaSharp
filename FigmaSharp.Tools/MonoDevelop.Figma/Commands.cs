@@ -45,7 +45,11 @@ namespace MonoDevelop.Figma.Commands
 
 		protected override void Update (CommandInfo info)
 		{
-			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is IFolderItem;
+			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
+				(
+					IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
+					&& folder.IsFigmaBundleDirectory ()
+				);
 		}
 	
 		protected override void Run ()
