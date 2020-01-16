@@ -33,13 +33,28 @@ using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
+using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma.Commands
 {
-	public class FigmaOpenBundleFormCommandHandler : CommandHandler
+	class FigmaNewFileViewCommandHandler : CommandHandler
+	{
+		protected override void Update (CommandInfo info)
+		{
+			info.Visible = info.Enabled =IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
+				&& folder.IsDocumentDirectoryBundle ();
+		}
+		protected override void Run ()
+		{
+
+		}
+	}
+
+	class FigmaNewBundlerCommandHandler : CommandHandler
 	{
 		const string AddFigmaDocumentSource = "AddFigmaDocument.figma";
 
