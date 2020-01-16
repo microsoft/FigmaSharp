@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace FigmaSharp
 {
@@ -69,6 +71,5 @@ namespace FigmaSharp
 		{
 			File.WriteAllText (filePath, JsonConvert.SerializeObject (this));
 		}
-
 	}
 }
