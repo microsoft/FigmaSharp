@@ -1,0 +1,35 @@
+language: csharp
+mono: beta
+os: osx
+sudo: required
+
+before_install:
+  - git submodule update --init --recursive
+  - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-6.8.3.0.pkg
+  - wget https://download.visualstudio.microsoft.com/download/pr/2aa9c320-b801-4fcb-af34-b01feb48f61d/2ff54bbeed83c42a0dc2c9fb9f3cc13a/visualstudioformac-8.4.0.2657.dmg
+  - sudo installer -pkg xamarin.mac*.pkg -target /
+  - hdiutil attach visualstudioformac-*.dmg
+  - cp -R /Volumes/Visual\ Studio/Visual\ Studio.app /Applications/
+
+script:
+  - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
+  - msbuild FigmaSharp.Tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
+
+before_deploy:
+  - cd ${TRAVIS_BUILD_DIR}/samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release
+  - zip --recurse-paths FigmaSharpApp-${TRAVIS_COMMIT}.zip FigmaSharpApp.app && mv FigmaSharpApp-${TRAVIS_COMMIT}.zip ${TRAVIS_BUILD_DIR}
+  - mv ${TRAVIS_BUILD_DIR}/FigmaSharp.Tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
+
+deploy:
+  provider: releases
+  on:
+    repo: hbons/FigmaSharp
+  file:
+    - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
+    - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
+  prerelease: true
+  overwrite: true
+  skip_cleanup: true
+  api_key:
+    secure: Xwiq1cNGcLVU9L6iqO/rDQEXsg8CEkfOprDl0p1J7tRwazSBa4PTzHzqh544XP+CYracB2ICThugbpp55nnDtciu9Dy5LBrGInl1e0THm7U8+XdlDmMQKjzuZ4XM3YQHkFtNdBCpoNZGfz0mz47+pSU4ZQnv+ocd68fEdnlVZXG+TJOBLRtme2bDxh8c+eqQlmDRrIR4gRP5ip1Y4Zyq0XTL893Yl9n1SMJaw4XGYL0j94z7cjze1he5i6smZ+Kj73JQd6xdWYulbftySty3/KBNaGUnMkzXXoCifviFmk1U37pojZW90y25MFHfDV9N8djJHmfkd/vx9uYzFe4uYt3uQDkXkDw2s8yZRFrEXVrjfM6EJ/avRd4LWZvn7LzzpttBvMCLpYeKKNuiOsnwjEogX2aLF3kV/zj+sWuuA63h/osga9qww3o2DVEfsyjvgRXzKgiD8ZdE+zhc2OCNdZyAODVPfpgPjx4HwrXWazhLVZWKNXt0mXbWxMZl7xcuS+IVjt5tu5C2P5/RBRd3ci152y21NRyqy8hwmh6QYbbbKa9pG8nltkuLBP2Q/fdnyKp+aRRM5vq8qjp5pEhp9rVyOpJSIeKWkJyj4DXFUmLSrngq8b/LYphHmYrvwdL6iB1a7PnLCOIxTlkZsufmAoHLV+zE7dKMGdIe/n1imog=
+
