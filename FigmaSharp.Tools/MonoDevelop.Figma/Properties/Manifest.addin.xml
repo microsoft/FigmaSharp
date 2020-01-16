@@ -23,8 +23,14 @@
                 id="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
         <CommandItem 
-            id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+            id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
             _label="_Figma Bundle..."
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertbefore="AddSectionEnd"
+        />
+        <CommandItem 
+            id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
+            _label="_Figma View..."
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
             insertbefore="AddSectionEnd"
         />
@@ -32,10 +38,14 @@
     
     <Extension path = "/MonoDevelop/Ide/Commands">
         <Category _name = "FigmaSharp" id = "FigmaSharp">
-            <Command id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+            <Command id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
                 _label = "Figma Bundle"
-                defaultHandler = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+                defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
                 _description = "Generates a figma bundle based in remote id"/>
+            <Command id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
+                _label = "New Figma View"
+                defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
+                _description = "Generates a new figma view in the current bundle"/>
         </Category>    
     </Extension>
     
