@@ -14,6 +14,10 @@
         <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
     
+    <Extension path = "/MonoDevelop/Ide/Pads/ProjectPad">
+        <NodeBuilder class = "MonoDevelop.Figma.CustomFigmaBundlerNodeBuilder"/>
+    </Extension>
+    
      <Extension path = "/MonoDevelop/DesignerSupport/PropertyProviders">
             <Class class = "MonoDevelop.Figma.FigmaPropertyProvider"/>
     </Extension>
