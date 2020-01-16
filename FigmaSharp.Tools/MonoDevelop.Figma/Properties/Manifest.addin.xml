@@ -11,7 +11,7 @@
         </MimeType>
     </Extension>
    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Other">
-        <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
+        <Section id="FigmaSettings" _label="Figma" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
     
      <Extension path = "/MonoDevelop/DesignerSupport/PropertyProviders">
@@ -28,7 +28,7 @@
             defaultPlacement="Right"
             defaultStatus="AutoHide"
             />
-            <Pad id = "MonoDevelop.Figma.PropertyPad"
+        <Pad id = "MonoDevelop.Figma.PropertyPad"
             class = "MonoDevelop.Figma.PropertyPad"
             _label="Figma Properties"
             icon = "md-properties-pad"

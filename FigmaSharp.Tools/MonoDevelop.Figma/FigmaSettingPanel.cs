@@ -62,22 +62,28 @@ namespace MonoDevelop.Figma
 			PackStart (mainVBox);
 
 			var tokenLabel = new Label ();
-			tokenLabel.Text = GettextCatalog.GetString ("Token:");
+			tokenLabel.Text = GettextCatalog.GetString ("Personal Access Token:");
 			mainVBox.PackStart (tokenLabel, false, false, 10);
 			tokenValueEntry = new Entry ();
 			mainVBox.PackStart (tokenValueEntry, false, false, 10);
 
-			tokenValueEntry.WidthRequest = 350;
+			tokenValueEntry.WidthRequest = 300;
             tokenValueEntry.Text = FigmaRuntime.Token;
+			tokenValueEntry.Visibility = false;
 
             tokenValueEntry.Changed += NeedsStoreValue;
 			tokenValueEntry.FocusOutEvent += NeedsStoreValue;
 
-            var refreshLabel = new Label() { Text = GettextCatalog.GetString("Reloads all the converters in the assembly folder") };
-            mainVBox.PackStart(refreshLabel, false, false, 10);
-            reloadButton = new Button() { Label = "Go!" };
-            mainVBox.PackStart(reloadButton, false, false, 10);
+        //    var refreshLabel = new Label() { Text = GettextCatalog.GetString("Reloads all the converters in the assembly folder") };
+         //   mainVBox.PackStart(refreshLabel, false, false, 10);
+         //   reloadButton = new Button() { Label = "Go!" };
+         //   mainVBox.PackStart(reloadButton, false, false, 10);
             reloadButton.Activated += RefresButton_Activated;
+
+			string tokenTip = "Get your token from the Figma app:\n" +
+				"☰  →  Help and Account  →  Personal Access Tokens";
+
+			PackStart(new Label(tokenTip) { Sensitive = false });
 
             ShowAll();
 		}
