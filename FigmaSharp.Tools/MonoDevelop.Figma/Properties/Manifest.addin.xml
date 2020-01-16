@@ -24,6 +24,7 @@
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
+            _label="_Figma Bundle..."
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
             insertbefore="AddSectionEnd"
         />
@@ -32,7 +33,7 @@
     <Extension path = "/MonoDevelop/Ide/Commands">
         <Category _name = "FigmaSharp" id = "FigmaSharp">
             <Command id = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
-                _label = "Figma Bundle..."
+                _label = "Figma Bundle"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaOpenBundleFormCommandHandler"
                 _description = "Generates a figma bundle based in remote id"/>
         </Category>    
