@@ -5,7 +5,7 @@
 > Here at Microsoft we ❤️ [Figma](https://www.figma.com/). We use it for everything and anything. So much so, we thought why not use it to actually implement our user interfaces? Sounds crazy enough to work. Let's give this a go.
 
 
-![Gitter](https://badges.gitter.im/Join%20Chat.svg) [![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp?utm_medium=notification&utm_source=github_status)
+![Gitter](https://badges.gitter.im/Join%20Chat.svg) [![Build Status](https://netonjm.visualstudio.com/FigmaSharp/_apis/build/status/FigmaSharp?branchName=master)](https://netonjm.visualstudio.com/FigmaSharp/_build/latest?definitionId=3&branchName=master)
 
 ## Getting started
 
