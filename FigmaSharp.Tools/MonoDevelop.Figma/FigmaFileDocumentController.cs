@@ -61,7 +61,7 @@ namespace MonoDevelop.Figma
         FileExtension = ".figma",
         CanUseAsDefault = true,
         InsertBefore = "DefaultDisplayBinding")]
-    class FigmaFileDocumentController : FileDocumentController, IOutlinedDocument, ICustomPropertyPadProvider
+    class FigmaFileDocumentController : FileDocumentController, IOutlinedDocument, IPropertyPadProvider
     {
         FigmaDesignerSession session;
         IFigmaDesignerDelegate figmaDelegate;
@@ -72,7 +72,7 @@ namespace MonoDevelop.Figma
         private FilePath filePath;
 
         Gtk.Widget _content;
-        PropertyGrid grid;
+        //PropertyGrid grid;
 
         readonly IScrollView scrollViewWrapper;
 
@@ -83,8 +83,8 @@ namespace MonoDevelop.Figma
 
             _content.ShowAll();
 
-            grid = PropertyPad.Instance.Control;
-            grid.Changed += PropertyPad_Changed;
+            //grid = PropertyPad.Instance.Control;
+            //grid.Changed += PropertyPad_Changed;
         }
 
         void PropertyPad_Changed(object sender, EventArgs e)
@@ -99,7 +99,7 @@ namespace MonoDevelop.Figma
             return Task.FromResult(true);
         }
 
-        FigmaManifestFileProvider fileProvider;
+        FigmaLocalFileProvider fileProvider;
         FigmaFileRendererService rendererService;
         FigmaViewRendererDistributionService distributionService;
 
@@ -116,22 +116,25 @@ namespace MonoDevelop.Figma
 
                 figmaDelegate = new FigmaDesignerDelegate();
               
-                string assemblyPath = null;
-				//we need check the current configuration and check for the generated assembly path
-				if (Owner is DotNetProject dotNetProject) {
-                    var configuration = dotNetProject.GetConfiguration (IdeApp.Workspace.ActiveConfiguration);
-                    assemblyPath = dotNetProject.GetOutputFileName (IdeApp.Workspace.ActiveConfiguration);
-                }
+    //            string assemblyPath = null;
+				////we need check the current configuration and check for the generated assembly path
+				//if (Owner is DotNetProject dotNetProject) {
+    //                var configuration = dotNetProject.GetConfiguration (IdeApp.Workspace.ActiveConfiguration);
+    //                assemblyPath = dotNetProject.GetOutputFileName (IdeApp.Workspace.ActiveConfiguration);
+    //            }
 
-                System.Reflection.Assembly assembly;
-				try {
-                    assembly = File.Exists (assemblyPath) ? System.Reflection.Assembly.LoadFile (assemblyPath) : this.GetType ().Assembly;
-                } catch (Exception ex) {
-                    Console.WriteLine (ex);
-                    assembly = this.GetType ().Assembly;
-                }
-  
-                fileProvider = new FigmaManifestFileProvider(assembly, filePath.FileName);
+                //            System.Reflection.Assembly assembly;
+                //try {
+                //                assembly = File.Exists (assemblyPath) ? System.Reflection.Assembly.LoadFile (assemblyPath) : this.GetType ().Assembly;
+                //            } catch (Exception ex) {
+                //                Console.WriteLine (ex);
+                //                assembly = this.GetType ().Assembly;
+                //            }
+
+                var localPath = Path.Combine (filePath.ParentDirectory.FullPath, "Resources");
+                fileProvider = new FigmaLocalFileProvider (localPath);
+                fileProvider.File = filePath.FullPath;
+
 
                 var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
                 rendererService = new FigmaFileRendererService (fileProvider, converters);
@@ -158,7 +161,7 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(scrollViewWrapper, filePath.FileName, new FigmaViewRendererServiceOptions());
+                session.Reload(scrollViewWrapper, fileProvider.File, new FigmaViewRendererServiceOptions());
             }
             await base.OnInitialize(modelDescriptor, status);
         }
@@ -166,11 +169,12 @@ namespace MonoDevelop.Figma
         void Surface_FocusedViewChanged(object sender, IView e)
         {
             var model = session.GetModel(e);
-            if (outlinePad != null)
-            {
+            if (outlinePad != null)  {
                 outlinePad.Focus(model);
             }
-            PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
+            var currentWrapper = GetWrapper (model);
+            DesignerSupport.DesignerSupport.Service.PropertyPad.SetCurrentObject (model, new object[] { model });
+            //PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
         }
 
         FigmaNodeWrapper GetWrapper(FigmaNode node)
@@ -287,12 +291,16 @@ namespace MonoDevelop.Figma
             session.Reload(scrollViewWrapper, filePath, fileOptions);
             if (outlinePad != null)
             {
-                var selectedView = surface.SelectedView;
-                var selectedModel = session.GetModel(selectedView);
-
                 outlinePad.GenerateTree(session.Response.document, figmaDelegate);
-                outlinePad.Focus(selectedModel);
+                outlinePad.Focus(GetCurrentSelectedNode ());
             }
+        }
+
+		FigmaNode GetCurrentSelectedNode ()
+		{
+            var selectedView = surface.SelectedView;
+            var selectedModel = session.GetModel (selectedView);
+            return selectedModel;
         }
 
         void OutlinePad_RaiseFirstResponder(object sender, FigmaNode e)
@@ -313,23 +321,23 @@ namespace MonoDevelop.Figma
 
         #endregion
 
-        #region ICustomPropertyPadProvider
+        //#region ICustomPropertyPadProvider
 
-        PropertyContentPad propertyPad;
+        //PropertyContentPad propertyPad;
 
-        public Widget GetCustomPropertyWidget()
-        {
-            PropertyPad.Initialize(session);
-            propertyPad = PropertyPad.Instance;
-            return propertyPad.Control;
-        }
+        //public Widget GetCustomPropertyWidget()
+        //{
+        //    PropertyPad.Initialize(session);
+        //    propertyPad = PropertyPad.Instance;
+        //    return propertyPad.Control;
+        //}
 
-        public void DisposeCustomPropertyWidget()
-        {
-            //throw new NotImplementedException();
-        }
+        //public void DisposeCustomPropertyWidget()
+        //{
+        //    //throw new NotImplementedException();
+        //}
 
-        #endregion
+        //#endregion
 
         protected override Control OnGetViewControl(DocumentViewContent view)
         {
@@ -341,5 +349,26 @@ namespace MonoDevelop.Figma
             surface.StopHover();
             base.OnDispose();
         }
-    }
+
+		public object GetActiveComponent ()
+		{
+            return GetCurrentSelectedNode ();
+        }
+
+		public object GetProvider ()
+		{
+            return GetCurrentSelectedNode ();
+        }
+
+		public void OnEndEditing (object obj)
+		{
+			
+		}
+
+		public void OnChanged (object obj)
+		{
+			
+		}
+
+	}
 }
