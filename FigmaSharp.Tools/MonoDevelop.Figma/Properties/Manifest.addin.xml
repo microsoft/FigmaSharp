@@ -63,14 +63,5 @@
             defaultPlacement="Right"
             defaultStatus="AutoHide"
             />
-            <Pad id = "MonoDevelop.Figma.PropertyPad"
-            class = "MonoDevelop.Figma.PropertyPad"
-            _label="Figma Properties"
-            icon = "md-properties-pad"
-            group = "Designer"
-            defaultLayout="*"
-            defaultPlacement="Right"
-            defaultStatus="AutoHide"
-            />
     </Extension>
 </ExtensionModel>

@@ -100,7 +100,6 @@ namespace MonoDevelop.Figma.Commands
 		protected override void Run ()
 		{
 			Resources.Init ();
-			PropertyPad.Instance.Initialize ();
 			FigmaApplication.Init (FigmaRuntime.Token);
 		}
 	}
