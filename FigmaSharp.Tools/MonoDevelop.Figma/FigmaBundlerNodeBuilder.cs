@@ -7,6 +7,9 @@ namespace MonoDevelop.Figma
 {
 	public class CustomFigmaBundlerNodeBuilder : NodeBuilderExtension
 	{
+		const string BundlesFolderLabel = "Bundles";
+		const string FigmaFolderLabel = "Figma";
+
 		public override bool CanBuildNode (Type dataType)
 		{
 			return typeof (ProjectFolder).IsAssignableFrom (dataType);
@@ -36,16 +39,20 @@ namespace MonoDevelop.Figma
 		{
 			if (dataObject is ProjectFolder pr) {
 				if (pr.IsFigmaBundleDirectory ()) {
-					nodeInfo.Label = "Figma Bundles";
-					nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
-					nodeInfo.ClosedIcon = Context.GetIcon (Stock.AssetsFolder);
+					nodeInfo.Label = BundlesFolderLabel;
+					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
 					return;
 				}
 
 				if (pr.IsDocumentDirectoryBundle ()) {
 					nodeInfo.Label = pr.Path.FileNameWithoutExtension;
-					nodeInfo.Icon = Context.GetIcon ("md-reference-package");
-					nodeInfo.ClosedIcon = Context.GetIcon ("md-reference-package");
+					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.Package);
+					return;
+				}
+
+				if (pr.IsFigmaDirectory ()) {
+					nodeInfo.Label = FigmaFolderLabel;
+					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
 					return;
 				}
 			}
