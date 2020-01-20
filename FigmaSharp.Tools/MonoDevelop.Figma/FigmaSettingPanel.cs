@@ -65,7 +65,7 @@ namespace MonoDevelop.Figma
 			tokenLabel.Text = GettextCatalog.GetString ("Personal Access Token:");
 			mainVBox.PackStart (tokenLabel, false, false, 6);
 			tokenValueEntry = new Entry ();
-			mainVBox.PackStart (tokenValueEntry, false, false, 10);
+			mainVBox.PackStart (tokenValueEntry, false, false, 6);
 
 			tokenValueEntry.WidthRequest = 350;
             tokenValueEntry.Text = FigmaRuntime.Token;
@@ -74,10 +74,10 @@ namespace MonoDevelop.Figma
             tokenValueEntry.Changed += NeedsStoreValue;
 			tokenValueEntry.FocusOutEvent += NeedsStoreValue;
 
-            var refreshLabel = new Label() { Text = GettextCatalog.GetString("Reloads all the converters in the assembly folder") };
-            mainVBox.PackStart(refreshLabel, false, false, 10);
-            reloadButton = new Button() { Label = "Go!" };
-            mainVBox.PackStart(reloadButton, false, false, 10);
+            var refreshLabel = new Label() { Text = GettextCatalog.GetString("Converters in assembly folder") };
+            mainVBox.PackStart(refreshLabel, false, false, 6);
+            reloadButton = new Button() { Label = "Reload Converters" };
+            mainVBox.PackStart(reloadButton, false, false, 6);
             reloadButton.Activated += RefresButton_Activated;
 
             ShowAll();
