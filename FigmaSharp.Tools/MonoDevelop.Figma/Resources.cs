@@ -50,7 +50,12 @@ namespace MonoDevelop.Figma
             ModuleService.LoadModules(Directories.MonoDevelopExtensions);
         }
 
-        class Directories
+        internal static class Icons
+        {
+            public const string FigmaPad = "vs-pad-figma";
+        }
+
+        internal class Directories
         {
             static Directories()
             {
