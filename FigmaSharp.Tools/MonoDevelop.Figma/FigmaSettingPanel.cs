@@ -69,6 +69,7 @@ namespace MonoDevelop.Figma
 
 			tokenValueEntry.WidthRequest = 350;
             tokenValueEntry.Text = FigmaRuntime.Token;
+			tokenValueEntry.Visibility = false;
 
             tokenValueEntry.Changed += NeedsStoreValue;
 			tokenValueEntry.FocusOutEvent += NeedsStoreValue;
