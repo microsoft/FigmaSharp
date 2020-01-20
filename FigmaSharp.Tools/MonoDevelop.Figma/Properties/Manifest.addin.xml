@@ -22,20 +22,44 @@
             <Class class = "MonoDevelop.Figma.FigmaPropertyProvider"/>
     </Extension>
     
-    <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">
+     <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad">
         <SeparatorItem
                 id="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
         <CommandItem 
+            id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
+            _label="Show Remote File"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertbefore="AddSectionEnd"
+        />
+        <CommandItem 
+            id = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"
+            _label="Show Local File"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertbefore="AddSectionEnd"
+        /> 
+    </Extension>
+    
+    <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">
+        <SeparatorItem
+                id="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
+        />
+        <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
             _label="_Figma Bundle..."
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
             insertbefore="AddSectionEnd"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
             _label="_Figma View..."
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
+            insertbefore="AddSectionEnd"
+        />
+        <CommandItem 
+            id = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
+            _label="Empty Figma Manifest..."
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
             insertbefore="AddSectionEnd"
         />
     </Extension>
@@ -50,6 +74,18 @@
                 _label = "New Figma View"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
                 _description = "Generates a new figma view in the current bundle"/>
+            <Command id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
+                _label = "Show Remote File"
+                defaultHandler = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
+                _description = "Opens a web browser with the current remote Figma file"/>
+            <Command id = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"
+                _label = "Show Local File"
+                defaultHandler = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"
+                _description = "Opens the renderer for the generated Figma file"/> 
+            <Command id = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
+                _label = "Empty Figma Manifest"
+                defaultHandler = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
+                _description = "Creates an empty manifest file"/>
         </Category>    
     </Extension>
     

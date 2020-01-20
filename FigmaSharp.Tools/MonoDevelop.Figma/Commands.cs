@@ -35,12 +35,128 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using MonoDevelop.Components.Commands;
+using MonoDevelop.Core;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma.Commands
 {
+	class CreateEmptyManifesCommandHandler : CommandHandler
+	{
+		protected override void Update (CommandInfo info)
+		{
+			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
+					currentFolder.IsDocumentDirectoryBundle () &&
+					!File.Exists (Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName));
+		}
+
+		protected async override void Run ()
+		{
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
+				try {
+					var manifestFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName);
+
+					if (!File.Exists (manifestFilePath)) {
+						var manifest = new FigmaManifest () {
+							ApiVersion = FigmaSharp.AppContext.Current.Version,
+							Date = DateTime.Now
+						};
+						manifest.Save (manifestFilePath);
+						var project = currentFolder.Project;
+						project.AddFile (manifestFilePath);
+						project.NeedsReload = true;
+						await IdeApp.ProjectOperations.SaveAsync (project);
+					}
+				} catch (Exception ex) {
+					LoggingService.LogInternalError (ex);
+				}
+			}
+		}
+	}
+
+	class OpenLocalFigmaFileCommandHandler : CommandHandler
+	{
+		protected override void Update (CommandInfo info)
+		{
+			try {
+				if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
+					currentFolder.IsDocumentDirectoryBundle ()
+					) {
+
+					var manifestFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
+
+					if (File.Exists (manifestFilePath)) {
+						info.Visible = info.Enabled = true;
+						return;
+					}
+				};
+			} catch (Exception ex) {
+				Console.WriteLine (ex);
+			}
+			info.Visible = info.Enabled = false;
+		}
+
+		protected override void Run ()
+		{
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
+				try {
+					var documentFilePath = new FilePath (Path.Combine (currentFolder.Path.FullPath, FigmaBundle.DocumentFileName));
+
+					IdeApp.OpenFiles (new[] { new Ide.Gui.FileOpenInformation (documentFilePath)});
+				} catch (Exception ex) {
+					LoggingService.LogInternalError (ex);
+				}
+			}
+		}
+	}
+
+	class OpenRemoteFigmaFileCommandHandler : CommandHandler
+	{
+		const string figmaUrl = "https://www.figma.com/file/{0}/";
+
+		protected override void Update (CommandInfo info)
+		{
+			try {
+				if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
+					currentFolder.IsDocumentDirectoryBundle ()
+					) {
+
+					var manifestFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName);
+
+					if (!File.Exists (manifestFilePath)) {
+						throw new FileNotFoundException (manifestFilePath);
+					}
+
+					var manifest = FigmaManifest.FromFilePath (manifestFilePath);
+					if (manifest.DocumentUrl != null) {
+						info.Visible = info.Enabled = true;
+						return;
+					}
+				};
+			} catch (Exception ex) {
+				Console.WriteLine (ex);
+			}
+			info.Visible = info.Enabled = false;
+		}
+
+		protected override void Run ()
+		{
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
+			try {
+					var manifestFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName);
+					var manifest = FigmaManifest.FromFilePath (manifestFilePath);
+					if (manifest.DocumentUrl != null) {
+						IdeServices.DesktopService.ShowUrl (string.Format (figmaUrl, manifest.DocumentUrl));
+						return;
+					}
+				} catch (Exception ex) {
+					LoggingService.LogInternalError (ex);
+				}
+			}
+		}
+	}
+
 	class FigmaNewFileViewCommandHandler : CommandHandler
 	{
 		protected override void Update (CommandInfo info)
