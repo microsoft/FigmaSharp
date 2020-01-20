@@ -52,7 +52,7 @@ namespace MonoDevelop.Figma
 
 				if (pr.IsFigmaDirectory ()) {
 					nodeInfo.Label = FigmaFolderLabel;
-					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
+					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Resources.Icons.FigmaPad);
 					return;
 				}
 			}

@@ -64,6 +64,10 @@
         />
     </Extension>
     
+    <Extension path = "/MonoDevelop/Core/StockIcons">
+        <StockIcon stockid = "vs-pad-figma" resource = "vs-pad-figma.png" size = "Menu"/>
+    </Extension>
+    
     <Extension path = "/MonoDevelop/Ide/Commands">
         <Category _name = "FigmaSharp" id = "FigmaSharp">
             <Command id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
