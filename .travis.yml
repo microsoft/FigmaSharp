@@ -1,18 +1,29 @@
+os: osx
 language: csharp
 mono: beta
-os: osx
-sudo: required
 
-before_install:
-  - git submodule update --init --recursive
+env:
+  # NUGET_API_KEY
+  secure: "M8l28+MyYSQtvUE3DiLb+1nBQQ4dUdA5l3s53LUNnMpiy4eYerTs6pYcbH+ZqvsgZbJybP62ThvQ2yhFqzBJ/swnmcqeKDxXaTl1edFdJVSAQ3C3J1UxLbaLbOUz2HO5e9DTnK6pBu9C56WEpf8y0ZwJwPlw08BaM3UWx4Iv2tWSL7A0JUpxCaqzXKpvluonWRSOAJv+0XiQ0aQmRFYj89ACR0ks1CVI3V8zGe255ZjDuQlKEvZt8DdS7d4fkbRbd2EEYh9lQ/Jr9P6n7dslJJzzV+gFGgCjXqVG5GQEGZTFNac13htQsMdqt4s45qxjBmZEmGn30WIMNkqt6LmYD3nccV+5AJvekfcsX+8QfOFTmoxhcKvazSwY7FTRmGrkneLc3a3otcaDUGP+ec/jlXRfZJb+gmZHVCRvP1vIAR+bj3sJJpK4lARVIcZZ9KXJ/Y+IAL5i37jZsT4czah7fN6PwDzYvFxtnSVbc565wo6fsSpCoKxtM85QgBPBfMngXZ5vDEjDvGPpXlvAHLqqND/M7nfxeIcBJYzCFDyIa4tzb11WyishvrgGy1Tc/0nnZd/WSk3EiP/jhXveOpgiWGXwRemXD+DIYI/CJ8j0zdfZL4teSLQIDp8jqH4dWIkKw0WdB9Ztfdtk4qqbPci/11BFxERCQhoGAXjG2rtq5b0="
+
+install:
+  # Install Xamarin.Mac
   - wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-6.8.3.0.pkg
-  - wget https://download.visualstudio.microsoft.com/download/pr/2aa9c320-b801-4fcb-af34-b01feb48f61d/2ff54bbeed83c42a0dc2c9fb9f3cc13a/visualstudioformac-8.4.0.2657.dmg
   - sudo installer -pkg xamarin.mac*.pkg -target /
+
+  # Install Visual Studio for Mac
+  - wget https://download.visualstudio.microsoft.com/download/pr/2aa9c320-b801-4fcb-af34-b01feb48f61d/2ff54bbeed83c42a0dc2c9fb9f3cc13a/visualstudioformac-8.4.0.2657.dmg
   - hdiutil attach visualstudioformac-*.dmg
   - cp -R /Volumes/Visual\ Studio/Visual\ Studio.app /Applications/
 
+before_script:
+  - git submodule update --init --recursive
+
 script:
+  # Build FigmaSharpApp
   - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
+
+  # Build FigmaSharpExtension
   - msbuild FigmaSharp.Tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
 
 before_deploy:
@@ -21,17 +32,23 @@ before_deploy:
   - mv ${TRAVIS_BUILD_DIR}/FigmaSharp.Tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
 
 deploy:
-  provider: releases
-  on:
-    repo: hbons/FigmaSharp
-  file:
-    - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
-    - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
-  prerelease: true
-  overwrite: true
-  skip_cleanup: true
-  api_key:
-    secure: Q673xZSt9qqDa1EAJDghkiNU/2vl/lHEtrw6zK0Y9s6eMGetVNubzdjW7MsG4cdbR52fzES1PRf421AT5mGAe29/B51uoaxkkDTdVDcMxL2SM/Lw8N1B6WdfpxBPFHVQhF0L1nGufdu8yIuHoFZy1WrqtNpnrlM0TWRdV1xbt3yRXu1GgPFx+FXNN7GcAuXry+PJmz2CqE5OaxN7j8btQ1s/cQGjW4hLxrM5aGad19Xq97uO/kaWN2XmWD5Bv1AWm8ZsSoxyRB5KJAgj6DfwHLkGWDcbHlAyZsZDSYUgkqjXXfXEkzqOuWX1C+sQTN3KjRCjYiadcbvUsoG9Qg4pO8DSehFnxoprsNOfbyZn7BdP+1v+FCBXAO46l/TcrKsbe8RgdKqb/fSiopg+ZbHRkvXzZ+2wtqPROhRzJ43KtalAl4rnYT8cYScBRmL90QUjnos7DwGDQhWvaFhQJj2YzAYazjccz2gCUnD9IWzLkSa5X2PVN+XYJSdaYitsikl3RxbPmk+Aulp3bizpbX07fEc3NZdcWwGr0wZx8YsLQltzPyKZuOcqHp7EDwDqQzMApv+AYwyF4B9mf3vceNJY+/6vGU8J4eQ7L0Lv7W5LeD0T1YPVM7Tk3lEBmzxVJpain566X1p6J+Wbcv5Fqc+1ht/ssPPcFm87fAnGw55PwL4=
-  on:
-    repo: netonjm/FigmaSharp
+  # Publish each build to GitHub Releases
+  - provider: releases
+    on:
+      repo: netonjm/FigmaSharp
+    file:
+      - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
+      - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
+    prerelease: true
+    overwrite: true
+    cleanup: false
+    token:
+      secure: Xwiq1cNGcLVU9L6iqO/rDQEXsg8CEkfOprDl0p1J7tRwazSBa4PTzHzqh544XP+CYracB2ICThugbpp55nnDtciu9Dy5LBrGInl1e0THm7U8+XdlDmMQKjzuZ4XM3YQHkFtNdBCpoNZGfz0mz47+pSU4ZQnv+ocd68fEdnlVZXG+TJOBLRtme2bDxh8c+eqQlmDRrIR4gRP5ip1Y4Zyq0XTL893Yl9n1SMJaw4XGYL0j94z7cjze1he5i6smZ+Kj73JQd6xdWYulbftySty3/KBNaGUnMkzXXoCifviFmk1U37pojZW90y25MFHfDV9N8djJHmfkd/vx9uYzFe4uYt3uQDkXkDw2s8yZRFrEXVrjfM6EJ/avRd4LWZvn7LzzpttBvMCLpYeKKNuiOsnwjEogX2aLF3kV/zj+sWuuA63h/osga9qww3o2DVEfsyjvgRXzKgiD8ZdE+zhc2OCNdZyAODVPfpgPjx4HwrXWazhLVZWKNXt0mXbWxMZl7xcuS+IVjt5tu5C2P5/RBRd3ci152y21NRyqy8hwmh6QYbbbKa9pG8nltkuLBP2Q/fdnyKp+aRRM5vq8qjp5pEhp9rVyOpJSIeKWkJyj4DXFUmLSrngq8b/LYphHmYrvwdL6iB1a7PnLCOIxTlkZsufmAoHLV+zE7dKMGdIe/n1imog=
+
+  # Build and publish NuGets on tags
+  - provider: script
+    script: bash ./scripts/ci/publish_nugets.sh
+    on:
+      branch: master
+      tags: true
 
