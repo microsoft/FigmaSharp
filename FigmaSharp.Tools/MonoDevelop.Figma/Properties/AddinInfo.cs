@@ -23,7 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
 using Mono.Addins;
 using Mono.Addins.Description;
 
@@ -33,7 +33,7 @@ using Mono.Addins.Description;
 	Version = "1.3.5"
 )]
 
-[assembly: AddinName ("Figma Tools")]
+[assembly: AddinName ("FigmaSharp")]
 [assembly: AddinCategory ("IDE extensions")]
-[assembly: AddinDescription ("Figma Tools for MonoDevelop/Visual Studio for Mac")]
+[assembly: AddinDescription ("Create apps with Figma")]
 [assembly: AddinAuthor ("Jose Medrano")]
