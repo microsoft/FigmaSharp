@@ -16,6 +16,45 @@ namespace FigmaSharp
 		}
 	}
 
+	public class FigmaBundle
+	{
+		public FigmaManifest Manifest { get; set; }
+
+		internal const string manifestFileName = "manifest.json";
+
+		public void Load (string bundleDirectoryPath)
+		{
+			if (!File.Exists (bundleDirectoryPath)) {
+				throw new DirectoryNotFoundException ("directory doesn't exists");
+			}
+
+			var manifestFullPath = Path.Combine (bundleDirectoryPath, manifestFileName);
+
+			if (!File.Exists (manifestFullPath)) {
+				throw new FileNotFoundException ("manifest doesn't exists");
+			}
+
+			try {
+				Manifest = FigmaManifest.FromFilePath (manifestFullPath);
+
+			} catch (Exception ex) {
+				throw new FileLoadException ("error reading manifest file", ex);
+			}
+		}
+
+		public void Save (string outputDirectoryPath)
+		{
+
+		}
+
+		public static FigmaBundle FromDirectoryPath (string fullPath)
+		{
+			var bundle = new FigmaBundle ();
+			bundle.Load (fullPath);
+			return bundle;
+		}
+	}
+
 	public class FigmaManifest
 	{
 		[ManifestDescription ("Document Url")]
@@ -31,11 +70,7 @@ namespace FigmaSharp
 		public string RemoteApiVersion { get; set; }
 
 		[ManifestDescription ("FigmaSharp Api Version")]
-		public string ApiVersion {
-			get {
-				return System.Diagnostics.FileVersionInfo.GetVersionInfo (this.GetType ().Assembly.Location).FileVersion;
-			}
-		}
+		public string ApiVersion { get; set; }
 
 		ManifestDescription GetManifestDescription (string propertyName)
 		{
@@ -53,8 +88,8 @@ namespace FigmaSharp
 			if (!string.IsNullOrEmpty (ApiVersion))
 				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (DocumentVersion)).Description}: {DocumentVersion}");
 
-			if (Date != default)
-				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (Date)).Description}: {Date.ToString ("MM/dd/yyyy HH:mm:ss")}");
+			//if (Date != default)
+			//	builder.AppendLine ($"{comment} {GetManifestDescription (nameof (Date)).Description}: {Date.ToString ("MM/dd/yyyy HH:mm:ss")}");
 
 			if (!string.IsNullOrEmpty (RemoteApiVersion))
 				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (RemoteApiVersion)).Description}: {RemoteApiVersion}");
