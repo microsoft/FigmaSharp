@@ -20,7 +20,8 @@ namespace FigmaSharp
 	{
 		public FigmaManifest Manifest { get; set; }
 
-		internal const string manifestFileName = "manifest.json";
+		internal const string ManifestFileName = "manifest.json";
+		internal const string DocumentFileName = "document.figma";
 
 		public void Load (string bundleDirectoryPath)
 		{
@@ -28,7 +29,7 @@ namespace FigmaSharp
 				throw new DirectoryNotFoundException ("directory doesn't exists");
 			}
 
-			var manifestFullPath = Path.Combine (bundleDirectoryPath, manifestFileName);
+			var manifestFullPath = Path.Combine (bundleDirectoryPath, ManifestFileName);
 
 			if (!File.Exists (manifestFullPath)) {
 				throw new FileNotFoundException ("manifest doesn't exists");
@@ -88,8 +89,8 @@ namespace FigmaSharp
 			if (!string.IsNullOrEmpty (ApiVersion))
 				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (DocumentVersion)).Description}: {DocumentVersion}");
 
-			//if (Date != default)
-			//	builder.AppendLine ($"{comment} {GetManifestDescription (nameof (Date)).Description}: {Date.ToString ("MM/dd/yyyy HH:mm:ss")}");
+			if (Date != default)
+				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (Date)).Description}: {Date.ToString ("MM/dd/yyyy HH:mm:ss")}");
 
 			if (!string.IsNullOrEmpty (RemoteApiVersion))
 				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (RemoteApiVersion)).Description}: {RemoteApiVersion}");

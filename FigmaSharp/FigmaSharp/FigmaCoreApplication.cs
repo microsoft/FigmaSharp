@@ -46,6 +46,8 @@ namespace FigmaSharp
 
         internal string Token { get; set; }
 
+		public string Version => System.Diagnostics.FileVersionInfo.GetVersionInfo(this.GetType ().Assembly.Location).FileVersion;
+
         AppContext()
         {
 
