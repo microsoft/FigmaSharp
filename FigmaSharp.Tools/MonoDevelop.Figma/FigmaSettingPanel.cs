@@ -62,7 +62,7 @@ namespace MonoDevelop.Figma
 			PackStart (mainVBox);
 
 			var tokenLabel = new Label ();
-			tokenLabel.Text = GettextCatalog.GetString ("Token:");
+			tokenLabel.Text = GettextCatalog.GetString ("Personal Access Token:");
 			mainVBox.PackStart (tokenLabel, false, false, 10);
 			tokenValueEntry = new Entry ();
 			mainVBox.PackStart (tokenValueEntry, false, false, 10);
