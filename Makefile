@@ -4,7 +4,7 @@ ARGS:=/p:Configuration="${CONFIG}" $(ARGS)
 
 all:
 	echo "Building FigmaSharp..."
-	msbuild FigmaSharp.Views.sln $(ARGS)
+	msbuild FigmaSharp.sln $(ARGS)
 
 clean:
 	find . -type d -name bin -exec rm -rf {} \;
@@ -12,10 +12,10 @@ clean:
 	find . -type d -name packages -exec rm -rf {} \;
 
 pack:
-	msbuild FigmaSharp.Views.sln $(ARGS) /p:CreatePackage=true /restore
+	msbuild FigmaSharp.sln $(ARGS) /p:CreatePackage=true /restore
 
 install:
-	msbuild FigmaSharp.Views.sln $(ARGS) /p:InstallAddin=true /restore
+	msbuild FigmaSharp.sln $(ARGS) /p:InstallAddin=true /restore
 
 check-dependencies:
 	#updating the submodules
@@ -28,7 +28,7 @@ check-dependencies:
 
 submodules: nuget-download
 	echo "Restoring FigmaSharp..."
-	msbuild FigmaSharp.Views.sln /t:Restore
+	msbuild FigmaSharp.sln /restore
 
 sdk: nuget-download
 	mono src/.nuget/nuget.exe pack FigmaSharp.nuspec
