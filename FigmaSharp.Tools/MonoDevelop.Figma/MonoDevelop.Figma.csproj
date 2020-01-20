@@ -19,186 +19,6 @@
         <Folder Include="Resources\" />
       </ItemGroup>
       <ItemGroup>
-        <None Remove="Resources\pe-path-reveal.png" />
-        <None Remove="Resources\pe-path-reveal%402x.png" />
-        <None Remove="Resources\pe-path-reveal~dark.png" />
-        <None Remove="Resources\pe-path-reveal~dark%402x.png" />
-<<<<<<< HEAD
-        <None Remove="Resources\figma-frame~sel.png" />
-        <None Remove="Resources\figma-slice~sel.png" />
-        <None Remove="Resources\figma-rectangle~sel.png" />
-        <None Remove="Resources\figma-ellipse~sel.png" />
-        <None Remove="Resources\vs-prefs-figma~sel.png" />
-        <None Remove="Resources\figma-group~sel%402x.png" />
-        <None Remove="Resources\vs-pad-figma~sel%402x.png" />
-        <None Remove="Resources\figma-group~sel.png" />
-        <None Remove="Resources\figma-frame~sel%402x.png" />
-        <None Remove="Resources\figma-image~sel.png" />
-        <None Remove="Resources\figma-polygon~sel.png" />
-        <None Remove="Resources\vs-pad-figma~sel.png" />
-        <None Remove="Resources\figma-rectangle~sel%402x.png" />
-        <None Remove="Resources\vs-prefs-figma~sel%402x.png" />
-        <None Remove="Resources\figma-component~sel%402x.png" />
-        <None Remove="Resources\figma-polygon~sel%402x.png" />
-        <None Remove="Resources\figma-slice~sel%402x.png" />
-        <None Remove="Resources\vs-prefs-figma~dark.png" />
-        <None Remove="Resources\vs-pad-figma~dark.png" />
-        <None Remove="Resources\figma-line~sel%402x.png" />
-        <None Remove="Resources\figma-text~sel%402x.png" />
-        <None Remove="Resources\figma-group~dark%402x.png" />
-        <None Remove="Resources\vs-prefs-figma~dark%402x.png" />
-        <None Remove="Resources\figma-instance~sel.png" />
-        <None Remove="Resources\figma-ellipse~sel%402x.png" />
-        <None Remove="Resources\figma-text~sel.png" />
-        <None Remove="Resources\figma-group~dark.png" />
-        <None Remove="Resources\figma-rectangle~dark%402x.png" />
-        <None Remove="Resources\figma-ellipse~dark.png" />
-        <None Remove="Resources\figma-frame~dark.png" />
-        <None Remove="Resources\figma-instance~sel%402x.png" />
-        <None Remove="Resources\figma-image~dark.png" />
-        <None Remove="Resources\vs-pad-figma~dark%402x.png" />
-        <None Remove="Resources\figma-ellipse~dark%402x.png" />
-        <None Remove="Resources\figma-frame~dark%402x.png" />
-        <None Remove="Resources\figma-polygon~dark.png" />
-        <None Remove="Resources\figma-text~dark.png" />
-        <None Remove="Resources\figma-component~dark.png" />
-        <None Remove="Resources\figma-polygon~dark%402x.png" />
-        <None Remove="Resources\figma-text~dark%402x.png" />
-        <None Remove="Resources\figma-image~dark%402x.png" />
-        <None Remove="Resources\figma-line~sel.png" />
-        <None Remove="Resources\vs-pad-figma.png" />
-        <None Remove="Resources\vs-pad-figma%402x.png" />
-        <None Remove="Resources\figma-line~dark.png" />
-        <None Remove="Resources\figma-instance~dark.png" />
-        <None Remove="Resources\figma-line~dark%402x.png" />
-        <None Remove="Resources\figma-group.png" />
-        <None Remove="Resources\figma-image.png" />
-        <None Remove="Resources\figma-group%402x.png" />
-        <None Remove="Resources\figma-ellipse.png" />
-        <None Remove="Resources\figma-slice~dark.png" />
-        <None Remove="Resources\figma-rectangle%402x.png" />
-        <None Remove="Resources\figma-component.png" />
-        <None Remove="Resources\figma-component~dark%402x.png" />
-        <None Remove="Resources\figma-component%402x.png" />
-        <None Remove="Resources\figma-image~sel%402x.png" />
-        <None Remove="Resources\figma-image%402x.png" />
-        <None Remove="Resources\figma-slice~dark%402x.png" />
-        <None Remove="Resources\figma-frame.png" />
-        <None Remove="Resources\figma-instance~dark%402x.png" />
-        <None Remove="Resources\figma-instance.png" />
-        <None Remove="Resources\figma-text.png" />
-        <None Remove="Resources\figma-rectangle.png" />
-        <None Remove="Resources\figma-frame%402x.png" />
-        <None Remove="Resources\vs-prefs-figma%402x.png" />
-        <None Remove="Resources\figma-ellipse%402x.png" />
-        <None Remove="Resources\figma-rectangle~dark.png" />
-        <None Remove="Resources\figma-polygon%402x.png" />
-        <None Remove="Resources\figma-polygon.png" />
-        <None Remove="Resources\figma-slice%402x.png" />
-        <None Remove="Resources\figma-line.png" />
-        <None Remove="Resources\figma-text%402x.png" />
-        <None Remove="Resources\figma-line%402x.png" />
-        <None Remove="Resources\figma-instance%402x.png" />
-        <None Remove="Resources\figma-slice.png" />
-        <None Remove="Resources\figma-component~sel.png" />
-        <None Remove="Resources\vs-prefs-figma.png" />
-        <None Remove="Resources\pe-path-reveal~dark%402x.png" />
-        <None Remove="Resources\pe-path-reveal%402x.png" />
-=======
-        <None Remove="AddFigmaDocument.figma" />
->>>>>>> Adds a command to open Bundle tool
-      </ItemGroup>
-      <ItemGroup>
-        <EmbeddedResource Include="Resources\pe-path-reveal.png" />
-        <EmbeddedResource Include="Resources\pe-path-reveal%402x.png" />
-        <EmbeddedResource Include="Resources\pe-path-reveal~dark.png" />
-        <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
-<<<<<<< HEAD
-        <EmbeddedResource Include="Resources\figma-frame~sel.png" />
-        <EmbeddedResource Include="Resources\figma-slice~sel.png" />
-        <EmbeddedResource Include="Resources\figma-rectangle~sel.png" />
-        <EmbeddedResource Include="Resources\figma-ellipse~sel.png" />
-        <EmbeddedResource Include="Resources\vs-prefs-figma~sel.png" />
-        <EmbeddedResource Include="Resources\figma-group~sel%402x.png" />
-        <EmbeddedResource Include="Resources\vs-pad-figma~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-group~sel.png" />
-        <EmbeddedResource Include="Resources\figma-frame~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-image~sel.png" />
-        <EmbeddedResource Include="Resources\figma-polygon~sel.png" />
-        <EmbeddedResource Include="Resources\vs-pad-figma~sel.png" />
-        <EmbeddedResource Include="Resources\figma-rectangle~sel%402x.png" />
-        <EmbeddedResource Include="Resources\vs-prefs-figma~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-component~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-polygon~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-slice~sel%402x.png" />
-        <EmbeddedResource Include="Resources\vs-prefs-figma~dark.png" />
-        <EmbeddedResource Include="Resources\vs-pad-figma~dark.png" />
-        <EmbeddedResource Include="Resources\figma-line~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-text~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-group~dark%402x.png" />
-        <EmbeddedResource Include="Resources\vs-prefs-figma~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-instance~sel.png" />
-        <EmbeddedResource Include="Resources\figma-ellipse~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-text~sel.png" />
-        <EmbeddedResource Include="Resources\figma-group~dark.png" />
-        <EmbeddedResource Include="Resources\figma-rectangle~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-ellipse~dark.png" />
-        <EmbeddedResource Include="Resources\figma-frame~dark.png" />
-        <EmbeddedResource Include="Resources\figma-instance~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-image~dark.png" />
-        <EmbeddedResource Include="Resources\vs-pad-figma~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-ellipse~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-frame~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-polygon~dark.png" />
-        <EmbeddedResource Include="Resources\figma-text~dark.png" />
-        <EmbeddedResource Include="Resources\figma-component~dark.png" />
-        <EmbeddedResource Include="Resources\figma-polygon~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-text~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-image~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-line~sel.png" />
-        <EmbeddedResource Include="Resources\vs-pad-figma.png" />
-        <EmbeddedResource Include="Resources\vs-pad-figma%402x.png" />
-        <EmbeddedResource Include="Resources\figma-line~dark.png" />
-        <EmbeddedResource Include="Resources\figma-instance~dark.png" />
-        <EmbeddedResource Include="Resources\figma-line~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-group.png" />
-        <EmbeddedResource Include="Resources\figma-image.png" />
-        <EmbeddedResource Include="Resources\figma-group%402x.png" />
-        <EmbeddedResource Include="Resources\figma-ellipse.png" />
-        <EmbeddedResource Include="Resources\figma-slice~dark.png" />
-        <EmbeddedResource Include="Resources\figma-rectangle%402x.png" />
-        <EmbeddedResource Include="Resources\figma-component.png" />
-        <EmbeddedResource Include="Resources\figma-component~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-component%402x.png" />
-        <EmbeddedResource Include="Resources\figma-image~sel%402x.png" />
-        <EmbeddedResource Include="Resources\figma-image%402x.png" />
-        <EmbeddedResource Include="Resources\figma-slice~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-frame.png" />
-        <EmbeddedResource Include="Resources\figma-instance~dark%402x.png" />
-        <EmbeddedResource Include="Resources\figma-instance.png" />
-        <EmbeddedResource Include="Resources\figma-text.png" />
-        <EmbeddedResource Include="Resources\figma-rectangle.png" />
-        <EmbeddedResource Include="Resources\figma-frame%402x.png" />
-        <EmbeddedResource Include="Resources\vs-prefs-figma%402x.png" />
-        <EmbeddedResource Include="Resources\figma-ellipse%402x.png" />
-        <EmbeddedResource Include="Resources\figma-rectangle~dark.png" />
-        <EmbeddedResource Include="Resources\figma-polygon%402x.png" />
-        <EmbeddedResource Include="Resources\figma-polygon.png" />
-        <EmbeddedResource Include="Resources\figma-slice%402x.png" />
-        <EmbeddedResource Include="Resources\figma-line.png" />
-        <EmbeddedResource Include="Resources\figma-text%402x.png" />
-        <EmbeddedResource Include="Resources\figma-line%402x.png" />
-        <EmbeddedResource Include="Resources\figma-instance%402x.png" />
-        <EmbeddedResource Include="Resources\figma-slice.png" />
-        <EmbeddedResource Include="Resources\figma-component~sel.png" />
-        <EmbeddedResource Include="Resources\vs-prefs-figma.png" />
-        <EmbeddedResource Include="Resources\pe-path-reveal~dark%402x.png" />
-        <EmbeddedResource Include="Resources\pe-path-reveal%402x.png" />
-=======
-        <EmbeddedResource Include="AddFigmaDocument.figma" />
->>>>>>> Adds a command to open Bundle tool
-      </ItemGroup>
-      <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
         <ProjectReference Include="..\FigmaSharp.Designer\FigmaSharp.Designer.csproj" />
@@ -206,5 +26,33 @@
         <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj" />
         <ProjectReference Include="..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj" />
         <ProjectReference Include="..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj" />
+      </ItemGroup>
+      <ItemGroup>
+        <None Remove="Resources\vs-pad-figma.png" />
+        <None Remove="Resources\vs-pad-figma%402x.png" />
+        <None Remove="Resources\vs-pad-figma~dark.png" />
+        <None Remove="Resources\vs-pad-figma~dark%402x.png" />
+        <None Remove="Resources\vs-pad-figma~sel.png" />
+        <None Remove="Resources\vs-pad-figma~sel%402x.png" />
+      </ItemGroup>
+      <ItemGroup>
+        <EmbeddedResource Include="Resources\vs-pad-figma.png">
+          <LogicalName>vs-pad-figma.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-pad-figma%402x.png">
+          <LogicalName>vs-pad-figma@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-pad-figma~dark.png">
+          <LogicalName>vs-pad-figma~dark.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-pad-figma~dark%402x.png">
+          <LogicalName>vs-pad-figma~dark@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-pad-figma~sel.png">
+          <LogicalName>vs-pad-figma~sel.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-pad-figma~sel%402x.png">
+          <LogicalName>vs-pad-figma~sel@2x.png</LogicalName>
+        </EmbeddedResource>
       </ItemGroup>
 </Project>
