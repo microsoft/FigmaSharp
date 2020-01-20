@@ -12,10 +12,10 @@ clean:
 	find . -type d -name packages -exec rm -rf {} \;
 
 pack:
-	msbuild FigmaSharp.Views.sln $(ARGS) /p:CreatePackage=true
+	msbuild FigmaSharp.Views.sln $(ARGS) /p:CreatePackage=true /restore
 
 install:
-	msbuild FigmaSharp.Views.sln $(ARGS) /p:InstallAddin=true
+	msbuild FigmaSharp.Views.sln $(ARGS) /p:InstallAddin=true /restore
 
 check-dependencies:
 	#updating the submodules
@@ -34,18 +34,18 @@ sdk: nuget-download
 	mono src/.nuget/nuget.exe pack FigmaSharp.nuspec
 
 package: check-dependencies
-	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /t:Restore
-	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /t:Restore
-	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release /t:Restore
+	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /restore
+	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /restore
+	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release /restore
 
 	mono nuget.exe restore FigmaSharp.sln
-	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release
-	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release
-	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release
+	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /restore
+	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /restore
+	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release /restore
 
-	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls/FigmaSharp.NativeControls.csproj /p:Configuration=Release
-	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Cocoa/FigmaSharp.NativeControls.Cocoa.csproj /p:Configuration=Release
-	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Forms/FigmaSharp.NativeControls.Forms.csproj /p:Configuration=Release
+	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls/FigmaSharp.NativeControls.csproj /p:Configuration=Release /restore
+	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Cocoa/FigmaSharp.NativeControls.Cocoa.csproj /p:Configuration=Release /restore
+	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Forms/FigmaSharp.NativeControls.Forms.csproj /p:Configuration=Release /restore
 
 	mono nuget.exe pack NuGet/FigmaSharp.Views.nuspec
 	mono nuget.exe pack NuGet/FigmaSharp.Views.Cocoa.nuspec

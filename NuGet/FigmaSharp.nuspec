@@ -4,15 +4,12 @@
     <id>FigmaSharp</id>
     <title>FigmaSharp</title>
     <version>0.6.0-alpha</version>
+    <description>Create native UIs with Figma</description>
     <authors>Jose Medrano</authors>
-    <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
-    <projectUrl>https://www.microsoft.com/es-es/</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/netonjm/FigmaSharp/master/icons/image-logo.png</iconUrl>
+    <license type="expression">MIT</license>
+    <projectUrl>https://www.github.com/netonjm/FigmaSharp</projectUrl>
+    <copyright>Microsoft</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Say hello to #FigmaSharp and enhance your .NET applications taking advantage of Figma's component system creating beautiful views in your application!</description>
-	 <releaseNotes>https://www.microsoft.com/es-es/</releaseNotes>
-    <copyright>Jose Medrano.</copyright>
-    <tags>figma designer design</tags>
   </metadata>
 
   <files>
