@@ -11,7 +11,7 @@
         </MimeType>
     </Extension>
    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Other">
-        <Section id="FigmaSettings" _label="Figma Settings" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
+        <Section id="FigmaSettings" _label="Figma" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Pads/ProjectPad">
