@@ -46,6 +46,9 @@ namespace MonoDevelop.Figma.Commands
 	{
 		protected override void Update (CommandInfo info)
 		{
+			if (!Resources.IsFigmaEnabled)
+				return;
+
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
 					currentFolder.IsDocumentDirectoryBundle () &&
 					!File.Exists (Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName));
@@ -79,6 +82,9 @@ namespace MonoDevelop.Figma.Commands
 	{
 		protected override void Update (CommandInfo info)
 		{
+			if (!Resources.IsFigmaEnabled)
+				return;
+
 			try {
 				if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
 					currentFolder.IsDocumentDirectoryBundle ()
@@ -117,6 +123,9 @@ namespace MonoDevelop.Figma.Commands
 
 		protected override void Update (CommandInfo info)
 		{
+			if (!Resources.IsFigmaEnabled)
+				return;
+
 			try {
 				if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
 					currentFolder.IsDocumentDirectoryBundle ()
@@ -161,9 +170,12 @@ namespace MonoDevelop.Figma.Commands
 	{
 		protected override void Update (CommandInfo info)
 		{
+			if (!Resources.IsFigmaEnabled)
+				return;
 			info.Visible = info.Enabled =IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
 				&& folder.IsDocumentDirectoryBundle ();
 		}
+
 		protected override void Run ()
 		{
 
@@ -176,6 +188,9 @@ namespace MonoDevelop.Figma.Commands
 
 		protected override void Update (CommandInfo info)
 		{
+			if (!Resources.IsFigmaEnabled)
+				return;
+
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
 				(
 					IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder

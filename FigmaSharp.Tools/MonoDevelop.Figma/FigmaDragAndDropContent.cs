@@ -164,7 +164,7 @@ namespace MonoDevelop.Figma
             RefreshEnabledStatement ();
         }
 
-		internal void RefreshEnabledStatement () => exportButton.Enabled = fileTextField.Enabled = openFileButton.Enabled = FigmaSharp.AppContext.Current.IsConfigured;
+		internal void RefreshEnabledStatement () => exportButton.Enabled = fileTextField.Enabled = openFileButton.Enabled = Resources.IsFigmaEnabled;
 
         void SetCodeRenderer (string platform)
         {
@@ -201,7 +201,7 @@ namespace MonoDevelop.Figma
 
         void openFileButton_Activated(object sender, EventArgs e)
         {
-            if (!FigmaSharp.AppContext.Current.IsConfigured)
+            if (Resources.IsFigmaEnabled)
             {
                 MessageService.ShowError("Figma API is not configured");
                 return;
