@@ -37,7 +37,12 @@
             _label="Show Local File"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
             insertbefore="AddSectionEnd"
-        /> 
+        />
+        <CommandItem 
+            id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+            insertbefore="AddSectionEnd"
+        />        
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">
@@ -90,6 +95,10 @@
                 _label = "Empty Figma Manifest"
                 defaultHandler = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
                 _description = "Creates an empty manifest file"/>
+            <Command id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
+                _label = "Regenerate Document"
+                defaultHandler = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
+                _description = "Regenerate Document"/>            
         </Category>    
     </Extension>
     

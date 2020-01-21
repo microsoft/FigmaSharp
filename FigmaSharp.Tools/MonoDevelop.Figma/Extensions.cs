@@ -15,6 +15,25 @@ namespace MonoDevelop.Figma
 			&& figmaProject.Parent is Project;
 		}
 
+		public static bool IsFigmaManifest (this ProjectFile pr)
+		{
+			if (pr.FilePath.FileName != FigmaBundle.DocumentFileName) {
+				return false;
+			}
+
+			var bundleDirectory = pr.FilePath.ParentDirectory;
+			if (bundleDirectory == null || bundleDirectory.Extension != FigmaBundle.FigmaBundleDirectoryExtension) {
+				return false;
+			}
+
+			var figmaDirectory = bundleDirectory.ParentDirectory;
+			if (figmaDirectory == null || figmaDirectory.FileName != FigmaBundle.FigmaDirectoryName) {
+				return false;
+			}
+
+			return figmaDirectory.ParentDirectory.FullPath == pr.Project.BaseDirectory.FullPath;
+		}
+
 		public static bool IsFigmaDirectory (this ProjectFolder pr)
 		{
 			return pr.Path.Extension == FigmaBundle.FigmaDirectoryName

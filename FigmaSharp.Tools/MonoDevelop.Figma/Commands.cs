@@ -39,30 +39,10 @@ using MonoDevelop.Core;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
+using System.Threading.Tasks;
 
 namespace MonoDevelop.Figma.Commands
 {
-	abstract class FigmaCommandHandler : CommandHandler
-	{
-		protected override void Update (CommandInfo info)
-		{
-			OnUpdate (info);
-
-			if (!Resources.IsFigmaEnabled) {
-				info.Enabled = false;
-				return;
-			}
-		}
-
-		protected override void Run ()
-		{
-			OnRun ();
-		}
-
-		protected abstract void OnUpdate (CommandInfo info);
-		protected abstract void OnRun ();
-	}
-
 	class CreateEmptyManifesCommandHandler : FigmaCommandHandler
 	{
 		protected override void OnUpdate (CommandInfo info)
@@ -235,7 +215,7 @@ namespace MonoDevelop.Figma.Commands
 
 			bool includeImages = false; //false for the moment
 
-			bundle.GenerateDocument (includeImages);
+			bundle.GenerateLocalDocument (includeImages);
 			//now we need to add the content
 			//bundle
 			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath)) ;
@@ -262,8 +242,6 @@ namespace MonoDevelop.Figma.Commands
 			await IdeApp.ProjectOperations.SaveAsync (currentProject);
 
 			//currentProject.AddDirectory (FigmaBundle.FigmaDirectoryName);
-
-
 			//if (!(IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
 			//	(
 			//		IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
@@ -271,9 +249,6 @@ namespace MonoDevelop.Figma.Commands
 			//	))) {
 			//	return;
 			//}
-
-
-
 			//var window = new Gtk.Dialog ();
 			//window.Modal = true;
 			//window.SetSizeRequest (200, 300);
@@ -297,10 +272,76 @@ namespace MonoDevelop.Figma.Commands
 			//	vb.ShowAll ();
 			//}
 			//MessageService.ShowCustomDialog (window, IdeApp.Workbench.RootWindow);
-
-
-
 		}
+	}
+
+	class RegenerateFigmaDocumentCommandHandler : FigmaCommandHandler
+	{
+		protected override void OnUpdate (CommandInfo info)
+		{
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
+				if (currentFolder.IsDocumentDirectoryBundle ()) {
+					var manifestFullFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
+					info.Text = string.Format ("{0} {1}", currentFolder.Project.PathExistsInProject (manifestFullFilePath) ? "Regenerate" : "Generate",  FigmaBundle.DocumentFileName);
+					info.Visible = info.Enabled = true;
+					return;
+				}
+			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFile currentFile && currentFile.IsFigmaManifest ()) {
+				info.Text = string.Format ("Regenerate {0}", FigmaBundle.DocumentFileName);
+				info.Visible = info.Enabled = true;
+				return;
+			}
+
+			info.Visible = info.Enabled = false;
+		}
+
+		protected async override void OnRun ()
+		{
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder && currentFolder.IsDocumentDirectoryBundle ()) {
+				await RegenerateDocument (currentFolder.Project, currentFolder.Path.FullPath);
+			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFile currentFile && currentFile.IsFigmaManifest ()) {
+				await RegenerateDocument (currentFile.Project, currentFile.FilePath.ParentDirectory.FullPath);
+				return;
+			}
+		}
+
+		async Task RegenerateDocument (Project project, string bundleDirectoryPath)
+		{
+			var manifest = FigmaBundle.FromDirectoryPath (bundleDirectoryPath);
+			if (manifest == null) {
+				return;
+			}
+			manifest.GenerateLocalDocument (false);
+
+			var documentFilePath = manifest.DocumentFilePath;
+			//we need to add the file to the project in case is not added
+			if (!project.PathExistsInProject (documentFilePath)) {
+				project.AddFile (documentFilePath);
+				project.NeedsReload = true;
+				await IdeApp.ProjectOperations.SaveAsync (project);
+			}
+		}
+	}
+
+	abstract class FigmaCommandHandler : CommandHandler
+	{
+		protected override void Update (CommandInfo info)
+		{
+			OnUpdate (info);
+
+			if (!Resources.IsFigmaEnabled) {
+				info.Enabled = false;
+				return;
+			}
+		}
+
+		protected override void Run ()
+		{
+			OnRun ();
+		}
+
+		protected abstract void OnUpdate (CommandInfo info);
+		protected abstract void OnRun ();
 	}
 
 	public class FigmaInitCommand : CommandHandler
@@ -312,5 +353,3 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 }
-
-
