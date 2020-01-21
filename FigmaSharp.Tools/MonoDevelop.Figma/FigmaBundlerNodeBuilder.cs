@@ -7,7 +7,7 @@ namespace MonoDevelop.Figma
 {
 	public class CustomFigmaBundlerNodeBuilder : NodeBuilderExtension
 	{
-		const string BundlesFolderLabel = "Bundles";
+		//const string BundlesFolderLabel = "Bundles";
 		const string FigmaFolderLabel = "Figma";
 
 		public override bool CanBuildNode (Type dataType)
@@ -38,11 +38,11 @@ namespace MonoDevelop.Figma
 		public override void BuildNode (ITreeBuilder builder, object dataObject, NodeInfo nodeInfo)
 		{
 			if (dataObject is ProjectFolder pr) {
-				if (pr.IsFigmaBundleDirectory ()) {
-					nodeInfo.Label = BundlesFolderLabel;
-					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
-					return;
-				}
+				//if (pr.IsFigmaBundleDirectory ()) {
+				//	nodeInfo.Label = BundlesFolderLabel;
+				//	nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
+				//	return;
+				//}
 
 				if (pr.IsDocumentDirectoryBundle ()) {
 					nodeInfo.Label = pr.Path.FileNameWithoutExtension;

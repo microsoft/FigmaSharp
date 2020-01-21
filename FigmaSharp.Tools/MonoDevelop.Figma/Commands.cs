@@ -179,7 +179,7 @@ namespace MonoDevelop.Figma.Commands
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
 				(
 					IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
-					&& (folder.IsFigmaBundleDirectory () || folder.IsFigmaDirectory ())
+					&& folder.IsFigmaDirectory ()
 				);
 		}
 	
