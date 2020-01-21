@@ -36,7 +36,7 @@ namespace FigmaSharp
 
 		public void Load (string bundleDirectoryPath)
 		{
-			if (!File.Exists (bundleDirectoryPath)) {
+			if (!Directory.Exists (bundleDirectoryPath)) {
 				throw new DirectoryNotFoundException ("directory doesn't exists");
 			}
 
@@ -85,28 +85,36 @@ namespace FigmaSharp
 
 		public static FigmaBundle FromDirectoryPath (string fullPath)
 		{
-			var bundle = new FigmaBundle ();
-			bundle.Load (fullPath);
-			return bundle;
+			try {
+				var bundle = new FigmaBundle ();
+				bundle.Load (fullPath);
+				return bundle;
+			} catch (Exception ex) {
+				Console.WriteLine (ex);
+				//not a bundle
+				return null;
+			}
 		}
 
 		public string FileId => Manifest.DocumentUrl;
 
-		internal void GenerateDocument (bool includeImages)
+		public string DocumentFilePath => Path.Combine (DirectoryPath, DocumentFileName);
+
+		internal static FigmaResponse GenerateDocumentOutputFile (string fileId, string directoryPath)
 		{
-			if (string.IsNullOrEmpty (FileId)) {
-				throw new InvalidOperationException ("id not set");
-			}
+			var documentFilePath = Path.Combine (directoryPath, DocumentFileName);
+			if (File.Exists (documentFilePath))
+				File.Delete (documentFilePath);
 			//generate also Document.figma
-			var content = FigmaApiHelper.GetFigmaFileContent (FileId);
-			var documentFilePath = Path.Combine (DirectoryPath, DocumentFileName);
+			var content = FigmaApiHelper.GetFigmaFileContent (fileId);
+		
 			File.WriteAllText (documentFilePath, content);
-
-			if (!includeImages)
-				return;
-
-			//get image resources
 			var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent (content);
+			return figmaResponse;
+		}
+
+		internal static void GenerateOutputResourceFiles (string fileId, FigmaResponse figmaResponse, string resourcesDirectoryPath)
+		{
 			var mainNode = figmaResponse.document.children.FirstOrDefault ();
 
 			var figmaImageIds = mainNode.OfTypeImage ()
@@ -114,14 +122,30 @@ namespace FigmaSharp
 				.ToArray ();
 
 			if (figmaImageIds.Length > 0) {
-				var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
+				
 				if (!Directory.Exists (resourcesDirectoryPath)) {
 					Directory.CreateDirectory (resourcesDirectoryPath);
 				}
 
-				var figmaImageResponse = FigmaApiHelper.GetFigmaImages (FileId, figmaImageIds);
+				var figmaImageResponse = FigmaApiHelper.GetFigmaImages (fileId, figmaImageIds);
 				FileHelper.SaveFiles (resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
 			}
+		}
+
+		internal void GenerateLocalDocument (bool includeImages)
+		{
+			if (string.IsNullOrEmpty (FileId)) {
+				throw new InvalidOperationException ("id not set");
+			}
+
+			//get image resources
+			var figmaResponse = GenerateDocumentOutputFile (Manifest.DocumentUrl, DirectoryPath);
+
+			if (!includeImages)
+				return;
+
+			var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
+			GenerateOutputResourceFiles (FileId, figmaResponse, resourcesDirectoryPath);
 		}
 	}
 
