@@ -172,23 +172,23 @@ namespace FigmaSharp
 			return attribute;
 		}
 
-		public void ToComment (StringBuilder builder, bool singleComment = false)
+		public void ToComment (StringBuilder builder)
 		{
-			string comment = singleComment ? "//" : "*";
+			string date = Date.ToString("yyyy-MM-dd HH:mm");
+			string time = Date.ToString("HH:mm");
 
-			if (!string.IsNullOrEmpty (DocumentUrl))
-				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (DocumentUrl)).Description}: {DocumentUrl}");
+			string header =
+				$"// This file was auto-generated using\n" +
+				$"// FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}\n" +
+				$"//" +
+				$"// Document title:   macOS Components\n" + // TODO: Document title in manifest
+				$"// Document version: {DocumentVersion}\n" +
+				$"// Document URL:     {DocumentUrl}\n" +
+				$"//" +
+				$"// Changes to this file may cause incorrect behavior\n" +
+				$"// and will be lost if the code is regenerated.";
 
-			if (!string.IsNullOrEmpty (ApiVersion))
-				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (DocumentVersion)).Description}: {DocumentVersion}");
-
-			if (Date != default)
-				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (Date)).Description}: {Date.ToString ("MM/dd/yyyy HH:mm:ss")}");
-
-			if (!string.IsNullOrEmpty (RemoteApiVersion))
-				builder.AppendLine ($"{comment} {GetManifestDescription (nameof (RemoteApiVersion)).Description}: {RemoteApiVersion}");
-
-			builder.AppendLine ($"{comment} {GetManifestDescription (nameof (ApiVersion)).Description}: {ApiVersion}");
+			builder.AppendLine(header);
 		}
 
 		public static FigmaManifest FromFilePath (string filePath)

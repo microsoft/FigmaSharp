@@ -13,10 +13,6 @@ namespace FigmaSharp
 
 		public FigmaPartialDesignerClass ()
 		{
-			Comments.Add ("Author:");
-			Comments.Add ("Jose Medrano <josmed@microsoft.com>");
-			Comments.Add ("");
-			Comments.Add ("Copyright (C) 2018 Microsoft, Corp");
 		}
 
 		protected void GeneratePartialDesignerClass (StringBuilder sb, string className)
@@ -54,10 +50,6 @@ namespace FigmaSharp
 	{
 		public FigmaPublicPartialClass ()
 		{
-			Comments.Add ("Author:");
-			Comments.Add ("Jose Medrano <josmed@microsoft.com>");
-			Comments.Add ("");
-			Comments.Add ("Copyright (C) 2018 Microsoft, Corp");
 		}
 
 		public string Namespace { get; set; }
@@ -104,7 +96,6 @@ namespace FigmaSharp
 
 		protected void GenerateComments (StringBuilder builder)
 		{
-			builder.AppendLine ("/*");
 			if (ShowManifestComments) {
 				Manifest.ToComment (builder);
 				builder.AppendLine ("* ");
@@ -112,7 +103,6 @@ namespace FigmaSharp
 			foreach (var current in Comments) {
 				builder.AppendLine ($"* {current}");
 			}
-			builder.AppendLine ("*/");
 		}
 
 		public void Save (string filePath)
