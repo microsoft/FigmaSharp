@@ -11,7 +11,7 @@
         </MimeType>
     </Extension>
    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Projects">
-        <Section id="FigmaSettings" _label="Figma" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
+        <Section id="FigmaSettings" _label="Figma" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="vs-prefs-figma" />
   </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Pads/ProjectPad">
@@ -71,6 +71,7 @@
     
     <Extension path = "/MonoDevelop/Core/StockIcons">
         <StockIcon stockid = "vs-pad-figma" resource = "vs-pad-figma.png" size = "Menu"/>
+        <StockIcon stockid = "vs-prefs-figma" resource = "vs-prefs-figma.png" size = "Menu"/>
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Commands">
