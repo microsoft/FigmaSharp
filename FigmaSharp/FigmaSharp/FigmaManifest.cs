@@ -32,6 +32,7 @@ namespace FigmaSharp
 		internal const string ManifestFileName = "manifest.json";
 		internal const string DocumentFileName = "document.figma";
 		internal const string ResourcesDirectoryName = "Resources";
+		internal const string ImageFormat = ".png";
 
 		public void Load (string bundleDirectoryPath)
 		{
@@ -91,9 +92,7 @@ namespace FigmaSharp
 
 		public string FileId => Manifest.DocumentUrl;
 
-		const string imageFormat = ".png";
-
-		internal void GenerateDocument ()
+		internal void GenerateDocument (bool includeImages)
 		{
 			if (string.IsNullOrEmpty (FileId)) {
 				throw new InvalidOperationException ("id not set");
@@ -102,6 +101,9 @@ namespace FigmaSharp
 			var content = FigmaApiHelper.GetFigmaFileContent (FileId);
 			var documentFilePath = Path.Combine (DirectoryPath, DocumentFileName);
 			File.WriteAllText (documentFilePath, content);
+
+			if (!includeImages)
+				return;
 
 			//get image resources
 			var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent (content);
@@ -118,7 +120,7 @@ namespace FigmaSharp
 				}
 
 				var figmaImageResponse = FigmaApiHelper.GetFigmaImages (FileId, figmaImageIds);
-				FileHelper.SaveFiles (resourcesDirectoryPath, imageFormat, figmaImageResponse.images);
+				FileHelper.SaveFiles (resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
 			}
 		}
 	}

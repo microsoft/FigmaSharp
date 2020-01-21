@@ -131,7 +131,7 @@ namespace MonoDevelop.Figma
                 //                assembly = this.GetType ().Assembly;
                 //            }
 
-                var localPath = Path.Combine (filePath.ParentDirectory.FullPath, "Resources");
+                var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
                 fileProvider = new FigmaLocalFileProvider (localPath);
                 fileProvider.File = filePath.FullPath;
 
