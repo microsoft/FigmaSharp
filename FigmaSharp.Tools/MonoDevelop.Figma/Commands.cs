@@ -42,19 +42,37 @@ using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma.Commands
 {
-	class CreateEmptyManifesCommandHandler : CommandHandler
+	abstract class FigmaCommandHandler : CommandHandler
 	{
 		protected override void Update (CommandInfo info)
 		{
-			if (!Resources.IsFigmaEnabled)
-				return;
+			OnUpdate (info);
 
+			if (!Resources.IsFigmaEnabled) {
+				info.Enabled = false;
+				return;
+			}
+		}
+
+		protected override void Run ()
+		{
+			OnRun ();
+		}
+
+		protected abstract void OnUpdate (CommandInfo info);
+		protected abstract void OnRun ();
+	}
+
+	class CreateEmptyManifesCommandHandler : FigmaCommandHandler
+	{
+		protected override void OnUpdate (CommandInfo info)
+		{
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
 					currentFolder.IsDocumentDirectoryBundle () &&
 					!File.Exists (Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName));
 		}
 
-		protected async override void Run ()
+		protected async override void OnRun ()
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 				try {
@@ -78,13 +96,10 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
-	class OpenLocalFigmaFileCommandHandler : CommandHandler
+	class OpenLocalFigmaFileCommandHandler : FigmaCommandHandler
 	{
-		protected override void Update (CommandInfo info)
+		protected override void OnUpdate (CommandInfo info)
 		{
-			if (!Resources.IsFigmaEnabled)
-				return;
-
 			try {
 				if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
 					currentFolder.IsDocumentDirectoryBundle ()
@@ -103,7 +118,7 @@ namespace MonoDevelop.Figma.Commands
 			info.Visible = info.Enabled = false;
 		}
 
-		protected override void Run ()
+		protected override void OnRun ()
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 				try {
@@ -117,15 +132,12 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
-	class OpenRemoteFigmaFileCommandHandler : CommandHandler
+	class OpenRemoteFigmaFileCommandHandler : FigmaCommandHandler
 	{
 		const string figmaUrl = "https://www.figma.com/file/{0}/";
 
-		protected override void Update (CommandInfo info)
+		protected override void OnUpdate (CommandInfo info)
 		{
-			if (!Resources.IsFigmaEnabled)
-				return;
-
 			try {
 				if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
 					currentFolder.IsDocumentDirectoryBundle ()
@@ -149,7 +161,7 @@ namespace MonoDevelop.Figma.Commands
 			info.Visible = info.Enabled = false;
 		}
 
-		protected override void Run ()
+		protected override void OnRun ()
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 			try {
@@ -166,31 +178,26 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
-	class FigmaNewFileViewCommandHandler : CommandHandler
+	class FigmaNewFileViewCommandHandler : FigmaCommandHandler
 	{
-		protected override void Update (CommandInfo info)
+		protected override void OnUpdate (CommandInfo info)
 		{
-			if (!Resources.IsFigmaEnabled)
-				return;
 			info.Visible = info.Enabled =IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
 				&& folder.IsDocumentDirectoryBundle ();
 		}
 
-		protected override void Run ()
+		protected override void OnRun ()
 		{
 
 		}
 	}
 
-	class FigmaNewBundlerCommandHandler : CommandHandler
+	class FigmaNewBundlerCommandHandler : FigmaCommandHandler
 	{
 		const string AddFigmaDocumentSource = "AddFigmaDocument.figma";
 
-		protected override void Update (CommandInfo info)
+		protected override void OnUpdate (CommandInfo info)
 		{
-			if (!Resources.IsFigmaEnabled)
-				return;
-
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
 				(
 					IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
@@ -198,7 +205,7 @@ namespace MonoDevelop.Figma.Commands
 				);
 		}
 	
-		protected async override void Run ()
+		protected async override void OnRun ()
 		{
 			Project currentProject = null;
 
@@ -225,7 +232,10 @@ namespace MonoDevelop.Figma.Commands
 
 			var bundle = FigmaBundle.Create ("EGTUYgwUC9rpHmm4kJwZQXq4", fullBundlePath);
 			bundle.Save ();
-			bundle.GenerateDocument ();
+
+			bool includeImages = false; //false for the moment
+
+			bundle.GenerateDocument (includeImages);
 			//now we need to add the content
 			//bundle
 			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath)) ;
@@ -234,14 +244,19 @@ namespace MonoDevelop.Figma.Commands
 			//document
 			currentProject.AddFile (Path.Combine (fullBundlePath, FigmaBundle.DocumentFileName));
 
-			//resources
-			var resourcesDirectoryPath = Path.Combine (fullBundlePath, FigmaBundle.ResourcesDirectoryName);
-			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, resourcesDirectoryPath));
+			if (includeImages) {
+				//resources
+				var resourcesDirectoryPath = Path.Combine (fullBundlePath, FigmaBundle.ResourcesDirectoryName);
+				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, resourcesDirectoryPath));
 
-			//we add to the project for each resource inside the 
+				//we add to the project for each resource inside the 
+				//foreach (var image in Directory.EnumerateFiles (resourcesDirectoryPath, "*.png")) {
+				//	currentProject.AddFile (image);
+				//}
 
-			var images = Directory.EnumerateFiles (resourcesDirectoryPath, "*.png").Select (s => new FilePath (s));
-			currentProject.AddFiles (images);
+				var images = Directory.EnumerateFiles (resourcesDirectoryPath, $"*{FigmaBundle.ImageFormat}").Select (s => new FilePath (s));
+				currentProject.AddFiles (images);
+			}
 
 			currentProject.NeedsReload = true;
 			await IdeApp.ProjectOperations.SaveAsync (currentProject);
