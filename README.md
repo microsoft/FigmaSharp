@@ -15,7 +15,7 @@ To get documents from [figma.com](https://www.figma.com/) you'll need to generat
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
 This will be your only chance to copy the token, so make sure you keep a copy in a secure place.
 
-We recommend trying out automatic builds of the example app and Visual Studio extension on the [Releases](/releases) page. 
+We recommend trying out automatic builds of the example app and Visual Studio extension on the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
 
 
 # Building from source
@@ -192,5 +192,5 @@ The **FigmaSharp.Tools** folder contains some helpful tools for handling Figma f
 - **Inspector** – preview how your Figma document looks when rendered natively
 - **Bundler** – takes a figma.com URL and downloads the .figma file including all images and adds it to your project
 
- [This extension](https://www.nuget.org/packages/FigmaSharp/) integrates the inspector and bundler directly into [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) for ease of use.
+The extension integrates the inspector and bundler directly into [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) for ease of use. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page.
  
