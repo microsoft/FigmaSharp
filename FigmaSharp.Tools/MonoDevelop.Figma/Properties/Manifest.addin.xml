@@ -10,7 +10,7 @@
             <File pattern="*.figma"/>
         </MimeType>
     </Extension>
-   <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Other">
+   <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Projects">
         <Section id="FigmaSettings" _label="Figma" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="md-prefs-source" />
   </Extension>
     
