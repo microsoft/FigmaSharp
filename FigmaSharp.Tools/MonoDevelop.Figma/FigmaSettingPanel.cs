@@ -38,7 +38,7 @@ namespace MonoDevelop.Figma
 		const string FigmaSetting = "FigmaToken";
 
 		public static string Token {
-			get => PropertyService.Get<string> (FigmaSetting);
+			get => PropertyService.Get<string> (FigmaSetting) ?? string.Empty;
             set
             {
                 FigmaSharp.AppContext.Current.SetAccessToken(value);
