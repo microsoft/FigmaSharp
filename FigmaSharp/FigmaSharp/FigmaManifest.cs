@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using FigmaSharp.Models;
+using System.Threading.Tasks;
 
 namespace FigmaSharp
 {
@@ -30,6 +31,7 @@ namespace FigmaSharp
 		internal const string FigmaDirectoryName = ".figma";
 		internal const string ManifestFileName = "manifest.json";
 		internal const string DocumentFileName = "document.figma";
+		internal const string ResourcesDirectoryName = "Resources";
 
 		public void Load (string bundleDirectoryPath)
 		{
@@ -72,10 +74,11 @@ namespace FigmaSharp
 				DirectoryPath = directoryPath
 			};
 			bundle.Manifest = new FigmaManifest () {
-				ApiVersion = FigmaSharp.AppContext.Current.Version,
+				ApiVersion = AppContext.Current.Version,
 				Date = DateTime.Now,
 				DocumentUrl = fileId
 			};
+
 			return bundle;
 		}
 
@@ -84,6 +87,39 @@ namespace FigmaSharp
 			var bundle = new FigmaBundle ();
 			bundle.Load (fullPath);
 			return bundle;
+		}
+
+		public string FileId => Manifest.DocumentUrl;
+
+		const string imageFormat = ".png";
+
+		internal void GenerateDocument ()
+		{
+			if (string.IsNullOrEmpty (FileId)) {
+				throw new InvalidOperationException ("id not set");
+			}
+			//generate also Document.figma
+			var content = FigmaApiHelper.GetFigmaFileContent (FileId);
+			var documentFilePath = Path.Combine (DirectoryPath, DocumentFileName);
+			File.WriteAllText (documentFilePath, content);
+
+			//get image resources
+			var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent (content);
+			var mainNode = figmaResponse.document.children.FirstOrDefault ();
+
+			var figmaImageIds = mainNode.OfTypeImage ()
+				.Select (s => s.id)
+				.ToArray ();
+
+			if (figmaImageIds.Length > 0) {
+				var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
+				if (!Directory.Exists (resourcesDirectoryPath)) {
+					Directory.CreateDirectory (resourcesDirectoryPath);
+				}
+
+				var figmaImageResponse = FigmaApiHelper.GetFigmaImages (FileId, figmaImageIds);
+				FileHelper.SaveFiles (resourcesDirectoryPath, imageFormat, figmaImageResponse.images);
+			}
 		}
 	}
 

@@ -210,12 +210,23 @@ namespace MonoDevelop.Figma.Commands
 
 			var bundle = FigmaBundle.Create ("EGTUYgwUC9rpHmm4kJwZQXq4", fullBundlePath);
 			bundle.Save ();
-
-			//now add the content
+			bundle.GenerateDocument ();
+			//now we need to add the content
+			//bundle
 			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath)) ;
+			//manifest
+			currentProject.AddFile (Path.Combine (fullBundlePath, FigmaBundle.ManifestFileName));
+			//document
+			currentProject.AddFile (Path.Combine (fullBundlePath, FigmaBundle.DocumentFileName));
 
-			var manifestPath = Path.Combine (fullBundlePath, FigmaBundle.ManifestFileName);
-			currentProject.AddFile (manifestPath);
+			//resources
+			var resourcesDirectoryPath = Path.Combine (fullBundlePath, FigmaBundle.ResourcesDirectoryName);
+			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, resourcesDirectoryPath));
+
+			//we add to the project for each resource inside the 
+
+			var images = Directory.EnumerateFiles (resourcesDirectoryPath, "*.png").Select (s => new FilePath (s));
+			currentProject.AddFiles (images);
 
 			currentProject.NeedsReload = true;
 			await IdeApp.ProjectOperations.SaveAsync (currentProject);
