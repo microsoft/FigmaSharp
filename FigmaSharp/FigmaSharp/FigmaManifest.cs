@@ -20,6 +20,13 @@ namespace FigmaSharp
 	{
 		public FigmaManifest Manifest { get; set; }
 
+		public string DirectoryPath { get; private set; }
+
+		public string Name => DirectoryPath == null ? null : Path.GetFileName (DirectoryPath);
+
+		internal const string FigmaBundleDirectoryExtension = ".figmabundle";
+		//const string FigmaBundlesDirectoryName = ".bundles";
+		internal const string FigmaDirectoryName = ".figma";
 		internal const string ManifestFileName = "manifest.json";
 		internal const string DocumentFileName = "document.figma";
 
