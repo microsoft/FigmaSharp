@@ -163,7 +163,9 @@ namespace FigmaSharp.Designer
 
         public void ChangeFocusedView(IObject nextView)
         {
-            if (selectedWindow == null || nextView == null || SelectedView == nextView)
+            var selectedView = SelectedView;
+
+            if (nextView == null || selectedView == nextView)
             {
                 //FocusedViewChanged?.Invoke(this, nextView);
                 return;
@@ -173,10 +175,10 @@ namespace FigmaSharp.Designer
 
             IsFirstResponderOverlayVisible = true;
 
-            if (SelectedView != null)
+            if (selectedView != null)
             {
                 //toolbarWindow.ChangeView(this, SelectedView);
-                FocusedViewChanged?.Invoke(this, SelectedView);
+                FocusedViewChanged?.Invoke(this, selectedView);
             }
         }
 

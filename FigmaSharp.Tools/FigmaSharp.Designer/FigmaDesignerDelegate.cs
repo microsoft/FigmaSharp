@@ -31,6 +31,10 @@ namespace FigmaSharp.Designer
 
             clickMonitor = NSEvent.AddLocalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDown, (NSEvent theEvent) => {
 
+				if (currentWindow == null) {
+                    return theEvent;
+				}
+
                 var nativeWindow = currentWindow.NativeObject as NSWindow;
 
                 if (theEvent.Window != nativeWindow)

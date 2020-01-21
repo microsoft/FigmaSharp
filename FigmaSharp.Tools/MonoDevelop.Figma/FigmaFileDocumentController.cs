@@ -169,10 +169,15 @@ namespace MonoDevelop.Figma
         void Surface_FocusedViewChanged(object sender, IView e)
         {
             var model = session.GetModel(e);
+			if (model == null) {
+                return;
+			}
+
             if (outlinePad != null)  {
                 outlinePad.Focus(model);
             }
-            var currentWrapper = GetWrapper (model);
+            //var currentWrapper = GetWrapper (model);
+			
             DesignerSupport.DesignerSupport.Service.PropertyPad.SetCurrentObject (model, new object[] { model });
             //PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
         }
