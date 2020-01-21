@@ -52,35 +52,52 @@ namespace MonoDevelop.Figma
 
 	class FigmaOptionsWidget : VBox
 	{
-		Entry tokenValueEntry;
+		Entry tokenEntry;
 		FigmaOptionsPanel panel;
+
 		public FigmaOptionsWidget (FigmaOptionsPanel figmaOptionsPanel)
 		{
 			panel = figmaOptionsPanel;
 
-			var mainVBox = new HBox ();
-			PackStart (mainVBox);
+
+			var tokenLayout = new HBox();
+			var tokenTip = new Label("Get your token from the Figma app:\n" +
+				"Menu → Help and Account → Personal Access Tokens");
+
+			tokenTip.Sensitive = false;
+			tokenTip.Xalign = 0;
+			tokenTip.Xpad = 148;
 
 			var tokenLabel = new Label ();
 			tokenLabel.Text = GettextCatalog.GetString ("Personal Access Token:");
-			mainVBox.PackStart (tokenLabel, false, false, 6);
-			tokenValueEntry = new Entry ();
-			mainVBox.PackStart (tokenValueEntry, false, false, 6);
 
-			tokenValueEntry.WidthRequest = 350;
-            tokenValueEntry.Text = FigmaRuntime.Token;
-			tokenValueEntry.Visibility = false;
+			tokenEntry = new Entry(FigmaRuntime.Token) {
+				Visibility = false,
+				WidthRequest = 400
+			};
 
-            tokenValueEntry.Changed += NeedsStoreValue;
-			tokenValueEntry.FocusOutEvent += NeedsStoreValue;
+			tokenEntry.Changed += NeedsStoreValue;
+			tokenEntry.FocusOutEvent += NeedsStoreValue;
 
-            var refreshLabel = new Label() { Text = GettextCatalog.GetString("Converters in assembly folder") };
-            mainVBox.PackStart(refreshLabel, false, false, 6);
-            reloadButton = new Button() { Label = "Reload Converters" };
-            mainVBox.PackStart(reloadButton, false, false, 6);
-            reloadButton.Activated += RefresButton_Activated;
+			tokenLayout.PackStart (tokenLabel, false, false, 0);
+			tokenLayout.PackStart (tokenEntry, false, false, 6);
 
-            ShowAll();
+
+			var convertersLayout = new HBox();
+
+			reloadButton = new Button() { Label = "Reload Converters" };
+			reloadButton.Activated += RefresButton_Activated;
+
+			convertersLayout.PackStart(reloadButton, false, false, 6);
+
+
+			PackStart(tokenLayout, false, false, 0);
+			PackStart(tokenTip, false, false, 6);
+			PackStart(new Label(""), true, true, 0);
+			PackStart(new Label("<b>Debugging</b>") { UseMarkup = true, Xalign = 0 }, false, false, 0);
+			PackStart(convertersLayout, false, false, 6);
+
+			ShowAll();
 		}
 
         Button reloadButton;
@@ -92,12 +109,12 @@ namespace MonoDevelop.Figma
 
         void NeedsStoreValue (object sender, EventArgs e)
 		{
-			FigmaRuntime.Token = tokenValueEntry.Text;
+			FigmaRuntime.Token = tokenEntry.Text;
 		}
 
 		internal void ApplyChanges ()
 		{
-			FigmaRuntime.Token = tokenValueEntry.Text;
+			FigmaRuntime.Token = tokenEntry.Text;
 		}
 
         public override void Dispose()
