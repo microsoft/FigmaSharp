@@ -3,6 +3,7 @@ using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
@@ -37,22 +38,45 @@ namespace FigmaSharp
 			}
 
 			var manifestFullPath = Path.Combine (bundleDirectoryPath, ManifestFileName);
-
 			if (!File.Exists (manifestFullPath)) {
 				throw new FileNotFoundException ("manifest doesn't exists");
 			}
 
+			DirectoryPath = bundleDirectoryPath;
+
 			try {
 				Manifest = FigmaManifest.FromFilePath (manifestFullPath);
-
 			} catch (Exception ex) {
 				throw new FileLoadException ("error reading manifest file", ex);
 			}
 		}
 
-		public void Save (string outputDirectoryPath)
+		public void Save ()
 		{
+			if (DirectoryPath == null) {
+				return;
+			}
 
+			if (!Directory.Exists (DirectoryPath)) {
+				Directory.CreateDirectory (DirectoryPath);
+			}
+
+			if (Manifest != null) {
+				Manifest.Save (Path.Combine (DirectoryPath, ManifestFileName));
+			}
+		}
+
+		public static FigmaBundle Create (string fileId, string directoryPath)
+		{
+			var bundle = new FigmaBundle () {
+				DirectoryPath = directoryPath
+			};
+			bundle.Manifest = new FigmaManifest () {
+				ApiVersion = FigmaSharp.AppContext.Current.Version,
+				Date = DateTime.Now,
+				DocumentUrl = fileId
+			};
+			return bundle;
 		}
 
 		public static FigmaBundle FromDirectoryPath (string fullPath)

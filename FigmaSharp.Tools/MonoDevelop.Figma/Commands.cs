@@ -25,7 +25,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+using System.Linq;
 using System;
 using System.IO;
 using CoreGraphics;
@@ -183,31 +183,82 @@ namespace MonoDevelop.Figma.Commands
 				);
 		}
 	
-		protected override void Run ()
+		protected async override void Run ()
 		{
-			var window = new Gtk.Dialog ();
-			window.Modal = true;
-			window.SetSizeRequest (200, 300);
-			window.Title = "Figma Bundle Generator";
+			Project currentProject = null;
 
-			var fileProvider = new FigmaManifestFileProvider (this.GetType ().Assembly, AddFigmaDocumentSource);
-			fileProvider.Load (AddFigmaDocumentSource);
-
-			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-			var rendererService = new FigmaViewRendererService (fileProvider, converters);
-			var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
-			var view = rendererService.RenderByName<IView> ("1.0. Bundle Figma Document", rendererOptions);
-
-			//var urlTextField = rendererService.Find<TextBox> ("FigmaUrlTextField");
-			//var bundleButton = rendererService.FindViewByName<Button> ("BundleButton");
-			//var cancelButton = rendererService.FindViewByName<Button> ("CancelButton");
-
-			var gtkViewHost = new Gtk.GtkNSViewHost (view.NativeObject as AppKit.NSView);
-			if (window.Child is Gtk.VBox vb) {
-				vb.PackStart (gtkViewHost, true, true, 0);
-				vb.ShowAll ();
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
+				currentProject = project;
+			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
+					&& folder.IsFigmaDirectory ()) {
+				currentProject = folder.Project;
 			}
-			MessageService.ShowCustomDialog (window, IdeApp.Workbench.RootWindow);
+
+			if (currentProject == null) {
+				return;
+			}
+
+			var figmaFolder = Path.Combine (currentProject.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
+
+			if (!Directory.Exists (figmaFolder)) {
+				Directory.CreateDirectory (figmaFolder);
+				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, figmaFolder));
+			}
+
+			var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
+			var fullBundlePath = Path.Combine (figmaFolder, bundleName);
+
+			var bundle = FigmaBundle.Create ("EGTUYgwUC9rpHmm4kJwZQXq4", fullBundlePath);
+			bundle.Save ();
+
+			//now add the content
+			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath)) ;
+
+			var manifestPath = Path.Combine (fullBundlePath, FigmaBundle.ManifestFileName);
+			currentProject.AddFile (manifestPath);
+
+			currentProject.NeedsReload = true;
+			await IdeApp.ProjectOperations.SaveAsync (currentProject);
+
+			//currentProject.AddDirectory (FigmaBundle.FigmaDirectoryName);
+
+
+			//if (!(IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
+			//	(
+			//		IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
+			//		&& folder.IsFigmaDirectory ()
+			//	))) {
+			//	return;
+			//}
+
+
+
+			//var window = new Gtk.Dialog ();
+			//window.Modal = true;
+			//window.SetSizeRequest (200, 300);
+			//window.Title = "Figma Bundle Generator";
+
+			//var fileProvider = new FigmaManifestFileProvider (this.GetType ().Assembly, AddFigmaDocumentSource);
+			//fileProvider.Load (AddFigmaDocumentSource);
+
+			//var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
+			//var rendererService = new FigmaViewRendererService (fileProvider, converters);
+			//var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
+			//var view = rendererService.RenderByName<IView> ("1.0. Bundle Figma Document", rendererOptions);
+
+			////var urlTextField = rendererService.Find<TextBox> ("FigmaUrlTextField");
+			////var bundleButton = rendererService.FindViewByName<Button> ("BundleButton");
+			////var cancelButton = rendererService.FindViewByName<Button> ("CancelButton");
+
+			//var gtkViewHost = new Gtk.GtkNSViewHost (view.NativeObject as AppKit.NSView);
+			//if (window.Child is Gtk.VBox vb) {
+			//	vb.PackStart (gtkViewHost, true, true, 0);
+			//	vb.ShowAll ();
+			//}
+			//MessageService.ShowCustomDialog (window, IdeApp.Workbench.RootWindow);
+
+
+
 		}
 	}
 
