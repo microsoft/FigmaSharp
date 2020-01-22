@@ -40,6 +40,7 @@ using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
 using System.Threading.Tasks;
+using FigmaSharp.Cocoa.Converters;
 
 namespace MonoDevelop.Figma.Commands
 {
@@ -168,6 +169,8 @@ namespace MonoDevelop.Figma.Commands
 				&& folder.IsDocumentDirectoryBundle ();
 		}
 
+		const string figmaNodeName = "1.0. Bundle Figma Bundle";
+
 		protected async override void OnRun ()
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder && currentFolder.IsDocumentDirectoryBundle ()) {
@@ -177,9 +180,18 @@ namespace MonoDevelop.Figma.Commands
 
 					var currentProject = currentFolder.Project;
 
-					var figmaBundleView = new FigmaBundleView (bundle, "test");
-					figmaBundleView.Generate ();
-					
+					var figmaBundleView = new FigmaBundleView (bundle, "test", figmaNodeName);
+
+					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
+					fileProvider.Load (bundle.DocumentFilePath);
+					var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
+					//var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
+
+					var addChildConverter = new FigmaCodeAddChildConverter ();
+					var positionConverter = new FigmaCodePositionConverter ();
+					var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, positionConverter, addChildConverter);
+					figmaBundleView.Generate (fileProvider, codeRendererService);
+
 					if (!currentProject.PathExistsInProject (bundle.ViewsDirectoryPath)) {
 						currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, bundle.ViewsDirectoryPath));
 					}
