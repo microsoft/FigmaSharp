@@ -24,8 +24,11 @@ namespace FigmaSharp
 
 		protected void GenerateInitializeComponentMethod (StringBuilder sb)
 		{
-			GeneratePrivateMethod (sb, "InitializeComponent");
-			sb.AppendLine (InitializeComponentContent);
+			GeneratePrivateMethod (sb, InitializeComponentMethodName);
+
+			foreach (var line in InitializeComponentContent.Split('\n')) {
+				AppendLine (sb, line);
+			}
 			RemoveTabLevel ();
 			CloseBracket (sb);
 		}
@@ -73,6 +76,7 @@ namespace FigmaSharp
 			GenerateNamespace (sb, Namespace);
 			GeneratePublicPartialClass (sb, ClassName, BaseClass);
 			GenerateConstructor (sb, ClassName);
+			AppendLine (sb, $"{InitializeComponentMethodName} ();");
 			RemoveTabLevel ();
 			CloseConstructor (sb);
 			ClosePublicPartialClass (sb);
@@ -83,6 +87,8 @@ namespace FigmaSharp
 
 	public abstract class FigmaClassBase
 	{
+		 protected const string InitializeComponentMethodName = "InitializeComponent";
+
 		public List<string> Usings { get; } = new List<string> ();
 		public List<string> Comments { get; } = new List<string> ();
 
