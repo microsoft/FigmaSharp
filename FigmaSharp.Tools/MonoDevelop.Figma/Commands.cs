@@ -166,9 +166,30 @@ namespace MonoDevelop.Figma.Commands
 				&& folder.IsDocumentDirectoryBundle ();
 		}
 
-		protected override void OnRun ()
+		protected async override void OnRun ()
 		{
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder && currentFolder.IsDocumentDirectoryBundle ()) {
 
+				var bundle = FigmaBundle.FromDirectoryPath (currentFolder.Path.FullPath);
+				if (bundle != null) {
+
+					var currentProject = currentFolder.Project;
+
+					var figmaBundleView = new FigmaBundleView (bundle, "test");
+					figmaBundleView.Generate ();
+					
+					if (!currentProject.PathExistsInProject (bundle.ViewsDirectoryPath)) {
+						currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, bundle.ViewsDirectoryPath));
+					}
+
+					var designerProjectFile = currentProject.AddFile (figmaBundleView.PartialDesignerClassFilePath);
+					var csProjectFile = currentProject.AddFile (figmaBundleView.PublicCsClassFilePath);
+					designerProjectFile.DependsOn = csProjectFile.FilePath;
+
+					currentProject.NeedsReload = true;
+					await IdeApp.ProjectOperations.SaveAsync (currentProject);
+				}
+			}
 		}
 	}
 
