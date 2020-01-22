@@ -178,15 +178,15 @@ namespace FigmaSharp
 			string time = Date.ToString("HH:mm");
 
 			string header =
-				$"// This file was auto-generated using\n" +
-				$"// FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}\n" +
-				$"//" +
-				$"// Document title:   macOS Components\n" + // TODO: Document title in manifest
-				$"// Document version: {DocumentVersion}\n" +
-				$"// Document URL:     {DocumentUrl}\n" +
-				$"//" +
-				$"// Changes to this file may cause incorrect behavior\n" +
-				$"// and will be lost if the code is regenerated.";
+				$"* This file was auto-generated using\n" +
+				$"* FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}\n" +
+				$"*\n" +
+				$"* Document title:   macOS Components\n" + // TODO: Document title in manifest
+				$"* Document version: {DocumentVersion}\n" +
+				$"* Document URL:     {DocumentUrl}\n" +
+				$"*\n" +
+				$"* Changes to this file may cause incorrect behavior\n" +
+				$"* and will be lost if the code is regenerated.";
 
 			builder.AppendLine(header);
 		}
