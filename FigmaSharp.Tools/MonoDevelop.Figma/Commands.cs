@@ -210,6 +210,7 @@ namespace MonoDevelop.Figma.Commands
 	class FigmaNewBundlerCommandHandler : FigmaCommandHandler
 	{
 		const string AddFigmaDocumentSource = "AddFigmaDocument.figma";
+		const string MainWindowName = "1.0. Bundle Figma Bundle";
 
 		protected override void OnUpdate (CommandInfo info)
 		{
@@ -226,9 +227,9 @@ namespace MonoDevelop.Figma.Commands
 
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
 				currentProject = project;
-			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
-					&& folder.IsFigmaDirectory ()) {
-				currentProject = folder.Project;
+			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder projectFolder
+					&& projectFolder.IsFigmaDirectory ()) {
+				currentProject = projectFolder.Project;
 			}
 
 			if (currentProject == null) {
@@ -253,7 +254,7 @@ namespace MonoDevelop.Figma.Commands
 			bundle.GenerateLocalDocument (includeImages);
 			//now we need to add the content
 			//bundle
-			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath)) ;
+			currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath));
 			//manifest
 			currentProject.AddFile (Path.Combine (fullBundlePath, FigmaBundle.ManifestFileName));
 			//document
@@ -276,18 +277,22 @@ namespace MonoDevelop.Figma.Commands
 			currentProject.NeedsReload = true;
 			await IdeApp.ProjectOperations.SaveAsync (currentProject);
 
-			//currentProject.AddDirectory (FigmaBundle.FigmaDirectoryName);
-			//if (!(IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
-			//	(
-			//		IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
-			//		&& folder.IsFigmaDirectory ()
-			//	))) {
-			//	return;
-			//}
+			currentProject.AddDirectory (FigmaBundle.FigmaDirectoryName);
+			if (!(IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
+				(
+					IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
+					&& folder.IsFigmaDirectory ()
+				))) {
+				return;
+			}
 			//var window = new Gtk.Dialog ();
 			//window.Modal = true;
 			//window.SetSizeRequest (200, 300);
 			//window.Title = "Figma Bundle Generator";
+
+			////var resourcesFullPath = Path.Combine (currentProject.BaseDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
+
+			////var fileFullPath = Path.Combine (currentProject.BaseDirectory.FullPath, AddFigmaDocumentSource);
 
 			//var fileProvider = new FigmaManifestFileProvider (this.GetType ().Assembly, AddFigmaDocumentSource);
 			//fileProvider.Load (AddFigmaDocumentSource);
@@ -295,7 +300,7 @@ namespace MonoDevelop.Figma.Commands
 			//var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
 			//var rendererService = new FigmaViewRendererService (fileProvider, converters);
 			//var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
-			//var view = rendererService.RenderByName<IView> ("1.0. Bundle Figma Document", rendererOptions);
+			//var view = rendererService.RenderByPath<IView> (rendererOptions, "");
 
 			////var urlTextField = rendererService.Find<TextBox> ("FigmaUrlTextField");
 			////var bundleButton = rendererService.FindViewByName<Button> ("BundleButton");
