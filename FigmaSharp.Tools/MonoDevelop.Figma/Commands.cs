@@ -60,7 +60,9 @@ namespace MonoDevelop.Figma.Commands
 
 					if (!File.Exists (manifestFilePath)) {
 						var manifest = new FigmaManifest () {
+							DocumentVersion = 0,
 							ApiVersion = FigmaSharp.AppContext.Current.Version,
+							RemoteApiVersion = FigmaSharp.AppContext.Current.RemoteApiVersion,
 							Date = DateTime.Now
 						};
 						manifest.Save (manifestFilePath);
