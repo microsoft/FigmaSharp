@@ -344,7 +344,15 @@ namespace FigmaSharp.Services
         {
         }
 
-		public T RenderByPath<T>(FigmaViewRendererServiceOptions options, params string[] path) where T : IView
+        public T RenderByFullPath<T> (FigmaViewRendererServiceOptions options, string path) where T : IView
+        {
+            FigmaNode node = fileProvider.FindByPath (path);
+            if (node == null)
+                return default (T);
+            return (T)RenderFigmaNode (node, options);
+        }
+
+        public T RenderByPath<T>(FigmaViewRendererServiceOptions options, params string[] path) where T : IView
 		{
 			FigmaNode node = fileProvider.FindByPath(path);
 			if (node == null)

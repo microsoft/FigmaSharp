@@ -103,7 +103,9 @@ namespace MonoDevelop.Figma
         FigmaFileRendererService rendererService;
         FigmaViewRendererDistributionService distributionService;
 
-        protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
+		
+
+		protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
         {
             if (!(modelDescriptor is FileDescriptor fileDescriptor))
                 throw new InvalidOperationException();
@@ -116,36 +118,24 @@ namespace MonoDevelop.Figma
 
                 figmaDelegate = new FigmaDesignerDelegate();
               
-    //            string assemblyPath = null;
-				////we need check the current configuration and check for the generated assembly path
-				//if (Owner is DotNetProject dotNetProject) {
-    //                var configuration = dotNetProject.GetConfiguration (IdeApp.Workspace.ActiveConfiguration);
-    //                assemblyPath = dotNetProject.GetOutputFileName (IdeApp.Workspace.ActiveConfiguration);
-    //            }
-
-                //            System.Reflection.Assembly assembly;
-                //try {
-                //                assembly = File.Exists (assemblyPath) ? System.Reflection.Assembly.LoadFile (assemblyPath) : this.GetType ().Assembly;
-                //            } catch (Exception ex) {
-                //                Console.WriteLine (ex);
-                //                assembly = this.GetType ().Assembly;
-                //            }
-
                 var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
                 fileProvider = new FigmaLocalFileProvider (localPath);
                 fileProvider.File = filePath.FullPath;
 
-
                 var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
+                var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
+
                 rendererService = new FigmaFileRendererService (fileProvider, converters);
+
+                rendererService.CustomConverters.Add (new WindowConverter ());
+                rendererService.CustomConverters.Add (new SheetDialogConverter ());
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
 
                 session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
                 //session.ModifiedChanged += HandleModifiedChanged;
                 session.ReloadFinished += Session_ReloadFinished;
 
-                surface = new FigmaDesignerSurface(figmaDelegate, session)
-                {
+                surface = new FigmaDesignerSurface(figmaDelegate, session) {
                     Session = session
                 };
 
@@ -161,7 +151,9 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(scrollViewWrapper, fileProvider.File, new FigmaViewRendererServiceOptions());
+                session.Reload(scrollViewWrapper, fileProvider.File, new FigmaViewRendererServiceOptions () {
+					ScanChildrenFromFigmaInstances = false
+				});
             }
             await base.OnInitialize(modelDescriptor, status);
         }
@@ -219,8 +211,13 @@ namespace MonoDevelop.Figma
 
 			Reposition (mainNodes);
 
-			//we need reload after set the content to ensure the scrollview
-			scrollViewWrapper.AdjustToContent();
+            //We want know the background color of the figma camvas and apply to our scrollview
+            var canvas = fileProvider.Nodes.OfType<FigmaCanvas> ().FirstOrDefault ();
+            if (canvas != null)
+                scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
+
+            //we need reload after set the content to ensure the scrollview
+            scrollViewWrapper.AdjustToContent();
         }
 
         public void Reposition(ProcessedNode[] mainNodes)

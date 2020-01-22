@@ -51,7 +51,8 @@ namespace FigmaSharp.Services
         string GetContentTemplate(string file);
         void OnStartImageLinkProcessing(List<ProcessedNode> imageVectors);
 
-		FigmaNode FindByPath(params string[] path);
+        FigmaNode FindByFullPath (string fullPath);
+        FigmaNode FindByPath(params string[] path);
         FigmaNode FindByName(string nodeName);
     }
 
@@ -336,12 +337,17 @@ namespace FigmaSharp.Services
             }
         }
 
-		/// <summary>
-		/// Finds a node using the path of the views, returns null in case of no data
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public FigmaNode FindByPath(params string[] path)
+        public FigmaNode FindByFullPath (string fullPath)
+        {
+            return FindByPath (fullPath.Split ('/'));
+        }
+
+        /// <summary>
+        /// Finds a node using the path of the views, returns null in case of no data
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public FigmaNode FindByPath(params string[] path)
 		{
 			if (path.Length == 0)
 			{
@@ -393,5 +399,6 @@ namespace FigmaSharp.Services
         {
             AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
         }
-    }
+
+	}
 }
