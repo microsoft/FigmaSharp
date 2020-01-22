@@ -17,6 +17,7 @@
   </ItemGroup>
       <ItemGroup>
         <Folder Include="Resources\" />
+        <Folder Include="Converters\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
