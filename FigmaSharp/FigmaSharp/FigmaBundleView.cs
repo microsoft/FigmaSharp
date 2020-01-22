@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
@@ -8,6 +9,7 @@ namespace FigmaSharp
 		internal const string PublicCsExtension = ".cs";
 		internal const string PartialDesignerExtension = ".designer.cs";
 
+		public string FigmaNodeName { get; private set; }
 		public string Name { get; private set; }
 
 		public string PartialDesignerClassName => $"{Name}{PartialDesignerExtension}";
@@ -20,13 +22,14 @@ namespace FigmaSharp
 
 		private readonly FigmaBundle bundle;
 
-		public FigmaBundleView (FigmaBundle figmaBundle, string name)
+		public FigmaBundleView (FigmaBundle figmaBundle, string viewName, string figmaName)
 		{
-			Name = name;
+			Name = viewName;
 			bundle = figmaBundle;
+			FigmaNodeName = figmaName;
 		}
 
-		public void Generate ()
+		public void Generate (IFigmaFileProvider fileProvider, FigmaCodeRendererService codeRendererService)
 		{
 			if (!Directory.Exists (bundle.ViewsDirectoryPath))
 				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
@@ -40,9 +43,24 @@ namespace FigmaSharp
 				ApiVersion = AppContext.Current.Version
 			};
 
+			string initializeComponentContent;
+			if (!string.IsNullOrEmpty (FigmaNodeName)) {
+				var figmaNode = fileProvider.FindByName (FigmaNodeName);
+				if (figmaNode == null) {
+					throw new Exception ("node not found");
+				}
+				var builder = new System.Text.StringBuilder ();
+				codeRendererService.GetCode (builder, figmaNode, null, null);
+
+				initializeComponentContent = builder.ToString ();
+			} else {
+				initializeComponentContent = string.Empty;
+			}
+
 			partialDesignerClass.Usings.Add ("AppKit");
 			partialDesignerClass.ClassName = Name;
 			partialDesignerClass.Namespace = bundle.Namespace;
+			partialDesignerClass.InitializeComponentContent = initializeComponentContent;
 
 			partialDesignerClass.Save (PartialDesignerClassFilePath);
 

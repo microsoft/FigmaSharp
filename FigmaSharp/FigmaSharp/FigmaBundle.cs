@@ -19,6 +19,7 @@ namespace FigmaSharp
 
 		public string DocumentFilePath => Path.Combine (DirectoryPath, DocumentFileName);
 		public string ViewsDirectoryPath => Path.Combine (DirectoryPath, ViewsDirectoryName);
+		public string ResourcesDirectoryPath => Path.Combine (DirectoryPath, ResourcesDirectoryName);
 
 		public string Namespace { get; set; } = "FigmaSharp";
 
@@ -41,7 +42,7 @@ namespace FigmaSharp
 
 			foreach (var viewFullPath in Directory.EnumerateFiles (ViewsDirectoryPath, $"*{FigmaBundleView.PartialDesignerExtension}")) {
 				var name = viewFullPath.Substring (0, viewFullPath.Length - FigmaBundleView.PartialDesignerExtension.Length);
-				Views.Add (new FigmaBundleView (this, name));
+				Views.Add (new FigmaBundleView (this, name, null));
 			}
 		}
 
