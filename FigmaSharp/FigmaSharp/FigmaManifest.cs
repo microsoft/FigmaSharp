@@ -45,18 +45,15 @@ namespace FigmaSharp
 			string date = Date.ToString("yyyy-MM-dd HH:mm");
 			string time = Date.ToString("HH:mm");
 
-			string header =
-				$"* This file was auto-generated using\n" +
-				$"* FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}\n" +
-				$"*\n" +
-				$"* Document title:   macOS Components\n" + // TODO: Document title in manifest
-				$"* Document version: {DocumentVersion}\n" +
-				$"* Document URL:     {DocumentUrl}\n" +
-				$"*\n" +
-				$"* Changes to this file may cause incorrect behavior\n" +
-				$"* and will be lost if the code is regenerated.";
-
-			builder.AppendLine(header);
+			builder.AppendLine ($"This file was auto-generated using");
+			builder.AppendLine ($"FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}");
+			builder.AppendLine ();
+			builder.AppendLine ($"Document title:   macOS Components");
+			builder.AppendLine ($"Document version: {DocumentVersion}");
+			builder.AppendLine ($"Document URL:     {DocumentUrl}");
+			builder.AppendLine ();
+			builder.AppendLine ($"Changes to this file may cause incorrect behavior");
+			builder.AppendLine ($"and will be lost if the code is regenerated.");
 		}
 
 		public static FigmaManifest FromFilePath (string filePath)
