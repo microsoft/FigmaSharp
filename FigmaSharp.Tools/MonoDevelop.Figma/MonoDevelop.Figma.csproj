@@ -17,6 +17,8 @@
   </ItemGroup>
       <ItemGroup>
         <Folder Include="Resources\" />
+        <Folder Include=".figma\" />
+        <Folder Include=".figma\MonoDevelopExtension.figmabundle\" />
         <Folder Include="Converters\" />
       </ItemGroup>
       <ItemGroup>
@@ -79,5 +81,9 @@
         <EmbeddedResource Include="Resources\vs-prefs-figma~sel%402x.png">
           <LogicalName>vs-prefs-figma~sel@2x.png</LogicalName>
         </EmbeddedResource>
+      </ItemGroup>
+      <ItemGroup>
+        <None Include=".figma\MonoDevelopExtension.figmabundle\manifest.json" />
+        <None Include=".figma\MonoDevelopExtension.figmabundle\document.figma" />
       </ItemGroup>
 </Project>
