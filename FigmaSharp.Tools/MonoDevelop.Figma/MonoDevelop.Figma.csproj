@@ -34,6 +34,12 @@
         <None Remove="Resources\vs-pad-figma~dark%402x.png" />
         <None Remove="Resources\vs-pad-figma~sel.png" />
         <None Remove="Resources\vs-pad-figma~sel%402x.png" />
+        <None Remove="Resources\vs-prefs-figma.png" />
+        <None Remove="Resources\vs-prefs-figma%402x.png" />
+        <None Remove="Resources\vs-prefs-figma~dark.png" />
+        <None Remove="Resources\vs-prefs-figma~dark%402x.png" />
+        <None Remove="Resources\vs-prefs-figma~sel.png" />
+        <None Remove="Resources\vs-prefs-figma~sel%402x.png" />
       </ItemGroup>
       <ItemGroup>
         <EmbeddedResource Include="Resources\vs-pad-figma.png">
@@ -53,6 +59,24 @@
         </EmbeddedResource>
         <EmbeddedResource Include="Resources\vs-pad-figma~sel%402x.png">
           <LogicalName>vs-pad-figma~sel@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-prefs-figma.png">
+          <LogicalName>vs-prefs-figma.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-prefs-figma%402x.png">
+          <LogicalName>vs-prefs-figma@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-prefs-figma~dark.png">
+          <LogicalName>vs-prefs-figma~dark.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-prefs-figma~dark%402x.png">
+          <LogicalName>vs-prefs-figma~dark@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-prefs-figma~sel.png">
+          <LogicalName>vs-prefs-figma~sel.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\vs-prefs-figma~sel%402x.png">
+          <LogicalName>vs-prefs-figma~sel@2x.png</LogicalName>
         </EmbeddedResource>
       </ItemGroup>
 </Project>
