@@ -63,6 +63,7 @@
     <Compile Include="Converters\TextFieldConverter.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Converters\WindowConverter.cs" />
+    <Compile Include="Converters\SpinnerConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
