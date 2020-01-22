@@ -89,6 +89,7 @@ namespace FigmaSharp
 			};
 			bundle.Manifest = new FigmaManifest () {
 				ApiVersion = AppContext.Current.Version,
+				RemoteApiVersion = AppContext.Current.RemoteApiVersion,
 				Date = DateTime.Now,
 				DocumentUrl = fileId
 			};

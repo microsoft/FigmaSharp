@@ -46,7 +46,10 @@ namespace FigmaSharp
 
         internal string Token { get; set; }
 
-		public string Version => System.Diagnostics.FileVersionInfo.GetVersionInfo(this.GetType ().Assembly.Location).FileVersion;
+		//TODO: right now there is no way to detect changes in API
+        public string RemoteApiVersion { get; } = "1.0";
+
+        public string Version => System.Diagnostics.FileVersionInfo.GetVersionInfo(this.GetType ().Assembly.Location).FileVersion;
 
         AppContext()
         {
@@ -130,6 +133,6 @@ namespace FigmaSharp
 
         public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
 
-        #endregion
-    }
+		#endregion
+	}
 }
