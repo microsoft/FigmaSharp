@@ -45,8 +45,12 @@ namespace FigmaSharp.NativeControls
         ComboBoxStandard = 70,
         ComboBoxSmall = 71,
         ComboBoxStandardDark = 72,
-        ComboBoxSmallDark = 73
+        ComboBoxSmallDark = 73,
 
+        ProgressSpinnerSmallDark = 80,
+        ProgressSpinnerStandardDark = 81,
+        ProgressSpinnerSmall = 82,
+        ProgressSpinnerStandard = 83
     }
 
     public static class FigmaControlsExtension
@@ -62,10 +66,10 @@ namespace FigmaSharp.NativeControls
 
 			{ "65722325467a63cc1dcb0851cd7cdc1bb3b8bd7c", NativeControlType.ButtonStandardDark }, //not sure why we have 2 instances
 
-			{ "a31379072ea9b5b2ed501c707537df70e61e867d", NativeControlType.TextFieldStandard },
-            { "6881fe7b35babca25147cb0cbadf401a266cda26", NativeControlType.TextFieldSmall },
-            { "d0dfb49c121f3f2619096456026e91e224ac4248", NativeControlType.TextFieldStandardDark },
-            { "646b4c57510bd605393f887599a1665d828216ef", NativeControlType.TextFieldSmallDark },
+			{ "Text Field/Standard", NativeControlType.TextFieldStandard },
+            { "Text Field/Small", NativeControlType.TextFieldSmall },
+            { "Text Field/Standard Dark", NativeControlType.TextFieldStandardDark },
+            { "Text Field/Small Dark", NativeControlType.TextFieldSmallDark },
 
             { "92af27bcd788e4f3a291b8776adda4a2efc060ef", NativeControlType.FilterSmallDark },
             { "be1d8114b486b8e1fe1e8a01c7521e806d856c5d", NativeControlType.FilterStandardDark },
@@ -93,6 +97,11 @@ namespace FigmaSharp.NativeControls
             { "9d78fd2ff7b81a8cf56115504bab1bf8e3e413e9", NativeControlType.ComboBoxSmall },
             { "cdb09381b061dddfe1f02fcad38a247b3724d562", NativeControlType.ComboBoxStandardDark },
             { "97d0aa7c49386dd69f430b29bd82e89038e386d4", NativeControlType.ComboBoxSmallDark },
+
+            { "Progress Spinner/Small", NativeControlType.ProgressSpinnerSmall },
+            { "Progress Spinner/Small Dark", NativeControlType.ProgressSpinnerSmallDark },
+            { "Progress Spinner/Standard", NativeControlType.ProgressSpinnerStandard },
+            { "Progress Spinner/Standard Dark", NativeControlType.ProgressSpinnerStandardDark },
         };
 
         public static NativeControlType ToControlType (this FigmaInstance figmaInstance)
@@ -101,6 +110,10 @@ namespace FigmaSharp.NativeControls
             {
                 if (data.TryGetValue (figmaInstance.Component.key, out var nativeControls))
                 {
+                    return nativeControls;
+                }
+
+                if (data.TryGetValue (figmaInstance.Component.name, out nativeControls)) {
                     return nativeControls;
                 }
                 Console.WriteLine("Component Key not found: {0} - {1}", figmaInstance.Component.key, figmaInstance.Component.name);

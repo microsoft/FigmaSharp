@@ -37,19 +37,18 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class TextFieldConverter : TextFieldConverterBase
+    public partial class TextFieldConverter : TextFieldConverterBase
     {
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var instance = (FigmaInstance)currentNode;
 
-			var textBox = new TextBox();
-			var view = (NSTextField)textBox.NativeObject;
+            var textBox = new TextBox ();
+            var view = (NSTextField)textBox.NativeObject;
 
             var figmaInstance = (FigmaInstance)currentNode;
-            var controlType = figmaInstance.ToControlType();
-            switch (controlType)
-            {
+            var controlType = figmaInstance.ToControlType ();
+            switch (controlType) {
                 case NativeControlType.TextFieldSmall:
                 case NativeControlType.TextFieldSmallDark:
                     view.ControlSize = NSControlSize.Small;
@@ -61,47 +60,44 @@ namespace FigmaSharp.NativeControls.Cocoa
             }
 
             var texts = instance.children
-                .OfType<FigmaText>();
+                .OfType<FigmaText> ();
 
             var text = texts.FirstOrDefault (s => s.name == "lbl");
-            if (text != null)
-            {
-				textBox.Text = text.characters;
-                view.Configure(text);
+            if (text != null) {
+                textBox.Text = text.characters;
+                view.Configure (text);
             }
 
-            var placeholder = texts.FirstOrDefault(s => s.name == "placeholder");
+            var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
             if (placeholder != null)
                 view.PlaceholderString = placeholder.characters;
 
 
-            if (controlType.ToString().EndsWith("Dark", System.StringComparison.Ordinal))
-            {
-                view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+            if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
+                view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
             }
 
             return textBox;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
-			StringBuilder builder = new StringBuilder ();
-			builder.AppendLine ($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof (NSTextField).FullName}();");
-			if (currentNode is IFigmaDocumentContainer container) 
-			{
-				var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
-	   .FirstOrDefault ();
+            StringBuilder builder = new StringBuilder ();
+            builder.AppendLine ($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof (NSTextField).FullName}();");
+            if (currentNode is IFigmaDocumentContainer container) {
+                var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
+       .FirstOrDefault ();
 
                 var text = figmaText.characters ?? string.Empty;
                 var isMultiline = text.Contains ('\n');
 
                 builder.AppendLine (string.Format ("{0}.StringValue = {1}\"{2}\";",
-					FigmaSharp.Resources.Ids.Conversion.NameIdentifier,
+                    FigmaSharp.Resources.Ids.Conversion.NameIdentifier,
                     isMultiline ? "@" : "",
                      isMultiline ? text.Replace ("\"", "\"\"") : text));
-			}
-            builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
-            return builder.ToString();
+            }
+            builder.Configure (FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
+            return builder.ToString ();
         }
     }
 }
