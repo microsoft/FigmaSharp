@@ -30,8 +30,6 @@ namespace FigmaSharp.NativeControls
         RadioSmall = 42,
         RadioStandard = 43,
 
-        RadioSingleStandard = 46,
-
         CheckboxSmallDark = 50,
         CheckboxStandardDark = 51,
         CheckboxSmall = 52,
@@ -82,8 +80,6 @@ namespace FigmaSharp.NativeControls
             { "844a988e2231ee8c794221e1a8b04522649caca4", NativeControlType.RadioStandardDark },
             { "b71c0bed2374cf42b3990fcff961b577d0d912b4", NativeControlType.RadioSmall },
             { "be9ae04fb622ea797dc9659e6d3f05987b8567c2", NativeControlType.RadioStandard },
-
-            { "92f3aa0d8397ca5f0bf76e818e2300152394836a", NativeControlType.RadioSingleStandard },
 
 			// Checkboxes
             { "bea94829972c38261c31abceec35bb7cfd2ab440", NativeControlType.CheckboxSmallDark },
