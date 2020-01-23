@@ -46,8 +46,11 @@ namespace FigmaSharp.NativeControls
         ComboBoxSmall = 71,
         ComboBoxStandardDark = 72,
         ComboBoxSmallDark = 73
-
     }
+
+
+	public static string CocoaControlsURL = "https://www.figma.com/file/QzEgq2772k2eeMF2sVNc3kEY";
+    public static string CocoaControlsVersion = "FigmaSharp 0.1";
 
     public static class FigmaControlsExtension
     {
