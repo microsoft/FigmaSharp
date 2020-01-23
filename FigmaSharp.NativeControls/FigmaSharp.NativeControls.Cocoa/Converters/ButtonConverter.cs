@@ -25,15 +25,18 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
-using FigmaSharp.NativeControls.Base;
+
+using System;
 using System.Linq;
 using System.Text;
+
+using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using System;
-using FigmaSharp.Views;
+using FigmaSharp.NativeControls.Base;
 using FigmaSharp.Services;
+using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
@@ -88,6 +91,10 @@ namespace FigmaSharp.NativeControls.Cocoa
                 if (group.name == "Disabled") {
 					button.Enabled = false;
                 }
+
+                if (group.name == "Default") {
+                    (button.NativeObject as NSButton).KeyEquivalent = "\r"; // Return key
+                }
             } else
 			{
 				var label = figmaInstance.children
@@ -111,19 +118,44 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             var builder = new StringBuilder();
-            var name = "[NAME]";
-            builder.AppendLine($"var {name} = new {nameof(NSButton)}();");
-            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.ToString ()));
-            builder.Configure(name, currentNode);
 
+            var figmaInstance = (FigmaInstance)currentNode;
+            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+
+            builder.AppendLine($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof(NSButton).FullName}();");
+            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, NSBezelStyle.Rounded.GetFullName ()));
+            builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
+
+            var controlType = figmaInstance.ToControlType ();
+            switch (controlType) {
+                case NativeControlType.ButtonLarge:
+                case NativeControlType.ButtonLargeDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    break;
+                case NativeControlType.ButtonStandard:
+                case NativeControlType.ButtonStandardDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    break;
+                case NativeControlType.ButtonSmall:
+                case NativeControlType.ButtonSmallDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                    break;
+            }
+
+            string title = null;
 			if (currentNode is IFigmaDocumentContainer instance) {
 				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
 				if (figmaText != null) {
-					builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
-					builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, figmaText.characters));
+
+                    title = figmaText.characters;
+                    builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, figmaText.opacity.ToDesignerString ()));
+				
 					//button.Font = figmaText.style.ToNSFont();
 				}
 			}
+
+            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, title ?? string.Empty));
+
             return builder.ToString();
         }
     }
