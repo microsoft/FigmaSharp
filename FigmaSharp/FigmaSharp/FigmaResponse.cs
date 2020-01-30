@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.IO;
 using FigmaSharp.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace FigmaSharp.Models
 {
@@ -42,7 +43,7 @@ namespace FigmaSharp.Models
 	public class FigmaFileVersion
     {
         public string id { get; set; }
-        public string created_at { get; set; }
+        public DateTime created_at { get; set; }
         public string label { get; set; }
         public string description { get; set; }
         public FigmaUser user { get; set; }

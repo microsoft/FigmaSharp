@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGeneratorTests.cs" />
+    <Compile Include="FigmaApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">

@@ -59,7 +59,17 @@ namespace FigmaSharp
     {
         public string Version { get; private set; }
 
-        public FigmaFileQuery (string fileId, string version = null, string personalAccessToken = null) : base (fileId, personalAccessToken)
+        public FigmaFileQuery (string fileId, string personalAccessToken = null) : this (fileId, (string)null, personalAccessToken)
+        {
+
+        }
+
+        public FigmaFileQuery (string fileId, Models.FigmaFileVersion version, string personalAccessToken = null) : this (fileId, version?.id, personalAccessToken)
+        {
+           
+        }
+
+        public FigmaFileQuery (string fileId, string version, string personalAccessToken = null) : base (fileId, personalAccessToken)
         {
             Version = version;
         }
