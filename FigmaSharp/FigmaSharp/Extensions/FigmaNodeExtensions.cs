@@ -101,7 +101,8 @@ namespace FigmaSharp
                 }
             }
         }
-        public static IEnumerable<FigmaVectorEntity> OfTypeImage(this FigmaNode child)
+
+		public static IEnumerable<FigmaVectorEntity> OfTypeImage(this FigmaNode child)
         {
             if (child.GetType () != typeof (FigmaText) && child is FigmaVectorEntity figmaVectorEntity)
             {
@@ -132,6 +133,27 @@ namespace FigmaSharp
         //        FileHelper.SaveFiles(directoryPath, format, urls);
         //    }
         //}
+
+        public static IEnumerable<FigmaNode> FindImageNodes (this FigmaNode sender, Func<FigmaNode, bool> condition = null)
+        {
+			if (sender is IFigmaImage && (condition == null || condition (sender))) {
+                yield return sender;
+			}
+
+            if (sender is IFigmaNodeContainer container) {
+                foreach (var child in container.children) {
+                    foreach (var image in child.FindImageNodes ()) {
+                        yield return image;
+                    }
+                }
+            } else if (sender is FigmaDocument document) {
+                foreach (var child in document.children) {
+                    foreach (var image in child.FindImageNodes ()) {
+                        yield return image;
+                    }
+                }
+            }
+        }
 
         public static void Recursively(this FigmaNode[] customViews, string filter, List<FigmaNode> viewsFound)
         {

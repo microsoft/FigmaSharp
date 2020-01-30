@@ -44,7 +44,6 @@ namespace FigmaSharp
 		//TODO: right now there is no way to detect changes in API
 		public string Version { get; } = "1.0";
 
-
 		#region Urls
 
 		string GetFigmaFileUrl (string fileId) => string.Format ("https://api.figma.com/v1/files/{0}", fileId);
@@ -59,40 +58,22 @@ namespace FigmaSharp
 
 		public string GetContentFile (FigmaFileQuery figmaQuery)
 		{
-			var queryUrl = GetFigmaFileUrl (figmaQuery.FileId);
-			var token = string.IsNullOrEmpty (figmaQuery.PersonalAccessToken) ?
-				Token : figmaQuery.PersonalAccessToken;
-
-			if (figmaQuery.Version != null) {
-				queryUrl += string.Format ("?version={0}", figmaQuery.Version);
-			}
-
-			var httpWebRequest = (HttpWebRequest)WebRequest.Create (queryUrl);
-			httpWebRequest.ContentType = "application/json";
-			httpWebRequest.Method = "GET";
-			httpWebRequest.Headers["x-figma-token"] = token;
-			
-			var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse ();
-			using (var streamReader = new StreamReader (httpResponse.GetResponseStream ())) {
-				return streamReader.ReadToEnd ();
-			}
+			var result = GetContentUrl (figmaQuery,
+				(e) => {
+					var queryUrl = GetFigmaFileUrl (figmaQuery.FileId);
+					if (e.Version != null) {
+						queryUrl += string.Format ("?version={0}", figmaQuery.Version);
+					}
+					return queryUrl;
+				}
+			);
+			return result;
 		}
 
 		public string GetContentFileVersion (FigmaFileVersionQuery figmaQuery)
 		{
-			var queryUrl = GetFigmaFileVersionsUrl (figmaQuery.FileId);
-			var token = string.IsNullOrEmpty (figmaQuery.PersonalAccessToken) ?
-				Token : figmaQuery.PersonalAccessToken;
-
-			var httpWebRequest = (HttpWebRequest)WebRequest.Create (queryUrl);
-			httpWebRequest.ContentType = "application/json";
-			httpWebRequest.Method = "GET";
-			httpWebRequest.Headers["x-figma-token"] = token;
-
-			var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse ();
-			using (var streamReader = new StreamReader (httpResponse.GetResponseStream ())) {
-				return streamReader.ReadToEnd ();
-			}
+			var result = GetContentUrl (figmaQuery,	(e) => GetFigmaFileVersionsUrl (e.FileId));
+			return result;
 		}
 
 		public FigmaFileResponse GetFile (FigmaFileQuery figmaQuery)
@@ -119,33 +100,41 @@ namespace FigmaSharp
 
 		public FigmaImageResponse GetImage (FigmaImageQuery figmaQuery)
 		{
-			var figmaImageUrl = GetFigmaImageUrl (figmaQuery.FileId, figmaQuery.Ids);
-			var stringBuilder = new StringBuilder (figmaImageUrl);
-			if (figmaQuery.Scale != default) {
-				stringBuilder.Append (string.Format ("&scale={0}", figmaQuery.Scale));
-			}
-			if (figmaQuery.Format != default) {
-				stringBuilder.Append (string.Format ("&format={0}", figmaQuery.Format));
-			}
-			if (figmaQuery.Version != null) {
-				stringBuilder.Append (string.Format ("&version={0}", figmaQuery.Version));
-			}
+			var result = GetContentUrl (figmaQuery,
+				(e) => {
+					var figmaImageUrl = GetFigmaImageUrl (figmaQuery.FileId, figmaQuery.Ids);
+					var stringBuilder = new StringBuilder (figmaImageUrl);
 
-			var httpWebRequest = (HttpWebRequest)WebRequest.Create (stringBuilder.ToString ());
+					stringBuilder.Append (string.Format ("&format={0}", figmaQuery.Format));
+					stringBuilder.Append (string.Format ("&scale={0}", figmaQuery.Scale));
+
+					if (figmaQuery.Version != null) {
+						stringBuilder.Append (string.Format ("&version={0}", figmaQuery.Version));
+					}
+					return stringBuilder.ToString ();
+				}
+			);
+
+			return JsonConvert.DeserializeObject<FigmaImageResponse> (result);
+		}
+
+		string GetContentUrl <T> (T figmaQuery, Func<T, string> handler) where T : FigmaFileBaseQuery
+		{
+			var token = string.IsNullOrEmpty (figmaQuery.PersonalAccessToken) ?
+	Token : figmaQuery.PersonalAccessToken;
+
+			var query = handler (figmaQuery);
+
+			var httpWebRequest = (HttpWebRequest)WebRequest.Create (query);
 			httpWebRequest.ContentType = "application/json";
 			httpWebRequest.Method = "GET";
-			httpWebRequest.Headers["x-figma-token"] = figmaQuery.PersonalAccessToken;
+			httpWebRequest.Headers["x-figma-token"] = token;
 
-			try {
-				var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse ();
-				using (var streamReader = new StreamReader (httpResponse.GetResponseStream ())) {
-					var result = streamReader.ReadToEnd ();
-					return JsonConvert.DeserializeObject<FigmaImageResponse> (result);
-				}
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
+			var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse ();
+			using (var streamReader = new StreamReader (httpResponse.GetResponseStream ())) {
+				var result = streamReader.ReadToEnd ();
+				return result;
 			}
-			return null;
 		}
 
 		#endregion
