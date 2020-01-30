@@ -64,7 +64,7 @@ namespace FigmaSharp
 				Token : figmaQuery.PersonalAccessToken;
 
 			if (figmaQuery.Version != null) {
-				queryUrl += string.Format ("&version={0}", figmaQuery.Version);
+				queryUrl += string.Format ("?version={0}", figmaQuery.Version);
 			}
 
 			var httpWebRequest = (HttpWebRequest)WebRequest.Create (queryUrl);
@@ -101,10 +101,10 @@ namespace FigmaSharp
 			return FigmaApiHelper.GetFigmaResponseFromFileContent (content);
 		}
 
-		public FigmaFileResponse GetFileVersions (FigmaFileVersionQuery figmaQuery)
+		public FigmaFileVersionResponse GetFileVersions (FigmaFileVersionQuery figmaQuery)
 		{
 			var content = GetContentFileVersion (figmaQuery);
-			return FigmaApiHelper.GetFigmaResponseFromFileContent (content);
+			return FigmaApiHelper.GetFigmaResponseFromFileVersionContent (content);
 		}
 
 		#region Images
