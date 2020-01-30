@@ -76,6 +76,11 @@ namespace FigmaSharp
             return JsonConvert.DeserializeObject<FigmaFileResponse> (figmaContent, new FigmaResponseConverter ());
         }
 
+        public static FigmaFileVersionResponse GetFigmaResponseFromFileVersionContent (string figmaVersionContent)
+        {
+            return JsonConvert.DeserializeObject<FigmaFileVersionResponse> (figmaVersionContent);
+        }
+
         //public static string GetUrlContent(string url, string version)
         //{
         //	try
