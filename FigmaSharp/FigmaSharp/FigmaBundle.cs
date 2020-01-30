@@ -90,7 +90,7 @@ namespace FigmaSharp
 			};
 			bundle.Manifest = new FigmaManifest () {
 				ApiVersion = AppContext.Current.Version,
-				RemoteApiVersion = AppContext.Current.RemoteApiVersion,
+				RemoteApiVersion = AppContext.Api.Version,
 				Date = DateTime.Now,
 				DocumentUrl = fileId
 			};
@@ -117,11 +117,9 @@ namespace FigmaSharp
 			if (File.Exists (documentFilePath))
 				File.Delete (documentFilePath);
 			//generate also Document.figma
-			var content = FigmaApiHelper.GetFigmaFileContent (fileId);
-
-			File.WriteAllText (documentFilePath, content);
-			var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent (content);
-			return figmaResponse;
+			var response = AppContext.Api.GetFile (new FigmaFileQuery (fileId));
+			response.Save (documentFilePath);
+			return response;
 		}
 
 		internal static void GenerateOutputResourceFiles (string fileId, FigmaResponse figmaResponse, string resourcesDirectoryPath)
@@ -138,7 +136,7 @@ namespace FigmaSharp
 					Directory.CreateDirectory (resourcesDirectoryPath);
 				}
 
-				var figmaImageResponse = FigmaApiHelper.GetFigmaImages (fileId, figmaImageIds);
+				var figmaImageResponse = AppContext.Api.GetImages (fileId, figmaImageIds);
 				FileHelper.SaveFiles (resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
 			}
 		}

@@ -119,7 +119,7 @@ namespace FigmaSharp.Services
 
         public override string GetContentTemplate(string file)
         {
-            return AppContext.Current.GetFigmaFileContent(file, AppContext.Current.Token);
+            return AppContext.Api.GetContentFile (new FigmaFileQuery (file));
         }
 
         public IEnumerable<string> GetKeys (List<FigmaImageResponse> responses, string image)
@@ -150,7 +150,8 @@ namespace FigmaSharp.Services
 				{
 					var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
 					Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
-					var figmaImageResponse = FigmaApiHelper.GetFigmaImages(File, vectors.Select(s => s.FigmaNode.id), imageFormat);
+                    var ids = vectors.Select (s => s.FigmaNode.id).ToArray ();
+                    var figmaImageResponse = AppContext.Api.GetImages (File, ids, imageFormat);
 					if (figmaImageResponse != null)
 					{
 						foreach (var image in figmaImageResponse.images)
@@ -315,7 +316,7 @@ namespace FigmaSharp.Services
                 var contentTemplate = GetContentTemplate(file);
 
 				//parse the json into a model format
-                Response = AppContext.Current.GetFigmaResponseFromContent(contentTemplate);
+                Response =  FigmaApiHelper.GetFigmaResponseFromContent (contentTemplate);
 
 				//proceses all the views recursively
                 foreach (var item in Response.document.children)
@@ -323,7 +324,7 @@ namespace FigmaSharp.Services
             }
             catch (System.Net.WebException ex)
             {
-                if (!AppContext.Current.IsConfigured)
+                if (!AppContext.Current.IsApiConfigured)
                     Console.Error.WriteLine($"Cannot connect to Figma server: TOKEN not configured.");
                 else
                     Console.Error.WriteLine($"Cannot connect to Figma server: wrong TOKEN?");
@@ -397,8 +398,7 @@ namespace FigmaSharp.Services
 
         public void Save(string filePath)
         {
-            AppContext.Current.SetFigmaResponseFromContent(Response, filePath);
+            Response.Save (filePath);
         }
-
 	}
 }
