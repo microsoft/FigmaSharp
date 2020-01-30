@@ -34,12 +34,18 @@
   <ItemGroup>
     <Compile Include="CodeGeneratorTests.cs" />
     <Compile Include="FigmaApiTests.cs" />
+    <Compile Include="LocalFileTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
       <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
