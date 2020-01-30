@@ -42,7 +42,7 @@ namespace FigmaSharp
         public string PersonalAccessToken { get; private set; }
         public string Version { get; private set; }
 
-        public FigmaFileQuery (string fileId, string personalAccessToken = null, string version = null)
+        public FigmaFileQuery (string fileId, string version = null, string personalAccessToken = null)
         {
             FileId = fileId;
             PersonalAccessToken = personalAccessToken;
