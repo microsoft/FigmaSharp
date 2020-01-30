@@ -50,7 +50,7 @@ namespace FigmaSharp
 
             object figmaObject = null;
 
-            if (!jsonObject.ContainsKey ("type"))
+            if (!jsonObject.ContainsKey ("type") || string.IsNullOrEmpty (jsonObject["type"].Value<string> ()))
             {
                 if (objectType == typeof (FigmaVector))
                 {
@@ -130,10 +130,14 @@ namespace FigmaSharp
             {
                 figmaObject = jsonObject.ToObject<FigmaBoolean>();
             }
-            else
+			else if (jsonObject["type"].Value<string> () == "BOOLEAN_OPERATION") {
+                figmaObject = jsonObject.ToObject<FigmaBoolean> ();
+            } else
             {
                 return jsonObject.ToObject<object>();
             }
+            serializer.MissingMemberHandling = MissingMemberHandling.Ignore;
+            serializer.NullValueHandling = NullValueHandling.Ignore;
             serializer.Populate(jsonObject.CreateReader(), figmaObject);
             return figmaObject;
         }
