@@ -111,7 +111,7 @@ namespace FigmaSharp
 			}
 		}
 
-		internal static FigmaResponse GenerateDocumentOutputFile (string fileId, string directoryPath)
+		internal static FigmaFileResponse GenerateDocumentOutputFile (string fileId, string directoryPath)
 		{
 			var documentFilePath = Path.Combine (directoryPath, DocumentFileName);
 			if (File.Exists (documentFilePath))
@@ -122,7 +122,7 @@ namespace FigmaSharp
 			return response;
 		}
 
-		internal static void GenerateOutputResourceFiles (string fileId, FigmaResponse figmaResponse, string resourcesDirectoryPath)
+		internal static void GenerateOutputResourceFiles (string fileId, FigmaFileResponse figmaResponse, string resourcesDirectoryPath)
 		{
 			var mainNode = figmaResponse.document.children.FirstOrDefault ();
 

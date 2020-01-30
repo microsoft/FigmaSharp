@@ -71,9 +71,9 @@ namespace FigmaSharp
             }
         }
 
-        public static FigmaResponse GetFigmaResponseFromContent (string figmaContent)
+        public static FigmaFileResponse GetFigmaResponseFromFileContent (string figmaContent)
         {
-            return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
+            return JsonConvert.DeserializeObject<FigmaFileResponse> (figmaContent, new FigmaResponseConverter ());
         }
 
         //public static string GetUrlContent(string url, string version)

@@ -32,6 +32,28 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
+	public class FigmaUser
+	{
+		public string handle { get; set; }
+        public string img_url { get; set; }
+        public string id { get; set; }
+    }
+
+	public class FigmaFileVersion
+    {
+        public string id { get; set; }
+        public string created_at { get; set; }
+        public string label { get; set; }
+        public string description { get; set; }
+        public FigmaUser user { get; set; }
+        public string thumbnail_url { get; set; }
+    }
+
+	public class FigmaFileVersionResponse
+	{
+        public FigmaFileVersion[] versions { get; set; }
+    }
+
     public class FigmaComponent
     {
         public string key { get; set; }
@@ -49,7 +71,7 @@ namespace FigmaSharp.Models
     /// <summary>
     /// FigmaResponse contains the raw data requested from a figma.com URL.
     /// </summary>
-    public class FigmaResponse
+    public class FigmaFileResponse
     {
         public FigmaDocument document { get; set; }
 

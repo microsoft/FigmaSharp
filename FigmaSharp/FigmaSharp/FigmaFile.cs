@@ -52,7 +52,7 @@ namespace FigmaSharp
         /// Gets the document.
         /// </summary>
         /// <value>The document.</value>
-        public FigmaResponse Document => figmaLocalFileProvider.Response;
+        public FigmaFileResponse Document => figmaLocalFileProvider.Response;
 
         /// <summary>
         /// Gets the content view.
