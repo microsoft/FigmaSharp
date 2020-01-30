@@ -32,7 +32,7 @@ namespace FigmaSharp
 {
     public class FigmaFrameEntityResponse
     {
-        public FigmaFrameEntityResponse(FigmaResponse figmaResponse, int page)
+        public FigmaFrameEntityResponse(FigmaFileResponse figmaResponse, int page)
         {
             Page = page;
             FigmaResponse = figmaResponse;
@@ -40,6 +40,6 @@ namespace FigmaSharp
         public int Page { get; }
         public FigmaCanvas PageContent => FigmaResponse.document.children[Page];
 
-        public FigmaResponse FigmaResponse { get; }
+        public FigmaFileResponse FigmaResponse { get; }
     }
 }

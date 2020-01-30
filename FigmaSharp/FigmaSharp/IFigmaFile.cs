@@ -7,7 +7,7 @@ namespace FigmaSharp
     public interface IFigmaFile
     {
         List<IImageView> FigmaImages { get; }
-        FigmaResponse Document { get; }
+        FigmaFileResponse Document { get; }
 
         void InitializeComponent();
 

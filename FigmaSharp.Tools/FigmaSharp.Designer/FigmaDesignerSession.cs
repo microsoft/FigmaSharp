@@ -38,148 +38,124 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Designer
 {
-    public class FigmaDesignerSession
-    {
-        readonly FigmaFileRendererService rendererService;
-        readonly FigmaViewRendererDistributionService distributionService;
-        readonly IFigmaFileProvider fileProvider;
+	public class FigmaDesignerSession
+	{
+		readonly FigmaFileRendererService rendererService;
+		readonly FigmaViewRendererDistributionService distributionService;
+		readonly IFigmaFileProvider fileProvider;
 
-        public bool IsModified { get; internal set; }
+		public bool IsModified { get; internal set; }
 
-        public FigmaResponse Response => fileProvider.Response;
+		public FigmaFileResponse Response => fileProvider.Response;
 
-        public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
-        public ProcessedNode[] MainViews => distributionService.MainViews;
+		public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
+		public ProcessedNode[] MainViews => distributionService.MainViews;
 
-        public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaFileRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
-        {
-            fileProvider = figmaFileProvider;
-            rendererService = figmaViewRendererService;
-            distributionService = figmaViewRendererDistributionService;
-        }
+		public FigmaDesignerSession (IFigmaFileProvider figmaFileProvider, FigmaFileRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
+		{
+			fileProvider = figmaFileProvider;
+			rendererService = figmaViewRendererService;
+			distributionService = figmaViewRendererDistributionService;
+		}
 
-        public event EventHandler ReloadFinished;
+		public event EventHandler ReloadFinished;
 
-        string baseDirectory;
+		string baseDirectory;
 
-        public void Reload(IView contentView, string file, FigmaViewRendererServiceOptions options)
-        {
-            try
-            {
-                rendererService.Start(file, contentView, options);
-                distributionService.Start();
+		public void Reload (IView contentView, string file, FigmaViewRendererServiceOptions options)
+		{
+			try {
+				rendererService.Start (file, contentView, options);
+				distributionService.Start ();
 
-                ReloadFinished?.Invoke(this, EventArgs.Empty);
-            }
-            catch (DirectoryNotFoundException ex)
-            {
-                Console.WriteLine("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
+				ReloadFinished?.Invoke (this, EventArgs.Empty);
+			} catch (DirectoryNotFoundException ex) {
+				Console.WriteLine ("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
+			} catch (System.Exception ex) {
+				Console.WriteLine (ex);
+			}
+		}
 
-        public void Save(string fileName)
-        {
-            fileProvider.Save(fileName);
-        }
+		public void Save (string fileName)
+		{
+			fileProvider.Save (fileName);
+		}
 
-        public event EventHandler ModifiedChanged;
+		public event EventHandler ModifiedChanged;
 
-        public IView GetViewWrapper(FigmaNode e)
-        {
-            var processed = ProcessedNodes.FirstOrDefault(s => s.FigmaNode == e);
-            return processed?.View;
-        }
+		public IView GetViewWrapper (FigmaNode e)
+		{
+			var processed = ProcessedNodes.FirstOrDefault (s => s.FigmaNode == e);
+			return processed?.View;
+		}
 
-        public FigmaNode GetModel(IView e)
-        {
-            var processed = ProcessedNodes.FirstOrDefault(s => s.View.NativeObject == e.NativeObject);
-            return processed?.FigmaNode;
-        }
+		public FigmaNode GetModel (IView e)
+		{
+			var processed = ProcessedNodes.FirstOrDefault (s => s.View.NativeObject == e.NativeObject);
+			return processed?.FigmaNode;
+		}
 
-        public void DeleteView(FigmaNode e)
-        {
-            foreach (var canvas in fileProvider.Response.document.children)
-            {
-                if (DeleteNodeRecursively(canvas, fileProvider.Response.document, e))
-                {
-                    return;
-                }
-            }
-        }
+		public void DeleteView (FigmaNode e)
+		{
+			foreach (var canvas in fileProvider.Response.document.children) {
+				if (DeleteNodeRecursively (canvas, fileProvider.Response.document, e)) {
+					return;
+				}
+			}
+		}
 
-        static T[] RemoveAt<T>(T[] source, int index)
-        {
-            T[] dest = new T[source.Length - 1];
-            if (index > 0)
-                Array.Copy(source, 0, dest, 0, index);
+		static T[] RemoveAt<T> (T[] source, int index)
+		{
+			T[] dest = new T[source.Length - 1];
+			if (index > 0)
+				Array.Copy (source, 0, dest, 0, index);
 
-            if (index < source.Length - 1)
-                Array.Copy(source, index + 1, dest, index, source.Length - index - 1);
+			if (index < source.Length - 1)
+				Array.Copy (source, index + 1, dest, index, source.Length - index - 1);
 
-            return dest;
-        }
-        bool DeleteNodeRecursively(FigmaNode current, FigmaNode parent, FigmaNode toDelete)
-        {
-            if (current == toDelete)
-            {
-                if (parent is FigmaDocument parentDocument)
-                {
-                    var index = Array.FindIndex(parentDocument.children, row => row == current);
-                    parentDocument.children = RemoveAt<FigmaCanvas>(parentDocument.children, index);
-                    return true;
-                }
-                else if (parent is IFigmaNodeContainer parentNodeContainer)
-                {
-                    var index = Array.FindIndex(parentNodeContainer.children, row => row == current);
-                    parentNodeContainer.children = RemoveAt<FigmaNode>(parentNodeContainer.children, index);
-                    return true;
-                }
-            }
+			return dest;
+		}
+		bool DeleteNodeRecursively (FigmaNode current, FigmaNode parent, FigmaNode toDelete)
+		{
+			if (current == toDelete) {
+				if (parent is FigmaDocument parentDocument) {
+					var index = Array.FindIndex (parentDocument.children, row => row == current);
+					parentDocument.children = RemoveAt<FigmaCanvas> (parentDocument.children, index);
+					return true;
+				} else if (parent is IFigmaNodeContainer parentNodeContainer) {
+					var index = Array.FindIndex (parentNodeContainer.children, row => row == current);
+					parentNodeContainer.children = RemoveAt<FigmaNode> (parentNodeContainer.children, index);
+					return true;
+				}
+			}
 
-            if (current is FigmaDocument document)
-            {
-                if (document.children != null)
-                {
-                    foreach (var item in document.children)
-                    {
-                        try
-                        {
-                            if (DeleteNodeRecursively(item, current, toDelete))
-                            {
-                                return true;
-                            };
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                        }
-                    }
-                }
-                return false;
-            }
+			if (current is FigmaDocument document) {
+				if (document.children != null) {
+					foreach (var item in document.children) {
+						try {
+							if (DeleteNodeRecursively (item, current, toDelete)) {
+								return true;
+							};
+						} catch (Exception ex) {
+							Console.WriteLine (ex);
+						}
+					}
+				}
+				return false;
+			}
 
-            if (current is IFigmaNodeContainer container)
-            {
-                foreach (var item in container.children)
-                {
-                    try
-                    {
-                        if (DeleteNodeRecursively(item, current, toDelete))
-                        {
-                            return true;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
-            }
-            return false;
-        }
-    }
+			if (current is IFigmaNodeContainer container) {
+				foreach (var item in container.children) {
+					try {
+						if (DeleteNodeRecursively (item, current, toDelete)) {
+							return true;
+						}
+					} catch (Exception ex) {
+						Console.WriteLine (ex);
+					}
+				}
+			}
+			return false;
+		}
+	}
 }

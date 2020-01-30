@@ -45,7 +45,7 @@ namespace FigmaSharp.Services
         bool NeedsImageLinks { get; }
         event EventHandler ImageLinksProcessed;
         List<FigmaNode> Nodes { get; }
-        FigmaResponse Response { get; }
+        FigmaFileResponse Response { get; }
         void Load(string file);
         void Save(string filePath);
         string GetContentTemplate(string file);
@@ -291,7 +291,7 @@ namespace FigmaSharp.Services
 
         public event EventHandler ImageLinksProcessed;
 
-        public FigmaResponse Response { get; protected set; }
+        public FigmaFileResponse Response { get; protected set; }
         public List<FigmaNode> Nodes { get; } = new List<FigmaNode>();
 
         public bool ImageProcessed;
@@ -316,7 +316,7 @@ namespace FigmaSharp.Services
                 var contentTemplate = GetContentTemplate(file);
 
 				//parse the json into a model format
-                Response =  FigmaApiHelper.GetFigmaResponseFromContent (contentTemplate);
+                Response =  FigmaApiHelper.GetFigmaResponseFromFileContent (contentTemplate);
 
 				//proceses all the views recursively
                 foreach (var item in Response.document.children)

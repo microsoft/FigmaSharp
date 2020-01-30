@@ -36,37 +36,46 @@ namespace FigmaSharp
 		pdf
 	}
 
-    public class FigmaFileQuery
+    public abstract class FigmaFileBaseQuery
     {
         public string FileId { get; private set; }
         public string PersonalAccessToken { get; private set; }
-        public string Version { get; private set; }
 
-        public FigmaFileQuery (string fileId, string version = null, string personalAccessToken = null)
+        public FigmaFileBaseQuery (string fileId, string personalAccessToken = null)
         {
             FileId = fileId;
             PersonalAccessToken = personalAccessToken;
+        }
+    }
+
+    public class FigmaFileVersionQuery : FigmaFileBaseQuery
+    {
+        public FigmaFileVersionQuery (string fileId, string personalAccessToken = null) : base (fileId, personalAccessToken)
+        {
+        }
+    }
+
+    public class FigmaFileQuery : FigmaFileBaseQuery
+    {
+        public string Version { get; private set; }
+
+        public FigmaFileQuery (string fileId, string version = null, string personalAccessToken = null) : base (fileId, personalAccessToken)
+        {
             Version = version;
         }
     }
 
-    public class FigmaImageQuery
+    public class FigmaImageQuery : FigmaFileBaseQuery
     {
-        public FigmaImageQuery(string fileId, string[] ids, string personalAccessToken = null)
+        public FigmaImageQuery(string fileId, string[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
         {
-            FileId = fileId;
             Ids = ids;
-            PersonalAccessToken = personalAccessToken;
         }
-
-        public string FileId { get; set; }
 
 		/// <summary>
 		/// A comma separated list of node IDs to render
 		/// </summary>
 		public string[] Ids { get; set; }
-
-        public string PersonalAccessToken { get; set; }
 
 		/// <summary>
 		/// A number between 0.01 and 4, the image scaling factor
