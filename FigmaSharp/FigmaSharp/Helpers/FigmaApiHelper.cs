@@ -71,123 +71,28 @@ namespace FigmaSharp
             }
         }
 
-
-        public static FigmaResponse GetFigmaDialogFromUrlFile (string urlFile)
-       {
-         var figmaContent = GetFigmaFileContent (urlFile, AppContext.Current.Token);
-         return GetFigmaResponseFromContent(figmaContent);
-       }
-
-
-       public static FigmaResponse GetFigmaDialogFromFilePath (string file)
-       {
-         var figmaContent = File.ReadAllText (file);
-         return GetFigmaResponseFromContent(figmaContent);
-       }
-
-
-       public static FigmaResponse GetFigmaResponseFromContent (string figmaContent)
-       {
-         return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
-       }
-
-
-        public static void SetFigmaResponseFromContent(FigmaResponse figmaResponse, string filePath)
+        public static FigmaResponse GetFigmaResponseFromContent (string figmaContent)
         {
-            var data = JsonConvert.SerializeObject (figmaResponse);
-            if (File.Exists (filePath)) {
-                File.Delete(filePath);
-            }
-            File.WriteAllText(filePath, data);
+            return JsonConvert.DeserializeObject<FigmaResponse> (figmaContent, new FigmaResponseConverter ());
         }
 
-        public static FigmaImageResponse GetFigmaImages(string fileId, IEnumerable<string> ids, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
-        {
-            var query = new FigmaImageQuery(AppContext.Current.Token, fileId, ids);
-			query.Scale = scale;
-			query.Format = format;
-			return GetFigmaImage(query);
-        }
+        //public static string GetUrlContent(string url, string version)
+        //{
+        //	try
+        //	{
+        //		var wc = new System.Net.WebClient();
+        //		byte[] raw = wc.DownloadData(url);
 
-        public static FigmaImageResponse GetFigmaImage (FigmaImageQuery figmaQuery)
-        {
-            var id = string.Join(",", figmaQuery.Ids);
-
-            var stringBuilder = new StringBuilder($"https://api.figma.com/v1/images/{figmaQuery.Document}?ids={id}");
-            if (figmaQuery.Scale != null)
-            {
-                stringBuilder.Append(string.Format("&scale={0}", figmaQuery.Scale));
-            }
-            if (figmaQuery.Format != null)
-            {
-                stringBuilder.Append(string.Format("&format={0}", figmaQuery.Format));
-            }
-            if (figmaQuery.Version != null)
-            {
-                stringBuilder.Append(string.Format("&version={0}", figmaQuery.Version));
-            }
-
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(stringBuilder.ToString ());
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "GET";
-            httpWebRequest.Headers["x-figma-token"] = figmaQuery.PersonalAccessToken;
-
-            try
-            {
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<FigmaImageResponse>(result);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            return null;
-        }
+        //		string webData = System.Text.Encoding.UTF8.GetString(raw);
+        //		return webData;
+        //	}
+        //	catch (Exception ex)
+        //	{
+        //		Console.WriteLine(ex);
+        //	}
+        //	return string.Empty;
+        //}
 
 
-       public static string GetFigmaFileContent (string file)
-       {
-            return GetFigmaFileContent (file, AppContext.Current.Token);
-       }
-
-        public static string GetFigmaFileContent (string file, string personal_access_token)
-        {
-			return GetUrlContent($"https://api.figma.com/v1/files/{file}", personal_access_token);
-        }
-
-		public static string GetUrlContent(string url)
-		{
-			try
-			{
-				var wc = new System.Net.WebClient();
-				byte[] raw = wc.DownloadData(url);
-
-				string webData = System.Text.Encoding.UTF8.GetString(raw);
-				return webData;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
-			return string.Empty;
-		}
-
-		public static string GetUrlContent(string url, string personal_access_token)
-		{
-			var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-			httpWebRequest.ContentType = "application/json";
-			httpWebRequest.Method = "GET";
-			httpWebRequest.Headers["x-figma-token"] = personal_access_token;
-
-			var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-			using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-			{
-				return streamReader.ReadToEnd();
-			}
-		}
-	}
+    }
 }

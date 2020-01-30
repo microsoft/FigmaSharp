@@ -40,14 +40,9 @@ namespace FigmaSharp
     /// </summary>
     public class AppContext : IFigmaDelegate
     {
+        public bool IsApiConfigured => !string.IsNullOrEmpty (Api.Token);
+
         IFigmaDelegate figmaDelegate;
-
-        public bool IsConfigured => !string.IsNullOrEmpty(Token);
-
-        internal string Token { get; set; }
-
-		//TODO: right now there is no way to detect changes in API
-        public string RemoteApiVersion { get; } = "1.0";
 
         public string Version => System.Diagnostics.FileVersionInfo.GetVersionInfo(this.GetType ().Assembly.Location).FileVersion;
 
@@ -66,7 +61,7 @@ namespace FigmaSharp
 
 		public void SetAccessToken(string token)
         {
-            Token = token;
+            Api.Token = token;
         }
 
         public void BeginInvoke(Action handler) => figmaDelegate.BeginInvoke(handler);
@@ -81,17 +76,11 @@ namespace FigmaSharp
 		public IImage GetImageFromFilePath(string filePath) =>
             figmaDelegate.GetImageFromFilePath(filePath);
 
-        public FigmaResponse GetFigmaResponseFromContent(string template) =>
-              FigmaApiHelper.GetFigmaResponseFromContent(template);
-
-        public void SetFigmaResponseFromContent(FigmaResponse figmaResponse, string filePath) =>
-             FigmaApiHelper.SetFigmaResponseFromContent(figmaResponse, filePath);
+        //public FigmaResponse GetFigmaResponseFromContent(string template) =>
+        //      Api. FigmaApiHelper.GetFigmaResponseFromContent(template);
 
         public IImage GetImageFromManifest(Assembly assembly, string imageRef) =>
             figmaDelegate.GetImageFromManifest(assembly, imageRef);
-
-        public string GetFigmaFileContent(string file, string token) =>
-            figmaDelegate.GetFigmaFileContent(file, token);
 
         public string GetManifestResource(Assembly assembly, string file) =>
             figmaDelegate.GetManifestResource(assembly, file);
@@ -130,6 +119,8 @@ namespace FigmaSharp
                 return current;
             }
         }
+
+        public static FigmaApi Api { get; } = new FigmaApi ();
 
         public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
 

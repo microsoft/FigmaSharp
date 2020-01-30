@@ -26,7 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System.Collections.Generic;
+using System.IO;
 using FigmaSharp.Models;
+using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
@@ -59,6 +61,16 @@ namespace FigmaSharp.Models
         public string version { get; set; }
         public string thumbnailUrl { get; set; }
         public int schemaVersion { get; set; }
+
+
+		public void Save (string filePath)
+		{
+            var data = JsonConvert.SerializeObject (this);
+            if (File.Exists (filePath)) {
+                File.Delete (filePath);
+            }
+            File.WriteAllText (filePath, data);
+        }
     }
 
     /// <summary>

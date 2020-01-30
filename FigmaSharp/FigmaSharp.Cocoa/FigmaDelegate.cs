@@ -61,13 +61,7 @@ namespace FigmaSharp.Cocoa
 
         public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
 
-        public string GetFigmaFileContent(string file, string token) =>
-             FigmaApiHelper.GetFigmaFileContent(file, token);
-
         public IView CreateEmptyView() => new View();
-
-        public FigmaResponse GetFigmaResponseFromContent(string template) =>
-            FigmaApiHelper.GetFigmaResponseFromContent(template);
 
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource(assembly, file);
