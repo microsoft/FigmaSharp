@@ -38,14 +38,28 @@ namespace FigmaSharp
 		pdf
 	}
 
+    public class FigmaFileQuery
+    {
+        public string Document { get; private set; }
+        public string PersonalAccessToken { get; private set; }
+        public string Version { get; private set; }
+
+        public FigmaFileQuery (string document, string personalAccessToken = null, string version = null)
+        {
+            Document = document;
+            PersonalAccessToken = personalAccessToken;
+            Version = version;
+        }
+    }
+
     public class FigmaImageQuery
     {
-        public FigmaImageQuery(string document, IEnumerable<string> ids) : this(AppContext.Current.Token, document, ids)
+        public FigmaImageQuery(string document, string[] ids) : this(AppContext.Api.Token, document, ids)
         {
 
         }
 
-        public FigmaImageQuery(string personalAccessToken, string document, IEnumerable<string> ids)
+        public FigmaImageQuery(string personalAccessToken, string document, string[] ids)
         {
             Document = document;
             Ids = ids;
@@ -57,7 +71,7 @@ namespace FigmaSharp
 		/// <summary>
 		/// A comma separated list of node IDs to render
 		/// </summary>
-		public IEnumerable<string> Ids { get; set; }
+		public string[] Ids { get; set; }
 
         public string PersonalAccessToken { get; set; }
 

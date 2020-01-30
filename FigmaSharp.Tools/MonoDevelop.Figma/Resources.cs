@@ -34,8 +34,6 @@ namespace MonoDevelop.Figma
 {
     static class Resources
     {
-        public static bool IsFigmaEnabled => FigmaSharp.AppContext.Current.IsConfigured;
-
         public static void Init ()
         {
             var userDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);

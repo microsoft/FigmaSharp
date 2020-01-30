@@ -72,23 +72,22 @@ namespace FigmaDocumentExporter.Shell
 			Console.WriteLine ();
 			Console.WriteLine ("[Import] Starting from remote document '{0}' ({1} images) in local file: {2}", fileId, processImages ? "with" : "without", outputFilePath);
 
-
-			var content = FigmaApiHelper.GetFigmaFileContent (fileId);
-			File.WriteAllText (outputFilePath, content);
+			var query = new FigmaFileQuery (fileId);
+			var response = FigmaSharp.AppContext.Api.GetFile (query);
+			response.Save (outputFilePath);
 
 			Console.WriteLine ("[Import] Success.");
 
 			if (processImages) {
-				var figmaResponse = FigmaApiHelper.GetFigmaResponseFromContent (content);
 
-				var mainNode = figmaResponse.document.children.FirstOrDefault ();
+				var mainNode = response.document.children.FirstOrDefault ();
 				var figmaModelImages = mainNode.OfTypeImage ().ToArray ();
 
 				Console.WriteLine ("[Import] Downloading {0} image/s...", figmaModelImages.Length);
 
 				var figmaImageIds = figmaModelImages.Select (s => s.id).ToArray ();
 				if (figmaImageIds.Length > 0) {
-					var figmaImageResponse = FigmaApiHelper.GetFigmaImages (fileId, figmaImageIds);
+					var figmaImageResponse = FigmaSharp.AppContext.Api.GetImages (fileId, figmaImageIds);
 					FileHelper.SaveFiles (outputDirectory, ".png", figmaImageResponse.images);
 				}
 				Console.WriteLine ("[Import] Success.");

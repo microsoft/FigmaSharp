@@ -63,7 +63,7 @@ namespace MonoDevelop.Figma.Commands
 						var manifest = new FigmaManifest () {
 							DocumentVersion = 0,
 							ApiVersion = FigmaSharp.AppContext.Current.Version,
-							RemoteApiVersion = FigmaSharp.AppContext.Current.RemoteApiVersion,
+							RemoteApiVersion = FigmaSharp.AppContext.Api.Version,
 							Date = DateTime.Now
 						};
 						manifest.Save (manifestFilePath);
@@ -369,7 +369,7 @@ namespace MonoDevelop.Figma.Commands
 		{
 			OnUpdate (info);
 
-			if (!Resources.IsFigmaEnabled) {
+			if (!FigmaSharp.AppContext.Current.IsApiConfigured) {
 				info.Enabled = false;
 				return;
 			}
