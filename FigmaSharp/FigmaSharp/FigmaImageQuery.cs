@@ -26,8 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System.Collections.Generic;
-
 namespace FigmaSharp
 {
 	public enum ImageQueryFormat
@@ -40,13 +38,13 @@ namespace FigmaSharp
 
     public class FigmaFileQuery
     {
-        public string Document { get; private set; }
+        public string FileId { get; private set; }
         public string PersonalAccessToken { get; private set; }
         public string Version { get; private set; }
 
-        public FigmaFileQuery (string document, string personalAccessToken = null, string version = null)
+        public FigmaFileQuery (string fileId, string personalAccessToken = null, string version = null)
         {
-            Document = document;
+            FileId = fileId;
             PersonalAccessToken = personalAccessToken;
             Version = version;
         }
@@ -54,19 +52,14 @@ namespace FigmaSharp
 
     public class FigmaImageQuery
     {
-        public FigmaImageQuery(string document, string[] ids) : this(AppContext.Api.Token, document, ids)
+        public FigmaImageQuery(string fileId, string[] ids, string personalAccessToken = null)
         {
-
-        }
-
-        public FigmaImageQuery(string personalAccessToken, string document, string[] ids)
-        {
-            Document = document;
+            FileId = fileId;
             Ids = ids;
             PersonalAccessToken = personalAccessToken;
         }
 
-        public string Document { get; set; }
+        public string FileId { get; set; }
 
 		/// <summary>
 		/// A comma separated list of node IDs to render

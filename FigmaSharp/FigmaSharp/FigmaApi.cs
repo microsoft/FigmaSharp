@@ -64,7 +64,7 @@ namespace FigmaSharp
 
 		public string GetContentFile (FigmaFileQuery figmaQuery)
 		{
-			var queryUrl = GetFigmaFileUrl (figmaQuery.Document);
+			var queryUrl = GetFigmaFileUrl (figmaQuery.FileId);
 			var token = string.IsNullOrEmpty (figmaQuery.PersonalAccessToken) ?
 				Token : figmaQuery.PersonalAccessToken;
 
@@ -93,7 +93,7 @@ namespace FigmaSharp
 
 		public FigmaImageResponse GetImages (string fileId, string[] ids, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
 		{
-			var query = new FigmaImageQuery (AppContext.Api.Token, fileId, ids);
+			var query = new FigmaImageQuery (fileId, ids);
 			query.Scale = scale;
 			query.Format = format;
 			return GetImage (query);
@@ -101,7 +101,7 @@ namespace FigmaSharp
 
 		public FigmaImageResponse GetImage (FigmaImageQuery figmaQuery)
 		{
-			var figmaImageUrl = GetFigmaImageUrl (figmaQuery.Document, figmaQuery.Ids);
+			var figmaImageUrl = GetFigmaImageUrl (figmaQuery.FileId, figmaQuery.Ids);
 			var stringBuilder = new StringBuilder (figmaImageUrl);
 			if (figmaQuery.Scale != default) {
 				stringBuilder.Append (string.Format ("&scale={0}", figmaQuery.Scale));
