@@ -47,14 +47,9 @@ namespace FigmaSharp
 
 		#region Urls
 
-		string GetFigmaFileUrl (string fileId) => string.Format (FigmaFileUrl, fileId);
-		string GetFigmaImageUrl (string fileId, params string[] imageIds)
-		{
-			return string.Format (FigmaImageUrl, fileId, string.Join (",", imageIds));
-		}
-
-		const string FigmaFileUrl = "https://api.figma.com/v1/files/{0}";
-		const string FigmaImageUrl = "https://api.figma.com/v1/images/{0}?ids={1}";
+		string GetFigmaFileUrl (string fileId) => string.Format ("https://api.figma.com/v1/files/{0}", fileId);
+		string GetFigmaImageUrl (string fileId, params string[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds));
+		string GetFigmaFileVersionsUrl (string fileId) => string.Format ("{0}/versions", GetFigmaFileUrl (fileId));
 
 		#endregion
 
@@ -83,10 +78,33 @@ namespace FigmaSharp
 			}
 		}
 
-		public FigmaResponse GetFile (FigmaFileQuery figmaFileQuery)
+		public string GetContentFileVersion (FigmaFileVersionQuery figmaQuery)
 		{
-			var content = GetContentFile (figmaFileQuery);
-			return FigmaApiHelper.GetFigmaResponseFromContent (content);
+			var queryUrl = GetFigmaFileVersionsUrl (figmaQuery.FileId);
+			var token = string.IsNullOrEmpty (figmaQuery.PersonalAccessToken) ?
+				Token : figmaQuery.PersonalAccessToken;
+
+			var httpWebRequest = (HttpWebRequest)WebRequest.Create (queryUrl);
+			httpWebRequest.ContentType = "application/json";
+			httpWebRequest.Method = "GET";
+			httpWebRequest.Headers["x-figma-token"] = token;
+
+			var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse ();
+			using (var streamReader = new StreamReader (httpResponse.GetResponseStream ())) {
+				return streamReader.ReadToEnd ();
+			}
+		}
+
+		public FigmaFileResponse GetFile (FigmaFileQuery figmaQuery)
+		{
+			var content = GetContentFile (figmaQuery);
+			return FigmaApiHelper.GetFigmaResponseFromFileContent (content);
+		}
+
+		public FigmaFileResponse GetFileVersions (FigmaFileVersionQuery figmaQuery)
+		{
+			var content = GetContentFileVersion (figmaQuery);
+			return FigmaApiHelper.GetFigmaResponseFromFileContent (content);
 		}
 
 		#region Images
