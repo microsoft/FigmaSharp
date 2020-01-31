@@ -371,7 +371,12 @@ namespace FigmaSharp.Services
 
         public FigmaNode FindByName(string name)
         {
-            return Nodes.FirstOrDefault(s => s.name == name);
+            var quotedName = string.Format ("\"{0}\"", name);
+            var found = Nodes.FirstOrDefault(s => s.name.Contains (quotedName));
+			if (found != null) {
+                return found;
+			}
+           return  Nodes.FirstOrDefault (s => s.name == name);
         }
 
         void ProcessNodeRecursively(FigmaNode node, FigmaNode parent)
