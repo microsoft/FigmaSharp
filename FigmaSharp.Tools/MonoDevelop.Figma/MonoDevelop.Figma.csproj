@@ -21,6 +21,7 @@
         <Folder Include=".figma\" />
         <Folder Include=".figma\MonoDevelopExtension.figmabundle\" />
         <Folder Include="Converters\" />
+        <Folder Include=".figma\MonoDevelopExtension.figmabundle\Views\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
@@ -86,5 +87,11 @@
       <ItemGroup>
         <None Include=".figma\MonoDevelopExtension.figmabundle\manifest.json" />
         <None Include=".figma\MonoDevelopExtension.figmabundle\document.figma" />
+      </ItemGroup>
+      <ItemGroup>
+        <Compile Include=".figma\MonoDevelopExtension.figmabundle\Views\FigmaBundleView.designer.cs">
+          <DependentUpon>FigmaBundleView.cs</DependentUpon>
+        </Compile>
+        <Compile Include=".figma\MonoDevelopExtension.figmabundle\Views\FigmaBundleView.cs" />
       </ItemGroup>
 </Project>
