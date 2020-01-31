@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
+    <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Mac" />
