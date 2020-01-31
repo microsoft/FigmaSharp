@@ -72,10 +72,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (placeholder != null)
                 view.PlaceholderString = placeholder.characters;
 
-
-            if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
-                view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-            }
+            //if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
+            //    view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+            //}
 
             return textBox;
         }
