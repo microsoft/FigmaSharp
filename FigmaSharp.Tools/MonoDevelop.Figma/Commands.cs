@@ -169,7 +169,7 @@ namespace MonoDevelop.Figma.Commands
 				&& folder.IsDocumentDirectoryBundle ();
 		}
 
-		const string figmaNodeName = "1.0. Bundle Figma Bundle";
+		const string figmaNodeName = "bundleFigmaDocument";
 
 		protected async override void OnRun ()
 		{
