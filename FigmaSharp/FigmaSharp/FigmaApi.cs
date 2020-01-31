@@ -42,7 +42,7 @@ namespace FigmaSharp
 		internal string Token { get; set; }
 
 		//TODO: right now there is no way to detect changes in API
-		public string Version { get; } = "1.0";
+		public Version Version { get; } = new Version (1, 0, 1);
 
 		#region Urls
 

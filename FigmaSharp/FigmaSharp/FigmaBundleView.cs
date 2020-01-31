@@ -39,7 +39,7 @@ namespace FigmaSharp
 				Date = DateTime.Now,
 				DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
 				DocumentVersion = 0.1f,
-				RemoteApiVersion = AppContext.Api.Version,
+				RemoteApiVersion = AppContext.Api.Version.ToString (),
 				ApiVersion = AppContext.Current.Version
 			};
 
