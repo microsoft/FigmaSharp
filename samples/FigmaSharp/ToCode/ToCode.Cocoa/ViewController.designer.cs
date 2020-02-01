@@ -13,6 +13,12 @@ namespace ToCode.Cocoa
 	partial class ViewController
 	{
 		[Outlet]
+		AppKit.NSButton copyDesignerCSButton { get; set; }
+
+		[Outlet]
+		AppKit.NSButton copyCSButton { get; set; }
+
+		[Outlet]
 		AppKit.NSScrollView logTextField { get; set; }
 
 		[Outlet]
@@ -20,6 +26,16 @@ namespace ToCode.Cocoa
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (copyDesignerCSButton != null) {
+				copyDesignerCSButton.Dispose ();
+				copyDesignerCSButton = null;
+			}
+
+			if (copyCSButton != null) {
+				copyCSButton.Dispose ();
+				copyCSButton = null;
+			}
+
 			if (logTextField != null) {
 				logTextField.Dispose ();
 				logTextField = null;
