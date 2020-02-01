@@ -50,26 +50,47 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var figmaInstance = (FigmaInstance)currentNode;
 				var controlType = figmaInstance.ToControlType ();
 				switch (controlType) {
-					case NativeControlType.TextFieldSmall:
-					case NativeControlType.TextFieldSmallDark:
+					case NativeControlType.ProgressSpinnerSmall:
+					case NativeControlType.ProgressSpinnerSmallDark:
 						nativeView.ControlSize = NSControlSize.Small;
 						break;
-					case NativeControlType.TextFieldStandard:
-					case NativeControlType.TextFieldStandardDark:
+					case NativeControlType.ProgressSpinnerStandard:
+					case NativeControlType.ProgressSpinnerStandardDark:
 						nativeView.ControlSize = NSControlSize.Regular;
 						break;
 				}
-
-				//if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
-				//	nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-				//}
+				if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
+					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+				}
 
 				return view;
 			}
 
 			public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
 			{
-				return string.Empty;
+                StringBuilder builder = new StringBuilder ();
+                string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+
+                if (rendererService.NeedsRenderInstance (currentNode)) {
+                    builder.AppendLine ($"var {name} = new {typeof (Spinner).FullName}();");
+                }
+                builder.Configure (name, currentNode);
+
+                var figmaInstance = (FigmaInstance)currentNode;
+                var controlType = figmaInstance.ToControlType ();
+
+                switch (controlType) {
+                    case NativeControlType.PopUpButtonSmall:
+                    case NativeControlType.PopUpButtonSmallDark:
+                        builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                        break;
+                    case NativeControlType.PopUpButtonStandard:
+                    case NativeControlType.PopUpButtonStandardDark:
+                        builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                        break;
+                }
+
+                return builder.ToString ();
 			}
 		}
 	}
