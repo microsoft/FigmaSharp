@@ -16,6 +16,8 @@ namespace FigmaSharp.Services
 		FigmaViewConverter[] figmaConverters;
 		FigmaViewConverter[] customConverters;
 
+
+
 		public FigmaCodeRendererService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters,
 			FigmaCodePositionConverterBase codePositionConverter, FigmaCodeAddChildConverterBase codeAddChildConverter)
 		{
@@ -36,15 +38,21 @@ namespace FigmaSharp.Services
 			return null;
 		}
 
-		public void GetCode (StringBuilder builder, FigmaNode node, string name, string parent)
-		{
-			GetCode (builder, node, name, -1, parent);
-		}
+		internal FigmaNode MainNode { get; private set; }
+		public bool MainIsThis { get; set; }
 
-		public void GetCode (StringBuilder builder, FigmaNode node, string name, int id, string parent)
+		bool IsMainNode (FigmaNode figmaNode) => figmaNode == MainNode;
+		public bool NeedsRenderInstance (FigmaNode figmaNode) => !MainIsThis || !IsMainNode (figmaNode);
+
+		public void GetCode (StringBuilder builder, FigmaNode node, string name, string parent)
 		{
 			if (parent == null) {
 				identifiers.Clear ();
+
+				MainNode = node;
+				if (MainIsThis) {
+					name = "this";
+				}
 			}
 
 			var converter = GetConverter (node, customConverters);
@@ -89,7 +97,7 @@ namespace FigmaSharp.Services
 
 			if (navigateChild && node is IFigmaNodeContainer nodeContainer) {
 				foreach (var item in nodeContainer.children) {
-					GetCode (builder, item, null, 0, name);
+					GetCode (builder, item, null, name);
 				}
 			}
 		}

@@ -180,8 +180,6 @@ namespace MonoDevelop.Figma.Commands
 
 					var currentProject = currentFolder.Project;
 
-					var figmaBundleView = new FigmaBundleView (bundle, "test", figmaNodeName);
-
 					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
 					fileProvider.Load (bundle.DocumentFilePath);
 					var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
@@ -190,7 +188,11 @@ namespace MonoDevelop.Figma.Commands
 					var addChildConverter = new FigmaCodeAddChildConverter ();
 					var positionConverter = new FigmaCodePositionConverter ();
 					var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, positionConverter, addChildConverter);
-					figmaBundleView.Generate (fileProvider, codeRendererService);
+
+					var fignaNode = fileProvider.FindByName (figmaNodeName);
+					var figmaBundleView = new FigmaBundleView (bundle, "test", fignaNode);
+
+					figmaBundleView.Generate (codeRendererService);
 
 					if (!currentProject.PathExistsInProject (bundle.ViewsDirectoryPath)) {
 						currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, bundle.ViewsDirectoryPath));
@@ -210,7 +212,7 @@ namespace MonoDevelop.Figma.Commands
 	class FigmaNewBundlerCommandHandler : FigmaCommandHandler
 	{
 		const string AddFigmaDocumentSource = "AddFigmaDocument.figma";
-		const string MainWindowName = "1.0. Bundle Figma Bundle";
+		const string MainWindowName = "content \"page1\"";
 
 		protected override void OnUpdate (CommandInfo info)
 		{
@@ -220,9 +222,31 @@ namespace MonoDevelop.Figma.Commands
 					&& folder.IsFigmaDirectory ()
 				);
 		}
-	
-		protected async override void OnRun ()
+
+		FigmaBundleDialogContentView nativeContentView;
+
+		protected override void OnRun ()
 		{
+			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
+			var currentScreen = currentIdeWindow.Screen;
+			var xPos = (float)((currentScreen.Frame.Width / 2f) - currentIdeWindow.Frame.Width);
+			var yPos = (float)((currentScreen.Frame.Height / 2f) - currentIdeWindow.Frame.Height);
+
+			var window = new Window (new Rectangle (xPos, yPos, 481f, 334f));
+			var figmaWindow = window.NativeObject as AppKit.NSWindow;
+			nativeContentView = new FigmaBundleDialogContentView ();
+			figmaWindow.ContentView = nativeContentView;
+
+			//var figmaWindow = new BundleWindow.FigmaBundleWindow (new CGRect (xPos, yPos, 481f, 334f));
+			currentIdeWindow.AddChildWindow (figmaWindow, AppKit.NSWindowOrderingMode.Above);
+
+			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
+			//CreateBundle (bundleName);
+		}
+
+		async void CreateBundle (string bundleName)
+		{
+
 			Project currentProject = null;
 
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
@@ -243,7 +267,7 @@ namespace MonoDevelop.Figma.Commands
 				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, figmaFolder));
 			}
 
-			var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
+			
 			var fullBundlePath = Path.Combine (figmaFolder, bundleName);
 
 			var bundle = FigmaBundle.Create ("EGTUYgwUC9rpHmm4kJwZQXq4", fullBundlePath);

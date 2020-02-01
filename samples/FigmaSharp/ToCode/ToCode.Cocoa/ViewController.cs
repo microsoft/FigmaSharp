@@ -83,7 +83,7 @@ namespace ToCode.Cocoa
 				return;
 			var bundle = FigmaBundle.Create ("1234", string.Empty);
 			var figmaBundleView = new FigmaBundleView (bundle, "test", currentSelectedNode);
-			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (fileProvider, codeRenderer);
+			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer);
 			var code = publicPartialClass.Generate ();
 			CopyToLogView (code);
 		}
