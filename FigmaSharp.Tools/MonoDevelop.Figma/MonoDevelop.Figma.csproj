@@ -22,6 +22,7 @@
         <Folder Include=".figma\MonoDevelopExtension.figmabundle\" />
         <Folder Include="Converters\" />
         <Folder Include=".figma\MonoDevelopExtension.figmabundle\Views\" />
+        <Folder Include="Views\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
@@ -90,8 +91,6 @@
       </ItemGroup>
       <ItemGroup>
         <Compile Include=".figma\MonoDevelopExtension.figmabundle\Views\FigmaBundleView.designer.cs">
-          <DependentUpon>FigmaBundleView.cs</DependentUpon>
         </Compile>
-        <Compile Include=".figma\MonoDevelopExtension.figmabundle\Views\FigmaBundleView.cs" />
       </ItemGroup>
 </Project>

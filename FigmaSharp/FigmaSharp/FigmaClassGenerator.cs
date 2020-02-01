@@ -26,8 +26,10 @@ namespace FigmaSharp
 		{
 			GeneratePrivateMethod (sb, InitializeComponentMethodName);
 
-			foreach (var line in InitializeComponentContent.Split('\n')) {
-				AppendLine (sb, line);
+			if (InitializeComponentContent != null) {
+				foreach (var line in InitializeComponentContent.Split ('\n')) {
+					AppendLine (sb, line);
+				}
 			}
 			RemoveTabLevel ();
 			CloseBracket (sb);

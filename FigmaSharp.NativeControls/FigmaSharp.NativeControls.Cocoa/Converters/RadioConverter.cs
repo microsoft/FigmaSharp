@@ -105,7 +105,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             var builder = new StringBuilder ();
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
-            builder.AppendLine ($"var {name} = new {typeof (NSButton).FullName}();");
+
+            if (rendererService.NeedsRenderInstance (currentNode))
+                builder.AppendLine ($"var {name} = new {typeof (NSButton).FullName}();");
 
             builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
             builder.AppendLine (string.Format ("{0}.SetButtonType ({1});", name, NSButtonType.Radio.GetFullName ()));

@@ -115,7 +115,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             var figmaInstance = (FigmaInstance)currentNode;
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-            builder.AppendLine($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof(NSButton).FullName}();");
+            if (rendererService.NeedsRenderInstance (currentNode))
+                builder.AppendLine($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof(NSButton).FullName}();");
+
             builder.AppendLine(string.Format("{0}.BezelStyle = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, NSBezelStyle.Rounded.GetFullName ()));
             builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
 

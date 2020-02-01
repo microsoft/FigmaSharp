@@ -13,25 +13,21 @@ and will be lost if the code is regenerated.
 using AppKit;
 namespace FigmaSharp
 {
-	partial class FigmaBundleView
+	partial class FigmaBundleDialogContentView
 	{
+		public AppKit.NSPopUpButton versionPopupButton;
+		public AppKit.NSButton codeOptionButton, markupOptionButton, noneOptionButton;
+
 		private void InitializeComponent ()
 		{
-			var frameEntityView = new NSView();
-			frameEntityView.WantsLayer = true;
-			frameEntityView.SetFrameSize(new CoreGraphics.CGSize(481f, 334f));
+			this.WantsLayer = true;
+			this.SetFrameSize(new CoreGraphics.CGSize(481f, 334f));
 			
-			var view = new NSView();
-			view.WantsLayer = true;
-			view.SetFrameSize(new CoreGraphics.CGSize(481f, 334f));
-			
-			frameEntityView.AddSubview(view);
-			view.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 0f));
 			var groupView = new NSView();
 			groupView.WantsLayer = true;
 			groupView.SetFrameSize(new CoreGraphics.CGSize(587f, 434f));
 			
-			view.AddSubview(groupView);
+			AddSubview(groupView);
 			groupView.SetFrameOrigin(new CoreGraphics.CGPoint(-53f, -74f));
 			var view1 = new AppKit.NSImageView();
 			view1.WantsLayer = true;
@@ -105,7 +101,7 @@ namespace FigmaSharp
 			view10.Layer.BorderWidth = 20;
 			view10.Layer.CornerRadius = 0f;
 			
-			view.AddSubview(view10);
+			AddSubview(view10);
 			view10.SetFrameOrigin(new CoreGraphics.CGPoint(20f, 20f));
 			var textView = new AppKit.NSTextField() {    StringValue = "Bundle Figma Document",
 			Editable = false,
@@ -121,13 +117,13 @@ namespace FigmaSharp
 			textView.AlphaValue = 1f;
 			textView.TextColor = NSColor.FromRgba(0.3137255f, 0.3137255f, 0.3137255f, 1f);
 			
-			view.AddSubview(textView);
+			AddSubview(textView);
 			textView.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 312f));
 			var frameEntityView1 = new NSView();
 			frameEntityView1.WantsLayer = true;
 			frameEntityView1.SetFrameSize(new CoreGraphics.CGSize(52f, 12f));
 			
-			view.AddSubview(frameEntityView1);
+			AddSubview(frameEntityView1);
 			frameEntityView1.SetFrameOrigin(new CoreGraphics.CGPoint(8f, 317f));
 			var elipseView = new AppKit.NSView();
 			elipseView.WantsLayer = true;
@@ -162,8 +158,8 @@ namespace FigmaSharp
 			var frameEntityView2 = new NSView();
 			frameEntityView2.WantsLayer = true;
 			frameEntityView2.SetFrameSize(new CoreGraphics.CGSize(481f, 312f));
-			
-			frameEntityView.AddSubview(frameEntityView2);
+
+			this.AddSubview(frameEntityView2);
 			frameEntityView2.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 0f));
 			var view11 = new AppKit.NSButton();
 			view11.BezelStyle = NSBezelStyle.Rounded;
@@ -203,33 +199,33 @@ namespace FigmaSharp
 			
 			groupView1.AddSubview(groupView2);
 			groupView2.SetFrameOrigin(new CoreGraphics.CGPoint(111f, 0f));
-			var view13 = new AppKit.NSButton();
-			view13.BezelStyle = NSBezelStyle.Rounded;
-			view13.SetButtonType (NSButtonType.Radio);
-			view13.WantsLayer = true;
-			view13.SetFrameSize(new CoreGraphics.CGSize(219f, 14f));
-			view13.Title = "None";
+			noneOptionButton = new AppKit.NSButton();
+			noneOptionButton.BezelStyle = NSBezelStyle.Rounded;
+			noneOptionButton.SetButtonType (NSButtonType.Radio);
+			noneOptionButton.WantsLayer = true;
+			noneOptionButton.SetFrameSize(new CoreGraphics.CGSize(219f, 14f));
+			noneOptionButton.Title = "None";
 			
-			groupView2.AddSubview(view13);
-			view13.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 0f));
-			var view14 = new AppKit.NSButton();
-			view14.BezelStyle = NSBezelStyle.Rounded;
-			view14.SetButtonType (NSButtonType.Radio);
-			view14.WantsLayer = true;
-			view14.SetFrameSize(new CoreGraphics.CGSize(219f, 14f));
-			view14.Title = "Markup";
+			groupView2.AddSubview(noneOptionButton);
+			noneOptionButton.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 0f));
+			markupOptionButton = new AppKit.NSButton();
+			markupOptionButton.BezelStyle = NSBezelStyle.Rounded;
+			markupOptionButton.SetButtonType (NSButtonType.Radio);
+			markupOptionButton.WantsLayer = true;
+			markupOptionButton.SetFrameSize(new CoreGraphics.CGSize(219f, 14f));
+			markupOptionButton.Title = "Markup";
 			
-			groupView2.AddSubview(view14);
-			view14.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 22f));
-			var view15 = new AppKit.NSButton();
-			view15.BezelStyle = NSBezelStyle.Rounded;
-			view15.SetButtonType (NSButtonType.Radio);
-			view15.WantsLayer = true;
-			view15.SetFrameSize(new CoreGraphics.CGSize(219f, 14f));
-			view15.Title = "Code";
+			groupView2.AddSubview(markupOptionButton);
+			markupOptionButton.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 22f));
+			codeOptionButton = new AppKit.NSButton();
+			codeOptionButton.BezelStyle = NSBezelStyle.Rounded;
+			codeOptionButton.SetButtonType (NSButtonType.Radio);
+			codeOptionButton.WantsLayer = true;
+			codeOptionButton.SetFrameSize(new CoreGraphics.CGSize(219f, 14f));
+			codeOptionButton.Title = "Code";
 			
-			groupView2.AddSubview(view15);
-			view15.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 44f));
+			groupView2.AddSubview(codeOptionButton);
+			codeOptionButton.SetFrameOrigin(new CoreGraphics.CGPoint(0f, 44f));
 			var textView1 = new AppKit.NSTextField() {    StringValue = "Template:",
 			Editable = false,
 			Bordered = false,
@@ -378,15 +374,15 @@ namespace FigmaSharp
 			
 			frameEntityView2.AddSubview(groupView3);
 			groupView3.SetFrameOrigin(new CoreGraphics.CGPoint(92f, 207f));
-			var view29 = new AppKit.NSPopUpButton();
-			view29.BezelStyle = NSBezelStyle.Rounded;
-			view29.WantsLayer = true;
-			view29.SetFrameSize(new CoreGraphics.CGSize(220f, 19f));
-			view29.ControlSize = NSControlSize.Regular;
-			view29.AddItem ("Current");
+			versionPopupButton = new AppKit.NSPopUpButton();
+			versionPopupButton.BezelStyle = NSBezelStyle.Rounded;
+			versionPopupButton.WantsLayer = true;
+			versionPopupButton.SetFrameSize(new CoreGraphics.CGSize(220f, 19f));
+			versionPopupButton.ControlSize = NSControlSize.Regular;
+			versionPopupButton.AddItem ("Current");
 			
-			groupView3.AddSubview(view29);
-			view29.SetFrameOrigin(new CoreGraphics.CGPoint(76f, 17f));
+			groupView3.AddSubview(versionPopupButton);
+			versionPopupButton.SetFrameOrigin(new CoreGraphics.CGPoint(76f, 17f));
 			var textView3 = new AppKit.NSTextField() {    StringValue = "Version:",
 			Editable = false,
 			Bordered = false,
@@ -442,6 +438,8 @@ namespace FigmaSharp
 			
 			frameEntityView2.AddSubview(textView5);
 			textView5.SetFrameOrigin(new CoreGraphics.CGPoint(20f, 279f));
+
+
 			
 		}
 	}

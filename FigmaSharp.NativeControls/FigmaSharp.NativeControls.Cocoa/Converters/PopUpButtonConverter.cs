@@ -82,7 +82,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             var builder = new StringBuilder ();
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
-            builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
+
+            if (rendererService.NeedsRenderInstance (currentNode))
+                builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
 
             builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
 
