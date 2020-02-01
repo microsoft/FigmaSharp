@@ -9,7 +9,7 @@ namespace FigmaSharp
 		internal const string PublicCsExtension = ".cs";
 		internal const string PartialDesignerExtension = ".designer.cs";
 
-		public string FigmaNodeName { get; private set; }
+		public Models.FigmaNode FigmaNodeName { get; private set; }
 		public string Name { get; private set; }
 
 		public string PartialDesignerClassName => $"{Name}{PartialDesignerExtension}";
@@ -22,18 +22,15 @@ namespace FigmaSharp
 
 		private readonly FigmaBundle bundle;
 
-		public FigmaBundleView (FigmaBundle figmaBundle, string viewName, string figmaName)
+		public FigmaBundleView (FigmaBundle figmaBundle, string viewName, Models.FigmaNode figmaName)
 		{
 			Name = viewName;
 			bundle = figmaBundle;
 			FigmaNodeName = figmaName;
 		}
 
-		public void Generate (IFigmaFileProvider fileProvider, FigmaCodeRendererService codeRendererService)
+		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (IFigmaFileProvider fileProvider, FigmaCodeRendererService codeRendererService)
 		{
-			if (!Directory.Exists (bundle.ViewsDirectoryPath))
-				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
-
 			var partialDesignerClass = new FigmaPartialDesignerClass ();
 			partialDesignerClass.Manifest = new FigmaManifest () {
 				Date = DateTime.Now,
@@ -44,13 +41,9 @@ namespace FigmaSharp
 			};
 
 			string initializeComponentContent;
-			if (!string.IsNullOrEmpty (FigmaNodeName)) {
-				var figmaNode = fileProvider.FindByName (FigmaNodeName);
-				if (figmaNode == null) {
-					throw new Exception ("node not found");
-				}
+			if (FigmaNodeName != null) {
 				var builder = new System.Text.StringBuilder ();
-				codeRendererService.GetCode (builder, figmaNode, null, null);
+				codeRendererService.GetCode (builder, FigmaNodeName, null, null);
 
 				initializeComponentContent = builder.ToString ();
 			} else {
@@ -62,16 +55,28 @@ namespace FigmaSharp
 			partialDesignerClass.Namespace = bundle.Namespace;
 			partialDesignerClass.InitializeComponentContent = initializeComponentContent;
 
-			partialDesignerClass.Save (PartialDesignerClassFilePath);
+			return partialDesignerClass;
+		}
 
-			var partialDesignerClassCode = partialDesignerClass.Generate ();
-			File.WriteAllText (PartialDesignerClassFilePath, partialDesignerClassCode);
-
+		public FigmaPublicPartialClass GetPublicPartialClass ()
+		{
 			var publicPartialClass = new FigmaPublicPartialClass ();
 			publicPartialClass.Usings.Add ("AppKit");
 			publicPartialClass.ClassName = Name;
 			publicPartialClass.Namespace = bundle.Namespace;
 			publicPartialClass.BaseClass = "AppKit.NSView";
+			return publicPartialClass;
+		}
+
+		public void Generate (IFigmaFileProvider fileProvider, FigmaCodeRendererService codeRendererService)
+		{
+			if (!Directory.Exists (bundle.ViewsDirectoryPath))
+				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
+
+			var partialDesignerClass = GetFigmaPartialDesignerClass (fileProvider, codeRendererService);
+			partialDesignerClass.Save (PartialDesignerClassFilePath);
+
+			var publicPartialClass = GetPublicPartialClass ();
 			publicPartialClass.Save (PublicCsClassFilePath);
 		}
 	}

@@ -30,6 +30,8 @@ namespace ToCode.Cocoa
 		{
 			base.ViewDidLoad ();
 
+			copyCSButton.Activated += CopyCSButton_Activated;
+			copyDesignerCSButton.Activated += CopyDesignerCSButton_Activated;
 			// Do any additional setup after loading the view.
 			outlinePanel = new OutlinePanel ();
 
@@ -51,7 +53,7 @@ namespace ToCode.Cocoa
 
 			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
 			fileProvider = new FigmaRemoteFileProvider ();
-			fileProvider.Load ("Dq1CFm7IrDi3UJC7KJ8zVjOt");
+			fileProvider.Load ("FwVa4JS5QsohRhNEnEBKslFk");
 
 			var addChildConverter = new FigmaCodeAddChildConverter ();
 			var positionConverter = new FigmaCodePositionConverter ();
@@ -62,17 +64,53 @@ namespace ToCode.Cocoa
 			outlinePanel.GenerateTree (data);
 		}
 
+		private void CopyDesignerCSButton_Activated (object sender, EventArgs e)
+		{
+			if (currentSelectedNode == null)
+				return;
+
+			var bundle = FigmaBundle.Create ("1234", string.Empty);
+
+			var figmaBundleView = new FigmaBundleView (bundle, "test", currentSelectedNode);
+			var publicPartialClass = figmaBundleView.GetPublicPartialClass ();
+			var code = publicPartialClass.Generate ();
+			CopyToLogView (code);
+		}
+
+		private void CopyCSButton_Activated (object sender, EventArgs e)
+		{
+			if (currentSelectedNode == null)
+				return;
+			var bundle = FigmaBundle.Create ("1234", string.Empty);
+			var figmaBundleView = new FigmaBundleView (bundle, "test", currentSelectedNode);
+			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (fileProvider, codeRenderer);
+			var code = publicPartialClass.Generate ();
+			CopyToLogView (code);
+		}
+
+		FigmaNode currentSelectedNode = null;
+
 		void OutlinePanel_RaiseFirstResponder (object sender, FigmaNode e)
 		{
+			currentSelectedNode = e;
 			var builder = new StringBuilder ();
 			codeRenderer.GetCode (builder, e, null, null);
-			var textField = logTextField.DocumentView as NSTextView; // codeRenderer.GetCode()
-			textField.Value = builder.ToString ();
-			NSFont monospaceFont = NSFont.FromFontName ("Monaco", 11);
-			textField.SetFont (monospaceFont, new NSRange (0, textField.Value.Length));
+			CopyToLogView (builder.ToString ());
+		}
 
+		void CopyToLogView (string text)
+		{
+			text = text ?? string.Empty;
+			var textField = (NSTextView)logTextField.DocumentView;
+			textField.Value = text;
+			textField.SetFont (NSFont.FromFontName ("Monaco", 11), new NSRange (0, text.Length));
+			CopyToClipBoard (text);
+		}
+
+		void CopyToClipBoard (string text)
+		{
 			NSPasteboard.GeneralPasteboard.DeclareTypes (new string[] { NSPasteboard.NSStringType }, null);
-			NSPasteboard.GeneralPasteboard.SetStringForType (textField.Value, NSPasteboard.NSStringType);
+			NSPasteboard.GeneralPasteboard.SetStringForType (text, NSPasteboard.NSStringType);
 		}
 
 		public override NSObject RepresentedObject {
