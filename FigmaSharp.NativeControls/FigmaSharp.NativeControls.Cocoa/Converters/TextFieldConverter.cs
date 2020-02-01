@@ -75,29 +75,44 @@ namespace FigmaSharp.NativeControls.Cocoa
             //if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
             //    view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
             //}
+            view.Configure (instance);
 
             return textBox;
         }
 
         public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
+            var instance = (FigmaInstance)currentNode;
+
+            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+
             StringBuilder builder = new StringBuilder ();
 
-            if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine ($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof (NSTextField).FullName}();");
-            if (currentNode is IFigmaDocumentContainer container) {
-                var figmaText = ((IFigmaDocumentContainer)currentNode).children.OfType<FigmaText> ()
-       .FirstOrDefault ();
+            if (rendererService.NeedsRenderInstance (instance))
+                builder.AppendLine ($"var {name} = new {typeof (NSTextField).FullName}();");
 
-                var text = figmaText.characters ?? string.Empty;
+            var texts = instance.children.OfType<FigmaText> ();
+
+            var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl");
+
+			if (figmaTextNode != null) {
+                var text = figmaTextNode.characters ?? string.Empty;
                 var isMultiline = text.Contains ('\n');
 
                 builder.AppendLine (string.Format ("{0}.StringValue = {1}\"{2}\";",
-                    FigmaSharp.Resources.Ids.Conversion.NameIdentifier,
+                    name,
                     isMultiline ? "@" : "",
-                     isMultiline ? text.Replace ("\"", "\"\"") : text));
+                        isMultiline ? text.Replace ("\"", "\"\"") : text));
+
+                builder.Configure (name, figmaTextNode);
             }
-            builder.Configure (FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
+
+            builder.Configure (name, instance);
+
+            var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
+            if (placeholderTextNode != null)
+                builder.AppendLine (string.Format ("{0}.PlaceholderString = \"{1}\";", name, placeholderTextNode.characters));
+
             return builder.ToString ();
         }
     }

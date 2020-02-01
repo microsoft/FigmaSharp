@@ -210,7 +210,7 @@ namespace FigmaSharp.Cocoa
 
         public static void Configure(this StringBuilder builder, string name, FigmaText text)
         {
-            Configure(builder, name, (FigmaNode)text);
+            //Configure(builder, name, (FigmaNode)text);
 
             var alignment = FigmaExtensions.ToNSTextAlignment(text.style.textAlignHorizontal);
 
@@ -264,8 +264,6 @@ namespace FigmaSharp.Cocoa
 
         public static void Configure(this NSTextField label, FigmaText text)
         {
-            Configure(label, (FigmaNode)text);
-
             label.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
             label.AlphaValue = text.opacity;
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
