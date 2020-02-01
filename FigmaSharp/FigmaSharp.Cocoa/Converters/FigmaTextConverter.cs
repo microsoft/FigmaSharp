@@ -62,6 +62,7 @@ namespace FigmaSharp.Cocoa.Converters
                 builder.AppendLine (string.Format ("var {0} = {1};", Resources.Ids.Conversion.NameIdentifier, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
             }
             builder.Configure(Resources.Ids.Conversion.NameIdentifier, (FigmaText)currentNode);
+            builder.Configure (Resources.Ids.Conversion.NameIdentifier, (FigmaNode)currentNode);
             return builder.ToString();
         }
     }
