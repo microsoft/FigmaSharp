@@ -39,6 +39,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			if (converters == null) {
 				converters = new FigmaViewConverter[] {
+					new SpinnerConverter (),
 					new CheckConverter (),
 					new ComboBoxConverter (),
 					new PopUpButtonConverter (),
