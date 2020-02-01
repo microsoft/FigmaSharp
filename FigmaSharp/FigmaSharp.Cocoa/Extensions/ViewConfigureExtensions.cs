@@ -24,7 +24,7 @@ namespace FigmaSharp.Cocoa
 			view.Layer.BackgroundColor = child.backgroundColor.MixOpacity(child.opacity).ToCGColor();
 		}
 
-        public static void Configure(this StringBuilder builder, string name, FigmaNode child)
+        public static void Configure(this StringBuilder builder, string name, FigmaNode child, bool drawFrameSize = true)
         {
             if (!child.visible)
             {
@@ -32,7 +32,7 @@ namespace FigmaSharp.Cocoa
             }
 
             builder.AppendLine(string.Format ("{0}.WantsLayer = {1};", name, true.ToDesignerString ()));
-            if (child is IAbsoluteBoundingBox container)
+            if (drawFrameSize && child is IAbsoluteBoundingBox container)
             {
                 builder.AppendLine(string.Format("{0}.SetFrameSize(new {1}({2}, {3}));", 
                     name, 
