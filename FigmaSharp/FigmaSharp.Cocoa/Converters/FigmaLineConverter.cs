@@ -41,20 +41,37 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaLineView = new FNSImageView();
-            var figmaLine = (FigmaLine)currentNode;
-            figmaLineView.Configure(figmaLine);
-            return new ImageView(figmaLineView);
+            var figmaLineView = new HorizontalBar ();
+            var nativeView = (FNSBox)figmaLineView.NativeObject;
+           
+            nativeView.Configure (currentNode);
+            return figmaLineView;
         }
 
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
+            var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine($"var {Resources.Ids.Conversion.NameIdentifier} = new {typeof(NSView).FullName}();");
+                builder.AppendLine($"var {name} = new {typeof(NSBox).FullName}();");
 
-            builder.Configure(Resources.Ids.Conversion.NameIdentifier, (FigmaLine)currentNode);
+            builder.Configure(name, currentNode, false);
+
+            if (currentNode is IAbsoluteBoundingBox container) {
+                var width = container.absoluteBoundingBox.Width == 0 ? 1 : container.absoluteBoundingBox.Width;
+                var height = container.absoluteBoundingBox.Height == 0 ? 1 : container.absoluteBoundingBox.Height;
+
+                builder.AppendLine (string.Format ("{0}.SetFrameSize (new {1}({2}, {3}));",
+                    name,
+                    typeof (CoreGraphics.CGSize).FullName,
+                    width.ToDesignerString (),
+					height.ToDesignerString ()
+                    ));
+            }
+
+            builder.AppendLine (string.Format ("{0}.BoxType = {1};", name, NSBoxType.NSBoxSeparator.GetFullName ()));
+
             return builder.ToString();
         }
     }

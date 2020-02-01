@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,18 +26,26 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
-using FigmaSharp.Views;
+using AppKit;
+using FigmaSharp.Views.Native.Cocoa;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Views.Cocoa
 {
-    public abstract class FigmaLineConverterBase : FigmaViewConverter
-    {
-        public override bool IsLayer => true;
+	public class HorizontalBar : View, IHorizontalBar
+	{
+		public HorizontalBar () : this (new FNSBox ())
+		{
 
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            return currentNode.GetType () == typeof (FigmaLine) || (currentNode.type == "VECTOR" && currentNode.name == "sep");
-        }
-    }
+		}
+
+		public HorizontalBar (FNSBox box) : base (box)
+		{
+			box.BoxType = NSBoxType.NSBoxSeparator;
+		}
+
+		public override void Dispose ()
+		{
+			base.Dispose ();
+		}
+	}
 }

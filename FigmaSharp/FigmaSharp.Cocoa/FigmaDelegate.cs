@@ -15,13 +15,13 @@ namespace FigmaSharp.Cocoa
     {
         static readonly FigmaViewConverter[] figmaViewConverters = {
             new FigmaRegularPolygonConverter (),
-            new FigmaVectorViewConverter (),
-            new FigmaFrameEntityConverter (),
             new FigmaTextConverter (),
-            new FigmaVectorEntityConverter (),
+            new FigmaLineConverter (),
             new RectangleVectorConverter (),
             new FigmaElipseConverter (),
-            new FigmaLineConverter ()
+            new FigmaVectorViewConverter (),
+            new FigmaFrameEntityConverter (),
+            new FigmaVectorEntityConverter (),
         };
 
         static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();

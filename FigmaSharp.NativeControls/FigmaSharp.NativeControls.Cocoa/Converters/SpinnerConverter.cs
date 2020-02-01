@@ -34,64 +34,73 @@ using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public partial class TextFieldConverter
+	public class SpinnerConverter : SpinnerConverterBase
 	{
-		public class SpinnerConverter : SpinnerConverterBase
+		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
-			{
-				var instance = (FigmaInstance)currentNode;
-				var view = new Spinner ();
-				var nativeView = (Views.Native.Cocoa.FNSProgressIndicator)view.NativeObject;
+			var instance = (FigmaInstance)currentNode;
+			var view = new Spinner ();
+			var nativeView = (FNSProgressIndicator)view.NativeObject;
+            nativeView.Configure (instance);
 
-				var figmaInstance = (FigmaInstance)currentNode;
-				var controlType = figmaInstance.ToControlType ();
-				switch (controlType) {
-					case NativeControlType.ProgressSpinnerSmall:
-					case NativeControlType.ProgressSpinnerSmallDark:
-						nativeView.ControlSize = NSControlSize.Small;
-						break;
-					case NativeControlType.ProgressSpinnerStandard:
-					case NativeControlType.ProgressSpinnerStandardDark:
-						nativeView.ControlSize = NSControlSize.Regular;
-						break;
-				}
-				if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
-					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-				}
-
-				return view;
+            var figmaInstance = (FigmaInstance)currentNode;
+			var controlType = figmaInstance.ToControlType ();
+			switch (controlType) {
+				case NativeControlType.ProgressSpinnerSmall:
+				case NativeControlType.ProgressSpinnerSmallDark:
+					nativeView.ControlSize = NSControlSize.Small;
+					break;
+				case NativeControlType.ProgressSpinnerStandard:
+				case NativeControlType.ProgressSpinnerStandardDark:
+					nativeView.ControlSize = NSControlSize.Regular;
+					break;
 			}
+			//if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
+			//	nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			//}
 
-			public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
-			{
-                StringBuilder builder = new StringBuilder ();
-                string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+            return view;
+		}
 
-                if (rendererService.NeedsRenderInstance (currentNode)) {
-                    builder.AppendLine ($"var {name} = new {typeof (Spinner).FullName}();");
-                }
-                builder.Configure (name, currentNode);
+		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		{
+            var figmaInstance = (FigmaInstance)currentNode;
 
-                var figmaInstance = (FigmaInstance)currentNode;
-                var controlType = figmaInstance.ToControlType ();
+            StringBuilder builder = new StringBuilder ();
+            string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+          
+            var view = new Spinner ();
+            var nativeView = (NSProgressIndicator) view.NativeObject;
+          
+            if (rendererService.NeedsRenderInstance (currentNode)) {
+                builder.AppendLine ($"var {name} = new {typeof (NSProgressIndicator).FullName}();");
+            }
 
-                switch (controlType) {
-                    case NativeControlType.PopUpButtonSmall:
-                    case NativeControlType.PopUpButtonSmallDark:
-                        builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
-                        break;
-                    case NativeControlType.PopUpButtonStandard:
-                    case NativeControlType.PopUpButtonStandardDark:
-                        builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
-                        break;
-                }
+            builder.Configure (name, figmaInstance);
 
-                return builder.ToString ();
-			}
+            builder.AppendLine (string.Format ("{0}.Style = {1};", name, NSProgressIndicatorStyle.Spinning.GetFullName ()));
+
+			//hidden by default
+            builder.AppendLine (string.Format ("{0}.Hidden = {1};", name, (true).ToDesignerString ()));
+
+            var controlType = figmaInstance.ToControlType ();
+
+            switch (controlType) {
+                case NativeControlType.PopUpButtonSmall:
+                case NativeControlType.PopUpButtonSmallDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                    break;
+                case NativeControlType.PopUpButtonStandard:
+                case NativeControlType.PopUpButtonStandardDark:
+                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    break;
+            }
+
+            return builder.ToString ();
 		}
 	}
 }
