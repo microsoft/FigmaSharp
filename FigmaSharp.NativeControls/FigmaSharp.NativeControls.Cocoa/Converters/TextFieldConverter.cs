@@ -46,6 +46,8 @@ namespace FigmaSharp.NativeControls.Cocoa
             var textBox = new TextBox ();
             var view = (NSTextField)textBox.NativeObject;
 
+            view.Configure (instance);
+
             var figmaInstance = (FigmaInstance)currentNode;
             var controlType = figmaInstance.ToControlType ();
             switch (controlType) {
@@ -75,7 +77,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             //if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
             //    view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
             //}
-            view.Configure (instance);
 
             return textBox;
         }
@@ -83,13 +84,14 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             var instance = (FigmaInstance)currentNode;
-
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             StringBuilder builder = new StringBuilder ();
 
             if (rendererService.NeedsRenderInstance (instance))
                 builder.AppendLine ($"var {name} = new {typeof (NSTextField).FullName}();");
+
+            builder.Configure (name, instance);
 
             var texts = instance.children.OfType<FigmaText> ();
 
@@ -106,8 +108,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
                 builder.Configure (name, figmaTextNode);
             }
-
-            builder.Configure (name, instance);
 
             var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
             if (placeholderTextNode != null)

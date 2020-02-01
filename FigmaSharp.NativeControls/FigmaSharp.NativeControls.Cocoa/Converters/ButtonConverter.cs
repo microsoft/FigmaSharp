@@ -51,6 +51,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			button.Size = new Size(figmaInstance.absoluteBoundingBox.Width, 30);
 
+            view.Configure (figmaInstance);
+
 			var controlType = figmaInstance.ToControlType();
             switch (controlType)
             {
@@ -116,11 +118,12 @@ namespace FigmaSharp.NativeControls.Cocoa
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine($"var {FigmaSharp.Resources.Ids.Conversion.NameIdentifier} = new {typeof(NSButton).FullName}();");
+                builder.AppendLine($"var {name} = new {typeof(NSButton).FullName}();");
 
-            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, NSBezelStyle.Rounded.GetFullName ()));
-            builder.Configure(FigmaSharp.Resources.Ids.Conversion.NameIdentifier, currentNode);
+            builder.Configure (name, currentNode);
 
+            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
+            
             var controlType = figmaInstance.ToControlType ();
             switch (controlType) {
                 case NativeControlType.ButtonLarge:
@@ -143,13 +146,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 				if (figmaText != null) {
 
                     title = figmaText.characters;
-                    builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, figmaText.opacity.ToDesignerString ()));
-				
+                    builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
 					//button.Font = figmaText.style.ToNSFont();
 				}
 			}
 
-            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", FigmaSharp.Resources.Ids.Conversion.NameIdentifier, title ?? string.Empty));
+            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, title ?? string.Empty));
 
             return builder.ToString();
         }

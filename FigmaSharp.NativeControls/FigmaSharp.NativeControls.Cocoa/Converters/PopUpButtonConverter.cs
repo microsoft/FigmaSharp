@@ -46,7 +46,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var button = new ComboBox();
 			var view = (NSPopUpButton)button.NativeObject;
-		
+            view.Configure (figmaInstance);
+
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
             {
@@ -86,9 +87,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (rendererService.NeedsRenderInstance (currentNode))
                 builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
 
-            builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
-
             builder.Configure (name, currentNode);
+
+            builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
 
             var controlType = figmaInstance.ToControlType ();
             switch (controlType) {

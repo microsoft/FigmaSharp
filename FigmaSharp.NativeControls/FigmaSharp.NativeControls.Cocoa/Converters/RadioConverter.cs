@@ -51,6 +51,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var button = new RadioBox() { Text = "" };
 			var view = (NSButton)button.NativeObject;
+            view.Configure (figmaInstance);
 
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
@@ -109,6 +110,8 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (rendererService.NeedsRenderInstance (currentNode))
                 builder.AppendLine ($"var {name} = new {typeof (NSButton).FullName}();");
 
+            builder.Configure (name, figmaInstance);
+
             builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
             builder.AppendLine (string.Format ("{0}.SetButtonType ({1});", name, NSButtonType.Radio.GetFullName ()));
             builder.Configure (name, currentNode);
@@ -130,8 +133,8 @@ namespace FigmaSharp.NativeControls.Cocoa
             }
 
 			var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
-
-            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label?.characters ?? ""));
+			if (label != null)
+				builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label?.characters ?? ""));
 
             //first figma 
             var group = figmaInstance.children
