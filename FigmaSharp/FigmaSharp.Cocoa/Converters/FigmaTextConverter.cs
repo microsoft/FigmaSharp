@@ -45,8 +45,7 @@ namespace FigmaSharp.Cocoa.Converters
         {
             var figmaText = ((FigmaText)currentNode);
             Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);
-
-			var label = new Label();
+            var label = new Label();
 			var textField = label.NativeObject as FNSTextField;
 			textField.Font = figmaText.style.ToNSFont();
 			label.Text = figmaText.characters;
@@ -57,12 +56,14 @@ namespace FigmaSharp.Cocoa.Converters
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
+            var name = Resources.Ids.Conversion.NameIdentifier;
+
             StringBuilder builder = new StringBuilder();
 			if (rendererService.NeedsRenderInstance (currentNode)) {
-                builder.AppendLine (string.Format ("var {0} = {1};", Resources.Ids.Conversion.NameIdentifier, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
+                builder.AppendLine (string.Format ("var {0} = {1};", name, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
             }
-            builder.Configure(Resources.Ids.Conversion.NameIdentifier, (FigmaText)currentNode);
-            builder.Configure (Resources.Ids.Conversion.NameIdentifier, (FigmaNode)currentNode);
+            builder.Configure(name, (FigmaText)currentNode);
+            builder.Configure (name, (FigmaNode)currentNode);
             return builder.ToString();
         }
     }

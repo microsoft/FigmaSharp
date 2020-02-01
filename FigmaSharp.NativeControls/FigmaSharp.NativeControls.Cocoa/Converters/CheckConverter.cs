@@ -51,6 +51,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var button = new CheckBox() { Text = "" };
 			var view = (NSButton)button.NativeObject;
+            view.Configure (figmaInstance);
 
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
@@ -109,12 +110,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             if (rendererService.NeedsRenderInstance (currentNode))
                 builder.AppendLine ($"var {name} = new {typeof (NSButton).FullName}();");
+
+            builder.Configure (name, currentNode);
+
             builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
 
             builder.AppendLine (string.Format ("{0}.SetButtonType ({1});", name, NSButtonType.Switch.GetFullName ()));
             builder.AppendLine (string.Format ("{0}.Title = string.Empty;", name));
-
-            builder.Configure (name, currentNode);
 
             var controlType = figmaInstance.ToControlType ();
             switch (controlType) {

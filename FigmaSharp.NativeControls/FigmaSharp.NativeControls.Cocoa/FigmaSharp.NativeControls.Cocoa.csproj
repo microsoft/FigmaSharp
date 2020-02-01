@@ -65,6 +65,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Converters\WindowConverter.cs" />
     <Compile Include="Converters\SpinnerConverter.cs" />
+    <Compile Include="Views\HorizontalLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -73,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">

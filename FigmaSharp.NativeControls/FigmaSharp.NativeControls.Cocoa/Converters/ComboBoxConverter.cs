@@ -43,8 +43,9 @@ namespace FigmaSharp.NativeControls.Cocoa
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var view = new NSComboBox();
-
             var figmaInstance = (FigmaInstance)currentNode;
+            view.Configure (currentNode);
+
             var controlType = figmaInstance.ToControlType();
             switch (controlType)
             {
@@ -76,10 +77,10 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (rendererService.NeedsRenderInstance (currentNode))
                 builder.AppendLine ($"var {name} = new {typeof (NSComboBox).FullName}();");
 
+            builder.Configure (name, currentNode);
+
             builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
             builder.AppendLine (string.Format ("{0}.Title = string.Empty;", name));
-
-            builder.Configure (name, currentNode);
 
             var controlType = figmaInstance.ToControlType ();
             switch (controlType) {
