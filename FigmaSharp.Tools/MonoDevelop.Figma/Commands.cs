@@ -372,7 +372,12 @@ namespace MonoDevelop.Figma.Commands
 				//}
 
 				var images = Directory.EnumerateFiles (resourcesDirectoryPath, $"*{FigmaBundle.ImageFormat}").Select (s => new FilePath (s));
-				currentProject.AddFiles (images);
+
+				foreach (var item in images) {
+					if (!currentProject.PathExistsInProject (item)) {
+						currentProject.AddFile (item);
+					}
+				}
 			}
 
 			//files
