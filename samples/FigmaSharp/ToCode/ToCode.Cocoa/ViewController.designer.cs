@@ -19,6 +19,9 @@ namespace ToCode.Cocoa
 		AppKit.NSButton copyCSButton { get; set; }
 
 		[Outlet]
+		AppKit.NSButton openUrlButton { get; set; }
+
+		[Outlet]
 		AppKit.NSScrollView logTextField { get; set; }
 
 		[Outlet]
@@ -26,6 +29,11 @@ namespace ToCode.Cocoa
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (openUrlButton != null) {
+				openUrlButton.Dispose ();
+				openUrlButton = null;
+			}
+
 			if (copyDesignerCSButton != null) {
 				copyDesignerCSButton.Dispose ();
 				copyDesignerCSButton = null;

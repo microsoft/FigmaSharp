@@ -34,7 +34,11 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override string ConvertToCode(string parent, string name, FigmaNode current)
         {
-            if (current is IAbsoluteBoundingBox absoluteBounding && current.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
+			//first level has an special behaviour on positioning 
+			if (current.Parent is FigmaCanvas)
+                return string.Empty;
+
+            if (current is IAbsoluteBoundingBox absoluteBounding && current.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox )
             {
                 var x = absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X;
 

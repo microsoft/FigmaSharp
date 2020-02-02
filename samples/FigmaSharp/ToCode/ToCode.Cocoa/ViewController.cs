@@ -32,6 +32,8 @@ namespace ToCode.Cocoa
 
 			copyCSButton.Activated += CopyCSButton_Activated;
 			copyDesignerCSButton.Activated += CopyDesignerCSButton_Activated;
+			openUrlButton.Activated += OpenUrlButton_Activated;
+
 			// Do any additional setup after loading the view.
 			outlinePanel = new OutlinePanel ();
 
@@ -53,7 +55,7 @@ namespace ToCode.Cocoa
 
 			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
 			fileProvider = new FigmaRemoteFileProvider ();
-			fileProvider.Load ("FwVa4JS5QsohRhNEnEBKslFk");
+			fileProvider.Load (fileId);
 
 			var addChildConverter = new FigmaCodeAddChildConverter ();
 			var positionConverter = new FigmaCodePositionConverter ();
@@ -62,6 +64,14 @@ namespace ToCode.Cocoa
 			data = new FigmaNodeView (fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes (fileProvider.Response.document, data);
 			outlinePanel.GenerateTree (data);
+		}
+
+		const string fileId = "FwVa4JS5QsohRhNEnEBKslFk";
+
+		private void OpenUrlButton_Activated (object sender, EventArgs e)
+		{
+			var url = new NSUrl (string.Format ("https://www.figma.com/file/{0}", fileId));
+			NSWorkspace.SharedWorkspace.OpenUrl (url);
 		}
 
 		private void CopyDesignerCSButton_Activated (object sender, EventArgs e)
