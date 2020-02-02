@@ -66,6 +66,7 @@
     <Compile Include="Converters\WindowConverter.cs" />
     <Compile Include="Converters\SpinnerConverter.cs" />
     <Compile Include="Views\HorizontalLine.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

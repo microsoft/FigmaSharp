@@ -32,12 +32,11 @@ using System.Text;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class WindowConverter : WindowConverterBase
+    public class WindowStandardConverter : WindowStandardConverterBase
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
@@ -45,6 +44,32 @@ namespace FigmaSharp.NativeControls.Cocoa
         }
 
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        {
+            return string.Empty;
+        }
+    }
+
+    public class WindowSheetConverter : WindowSheetConverterBase
+    {
+        public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            return null;
+        }
+
+        public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        {
+            return string.Empty;
+        }
+    }
+
+    public class WindowPanelConverter : WindowPanelConverterBase
+    {
+        public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            return null;
+        }
+
+        public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
         }

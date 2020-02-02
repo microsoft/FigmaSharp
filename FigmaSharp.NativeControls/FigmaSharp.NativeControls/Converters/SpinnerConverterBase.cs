@@ -32,16 +32,8 @@ namespace FigmaSharp.NativeControls.Base
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			if (currentNode is FigmaInstance figmaInstance) {
-				switch (figmaInstance.ToControlType ()) {
-					case NativeControlType.ProgressSpinnerSmall:
-					case NativeControlType.ProgressSpinnerSmallDark:
-					case NativeControlType.ProgressSpinnerStandard:
-					case NativeControlType.ProgressSpinnerStandardDark:
-						return true;
-				}
-			}
-			return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.ProgressSpinner;
+            return result;
 		}
 	}
 }

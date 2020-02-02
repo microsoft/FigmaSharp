@@ -32,18 +32,8 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaInstance figmaInstance)
-            {
-                switch (figmaInstance.ToControlType())
-                {
-                    case NativeControlType.TextFieldSmall:
-                    case NativeControlType.TextFieldSmallDark:
-                    case NativeControlType.TextFieldStandard:
-                    case NativeControlType.TextFieldStandardDark:
-                        return true;
-                }
-            }
-            return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.TextField;
+            return result;
         }
     }
 }

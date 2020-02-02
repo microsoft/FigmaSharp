@@ -33,20 +33,8 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaInstance figmaInstance)
-            {
-                switch (figmaInstance.ToControlType())
-                {
-                    case NativeControlType.CheckboxSmall:
-                    case NativeControlType.CheckboxSmallDark:
-                    case NativeControlType.CheckboxStandard:
-                    case NativeControlType.CheckboxStandardDark:
-
-                    case NativeControlType.RadioSingleStandard:
-                        return true;
-                }
-            }
-            return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.CheckBox;
+            return result;
         }
     }
 }
