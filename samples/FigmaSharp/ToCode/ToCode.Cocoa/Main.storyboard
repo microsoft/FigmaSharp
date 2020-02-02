@@ -680,10 +680,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="868" height="561"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jvo-Jj-Sl2">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="561"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="442" height="561"/>
                                         <subviews>
                                             <customView verticalHuggingPriority="253" translatesAutoresizingMaskIntoConstraints="NO" id="DL5-9S-UrE">
-                                                <rect key="frame" x="0.0" y="531" width="288" height="30"/>
+                                                <rect key="frame" x="0.0" y="531" width="442" height="30"/>
                                                 <subviews>
                                                     <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="obb-tu-9wC">
                                                         <rect key="frame" x="151" y="-2" width="93" height="32"/>
@@ -699,17 +699,26 @@
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                     </button>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Col-dq-zSC">
+                                                        <rect key="frame" x="244" y="-2" width="94" height="32"/>
+                                                        <buttonCell key="cell" type="push" title="Open Url" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xuN-sT-HzQ">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="obb-tu-9wC" firstAttribute="centerY" secondItem="mWE-Qv-qV0" secondAttribute="centerY" id="6DD-Qg-Dfx"/>
                                                     <constraint firstItem="obb-tu-9wC" firstAttribute="leading" secondItem="mWE-Qv-qV0" secondAttribute="trailing" constant="10" id="KSh-pv-8X4"/>
                                                     <constraint firstItem="mWE-Qv-qV0" firstAttribute="leading" secondItem="DL5-9S-UrE" secondAttribute="leading" constant="11" id="PPo-lM-EEN"/>
+                                                    <constraint firstItem="Col-dq-zSC" firstAttribute="leading" secondItem="obb-tu-9wC" secondAttribute="trailing" constant="12" id="W6j-2o-aqy"/>
                                                     <constraint firstItem="mWE-Qv-qV0" firstAttribute="centerY" secondItem="DL5-9S-UrE" secondAttribute="centerY" id="WFU-fp-1w7"/>
+                                                    <constraint firstItem="Col-dq-zSC" firstAttribute="centerY" secondItem="obb-tu-9wC" secondAttribute="centerY" id="o0d-WZ-Ag8"/>
                                                     <constraint firstAttribute="height" constant="30" id="ol2-fe-gXm"/>
                                                 </constraints>
                                             </customView>
                                             <customView horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="grd-ar-Fjc">
-                                                <rect key="frame" x="0.0" y="0.0" width="288" height="531"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="442" height="531"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="443" id="hT0-og-uM1"/>
                                                 </constraints>
@@ -729,21 +738,21 @@
                                         </customSpacing>
                                     </stackView>
                                     <customView id="OCw-PE-pI3">
-                                        <rect key="frame" x="298" y="0.0" width="570" height="561"/>
+                                        <rect key="frame" x="452" y="0.0" width="416" height="561"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmZ-he-ePv">
-                                                <rect key="frame" x="0.0" y="0.0" width="570" height="561"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="416" height="561"/>
                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HFT-jK-w91">
-                                                    <rect key="frame" x="0.0" y="0.0" width="570" height="561"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="416" height="561"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="f7w-4L-lCO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="570" height="561"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="416" height="561"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="570" height="561"/>
+                                                            <size key="minSize" width="416" height="561"/>
                                                             <size key="maxSize" width="739" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
@@ -754,7 +763,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="REw-Cp-3fh">
-                                                    <rect key="frame" x="554" y="0.0" width="16" height="561"/>
+                                                    <rect key="frame" x="400" y="0.0" width="16" height="561"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -781,8 +790,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="copyDesignerCSButton" destination="mWE-Qv-qV0" id="26-Ug-4lv"/>
+                        <outlet property="openUrlButton" destination="Col-dq-zSC" id="43-Ug-4ls"/>
                         <outlet property="copyCSButton" destination="obb-tu-9wC" id="23-Ug-4lv"/>
+                        <outlet property="copyDesignerCSButton" destination="mWE-Qv-qV0" id="26-Ug-4lv"/>
                         <outlet property="logTextField" destination="hmZ-he-ePv" id="MaG-Ug-4lv"/>
                         <outlet property="nsOutlineCustomView" destination="grd-ar-Fjc" id="0wN-U7-tCu"/>
                         <outlet property="treeHierarchyContainer" destination="grd-ar-Fjc" id="aHw-Tc-itp"/>
