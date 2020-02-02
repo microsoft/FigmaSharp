@@ -16,7 +16,7 @@ namespace FigmaSharp
 		public string DirectoryPath { get; private set; }
 
 		public string Name => DirectoryPath == null ? null : Path.GetFileName (DirectoryPath);
-		public string FileId => Manifest.DocumentUrl;
+		public string FileId => Manifest.FileId;
 
 		public string DocumentFilePath => Path.Combine (DirectoryPath, DocumentFileName);
 		public string ViewsDirectoryPath => Path.Combine (DirectoryPath, ViewsDirectoryName);
@@ -134,7 +134,7 @@ namespace FigmaSharp
 				ApiVersion = AppContext.Current.Version,
 				RemoteApiVersion = AppContext.Api.Version.ToString (),
 				Date = DateTime.Now,
-				DocumentUrl = fileId
+				FileId = fileId
 			};
 
 			return bundle;

@@ -19,8 +19,8 @@ namespace FigmaSharp
 
 	public class FigmaManifest
 	{
-		[ManifestDescription ("Document Url")]
-		public string DocumentUrl { get; set; }
+		[ManifestDescription ("File Id")]
+		public string FileId { get; set; }
 
 		[ManifestDescription ("Document Version")]
 		public float DocumentVersion { get; set; }
@@ -50,7 +50,7 @@ namespace FigmaSharp
 			builder.AppendLine ();
 			builder.AppendLine ($"Document title:   macOS Components");
 			builder.AppendLine ($"Document version: {DocumentVersion}");
-			builder.AppendLine ($"Document URL:     {DocumentUrl}");
+			builder.AppendLine ($"Document URL:     {FileId}");
 			builder.AppendLine ();
 			builder.AppendLine ($"Changes to this file may cause incorrect behavior");
 			builder.AppendLine ($"and will be lost if the code is regenerated.");
