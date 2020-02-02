@@ -33,20 +33,8 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaInstance figmaInstance)
-            {
-                switch (figmaInstance.ToControlType())
-                {
-                    case NativeControlType.ButtonLarge:
-                    case NativeControlType.ButtonLargeDark:
-                    case NativeControlType.ButtonStandard:
-                    case NativeControlType.ButtonStandardDark:
-                    case NativeControlType.ButtonSmall:
-                    case NativeControlType.ButtonSmallDark:
-						return true;
-                }
-            }
-            return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.Button;
+            return result;
         }
     }
 }

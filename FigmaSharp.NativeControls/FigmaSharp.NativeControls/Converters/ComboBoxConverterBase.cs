@@ -33,18 +33,8 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaInstance figmaInstance)
-            {
-                switch (figmaInstance.ToControlType())
-                {
-                    case NativeControlType.ComboBoxSmall:
-                    case NativeControlType.ComboBoxSmallDark:
-                    case NativeControlType.ComboBoxStandard:
-                    case NativeControlType.ComboBoxStandardDark:
-                        return true;
-                }
-            }
-            return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.ComboBox;
+            return result;
         }
     }
 }

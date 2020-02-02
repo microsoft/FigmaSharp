@@ -33,20 +33,8 @@ namespace FigmaSharp.NativeControls.Base
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaInstance figmaInstance)
-            {
-                switch (figmaInstance.ToControlType())
-                {
-                    case NativeControlType.RadioSmall:
-                    case NativeControlType.RadioSmallDark:
-                    case NativeControlType.RadioStandard:
-                    case NativeControlType.RadioStandardDark:
-
-                    case NativeControlType.RadioSingleStandard:
-                        return true;
-                }
-            }
-            return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.RadioButton;
+            return result;
         }
     }
 }

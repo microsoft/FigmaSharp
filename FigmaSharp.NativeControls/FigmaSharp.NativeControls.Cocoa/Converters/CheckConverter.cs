@@ -53,19 +53,19 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var view = (NSButton)button.NativeObject;
             view.Configure (figmaInstance);
 
-            var controlType = figmaInstance.ToControlType();
+            var controlType = figmaInstance.ToNativeControlComponentType();
             switch (controlType)
             {
-                case NativeControlType.ButtonLarge:
-                case NativeControlType.ButtonLargeDark:
+                case NativeControlComponentType.ButtonLarge:
+                case NativeControlComponentType.ButtonLargeDark:
                     view.ControlSize = NSControlSize.Regular;
                     break;
-                case NativeControlType.ButtonStandard:
-                case NativeControlType.ButtonStandardDark:
+                case NativeControlComponentType.ButtonStandard:
+                case NativeControlComponentType.ButtonStandardDark:
                     view.ControlSize = NSControlSize.Regular;
                     break;
-                case NativeControlType.ButtonSmall:
-                case NativeControlType.ButtonSmallDark:
+                case NativeControlComponentType.ButtonSmall:
+                case NativeControlComponentType.ButtonSmallDark:
                     view.ControlSize = NSControlSize.Small;
                     break;
             }
@@ -118,18 +118,18 @@ namespace FigmaSharp.NativeControls.Cocoa
             builder.AppendLine (string.Format ("{0}.SetButtonType ({1});", name, NSButtonType.Switch.GetFullName ()));
             builder.AppendLine (string.Format ("{0}.Title = string.Empty;", name));
 
-            var controlType = figmaInstance.ToControlType ();
+            var controlType = figmaInstance.ToNativeControlComponentType ();
             switch (controlType) {
-                case NativeControlType.ButtonLarge:
-                case NativeControlType.ButtonLargeDark:
+                case NativeControlComponentType.ButtonLarge:
+                case NativeControlComponentType.ButtonLargeDark:
                     builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
                     break;
-                case NativeControlType.ButtonStandard:
-                case NativeControlType.ButtonStandardDark:
+                case NativeControlComponentType.ButtonStandard:
+                case NativeControlComponentType.ButtonStandardDark:
                     builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
                     break;
-                case NativeControlType.ButtonSmall:
-                case NativeControlType.ButtonSmallDark:
+                case NativeControlComponentType.ButtonSmall:
+                case NativeControlComponentType.ButtonSmallDark:
                     builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
                     break;
             }

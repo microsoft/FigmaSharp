@@ -38,81 +38,80 @@ using System.Text;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class PopUpButtonConverter : PopUpButtonConverterBase
-    {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
-        {
+	public class PopUpButtonConverter : PopUpButtonConverterBase
+	{
+		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		{
 			var figmaInstance = (FigmaInstance)currentNode;
 
-			var button = new ComboBox();
+			var button = new ComboBox ();
 			var view = (NSPopUpButton)button.NativeObject;
-            view.Configure (figmaInstance);
+			view.Configure (figmaInstance);
 
-            var controlType = figmaInstance.ToControlType();
-            switch (controlType)
-            {
-                case NativeControlType.PopUpButtonSmall:
-                case NativeControlType.PopUpButtonSmallDark:
-                    view.ControlSize = NSControlSize.Small;
-                    break;
-                case NativeControlType.PopUpButtonStandard:
-                case NativeControlType.PopUpButtonStandardDark:
-                    view.ControlSize = NSControlSize.Regular;
-                    break;
-            }
+			var controlType = figmaInstance.ToNativeControlComponentType ();
+			switch (controlType) {
+				case NativeControlComponentType.PopUpButtonSmall:
+				case NativeControlComponentType.PopUpButtonSmallDark:
+					view.ControlSize = NSControlSize.Small;
+					break;
+				case NativeControlComponentType.PopUpButtonStandard:
+				case NativeControlComponentType.PopUpButtonStandardDark:
+					view.ControlSize = NSControlSize.Regular;
+					break;
+			}
 
-            var label = figmaInstance.children
-                   .OfType<FigmaText>()
-                   .FirstOrDefault(s => s.name == "lbl");
+			var label = figmaInstance.children
+				   .OfType<FigmaText> ()
+				   .FirstOrDefault (s => s.name == "lbl");
 
-            if (label != null) {
-				button.AddItem(label.characters);
-                view.Font = label.style.ToNSFont();
-            }
+			if (label != null) {
+				button.AddItem (label.characters);
+				view.Font = label.style.ToNSFont ();
+			}
 
-            //if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal)) {
-            //    view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
-            //}
+			//if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal)) {
+			//    view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+			//}
 
-            return button;
-        }
+			return button;
+		}
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
-        {
-            var figmaInstance = (FigmaInstance)currentNode;
+		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		{
+			var figmaInstance = (FigmaInstance)currentNode;
 
-            var builder = new StringBuilder ();
-            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+			var builder = new StringBuilder ();
+			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-            if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
+			if (rendererService.NeedsRenderInstance (currentNode))
+				builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
 
-            builder.Configure (name, currentNode);
+			builder.Configure (name, currentNode);
 
-            builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
+			builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
 
-            var controlType = figmaInstance.ToControlType ();
-            switch (controlType) {
-                case NativeControlType.PopUpButtonSmall:
-                case NativeControlType.PopUpButtonSmallDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
-                    break;
-                case NativeControlType.PopUpButtonStandard:
-                case NativeControlType.PopUpButtonStandardDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
-                    break;
-            }
+			var controlType = figmaInstance.ToNativeControlComponentType ();
+			switch (controlType) {
+				case NativeControlComponentType.PopUpButtonSmall:
+				case NativeControlComponentType.PopUpButtonSmallDark:
+					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+					break;
+				case NativeControlComponentType.PopUpButtonStandard:
+				case NativeControlComponentType.PopUpButtonStandardDark:
+					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+					break;
+			}
 
-            var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
-            if (label != null) {
-                builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
-            }
+			var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
+			if (label != null) {
+				builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
+			}
 
-            if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-                builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-            }
+			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+				builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+			}
 
-            return builder.ToString ();
-        }
-    }
+			return builder.ToString ();
+		}
+	}
 }

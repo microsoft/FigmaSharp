@@ -29,28 +29,30 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class WindowConverterBase : FigmaInstanceConverter
+    public abstract class WindowStandardConverterBase : FigmaInstanceConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaInstance figmaInstance)
-            {
-                if (figmaInstance.name == "Window/Standard")
-                {
-                    return true;
-                }
-                //switch (figmaInstance.ToControlType())
-                //{
-                //    case NativeControlType.ButtonLarge:
-                //    case NativeControlType.ButtonLargeDark:
-                //    case NativeControlType.ButtonStandard:
-                //    case NativeControlType.ButtonStandardDark:
-                //    case NativeControlType.ButtonSmall:
-                //    case NativeControlType.ButtonSmallDark:
-                //        return true;
-                //}
-            }
-            return false;
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.WindowStandard;
+            return result;
+        }
+    }
+
+    public abstract class WindowSheetConverterBase : FigmaInstanceConverter
+    {
+        public override bool CanConvert (FigmaNode currentNode)
+        {
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.WindowSheet;
+            return result;
+        }
+    }
+
+    public abstract class WindowPanelConverterBase : FigmaInstanceConverter
+    {
+        public override bool CanConvert (FigmaNode currentNode)
+        {
+            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.WindowPanel;
+            return result;
         }
     }
 }
