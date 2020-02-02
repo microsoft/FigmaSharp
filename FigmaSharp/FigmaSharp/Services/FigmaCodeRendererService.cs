@@ -9,14 +9,12 @@ namespace FigmaSharp.Services
 {
 	public class FigmaCodeRendererService
 	{
-		protected IFigmaFileProvider figmaProvider;
+		internal IFigmaFileProvider figmaProvider;
 		FigmaCodePositionConverterBase codePositionConverter;
 		FigmaCodeAddChildConverterBase codeAddChildConverter;
 
 		FigmaViewConverter[] figmaConverters;
 		FigmaViewConverter[] customConverters;
-
-
 
 		public FigmaCodeRendererService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters,
 			FigmaCodePositionConverterBase codePositionConverter, FigmaCodeAddChildConverterBase codeAddChildConverter)
