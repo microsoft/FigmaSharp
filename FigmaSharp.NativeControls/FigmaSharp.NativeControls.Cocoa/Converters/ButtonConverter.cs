@@ -140,18 +140,45 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            string title = null;
-			if (currentNode is IFigmaDocumentContainer instance) {
-				var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
-				if (figmaText != null) {
+   //         string title = null;
+			//if (currentNode is IFigmaDocumentContainer instance) {
+			//	var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
+			//	if (figmaText != null) {
 
-                    title = figmaText.characters;
-                    builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
-					//button.Font = figmaText.style.ToNSFont();
-				}
-			}
+   //                 title = figmaText.characters;
+   //                 builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
+			//		//button.Font = figmaText.style.ToNSFont();
+			//	}
+			//}
 
-            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, title ?? string.Empty));
+            //first figma 
+            var group = figmaInstance.children
+                .OfType<FigmaGroup> ()
+                .FirstOrDefault (s => s.visible);
+
+            if (group != null) {
+                var label = group.children
+                    .OfType<FigmaText> ()
+                    .FirstOrDefault ();
+
+                if (label != null) {
+                    builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label.characters ?? string.Empty));
+                    //view.Font = label.style.ToNSFont ();
+                }
+
+                if (group.name == "Disabled") {
+                    builder.AppendLine (string.Format ("{0}.Enabled = {1};", name, false.ToDesignerString ()));
+                }
+            } else {
+                var label = figmaInstance.children
+                   .OfType<FigmaText> ()
+                   .FirstOrDefault ();
+
+                if (label != null) {
+                    builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label.characters ?? string.Empty));
+                    //view.Font = label.style.ToNSFont ();
+                }
+            }
 
             return builder.ToString();
         }
