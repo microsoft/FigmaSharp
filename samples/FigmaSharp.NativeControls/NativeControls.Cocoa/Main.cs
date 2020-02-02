@@ -90,7 +90,7 @@ namespace LocalFile.Cocoa
 
 			var rendererService = new FigmaViewRendererService(fileProvider, converters);
 			var rendererOptions = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false };
-			rendererService.RenderInWindow(mainWindow, rendererOptions, "1.0. Bundle Figma Document");
+			rendererService.RenderInWindow(mainWindow, rendererOptions, "1.0. Bundle Figma Bundle");
 
 			mainWindow.Resizable = false;
 			mainWindow.Center();
