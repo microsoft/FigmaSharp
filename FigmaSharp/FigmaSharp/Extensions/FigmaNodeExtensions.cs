@@ -39,7 +39,35 @@ namespace FigmaSharp
 {
 	public static class FigmaServiceExtensions
 	{
-		public static T FindNativeViewByName<T>(this Services.FigmaRendererService rendererService, string name)
+        public static string GetRealName (this FigmaNode node)
+        {
+            var name = node.name;
+            var index = name.IndexOf ('\"');
+            if (index > -1 && index < name.Length - 1) {
+                name = name.Substring (index + 1);
+                index = name.IndexOf ('\"');
+                if (index > -1 && index < name.Length) {
+                    name = name.Substring (0, index);
+
+                    return name
+                .Replace (" ", string.Empty)
+                .Replace (".", string.Empty);
+                }
+            }
+
+            name = node.name;
+            //HACK: we need to fix this
+            index = name.IndexOf (' ');
+            if (index > -1 && index < name.Length - 1) {
+                name = name.Substring (index + 1);
+            }
+
+            return name
+                .Replace (" ", string.Empty)
+                .Replace (".", string.Empty);
+        }
+
+        public static T FindNativeViewByName<T>(this Services.FigmaRendererService rendererService, string name)
 		{
 			foreach (var node in rendererService.NodesProcessed)
 			{

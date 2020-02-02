@@ -8,6 +8,7 @@ namespace FigmaSharp
 {
 	public class FigmaBundle
 	{
+		public FigmaFileResponse Document { get; set; }
 		public FigmaManifest Manifest { get; set; }
 
 		public List<FigmaBundleView> Views { get; } = new List<FigmaBundleView> ();
@@ -20,9 +21,10 @@ namespace FigmaSharp
 		public string DocumentFilePath => Path.Combine (DirectoryPath, DocumentFileName);
 		public string ViewsDirectoryPath => Path.Combine (DirectoryPath, ViewsDirectoryName);
 		public string ResourcesDirectoryPath => Path.Combine (DirectoryPath, ResourcesDirectoryName);
+		public string ManifestFilePath => Path.Combine (DirectoryPath, ManifestFileName);
 
 		public string Namespace { get; set; } = "FigmaSharp";
-
+	
 		internal const string FigmaBundleDirectoryExtension = ".figmabundle";
 		//const string FigmaBundlesDirectoryName = ".bundles";
 		internal const string FigmaDirectoryName = ".figma";
@@ -32,6 +34,7 @@ namespace FigmaSharp
 		internal const string ViewsDirectoryName = "Views";
 		internal const string ImageFormat = ".png";
 
+		//reads all the views from the current views directory with empty FigmaBundleViews (not implemented the read)
 		public void RefreshViews ()
 		{
 			Views.Clear ();
@@ -42,10 +45,12 @@ namespace FigmaSharp
 
 			foreach (var viewFullPath in Directory.EnumerateFiles (ViewsDirectoryPath, $"*{FigmaBundleView.PartialDesignerExtension}")) {
 				var name = viewFullPath.Substring (0, viewFullPath.Length - FigmaBundleView.PartialDesignerExtension.Length);
+				//TODO: right not it's not possible to read the content of the current .cs file then we create a fake file
 				Views.Add (new FigmaBundleView (this, name, null));
 			}
 		}
 
+		//this happens when we call to FigmaBundle.FromDirectoryPath
 		public void Load (string bundleDirectoryPath)
 		{
 			if (!Directory.Exists (bundleDirectoryPath)) {
@@ -83,6 +88,43 @@ namespace FigmaSharp
 			}
 		}
 
+		internal void LoadLocalDocument ()
+		{
+			//generate also Document.figma
+			Document = AppContext.Api.GetFile (new FigmaFileQuery (FileId));
+		}
+
+		//Generates the .figmafile
+		internal void SaveLocalDocument (bool includeImages)
+		{
+			if (string.IsNullOrEmpty (FileId)) {
+				throw new InvalidOperationException ("id not set");
+			}
+
+			if (Document == null) {
+				throw new InvalidOperationException ("document not loaded not set");
+			}
+			var documentFilePath = DocumentFilePath;
+			if (File.Exists (documentFilePath))
+				File.Delete (documentFilePath);
+
+			Document.Save (documentFilePath);
+
+			//get image resources
+			if (!includeImages)
+				return;
+
+			var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
+			GenerateOutputResourceFiles (FileId, Document, resourcesDirectoryPath);
+		}
+
+		public void GenerateDocuments ()
+		{
+
+		}
+
+		#region Static Methods
+
 		public static FigmaBundle Create (string fileId, string directoryPath)
 		{
 			var bundle = new FigmaBundle () {
@@ -111,17 +153,7 @@ namespace FigmaSharp
 			}
 		}
 
-		internal static FigmaFileResponse GenerateDocumentOutputFile (string fileId, string directoryPath)
-		{
-			var documentFilePath = Path.Combine (directoryPath, DocumentFileName);
-			if (File.Exists (documentFilePath))
-				File.Delete (documentFilePath);
-			//generate also Document.figma
-			var response = AppContext.Api.GetFile (new FigmaFileQuery (fileId));
-			response.Save (documentFilePath);
-			return response;
-		}
-
+		//Generates all the resources from the current .figmafile
 		internal static void GenerateOutputResourceFiles (string fileId, FigmaFileResponse figmaResponse, string resourcesDirectoryPath)
 		{
 			var mainNode = figmaResponse.document.children.FirstOrDefault ();
@@ -141,20 +173,32 @@ namespace FigmaSharp
 			}
 		}
 
-		internal void GenerateLocalDocument (bool includeImages)
+		//reads all the main layers from the remote document
+		public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
 		{
-			if (string.IsNullOrEmpty (FileId)) {
-				throw new InvalidOperationException ("id not set");
+			var mainNodes = figmaFileProvider.Nodes
+				.Where (s => s.Parent is FigmaCanvas)
+				.ToArray ();
+
+			foreach (var item in mainNodes) {
+				GenerateFigmaFile (item);
 			}
-
-			//get image resources
-			var figmaResponse = GenerateDocumentOutputFile (Manifest.DocumentUrl, DirectoryPath);
-
-			if (!includeImages)
-				return;
-
-			var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
-			GenerateOutputResourceFiles (FileId, figmaResponse, resourcesDirectoryPath);
 		}
+
+		void GenerateFigmaFile (FigmaNode figmaNode)
+		{
+			var name = figmaNode.GetRealName ();
+			var figmaBundleView = new FigmaBundleView (this, name, figmaNode);
+			Views.Add (figmaBundleView);
+		}
+
+		internal void SaveViews (Services.FigmaCodeRendererService codeRendererService)
+		{
+			foreach (var view in Views) {
+				view.Generate (codeRendererService);
+			}
+		}
+
+		#endregion
 	}
 }
