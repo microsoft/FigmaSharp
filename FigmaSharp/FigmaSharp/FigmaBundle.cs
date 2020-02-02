@@ -187,9 +187,25 @@ namespace FigmaSharp
 
 		void GenerateFigmaFile (FigmaNode figmaNode)
 		{
-			var name = figmaNode.GetRealName ();
-			var figmaBundleView = new FigmaBundleView (this, name, figmaNode);
-			Views.Add (figmaBundleView);
+			var name = figmaNode.GetClassName ();
+			if (HasCorrectClassName (name)) {
+				var figmaBundleView = new FigmaBundleView (this, name, figmaNode);
+				Views.Add (figmaBundleView);
+			} else {
+				Console.WriteLine ("Cannot generate a file for '{0}': Invalid ClassName. Skipping...", name);
+			}
+		}
+
+		bool HasCorrectClassName (string name)
+		{
+			if (name?.Length == 0)
+				return false;
+			if (int.TryParse (name, out _)) 
+				return false;
+			if (char.IsDigit (name[0]))
+				return false;
+
+			return true;
 		}
 
 		internal void SaveViews (Services.FigmaCodeRendererService codeRendererService)

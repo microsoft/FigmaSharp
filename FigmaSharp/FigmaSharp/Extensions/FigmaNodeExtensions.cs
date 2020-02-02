@@ -39,7 +39,7 @@ namespace FigmaSharp
 {
 	public static class FigmaServiceExtensions
 	{
-        public static string GetRealName (this FigmaNode node)
+        public static string GetClassName (this FigmaNode node)
         {
             var name = node.name;
             var index = name.IndexOf ('\"');
@@ -60,6 +60,10 @@ namespace FigmaSharp
             index = name.IndexOf (' ');
             if (index > -1 && index < name.Length - 1) {
                 name = name.Substring (index + 1);
+
+				//names cannot be only integers, we get default name
+				if (int.TryParse (name, out _))
+                    name = node.name;
             }
 
             return name
