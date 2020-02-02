@@ -133,7 +133,7 @@ namespace MonoDevelop.Figma.Commands
 					}
 
 					var manifest = FigmaManifest.FromFilePath (manifestFilePath);
-					if (manifest.DocumentUrl != null) {
+					if (manifest.FileId != null) {
 						info.Visible = info.Enabled = true;
 						return;
 					}
@@ -150,8 +150,8 @@ namespace MonoDevelop.Figma.Commands
 			try {
 					var manifestFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName);
 					var manifest = FigmaManifest.FromFilePath (manifestFilePath);
-					if (manifest.DocumentUrl != null) {
-						IdeServices.DesktopService.ShowUrl (string.Format (figmaUrl, manifest.DocumentUrl));
+					if (manifest.FileId != null) {
+						IdeServices.DesktopService.ShowUrl (string.Format (figmaUrl, manifest.FileId));
 						return;
 					}
 				} catch (Exception ex) {
