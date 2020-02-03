@@ -1,5 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo ("MonoDevelop.Figma")]
+
 [assembly: InternalsVisibleTo ("FigmaSharp.NativeControls.Cocoa")]
 [assembly: InternalsVisibleTo("FigmaSharp.NativeControls.Wpf")]
 [assembly: InternalsVisibleTo("FigmaSharp.NativeControls.WinForms")]
