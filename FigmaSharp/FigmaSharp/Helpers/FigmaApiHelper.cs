@@ -40,6 +40,26 @@ namespace FigmaSharp
 {
     public static class FigmaApiHelper
     {
+        const string prefix = "/file/";
+        const char urlSeparatorChar = '/';
+
+        public static bool TryParseFileUrl (string link, out string fileId)
+        {
+            try {
+                string path = new Uri (link).AbsolutePath;
+                if (path.StartsWith (prefix)) {
+                    string id = path.Substring (prefix.Length);
+                    if (id.Contains (urlSeparatorChar))
+                        id = id.Substring (0, id.IndexOf (urlSeparatorChar));
+                    fileId = id;
+                    return true;
+                }
+            } catch {
+            }
+            fileId = link;
+            return false;
+        }
+
         public static string GetManifestResource (Assembly assembly, string resource)
         {
             if (assembly == null)

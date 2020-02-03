@@ -95,7 +95,9 @@ namespace MonoDevelop.Figma
 
 			RefreshStates ();
 
-			var fileId = FileId;
+			if (FigmaApiHelper.TryParseFileUrl (FileId, out string fileId)) {
+				FigmaUrlTextField.StringValue = fileId;
+			}
 
 			versions = await Task.Run (() => {
 				try {
