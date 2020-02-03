@@ -222,19 +222,17 @@ namespace MonoDevelop.Figma.Commands
 
 		protected override void OnRun ()
 		{
-			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
-			var currentScreen = currentIdeWindow.Screen;
-			var xPos = (float)((currentScreen.Frame.Width / 2f) - currentIdeWindow.Frame.Width);
-			var yPos = (float)((currentScreen.Frame.Height / 2f) - currentIdeWindow.Frame.Height);
-
-			var nativeContentView = new FigmaBundleWindow ();
-			nativeContentView.BundleCreated += async (s, e) => {
+			var figmaBundleWindow = new FigmaBundleWindow ();
+			figmaBundleWindow.BundleCreated += async (s, e) => {
 				var window = (FigmaBundleWindow)s;
 				await GenerateBundle (window.FileId, window.SelectedFileVersion);
+				window.Close ();
 			};
-			//var figmaWindow = new BundleWindow.FigmaBundleWindow (new CGRect (xPos, yPos, 481f, 334f));
-			currentIdeWindow.AddChildWindow (nativeContentView, AppKit.NSWindowOrderingMode.Above);
-			MessageService.PlaceDialog (nativeContentView, MessageService.RootWindow);
+
+			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
+			currentIdeWindow.AddChildWindow (figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
+			MessageService.PlaceDialog (figmaBundleWindow, MessageService.RootWindow);
+			IdeServices.DesktopService.FocusWindow (figmaBundleWindow);
 		}
 
 		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version)

@@ -38,7 +38,6 @@ namespace MonoDevelop.Figma
 		void Initialize ()
 		{
 			FigmaUrlTextField.Activated += FigmaUrlTextField_Changed;
-
 			VersionComboBox.Activated += ItemsRefreshState_Handler;
 
 			TemplateCodeOptionBox.Activated += ItemsRefreshState_Handler;
@@ -49,13 +48,14 @@ namespace MonoDevelop.Figma
 			BundleButton.Activated += BundleButton_Activated;
 
 			RefreshStates ();
+
 		}
 
 		void RefreshStates ()
 		{
 			TemplateCodeOptionBox.Enabled =
-			TemplateNoneOptionBox.Enabled =
-			TemplateMarkUpOptionBox.Enabled =
+			//TemplateNoneOptionBox.Enabled =
+			//TemplateMarkUpOptionBox.Enabled =
 			VersionComboBox.Enabled = SelectedFileVersion != null;
 
 			RefreshBundleButtonState ();
@@ -72,7 +72,6 @@ namespace MonoDevelop.Figma
 		private void BundleButton_Activated (object sender, EventArgs e)
 		{
 			BundleCreated?.Invoke (this, e);
-			this.Close ();
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)
@@ -130,7 +129,5 @@ namespace MonoDevelop.Figma
 
 			RefreshStates ();
 		}
-
-
 	}
 }
