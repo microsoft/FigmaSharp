@@ -55,15 +55,15 @@ namespace FigmaSharp.Cocoa.Converters
 
         public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
         {
-            var figmaText = ((FigmaText)currentNode);
+            var figmaText = (FigmaText)currentNode;
             var name = Resources.Ids.Conversion.NameIdentifier;
 
             StringBuilder builder = new StringBuilder();
 			if (rendererService.NeedsRenderInstance (currentNode)) {
                 builder.AppendLine (string.Format ("var {0} = {1};", name, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
             }
-            builder.Configure(name, (FigmaText)currentNode);
-            builder.Configure (name, (FigmaNode)currentNode);
+            builder.Configure(name, figmaText);
+            builder.Configure (name, currentNode);
             return builder.ToString();
         }
     }

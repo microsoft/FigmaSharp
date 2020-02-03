@@ -118,7 +118,7 @@ namespace FigmaSharp.Cocoa
 
             figmaLineView.AlphaValue = figmaLine.opacity;
         }
-
+		
         public static void Configure(this NSView view, FigmaVectorEntity child)
         {
             Configure(view, (FigmaNode)child);
@@ -214,9 +214,15 @@ namespace FigmaSharp.Cocoa
 
             var alignment = FigmaExtensions.ToNSTextAlignment(text.style.textAlignHorizontal);
 
-            builder.AppendLine (string.Format ("{0}.Font = {1};", name, text.style.ToNSFontDesignerString ()));
-            builder.AppendLine(string.Format("{0}.Alignment = {1};", name, alignment.ToDesignerString ()));
-            builder.AppendLine(string.Format("{0}.AlphaValue = {1};", name, text.opacity.ToDesignerString ()));
+            var propertyAttributedStringValue = $"{name}.{nameof (NSTextField.AttributedStringValue)}";
+            var propertyTextColor = $"{name}.{nameof (NSTextField.TextColor)}";
+            var propertyFont = $"{name}.{nameof (NSTextField.Font)}";
+            var propertyAlignment = $"{name}.{nameof (NSTextField.Alignment)}";
+            var propertyAlphaValue = $"{name}.{nameof (NSTextField.AlphaValue)}";
+
+            builder.AppendLine (string.Format ("{0} = {1};", propertyFont, text.style.ToNSFontDesignerString ()));
+            builder.AppendLine(string.Format("{0} = {1};", propertyAlignment, alignment.ToDesignerString ()));
+            builder.AppendLine(string.Format("{0} = {1};", propertyAlphaValue, text.opacity.ToDesignerString ()));
 
             //label.LineBreakMode = NSLineBreakMode.ByWordWrapping;
             //label.SetContentCompressionResistancePriority(250, NSLayoutConstraintOrientation.Horizontal);
@@ -224,41 +230,62 @@ namespace FigmaSharp.Cocoa
             var fills = text.fills.FirstOrDefault () as FigmaPaint;
             if (fills != null)
             {
-                builder.AppendLine(string.Format("{0}.TextColor = {1};", name, fills.color.ToDesignerString ()));
+                builder.AppendLine(string.Format("{0} = {1};", propertyTextColor, fills.color.ToDesignerString ()));
             }
 
-            if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
-            {
+            if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0) {
+
                 var attributedTextName = string.Format ("{0}AttributedText", Resources.Ids.Conversion.NameIdentifier);
-                builder.AppendLine(string.Format("var {0} = new NSMutableAttributedString({1}.AttributedStringValue);", attributedTextName, name));
+                builder.AppendLine (string.Format ("var {0} = new {1} ({2});", attributedTextName, typeof (NSMutableAttributedString).FullName, propertyAttributedStringValue));
 
-                //var attributedText = new NSMutableAttributedString(label.AttributedStringValue);
-                for (int i = 0; i < text.characterStyleOverrides.Length; i++)
-                {
-                    var key = text.characterStyleOverrides[i].ToString();
-                    if (!text.styleOverrideTable.ContainsKey(key))
-                    {
+                var attributedStringKey = typeof (NSStringAttributeKey).FullName;
+                var attributtedStringForegroundColor = $"{attributedStringKey}.{nameof (NSStringAttributeKey.ForegroundColor)}";
+                var attributtedStringFont = $"{attributedStringKey}.{nameof (NSStringAttributeKey.Font)}";
+
+                //var attributedText = new NSMutableAttributedString (label.AttributedStringValue);
+                for (int i = 0; i < text.characterStyleOverrides.Length; i++) {
+					
+                    var range = $"new {typeof (NSRange).FullName} ({i}, 1)";
+
+                    var key = text.characterStyleOverrides[i].ToString ();
+                    if (!text.styleOverrideTable.ContainsKey (key)) {
+                        //we want the default values
+                        //builder.AppendLine (string.Format ("{0}.AddAttribute(AppKit.NSStringAttributeKey.Font, {1}, new NSRange({2}, 1));", attributedTextName, element.ToNSFontDesignerString (), i));
+
+                        builder.AppendLine (string.Format ("{0}.AddAttribute({1}, {2}, {3});", attributedTextName, attributtedStringForegroundColor, propertyTextColor, range));
+                        builder.AppendLine (string.Format ("{0}.AddAttribute({1}, {2}, {3});", attributedTextName, attributtedStringFont, propertyTextColor, range));
                         continue;
                     }
-                    var element = text.styleOverrideTable[key];
-                    if (element.fontFamily == null)
-                    {
-                        continue;
-                    }
-                    builder.AppendLine(string.Format("{0}.AddAttribute(NSStringAttributeKey.Font, {1}, new NSRange({2}, 1));", attributedTextName, element.ToNSFontDesignerString(), i));
 
-                    string color = fills?.color?.ToDesignerString();
+					//if there is a style to override
+                    var styleOverrided = text.styleOverrideTable[key];
 
-                    if (element.fills != null && element.fills.Any ())
-                    {
-                        if (element.fills.FirstOrDefault() is FigmaPaint paint)
-                        {
-                            color = paint.color.ToDesignerString();
-                        }
-                        builder.AppendLine(string.Format("{0}.AddAttribute(NSStringAttributeKey.ForegroundColor, {1}, new NSRange({2}, 1));", attributedTextName, color, i));
+                    //set the color
+
+                    string fontColorOverrided;
+                    var fillOverrided = styleOverrided.fills?.FirstOrDefault ();
+                    if (fillOverrided != null && fillOverrided.visible)
+                        fontColorOverrided = fillOverrided.color.ToDesignerString ();
+                    else {
+                        fontColorOverrided = propertyTextColor;
                     }
+
+                    builder.AppendLine (string.Format ("{0}.AddAttribute({1}, {2}, {3});", attributedTextName, attributtedStringForegroundColor, fontColorOverrided, range));
+
+                    //TODO: we can improve this
+                    //set the font for this character
+                    string fontOverrided;
+                    if (styleOverrided?.fontFamily != null) {
+                        fontOverrided = styleOverrided.ToNSFontDesignerString ();
+                    } else {
+                        fontOverrided = propertyFont;
+                    }
+
+                    builder.AppendLine (string.Format ("{0}.AddAttribute ({1}, {2}, {3});", attributedTextName,  attributtedStringFont, fontOverrided, range));
                 }
-                builder.AppendLine(string.Format("{0}.AttributedStringValue = {1};", name, attributedTextName));
+
+                builder.AppendLine (string.Format ("{0} = {1};", propertyAttributedStringValue, attributedTextName));
+               
             }
         }
 
