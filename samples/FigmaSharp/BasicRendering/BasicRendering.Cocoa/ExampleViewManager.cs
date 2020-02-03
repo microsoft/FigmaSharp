@@ -40,7 +40,7 @@ namespace ExampleFigma
 
 		readonly FigmaRemoteFileProvider fileProvider;
 
-		public string WindowTitle => fileProvider.Response.name;
+		public string WindowTitle => fileProvider?.Response?.name ?? "";
 
 		public ExampleViewManager (IScrollView scrollView)
 		{

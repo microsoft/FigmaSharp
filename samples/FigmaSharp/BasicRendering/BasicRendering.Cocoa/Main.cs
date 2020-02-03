@@ -58,9 +58,9 @@ namespace LocalFile.Cocoa
 			stackView.AddChild (scrollView);
 
 			manager = new ExampleViewManager (scrollView);
-
-			mainWindow.Title = manager.WindowTitle;
+		
 			mainWindow.Show ();
+			mainWindow.Title = manager.WindowTitle;
 
 			NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
 			NSApplication.SharedApplication.Run ();
