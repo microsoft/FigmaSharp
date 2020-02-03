@@ -42,6 +42,14 @@
       <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
+      <Project>{80D20B03-FF89-47CF-A676-B67B9DE2DAF2}</Project>
+      <Name>FigmaSharp.NativeControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
