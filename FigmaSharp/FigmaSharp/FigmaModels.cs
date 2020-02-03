@@ -367,7 +367,7 @@ namespace FigmaSharp.Models
     {
         public virtual bool HasImage ()
         {
-            return false;
+            return true;
         }
 
 		[Category ("General")]
