@@ -166,8 +166,9 @@ namespace MonoDevelop.Figma.Commands
 	{
 		protected override void OnUpdate (CommandInfo info)
 		{
-			info.Visible = info.Enabled =IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
-				&& folder.IsDocumentDirectoryBundle ();
+			info.Visible = info.Enabled = false;
+			//info.Visible = info.Enabled =IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
+			//	&& folder.IsDocumentDirectoryBundle ();
 		}
 
 		const string figmaNodeName = "bundleFigmaDocument";
