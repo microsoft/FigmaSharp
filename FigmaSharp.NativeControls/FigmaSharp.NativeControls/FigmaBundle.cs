@@ -11,7 +11,7 @@ namespace FigmaSharp
 		public FigmaFileResponse Document { get; set; }
 		public FigmaManifest Manifest { get; set; }
 
-		public List<FigmaBundleView> Views { get; } = new List<FigmaBundleView> ();
+		public List<FigmaBundleViewBase> Views { get; } = new List<FigmaBundleViewBase> ();
 
 		public string DirectoryPath { get; private set; }
 
@@ -43,10 +43,12 @@ namespace FigmaSharp
 				return;
 			}
 
-			foreach (var viewFullPath in Directory.EnumerateFiles (ViewsDirectoryPath, $"*{FigmaBundleView.PartialDesignerExtension}")) {
-				var name = viewFullPath.Substring (0, viewFullPath.Length - FigmaBundleView.PartialDesignerExtension.Length);
+			foreach (var viewFullPath in Directory.EnumerateFiles (ViewsDirectoryPath, $"*{FigmaBundleViewBase.PartialDesignerExtension}")) {
+				var name = viewFullPath.Substring (0, viewFullPath.Length - FigmaBundleViewBase.PartialDesignerExtension.Length);
 				//TODO: right not it's not possible to read the content of the current .cs file then we create a fake file
-				Views.Add (new FigmaBundleView (this, name, null));
+
+				var bundleView = NativeControlsContext.Current.GetBundleView (this, name, new FigmaNode ());
+				Views.Add (bundleView);
 			}
 		}
 
@@ -189,7 +191,7 @@ namespace FigmaSharp
 		{
 			var name = figmaNode.GetClassName ();
 			if (HasCorrectClassName (name)) {
-				var figmaBundleView = new FigmaBundleView (this, name, figmaNode);
+				var figmaBundleView = NativeControlsContext.Current.GetBundleView (this, name, figmaNode);
 				Views.Add (figmaBundleView);
 			} else {
 				Console.WriteLine ("Cannot generate a file for '{0}': Invalid ClassName. Skipping...", name);

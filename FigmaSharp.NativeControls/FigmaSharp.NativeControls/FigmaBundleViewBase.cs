@@ -4,7 +4,7 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
-	public class FigmaBundleView
+	public abstract class FigmaBundleViewBase
 	{
 		internal const string PublicCsExtension = ".cs";
 		internal const string PartialDesignerExtension = ".designer.cs";
@@ -24,7 +24,7 @@ namespace FigmaSharp
 
 		private readonly FigmaBundle bundle;
 
-		public FigmaBundleItemBase (FigmaBundle figmaBundle, string viewName, Models.FigmaNode figmaNode)
+		public FigmaBundleViewBase (FigmaBundle figmaBundle, string viewName, Models.FigmaNode figmaNode)
 		{
 			Name = viewName;
 			bundle = figmaBundle;
@@ -42,36 +42,27 @@ namespace FigmaSharp
 				ApiVersion = AppContext.Current.Version
 			};
 
-			string initializeComponentContent;
-			if (FigmaNode != null) {
-				var builder = new System.Text.StringBuilder ();
-
-				var isEnabled = codeRendererService.MainIsThis;
-				codeRendererService.MainIsThis = true;
-				codeRendererService.GetCode (builder, FigmaNode, null, null);
-				initializeComponentContent = builder.ToString ();
-
-				codeRendererService.MainIsThis = isEnabled;
-
-			} else {
-				initializeComponentContent = string.Empty;
-			}
-
-			partialDesignerClass.Usings.Add ("AppKit");
 			partialDesignerClass.ClassName = Name;
 			partialDesignerClass.Namespace = bundle.Namespace;
-			partialDesignerClass.InitializeComponentContent = initializeComponentContent;
+
+			OnGetPartialDesignerClass (partialDesignerClass, codeRendererService);
 
 			return partialDesignerClass;
 		}
 
+		protected abstract void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService);
+
+		protected abstract void OnGetPublicDesignerClass (FigmaPublicPartialClass publicPartialClass);
+
 		public FigmaPublicPartialClass GetPublicPartialClass ()
 		{
 			var publicPartialClass = new FigmaPublicPartialClass ();
-			publicPartialClass.Usings.Add ("AppKit");
+		
 			publicPartialClass.ClassName = Name;
 			publicPartialClass.Namespace = bundle.Namespace;
-			publicPartialClass.BaseClass = "AppKit.NSView";
+
+			OnGetPublicDesignerClass (publicPartialClass);
+
 			return publicPartialClass;
 		}
 
