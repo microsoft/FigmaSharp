@@ -79,6 +79,14 @@ namespace FigmaSharp.NativeControls.Cocoa
                 view.Font = label.style.ToNSFont();
             }
 
+            //check with labels needs check in child
+            var checkButtonFigmaNode = figmaInstance.children
+                .OfType<FigmaInstance> ()
+                .FirstOrDefault (s => s.ToNativeControlType () == NativeControlType.CheckBox);
+            if (checkButtonFigmaNode != null) {
+                figmaInstance = checkButtonFigmaNode;
+            }
+
             //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup>()
@@ -140,6 +148,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label?.characters ?? ""));
 
+            //check with labels needs check in child
+            var checkButtonFigmaNode = figmaInstance.children
+                .OfType<FigmaInstance> ()
+                .FirstOrDefault (s => s.ToNativeControlType () == NativeControlType.CheckBox);
+            if (checkButtonFigmaNode != null) {
+                figmaInstance = checkButtonFigmaNode;
+            }
+
             //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup> ()
@@ -155,9 +171,9 @@ namespace FigmaSharp.NativeControls.Cocoa
                 }
             }
 
-            if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-                builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-            }
+            //if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+            //    builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+            //}
 
             //if (currentNode is IFigmaDocumentContainer instance) {
             //    var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();

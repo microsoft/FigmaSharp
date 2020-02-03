@@ -72,21 +72,28 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var label = figmaInstance.children
 				  .OfType<FigmaText> ()
 				  .FirstOrDefault ();
-
 			if (label != null) {
 				button.Text = label.characters;
 				view.Font = label.style.ToNSFont ();
 			}
 
+			//radio buttons with label needs another
+			var radioButtonFigmaNode = figmaInstance.children
+				.OfType<FigmaInstance> ()
+				.FirstOrDefault (s => s.ToNativeControlType () == NativeControlType.RadioButton);
+
+			if (radioButtonFigmaNode != null) {
+				figmaInstance = radioButtonFigmaNode;
+			}
+
 			//first figma 
 			var group = figmaInstance.children
 				.OfType<FigmaGroup> ()
-				.FirstOrDefault ();
+				.FirstOrDefault (s => s.visible);
 
 			if (group != null) {
-				if (group.name == "Disabled") {
-					button.Enabled = false;
-				}
+				button.IsChecked = group.name == "On";
+				button.Enabled = group.name == "Disabled";
 			}
 
 			//if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal))
@@ -133,6 +140,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (label != null)
 				builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label?.characters ?? ""));
 
+			//radio buttons with label needs another
+			var radioButtonFigmaNode = figmaInstance.children
+				.OfType<FigmaInstance> ()
+				.FirstOrDefault (s => s.ToNativeControlType () == NativeControlType.RadioButton);
+
+			if (radioButtonFigmaNode != null) {
+				figmaInstance = radioButtonFigmaNode;
+			}
+
 			//first figma 
 			var group = figmaInstance.children
 				.OfType<FigmaGroup> ()
@@ -149,9 +165,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-			}
+			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+			//}
 
 			//if (currentNode is IFigmaDocumentContainer instance) {
 			//    var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();

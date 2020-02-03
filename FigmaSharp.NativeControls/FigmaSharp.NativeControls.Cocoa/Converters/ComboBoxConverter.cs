@@ -99,9 +99,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 				builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
 			}
 
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-			}
+			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+			//}
 
 			return builder.ToString ();
 		}
