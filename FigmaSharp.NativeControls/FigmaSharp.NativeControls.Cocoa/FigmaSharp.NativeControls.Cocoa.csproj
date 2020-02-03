@@ -66,7 +66,6 @@
     <Compile Include="Converters\WindowConverter.cs" />
     <Compile Include="Converters\SpinnerConverter.cs" />
     <Compile Include="Views\HorizontalLine.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="FigmaBundleView.cs" />
     <Compile Include="FigmaBundleWindow.cs" />
     <Compile Include="NativeControlsApplication.cs" />
