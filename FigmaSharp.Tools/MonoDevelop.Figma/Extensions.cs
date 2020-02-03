@@ -9,9 +9,10 @@ namespace MonoDevelop.Figma
 	{
 		public static bool IsDocumentDirectoryBundle (this ProjectFolder pr)
 		{
-			return pr.Path.Extension == FigmaBundle.FigmaBundleDirectoryExtension
-			//&& pr.Parent is ProjectFolder figmaBundles && figmaBundles.Path.FileName == FigmaBundlesDirectoryName
-			&& pr.Parent is ProjectFolder figmaProject && figmaProject.Path.FileName == FigmaBundle.FigmaDirectoryName
+			return
+			//pr.Path.Extension == FigmaBundle.FigmaBundleDirectoryExtension
+			//&& pr.Parent is ProjectFolder figmaBundles && figmaBundles.Path.FileName == FigmaBundlesDirectoryName &&
+			pr.Parent is ProjectFolder figmaProject && figmaProject.Path.FileName == FigmaBundle.FigmaDirectoryName
 			&& figmaProject.Parent is Project;
 		}
 

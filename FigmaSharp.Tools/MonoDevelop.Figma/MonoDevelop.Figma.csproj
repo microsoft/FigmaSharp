@@ -19,9 +19,9 @@
       <ItemGroup>
         <Folder Include="Resources\" />
         <Folder Include=".figma\" />
-        <Folder Include=".figma\MonoDevelopExtension.figmabundle\" />
+        <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
         <Folder Include="Converters\" />
-        <Folder Include=".figma\MonoDevelopExtension.figmabundle\Views\" />
+        <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
         <Folder Include="Views\" />
       </ItemGroup>
       <ItemGroup>
@@ -86,11 +86,11 @@
         </EmbeddedResource>
       </ItemGroup>
       <ItemGroup>
-        <None Include=".figma\MonoDevelopExtension.figmabundle\manifest.json" />
-        <None Include=".figma\MonoDevelopExtension.figmabundle\document.figma" />
+        <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\manifest.json" />
+        <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\document.figma" />
       </ItemGroup>
       <ItemGroup>
-        <Compile Include=".figma\MonoDevelopExtension.figmabundle\Views\FigmaBundleView.designer.cs">
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaBundleView.designer.cs">
         </Compile>
       </ItemGroup>
 </Project>
