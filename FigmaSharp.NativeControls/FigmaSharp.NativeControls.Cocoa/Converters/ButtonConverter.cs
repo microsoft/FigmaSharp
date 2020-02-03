@@ -89,6 +89,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
                 if (group.name == "Disabled") {
 					button.Enabled = false;
+                } else if (group.name == "Default") {
+                    view.KeyEquivalent = "\r";
                 }
             } else
 			{
@@ -140,17 +142,6 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-   //         string title = null;
-			//if (currentNode is IFigmaDocumentContainer instance) {
-			//	var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
-			//	if (figmaText != null) {
-
-   //                 title = figmaText.characters;
-   //                 builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
-			//		//button.Font = figmaText.style.ToNSFont();
-			//	}
-			//}
-
             //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup> ()
@@ -162,12 +153,14 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .FirstOrDefault ();
 
                 if (label != null) {
-                    builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label.characters ?? string.Empty));
+                    builder.AppendLine (string.Format ("{0}.{1} = \"{2}\";", name, nameof (NSButton.Enabled), label.characters ?? string.Empty));
                     //view.Font = label.style.ToNSFont ();
                 }
 
                 if (group.name == "Disabled") {
-                    builder.AppendLine (string.Format ("{0}.Enabled = {1};", name, false.ToDesignerString ()));
+                    builder.AppendLine (string.Format ("{0}.{1} = {2};", name, nameof (NSButton.Enabled), false.ToDesignerString ()));
+                } else if (group.name == "Default") {
+                    builder.AppendLine (string.Format ("{0}.{1} = {2};", name, nameof (NSButton.KeyEquivalent), "\r"));
                 }
             } else {
                 var label = figmaInstance.children
@@ -175,7 +168,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                    .FirstOrDefault ();
 
                 if (label != null) {
-                    builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label.characters ?? string.Empty));
+                    builder.AppendLine (string.Format ("{0}.{1} = \"{2}\";", name, nameof (NSButton.Title),  label.characters ?? string.Empty));
                     //view.Font = label.style.ToNSFont ();
                 }
             }
