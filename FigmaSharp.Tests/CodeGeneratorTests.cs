@@ -52,7 +52,7 @@ namespace FigmaSharp.Tests
             var codeGenerator = new FigmaPartialDesignerClass ();
             codeGenerator.Manifest = new FigmaManifest () {
                 Date = DateTime.Now,
-                DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
+                FileId = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
                 DocumentVersion = 0.1f,
                 RemoteApiVersion = "1.1"
             };
