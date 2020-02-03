@@ -362,7 +362,14 @@ namespace MonoDevelop.Figma
 			frameEntityView1.AddSubview (textView5);
 			textView5.SetFrameOrigin (new CoreGraphics.CGPoint (20f, 279f));
 
+			//initial states
 			BundleButton.KeyEquivalent = "\r";
+
+			TemplateCodeOptionBox.State = NSCellStateValue.On;
+			TemplateMarkUpOptionBox.Enabled =
+			TemplateNoneOptionBox.Enabled = false;
+
+			InitialFirstResponder = FigmaUrlTextField;
 		}
 	}
 }
