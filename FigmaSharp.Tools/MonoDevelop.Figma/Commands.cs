@@ -41,6 +41,7 @@ using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
 using System.Threading.Tasks;
 using FigmaSharp.Cocoa.Converters;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace MonoDevelop.Figma.Commands
 {
@@ -210,9 +211,6 @@ namespace MonoDevelop.Figma.Commands
 
 	class FigmaNewBundlerCommandHandler : FigmaCommandHandler
 	{
-		const string AddFigmaDocumentSource = "AddFigmaDocument.figma";
-		const string MainWindowName = "content \"page1\"";
-
 		protected override void OnUpdate (CommandInfo info)
 		{
 			info.Visible = info.Enabled = IdeApp.ProjectOperations.CurrentSelectedItem is Project ||
@@ -222,36 +220,27 @@ namespace MonoDevelop.Figma.Commands
 				);
 		}
 
-		FigmaBundleDialogContentView nativeContentView;
-
-		string fileId = "FwVa4JS5QsohRhNEnEBKslFk";
-
-		async protected override void OnRun ()
+		protected override void OnRun ()
 		{
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
 			var currentScreen = currentIdeWindow.Screen;
 			var xPos = (float)((currentScreen.Frame.Width / 2f) - currentIdeWindow.Frame.Width);
 			var yPos = (float)((currentScreen.Frame.Height / 2f) - currentIdeWindow.Frame.Height);
 
-			var window = new Window (new Rectangle (xPos, yPos, 481f, 334f));
-			var figmaWindow = window.NativeObject as AppKit.NSWindow;
-			nativeContentView = new FigmaBundleDialogContentView ();
-			figmaWindow.ContentView = nativeContentView;
-
+			var nativeContentView = new FigmaBundleWindow ();
+			nativeContentView.BundleCreated += async (s, e) => {
+				var window = (FigmaBundleWindow)s;
+				await GenerateBundle (window.FileId, window.SelectedFileVersion);
+			};
 			//var figmaWindow = new BundleWindow.FigmaBundleWindow (new CGRect (xPos, yPos, 481f, 334f));
-			currentIdeWindow.AddChildWindow (figmaWindow, AppKit.NSWindowOrderingMode.Above);
+			currentIdeWindow.AddChildWindow (nativeContentView, AppKit.NSWindowOrderingMode.Above);
+			MessageService.PlaceDialog (nativeContentView, MessageService.RootWindow);
+		}
 
-			//wait until window is closed
-
-
-
+		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version)
+		{
 			//when window is closed we need to create all the stuff
-			var query = new FigmaFileVersionQuery (fileId);
-			var versions = FigmaSharp.AppContext.Api.GetFileVersions (query);
-
-			//more recent version selected
-			var selectedVersion = versions.versions.FirstOrDefault ();
-
+		
 			Project currentProject = null;
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
 				currentProject = project;
@@ -268,8 +257,7 @@ namespace MonoDevelop.Figma.Commands
 			fileProvider.Load (fileId);
 
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
-			var projectBundle = CreateBundleFromProject (currentProject, fileId, fileId, fileProvider, selectedVersion);
-			
+			var projectBundle = CreateBundleFromProject (currentProject, fileId, fileId, fileProvider, version);
 
 			//to generate all layers we need a code renderer
 			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters (true);

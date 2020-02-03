@@ -12,11 +12,11 @@ using FigmaSharp;
 
 namespace MonoDevelop.Figma
 {
-	public partial class bundleFigmaDocument : AppKit.NSWindow
+	public partial class FigmaBundleWindow : AppKit.NSWindow
 	{
 		public string FileId => FigmaUrlTextField.StringValue;
 
-		public bundleFigmaDocument ()
+		public FigmaBundleWindow ()
 		{
 			InitializeComponent ();
 
@@ -47,7 +47,7 @@ namespace MonoDevelop.Figma
 
 			CancelButton.Activated += CancelButton_Activated;
 			BundleButton.Activated += BundleButton_Activated;
-			
+
 			RefreshStates ();
 		}
 
