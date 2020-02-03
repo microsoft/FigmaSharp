@@ -47,7 +47,7 @@ namespace LocalFile.Cocoa
 
 		static void Main(string[] args)
 		{
-			FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+			NativeControlsApplication.Init (Environment.GetEnvironmentVariable ("TOKEN"));
 
 			NSApplication.Init();
 			NSApplication.SharedApplication.ActivationPolicy = NSApplicationActivationPolicy.Regular;
