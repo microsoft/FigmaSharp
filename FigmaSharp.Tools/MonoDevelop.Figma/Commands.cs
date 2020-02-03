@@ -460,7 +460,7 @@ namespace MonoDevelop.Figma.Commands
 		protected override void Run ()
 		{
 			Resources.Init ();
-			FigmaApplication.Init (FigmaRuntime.Token);
+			NativeControlsApplication.Init (FigmaRuntime.Token);
 		}
 	}
 }
