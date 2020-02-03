@@ -89,7 +89,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			StringBuilder builder = new StringBuilder ();
 
 			if (rendererService.NeedsRenderInstance (instance))
-				builder.AppendLine ($"var {name} = new {typeof (NSTextField).FullName}();");
+				builder.WriteConstructor (name, typeof (NSTextField));
 
 			builder.Configure (name, instance);
 
@@ -99,19 +99,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (figmaTextNode != null) {
 				var text = figmaTextNode.characters ?? string.Empty;
-				var isMultiline = text.Contains ('\n');
-
-				builder.AppendLine (string.Format ("{0}.StringValue = {1}\"{2}\";",
-					name,
-					isMultiline ? "@" : "",
-						isMultiline ? text.Replace ("\"", "\"\"") : text));
-
+				
+				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
 				builder.Configure (name, figmaTextNode);
 			}
 
 			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
 			if (placeholderTextNode != null)
-				builder.AppendLine (string.Format ("{0}.PlaceholderString = \"{1}\";", name, placeholderTextNode.characters));
+				builder.WriteEquality (name, nameof (NSTextField.PlaceholderString), placeholderTextNode.characters, true);
 
 			return builder.ToString ();
 		}

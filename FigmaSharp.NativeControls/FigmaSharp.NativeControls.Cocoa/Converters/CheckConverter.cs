@@ -117,36 +117,30 @@ namespace FigmaSharp.NativeControls.Cocoa
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine ($"var {name} = new {typeof (NSButton).FullName}();");
+                builder.WriteConstructor (name, typeof (NSButton));
 
             builder.Configure (name, currentNode);
 
-            builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
-
-            builder.AppendLine (string.Format ("{0}.SetButtonType ({1});", name, NSButtonType.Switch.GetFullName ()));
-            builder.AppendLine (string.Format ("{0}.Title = string.Empty;", name));
+            builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
+            builder.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
 
             var controlType = figmaInstance.ToNativeControlComponentType ();
             switch (controlType) {
-                case NativeControlComponentType.ButtonLarge:
-                case NativeControlComponentType.ButtonLargeDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                case NativeControlComponentType.CheckboxSmall:
+                case NativeControlComponentType.CheckboxSmallDark:
+                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
                     break;
-                case NativeControlComponentType.ButtonStandard:
-                case NativeControlComponentType.ButtonStandardDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
-                    break;
-                case NativeControlComponentType.ButtonSmall:
-                case NativeControlComponentType.ButtonSmallDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                case NativeControlComponentType.CheckboxStandard:
+                case NativeControlComponentType.CheckboxStandardDark:
+                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
                     break;
             }
 
             var label = figmaInstance.children
 				.OfType<FigmaText> ()
 				.FirstOrDefault ();
-
-            builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, label?.characters ?? ""));
+            if (label != null)
+                builder.WriteEquality (name, nameof (NSButton.Title), label?.characters ?? "", true);
 
             //check with labels needs check in child
             var checkButtonFigmaNode = figmaInstance.children
@@ -163,11 +157,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             if (group != null) {
                 if (group.name == "On") {
-                    builder.AppendLine (string.Format ("{0}.State = \"{1}\";", name,   NSCellStateValue.On.GetFullName ()));
+                    builder.WriteEquality (name, nameof (NSButton.State), NSCellStateValue.On);
                 }
 
                 if (group.name == "Disabled") {
-                    builder.AppendLine (string.Format ("{0}.Enabled = {1};", name, false));
+                    builder.WriteEquality (name, nameof (NSButton.Enabled), false);
                 }
             }
 

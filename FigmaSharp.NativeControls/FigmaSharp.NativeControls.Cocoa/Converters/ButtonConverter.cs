@@ -120,25 +120,25 @@ namespace FigmaSharp.NativeControls.Cocoa
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine($"var {name} = new {typeof(NSButton).FullName}();");
+                builder.WriteConstructor (name, typeof (NSButton).FullName);
 
             builder.Configure (name, currentNode);
 
-            builder.AppendLine(string.Format("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
-            
+            builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
+
             var controlType = figmaInstance.ToNativeControlComponentType ();
             switch (controlType) {
                 case NativeControlComponentType.ButtonLarge:
                 case NativeControlComponentType.ButtonLargeDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
                     break;
                 case NativeControlComponentType.ButtonStandard:
                 case NativeControlComponentType.ButtonStandardDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
                     break;
                 case NativeControlComponentType.ButtonSmall:
                 case NativeControlComponentType.ButtonSmallDark:
-                    builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
                     break;
             }
 
@@ -153,14 +153,14 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .FirstOrDefault ();
 
                 if (label != null) {
-                    builder.AppendLine (string.Format ("{0}.{1} = \"{2}\";", name, nameof (NSButton.Enabled), label.characters ?? string.Empty));
+                    builder.WriteEquality (name, nameof (NSButton.Title), label.characters ?? string.Empty, true);
                     //view.Font = label.style.ToNSFont ();
                 }
 
                 if (group.name == "Disabled") {
-                    builder.AppendLine (string.Format ("{0}.{1} = {2};", name, nameof (NSButton.Enabled), false.ToDesignerString ()));
+                    builder.WriteEquality (name, nameof (NSButton.Enabled), false);
                 } else if (group.name == "Default") {
-                    builder.AppendLine (string.Format ("{0}.{1} = {2};", name, nameof (NSButton.KeyEquivalent), "\r"));
+                    builder.WriteEquality (name, nameof (NSButton.KeyEquivalent), "\\r", true);
                 }
             } else {
                 var label = figmaInstance.children
@@ -168,11 +168,10 @@ namespace FigmaSharp.NativeControls.Cocoa
                    .FirstOrDefault ();
 
                 if (label != null) {
-                    builder.AppendLine (string.Format ("{0}.{1} = \"{2}\";", name, nameof (NSButton.Title),  label.characters ?? string.Empty));
+                    builder.WriteEquality (name, nameof (NSButton.Title), label.characters ?? string.Empty, true);
                     //view.Font = label.style.ToNSFont ();
                 }
             }
-
             return builder.ToString();
         }
     }

@@ -73,30 +73,26 @@ namespace FigmaSharp.NativeControls.Cocoa
 			StringBuilder builder = new StringBuilder ();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			var view = new Spinner ();
-			var nativeView = (NSProgressIndicator)view.NativeObject;
-
-			if (rendererService.NeedsRenderInstance (currentNode)) {
-				builder.AppendLine ($"var {name} = new {typeof (NSProgressIndicator).FullName}();");
-			}
+			if (rendererService.NeedsRenderInstance (currentNode))
+				builder.WriteConstructor (name, typeof (NSProgressIndicator));
 
 			builder.Configure (name, figmaInstance);
 
-			builder.AppendLine (string.Format ("{0}.Style = {1};", name, NSProgressIndicatorStyle.Spinning.GetFullName ()));
+			builder.WriteEquality (name, nameof (NSProgressIndicator.Style), NSProgressIndicatorStyle.Spinning);
 
 			//hidden by default
-			builder.AppendLine (string.Format ("{0}.Hidden = {1};", name, (true).ToDesignerString ()));
+			builder.WriteEquality (name, nameof (NSProgressIndicator.Hidden), true);
 
 			var controlType = figmaInstance.ToNativeControlComponentType ();
 
 			switch (controlType) {
-				case NativeControlComponentType.PopUpButtonSmall:
-				case NativeControlComponentType.PopUpButtonSmallDark:
-					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+				case NativeControlComponentType.ProgressSpinnerSmall:
+				case NativeControlComponentType.ProgressSpinnerSmallDark:
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
 					break;
-				case NativeControlComponentType.PopUpButtonStandard:
-				case NativeControlComponentType.PopUpButtonStandardDark:
-					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+				case NativeControlComponentType.ProgressSpinnerStandard:
+				case NativeControlComponentType.ProgressSpinnerStandardDark:
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 

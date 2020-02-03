@@ -74,30 +74,29 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderInstance (currentNode))
-				builder.AppendLine ($"var {name} = new {typeof (NSComboBox).FullName}();");
+				builder.WriteConstructor (name, typeof (NSComboBox).FullName);
 
 			builder.Configure (name, currentNode);
 
-			builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
-			builder.AppendLine (string.Format ("{0}.Title = string.Empty;", name));
+			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
+			builder.WriteEquality (name, nameof (NSButton.Title), string.Empty, true);
 
 			var controlType = figmaInstance.ToNativeControlComponentType ();
 			switch (controlType) {
 				case NativeControlComponentType.PopUpButtonSmall:
 				case NativeControlComponentType.PopUpButtonSmallDark:
-					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
 					break;
 				case NativeControlComponentType.PopUpButtonStandard:
 				case NativeControlComponentType.PopUpButtonStandardDark:
-					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 
-			var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
-
-			if (!string.IsNullOrEmpty (label?.characters)) {
-				builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
-			}
+			//var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
+			//if (!string.IsNullOrEmpty (label?.characters)) {
+			//	builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
+			//}
 
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));

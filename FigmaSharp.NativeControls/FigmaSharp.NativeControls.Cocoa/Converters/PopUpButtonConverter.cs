@@ -84,21 +84,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderInstance (currentNode))
-				builder.AppendLine ($"var {name} = new {typeof (NSPopUpButton).FullName}();");
+				builder.WriteConstructor (name, typeof (NSPopUpButton));
 
 			builder.Configure (name, currentNode);
 
-			builder.AppendLine (string.Format ("{0}.BezelStyle = {1};", name, NSBezelStyle.Rounded.GetFullName ()));
+			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
 
 			var controlType = figmaInstance.ToNativeControlComponentType ();
 			switch (controlType) {
 				case NativeControlComponentType.PopUpButtonSmall:
 				case NativeControlComponentType.PopUpButtonSmallDark:
-					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Small.GetFullName ()));
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
 					break;
 				case NativeControlComponentType.PopUpButtonStandard:
 				case NativeControlComponentType.PopUpButtonStandardDark:
-					builder.AppendLine (string.Format ("{0}.ControlSize = {1};", name, NSControlSize.Regular.GetFullName ()));
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 

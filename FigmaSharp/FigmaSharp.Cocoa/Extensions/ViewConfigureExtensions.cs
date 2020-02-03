@@ -16,6 +16,54 @@ namespace FigmaSharp.Cocoa
             return string.Format ("{0}.{1}", myEnum.GetType ().Name, myEnum.ToString ());
         }
 
+		public static string GetStringEmpty (this StringBuilder builder)
+        {
+            return $"{typeof(string).Name}.{nameof (string.Empty)}";
+        }
+
+        public static void WriteConstructor (this StringBuilder builder, string viewName, Type type)
+        {
+            WriteConstructor (builder, viewName, type.FullName);
+        }
+
+        public static void WriteConstructor (this StringBuilder builder, string viewName, string typeFullName)
+        {
+            builder.AppendLine ($"var {viewName} = new {typeFullName}();");
+        }
+
+        public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, Enum value)
+        {
+            WriteEquality (builder, viewName, propertyName, value.GetFullName ());
+        }
+
+        public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, bool value)
+        {
+            WriteEquality (builder, viewName, propertyName, value.ToDesignerString ());
+        }
+
+        public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, string value, bool inQuotes = false)
+        {
+			if (inQuotes) {
+                var isMultiLine = value.Contains ('\n');
+                //maybe we want to detect here if is multiline
+                value = string.Format ("{0}\"{1}\"",
+                            isMultiLine ? "@" : "",
+                                isMultiLine ? value.Replace ("\"", "\"\"") : value);
+            }
+            builder.AppendLine ($"{viewName}.{propertyName} = {value};");
+        }
+
+        public static void WriteMethod (this StringBuilder builder, string viewName, string methodName, Enum parameter)
+        {
+            WriteMethod (builder, viewName, methodName, parameter.GetFullName ());
+        }
+
+         public static void WriteMethod (this StringBuilder builder, string viewName, string methodName, string parameters, bool inQuotes = false)
+        {
+            parameters = inQuotes ? $"\"{parameters}\"" : parameters;
+            builder.AppendLine ($"{viewName}.{methodName} ({parameters});");
+        }
+
         public static void Configure(this NSView view, FigmaFrameEntity child)
         {
             Configure(view, (FigmaNode)child);
@@ -285,7 +333,6 @@ namespace FigmaSharp.Cocoa
                 }
 
                 builder.AppendLine (string.Format ("{0} = {1};", propertyAttributedStringValue, attributedTextName));
-               
             }
         }
 
