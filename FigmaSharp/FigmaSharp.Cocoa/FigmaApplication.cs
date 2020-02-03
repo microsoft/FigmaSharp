@@ -1,24 +1,15 @@
 ﻿namespace FigmaSharp.Cocoa
 {
-    public class FigmaApplication
-    {
-        private FigmaApplication()
-        {
-
-        }
-
-        public static void Init(string token)
-        {
-            //Figma initialization
-            var applicationDelegate = new FigmaDelegate();
-            AppContext.Current.Configuration(applicationDelegate, token);
-        }
-
-		public static void Init()
+	public class FigmaApplication
+	{
+		public static void Init (string token = null)
 		{
 			//Figma initialization
-			var applicationDelegate = new FigmaDelegate();
-			AppContext.Current.Configuration(applicationDelegate);
+			var applicationDelegate = new FigmaDelegate ();
+			if (string.IsNullOrEmpty (token))
+				AppContext.Current.Configuration (applicationDelegate);
+			else
+				AppContext.Current.Configuration (applicationDelegate, token);
 		}
 	}
 }

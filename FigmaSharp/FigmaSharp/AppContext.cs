@@ -33,7 +33,6 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
-
     /// <summary>
     /// An AppContext contains configuration (such as the authentication token)
     /// and code converters for the current application.
@@ -59,7 +58,7 @@ namespace FigmaSharp
 
 		public void Configuration(IFigmaDelegate currentDelegate) => figmaDelegate = currentDelegate;
 
-		public void SetAccessToken(string token)
+        public void SetAccessToken(string token)
         {
             Api.Token = token;
         }

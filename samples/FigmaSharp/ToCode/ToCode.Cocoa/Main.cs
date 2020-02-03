@@ -30,6 +30,8 @@ using AppKit;
 
 using FigmaSharp;
 using FigmaSharp.Cocoa;
+using FigmaSharp.NativeControls;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace ToCode.Cocoa
 {
@@ -37,7 +39,7 @@ namespace ToCode.Cocoa
     {
         static void Main(string[] args)
         {
-            FigmaApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+            NativeControlsApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
             NSApplication.Init();
             NSApplication.Main(args);
         }

@@ -67,6 +67,8 @@
     <Compile Include="Converters\SpinnerConverter.cs" />
     <Compile Include="Views\HorizontalLine.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="NativeControlsApplication.cs" />
+    <Compile Include="FigmaNativeControlsDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

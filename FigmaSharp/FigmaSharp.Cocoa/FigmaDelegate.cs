@@ -12,7 +12,7 @@ using FigmaSharp.Models;
 namespace FigmaSharp.Cocoa
 {
     public class FigmaDelegate : IFigmaDelegate
-    {
+	{
         static readonly FigmaViewConverter[] figmaViewConverters = {
             new FigmaRegularPolygonConverter (),
             new FigmaTextConverter (),
@@ -64,12 +64,13 @@ namespace FigmaSharp.Cocoa
         public IView CreateEmptyView() => new View();
 
         public string GetManifestResource(Assembly assembly, string file) =>
-            FigmaApiHelper.GetManifestResource(assembly, file);
+			FigmaApiHelper.GetManifestResource(assembly, file);
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
-        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
+        public FigmaCodePositionConverterBase GetPositionConverter () => positionConverter;
 
-        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
-    }
+        public FigmaCodeAddChildConverterBase GetAddChildConverter () => addChildConverter;
+	
+	}
 }
