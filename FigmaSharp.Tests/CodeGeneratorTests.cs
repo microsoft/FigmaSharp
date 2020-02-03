@@ -20,7 +20,7 @@ namespace FigmaSharp.Tests
 
             var manifest = new FigmaManifest () {
                 Date = dateNow,
-                DocumentUrl = DocumentUrl,
+                FileId = DocumentUrl,
                 DocumentVersion = DocumentVersion,
                 RemoteApiVersion = RemoteApiVersion,
             };
@@ -39,7 +39,7 @@ namespace FigmaSharp.Tests
 			var copy = FigmaManifest.FromFilePath (file);
             Assert.AreEqual (copy.DocumentVersion, manifest.DocumentVersion);
             Assert.AreEqual (copy.Date, manifest.Date);
-            Assert.AreEqual (copy.DocumentUrl, manifest.DocumentUrl);
+            Assert.AreEqual (copy.FileId, manifest.FileId);
             Assert.AreEqual (copy.RemoteApiVersion, manifest.RemoteApiVersion);
 
             if (File.Exists (file))
