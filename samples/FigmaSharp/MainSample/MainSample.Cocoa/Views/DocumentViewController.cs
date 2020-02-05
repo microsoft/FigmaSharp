@@ -133,7 +133,7 @@ namespace FigmaSharp.Samples
 					////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
 					scrollview.AdjustToContent ();
 
-					windowController.Title = Link_ID;
+					windowController.Title = fileProvider.Response.name;
 
 					windowController.UpdateVersionMenu ();
 					windowController.UpdatePagesPopupButton (fileProvider);
