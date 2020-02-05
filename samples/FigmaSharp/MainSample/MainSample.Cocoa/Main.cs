@@ -34,7 +34,7 @@ namespace FigmaSharp.Samples
 	{
 		static void Main (string[] args)
 		{
-			FigmaApplication.Init ();
+            NativeControls.Cocoa.NativeControlsApplication.Init ();
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}
