@@ -284,10 +284,7 @@ namespace FigmaSharp.Services
                 NodesProcessed.Add(currentProcessedNode);
 
                 //TODO: this need to be improved, handles special cases for native controls
-
-				if (!options.ScanChildrenFromFigmaInstances || !converter.ScanChildren (currentNode)) {
-                    scanChildren = false;
-                } 
+                scanChildren = currentNode is FigmaInstance && options.ScanChildrenFromFigmaInstances ? true : converter.ScanChildren(currentNode);
             }
             else
             {
