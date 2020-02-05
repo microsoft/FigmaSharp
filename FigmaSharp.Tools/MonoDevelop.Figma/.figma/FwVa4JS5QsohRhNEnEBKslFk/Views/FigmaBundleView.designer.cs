@@ -29,6 +29,8 @@ namespace MonoDevelop.Figma
 			frame.Size = new CoreGraphics.CGSize (481f, 334f);
 			SetFrame (frame, true);
 
+			this.StyleMask |= NSWindowStyle.Closable;
+
 			this.Title = "Bundle Figma Document";
 
 			var groupView = new NSView ();
@@ -100,66 +102,7 @@ namespace MonoDevelop.Figma
 
 			groupView.AddSubview (view9);
 			view9.SetFrameOrigin (new CoreGraphics.CGPoint (103f, 111f));
-			var view10 = new AppKit.NSImageView ();
-			view10.Hidden = true;
-			view10.WantsLayer = true;
-			view10.SetFrameSize (new CoreGraphics.CGSize (441f, 272f));
-			view10.Layer.BorderColor = NSColor.FromRgba (1f, 0f, 0f, 1f).CGColor;
-			view10.Layer.BorderWidth = 20;
-			view10.Layer.CornerRadius = 0f;
-
-			view10.SetFrameOrigin (new CoreGraphics.CGPoint (20f, 20f));
-			var textView = new AppKit.NSTextField () {
-				StringValue = "Bundle Figma Document",
-				Editable = false,
-				Bordered = false,
-				Bezeled = false,
-				DrawsBackground = false,
-				Alignment = NSTextAlignment.Left,
-			};
-			textView.Font = NSFontManager.SharedFontManager.FontWithFamily ("SF Pro Text", default (NSFontTraitMask), 5, 13);
-			textView.Alignment = NSTextAlignment.Center;
-			textView.AlphaValue = 1f;
-			textView.TextColor = NSColor.FromRgba (0.3137255f, 0.3137255f, 0.3137255f, 1f);
-			textView.WantsLayer = true;
-			textView.SetFrameSize (new CoreGraphics.CGSize (481f, 22f));
-
-			textView.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 312f));
-			var frameEntityView = new NSView ();
-			frameEntityView.WantsLayer = true;
-			frameEntityView.SetFrameSize (new CoreGraphics.CGSize (52f, 12f));
-
-			frameEntityView.SetFrameOrigin (new CoreGraphics.CGPoint (8f, 317f));
-			var elipseView = new AppKit.NSView ();
-			elipseView.WantsLayer = true;
-			elipseView.SetFrameSize (new CoreGraphics.CGSize (12f, 12f));
-
-			frameEntityView.AddSubview (elipseView);
-			elipseView.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 0f));
-			var elipseView1 = new AppKit.NSView ();
-			elipseView1.WantsLayer = true;
-			elipseView1.SetFrameSize (new CoreGraphics.CGSize (12f, 12f));
-
-			frameEntityView.AddSubview (elipseView1);
-			elipseView1.SetFrameOrigin (new CoreGraphics.CGPoint (20f, 0f));
-			var elipseView2 = new AppKit.NSView ();
-			elipseView2.WantsLayer = true;
-			elipseView2.SetFrameSize (new CoreGraphics.CGSize (12f, 12f));
-
-			frameEntityView.AddSubview (elipseView2);
-			elipseView2.SetFrameOrigin (new CoreGraphics.CGPoint (40f, 0f));
-			var elipseView3 = new AppKit.NSView ();
-			elipseView3.WantsLayer = true;
-			elipseView3.SetFrameSize (new CoreGraphics.CGSize (12f, 12f));
-
-			frameEntityView.AddSubview (elipseView3);
-			elipseView3.SetFrameOrigin (new CoreGraphics.CGPoint (20f, 0f));
-			var elipseView4 = new AppKit.NSView ();
-			elipseView4.WantsLayer = true;
-			elipseView4.SetFrameSize (new CoreGraphics.CGSize (12f, 12f));
-
-			frameEntityView.AddSubview (elipseView4);
-			elipseView4.SetFrameOrigin (new CoreGraphics.CGPoint (40f, 0f));
+		
 			var frameEntityView1 = new NSView ();
 			frameEntityView1.WantsLayer = true;
 			frameEntityView1.SetFrameSize (new CoreGraphics.CGSize (481f, 312f));
@@ -168,22 +111,23 @@ namespace MonoDevelop.Figma
 			frameEntityView1.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 0f));
 			BundleButton = new AppKit.NSButton ();
 			BundleButton.WantsLayer = true;
-			BundleButton.SetFrameSize (new CoreGraphics.CGSize (82f, 19f));
+	
 			BundleButton.BezelStyle = NSBezelStyle.Rounded;
 			BundleButton.ControlSize = NSControlSize.Regular;
 			BundleButton.Title = "Bundle";
 
 			frameEntityView1.AddSubview (BundleButton);
-			BundleButton.SetFrameOrigin (new CoreGraphics.CGPoint (379f, 21f));
+			BundleButton.Frame = BundleButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (379f, 21f, 82f, 19f));
+
 			CancelButton = new AppKit.NSButton ();
 			CancelButton.WantsLayer = true;
-			CancelButton.SetFrameSize (new CoreGraphics.CGSize (82f, 19f));
 			CancelButton.BezelStyle = NSBezelStyle.Rounded;
 			CancelButton.ControlSize = NSControlSize.Regular;
 			CancelButton.Title = "Cancel";
-
+			
 			frameEntityView1.AddSubview (CancelButton);
-			CancelButton.SetFrameOrigin (new CoreGraphics.CGPoint (20f, 21f));
+			CancelButton.Frame = CancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (20f, 21f, 82f, 19f));
+		
 			var vectorEntityView = new AppKit.NSBox ();
 			vectorEntityView.WantsLayer = true;
 			vectorEntityView.SetFrameSize (new CoreGraphics.CGSize (481f, 1f));
@@ -205,37 +149,31 @@ namespace MonoDevelop.Figma
 			groupView2.SetFrameOrigin (new CoreGraphics.CGPoint (111f, 0f));
 			TemplateNoneOptionBox = new AppKit.NSButton ();
 			TemplateNoneOptionBox.WantsLayer = true;
-			TemplateNoneOptionBox.SetFrameSize (new CoreGraphics.CGSize (219f, 14f));
 			TemplateNoneOptionBox.BezelStyle = NSBezelStyle.Rounded;
 			TemplateNoneOptionBox.SetButtonType (NSButtonType.Radio);
 			TemplateNoneOptionBox.WantsLayer = true;
-			TemplateNoneOptionBox.SetFrameSize (new CoreGraphics.CGSize (219f, 14f));
 			TemplateNoneOptionBox.Title = "None";
-
 			groupView2.AddSubview (TemplateNoneOptionBox);
-			TemplateNoneOptionBox.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 0f));
+			TemplateNoneOptionBox.Frame = TemplateNoneOptionBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0, 0, 219f, 14f));
+
 			TemplateMarkUpOptionBox = new AppKit.NSButton ();
 			TemplateMarkUpOptionBox.WantsLayer = true;
-			TemplateMarkUpOptionBox.SetFrameSize (new CoreGraphics.CGSize (219f, 14f));
 			TemplateMarkUpOptionBox.BezelStyle = NSBezelStyle.Rounded;
 			TemplateMarkUpOptionBox.SetButtonType (NSButtonType.Radio);
 			TemplateMarkUpOptionBox.WantsLayer = true;
-			TemplateMarkUpOptionBox.SetFrameSize (new CoreGraphics.CGSize (219f, 14f));
 			TemplateMarkUpOptionBox.Title = "Markup";
-
 			groupView2.AddSubview (TemplateMarkUpOptionBox);
-			TemplateMarkUpOptionBox.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 22f));
+			TemplateMarkUpOptionBox.Frame = TemplateMarkUpOptionBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 22f, 219f, 14f));
+
 			TemplateCodeOptionBox = new AppKit.NSButton ();
 			TemplateCodeOptionBox.WantsLayer = true;
-			TemplateCodeOptionBox.SetFrameSize (new CoreGraphics.CGSize (219f, 14f));
 			TemplateCodeOptionBox.BezelStyle = NSBezelStyle.Rounded;
 			TemplateCodeOptionBox.SetButtonType (NSButtonType.Radio);
 			TemplateCodeOptionBox.WantsLayer = true;
-			TemplateCodeOptionBox.SetFrameSize (new CoreGraphics.CGSize (219f, 14f));
 			TemplateCodeOptionBox.Title = "Code";
-
 			groupView2.AddSubview (TemplateCodeOptionBox);
-			TemplateCodeOptionBox.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 44f));
+			TemplateCodeOptionBox.Frame = TemplateCodeOptionBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 44f, 219f, 14f));
+
 			var textView1 = new AppKit.NSTextField () {
 				StringValue = "Template:",
 				Editable = false,
@@ -277,28 +215,30 @@ namespace MonoDevelop.Figma
 
 			frameEntityView1.AddSubview (vectorEntityView1);
 			vectorEntityView1.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 199.5f));
+
+
 			LoadingProgressIndicator = new AppKit.NSProgressIndicator ();
 			LoadingProgressIndicator.WantsLayer = true;
-			LoadingProgressIndicator.SetFrameSize (new CoreGraphics.CGSize (18f, 18f));
 			LoadingProgressIndicator.Style = NSProgressIndicatorStyle.Spinning;
 			LoadingProgressIndicator.Hidden = true;
 
 			frameEntityView1.AddSubview (LoadingProgressIndicator);
-			LoadingProgressIndicator.SetFrameOrigin (new CoreGraphics.CGPoint (396f, 225f));
+			LoadingProgressIndicator.Frame = LoadingProgressIndicator.GetFrameForAlignmentRect (new CoreGraphics.CGRect (396f, 225f, 18f, 18f));
+
 			var groupView3 = new NSView ();
 			groupView3.WantsLayer = true;
 			groupView3.SetFrameSize (new CoreGraphics.CGSize (297f, 69f));
 
 			frameEntityView1.AddSubview (groupView3);
 			groupView3.SetFrameOrigin (new CoreGraphics.CGPoint (92f, 207f));
+
 			VersionComboBox = new AppKit.NSPopUpButton ();
 			VersionComboBox.WantsLayer = true;
-			VersionComboBox.SetFrameSize (new CoreGraphics.CGSize (220f, 19f));
 			VersionComboBox.BezelStyle = NSBezelStyle.Rounded;
 			VersionComboBox.ControlSize = NSControlSize.Regular;
-
 			groupView3.AddSubview (VersionComboBox);
-			VersionComboBox.SetFrameOrigin (new CoreGraphics.CGPoint (76f, 17f));
+			VersionComboBox.Frame = VersionComboBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (76f, 17f, 220f, 19f));
+
 			var textView3 = new AppKit.NSTextField () {
 				StringValue = "Version:",
 				Editable = false,
@@ -310,23 +250,20 @@ namespace MonoDevelop.Figma
 			textView3.Font = NSFontManager.SharedFontManager.FontWithFamily ("SF Pro Text", default (NSFontTraitMask), 5, 13);
 			textView3.Alignment = NSTextAlignment.Right;
 			textView3.AlphaValue = 1f;
-			textView3.TextColor = NSColor.FromRgba (0f, 0f, 0f, 1f);
 			textView3.WantsLayer = true;
-			textView3.SetFrameSize (new CoreGraphics.CGSize (71f, 35f));
 
 			groupView3.AddSubview (textView3);
-			textView3.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 0f));
+			textView3.SetFrameSize (new CoreGraphics.CGSize (71f, 35f));
+
 			FigmaUrlTextField = new AppKit.NSTextField ();
 			FigmaUrlTextField.WantsLayer = true;
-			FigmaUrlTextField.SetFrameSize (new CoreGraphics.CGSize (221f, 21f));
 			FigmaUrlTextField.Font = NSFontManager.SharedFontManager.FontWithFamily ("SF Pro Text", default (NSFontTraitMask), 5, 13);
 			FigmaUrlTextField.Alignment = NSTextAlignment.Left;
 			FigmaUrlTextField.AlphaValue = 1f;
-			FigmaUrlTextField.TextColor = NSColor.FromRgba (0f, 0f, 0f, 1f);
 			FigmaUrlTextField.PlaceholderString = "https://www.figma.com/file/";
-
 			groupView3.AddSubview (FigmaUrlTextField);
-			FigmaUrlTextField.SetFrameOrigin (new CoreGraphics.CGPoint (76f, 48f));
+			FigmaUrlTextField.Frame = FigmaUrlTextField.GetFrameForAlignmentRect (new CoreGraphics.CGRect (76f, 48f, 221f, 21f));
+
 			var textView4 = new AppKit.NSTextField () {
 				StringValue = "Figma URL:",
 				Editable = false,
@@ -340,10 +277,9 @@ namespace MonoDevelop.Figma
 			textView4.AlphaValue = 1f;
 			textView4.TextColor = NSColor.FromRgba (0f, 0f, 0f, 1f);
 			textView4.WantsLayer = true;
-			textView4.SetFrameSize (new CoreGraphics.CGSize (71f, 35f));
-
 			groupView3.AddSubview (textView4);
-			textView4.SetFrameOrigin (new CoreGraphics.CGPoint (0f, 31f));
+			textView4.Frame = textView4.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 31f, 71f, 35f));
+
 			var textView5 = new AppKit.NSTextField () {
 				StringValue = "Source",
 				Editable = false,
