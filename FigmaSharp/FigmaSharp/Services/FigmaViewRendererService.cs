@@ -261,11 +261,6 @@ namespace FigmaSharp.Services
                 return;
             }
 
-            if (currentNode.Parent is FigmaCanvas && !(currentNode is FigmaFrameEntity)) {
-                Console.WriteLine ("[{0}.{1}] Don't render views in first level different than a FrameEntity...Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
-                return;
-            }
-
             bool scanChildren = true;
           
             var converter = GetProcessedConverter(currentNode, CustomConverters);
