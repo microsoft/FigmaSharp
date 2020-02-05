@@ -115,8 +115,7 @@ namespace FigmaSharp.Services
 					builder.AppendLineIfValue (code.Replace (Resources.Ids.Conversion.NameIdentifier, node.Name));
 
 					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.AddChild, node, parent, this));
-					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.Position, node, parent, this));
-					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.Size, node, parent, this));
+					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.Frame, node, parent, this));
 					calculatedParentNode = node;
 				} else {
 					//without a converter we don't have any view created, we need to attach to the parent view

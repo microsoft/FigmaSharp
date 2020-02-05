@@ -177,24 +177,8 @@ namespace FigmaSharp.Services
                     var processedParentView = new ProcessedNode() { FigmaNode = figmaNode, View = View };
                     NodesProcessed.Add(processedParentView);
 
-                    Rectangle contentRect = Rectangle.Zero;
-                    for (int i = 0; i < canvas.children.Length; i++)
-                    {
-                        if (canvas.children[i] is IAbsoluteBoundingBox box)
-                        {
-                            if (i == 0)
-                            {
-                                contentRect = box.absoluteBoundingBox;
-                            }
-                            else
-                            {
-                                contentRect = contentRect.UnionWith(box.absoluteBoundingBox);
-                            }
-                        }
-                    }
-
                     //figma cambas
-                    canvas.absoluteBoundingBox = contentRect;
+                    canvas.absoluteBoundingBox = canvas.GetCurrentBounds ();
 
                     if (figmaNode is IFigmaNodeContainer container)
                     {

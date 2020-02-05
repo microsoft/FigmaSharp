@@ -40,6 +40,32 @@ namespace FigmaSharp
 {
 	public static class FigmaServiceExtensions
 	{
+		public static Rectangle GetCurrentBounds (this FigmaCanvas canvas)
+		{
+            Rectangle contentRect = Rectangle.Zero;
+            for (int i = 0; i < canvas.children.Length; i++) {
+                if (canvas.children[i] is IAbsoluteBoundingBox box) {
+                    if (i == 0) {
+                        contentRect = box.absoluteBoundingBox;
+                    } else {
+                        contentRect = contentRect.UnionWith (box.absoluteBoundingBox);
+                    }
+                }
+            }
+            return contentRect;
+        }
+
+        public static FigmaCanvas GetCurrentCanvas (this FigmaNode node)
+        {
+            if (node.Parent is FigmaCanvas figmaCanvas)
+                return figmaCanvas;
+
+            if (node.Parent == null)
+                return null;
+
+            return GetCurrentCanvas (node.Parent);
+        }
+
         public static void AppendLineIfValue (this StringBuilder sender, string value)
         {
             if (!string.IsNullOrEmpty (value))

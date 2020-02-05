@@ -36,6 +36,7 @@ namespace FigmaSharp
         public const string Size = "Size";
         public const string Position = "Position";
         public const string AddChild = "AddChild";
+        public const string Frame = "Frame";
     } 
 
     public abstract class FigmaCodePropertyConverterBase

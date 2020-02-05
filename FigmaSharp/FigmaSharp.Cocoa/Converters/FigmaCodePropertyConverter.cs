@@ -36,7 +36,34 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override string ConvertToCode (string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			if (propertyName == CodeProperties.AddChild) {
+            if (propertyName == CodeProperties.Frame) {
+
+                if (currentNode.Node.Parent is FigmaCanvas)
+                    return string.Empty;
+
+                if (currentNode.Node is IAbsoluteBoundingBox absoluteBounding && currentNode.Node.Parent is IAbsoluteBoundingBox parentAbsoluteBoundingBox) {
+                    var x = absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X;
+
+                    var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.Y + parentAbsoluteBoundingBox.absoluteBoundingBox.Height;
+                    var actualY = absoluteBounding.absoluteBoundingBox.Y + absoluteBounding.absoluteBoundingBox.Height;
+                    var y = parentY - actualY;
+
+					var rectangeConstructor = typeof (CoreGraphics.CGRect).GetConstructor (
+		new string[] {
+										x.ToDesignerString (),
+						y.ToDesignerString (),
+										absoluteBounding.absoluteBoundingBox.Width.ToDesignerString (),
+										absoluteBounding.absoluteBoundingBox.Height.ToDesignerString ()
+					});
+
+					var getFrameForAlignmentRectMethod = currentNode.GetMethod (nameof (NSView.GetFrameForAlignmentRect), rectangeConstructor);
+					currentNode.GetEquality (nameof (NSView.Frame), getFrameForAlignmentRectMethod);
+
+					return currentNode.GetEquality (nameof (NSView.Frame), getFrameForAlignmentRectMethod);
+                }
+                return string.Empty;
+            }
+            if (propertyName == CodeProperties.AddChild) {
                 return parentNode?.GetMethod (nameof (NSView.AddSubview), currentNode.Name);
 			}
             if (propertyName == CodeProperties.Size) {
