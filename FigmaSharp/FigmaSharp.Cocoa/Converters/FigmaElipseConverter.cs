@@ -49,12 +49,15 @@ namespace FigmaSharp.Cocoa.Converters
             return elipseView;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
-            if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine($"var {Resources.Ids.Conversion.NameIdentifier} = new {typeof (NSView).FullName}();");
-            builder.Configure(Resources.Ids.Conversion.NameIdentifier, currentNode);
+
+            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+                builder.WriteConstructor (currentNode.Name, typeof (NSView));
+
+            builder.Configure(currentNode.Node, currentNode.Name);
+
             return builder.ToString();
         }
     }

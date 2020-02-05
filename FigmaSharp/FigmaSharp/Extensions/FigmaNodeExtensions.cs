@@ -34,11 +34,28 @@ using System.Threading.Tasks;
 using System;
 using FigmaSharp.Views;
 using FigmaSharp.Models;
+using System.Text;
 
 namespace FigmaSharp
 {
 	public static class FigmaServiceExtensions
 	{
+        public static void AppendLineIfValue (this StringBuilder sender, string value)
+        {
+            if (!string.IsNullOrEmpty (value))
+                sender.AppendLine (value);
+        }
+
+		public static string GetNodeTypeName (this FigmaNode node)
+		{
+            var name = node.name;
+            var index = name.IndexOf (' ');
+            if (index > -1 && index < name.Length - 1) {
+                name = name.Substring (0,index);
+            }
+            return name;
+        }
+
         public static string GetClassName (this FigmaNode node)
         {
             var name = node.name;

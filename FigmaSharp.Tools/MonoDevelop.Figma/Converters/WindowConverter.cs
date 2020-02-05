@@ -36,7 +36,7 @@ namespace MonoDevelop.Figma
 			return view;
 		}
 
-		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
 		}
@@ -82,7 +82,7 @@ namespace MonoDevelop.Figma
 			return view;
 		}
 
-		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
 		}

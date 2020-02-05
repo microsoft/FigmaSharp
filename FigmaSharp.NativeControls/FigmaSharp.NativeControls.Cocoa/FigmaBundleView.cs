@@ -17,12 +17,8 @@ namespace FigmaSharp
 			partialDesignerClass.Usings.Add (nameof (AppKit));
 
 			//restore this state
-			var isEnabled = codeRendererService.MainIsThis;
-			codeRendererService.MainIsThis = true;
-
 			var builder = new System.Text.StringBuilder ();
-			codeRendererService.GetCode (builder, FigmaNode, null, null);
-			codeRendererService.MainIsThis = isEnabled;
+			codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 		}
 

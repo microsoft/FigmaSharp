@@ -66,17 +66,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return new View (view);
 		}
 
-		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaInstance)currentNode;
+			var figmaInstance = (FigmaInstance)currentNode.Node;
 
 			var builder = new StringBuilder ();
 			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			if (rendererService.NeedsRenderInstance (currentNode))
+			if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
 				builder.WriteConstructor (name, typeof (NSComboBox).FullName);
 
-			builder.Configure (name, currentNode);
+			builder.Configure (currentNode.Node, name);
 
 			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
 			builder.WriteEquality (name, nameof (NSButton.Title), string.Empty, true);

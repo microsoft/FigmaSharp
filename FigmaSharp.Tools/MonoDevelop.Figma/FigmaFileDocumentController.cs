@@ -99,11 +99,9 @@ namespace MonoDevelop.Figma
             return Task.FromResult(true);
         }
 
-        FigmaLocalFileProvider fileProvider;
+        NativeControlLocalFileProvider fileProvider;
         FigmaFileRendererService rendererService;
         FigmaViewRendererDistributionService distributionService;
-
-		
 
 		protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
         {
@@ -119,10 +117,10 @@ namespace MonoDevelop.Figma
                 figmaDelegate = new FigmaDesignerDelegate();
               
                 var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
-                fileProvider = new FigmaLocalFileProvider (localPath);
+                fileProvider = new NativeControlLocalFileProvider (localPath);
                 fileProvider.File = filePath.FullPath;
 
-                var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
+                var converters = NativeControlsContext.Current.GetConverters ();
                 var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
 
                 rendererService = new FigmaFileRendererService (fileProvider, converters);

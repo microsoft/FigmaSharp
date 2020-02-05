@@ -103,7 +103,7 @@ namespace FigmaSharp.NativeControls
             ( "708b4ca16b3b72bfb1c9ec9a25071b74744f5cf1", NativeControlComponentType.RadioSmallDark, NativeControlType.RadioButton),
             ( "844a988e2231ee8c794221e1a8b04522649caca4", NativeControlComponentType.RadioStandardDark, NativeControlType.RadioButton),
             ( "b71c0bed2374cf42b3990fcff961b577d0d912b4", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
-            ( "be9ae04fb622ea797dc9659e6d3f05987b8567c2", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton),
+            ( "be9ae04fb622ea797dc9659e6d3f05987b8567c2", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
 
             ( "92f3aa0d8397ca5f0bf76e818e2300152394836a", NativeControlComponentType.RadioSingleStandard, NativeControlType.RadioButton),
 
@@ -134,6 +134,54 @@ namespace FigmaSharp.NativeControls
             ( "Window/Panel", NativeControlComponentType.WindowPanel, NativeControlType.WindowPanel),
             ( "Window/Panel Dark", NativeControlComponentType.WindowPanelDark, NativeControlType.WindowPanel),
         };
+
+        public static bool IsWindowContent (this FigmaNode node)
+        {
+            if (!node.Parent?.IsDialogParentContainer (NativeControlType.WindowStandard) ?? true) {
+                return false;
+            }
+            return node.IsNodeWindowContent ();
+        }
+
+        public static bool IsMainDocumentView (this FigmaNode node)
+        {
+            return node.Parent is FigmaCanvas && !node.IsDialogParentContainer ();
+        }
+
+        public static bool IsNodeWindowContent (this FigmaNode node)
+		{
+            return node.GetNodeTypeName () == "content";
+        }
+
+        public static bool HasChildren (this FigmaNode node)
+        {
+            return node is IFigmaNodeContainer;
+        }
+
+        public static bool IsDialogParentContainer (this FigmaNode figmaNode)
+        {
+            return figmaNode is IFigmaNodeContainer container && container.children.OfType<FigmaInstance> ().Any (s => s.IsDialog ());
+        }
+
+        public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
+        {
+            return figmaNode is IFigmaNodeContainer container && container.children.OfType<FigmaInstance> ().Any (s => s.IsWindowOfType (controlType));
+        }
+        
+        public static bool IsDialog (this FigmaNode figmaNode)
+        {
+            return figmaNode is FigmaInstance instance &&
+				(
+				instance.ToNativeControlType () == NativeControlType.WindowPanel ||
+                instance.ToNativeControlType () == NativeControlType.WindowSheet ||
+                instance.ToNativeControlType () == NativeControlType.WindowStandard
+                );
+        }
+
+        public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)
+        {
+            return  figmaNode is FigmaInstance instance && instance.ToNativeControlType () == controlType;
+        }
 
         public static NativeControlComponentType ToNativeControlComponentType (this FigmaInstance figmaInstance)
         {

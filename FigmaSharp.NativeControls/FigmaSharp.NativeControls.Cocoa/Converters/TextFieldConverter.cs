@@ -81,17 +81,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return textBox;
 		}
 
-		public override string ConvertToCode (FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var instance = (FigmaInstance)currentNode;
-			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+			var instance = (FigmaInstance)currentNode.Node;
+			var name = currentNode.Name;
 
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 
-			if (rendererService.NeedsRenderInstance (instance))
+			if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
 				builder.WriteConstructor (name, typeof (NSTextField));
 
-			builder.Configure (name, instance);
+			builder.Configure (instance, name);
 
 			var texts = instance.children.OfType<FigmaText> ();
 
@@ -101,7 +101,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var text = figmaTextNode.characters ?? string.Empty;
 				
 				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
-				builder.Configure (name, figmaTextNode);
+				builder.Configure (figmaTextNode, name);
 			}
 
 			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");

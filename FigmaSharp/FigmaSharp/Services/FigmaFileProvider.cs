@@ -39,147 +39,133 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public interface IFigmaFileProvider
-    {
-        string File { get; }
-        bool NeedsImageLinks { get; }
-        event EventHandler ImageLinksProcessed;
-        List<FigmaNode> Nodes { get; }
-        FigmaFileResponse Response { get; }
-        void Load(string file);
-        void Save(string filePath);
-        string GetContentTemplate(string file);
-        void OnStartImageLinkProcessing(List<ProcessedNode> imageVectors);
+	public interface IFigmaFileProvider
+	{
+		string File { get; }
+		bool NeedsImageLinks { get; }
+		event EventHandler ImageLinksProcessed;
+		List<FigmaNode> Nodes { get; }
+		FigmaFileResponse Response { get; }
+		void Load (string file);
+		void Save (string filePath);
+		string GetContentTemplate (string file);
+		void OnStartImageLinkProcessing (List<ProcessedNode> imageVectors);
 
-        FigmaNode FindByFullPath (string fullPath);
-        FigmaNode FindByPath(params string[] path);
-        FigmaNode FindByName(string nodeName);
-    }
+		FigmaNode FindByFullPath (string fullPath);
+		FigmaNode FindByPath (params string[] path);
+		FigmaNode FindByName (string nodeName);
 
-    public class FigmaLocalFileProvider : FigmaFileProvider
-    {
-        public FigmaLocalFileProvider (string resourcesDirectory)
-        {
-            ResourcesDirectory = resourcesDirectory;
-        }
+		//maybe we need to move this into service
+		FigmaNode[] GetChildrenToRender (FigmaCodeNode node);
+		bool HasChildrenToRender (FigmaCodeNode node);
+		bool IsMainViewContainer (FigmaCodeNode node);
+		bool IsNodeSkipped (FigmaCodeNode node);
+	}
 
-        public override string GetContentTemplate(string file)
-        {
-            return System.IO.File.ReadAllText(file);
-        }
+	public class FigmaLocalFileProvider : FigmaFileProvider
+	{
+		public FigmaLocalFileProvider (string resourcesDirectory)
+		{
+			ResourcesDirectory = resourcesDirectory;
+		}
 
-        public string ResourcesDirectory { get; set; }
+		public override string GetContentTemplate (string file)
+		{
+			return System.IO.File.ReadAllText (file);
+		}
 
-        public string ImageFormat { get; set; } = ".png";
+		public string ResourcesDirectory { get; set; }
 
-        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes)
-        {
-            //not needed in local files
-            Console.WriteLine($"Loading images..");
-           
-            if (imageFigmaNodes.Count > 0)
-            {
-                foreach (var vector in imageFigmaNodes)
-                {
-                    try
-                    {
-                        var recoveredKey = FigmaResourceConverter.FromResource(vector.FigmaNode.id);
-                        string filePath = Path.Combine(ResourcesDirectory, string.Concat(recoveredKey, ImageFormat));
+		public string ImageFormat { get; set; } = ".png";
 
-                        if (!System.IO.File.Exists(filePath))
-                        {
-                            throw new FileNotFoundException(filePath);
-                        }
-                      
-                        if (vector.View is IImageView imageView)
-                        {
-                            var image = AppContext.Current.GetImageFromFilePath(filePath);
-                            imageView.Image = image;
-                        }
-                    }
-                    catch (FileNotFoundException ex)
-                    {
-                        Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
-            }
+		public override void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes)
+		{
+			//not needed in local files
+			Console.WriteLine ($"Loading images..");
 
-            Console.WriteLine("Ended image link processing");
-            OnImageLinkProcessed();
-        }
-    }
+			if (imageFigmaNodes.Count > 0) {
+				foreach (var vector in imageFigmaNodes) {
+					try {
+						var recoveredKey = FigmaResourceConverter.FromResource (vector.FigmaNode.id);
+						string filePath = Path.Combine (ResourcesDirectory, string.Concat (recoveredKey, ImageFormat));
 
-    public class FigmaRemoteFileProvider : FigmaFileProvider
-    {
-        public override bool NeedsImageLinks => true;
+						if (!System.IO.File.Exists (filePath)) {
+							throw new FileNotFoundException (filePath);
+						}
 
-        public override string GetContentTemplate(string file)
-        {
-            return AppContext.Api.GetContentFile (new FigmaFileQuery (file));
-        }
+						if (vector.View is IImageView imageView) {
+							var image = AppContext.Current.GetImageFromFilePath (filePath);
+							imageView.Image = image;
+						}
+					} catch (FileNotFoundException ex) {
+						Console.WriteLine ("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
+					} catch (Exception ex) {
+						Console.WriteLine (ex);
+					}
+				}
+			}
 
-        public IEnumerable<string> GetKeys (List<FigmaImageResponse> responses, string image)
-        {
-            foreach (var item in responses)
-            {
-                foreach (var keys in item.images.Where(s => s.Value == image))
-                {
-                    yield return keys.Key;
-                }
-            }
-        }
+			Console.WriteLine ("Ended image link processing");
+			OnImageLinkProcessed ();
+		}
+	}
+
+	public class FigmaRemoteFileProvider : FigmaFileProvider
+	{
+		public override bool NeedsImageLinks => true;
+
+		public override string GetContentTemplate (string file)
+		{
+			return AppContext.Api.GetContentFile (new FigmaFileQuery (file));
+		}
+
+		public IEnumerable<string> GetKeys (List<FigmaImageResponse> responses, string image)
+		{
+			foreach (var item in responses) {
+				foreach (var keys in item.images.Where (s => s.Value == image)) {
+					yield return keys.Key;
+				}
+			}
+		}
 
 		void ProcessRemoteImages (List<ProcessedNode> imageFigmaNodes, ImageQueryFormat imageFormat)
 		{
-			try
-			{
-				var totalImages = imageFigmaNodes.Count();
+			try {
+				var totalImages = imageFigmaNodes.Count ();
 				//TODO: figma url has a limited character in urls we fixed the limit to 10 ids's for each call
 				var numberLoop = (totalImages / CallNumber) + 1;
 
 				//var imageCache = new Dictionary<string, List<string>>();
-				List<Tuple<string, List<string>>> imageCacheResponse = new List<Tuple<string, List<string>>>();
-				Console.WriteLine("Detected a total of {0} possible {1} images.  ", totalImages, imageFormat);
+				List<Tuple<string, List<string>>> imageCacheResponse = new List<Tuple<string, List<string>>> ();
+				Console.WriteLine ("Detected a total of {0} possible {1} images.  ", totalImages, imageFormat);
 
-				var images = new List<string>();
-				for (int i = 0; i < numberLoop; i++)
-				{
-					var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
-					Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
-                    var ids = vectors.Select (s => s.FigmaNode.id).ToArray ();
-                    var figmaImageResponse = AppContext.Api.GetImages (File, ids, imageFormat);
-					if (figmaImageResponse != null)
-					{
-						foreach (var image in figmaImageResponse.images)
-						{
-							if (image.Value == null)
-							{
+				var images = new List<string> ();
+				for (int i = 0; i < numberLoop; i++) {
+					var vectors = imageFigmaNodes.Skip (i * CallNumber).Take (CallNumber);
+					Console.WriteLine ("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count ());
+					var ids = vectors.Select (s => s.FigmaNode.id).ToArray ();
+					var figmaImageResponse = AppContext.Api.GetImages (File, ids, imageFormat);
+					if (figmaImageResponse != null) {
+						foreach (var image in figmaImageResponse.images) {
+							if (image.Value == null) {
 								continue;
 							}
 
-							var img = imageCacheResponse.FirstOrDefault(s => image.Value == s.Item1);
-							if (img?.Item1 != null)
-							{
-								img.Item2.Add(image.Key);
-							}
-							else
-							{
-								imageCacheResponse.Add(new Tuple<string, List<string>>(image.Value, new List<string>() { image.Key }));
+							var img = imageCacheResponse.FirstOrDefault (s => image.Value == s.Item1);
+							if (img?.Item1 != null) {
+								img.Item2.Add (image.Key);
+							} else {
+								imageCacheResponse.Add (new Tuple<string, List<string>> (image.Value, new List<string> () { image.Key }));
 							}
 						}
 					}
 				}
 
 				//get images not dupplicates
-				Console.WriteLine("Finished image to download {0}", images.Count);
+				Console.WriteLine ("Finished image to download {0}", images.Count);
 
-				if (imageFormat == ImageQueryFormat.svg)
-				{
-					throw new NotImplementedException("svg not implemented");
+				if (imageFormat == ImageQueryFormat.svg) {
+					throw new NotImplementedException ("svg not implemented");
 					//with all the keys now we get the dupplicated images
 					//foreach (var imageUrl in imageCacheResponse)
 					//{
@@ -200,168 +186,152 @@ namespace FigmaSharp.Services
 					//}
 				} else {
 					//with all the keys now we get the dupplicated images
-					foreach (var imageUrl in imageCacheResponse)
-					{
-						var Image = AppContext.Current.GetImage(imageUrl.Item1);
-						foreach (var figmaNodeId in imageUrl.Item2)
-						{
-							var vector = imageFigmaNodes.FirstOrDefault(s => s.FigmaNode.id == figmaNodeId);
-							Console.Write("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
+					foreach (var imageUrl in imageCacheResponse) {
+						var Image = AppContext.Current.GetImage (imageUrl.Item1);
+						foreach (var figmaNodeId in imageUrl.Item2) {
+							var vector = imageFigmaNodes.FirstOrDefault (s => s.FigmaNode.id == figmaNodeId);
+							Console.Write ("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType (), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
 
 							if (vector != null) {
-								AppContext.Current.BeginInvoke(() => {
+								AppContext.Current.BeginInvoke (() => {
 									if (vector.View is IImageView imageView) {
 										imageView.Image = Image;
-									}
-									else if(vector.View is IImageButton imageButton) {
+									} else if (vector.View is IImageButton imageButton) {
 										imageButton.Image = Image;
 									}
 								});
 							}
-							Console.Write("OK \n");
+							Console.Write ("OK \n");
 						}
 					}
 				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
+			} catch (Exception ex) {
+				Console.WriteLine (ex);
 			}
 		}
 
-        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes)
-        {
-            if (imageFigmaNodes.Count == 0)
-            {
-                OnImageLinkProcessed();
-                return;
-            }
+		public override void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes)
+		{
+			if (imageFigmaNodes.Count == 0) {
+				OnImageLinkProcessed ();
+				return;
+			}
 
-            Task.Run(() => {
+			Task.Run (() => {
 
-				var images = imageFigmaNodes.ToList();
-				ProcessRemoteImages(images, ImageQueryFormat.png);
+				var images = imageFigmaNodes.ToList ();
+				ProcessRemoteImages (images, ImageQueryFormat.png);
 
-				OnImageLinkProcessed();
-            });
-        }
-        const int CallNumber = 250;
-    }
+				OnImageLinkProcessed ();
+			});
+		}
+		const int CallNumber = 250;
+	}
 
-    public class FigmaManifestFileProvider : FigmaFileProvider
-    {
-        public Assembly Assembly { get; set; }
+	public class FigmaManifestFileProvider : FigmaFileProvider
+	{
+		public Assembly Assembly { get; set; }
 
-        public FigmaManifestFileProvider (Assembly assembly, string file)
-        {
-            Assembly = assembly;
-            File = file;
-        }
+		public FigmaManifestFileProvider (Assembly assembly, string file)
+		{
+			Assembly = assembly;
+			File = file;
+		}
 
-        public override string GetContentTemplate(string file)
-        {
-            return AppContext.Current.GetManifestResource(Assembly, file);
-        }
+		public override string GetContentTemplate (string file)
+		{
+			return AppContext.Current.GetManifestResource (Assembly, file);
+		}
 
-        public override void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes)
-        {
-            Console.WriteLine($"Loading images..");
+		public override void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes)
+		{
+			Console.WriteLine ($"Loading images..");
 
-            if (imageFigmaNodes.Count > 0)
-            {
-                foreach (var vector in imageFigmaNodes)
-                {
-                    var recoveredKey = FigmaResourceConverter.FromResource(vector.FigmaNode.id);
-                    var image = AppContext.Current.GetImageFromManifest(Assembly, recoveredKey);
-                    if (image != null && vector.View is IImageView imageView)
-                    {
-                        imageView.Image = image;
-                    }
-                }
-            }
+			if (imageFigmaNodes.Count > 0) {
+				foreach (var vector in imageFigmaNodes) {
+					var recoveredKey = FigmaResourceConverter.FromResource (vector.FigmaNode.id);
+					var image = AppContext.Current.GetImageFromManifest (Assembly, recoveredKey);
+					if (image != null && vector.View is IImageView imageView) {
+						imageView.Image = image;
+					}
+				}
+			}
 
-            Console.WriteLine("Ended image link processing");
-            OnImageLinkProcessed();
-        }
-    }
+			Console.WriteLine ("Ended image link processing");
+			OnImageLinkProcessed ();
+		}
+	}
 
-    public abstract class FigmaFileProvider : IFigmaFileProvider
-    {
-        public virtual bool NeedsImageLinks => false;
+	public abstract class FigmaFileProvider : IFigmaFileProvider
+	{
+		public virtual bool NeedsImageLinks => false;
 
-        public event EventHandler ImageLinksProcessed;
+		public event EventHandler ImageLinksProcessed;
 
-        public FigmaFileResponse Response { get; protected set; }
-        public List<FigmaNode> Nodes { get; } = new List<FigmaNode>();
+		public FigmaFileResponse Response { get; protected set; }
+		public List<FigmaNode> Nodes { get; } = new List<FigmaNode> ();
 
-        public bool ImageProcessed;
+		public bool ImageProcessed;
 
-        internal void OnImageLinkProcessed()
-        {
-            ImageProcessed = true;
-            ImageLinksProcessed?.Invoke(this, new EventArgs());
-        }
+		internal void OnImageLinkProcessed ()
+		{
+			ImageProcessed = true;
+			ImageLinksProcessed?.Invoke (this, new EventArgs ());
+		}
 
-        public string File { get; set; }
+		public string File { get; set; }
 
-        public void Load(string file)
-        {
-            this.File = file;
+		public void Load (string file)
+		{
+			this.File = file;
 
-            ImageProcessed = false;
-            try
-            {
-                Nodes.Clear();
+			ImageProcessed = false;
+			try {
+				Nodes.Clear ();
 
-                var contentTemplate = GetContentTemplate(file);
+				var contentTemplate = GetContentTemplate (file);
 
 				//parse the json into a model format
-                Response =  FigmaApiHelper.GetFigmaResponseFromFileContent (contentTemplate);
+				Response = FigmaApiHelper.GetFigmaResponseFromFileContent (contentTemplate);
 
 				//proceses all the views recursively
-                foreach (var item in Response.document.children)
-                    ProcessNodeRecursively(item, null);
-            }
-            catch (System.Net.WebException ex)
-            {
-                if (!AppContext.Current.IsApiConfigured)
-                    Console.Error.WriteLine($"Cannot connect to Figma server: TOKEN not configured.");
-                else
-                    Console.Error.WriteLine($"Cannot connect to Figma server: wrong TOKEN?");
+				foreach (var item in Response.document.children)
+					ProcessNodeRecursively (item, null);
+			} catch (System.Net.WebException ex) {
+				if (!AppContext.Current.IsApiConfigured)
+					Console.Error.WriteLine ($"Cannot connect to Figma server: TOKEN not configured.");
+				else
+					Console.Error.WriteLine ($"Cannot connect to Figma server: wrong TOKEN?");
 
-                Console.WriteLine(ex);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error reading remote resources. Ensure you added NewtonSoft nuget or cannot parse the to json?");
-                Console.WriteLine(ex);
-            }
-        }
+				Console.WriteLine (ex);
+			} catch (Exception ex) {
+				Console.WriteLine ($"Error reading remote resources. Ensure you added NewtonSoft nuget or cannot parse the to json?");
+				Console.WriteLine (ex);
+			}
+		}
 
-        public FigmaNode FindByFullPath (string fullPath)
-        {
-            return FindByPath (fullPath.Split ('/'));
-        }
-
-        /// <summary>
-        /// Finds a node using the path of the views, returns null in case of no data
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public FigmaNode FindByPath(params string[] path)
+		public FigmaNode FindByFullPath (string fullPath)
 		{
-			if (path.Length == 0)
-			{
+			return FindByPath (fullPath.Split ('/'));
+		}
+
+		/// <summary>
+		/// Finds a node using the path of the views, returns null in case of no data
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public FigmaNode FindByPath (params string[] path)
+		{
+			if (path.Length == 0) {
 				return null;
 			}
 
 			FigmaNode figmaNode = null;
-			for (int i = 0; i < path.Length; i++)
-			{
+			for (int i = 0; i < path.Length; i++) {
 				if (i == 0)
-					figmaNode = Nodes.FirstOrDefault(s => s.name == path[i]);
+					figmaNode = Nodes.FirstOrDefault (s => s.name == path[i]);
 				else
-					figmaNode = Nodes.FirstOrDefault(s => s.name == path[i] && s.Parent.id == figmaNode.id);
+					figmaNode = Nodes.FirstOrDefault (s => s.name == path[i] && s.Parent.id == figmaNode.id);
 
 				if (figmaNode == null)
 					return null;
@@ -369,41 +339,67 @@ namespace FigmaSharp.Services
 			return figmaNode;
 		}
 
-        public FigmaNode FindByName(string name)
-        {
-            var quotedName = string.Format ("\"{0}\"", name);
-            var found = Nodes.FirstOrDefault(s => s.name.Contains (quotedName));
+		public FigmaNode FindByName (string name)
+		{
+			var quotedName = string.Format ("\"{0}\"", name);
+			var found = Nodes.FirstOrDefault (s => s.name.Contains (quotedName));
 			if (found != null) {
-                return found;
+				return found;
 			}
-           return  Nodes.FirstOrDefault (s => s.name == name);
-        }
+			return Nodes.FirstOrDefault (s => s.name == name);
+		}
 
-        void ProcessNodeRecursively(FigmaNode node, FigmaNode parent)
-        {
-            node.Parent = parent;
-            Nodes.Add(node);
+		void ProcessNodeRecursively (FigmaNode node, FigmaNode parent)
+		{
+			node.Parent = parent;
+			Nodes.Add (node);
 
-            if (node is FigmaInstance instance)
-            {
-                if (Response.components.TryGetValue(instance.componentId, out var figmaComponent))
-                    instance.Component = figmaComponent;
-            }
+			if (node is FigmaInstance instance) {
+				if (Response.components.TryGetValue (instance.componentId, out var figmaComponent))
+					instance.Component = figmaComponent;
+			}
 
-            if (node is IFigmaNodeContainer nodeContainer)
-            {
-                foreach (var item in nodeContainer.children)
-                    ProcessNodeRecursively(item, node);
-            }
-        }
+			if (node is IFigmaNodeContainer nodeContainer) {
+				foreach (var item in nodeContainer.children)
+					ProcessNodeRecursively (item, node);
+			}
+		}
 
-        public abstract string GetContentTemplate(string file);
+		public abstract string GetContentTemplate (string file);
 
-        public abstract void OnStartImageLinkProcessing(List<ProcessedNode> imageFigmaNodes);
+		public abstract void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes);
 
-        public void Save(string filePath)
-        {
-            Response.Save (filePath);
-        }
+		public void Save (string filePath)
+		{
+			Response.Save (filePath);
+		}
+
+		#region Rendering Iteration
+
+		public virtual bool IsMainViewContainer (FigmaCodeNode node)
+		{
+			return true;
+		}
+
+		public virtual FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
+		{
+			if (node.Node is IFigmaNodeContainer nodeContainer) {
+				return nodeContainer.children;
+			}
+			return new FigmaNode[0];
+		}
+
+		public virtual bool HasChildrenToRender (FigmaCodeNode node)
+		{
+			return node.Node is IFigmaNodeContainer;
+		}
+
+		public virtual bool IsNodeSkipped (FigmaCodeNode node)
+		{
+			return false;
+		}
+
+		#endregion
+
 	}
 }

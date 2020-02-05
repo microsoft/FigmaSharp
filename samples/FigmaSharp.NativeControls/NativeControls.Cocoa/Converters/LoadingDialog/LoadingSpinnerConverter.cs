@@ -56,7 +56,7 @@ namespace LocalFile.Cocoa
 			return spinner;
 		}
 
-		public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
 		}

@@ -47,13 +47,14 @@ namespace FigmaSharp.Cocoa.Converters
             return new ImageView(currengroupView);
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            var figmaFrameEntity = (FigmaFrameEntity)currentNode.Node;
             StringBuilder builder = new StringBuilder();
-            if (rendererService.NeedsRenderInstance (currentNode))
+            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
                 builder.AppendLine($"var {Resources.Ids.Conversion.NameIdentifier} = new {nameof(NSView)}();");
-            builder.Configure(Resources.Ids.Conversion.NameIdentifier, figmaFrameEntity);
+
+            builder.Configure(figmaFrameEntity, currentNode.Name);
             return builder.ToString();
         }
     }

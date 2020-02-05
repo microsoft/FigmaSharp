@@ -53,17 +53,16 @@ namespace FigmaSharp.Cocoa.Converters
             return label;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var figmaText = (FigmaText)currentNode;
-            var name = Resources.Ids.Conversion.NameIdentifier;
+            var figmaText = (FigmaText)currentNode.Node;
 
             StringBuilder builder = new StringBuilder();
-			if (rendererService.NeedsRenderInstance (currentNode)) {
-                builder.AppendLine (string.Format ("var {0} = {1};", name, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters)));
-            }
-            builder.Configure(name, figmaText);
-            builder.Configure (name, currentNode);
+            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+                builder.WriteEquality (currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters), instanciate: true);
+
+            builder.Configure(figmaText, currentNode.Name);
+            builder.Configure (currentNode.Node, currentNode.Name);
             return builder.ToString();
         }
     }

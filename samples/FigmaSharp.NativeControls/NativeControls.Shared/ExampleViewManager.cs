@@ -39,14 +39,14 @@ namespace LocalFile.Shared
 	public class ExampleViewManager
 	{
 		const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
-		readonly FigmaRemoteFileProvider fileProvider;
+		readonly NativeControlRemoteFileProvider fileProvider;
 
 		public readonly FigmaFileRendererService RendererService;
 		readonly FigmaViewRendererDistributionService distributionService;
 
 		public ExampleViewManager(IScrollView scrollView, FigmaViewConverter[] converters)
 		{
-			fileProvider = new FigmaRemoteFileProvider();
+			fileProvider = new NativeControlRemoteFileProvider ();
 			RendererService = new FigmaFileRendererService(fileProvider, converters);
 
 			var options = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false };
