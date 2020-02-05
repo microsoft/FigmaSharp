@@ -179,7 +179,7 @@ namespace FigmaSharp
 		public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
 		{
 			var mainNodes = figmaFileProvider.Nodes
-				.Where (s => s.Parent is FigmaCanvas)
+				.Where (s => s.Parent is FigmaCanvas && !s.name.StartsWith ("#") && !s.name.StartsWith ("//") && s is FigmaFrameEntity)
 				.ToArray ();
 
 			foreach (var item in mainNodes) {
