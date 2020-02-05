@@ -247,5 +247,10 @@ namespace FigmaSharp.Views.Cocoa
 		{
 
 		}
+
+		public void SetAlignmentRect (float x, float y, float width, float height)
+		{
+			nativeView.Frame = nativeView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (x, y, width, height));
+		}
 	}
 }

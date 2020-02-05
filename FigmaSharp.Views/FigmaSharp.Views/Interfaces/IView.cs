@@ -58,6 +58,7 @@ namespace FigmaSharp.Views
 		void Focus ();
 		void SetPosition (float x, float y);
 		void SetAllocation (float x, float y, float width, float height);
+		void SetAlignmentRect (float x, float y, float width, float height);
 
 		void SetPosition (Point origin);
 		void SetAllocation (Point origin, Size size);

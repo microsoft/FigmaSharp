@@ -52,7 +52,7 @@ namespace FigmaSharp.Services
                         y = absoluteBounding.absoluteBoundingBox.Y - parentAbsoluteBoundingBox.absoluteBoundingBox.Y;
                     }
 
-                    child.View.SetAllocation(x, y, Math.Max (absoluteBounding.absoluteBoundingBox.Width, 1), Math.Max (1, absoluteBounding.absoluteBoundingBox.Height));
+                    child.View.SetAlignmentRect (x, y, Math.Max (absoluteBounding.absoluteBoundingBox.Width, 1), Math.Max (1, absoluteBounding.absoluteBoundingBox.Height));
                 }
 
                 Recursively(child);
