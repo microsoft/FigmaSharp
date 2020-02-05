@@ -63,7 +63,7 @@ namespace FigmaSharp
 
 		public void Save (string filePath)
 		{
-			File.WriteAllText (filePath, JsonConvert.SerializeObject (this));
+			File.WriteAllText (filePath, JsonConvert.SerializeObject (this, Formatting.Indented));
 		}
 	}
 }
