@@ -103,13 +103,16 @@ namespace FigmaSharp.Samples
 
 					AppContext.Current.SetAccessToken (Token);
 
-					var converters = AppContext.Current.GetFigmaConverters ();
-
+					var converters = NativeControlsContext.Current
+						.GetConverters ()
+						.ToList ();
+					converters.Add (new SheetDialogConverter ());
+					converters.Add (new WindowConverter ());
+					
 					Console.WriteLine ("TOKEN: " + Token);
 
 					var fileProvider = new NativeControlRemoteFileProvider ();
-					var rendererService = new FigmaFileRendererService (fileProvider, converters);
-
+					var rendererService = new FigmaFileRendererService (fileProvider, converters.ToArray ());
 					rendererService.Start (Link_ID, scrollview);
 
 					var distributionService = new FigmaViewRendererDistributionService (rendererService);
