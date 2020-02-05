@@ -140,7 +140,7 @@ namespace FigmaSharp.Cocoa
             var family = font.FamilyName;
             var size = font.PointSize;
             var viewName = $"{typeof (NSFont).FullName}.{nameof (NSFontManager.SharedFontManager)}";
-            return CodeGenerationHelpers.GetMethod (typeof (NSFont).FullName, nameof (NSFont.FromFontName), $"\"{family}\", {size}");
+            return CodeGenerationHelpers.GetMethod (typeof (NSFont).FullName, nameof (NSFont.FromFontName), $"\"{family}\", {size}", includesSemicolon: false);
         }
 
         static nfloat GetFontWeight (FigmaTypeStyle style)

@@ -57,10 +57,11 @@ namespace FigmaSharp.Cocoa
 			return GetMethod (viewName, methodName, value.ToDesignerString ());
 		}
 
-		public static string GetMethod (string viewName, string methodName, string parameters, bool inQuotes = false)
+		public static string GetMethod (string viewName, string methodName, string parameters, bool inQuotes = false, bool includesSemicolon = true)
 		{
 			parameters = inQuotes ? $"\"{parameters}\"" : parameters;
-			return $"{viewName}.{methodName} ({parameters});";
+			var semicolon = includesSemicolon ? ";" : "";
+			return $"{viewName}.{methodName} ({parameters}){semicolon}";
 		}
 	}
 }
