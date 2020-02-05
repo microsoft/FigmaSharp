@@ -181,6 +181,9 @@ namespace FigmaSharp.Cocoa
 
             try {
                 font = NSFont.FromFontName (style.fontFamily, style.fontSize);
+				if (font == null)
+                    font = NSFont.SystemFontOfSize (style.fontSize, GetFontWeight (style));
+
             } catch (Exception ex) {
                 Console.WriteLine ($"Font not found in system: {family} .. using system default font.");
                 Console.WriteLine (ex);
