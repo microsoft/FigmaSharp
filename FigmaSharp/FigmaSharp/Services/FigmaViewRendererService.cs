@@ -256,8 +256,18 @@ namespace FigmaSharp.Services
         {
             Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
-            bool scanChildren = true;
+            if (currentNode.name.StartsWith ("#") || currentNode.name.StartsWith ("//")) {
+                Console.WriteLine ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
+                return;
+            }
 
+            if (currentNode.Parent is FigmaCanvas && !(currentNode is FigmaFrameEntity)) {
+                Console.WriteLine ("[{0}.{1}] Don't render views in first level different than a FrameEntity...Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
+                return;
+            }
+
+            bool scanChildren = true;
+          
             var converter = GetProcessedConverter(currentNode, CustomConverters);
 
             if (converter == null)
