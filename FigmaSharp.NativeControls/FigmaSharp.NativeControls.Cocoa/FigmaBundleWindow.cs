@@ -4,6 +4,8 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.NativeControls;
 using FigmaSharp.NativeControls.Cocoa;
+using System.Linq;
+
 namespace FigmaSharp
 {
 	public class FigmaBundleWindow : FigmaBundleViewBase
@@ -24,6 +26,24 @@ namespace FigmaSharp
 			//restore this state
 			var builder = new System.Text.StringBuilder ();
 			builder.AppendLine ("//HACK: Temporal Window Frame Size");
+
+			if (FigmaNode is IFigmaNodeContainer container) {
+				var properties = container.children
+					.FirstOrDefault (s => s.name == "Properties" && s.visible == false);
+				if (properties != null) {
+
+				}
+			}
+
+			//default configuration status bar
+			builder.AppendLine (string.Format ("{0}.{1} |= {2};",
+				CodeGenerationHelpers.This,
+				nameof (AppKit.NSWindow.StyleMask),
+				AppKit.NSWindowStyle.Closable.GetFullName ()
+			));
+
+			builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), "Bundle Figma Document", inQuotes: true);
+
 			if (FigmaNode is IAbsoluteBoundingBox box) {
 				builder.WriteEquality (frameEntity, null, nameof (AppKit.NSWindow.Frame), instanciate: true);
 

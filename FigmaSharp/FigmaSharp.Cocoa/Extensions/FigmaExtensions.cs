@@ -139,9 +139,8 @@ namespace FigmaSharp.Cocoa
             var font = style.ToNSFont();
             var family = font.FamilyName;
             var size = font.PointSize;
-            var w = NSFontManager.SharedFontManager.WeightOfFont(font);
-            var traits = NSFontManager.SharedFontManager.TraitsOfFont(font);
-            return string.Format("NSFontManager.SharedFontManager.FontWithFamily(\"{0}\", {1}, {2}, {3})", family, traits.ToDesignerString (), w, style.fontSize);
+            var viewName = $"{typeof (NSFont).FullName}.{nameof (NSFontManager.SharedFontManager)}";
+            return CodeGenerationHelpers.GetMethod (typeof (NSFont).FullName, nameof (NSFont.FromFontName), $"\"{family}\", {size}");
         }
 
         static nfloat GetFontWeight (FigmaTypeStyle style)
@@ -178,39 +177,50 @@ namespace FigmaSharp.Cocoa
         public static NSFont ToNSFont(this FigmaTypeStyle style)
         {
             string family = style.fontFamily;
-           
-            if (FontConversion.TryGetValue (family, out string newFamilyName))
-            {
-                Console.WriteLine("{0} font was in the conversion dicctionary and was replaced by {1}.", family, newFamilyName);
-                family = newFamilyName;
+            NSFont font;
+
+            try {
+                font = NSFont.FromFontName (style.fontFamily, style.fontSize);
+            } catch (Exception ex) {
+                Console.WriteLine ($"Font not found in system: {family} .. using system default font.");
+                Console.WriteLine (ex);
+                font = NSFont.SystemFontOfSize (style.fontSize, GetFontWeight (style));
             }
 
-            var fontDefault = NSFont.SystemFontOfSize(style.fontSize, GetFontWeight(style));
-            var traits = NSFontManager.SharedFontManager.TraitsOfFont(fontDefault);
-            var weight = Math.Max (Views.Cocoa.ViewsHelper.ToAppKitFontWeight(style.fontWeight) - 2,1);
-
-            NSFont font = null;
-            try
-            {
-                font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, weight, style.fontSize);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            if (font == null)
-            {
-                try
-                {
-                    font = NSFontManager.SharedFontManager.FontWithFamily(fontDefault.FamilyName, traits, weight, style.fontSize);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
             return font;
+
+            //if (FontConversion.TryGetValue (family, out string newFamilyName))
+            //{
+            //    Console.WriteLine("{0} font was in the conversion dicctionary and was replaced by {1}.", family, newFamilyName);
+            //    family = newFamilyName;
+            //}
+
+            //var fontDefault = NSFont.SystemFontOfSize(style.fontSize, GetFontWeight(style));
+            //var traits = NSFontManager.SharedFontManager.TraitsOfFont(fontDefault);
+            //var weight = Math.Max (Views.Cocoa.ViewsHelper.ToAppKitFontWeight(style.fontWeight) - 2,1);
+
+            //NSFont font = null;
+            //try
+            //{
+            //    font = NSFontManager.SharedFontManager.FontWithFamily(family, traits, weight, style.fontSize);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex);
+            //}
+
+            //if (font == null)
+            //{
+            //    try
+            //    {
+            //        font = NSFontManager.SharedFontManager.FontWithFamily(fontDefault.FamilyName, traits, weight, style.fontSize);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine(ex);
+            //    }
+            //}
+           // return font;
         }
 
         public static CGPoint GetRelativePosition(this IAbsoluteBoundingBox parent, IAbsoluteBoundingBox node)
