@@ -52,6 +52,7 @@ namespace FigmaSharp.Samples
 		}
 
 		public event EventHandler<string> VersionSelected;
+		public event EventHandler<int> PageChanged;
 
 		public event EventHandler RefreshRequested;
 
@@ -65,12 +66,21 @@ namespace FigmaSharp.Samples
 			base.WindowDidLoad ();
 		}
 
-		public void UpdatePagesPopupButton ()
+		FigmaCanvas[] elements;
+
+		public void UpdatePagesPopupButton (IFigmaFileProvider fileProvider)
 		{
-			PagePopUpButton.AddItem ("Page 1");
-			PagePopUpButton.Activated += delegate {
-				Console.WriteLine (PagePopUpButton.SelectedItem.Title);
-			};
+			elements = fileProvider.Nodes
+				.OfType<FigmaCanvas> ()
+				.ToArray ();
+
+			foreach (var item in elements) {
+				PagePopUpButton.AddItem (item.name);
+				PagePopUpButton.Activated += (s, e) => {
+					var button = (NSPopUpButton)s;
+					PageChanged?.Invoke (this, (int) button.IndexOfSelectedItem );
+				};
+			}
 		}
 
 		public void EnableButtons (bool enable)

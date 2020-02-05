@@ -241,7 +241,12 @@ namespace FigmaSharp.Services
 
             Console.WriteLine($"Reading successfull");
 
-            var canvas = fileProvider.Response.document.children.FirstOrDefault();
+            FigmaCanvas canvas;
+            if (options.StartPage >= 0 && options.StartPage <= fileProvider.Response.document.children.Length) {
+                canvas = fileProvider.Response.document.children[options.StartPage];
+            } else {
+                canvas = fileProvider.Response.document.children.FirstOrDefault ();
+            }
             ProcessFromNode (canvas, container, options);
         }
 

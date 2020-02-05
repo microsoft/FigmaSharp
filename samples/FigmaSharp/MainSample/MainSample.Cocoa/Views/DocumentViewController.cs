@@ -55,13 +55,13 @@ namespace FigmaSharp.Samples
 
 		}
 
-		public void Reload (string versionId = "", string pageId = "") => Load (versionId, pageId);
+		public void Reload (string versionId = "", string pageId = "", int startPage = 0) => Load (versionId, pageId, startPage);
 
 		public void LoadDocument (string token, string linkId, string versionId = "", string pageId = "")
 		{
 			Token = token;
 			Link_ID = linkId;
-			Load (version_id: versionId, page_id: pageId);
+			Load (version_id: versionId, page_id: pageId, startPage:0);
 		}
 
 		public void OnInitialize ()
@@ -77,15 +77,17 @@ namespace FigmaSharp.Samples
 				windowController = (DocumentWindowController)this.View.Window.WindowController;
 				windowController.VersionSelected += WindowController_VersionSelected;
 				windowController.RefreshRequested += WindowController_RefreshRequested;
+				windowController.PageChanged += WindowController_PageChanged;
 			}
 		}
 
+		private void WindowController_PageChanged (object sender, int startPage) => Reload (startPage: startPage);
 		private void WindowController_VersionSelected (object sender, string versionId) => Reload (versionId);
 		private void WindowController_RefreshRequested (object sender, EventArgs e) => Reload ();
 
 		//NSProgressIndicator progressIndicator;
 
-		void Load (string version_id, string page_id)
+		void Load (string version_id = "", string page_id = "", int startPage = 0)
 		{
 			if (string.IsNullOrEmpty (Link_ID)) {
 				return;
@@ -111,9 +113,10 @@ namespace FigmaSharp.Samples
 					
 					Console.WriteLine ("TOKEN: " + Token);
 
+					var options = new FigmaViewRendererServiceOptions () { StartPage = startPage };
 					var fileProvider = new NativeControlRemoteFileProvider ();
 					var rendererService = new FigmaFileRendererService (fileProvider, converters.ToArray ());
-					rendererService.Start (Link_ID, scrollview);
+					rendererService.Start (Link_ID, scrollview, options);
 
 					var distributionService = new FigmaViewRendererDistributionService (rendererService);
 					distributionService.Start ();
@@ -133,7 +136,7 @@ namespace FigmaSharp.Samples
 					windowController.Title = Link_ID;
 
 					windowController.UpdateVersionMenu ();
-					windowController.UpdatePagesPopupButton ();
+					windowController.UpdatePagesPopupButton (fileProvider);
 					windowController.EnableButtons (true);
 
 					ToggleSpinnerState (toggle_on: false);
