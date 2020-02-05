@@ -43,7 +43,7 @@ namespace LocalFile.Cocoa
 	static class MainClass
 	{
 		static IWindow mainWindow;
-		static FigmaRemoteFileProvider fileProvider;
+		static NativeControlRemoteFileProvider fileProvider;
 
 		static void Main(string[] args)
 		{
@@ -82,40 +82,40 @@ namespace LocalFile.Cocoa
 
 		static void Example1()
 		{
-			const string fileName = "EGTUYgwUC9rpHmm4kJwZQXq4";
+			const string fileName = "FwVa4JS5QsohRhNEnEBKslFk";
 
-			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-			fileProvider = new FigmaRemoteFileProvider();
+			var converters = NativeControlsContext.Current.GetConverters ();
+			fileProvider = new NativeControlRemoteFileProvider ();
 			fileProvider.Load(fileName);
 
 			var rendererService = new FigmaViewRendererService(fileProvider, converters);
 			var rendererOptions = new FigmaViewRendererServiceOptions() { ScanChildrenFromFigmaInstances = false };
-			rendererService.RenderInWindow(mainWindow, rendererOptions, "1.0. Bundle Figma Bundle");
+			rendererService.RenderInWindow(mainWindow, rendererOptions, "bundleFigmaDocument");
 
 			mainWindow.Resizable = false;
 			mainWindow.Center();
 
-			var urlTextField = rendererService.FindViewByName<TextBox>("FigmaUrlTextField");
-			var bundleButton = rendererService.FindViewByName<Button>("BundleButton");
-			var cancelButton = rendererService.FindViewByName<Button>("CancelButton");
+			//var urlTextField = rendererService.FindViewByName<TextBox>("FigmaUrlTextField");
+			//var bundleButton = rendererService.FindViewByName<Button>("BundleButton");
+			//var cancelButton = rendererService.FindViewByName<Button>("CancelButton");
 
-			if (cancelButton != null)
-			{
-				cancelButton.Clicked += (s, e) =>
-				{
-					if (urlTextField != null)
-						urlTextField.Text = "You pressed cancel";
-				};
-			}
+			//if (cancelButton != null)
+			//{
+			//	cancelButton.Clicked += (s, e) =>
+			//	{
+			//		if (urlTextField != null)
+			//			urlTextField.Text = "You pressed cancel";
+			//	};
+			//}
 
-			if (bundleButton != null)
-			{
-				bundleButton.Clicked += (s, e) =>
-				{
-					if (urlTextField != null)
-						urlTextField.Text = "You pressed bundle";
-				};
-			}
+			//if (bundleButton != null)
+			//{
+			//	bundleButton.Clicked += (s, e) =>
+			//	{
+			//		if (urlTextField != null)
+			//			urlTextField.Text = "You pressed bundle";
+			//	};
+			//}
 
 			//We want know the background color of the figma camvas and apply to our scrollview
 			var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
@@ -142,8 +142,8 @@ namespace LocalFile.Cocoa
 			mainWindow.BackgroundColor = Color.Transparent;
 
 			//we add the control converters
-			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-			fileProvider = new FigmaRemoteFileProvider();
+			var converters = NativeControlsContext.Current.GetConverters ();
+			fileProvider = new NativeControlRemoteFileProvider ();
 			fileProvider.Load(document);
 
 			var rendererService = new FigmaViewRendererService(fileProvider, converters);

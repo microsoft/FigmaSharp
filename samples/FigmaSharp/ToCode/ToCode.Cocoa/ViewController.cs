@@ -10,6 +10,7 @@ using FigmaSharp.Cocoa.Converters;
 using System.Text;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
+using FigmaSharp.NativeControls.Cocoa.Converters;
 
 namespace ToCode.Cocoa
 {
@@ -17,10 +18,12 @@ namespace ToCode.Cocoa
 	{
 		FigmaNodeView data;
 		OutlinePanel outlinePanel;
-		FigmaRemoteFileProvider fileProvider;
+		NativeControlRemoteFileProvider fileProvider;
 
 		FigmaDesignerDelegate figmaDelegate;
 		FigmaCodeRendererService codeRenderer;
+
+		const string fileId = "FwVa4JS5QsohRhNEnEBKslFk";
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
@@ -53,20 +56,17 @@ namespace ToCode.Cocoa
 
 			figmaDelegate = new FigmaDesignerDelegate ();
 
-			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-			fileProvider = new FigmaRemoteFileProvider ();
+			var converters = NativeControlsContext.Current.GetConverters ();
+			fileProvider = new NativeControlRemoteFileProvider ();
 			fileProvider.Load (fileId);
 
-			var addChildConverter = new FigmaCodeAddChildConverter ();
-			var positionConverter = new FigmaCodePositionConverter ();
-			codeRenderer = new FigmaCodeRendererService (fileProvider, converters, positionConverter, addChildConverter);
+			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
+			codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
 
 			data = new FigmaNodeView (fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes (fileProvider.Response.document, data);
 			outlinePanel.GenerateTree (data);
 		}
-
-		const string fileId = "FwVa4JS5QsohRhNEnEBKslFk";
 
 		private void OpenUrlButton_Activated (object sender, EventArgs e)
 		{
@@ -80,8 +80,8 @@ namespace ToCode.Cocoa
 				return;
 
 			var bundle = FigmaBundle.Create ("1234", string.Empty);
-
-			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, "test", currentSelectedNode);
+			var className = currentSelectedNode.GetClassName ();
+			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, className, currentSelectedNode);
 			var publicPartialClass = figmaBundleView.GetPublicPartialClass ();
 			var code = publicPartialClass.Generate ();
 			CopyToLogView (code);
@@ -91,8 +91,9 @@ namespace ToCode.Cocoa
 		{
 			if (currentSelectedNode == null)
 				return;
+			var className = currentSelectedNode.GetClassName ();
 			var bundle = FigmaBundle.Create ("1234", string.Empty);
-			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, "test", currentSelectedNode);
+			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, className, currentSelectedNode);
 			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer);
 			var code = publicPartialClass.Generate ();
 			CopyToLogView (code);
@@ -104,7 +105,7 @@ namespace ToCode.Cocoa
 		{
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
-			codeRenderer.GetCode (builder, e, null, null);
+			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null);
 			CopyToLogView (builder.ToString ());
 		}
 

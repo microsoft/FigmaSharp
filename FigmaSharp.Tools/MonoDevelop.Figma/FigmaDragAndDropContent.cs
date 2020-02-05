@@ -63,7 +63,7 @@ namespace MonoDevelop.Figma
 		public string GetCode (FigmaNode selectedNode)
 		{
             StringBuilder builder = new StringBuilder ();
-            codeRenderer.GetCode (builder, selectedNode, null, null);
+            codeRenderer.GetCode (builder, new FigmaCodeNode (selectedNode, null), null);
             return builder.ToString ();
         }
 
@@ -121,7 +121,7 @@ namespace MonoDevelop.Figma
             scrollView.AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable; 
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileProvider = new FigmaRemoteFileProvider();
+            fileProvider = new NativeControlRemoteFileProvider ();
 
             SetCocoaCodeRenderer ();
             //SetCodeRenderer(ModuleService.Platform.MAC);
@@ -172,17 +172,15 @@ namespace MonoDevelop.Figma
               .Select(s => s.Converter)
               .ToArray();
 
-            var addChildConverter = ModuleService.AddChildConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
-            var codePositionConverter = ModuleService.CodePositionConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
-            codeRenderer = new FigmaCodeRendererService(fileProvider, converters, codePositionConverter, addChildConverter);
+            var codePropertyConverters = ModuleService.CodePropertyConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
+            codeRenderer = new FigmaCodeRendererService(fileProvider, converters, codePropertyConverters);
         }
 
 		void SetCocoaCodeRenderer ()
 		{
-            var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-            var addChildConverter = FigmaSharp.AppContext.Current.GetAddChildConverter ();
-            var codePositionConverter = FigmaSharp.AppContext.Current.GetPositionConverter ();
-            codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePositionConverter, addChildConverter);
+            var converters = NativeControlsContext.Current.GetConverters ();
+            var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
+            codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
         }
 
         public override void SetFrameSize(CGSize newSize)
@@ -193,7 +191,7 @@ namespace MonoDevelop.Figma
             scrollView?.SetFrameSize(new CoreGraphics.CGSize(newSize.Width, newSize.Height - 30));
         }
 
-        FigmaRemoteFileProvider fileProvider;
+        NativeControlRemoteFileProvider fileProvider;
         FigmaDesignerDelegate figmaDelegate;
         FigmaCodeRendererService codeRenderer;
         FigmaNodeView data;

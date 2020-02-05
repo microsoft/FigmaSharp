@@ -40,7 +40,6 @@ using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
 using System.Threading.Tasks;
-using FigmaSharp.Cocoa.Converters;
 using FigmaSharp.NativeControls.Cocoa;
 
 namespace MonoDevelop.Figma.Commands
@@ -182,13 +181,12 @@ namespace MonoDevelop.Figma.Commands
 
 					var currentProject = currentFolder.Project;
 
-					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
+					var fileProvider = new NativeControlLocalFileProvider (bundle.ResourcesDirectoryPath);
 					fileProvider.Load (bundle.DocumentFilePath);
 
-					var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-					var addChildConverter = new FigmaCodeAddChildConverter ();
-					var positionConverter = new FigmaCodePositionConverter ();
-					var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, positionConverter, addChildConverter);
+					var converters = NativeControlsContext.Current.GetConverters ();
+					var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
+					var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
 
 					var fignaNode = fileProvider.FindByName (figmaNodeName);
 					var figmaBundleView = new FigmaBundleView (bundle, "test", fignaNode);
@@ -252,17 +250,16 @@ namespace MonoDevelop.Figma.Commands
 			}
 
 			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new FigmaRemoteFileProvider () { File = fileId };
+			var fileProvider = new NativeControlRemoteFileProvider () { File = fileId };
 			fileProvider.Load (fileId);
 
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
 			var projectBundle = CreateBundleFromProject (currentProject, fileId, fileId, fileProvider, version);
 
 			//to generate all layers we need a code renderer
-			var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters (true);
-			var addChildConverter = new FigmaCodeAddChildConverter ();
-			var positionConverter = new FigmaCodePositionConverter ();
-			var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, positionConverter, addChildConverter);
+			var converters = NativeControlsContext.Current.GetConverters (true);
+			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
+			var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
 
 			projectBundle.Save ();
 			projectBundle.SaveLocalDocument (false);

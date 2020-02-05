@@ -31,6 +31,12 @@ namespace FigmaSharp
             figmaDelegate = applicationDelegate;
         }
 
-		#endregion
-	}
+        public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
+            => figmaDelegate.GetCodePropertyConverter ();
+
+        public FigmaViewConverter[] GetConverters (bool includeAll = true)
+             => figmaDelegate.GetConverters (includeAll);
+
+        #endregion
+    }
 }

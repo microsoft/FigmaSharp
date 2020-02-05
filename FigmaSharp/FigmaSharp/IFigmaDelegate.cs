@@ -23,7 +23,7 @@ namespace FigmaSharp
         IImage GetImageFromManifest(Assembly assembly, string imageRef);
         IImageView GetImageView(IImage image);
         void BeginInvoke(Action handler);
-        FigmaCodePositionConverterBase GetPositionConverter();
-        FigmaCodeAddChildConverterBase GetAddChildConverter();
+        
+        FigmaCodePropertyConverterBase GetCodePropertyConverter ();
     }
 }

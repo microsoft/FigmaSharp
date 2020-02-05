@@ -48,28 +48,16 @@ namespace FigmaSharp.Services
         public FigmaViewConverter Converter { get; private set; }
     }
 
-    public class PlatformFigmaCodeAddChildConverter
+    public class PlatformFigmaCodePropertyConverter
     {
-        public PlatformFigmaCodeAddChildConverter(string platform, FigmaCodeAddChildConverterBase converter)
+        public PlatformFigmaCodePropertyConverter (string platform, FigmaCodePropertyConverterBase converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public FigmaCodeAddChildConverterBase Converter { get; private set; }
-    }
-
-    public class PlatformFigmaCodePositionConverter
-    {
-        public PlatformFigmaCodePositionConverter(string platform, FigmaCodePositionConverterBase converter)
-        {
-            Platform = platform;
-            Converter = converter;
-        }
-
-        public string Platform { get; private set; }
-        public FigmaCodePositionConverterBase Converter { get; private set; }
+        public FigmaCodePropertyConverterBase Converter { get; private set; }
     }
 
     public static class ModuleService
@@ -83,8 +71,7 @@ namespace FigmaSharp.Services
         }
 
         public static List<PlatformCustomViewConverter> Converters = new List<PlatformCustomViewConverter>();
-        public static List<PlatformFigmaCodeAddChildConverter> AddChildConverters = new List<PlatformFigmaCodeAddChildConverter>();
-        public static List<PlatformFigmaCodePositionConverter> CodePositionConverters = new List<PlatformFigmaCodePositionConverter>();
+        public static List<PlatformFigmaCodePropertyConverter> CodePropertyConverters = new List<PlatformFigmaCodePropertyConverter> ();
 
         public static void LoadModules (string directory)
         {
@@ -206,7 +193,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodeAddChildConverterBase);
+                var interfaceType = typeof(FigmaCodePropertyConverterBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -220,8 +207,8 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodeAddChildConverterBase element)
-                            AddChildConverters.Add(new PlatformFigmaCodeAddChildConverter(platform, element));
+                        if (Activator.CreateInstance(type) is FigmaCodePropertyConverterBase element)
+                            CodePropertyConverters.Add(new PlatformFigmaCodePropertyConverter(platform, element));
                     }
                     catch (Exception ex)
                     {
@@ -241,7 +228,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodePositionConverterBase);
+                var interfaceType = typeof(FigmaCodePropertyConverterBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -255,8 +242,8 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodePositionConverterBase element)
-                            CodePositionConverters.Add(new PlatformFigmaCodePositionConverter(platform, element));
+                        if (Activator.CreateInstance(type) is FigmaCodePropertyConverterBase element)
+                            CodePropertyConverters.Add(new PlatformFigmaCodePropertyConverter (platform, element));
                     }
                     catch (Exception ex)
                     {

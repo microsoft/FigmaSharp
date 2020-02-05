@@ -48,29 +48,16 @@ namespace FigmaSharp.Cocoa.Converters
             return figmaLineView;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
-            var name = Resources.Ids.Conversion.NameIdentifier;
 
-            if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine($"var {name} = new {typeof(NSBox).FullName}();");
+            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+                builder.WriteConstructor (currentNode.Name, typeof (NSBox));
 
-            builder.Configure(name, currentNode, false);
+            builder.Configure (currentNode.Node, currentNode.Name);
 
-            if (currentNode is IAbsoluteBoundingBox container) {
-                var width = container.absoluteBoundingBox.Width == 0 ? 1 : container.absoluteBoundingBox.Width;
-                var height = container.absoluteBoundingBox.Height == 0 ? 1 : container.absoluteBoundingBox.Height;
-
-                builder.AppendLine (string.Format ("{0}.SetFrameSize (new {1}({2}, {3}));",
-                    name,
-                    typeof (CoreGraphics.CGSize).FullName,
-                    width.ToDesignerString (),
-					height.ToDesignerString ()
-                    ));
-            }
-
-            builder.AppendLine (string.Format ("{0}.BoxType = {1};", name, NSBoxType.NSBoxSeparator.GetFullName ()));
+            builder.AppendLine (string.Format ("{0}.BoxType = {1};", currentNode.Name, NSBoxType.NSBoxSeparator.GetFullName ()));
 
             return builder.ToString();
         }

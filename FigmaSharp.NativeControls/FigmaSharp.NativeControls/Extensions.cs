@@ -15,13 +15,15 @@ namespace FigmaSharp
 
 		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, FigmaViewRendererServiceOptions options, params string[] path)
         {
-            var contentPath = path.Concat(new[] { "content" }).ToArray();
+            var windowFigmaNode = sender.FileProvider.FindByName ("bundleFigmaDocument");
+            var windowBoundingBox = (IAbsoluteBoundingBox)windowFigmaNode;
 
-            var contentFigmaNode = (IAbsoluteBoundingBox)sender.FileProvider.FindByPath(contentPath);
+            //var contentPath = path.Concat(new[] { "content" }).ToArray();
+
+            var contentFigmaNode = (IAbsoluteBoundingBox)sender.FileProvider.FindByName ("content \"page1\"");
             var contentView = sender.RenderByNode<IView>((FigmaNode)contentFigmaNode, options);
 
-            var windowFigmaNode = (IAbsoluteBoundingBox)sender.FileProvider.FindByPath(path);
-            mainWindow.Size = windowFigmaNode.absoluteBoundingBox.Size;
+            mainWindow.Size = windowBoundingBox.absoluteBoundingBox.Size;
 
             var windowNodeContainer = (IFigmaNodeContainer)windowFigmaNode;
             var windowComponent = windowNodeContainer.children
@@ -34,8 +36,8 @@ namespace FigmaSharp
 
             mainWindow.Title = windowLabel.characters;
 
-            var difX = contentFigmaNode.absoluteBoundingBox.X - windowFigmaNode.absoluteBoundingBox.X;
-            var difY = contentFigmaNode.absoluteBoundingBox.Y - windowFigmaNode.absoluteBoundingBox.Y;
+            var difX = contentFigmaNode.absoluteBoundingBox.X - windowBoundingBox.absoluteBoundingBox.X;
+            var difY = contentFigmaNode.absoluteBoundingBox.Y - windowBoundingBox.absoluteBoundingBox.Y;
             const int WindowTitleHeight = 20;
             difY -= WindowTitleHeight;
 

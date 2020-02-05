@@ -107,7 +107,7 @@ namespace FigmaSharp.Samples
 
 					Console.WriteLine ("TOKEN: " + Token);
 
-					var fileProvider = new FigmaRemoteFileProvider ();
+					var fileProvider = new NativeControlRemoteFileProvider ();
 					var rendererService = new FigmaFileRendererService (fileProvider, converters);
 
 					rendererService.Start (Link_ID, scrollview);

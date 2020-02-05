@@ -46,14 +46,14 @@ namespace FigmaSharp.Cocoa.Converters
             return vector;
         }
 
-        public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
 
-            if (rendererService.NeedsRenderInstance (currentNode))
-                builder.AppendLine($"var {Resources.Ids.Conversion.NameIdentifier} = new {typeof(NSImageView).FullName}();");
+            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+                builder.WriteConstructor (currentNode.Name, typeof (NSImageView));
 
-            builder.Configure(Resources.Ids.Conversion.NameIdentifier, (RectangleVector)currentNode);
+            builder.Configure((RectangleVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();
         }
     }

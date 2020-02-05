@@ -89,15 +89,8 @@ namespace FigmaSharp
             return figmaDelegate.GetImageView(image);
         }
 
-        public FigmaCodePositionConverterBase GetPositionConverter()
-        {
-            return figmaDelegate.GetPositionConverter ();
-        }
-
-        public FigmaCodeAddChildConverterBase GetAddChildConverter()
-        {
-            return figmaDelegate.GetAddChildConverter();
-        }
+        public FigmaCodePropertyConverterBase GetCodePropertyConverter()
+			=> figmaDelegate.GetCodePropertyConverter ();
 
         #region Static
 
