@@ -37,7 +37,7 @@ namespace MonoDevelop.Figma
 		// Shared initialization code
 		void Initialize ()
 		{
-			FigmaUrlTextField.Activated += FigmaUrlTextField_Changed;
+			FigmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 			VersionComboBox.Activated += ItemsRefreshState_Handler;
 
 			TemplateCodeOptionBox.Activated += ItemsRefreshState_Handler;
