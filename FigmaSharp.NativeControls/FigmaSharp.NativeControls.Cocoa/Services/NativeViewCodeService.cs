@@ -1,10 +1,13 @@
 ﻿using System;
 using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using System.Linq;
 using FigmaSharp.NativeControls.Cocoa;
 using FigmaSharp.NativeControls;
+using System.Text;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Services
 {
@@ -13,6 +16,51 @@ namespace FigmaSharp.Services
 		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters, FigmaCodePropertyConverterBase codePropertyConverter) : base (figmaProvider, figmaViewConverters, codePropertyConverter)
 		{
 
+		}
+
+		const string a11yLabel = "a11y-label:\"";
+		const string a11yHelp = "a11y-help:\"";
+		const string a11yGroup = "a11y-group";
+
+		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		{
+			bool hasAccessibility = false;
+			if (node.Node.name.Contains (a11yGroup)) {
+				var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof (AppKit.NSAccessibilityRoles.GroupRole)}";
+				new AppKit.NSView ().AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
+				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityRole), fullRoleName);
+				hasAccessibility = true;
+			}
+			if (TrySearchParameter (node.Node, a11yLabel, out var label)) {
+				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityLabel), label, inQuotes: true);
+				hasAccessibility = true;
+			}
+			if (TrySearchParameter (node.Node, a11yHelp, out var help)) {
+				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
+				hasAccessibility = true;
+			}
+
+			if (hasAccessibility)
+				builder.AppendLine ();
+		}
+
+		bool TrySearchParameter (FigmaNode node, string parameter, out string value)
+		{
+			value = node.name;
+			try {
+				var index = value.IndexOf (parameter);
+				if (index > -1 && index < value.Length) {
+					value = value.Substring (index + parameter.Length);
+					index = value.IndexOf ("\"");
+					if (index > -1 && index < value.Length) {
+						value = value.Substring (0, index);
+						return true;
+					}
+				}
+			} catch (Exception) {
+			}
+			value = null;
+			return false;
 		}
 
 		#region Rendering

@@ -111,12 +111,17 @@ namespace FigmaSharp.Services
 					builder.AppendLine ($"// View: {node.Name} NodeName: {node.Node.name} NodeType: {node.Node.type} NodeId: {node.Node.id}");
 					builder.AppendLine ();
 
+					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
 					//we generate our code and replace node name
 					var code = converter.ConvertToCode (node, parent, this);
 					builder.AppendLineIfValue (code.Replace (Resources.Ids.Conversion.NameIdentifier, node.Name));
+					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 
 					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.AddChild, node, parent, this));
+					OnChildAdded (builder, node, parent, converter, codePropertyConverter);
 					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.Frame, node, parent, this));
+					OnFrameSet (builder, node, parent, converter, codePropertyConverter);
+
 					calculatedParentNode = node;
 				} else {
 					//without a converter we don't have any view created, we need to attach to the parent view
@@ -136,6 +141,26 @@ namespace FigmaSharp.Services
 				//first loop
 				Clear ();
 			}
+		}
+
+		protected virtual void OnPreConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		{
+			
+		}
+
+		protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		{
+
+		}
+
+		protected virtual void OnChildAdded (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		{
+
+		}
+
+		protected virtual void OnFrameSet (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		{
+
 		}
 
 		const string init = "Figma";
