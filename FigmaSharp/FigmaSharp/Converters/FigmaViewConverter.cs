@@ -37,44 +37,7 @@ namespace FigmaSharp
 {
 	public abstract class FigmaViewConverter : CustomViewConverter
 	{
-        const string init = "Figma";
-        const string end = "Converter";
-        const string ViewIdentifier = "View";
 
-        internal virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService, out string identifier)
-		{
-			try {
-                identifier = GetType ().Name;
-                if (identifier.StartsWith (init)) {
-                    identifier = identifier.Substring (init.Length);
-                }
-
-                if (identifier.EndsWith (end)) {
-                    identifier = identifier.Substring (0, identifier.Length - end.Length);
-                }
-
-                identifier = char.ToLower (identifier[0]) + identifier.Substring (1) + ViewIdentifier;
-
-                return true;
-            } catch (Exception) {
-                identifier = null;
-                return false;
-            }
-		}
-
-		protected virtual bool NeedsRenderConstructor (FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
-		{
-            if (parent != null
-				&& figmaCodeRendererService.IsMainNode (parent.Node)
-				&& (figmaCodeRendererService?.CurrentRendererOptions?.RendersConstructorFirstElement ?? false)
-				)
-				return false;
-			else {
-                return true;
-            }
-		}
-
-        protected bool IsMainNode (FigmaNode figmaNode, FigmaCodeRendererService figmaCodeRendererService) => figmaCodeRendererService.IsMainNode (figmaNode);
     }
 
 	public abstract class FigmaInstanceConverter : FigmaViewConverter

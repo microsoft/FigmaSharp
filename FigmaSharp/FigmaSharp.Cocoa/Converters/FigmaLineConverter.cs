@@ -52,7 +52,7 @@ namespace FigmaSharp.Cocoa.Converters
         {
             StringBuilder builder = new StringBuilder();
 
-            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.WriteConstructor (currentNode.Name, typeof (NSBox));
 
             builder.Configure (currentNode.Node, currentNode.Name);

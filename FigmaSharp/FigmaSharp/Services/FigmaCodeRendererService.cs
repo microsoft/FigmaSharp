@@ -90,7 +90,7 @@ namespace FigmaSharp.Services
 				if (converter != null) {
 					if (!node.HasName) {
 
-						if (!converter.TryGetCodeViewName (node, parent, this, out string identifier)) {
+						if (!TryGetCodeViewName (node, parent, out string identifier)) {
 							identifier = DefaultViewName;
 						}
 
@@ -138,6 +138,31 @@ namespace FigmaSharp.Services
 			}
 		}
 
+		const string init = "Figma";
+		const string end = "Converter";
+		const string ViewIdentifier = "View";
+
+		protected virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, out string identifier)
+		{
+			try {
+				identifier = GetType ().Name;
+				if (identifier.StartsWith (init)) {
+					identifier = identifier.Substring (init.Length);
+				}
+
+				if (identifier.EndsWith (end)) {
+					identifier = identifier.Substring (0, identifier.Length - end.Length);
+				}
+
+				identifier = char.ToLower (identifier[0]) + identifier.Substring (1) + ViewIdentifier;
+
+				return true;
+			} catch (Exception) {
+				identifier = null;
+				return false;
+			}
+		}
+
 		internal int GetLastInsertedIndex (string identifier)
 		{
 			if (!identifiers.TryGetValue (identifier, out int data)) {
@@ -148,12 +173,24 @@ namespace FigmaSharp.Services
 
 		#region Rendering Iteration
 
-		public virtual bool IsMainViewContainer (FigmaCodeNode node)
+		internal virtual bool NeedsRenderConstructor (FigmaCodeNode node, FigmaCodeNode parent)
+		{
+			if (parent != null
+				&& IsMainNode (parent.Node)
+				&& (CurrentRendererOptions?.RendersConstructorFirstElement ?? false)
+				)
+				return false;
+			else {
+				return true;
+			}
+		}
+
+		internal virtual bool IsMainViewContainer (FigmaCodeNode node)
 		{
 			return true;
 		}
 
-		public virtual FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
+		internal virtual FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
 		{
 			if (node.Node is IFigmaNodeContainer nodeContainer) {
 				return nodeContainer.children;
@@ -161,12 +198,12 @@ namespace FigmaSharp.Services
 			return new FigmaNode[0];
 		}
 
-		public virtual bool HasChildrenToRender (FigmaCodeNode node)
+		internal virtual bool HasChildrenToRender (FigmaCodeNode node)
 		{
 			return node.Node is IFigmaNodeContainer;
 		}
 
-		public virtual bool IsNodeSkipped (FigmaCodeNode node)
+		internal virtual bool IsNodeSkipped (FigmaCodeNode node)
 		{
 			return false;
 		}

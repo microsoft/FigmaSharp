@@ -58,7 +58,7 @@ namespace FigmaSharp.Cocoa.Converters
             var figmaText = (FigmaText)currentNode.Node;
 
             StringBuilder builder = new StringBuilder();
-            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.WriteEquality (currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters), instanciate: true);
 
             builder.Configure(figmaText, currentNode.Name);

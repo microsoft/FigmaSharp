@@ -17,7 +17,7 @@ namespace FigmaSharp.Services
 
 		#region Rendering
 
-		public override bool IsNodeSkipped (FigmaCodeNode node)
+		internal override bool IsNodeSkipped (FigmaCodeNode node)
 		{
 			if (node.Node.IsDialogParentContainer ())
 				return true;
@@ -26,12 +26,12 @@ namespace FigmaSharp.Services
 			return false;
 		}
 
-		public override bool IsMainViewContainer (FigmaCodeNode node)
+		internal override bool IsMainViewContainer (FigmaCodeNode node)
 		{
 			return node.Node.IsWindowContent ();
 		}
 
-		public override FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
+		internal override FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
 		{
 			if (node.Node is FigmaBoolean) {
 				return new FigmaNode[0];
@@ -48,12 +48,22 @@ namespace FigmaSharp.Services
 			return base.GetChildrenToRender (node);
 		}
 
-		public override bool HasChildrenToRender (FigmaCodeNode node)
+		internal override bool HasChildrenToRender (FigmaCodeNode node)
 		{
 			if (node.Node.IsDialogParentContainer ()) {
 				return true;
 			}
 			return base.HasChildrenToRender (node);
+		}
+
+		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, out string identifier)
+		{
+			var customName = node.Node.GetNodeCustomName ();
+			if (!string.IsNullOrEmpty (customName)) {
+				identifier = customName;
+				return true;
+			}
+			return base.TryGetCodeViewName (node, parent, out identifier);
 		}
 
 		#endregion

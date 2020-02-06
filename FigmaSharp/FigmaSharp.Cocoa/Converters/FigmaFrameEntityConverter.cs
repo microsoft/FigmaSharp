@@ -51,7 +51,7 @@ namespace FigmaSharp.Cocoa.Converters
         {
             var figmaFrameEntity = (FigmaFrameEntity)currentNode.Node;
             StringBuilder builder = new StringBuilder();
-            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.AppendLine($"var {Resources.Ids.Conversion.NameIdentifier} = new {nameof(NSView)}();");
 
             builder.Configure(figmaFrameEntity, currentNode.Name);

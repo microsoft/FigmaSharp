@@ -111,7 +111,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var builder = new StringBuilder ();
 			var name = currentNode.Name;
 
-			if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
 				builder.WriteConstructor (name, typeof (NSButton));
 
 			builder.Configure (figmaInstance, name);

@@ -73,7 +73,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			StringBuilder builder = new StringBuilder ();
 			string name = currentNode.Name;
 
-			if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
 				builder.WriteConstructor (name, typeof (NSProgressIndicator));
 
 			builder.Configure (figmaInstance, name);

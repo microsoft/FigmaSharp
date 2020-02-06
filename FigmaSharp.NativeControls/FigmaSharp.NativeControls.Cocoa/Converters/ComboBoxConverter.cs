@@ -73,7 +73,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var builder = new StringBuilder ();
 			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
 				builder.WriteConstructor (name, typeof (NSComboBox).FullName);
 
 			builder.Configure (currentNode.Node, name);

@@ -49,7 +49,7 @@ namespace FigmaSharp.Cocoa.Converters
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var builder = new StringBuilder();
-            if (NeedsRenderConstructor (currentNode, parentNode, rendererService))
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.WriteConstructor (currentNode.Name, typeof (NSImageView));
             builder.Configure((FigmaVectorEntity)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();
