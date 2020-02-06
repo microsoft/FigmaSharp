@@ -82,21 +82,20 @@ namespace FigmaSharp
             return name;
         }
 
-        public static string GetNodeCustomName (this FigmaNode node)
+        public static bool TryGetNodeCustomName (this FigmaNode node, out string customName)
         {
-            var name = node.name;
-            var index = name.IndexOf ('\"');
-            if (index > -1 && index < name.Length - 1) {
-                name = name.Substring (0, index);
+            customName = node.name;
+            var index = customName.IndexOf ('\"');
+            if (index > -1 && index < customName.Length - 1) {
+                customName = customName.Substring (index + 1);
 
-                index = name.IndexOf ('\"');
-                if (index > -1 && index < name.Length - 1) {
-                    name = name.Substring (0, index);
-                } else {
-                    name = node.name;
-                }
+                index = customName.IndexOf ('\"');
+                if (index > -1 && index < customName.Length) {
+                    customName = customName.Substring (0, index);
+                    return true;
+                } 
             }
-            return name;
+            return false;
         }
 
         public static string GetClassName (this FigmaNode node)
