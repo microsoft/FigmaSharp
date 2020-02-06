@@ -54,12 +54,6 @@ namespace FigmaSharp.Services
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
-
-		//maybe we need to move this into service
-		FigmaNode[] GetChildrenToRender (FigmaCodeNode node);
-		bool HasChildrenToRender (FigmaCodeNode node);
-		bool IsMainViewContainer (FigmaCodeNode node);
-		bool IsNodeSkipped (FigmaCodeNode node);
 	}
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
@@ -373,33 +367,5 @@ namespace FigmaSharp.Services
 		{
 			Response.Save (filePath);
 		}
-
-		#region Rendering Iteration
-
-		public virtual bool IsMainViewContainer (FigmaCodeNode node)
-		{
-			return true;
-		}
-
-		public virtual FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
-		{
-			if (node.Node is IFigmaNodeContainer nodeContainer) {
-				return nodeContainer.children;
-			}
-			return new FigmaNode[0];
-		}
-
-		public virtual bool HasChildrenToRender (FigmaCodeNode node)
-		{
-			return node.Node is IFigmaNodeContainer;
-		}
-
-		public virtual bool IsNodeSkipped (FigmaCodeNode node)
-		{
-			return false;
-		}
-
-		#endregion
-
 	}
 }

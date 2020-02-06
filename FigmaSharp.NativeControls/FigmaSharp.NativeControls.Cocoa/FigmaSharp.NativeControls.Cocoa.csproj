@@ -70,7 +70,7 @@
     <Compile Include="NativeControlsApplication.cs" />
     <Compile Include="FigmaNativeControlsDelegate.cs" />
     <Compile Include="Converters\FigmaCodeViewConverter.cs" />
-    <Compile Include="Services\NativeControlLocalFileProvider.cs" />
+    <Compile Include="Services\NativeViewCodeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

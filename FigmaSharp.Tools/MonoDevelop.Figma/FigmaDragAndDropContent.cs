@@ -121,7 +121,7 @@ namespace MonoDevelop.Figma
             scrollView.AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable; 
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileProvider = new NativeControlRemoteFileProvider ();
+            fileProvider = new FigmaRemoteFileProvider ();
 
             SetCocoaCodeRenderer ();
             //SetCodeRenderer(ModuleService.Platform.MAC);
@@ -173,14 +173,14 @@ namespace MonoDevelop.Figma
               .ToArray();
 
             var codePropertyConverters = ModuleService.CodePropertyConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
-            codeRenderer = new FigmaCodeRendererService(fileProvider, converters, codePropertyConverters);
+            codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverters);
         }
 
 		void SetCocoaCodeRenderer ()
 		{
             var converters = NativeControlsContext.Current.GetConverters ();
             var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-            codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
+            codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
         }
 
         public override void SetFrameSize(CGSize newSize)
@@ -191,7 +191,7 @@ namespace MonoDevelop.Figma
             scrollView?.SetFrameSize(new CoreGraphics.CGSize(newSize.Width, newSize.Height - 30));
         }
 
-        NativeControlRemoteFileProvider fileProvider;
+        FigmaRemoteFileProvider fileProvider;
         FigmaDesignerDelegate figmaDelegate;
         FigmaCodeRendererService codeRenderer;
         FigmaNodeView data;

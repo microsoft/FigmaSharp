@@ -18,7 +18,7 @@ namespace ToCode.Cocoa
 	{
 		FigmaNodeView data;
 		OutlinePanel outlinePanel;
-		NativeControlRemoteFileProvider fileProvider;
+		FigmaRemoteFileProvider fileProvider;
 
 		FigmaDesignerDelegate figmaDelegate;
 		FigmaCodeRendererService codeRenderer;
@@ -57,11 +57,11 @@ namespace ToCode.Cocoa
 			figmaDelegate = new FigmaDesignerDelegate ();
 
 			var converters = NativeControlsContext.Current.GetConverters ();
-			fileProvider = new NativeControlRemoteFileProvider ();
+			fileProvider = new FigmaRemoteFileProvider ();
 			fileProvider.Load (fileId);
 
 			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-			codeRenderer = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
+			codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
 
 			data = new FigmaNodeView (fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes (fileProvider.Response.document, data);

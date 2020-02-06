@@ -43,7 +43,7 @@ namespace LocalFile.Cocoa
 	static class MainClass
 	{
 		static IWindow mainWindow;
-		static NativeControlRemoteFileProvider fileProvider;
+		static FigmaRemoteFileProvider fileProvider;
 
 		static void Main(string[] args)
 		{
@@ -85,7 +85,7 @@ namespace LocalFile.Cocoa
 			const string fileName = "FwVa4JS5QsohRhNEnEBKslFk";
 
 			var converters = NativeControlsContext.Current.GetConverters ();
-			fileProvider = new NativeControlRemoteFileProvider ();
+			fileProvider = new FigmaRemoteFileProvider ();
 			fileProvider.Load(fileName);
 
 			var rendererService = new FigmaViewRendererService(fileProvider, converters);
@@ -143,7 +143,7 @@ namespace LocalFile.Cocoa
 
 			//we add the control converters
 			var converters = NativeControlsContext.Current.GetConverters ();
-			fileProvider = new NativeControlRemoteFileProvider ();
+			fileProvider = new FigmaRemoteFileProvider ();
 			fileProvider.Load(document);
 
 			var rendererService = new FigmaViewRendererService(fileProvider, converters);

@@ -38,7 +38,7 @@ namespace ExampleFigma
 	{
 		const string fileName = "CobaSo7LmEYsuGZB0ED0ewSs";
 
-		readonly NativeControlRemoteFileProvider fileProvider;
+		readonly FigmaRemoteFileProvider fileProvider;
 
 		public string WindowTitle => fileProvider?.Response?.name ?? "";
 
@@ -53,7 +53,7 @@ namespace ExampleFigma
 			//native toolkit positioning system
 
 			//in this case we want use a remote file provider (figma url from our document)
-			fileProvider = new NativeControlRemoteFileProvider ();
+			fileProvider = new FigmaRemoteFileProvider ();
 
 			//we initialize our renderer service, this uses all the converters passed
 			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>

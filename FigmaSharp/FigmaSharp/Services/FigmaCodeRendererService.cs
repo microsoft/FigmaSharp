@@ -76,7 +76,7 @@ namespace FigmaSharp.Services
 			FigmaCodeNode calculatedParentNode = null;
 			FigmaViewConverter converter = null;
 
-			var isNodeSkipped = figmaProvider.IsNodeSkipped (node);
+			var isNodeSkipped = IsNodeSkipped (node);
 
 			//on node skipped we don't render
 			if (!isNodeSkipped) {
@@ -89,6 +89,7 @@ namespace FigmaSharp.Services
 
 				if (converter != null) {
 					if (!node.HasName) {
+
 						if (!converter.TryGetCodeViewName (node, parent, this, out string identifier)) {
 							identifier = DefaultViewName;
 						}
@@ -125,8 +126,8 @@ namespace FigmaSharp.Services
 
 			//without converter we scan the children automatically
 			var navigateChild = converter?.ScanChildren (node.Node) ?? true; 
-			if (navigateChild && figmaProvider.HasChildrenToRender (node)) {
-				foreach (var item in figmaProvider.GetChildrenToRender (node)) {
+			if (navigateChild && HasChildrenToRender (node)) {
+				foreach (var item in GetChildrenToRender (node)) {
 					GetCode (builder, new FigmaCodeNode (item, null), calculatedParentNode);
 				}
 			}
@@ -144,6 +145,33 @@ namespace FigmaSharp.Services
 			}
 			return data;
 		}
+
+		#region Rendering Iteration
+
+		public virtual bool IsMainViewContainer (FigmaCodeNode node)
+		{
+			return true;
+		}
+
+		public virtual FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
+		{
+			if (node.Node is IFigmaNodeContainer nodeContainer) {
+				return nodeContainer.children;
+			}
+			return new FigmaNode[0];
+		}
+
+		public virtual bool HasChildrenToRender (FigmaCodeNode node)
+		{
+			return node.Node is IFigmaNodeContainer;
+		}
+
+		public virtual bool IsNodeSkipped (FigmaCodeNode node)
+		{
+			return false;
+		}
+
+		#endregion
 
 		Dictionary<string, int> identifiers = new Dictionary<string, int> ();
 	}

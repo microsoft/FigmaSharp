@@ -99,7 +99,7 @@ namespace MonoDevelop.Figma
             return Task.FromResult(true);
         }
 
-        NativeControlLocalFileProvider fileProvider;
+        FigmaLocalFileProvider fileProvider;
         FigmaFileRendererService rendererService;
         FigmaViewRendererDistributionService distributionService;
 
@@ -117,7 +117,7 @@ namespace MonoDevelop.Figma
                 figmaDelegate = new FigmaDesignerDelegate();
               
                 var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
-                fileProvider = new NativeControlLocalFileProvider (localPath);
+                fileProvider = new FigmaLocalFileProvider (localPath);
                 fileProvider.File = filePath.FullPath;
 
                 var converters = NativeControlsContext.Current.GetConverters ();

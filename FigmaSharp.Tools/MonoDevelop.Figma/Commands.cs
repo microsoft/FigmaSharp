@@ -181,12 +181,12 @@ namespace MonoDevelop.Figma.Commands
 
 					var currentProject = currentFolder.Project;
 
-					var fileProvider = new NativeControlLocalFileProvider (bundle.ResourcesDirectoryPath);
+					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
 					fileProvider.Load (bundle.DocumentFilePath);
 
 					var converters = NativeControlsContext.Current.GetConverters ();
 					var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-					var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
+					var codeRendererService = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
 
 					var fignaNode = fileProvider.FindByName (figmaNodeName);
 					var figmaBundleView = new FigmaBundleView (bundle, "test", fignaNode);
@@ -250,7 +250,7 @@ namespace MonoDevelop.Figma.Commands
 			}
 
 			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new NativeControlRemoteFileProvider () { File = fileId };
+			var fileProvider = new FigmaRemoteFileProvider () { File = fileId };
 			fileProvider.Load (fileId);
 
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
@@ -259,14 +259,14 @@ namespace MonoDevelop.Figma.Commands
 			//to generate all layers we need a code renderer
 			var converters = NativeControlsContext.Current.GetConverters (true);
 			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-			var codeRendererService = new FigmaCodeRendererService (fileProvider, converters, codePropertyConverter);
+			var codeRendererService = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
 
 			projectBundle.Save ();
 			projectBundle.SaveLocalDocument (false);
 			projectBundle.SaveViews (codeRendererService);
 
 			//now we need to add to Monodevelop all the stuff
-			await IncludeBundleInProject (currentProject, projectBundle);
+			await IncludeBundleInProject (currentProject, projectBundle).ConfigureAwait (true);
 		}
 
 		FigmaBundle CreateBundleFromProject (Project project, string bundleName, string fileId, IFigmaFileProvider fileProvider, FigmaSharp.Models.FigmaFileVersion version = null, bool includeImages = false)
