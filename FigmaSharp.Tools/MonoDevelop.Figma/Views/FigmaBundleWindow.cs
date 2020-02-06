@@ -27,7 +27,7 @@ namespace MonoDevelop.Figma
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
-				if (VersionComboBox.ItemCount > 0 && VersionComboBox.ItemCount == versions.Length && VersionComboBox.IndexOfSelectedItem > -1) {
+				if (VersionComboBox.ItemCount > 0 && VersionComboBox.ItemCount == versions.Length + 1 && VersionComboBox.IndexOfSelectedItem > -1) {
 					return versions[(int)VersionComboBox.IndexOfSelectedItem];
 				}
 				return null;
@@ -118,15 +118,23 @@ namespace MonoDevelop.Figma
 			LoadingProgressIndicator.Hidden = true;
 
 			if (versions != null) {
-				for (int i = 0; i < versions.Length; i++) {
-					string title;
-					if (i == 0) {
-						title = "Current";
-					} else {
-						title = versions[i].created_at.ToString ("MM/dd/yyyy HH:mm:ss");
+				var menu = new NSMenu();
+				menu.AddItem(new NSMenuItem("Current"));
+
+				if (versions.Length > 0) {
+					menu.AddItem(NSMenuItem.SeparatorItem);
+
+					foreach (FigmaFileVersion version in versions.Skip(1)) {
+						if (!string.IsNullOrEmpty(version.label))
+							menu.AddItem(new NSMenuItem(version.label));
+						else
+							menu.AddItem(new NSMenuItem(version.created_at.ToString("f")));
 					}
-					VersionComboBox.AddItem (title);
 				}
+
+				VersionComboBox.Menu = menu;
+				VersionComboBox.SelectItem(0);
+				menu.Update();
 			}
 
 			RefreshStates ();
