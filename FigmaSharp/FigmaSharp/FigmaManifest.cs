@@ -26,7 +26,7 @@ namespace FigmaSharp
 		public string DocumentTitle { get; set; }
 
 		[ManifestDescription("Document Version")]
-		public float DocumentVersion { get; set; }
+		public string DocumentVersion { get; set; }
 
 		[ManifestDescription ("Conversion Date")]
 		public DateTime Date { get; set; }
