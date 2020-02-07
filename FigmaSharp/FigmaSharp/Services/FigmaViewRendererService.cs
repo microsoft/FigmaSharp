@@ -195,12 +195,8 @@ namespace FigmaSharp.Services
                 {
                     foreach (var processedNode in NodesProcessed)
                     {
-                        if (processedNode.FigmaNode is IFigmaImage figmaImage)
-                        {
-                            //TODO: this should be replaced by svg
-                            if (figmaImage.HasImage()) {
-                                ImageVectors.Add(processedNode);
-                            }
+                        if (processedNode.FigmaNode.IsImageNode ()) {
+                            ImageVectors.Add (processedNode);
                         }
                     }
 
@@ -251,6 +247,11 @@ namespace FigmaSharp.Services
             return null;
         }
 
+		protected virtual bool SkipsNode (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
+		{
+            return false;
+		}
+
         //TODO: This 
         protected void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
         {
@@ -261,8 +262,10 @@ namespace FigmaSharp.Services
                 return;
             }
 
+            if (SkipsNode (currentNode, parent, options))
+                return;
+
             bool scanChildren = true;
-          
             var converter = GetProcessedConverter(currentNode, CustomConverters);
 
             if (converter == null)
@@ -278,7 +281,7 @@ namespace FigmaSharp.Services
                 NodesProcessed.Add(currentProcessedNode);
 
                 //TODO: this need to be improved, handles special cases for native controls
-                scanChildren = currentNode is FigmaInstance && options.ScanChildrenFromFigmaInstances ? true : converter.ScanChildren(currentNode);
+                scanChildren = (currentNode is FigmaInstance && options.ScanChildrenFromFigmaInstances) || converter.ScanChildren (currentNode);
             }
             else
             {
@@ -288,12 +291,13 @@ namespace FigmaSharp.Services
 
             if (scanChildren && currentNode is IFigmaNodeContainer nodeContainer)
             {
-                foreach (var item in nodeContainer.children)
-                {
+                foreach (var item in nodeContainer.children) {
                     GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
                 }
             }
         }
+
+
     }
 
 	[Obsolete("Use FigmaViewRendererService instead")]
@@ -338,6 +342,8 @@ namespace FigmaSharp.Services
         {
         }
 
+        #region Rendering
+
         public T RenderByFullPath<T> (FigmaViewRendererServiceOptions options, string path) where T : IView
         {
             FigmaNode node = fileProvider.FindByPath (path);
@@ -346,46 +352,48 @@ namespace FigmaSharp.Services
             return (T)RenderFigmaNode (node, options);
         }
 
-        public T RenderByPath<T>(FigmaViewRendererServiceOptions options, params string[] path) where T : IView
-		{
-			FigmaNode node = fileProvider.FindByPath(path);
-			if (node == null)
-				return default(T);
-			return (T)RenderFigmaNode(node, options);
-		}
-
-		public IView RenderFigmaNode (FigmaNode node, FigmaViewRendererServiceOptions options)
-		{
-			ProcessFromNode (node, null, options);
-			var processedNode = FindProcessedNodeById(node.id);
-			Recursively(processedNode);
-			return processedNode.View;
-		}
-
-		public T RenderByNode<T>(FigmaNode node) where T : IView
-		{
-			return RenderByNode<T>(node, new FigmaViewRendererServiceOptions());
-		}
-
-		public T RenderByNode<T>(FigmaNode node, FigmaViewRendererServiceOptions options) where T : IView
-		{
-			return (T)RenderFigmaNode(node, options);
-		}
-
-		public T RenderByName<T>(string figmaName) where T : IView
+        public T RenderByPath<T> (FigmaViewRendererServiceOptions options, params string[] path) where T : IView
         {
-            return RenderByName <T>(figmaName, new FigmaViewRendererServiceOptions());
-        }
-
-        public T RenderByName<T>(string figmaName, FigmaViewRendererServiceOptions options) where T: IView
-        {
-            var node = FindNodeByName(figmaName);
+            FigmaNode node = fileProvider.FindByPath (path);
             if (node == null)
                 return default (T);
-			return (T)RenderFigmaNode(node, options);
-		}
+            return (T)RenderFigmaNode (node, options);
+        }
 
-        void Recursively(ProcessedNode parentNode)
+        public IView RenderFigmaNode (FigmaNode node, FigmaViewRendererServiceOptions options)
+        {
+            ProcessFromNode (node, null, options);
+            var processedNode = FindProcessedNodeById (node.id);
+            Recursively (processedNode);
+            return processedNode.View;
+        }
+
+        public T RenderByNode<T> (FigmaNode node) where T : IView
+        {
+            return RenderByNode<T> (node, new FigmaViewRendererServiceOptions ());
+        }
+
+        public T RenderByNode<T> (FigmaNode node, FigmaViewRendererServiceOptions options) where T : IView
+        {
+            return (T)RenderFigmaNode (node, options);
+        }
+
+        public T RenderByName<T> (string figmaName) where T : IView
+        {
+            return RenderByName<T> (figmaName, new FigmaViewRendererServiceOptions ());
+        }
+
+        public T RenderByName<T> (string figmaName, FigmaViewRendererServiceOptions options) where T : IView
+        {
+            var node = FindNodeByName (figmaName);
+            if (node == null)
+                return default (T);
+            return (T)RenderFigmaNode (node, options);
+        }
+
+        #endregion
+
+        protected void Recursively(ProcessedNode parentNode)
         {
             var children = NodesProcessed.Where(s => s.ParentView == parentNode);
             foreach (var child in children)
@@ -463,6 +471,6 @@ namespace FigmaSharp.Services
         /// <summary>
         /// Allows configure in rederer process all children subviews from FigmaInstances (Components)
         /// </summary>
-        public bool ScanChildrenFromFigmaInstances { get; set; } = true;
+        public bool ScanChildrenFromFigmaInstances { get; set; } = false;
     }
 }

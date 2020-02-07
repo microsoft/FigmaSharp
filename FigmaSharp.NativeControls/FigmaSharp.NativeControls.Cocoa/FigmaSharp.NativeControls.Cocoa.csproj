@@ -71,6 +71,9 @@
     <Compile Include="FigmaNativeControlsDelegate.cs" />
     <Compile Include="Converters\FigmaCodeViewConverter.cs" />
     <Compile Include="Services\NativeViewCodeService.cs" />
+    <Compile Include="Services\NativeViewRenderingService.cs" />
+    <Compile Include="Converters\StepperConverter.cs" />
+    <Compile Include="Converters\DisclossureConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

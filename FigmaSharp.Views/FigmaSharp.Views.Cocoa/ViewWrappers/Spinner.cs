@@ -31,6 +31,37 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Views.Cocoa
 {
+	public class Stepper : View, IStepper
+	{
+		FNSStepper stepper;
+
+		public Stepper () : this (new FNSStepper ())
+		{
+
+		}
+
+		public Stepper (FNSStepper stepper) : base (stepper)
+		{
+			this.stepper = stepper;
+		}
+	}
+
+	public class DisclosureTriangle : Button, IDisclosureTriangle
+	{
+		public DisclosureTriangle () : this (new FNSButton ())
+		{
+
+		}
+
+		public DisclosureTriangle (FNSButton disclosureButton) : base (disclosureButton)
+		{
+			disclosureButton.SetButtonType (NSButtonType.PushOnPushOff);
+			disclosureButton.BezelStyle = NSBezelStyle.Disclosure;
+			disclosureButton.Title = string.Empty;
+			disclosureButton.Highlight (false);
+		}
+	}
+
 	public class Spinner : View, ISpinner
 	{
 		FNSProgressIndicator progressIndicator;

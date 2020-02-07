@@ -72,7 +72,25 @@ namespace FigmaSharp
                 sender.AppendLine (value);
         }
 
-		public static string GetNodeTypeName (this FigmaNode node)
+        public static bool IsVectorImage (this FigmaVectorEntity node)
+		{
+            return node.fills.OfType<FigmaPaint> ().Any (s => s.type == "IMAGE" && !string.IsNullOrEmpty (s.imageRef));
+		}
+
+        public static bool IsImageNode (this FigmaNode node)
+        {
+			if (node is FigmaVectorEntity vectorEntity && vectorEntity.IsVectorImage ()) {
+                return true;
+			}
+            return false;
+        }
+
+        public static bool IsWindowContent (this FigmaNode node)
+        {
+            return GetNodeTypeName (node) == "content";
+        }
+
+        public static string GetNodeTypeName (this FigmaNode node)
 		{
             var name = node.name;
             var index = name.IndexOf (' ');
@@ -95,6 +113,7 @@ namespace FigmaSharp
                     return true;
                 } 
             }
+            customName = node.name;
             return false;
         }
 

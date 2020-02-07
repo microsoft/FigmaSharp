@@ -22,8 +22,11 @@ namespace FigmaSharp
 		[ManifestDescription ("File Id")]
 		public string FileId { get; set; }
 
-		[ManifestDescription ("Document Version")]
-		public float DocumentVersion { get; set; }
+		[ManifestDescription ("Document Title")]
+		public string DocumentTitle { get; set; }
+
+		[ManifestDescription("Document Version")]
+		public string DocumentVersion { get; set; }
 
 		[ManifestDescription ("Conversion Date")]
 		public DateTime Date { get; set; }
@@ -48,7 +51,7 @@ namespace FigmaSharp
 			builder.AppendLine ($"This file was auto-generated using");
 			builder.AppendLine ($"FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}");
 			builder.AppendLine ();
-			builder.AppendLine ($"Document title:   macOS Components");
+			builder.AppendLine ($"Document title:   {DocumentTitle}");
 			builder.AppendLine ($"Document version: {DocumentVersion}");
 			builder.AppendLine ($"Document URL:     {FileId}");
 			builder.AppendLine ();

@@ -34,17 +34,40 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.Views.Cocoa;
+using System.Linq;
+using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override bool ScanChildren (FigmaNode currentNode)
+            => true;
+
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var currengroupView = new FNSImageView();
+            var currengroupView = new FNSView();
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
-            currengroupView.Configure(figmaFrameEntity);
-            return new ImageView(currengroupView);
+            currengroupView.Configure(currentNode);
+
+            currengroupView.AlphaValue = figmaFrameEntity.opacity;
+
+			if (figmaFrameEntity.HasFills) {
+                foreach (var fill in figmaFrameEntity.fills) {
+					if (fill.type == "IMAGE") {
+						//we need to add this to our service
+                    } else if (fill.type == "SOLID") {
+                       if (fill.visible) {
+                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
+                        }
+                    } else {
+                        Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
+					}
+                    //currengroupView.Layer.Hidden = !fill.visible;
+                }
+            }
+		
+            return new View(currengroupView);
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

@@ -133,7 +133,8 @@ namespace FigmaSharp
 			var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse ();
 			using (var streamReader = new StreamReader (httpResponse.GetResponseStream ())) {
 				var result = streamReader.ReadToEnd ();
-				return result;
+				var json = Newtonsoft.Json.Linq.JObject.Parse (result);
+				return json.ToString ();
 			}
 		}
 

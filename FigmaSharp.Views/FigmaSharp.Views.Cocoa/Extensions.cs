@@ -27,11 +27,13 @@ namespace FigmaSharp
 			return new Rectangle ((float)rectangle.X, (float)rectangle.Y, (float)rectangle.Width, (float)rectangle.Height);
 		}
 
-		public static CGColor ToCGColor (this Color color)
+		public static CGColor ToCGColor (this Color color, float opacity = -1)
 		{
 			if (color.R == 0 && color.G == 0 && color.R == 0 && color.A == 0)
 				return NSColor.Clear.CGColor;
-			return new CGColor (color.R, color.G, color.B, color.A);
+			var alpha = (float) (opacity == -1 ? color.A : opacity);
+			var cg = new CGColor (color.R, color.G, color.B, alpha);
+			return cg;
 		}
 
 		public static Color ToColor (this CGColor color)

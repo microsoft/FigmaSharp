@@ -47,13 +47,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var button = new Button();
 			var view = (NSButton)button.NativeObject;
 			view.Title = "";
-            view.BezelStyle = NSBezelStyle.Rounded;
 
-			button.Size = new Size(figmaInstance.absoluteBoundingBox.Width, 30);
+            var controlType = figmaInstance.ToNativeControlComponentType ();
+
+            if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark) {
+                view.BezelStyle = NSBezelStyle.HelpButton;
+            } else {
+                view.BezelStyle = NSBezelStyle.Rounded;
+            }
 
             view.Configure (figmaInstance);
-
-			var controlType = figmaInstance.ToNativeControlComponentType();
+			
             switch (controlType)
             {
                 case NativeControlComponentType.ButtonLarge:
@@ -105,11 +109,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 
-            //if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal))
-            //{
-            //    view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
-            //}
-            return button;
+			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			}
+			return button;
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

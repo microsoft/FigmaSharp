@@ -23,7 +23,7 @@ namespace FigmaSharp
 		public string ResourcesDirectoryPath => Path.Combine (DirectoryPath, ResourcesDirectoryName);
 		public string ManifestFilePath => Path.Combine (DirectoryPath, ManifestFileName);
 
-		public string Namespace { get; set; } = "FigmaSharp";
+		public string Namespace { get; set; } = "Figma";
 	
 		internal const string FigmaBundleDirectoryExtension = ".figmabundle";
 		//const string FigmaBundlesDirectoryName = ".bundles";

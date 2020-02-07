@@ -16,7 +16,9 @@ namespace FigmaSharp.NativeControls
 		PopupButton = 6,
 		ComboBox = 7,
 		ProgressSpinner = 8,
-		WindowStandard = 50,
+        DisclosureTriange = 9,
+        Stepper = 10,
+        WindowStandard = 50,
 		WindowSheet = 51,
 		WindowPanel = 52,
     }
@@ -31,6 +33,9 @@ namespace FigmaSharp.NativeControls
         ButtonLargeDark = 14,
         ButtonStandardDark = 15,
         ButtonSmallDark = 16,
+
+        ButtonHelp = 17,
+        ButtonHelpDark = 18,
 
         TextFieldStandard = 20,
         TextFieldSmall = 21,
@@ -69,26 +74,41 @@ namespace FigmaSharp.NativeControls
         ProgressSpinnerSmall = 82,
         ProgressSpinnerStandard = 83,
 
-		//Windows
-		WindowSheet = 100,
+        DisclosureTriangleStandard = 85,
+        DisclosureTriangleStandardDark = 86,
+
+        StepperSmallDark = 90,
+		StepperStandardDark = 91,
+        StepperSmall = 92,
+        StepperStandard = 93,
+
+        //Windows
+        WindowSheet = 100,
         WindowSheetDark = 102,
         WindowPanel = 110,
         WindowPanelDark = 111,
         WindowStandard = 120,
         WindowStandardDark = 121,
-    }
+
+	}
 
     public static class FigmaControlsExtension
     {
         static IReadOnlyList<(string name, NativeControlComponentType nativeControlComponentType, NativeControlType nativeControlType)> data = new List<(string name, NativeControlComponentType nativeControlComponentType, NativeControlType nativeControlType)>
         {
-            ( "65e801586bf62f77a4d79085aaeb6e2bbd8a48ea", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
-            ( "52a371ab5df2ad1fe9f7ae1d51712ec9dc493325", NativeControlComponentType.ButtonLarge,  NativeControlType.Button ),
-            ( "cc3e8e90f86a174cc22a27b7f8661f53f94b5d21", NativeControlComponentType.ButtonSmall,  NativeControlType.Button ),
-            ( "101d73f2d75f295756728ee1fbb2ba3ce33fee5e", NativeControlComponentType.ButtonLargeDark,  NativeControlType.Button),
-            ( "4a606f23d957d508b11707faba119cbd7edf4565", NativeControlComponentType.ButtonStandardDark,  NativeControlType.Button),
-            ( "c252a811c880b9ab074d2ba63d3e279e7e3bad4a", NativeControlComponentType.ButtonSmallDark,  NativeControlType.Button),
-            ( "65722325467a63cc1dcb0851cd7cdc1bb3b8bd7c", NativeControlComponentType.ButtonStandardDark,  NativeControlType.Button),
+            ( "Button/Standard", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
+            ( "Button/Standard HC", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
+            ( "Button/Large", NativeControlComponentType.ButtonLarge,  NativeControlType.Button ),
+            ( "Button/Large HC", NativeControlComponentType.ButtonLarge,  NativeControlType.Button ),
+            ( "Button/Small", NativeControlComponentType.ButtonSmall,  NativeControlType.Button ),
+            ( "Button/Small HC", NativeControlComponentType.ButtonSmall,  NativeControlType.Button ),
+
+            ( "Button/Large Dark", NativeControlComponentType.ButtonLargeDark,  NativeControlType.Button),
+            ( "Button/Standard Dark", NativeControlComponentType.ButtonStandardDark,  NativeControlType.Button),
+            ( "Button/Small Dark", NativeControlComponentType.ButtonSmallDark,  NativeControlType.Button),
+
+            ( "Button/Help", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
+            ( "Button/Help Dark", NativeControlComponentType.ButtonHelpDark,  NativeControlType.Button),
 
             ( "Text Field/Standard", NativeControlComponentType.TextFieldStandard, NativeControlType.TextField),
             ( "Text Field/Small", NativeControlComponentType.TextFieldSmall, NativeControlType.TextField),
@@ -112,11 +132,25 @@ namespace FigmaSharp.NativeControls
             ( "0ad661c90900c3a974cf1dd819614fa4704ee4ad", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
             ( "88c2e67236d56db9147ffa6f1034ba203b794393", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
 
-            ( "76ab0c7d6eab51ff9c4a4b0c1e356c45daaa8857", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
-            ( "f2f690e55f3ec52f312a18f3ce9a0f5c6ec9a516", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
-            ( "9bb29e36e1af3f4f93b3aecde65b22afa5fd2ce3", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
-            ( "b70a003c6523ae1058868643bd1b36170c2b7a1f", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
+			//Pop Up Button
+            ( "Pop Up Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            ( "Pop Up Button/Standard Dark", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
+            ( "Pop Up Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
+            ( "Pop Up Button/Small Dark", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
 
+			//Standard HC
+            ( "Pop Up Button/Standard HC", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            ( "Pull Down Button/Standard HC", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
+            ( "Pop Up Button/Small HC", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
+            ( "Pull Down Button/Small HC", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
+
+			//Pull Down Button
+			( "Pull Down Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            ( "Pull Down Button/Standard Dark", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
+            ( "Pull Down Button/Small", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
+            ( "Pull Down Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
+
+			//General
             ( "3bc48ea321b06cfa5a05801c9d33d2f3e1b6095a", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
             ( "9d78fd2ff7b81a8cf56115504bab1bf8e3e413e9", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
             ( "cdb09381b061dddfe1f02fcad38a247b3724d562", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
@@ -126,6 +160,17 @@ namespace FigmaSharp.NativeControls
             ( "Progress Spinner/Small Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
             ( "Progress Spinner/Standard", NativeControlComponentType.ProgressSpinnerStandard, NativeControlType.ProgressSpinner),
             ( "Progress Spinner/Standard Dark", NativeControlComponentType.ProgressSpinnerStandardDark, NativeControlType.ProgressSpinner),
+
+            //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.ProgressSpinner),
+            //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
+            ( "Disclosure Triangle/Standard", NativeControlComponentType.DisclosureTriangleStandard, NativeControlType.DisclosureTriange),
+            ( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.DisclosureTriange),
+
+             ( "Stepper/Standard", NativeControlComponentType.StepperStandard, NativeControlType.Stepper),
+            ( "Stepper/Standard Dark", NativeControlComponentType.StepperStandardDark, NativeControlType.Stepper),
+               ( "Stepper/Small", NativeControlComponentType.StepperSmall, NativeControlType.Stepper),
+            ( "Stepper/Small Dark", NativeControlComponentType.StepperSmallDark, NativeControlType.Stepper),
+
 
             ( "Window/Standard", NativeControlComponentType.WindowStandard, NativeControlType.WindowStandard),
             ( "Window/Standard Dark", NativeControlComponentType.WindowStandardDark, NativeControlType.WindowStandard),

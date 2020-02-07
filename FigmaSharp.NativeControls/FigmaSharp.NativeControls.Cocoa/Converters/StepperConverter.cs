@@ -27,88 +27,75 @@
  */
 using AppKit;
 using FigmaSharp.NativeControls.Base;
-using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public partial class TextFieldConverter : TextFieldConverterBase
+	public class StepperConverter : StepperConverterBase
 	{
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var instance = (FigmaInstance)currentNode;
-
-			var textBox = new TextBox ();
-			var view = (NSTextField)textBox.NativeObject;
-
-			view.Configure (instance);
+			var view = new Stepper ();
+			var nativeView = (FNSStepper)view.NativeObject;
+			nativeView.Configure (instance);
 
 			var figmaInstance = (FigmaInstance)currentNode;
 			var controlType = figmaInstance.ToNativeControlComponentType ();
 			switch (controlType) {
-				case NativeControlComponentType.TextFieldSmall:
-				case NativeControlComponentType.TextFieldSmallDark:
-					view.ControlSize = NSControlSize.Small;
+				case NativeControlComponentType.StepperSmall:
+				case NativeControlComponentType.StepperSmallDark:
+					nativeView.ControlSize = NSControlSize.Small;
 					break;
-				case NativeControlComponentType.TextFieldStandard:
-				case NativeControlComponentType.TextFieldStandardDark:
-					view.ControlSize = NSControlSize.Regular;
+				case NativeControlComponentType.StepperStandard:
+				case NativeControlComponentType.StepperStandardDark:
+					nativeView.ControlSize = NSControlSize.Regular;
 					break;
 			}
-
-			var texts = instance.children
-				.OfType<FigmaText> ();
-
-			var text = texts.FirstOrDefault (s => s.name == "lbl");
-			if (text != null) {
-				textBox.Text = text.characters;
-				view.Configure (text);
-			}
-
-			var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholder != null)
-				view.PlaceholderString = placeholder.characters;
 
 			if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
 			}
 
-			return textBox;
+			return view;
 		}
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var instance = (FigmaInstance)currentNode.Node;
-			var name = currentNode.Name;
+			var figmaInstance = (FigmaInstance)currentNode.Node;
 
-			var builder = new StringBuilder ();
+			StringBuilder builder = new StringBuilder ();
+			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSTextField));
+				builder.WriteConstructor (name, typeof (AppKit.NSStepper));
 
-			builder.Configure (instance, name);
+			builder.Configure (figmaInstance, name);
 
-			var texts = instance.children.OfType<FigmaText> ();
+			//hidden by default
+			builder.WriteEquality (name, nameof (NSProgressIndicator.Hidden), true);
 
-			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl");
+			var controlType = figmaInstance.ToNativeControlComponentType ();
 
-			if (figmaTextNode != null) {
-				var text = figmaTextNode.characters ?? string.Empty;
-				
-				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
-				builder.Configure (figmaTextNode, name);
+			switch (controlType) {
+				case NativeControlComponentType.ProgressSpinnerSmall:
+				case NativeControlComponentType.ProgressSpinnerSmallDark:
+					builder.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Small);
+					break;
+				case NativeControlComponentType.ProgressSpinnerStandard:
+				case NativeControlComponentType.ProgressSpinnerStandardDark:
+					builder.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Regular);
+					break;
 			}
-
-			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholderTextNode != null)
-				builder.WriteEquality (name, nameof (NSTextField.PlaceholderString), placeholderTextNode.characters, true);
 
 			return builder.ToString ();
 		}
+
 	}
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaImageView.cs - NSImageView which stores it's associed Figma Id
+ * CustomTextFieldConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,20 +25,15 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-namespace FigmaSharp.Views
+using FigmaSharp.Models;
+namespace FigmaSharp.NativeControls.Base
 {
-    public interface IDisclosureTriangle : IButton
-    {
-    }
-
-    public interface IStepper : IView
-    {
-    }
-
-    public interface ISpinner : IView
+	public abstract class StepperConverterBase : FigmaInstanceConverter
 	{
-		void Start ();
-		void Stop ();
+		public override bool CanConvert (FigmaNode currentNode)
+		{
+			var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.Stepper;
+			return result;
+		}
 	}
 }

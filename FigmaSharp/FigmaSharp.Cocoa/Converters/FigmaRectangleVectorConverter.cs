@@ -25,6 +25,8 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
+using System.Linq;
 using System.Text;
 using AppKit;
 
@@ -40,9 +42,36 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-			var vector = new ImageView();
-			var currengroupView = (NSImageView)vector.NativeObject;
-			currengroupView.Configure((RectangleVector)currentNode);
+            var vectorEntity = (RectangleVector)currentNode;
+            var vector = new ImageView ();
+            var currengroupView = (NSImageView)vector.NativeObject;
+            currengroupView.Configure (currentNode);
+
+            if (vectorEntity.HasFills) {
+                foreach (var fill in vectorEntity.fills) {
+                    if (fill.type == "IMAGE") {
+                        //we need to add this to our service
+                    } else if (fill.type == "SOLID") {
+                        if (fill.visible && fill.color != null) {
+                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor (fill.opacity);
+                        }
+                    } else {
+                        Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
+                    }
+                }
+            }
+
+            currengroupView.Layer.CornerRadius = vectorEntity.cornerRadius;
+          
+            var stroke = vectorEntity.strokes?.FirstOrDefault ();
+            if (stroke != null) {
+                currengroupView.Layer.BorderWidth = vectorEntity.strokeWeight;
+                if (stroke.visible && stroke.color != null) {
+                    currengroupView.Layer.BorderColor = stroke.color.ToCGColor (stroke.opacity);
+                }
+            }
+            //view.layer.borderColor = UIColor (red: 1, green: 1, blue: 1, alpha: 1).cgColor
+
             return vector;
         }
 
