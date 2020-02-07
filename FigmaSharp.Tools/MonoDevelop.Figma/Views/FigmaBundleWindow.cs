@@ -86,18 +86,19 @@ namespace MonoDevelop.Figma
 
 		private async void FigmaUrlTextField_Changed (object sender, EventArgs e)
 		{
+			if (FigmaApiHelper.TryParseFileUrl (FileId, out string fileId)) {
+				FigmaUrlTextField.StringValue = fileId;
+			} else {
+				return;
+			}
+
 			LoadingProgressIndicator.Hidden = false;
 			LoadingProgressIndicator.StartAnimation (LoadingProgressIndicator);
 
-			//loads current versions
 			VersionComboBox.RemoveAllItems ();
 			VersionComboBox.Enabled = false;
 
 			RefreshStates ();
-
-			if (FigmaApiHelper.TryParseFileUrl (FileId, out string fileId)) {
-				FigmaUrlTextField.StringValue = fileId;
-			}
 
 			versions = await Task.Run (() => {
 				try {
