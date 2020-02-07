@@ -15,7 +15,9 @@ namespace FigmaSharp.Samples
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			return currentNode.IsDialogParentContainer (NativeControlType.WindowSheet) || currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
+			var isWindow = currentNode.IsWindowOfType (NativeControlType.WindowSheet)
+				|| currentNode.IsWindowOfType (NativeControlType.WindowPanel);
+			return isWindow;
 		}
 
 		static CoreGraphics.CGColor backgroundWindowColor =
