@@ -74,7 +74,7 @@ namespace FigmaSharp.Views.Cocoa
 
 		public bool Enabled {
 			get => button.Enabled;
-			set => button.Enabled = false;
+			set => button.Enabled = value;
 		}
 
 		public override void Dispose ()

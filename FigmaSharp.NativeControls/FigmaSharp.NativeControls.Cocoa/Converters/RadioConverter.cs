@@ -87,14 +87,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			//first figma 
-			var group = figmaInstance.children
+			button.IsChecked = figmaInstance.children
 				.OfType<FigmaGroup> ()
-				.FirstOrDefault (s => s.visible);
+				.Any (s => s.name == "On" && s.visible);
 
-			if (group != null) {
-				button.IsChecked = group.name == "On";
-				button.Enabled = group.name == "Disabled";
-			}
+			button.Enabled = !figmaInstance.children
+				.OfType<FigmaGroup> ()
+				.Any (s => s.name == "Disabled" && s.visible);
 
 			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
