@@ -335,6 +335,10 @@ namespace FigmaSharp.Models
 
         [DisplayName ("Children")]
         public FigmaNode[] children { get; set; }
+
+        [DisplayName ("Fills")]
+        public FigmaPaint[] fills { get; set; }
+        public bool HasFills => fills?.Length > 0;
     }
 
     public class FigmaVector : FigmaNode
@@ -424,9 +428,6 @@ namespace FigmaSharp.Models
         [DisplayName ("Is Mask")]
         public bool isMask { get; set; }
 
-        [DisplayName ("Fills")]
-        public FigmaPaint[] fills { get; set; }
-
         [Category ("General")]
         [DisplayName ("FillGeometry")]
         public FigmaPath[] fillGeometry { get; set; }
@@ -451,6 +452,8 @@ namespace FigmaSharp.Models
         [DisplayName ("Stroke Dashes")]
         public float[] strokeDashes { get; set; }
 
+        [DisplayName ("Fills")]
+        public FigmaPaint[] fills { get; set; }
         public bool HasFills => fills?.Length > 0;
     }
 

@@ -25,6 +25,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
 using System.Text;
 using AppKit;
 
@@ -40,10 +41,27 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-			var vector = new ImageView();
-			var currengroupView = (NSImageView)vector.NativeObject;
-			currengroupView.Configure((FigmaVectorEntity)currentNode);
-			return vector;
+            var vectorEntity = (FigmaVectorEntity)currentNode;
+            var vector = new ImageView();
+            var currengroupView = (NSImageView)vector.NativeObject;
+            currengroupView.Configure(currentNode);
+
+            if (vectorEntity.HasFills) {
+                foreach (var fill in vectorEntity.fills) {
+                    if (fill.type == "IMAGE") {
+                        //we need to add this to our service
+                    } else if (fill.type == "SOLID") {
+                        if (fill.visible) {
+                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
+                        }
+                    } else {
+                        Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
+                    }
+                    //currengroupView.Layer.Hidden = !fill.visible;
+                }
+            }
+
+            return vector;
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

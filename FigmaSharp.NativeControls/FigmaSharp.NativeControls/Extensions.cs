@@ -15,34 +15,35 @@ namespace FigmaSharp
 
 		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, FigmaViewRendererServiceOptions options, params string[] path)
         {
-            var windowFigmaNode = sender.FileProvider.FindByName ("bundleFigmaDocument");
-            var windowBoundingBox = (IAbsoluteBoundingBox)windowFigmaNode;
+            //var windowFigmaNode = sender.FileProvider.FindByName (path[0]);
 
-            //var contentPath = path.Concat(new[] { "content" }).ToArray();
+            //sender.RenderInWindow (mainWindow, windowFigmaNode, options);
 
-            var contentFigmaNode = (IAbsoluteBoundingBox)sender.FileProvider.FindByName ("content \"page1\"");
-            var contentView = sender.RenderByNode<IView>((FigmaNode)contentFigmaNode, options);
+            //var windowBoundingBox = (IAbsoluteBoundingBox)windowFigmaNode;
 
-            mainWindow.Size = windowBoundingBox.absoluteBoundingBox.Size;
+            ////var contentPath = path.Concat(new[] { "content" }).ToArray();
 
-            var windowNodeContainer = (IFigmaNodeContainer)windowFigmaNode;
-            var windowComponent = windowNodeContainer.children
-                .OfType<FigmaInstance>()
-                .FirstOrDefault(s => s.Component.key == "b666bac2b68d976c9e3e5b52a0956a9f1857c1f2");
+            ////var contentFigmaNode = (IAbsoluteBoundingBox)windowFigmaNode;
+            //var contentView = sender.RenderByNode<IView>(windowFigmaNode, options);
+            //mainWindow.Content = contentView;
 
-            var windowLabel = windowComponent.children
-                .OfType<FigmaText>()
-                .FirstOrDefault();
+            //mainWindow.Size = windowBoundingBox.absoluteBoundingBox.Size;
 
-            mainWindow.Title = windowLabel.characters;
+            //var windowNodeContainer = (IFigmaNodeContainer)windowFigmaNode;
+            //var windowComponent = windowNodeContainer.children
+            //    .OfType<FigmaInstance>()
+            //    .FirstOrDefault(s => s.Component.key == "b666bac2b68d976c9e3e5b52a0956a9f1857c1f2");
 
-            var difX = contentFigmaNode.absoluteBoundingBox.X - windowBoundingBox.absoluteBoundingBox.X;
-            var difY = contentFigmaNode.absoluteBoundingBox.Y - windowBoundingBox.absoluteBoundingBox.Y;
-            const int WindowTitleHeight = 20;
-            difY -= WindowTitleHeight;
+            //var windowLabel = windowComponent.children
+            //    .OfType<FigmaText>()
+            //    .FirstOrDefault();
 
-            mainWindow.Content.AddChild(contentView);
-            contentView.SetPosition(difX, difY);
-        }
+            //mainWindow.Title = windowLabel.characters;
+
+			//var difX = contentFigmaNode.absoluteBoundingBox.X - windowBoundingBox.absoluteBoundingBox.X;
+			//var difY = contentFigmaNode.absoluteBoundingBox.Y - windowBoundingBox.absoluteBoundingBox.Y;
+
+			//contentView.SetPosition (difX, difY);
+		}
     }
 }

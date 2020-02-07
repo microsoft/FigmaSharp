@@ -7,6 +7,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using System.Linq;
 using FigmaSharp.Views;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp.Samples
 {
@@ -14,11 +15,7 @@ namespace FigmaSharp.Samples
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			if (currentNode is FigmaFrameEntity figmaFrameEntity && figmaFrameEntity.children.Any (s => s is FigmaInstance instance && instance.name.In ("Window/Sheet Dark", "Window/Sheet"))
-						) 
-				return true;
-				
-			return false;
+			return currentNode.IsDialogParentContainer (NativeControlType.WindowSheet) || currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
 		}
 
 		static CoreGraphics.CGColor backgroundWindowColor =
@@ -28,10 +25,20 @@ namespace FigmaSharp.Samples
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var view = new View ();
+			var frame = (FigmaFrameEntity)currentNode;
+
+			var view = WindowConverter.GetSimulatedWindow ();
+		
 			var nativeView = view.NativeObject as NSView;
-			nativeView.Configure (currentNode);
+			nativeView.Configure (frame);
 			nativeView.Layer.BackgroundColor = backgroundWindowColor;
+
+			var instance = (FigmaInstance)currentNode;
+			var controlType = instance.ToNativeControlComponentType ();
+			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			}
+
 			return view;
 		}
 
@@ -43,28 +50,26 @@ namespace FigmaSharp.Samples
 
 	class WindowConverter : FigmaViewConverter
 	{
+		public static IView GetSimulatedWindow ()
+		{
+			var view = new View ();
+			var nativeView = view.NativeObject as NSView;
+			nativeView.Layer.BorderWidth = 1;
+			nativeView.Layer.BorderColor = NSColor.Gray.CGColor;
+			nativeView.Layer.ShadowOpacity = 1.0f;
+			nativeView.Layer.ShadowRadius = 20;
+			nativeView.Layer.ShadowOffset = new CoreGraphics.CGSize (0, -10);
+			return view;
+		}
+
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			string id;
-			var nextSpace = currentNode.name.IndexOf (' ');
-			if (nextSpace > 0) {
-				id = currentNode.name.Substring (0, nextSpace);
-			} else {
-				id = currentNode.name;
+			if (currentNode.IsWindowContent ()) {
+				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.WindowStandard);
 			}
 
-			if (id == "content") {
-				if (currentNode.Parent is FigmaFrameEntity frameEntity &&
-					frameEntity.children.Any (s => s is FigmaInstance instance && instance.name.In ("Window/Standard", "Window/Standard Dark"))
-					)
-					return true;
-			}
-
-			if (currentNode is FigmaFrameEntity figmaFrameEntity && figmaFrameEntity.children.Any (s => s is FigmaInstance instance && instance.name.In ("Window/Standard", "Window/Standard Dark"))
-					)
-				return true;
-
-			return false;
+			var isWindow = currentNode.IsWindowOfType (NativeControlType.WindowStandard);
+			return isWindow;
 		}
 
 		static CoreGraphics.CGColor backgroundWindowColor =
@@ -74,10 +79,18 @@ namespace FigmaSharp.Samples
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var view = new View ();
+			var view = GetSimulatedWindow ();
 			var nativeView = view.NativeObject as NSView;
-			nativeView.Configure (currentNode);
 			nativeView.Layer.BackgroundColor = backgroundWindowColor;
+			nativeView.Layer.CornerRadius = 5;
+			nativeView.Configure (currentNode);
+
+			var instance = (FigmaInstance)currentNode;
+			var controlType = instance.ToNativeControlComponentType ();
+			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			}
+
 			return view;
 		}
 
