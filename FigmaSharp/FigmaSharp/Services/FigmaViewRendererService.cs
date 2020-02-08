@@ -195,7 +195,7 @@ namespace FigmaSharp.Services
                 {
                     foreach (var processedNode in NodesProcessed)
                     {
-                        if (processedNode.FigmaNode.IsImageNode ()) {
+                        if (ProcessesImageFromNode (processedNode.FigmaNode)) {
                             ImageVectors.Add (processedNode);
                         }
                     }
@@ -228,6 +228,11 @@ namespace FigmaSharp.Services
                 canvas = fileProvider.Response.document.children.FirstOrDefault ();
             }
             ProcessFromNode (canvas, container, options);
+        }
+
+        public virtual bool ProcessesImageFromNode (FigmaNode node)
+        {
+           return node.IsImageNode ();
         }
 
         private void FileProvider_ImageLinksProcessed(object sender, EventArgs e)
@@ -265,7 +270,6 @@ namespace FigmaSharp.Services
             if (SkipsNode (currentNode, parent, options))
                 return;
 
-            bool scanChildren = true;
             var converter = GetProcessedConverter(currentNode, CustomConverters);
 
             if (converter == null)
@@ -279,17 +283,13 @@ namespace FigmaSharp.Services
                 var currentView = options.IsToViewProcessed ? converter.ConvertTo(currentNode, parent, this) : null;
                 currentProcessedNode = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                 NodesProcessed.Add(currentProcessedNode);
-
-                //TODO: this need to be improved, handles special cases for native controls
-                scanChildren = (currentNode is FigmaInstance && options.ScanChildrenFromFigmaInstances) || converter.ScanChildren (currentNode);
             }
             else
             {
-                scanChildren = false;
                 Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
-            if (scanChildren && currentNode is IFigmaNodeContainer nodeContainer)
+            if (NodeScansChildren (currentNode, converter, options) && currentNode is IFigmaNodeContainer nodeContainer)
             {
                 foreach (var item in nodeContainer.children) {
                     GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
@@ -297,8 +297,22 @@ namespace FigmaSharp.Services
             }
         }
 
+		protected virtual bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+		{
+            if (converter == null)
+                return false;
 
-    }
+			if (!converter.ScanChildren (currentNode)) {
+                return false;
+			}
+
+			if (!options.ScanChildrenFromFigmaInstances && (currentNode is FigmaInstance || currentNode is FigmaComponentEntity)) {
+                return false;
+			}
+
+            return true;
+        }
+	}
 
 	[Obsolete("Use FigmaViewRendererService instead")]
 	public class FigmaFileRendererService : FigmaRendererService
@@ -471,6 +485,6 @@ namespace FigmaSharp.Services
         /// <summary>
         /// Allows configure in rederer process all children subviews from FigmaInstances (Components)
         /// </summary>
-        public bool ScanChildrenFromFigmaInstances { get; set; } = false;
+        public bool ScanChildrenFromFigmaInstances { get; set; } = true;
     }
 }

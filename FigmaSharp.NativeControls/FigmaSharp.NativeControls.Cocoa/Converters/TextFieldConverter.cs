@@ -37,31 +37,35 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public partial class TextFieldConverter : TextFieldConverterBase
+	public class TextFieldConverter : TextFieldConverterBase
 	{
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var instance = (FigmaInstance)currentNode;
+			var figmaInstance = (FigmaFrameEntity) currentNode;
 
-			var textBox = new TextBox ();
+			figmaInstance.TryGetNativeControlType (out var controlType);
+			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox () : new TextBox ();
 			var view = (NSTextField)textBox.NativeObject;
 
-			view.Configure (instance);
+			view.Configure (figmaInstance);
 
-			var figmaInstance = (FigmaInstance)currentNode;
-			var controlType = figmaInstance.ToNativeControlComponentType ();
-			switch (controlType) {
+			figmaInstance.TryGetNativeControlComponentType (out var controlComponentType);
+			switch (controlComponentType) {
 				case NativeControlComponentType.TextFieldSmall:
 				case NativeControlComponentType.TextFieldSmallDark:
+				case NativeControlComponentType.FilterSmall:
+				case NativeControlComponentType.FilterSmallDark:
 					view.ControlSize = NSControlSize.Small;
 					break;
+				case NativeControlComponentType.FilterStandard:
+				case NativeControlComponentType.FilterStandardDark:
 				case NativeControlComponentType.TextFieldStandard:
 				case NativeControlComponentType.TextFieldStandardDark:
 					view.ControlSize = NSControlSize.Regular;
 					break;
 			}
-
-			var texts = instance.children
+	
+			var texts = figmaInstance.children
 				.OfType<FigmaText> ();
 
 			var text = texts.FirstOrDefault (s => s.name == "lbl");
@@ -74,7 +78,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (placeholder != null)
 				view.PlaceholderString = placeholder.characters;
 
-			if (controlType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
+			if (controlComponentType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
 				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
 			}
 

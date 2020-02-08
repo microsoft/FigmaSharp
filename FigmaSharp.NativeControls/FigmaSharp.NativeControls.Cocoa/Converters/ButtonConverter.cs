@@ -42,13 +42,13 @@ namespace FigmaSharp.NativeControls.Cocoa
     {
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaInstance = (FigmaInstance)currentNode;
+            var figmaInstance = (FigmaFrameEntity)currentNode;
 
-			var button = new Button();
+            var button = new Button();
 			var view = (NSButton)button.NativeObject;
 			view.Title = "";
 
-            var controlType = figmaInstance.ToNativeControlComponentType ();
+            figmaInstance.TryGetNativeControlComponentType (out var controlType);
 
             if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark) {
                 view.BezelStyle = NSBezelStyle.HelpButton;
@@ -75,7 +75,6 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup>()
                 .FirstOrDefault(s => s.visible);
@@ -119,7 +118,7 @@ namespace FigmaSharp.NativeControls.Cocoa
         {
             var builder = new StringBuilder();
 
-            var figmaInstance = (FigmaInstance)currentNode.Node;
+            var figmaInstance = (FigmaFrameEntity)currentNode.Node;
             var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
@@ -129,7 +128,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
 
-            var controlType = figmaInstance.ToNativeControlComponentType ();
+            figmaInstance.TryGetNativeControlComponentType (out var controlType);
+
             switch (controlType) {
                 case NativeControlComponentType.ButtonLarge:
                 case NativeControlComponentType.ButtonLargeDark:

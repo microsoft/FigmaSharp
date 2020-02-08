@@ -184,7 +184,7 @@ namespace FigmaSharp.Services
 						var Image = AppContext.Current.GetImage (imageUrl.Item1);
 						foreach (var figmaNodeId in imageUrl.Item2) {
 							var vector = imageFigmaNodes.FirstOrDefault (s => s.FigmaNode.id == figmaNodeId);
-							Console.Write ("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType (), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
+							Console.WriteLine ("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType (), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
 
 							if (vector != null) {
 								AppContext.Current.BeginInvoke (() => {
@@ -192,6 +192,8 @@ namespace FigmaSharp.Services
 										imageView.Image = Image;
 									} else if (vector.View is IImageButton imageButton) {
 										imageButton.Image = Image;
+									} else {
+										Console.WriteLine ("[{0}:{1}:{2}] Error cannot assign the image to the current view {3}", vector.FigmaNode.GetType (), vector.FigmaNode.id, vector.FigmaNode.name, vector.View.GetType ().FullName);
 									}
 								});
 							}

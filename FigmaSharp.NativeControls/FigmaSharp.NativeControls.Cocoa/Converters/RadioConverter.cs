@@ -47,25 +47,22 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaInstance)currentNode;
+			var figmaInstance = (FigmaFrameEntity)currentNode;
 
 			var button = new RadioBox () { Text = "" };
 			var view = (NSButton)button.NativeObject;
 			view.Configure (figmaInstance);
 
-			var controlType = figmaInstance.ToNativeControlComponentType ();
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
-				case NativeControlComponentType.ButtonLarge:
-				case NativeControlComponentType.ButtonLargeDark:
+				case NativeControlComponentType.RadioSingleStandard:
+				case NativeControlComponentType.RadioStandard:
+				case NativeControlComponentType.RadioStandardDark:
 					view.ControlSize = NSControlSize.Regular;
 					break;
-				case NativeControlComponentType.ButtonStandard:
-				case NativeControlComponentType.ButtonStandardDark:
-					view.ControlSize = NSControlSize.Regular;
-					break;
-				case NativeControlComponentType.ButtonSmall:
-				case NativeControlComponentType.ButtonSmallDark:
-					view.ControlSize = NSControlSize.Small;
+				case NativeControlComponentType.RadioSmall:
+				case NativeControlComponentType.RadioSmallDark:
+					view.ControlSize = NSControlSize.Mini;
 					break;
 			}
 
@@ -79,8 +76,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-				.OfType<FigmaInstance> ()
-				.FirstOrDefault (s => s.ToNativeControlType () == NativeControlType.RadioButton);
+		 .FirstOrDefault (s => s.TryGetNativeControlType (out var value) && value == NativeControlType.RadioButton)
+		 as FigmaFrameEntity;
 
 			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;
@@ -104,7 +101,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaInstance)currentNode.Node;
+			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
 			var builder = new StringBuilder ();
 			var name = currentNode.Name;
@@ -119,21 +116,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			builder.Configure (currentNode.Node, name);
 
-			var controlType = figmaInstance.ToNativeControlComponentType ();
-			switch (controlType) {
-				case NativeControlComponentType.ButtonLarge:
-				case NativeControlComponentType.ButtonLargeDark:
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 
+			switch (controlType) {
+				case NativeControlComponentType.RadioSingleStandard:
+				case NativeControlComponentType.RadioStandard:
+				case NativeControlComponentType.RadioStandardDark:
 					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
-				
 					break;
-				case NativeControlComponentType.ButtonStandard:
-				case NativeControlComponentType.ButtonStandardDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
-					break;
-				case NativeControlComponentType.ButtonSmall:
-				case NativeControlComponentType.ButtonSmallDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+				case NativeControlComponentType.RadioSmall:
+				case NativeControlComponentType.RadioSmallDark:
+					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Mini);
 					break;
 			}
 
@@ -143,9 +136,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-				.OfType<FigmaInstance> ()
-				.FirstOrDefault (s => s.ToNativeControlType () == NativeControlType.RadioButton);
-
+			 .FirstOrDefault (s => s.TryGetNativeControlType (out var value) && value == NativeControlType.RadioButton)
+			 as FigmaFrameEntity;
+		
 			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;
 			}

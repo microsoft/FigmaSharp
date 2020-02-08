@@ -28,12 +28,11 @@
 using FigmaSharp.Models;
 namespace FigmaSharp.NativeControls.Base
 {
-	public abstract class DisclosureTriangleConverterBase : FigmaInstanceConverter
+	public abstract class DisclosureTriangleConverterBase : FigmaNativeControlConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.DisclosureTriange;
-			return result;
-		}
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.DisclosureTriange;
+        }
 	}
 }

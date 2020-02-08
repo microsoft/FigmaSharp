@@ -52,7 +52,7 @@ namespace FigmaSharp.Cocoa.Converters
                         //we need to add this to our service
                     } else if (fill.type == "SOLID") {
                         if (fill.visible) {
-                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
+                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
                         }
                     } else {
                         Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");

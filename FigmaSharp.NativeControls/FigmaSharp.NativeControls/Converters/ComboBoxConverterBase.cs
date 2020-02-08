@@ -29,12 +29,11 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class ComboBoxConverterBase : FigmaInstanceConverter
+    public abstract class ComboBoxConverterBase : FigmaNativeControlConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.ComboBox;
-            return result;
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.ComboBox;
         }
     }
 }

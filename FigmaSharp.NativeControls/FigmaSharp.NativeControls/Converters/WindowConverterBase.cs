@@ -29,30 +29,27 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class WindowStandardConverterBase : FigmaInstanceConverter
+    public abstract class WindowStandardConverterBase : FigmaNativeControlConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.WindowStandard;
-            return result;
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.WindowStandard;
         }
     }
 
-    public abstract class WindowSheetConverterBase : FigmaInstanceConverter
+    public abstract class WindowSheetConverterBase : FigmaNativeControlConverter
     {
         public override bool CanConvert (FigmaNode currentNode)
         {
-            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.WindowSheet;
-            return result;
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.WindowSheet;
         }
     }
 
-    public abstract class WindowPanelConverterBase : FigmaInstanceConverter
+    public abstract class WindowPanelConverterBase : FigmaNativeControlConverter
     {
         public override bool CanConvert (FigmaNode currentNode)
         {
-            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.WindowPanel;
-            return result;
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.WindowPanel;
         }
     }
 }

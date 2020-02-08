@@ -28,10 +28,8 @@
 
 namespace FigmaSharp.Views
 {
-	public interface ISearchBox : IView
+	public interface ISearchBox : ITextBox, IView
 	{
-		string Text { get; set; }
-		string PlaceHolderString { get; set; }
-		Color ForegroundColor { get; set; }
+		
 	}
 }

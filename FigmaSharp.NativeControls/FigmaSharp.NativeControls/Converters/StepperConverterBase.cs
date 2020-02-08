@@ -28,12 +28,11 @@
 using FigmaSharp.Models;
 namespace FigmaSharp.NativeControls.Base
 {
-	public abstract class StepperConverterBase : FigmaInstanceConverter
+	public abstract class StepperConverterBase : FigmaNativeControlConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.Stepper;
-			return result;
-		}
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.Stepper;
+        }
 	}
 }

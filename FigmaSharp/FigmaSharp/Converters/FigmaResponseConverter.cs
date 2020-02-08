@@ -58,7 +58,12 @@ namespace FigmaSharp
                 }
                 if (objectType == typeof(FigmaComponent))
                 {
-                    return jsonObject.ToObject<FigmaComponent>();
+                    //var obj = jsonObject.ToObject<FigmaComponent>();
+                    serializer.MissingMemberHandling = MissingMemberHandling.Ignore;
+                    serializer.NullValueHandling = NullValueHandling.Ignore;
+                    figmaObject = jsonObject.ToObject<FigmaComponent> ();
+                    serializer.Populate (jsonObject.CreateReader (), figmaObject);
+                    return figmaObject;
                 }
 
                 throw new NotImplementedException(objectType.ToString ());

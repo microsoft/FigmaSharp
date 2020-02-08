@@ -18,6 +18,7 @@ namespace FigmaSharp.NativeControls
 		ProgressSpinner = 8,
         DisclosureTriange = 9,
         Stepper = 10,
+		Label = 11,
         WindowStandard = 50,
 		WindowSheet = 51,
 		WindowPanel = 52,
@@ -42,6 +43,11 @@ namespace FigmaSharp.NativeControls
         TextFieldStandardDark = 22,
         TextFieldSmallDark = 23,
 
+        MultilineTextFieldStandard = 25,
+        MultilineTextFieldStandardDark = 26,
+        MultilineTextFieldSmall = 27,
+        MultilineTextFieldSmallDark = 28,
+
         FilterSmallDark = 30,
         FilterStandardDark =31,
         FilterSmall = 32,
@@ -63,6 +69,11 @@ namespace FigmaSharp.NativeControls
         PopUpButtonStandard = 61,
         PopUpButtonSmallDark = 62,
         PopUpButtonStandardDark = 63,
+
+        LabelStandard = 65,
+        LabelSmall = 66,
+        LabelStandardDark = 67,
+        LabelSmallDark = 68,
 
         ComboBoxStandard = 70,
         ComboBoxSmall = 71,
@@ -123,29 +134,39 @@ namespace FigmaSharp.NativeControls
 
             ( "Button/Help", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
             ( "Button/Help Dark", NativeControlComponentType.ButtonHelpDark,  NativeControlType.Button),
+            ( "Button/Help HC", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
 
             ( "Text Field/Standard", NativeControlComponentType.TextFieldStandard, NativeControlType.TextField),
             ( "Text Field/Small", NativeControlComponentType.TextFieldSmall, NativeControlType.TextField),
             ( "Text Field/Standard Dark", NativeControlComponentType.TextFieldStandardDark, NativeControlType.TextField),
             ( "Text Field/Small Dark", NativeControlComponentType.TextFieldSmallDark, NativeControlType.TextField),
 
-            ( "92af27bcd788e4f3a291b8776adda4a2efc060ef", NativeControlComponentType.FilterSmallDark, NativeControlType.Filter),
-            ( "be1d8114b486b8e1fe1e8a01c7521e806d856c5d", NativeControlComponentType.FilterStandardDark, NativeControlType.Filter),
-            ( "64b610597e8a6ca2a54f66f6e810457d9d12c633", NativeControlComponentType.FilterSmall, NativeControlType.Filter),
-            ( "ebb7f47060094711b295e18af548a27df0a1c2ce", NativeControlComponentType.FilterStandard, NativeControlType.Filter),
+            ( "Multiline Text Field/Standard", NativeControlComponentType.MultilineTextFieldStandard, NativeControlType.TextField),
+            ( "Multiline Text Field/Small", NativeControlComponentType.MultilineTextFieldSmall, NativeControlType.TextField),
+            ( "Multiline Text Field/Standard Dark", NativeControlComponentType.MultilineTextFieldStandardDark, NativeControlType.TextField),
+            ( "Multiline Text Field/Small Dark", NativeControlComponentType.MultilineTextFieldSmallDark, NativeControlType.TextField),
 
-            ( "708b4ca16b3b72bfb1c9ec9a25071b74744f5cf1", NativeControlComponentType.RadioSmallDark, NativeControlType.RadioButton),
-            ( "844a988e2231ee8c794221e1a8b04522649caca4", NativeControlComponentType.RadioStandardDark, NativeControlType.RadioButton),
-            ( "b71c0bed2374cf42b3990fcff961b577d0d912b4", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
-            ( "be9ae04fb622ea797dc9659e6d3f05987b8567c2", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
+            ( "Search/Small Dark", NativeControlComponentType.FilterSmallDark, NativeControlType.Filter),
+            ( "Search/Standard Dark", NativeControlComponentType.FilterStandardDark, NativeControlType.Filter),
+            ( "Search/Small", NativeControlComponentType.FilterSmall, NativeControlType.Filter),
+            ( "Search/Standard", NativeControlComponentType.FilterStandard, NativeControlType.Filter),
+
+            ( "Radio/Small Dark", NativeControlComponentType.RadioSmallDark, NativeControlType.RadioButton),
+            ( "Radio/Standard Dark", NativeControlComponentType.RadioStandardDark, NativeControlType.RadioButton),
+            ( "Radio/Small", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
+            ( "Radio/Standard", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
+			( "Radio/Small HC", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
+            ( "Radio/Standard HC", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
 
             ( "92f3aa0d8397ca5f0bf76e818e2300152394836a", NativeControlComponentType.RadioSingleStandard, NativeControlType.RadioButton),
 
-            ( "bea94829972c38261c31abceec35bb7cfd2ab440", NativeControlComponentType.CheckboxSmallDark, NativeControlType.CheckBox),
-            ( "26e8dc2aa029ec68aa6c42d12935dadb85017bde", NativeControlComponentType.CheckboxStandardDark, NativeControlType.CheckBox),
-            ( "0ad661c90900c3a974cf1dd819614fa4704ee4ad", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
-            ( "88c2e67236d56db9147ffa6f1034ba203b794393", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
-
+            ( "Checkbox/Standard", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
+            ( "Checkbox/Standard HC", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
+            ( "Checkbox/Standard Dark", NativeControlComponentType.CheckboxStandardDark, NativeControlType.CheckBox),
+            ( "Checkbox/Small", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
+			( "Checkbox/Small HC", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
+            ( "Checkbox/Small Dark", NativeControlComponentType.CheckboxSmallDark, NativeControlType.CheckBox),
+          
 			//Pop Up Button
             ( "Pop Up Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
             ( "Pop Up Button/Standard Dark", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
@@ -165,10 +186,10 @@ namespace FigmaSharp.NativeControls
             ( "Pull Down Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
 
 			//General
-            ( "3bc48ea321b06cfa5a05801c9d33d2f3e1b6095a", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
-            ( "9d78fd2ff7b81a8cf56115504bab1bf8e3e413e9", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
-            ( "cdb09381b061dddfe1f02fcad38a247b3724d562", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
-            ( "97d0aa7c49386dd69f430b29bd82e89038e386d4", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
+            ( "Combo Box/Standard", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
+            ( "Combo Box/Small", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
+            ( "Combo Box/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
+            ( "Combo Box/Small Dark", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
 
             ( "Progress Spinner/Small", NativeControlComponentType.ProgressSpinnerSmall, NativeControlType.ProgressSpinner),
             ( "Progress Spinner/Small Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
@@ -180,11 +201,20 @@ namespace FigmaSharp.NativeControls
             ( "Disclosure Triangle/Standard", NativeControlComponentType.DisclosureTriangleStandard, NativeControlType.DisclosureTriange),
             ( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.DisclosureTriange),
 
-             ( "Stepper/Standard", NativeControlComponentType.StepperStandard, NativeControlType.Stepper),
+            ( "Stepper/Standard", NativeControlComponentType.StepperStandard, NativeControlType.Stepper),
             ( "Stepper/Standard Dark", NativeControlComponentType.StepperStandardDark, NativeControlType.Stepper),
-               ( "Stepper/Small", NativeControlComponentType.StepperSmall, NativeControlType.Stepper),
+            ( "Stepper/Small", NativeControlComponentType.StepperSmall, NativeControlType.Stepper),
             ( "Stepper/Small Dark", NativeControlComponentType.StepperSmallDark, NativeControlType.Stepper),
 
+
+            ( "Label/Standard", NativeControlComponentType.LabelStandard, NativeControlType.Label),
+            ( "Label/Standard Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
+            ( "Label/Small", NativeControlComponentType.LabelSmall, NativeControlType.Label),
+            ( "Label/Small Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
+
+            ( "Label/Standard HC Dark", NativeControlComponentType.LabelStandard, NativeControlType.Label),
+            ( "Label/Secondary HC Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
+            ( "Label/Small HC Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
 
             ( "Window/Standard", NativeControlComponentType.WindowStandard, NativeControlType.WindowStandard),
             ( "Window/Standard Dark", NativeControlComponentType.WindowStandardDark, NativeControlType.WindowStandard),
@@ -229,46 +259,95 @@ namespace FigmaSharp.NativeControls
         
         public static bool IsDialog (this FigmaNode figmaNode)
         {
-            return figmaNode is FigmaInstance instance &&
-				(
-				instance.ToNativeControlType () == NativeControlType.WindowPanel ||
-                instance.ToNativeControlType () == NativeControlType.WindowSheet ||
-                instance.ToNativeControlType () == NativeControlType.WindowStandard
-                );
+            if (TryGetNativeControlType (figmaNode, out var value) &&
+				(value == NativeControlType.WindowPanel || value == NativeControlType.WindowSheet || value == NativeControlType.WindowStandard)) {
+                return true;
+            }
+            return false;
         }
 
         public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)
         {
-            return  figmaNode is FigmaInstance instance && instance.ToNativeControlType () == controlType;
+			if (figmaNode.TryGetNativeControlType (out var value) && value == controlType) {
+                return true;
+			}
+            return false;
         }
 
-        public static NativeControlComponentType ToNativeControlComponentType (this FigmaInstance figmaInstance)
+        public static bool TryGetNativeControlComponentType (this FigmaNode node, out NativeControlComponentType nativeControlComponentType)
         {
-            if (figmaInstance.Component != null)
-            {
-                var found = data.FirstOrDefault (s => s.name == figmaInstance.Component.key || s.name == figmaInstance.Component.name);
-				if (!found.Equals (default)) {
-                    return found.nativeControlComponentType;
+            nativeControlComponentType = NativeControlComponentType.NotDefined;
+            if (node is FigmaComponentEntity) {
+                nativeControlComponentType = GetNativeControlComponentType (node.name);
+                if (nativeControlComponentType == NativeControlComponentType.NotDefined) {
+                    nativeControlComponentType = GetNativeControlComponentType (node.id);
                 }
-				
-                Console.WriteLine("Component Key not found: {0} - {1}", figmaInstance.Component.key, figmaInstance.Component.name);
-                //throw new KeyNotFoundException(figmaInstance.Component.key);
+                return nativeControlComponentType != NativeControlComponentType.NotDefined;
             }
-            return NativeControlComponentType.NotDefined;
+
+            if (node is FigmaInstance figmaInstance && figmaInstance.Component != null) {
+                nativeControlComponentType = figmaInstance.Component.ToNativeControlComponentType ();
+                return nativeControlComponentType != NativeControlComponentType.NotDefined;
+            }
+
+            return false;
         }
 
-        public static NativeControlType ToNativeControlType (this FigmaInstance figmaInstance)
+        public static bool TryGetNativeControlType (this FigmaNode node, out NativeControlType nativeControlType)
         {
-            if (figmaInstance.Component != null) {
-                var found = data.FirstOrDefault (s => s.name == figmaInstance.Component.key || s.name == figmaInstance.Component.name);
-                if (!found.Equals (default)) {
-                    return found.nativeControlType;
+            nativeControlType = NativeControlType.NotDefined;
+			if (node is FigmaComponentEntity) {
+                nativeControlType = GetNativeControlType (node.name);
+				if (nativeControlType == NativeControlType.NotDefined) {
+                    nativeControlType = GetNativeControlType (node.id);
                 }
-
-                Console.WriteLine ("Component Key not found: {0} - {1}", figmaInstance.Component.key, figmaInstance.Component.name);
-                //throw new KeyNotFoundException(figmaInstance.Component.key);
+                return nativeControlType != NativeControlType.NotDefined;
             }
-            return NativeControlType.NotDefined;
+
+            if (node is FigmaInstance figmaInstance && figmaInstance.Component != null) {
+                nativeControlType = figmaInstance.Component.ToNativeControlType ();
+                return nativeControlType != NativeControlType.NotDefined;
+            }
+
+            return false;
+        }
+
+        public static NativeControlComponentType ToNativeControlComponentType (this FigmaComponent figmaComponent)
+        {
+            var type = GetNativeControlComponentType (figmaComponent.name);
+            if (type == NativeControlComponentType.NotDefined) {
+                return GetNativeControlComponentType (figmaComponent.key);
+            }
+            return type;
+        }
+
+        public static NativeControlType ToNativeControlType (this FigmaComponent figmaComponent)
+        {
+            var type = GetNativeControlType (figmaComponent.name);
+			if (type == NativeControlType.NotDefined) {
+                return GetNativeControlType (figmaComponent.key);
+            }
+            return type;
+        }
+
+		static NativeControlType GetNativeControlType (string name)
+		{
+            var found = data.FirstOrDefault (s => s.name == name || s.name == name);
+            if (found.Equals (default)) {
+                Console.WriteLine ("Component Key not found: {0}", name);
+                return NativeControlType.NotDefined;
+            }
+            return found.nativeControlType;
+        }
+
+        static NativeControlComponentType GetNativeControlComponentType (string name)
+        {
+            var found = data.FirstOrDefault (s => s.name == name || s.name == name);
+            if (found.Equals (default)) {
+                Console.WriteLine ("Component Key not found: {0}", name);
+                return NativeControlComponentType.NotDefined;
+            }
+            return found.nativeControlComponentType;
         }
 
         //public static NativeControlComponentType ToControlType (this FigmaInstance figmaInstance)
