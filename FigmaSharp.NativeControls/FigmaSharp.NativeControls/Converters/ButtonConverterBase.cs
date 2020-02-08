@@ -29,13 +29,11 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-	public abstract class ButtonConverterBase : FigmaInstanceConverter
+	public abstract class ButtonConverterBase : FigmaNativeControlConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			var result = currentNode is FigmaInstance figmaInstance
-				&& figmaInstance.ToNativeControlType () == NativeControlType.Button;
-			return result;
-		}
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.Button;
+        }
 	}
 }

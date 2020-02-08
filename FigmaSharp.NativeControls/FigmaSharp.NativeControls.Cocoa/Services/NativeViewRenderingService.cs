@@ -5,6 +5,8 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.NativeControls;
 using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp;
+
 namespace FigmaSharp.Services
 {
 	public class NativeViewRenderingService : FigmaViewRendererService
@@ -23,6 +25,19 @@ namespace FigmaSharp.Services
 			var processedNode = FindProcessedNodeById (node.id);
 			Recursively (processedNode);
 			mainWindow.Content = processedNode.View;
+		}
+
+		public override bool ProcessesImageFromNode (FigmaNode node)
+		{
+ 			return node.IsImageNode () || node.IsFigmaImageViewNode ();
+		}
+
+		protected override bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+		{
+			if (currentNode.IsFigmaImageViewNode ())
+				return false;
+
+			return base.NodeScansChildren (currentNode, converter, options);
 		}
 
 		protected override bool SkipsNode (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)

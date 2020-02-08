@@ -28,12 +28,11 @@
 using FigmaSharp.Models;
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class TextFieldConverterBase : FigmaInstanceConverter
+    public abstract class TextFieldConverterBase : FigmaNativeControlConverter
     {
-        public override bool CanConvert(FigmaNode currentNode)
+        public override bool CanConvert (FigmaNode currentNode)
         {
-            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.TextField;
-            return result;
+            return currentNode.TryGetNativeControlType (out var value) && (value == NativeControlType.TextField || value == NativeControlType.Filter);
         }
     }
 }

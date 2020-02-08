@@ -35,11 +35,10 @@ namespace FigmaSharp.Samples
 			nativeView.Configure (frame);
 			nativeView.Layer.BackgroundColor = backgroundWindowColor;
 
-			var instance = (FigmaInstance)currentNode;
-			var controlType = instance.ToNativeControlComponentType ();
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			}
+			//var controlType = instance.ToNativeControlComponentType ();
+			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+			//	nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			//}
 
 			return view;
 		}
@@ -87,8 +86,7 @@ namespace FigmaSharp.Samples
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
 
-			var instance = (FigmaInstance)currentNode;
-			var controlType = instance.ToNativeControlComponentType ();
+			currentNode.TryGetNativeControlComponentType (out var controlType);
 			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
 			}

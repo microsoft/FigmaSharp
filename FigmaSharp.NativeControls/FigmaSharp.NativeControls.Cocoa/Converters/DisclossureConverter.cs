@@ -41,13 +41,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var instance = (FigmaInstance)currentNode;
+			var instance = (FigmaFrameEntity)currentNode;
 			var view = new DisclosureTriangle ();
 			var nativeView = (FNSButton)view.NativeObject;
 			nativeView.Configure (instance);
 
-			var figmaInstance = (FigmaInstance)currentNode;
-			var controlType = figmaInstance.ToNativeControlComponentType ();
+			instance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.DisclosureTriangleStandard:
 				case NativeControlComponentType.DisclosureTriangleStandardDark:
@@ -63,7 +62,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaInstance)currentNode.Node;
+			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
 			StringBuilder builder = new StringBuilder ();
 			string name = currentNode.Name;
@@ -78,8 +77,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.WriteEquality (name, nameof (NSButton.Title), CodeGenerationHelpers.StringEmpty);
 			builder.WriteMethod (name, nameof (NSButton.Highlight), false);
 
-			var controlType = figmaInstance.ToNativeControlComponentType ();
-
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.DisclosureTriangleStandard:
 				case NativeControlComponentType.DisclosureTriangleStandardDark:

@@ -43,10 +43,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var view = new NSComboBox ();
-			var figmaInstance = (FigmaInstance)currentNode;
+			var figmaInstance = (FigmaFrameEntity)currentNode;
 			view.Configure (currentNode);
 
-			var controlType = figmaInstance.ToNativeControlComponentType ();
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.ComboBoxSmall:
 				case NativeControlComponentType.ComboBoxSmallDark:
@@ -67,7 +67,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaInstance)currentNode.Node;
+			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
 			var builder = new StringBuilder ();
 			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -80,7 +80,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
 			builder.WriteEquality (name, nameof (NSButton.Title), string.Empty, true);
 
-			var controlType = figmaInstance.ToNativeControlComponentType ();
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.PopUpButtonSmall:
 				case NativeControlComponentType.PopUpButtonSmallDark:

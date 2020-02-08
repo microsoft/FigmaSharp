@@ -8,6 +8,14 @@ namespace FigmaSharp
 {
     public static class Extensions
     {
+		public static bool IsFigmaImageViewNode (this FigmaNode node)
+		{
+			if (node.name.Contains ("!image")) {
+                return true;
+			}
+            return false;
+        }
+
 		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow,  params string[] path)
 		{
 			RenderInWindow(sender, mainWindow, new FigmaViewRendererServiceOptions(), path);

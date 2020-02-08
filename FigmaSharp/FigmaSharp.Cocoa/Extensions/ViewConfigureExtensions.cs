@@ -16,6 +16,7 @@ namespace FigmaSharp.Cocoa
             Configure(view, (FigmaNode)child);
 		
 			view.AlphaValue = child.opacity;
+
 			view.Layer.BackgroundColor = child.backgroundColor.MixOpacity(child.opacity).ToCGColor();
 		}
 
@@ -24,10 +25,10 @@ namespace FigmaSharp.Cocoa
             view.Hidden = !child.visible;
             view.WantsLayer = true;
 
-            if (child is IAbsoluteBoundingBox container)
-            {
-                view.SetFrameSize(new CGSize(container.absoluteBoundingBox.Width, container.absoluteBoundingBox.Height));
-            }
+            //if (child is IAbsoluteBoundingBox container)
+            //{
+            //    view.SetFrameSize(new CGSize(container.absoluteBoundingBox.Width, container.absoluteBoundingBox.Height));
+            //}
         }
 
         public static void Configure(this NSView view, FigmaElipse elipse)

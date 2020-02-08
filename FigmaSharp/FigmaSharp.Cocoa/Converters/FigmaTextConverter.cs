@@ -50,6 +50,7 @@ namespace FigmaSharp.Cocoa.Converters
 			textField.Font = figmaText.style.ToNSFont();
 			label.Text = figmaText.characters;
             textField.Configure(figmaText);
+            textField.Configure (currentNode);
             return label;
         }
 

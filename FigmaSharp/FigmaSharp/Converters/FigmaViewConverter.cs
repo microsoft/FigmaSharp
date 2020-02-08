@@ -40,7 +40,7 @@ namespace FigmaSharp
 
     }
 
-	public abstract class FigmaInstanceConverter : FigmaViewConverter
+	public abstract class FigmaNativeControlConverter : FigmaViewConverter
     {
         public override bool ScanChildren(FigmaNode currentNode)
         {

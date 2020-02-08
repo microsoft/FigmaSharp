@@ -29,12 +29,11 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Base
 {
-    public abstract class CheckConverterBase : FigmaInstanceConverter
+    public abstract class CheckConverterBase : FigmaNativeControlConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            var result = currentNode is FigmaInstance figmaInstance && figmaInstance.ToNativeControlType () == NativeControlType.CheckBox;
-            return result;
+            return currentNode.TryGetNativeControlType (out var value) && value == NativeControlType.CheckBox;
         }
     }
 }

@@ -46,7 +46,13 @@ namespace FigmaSharp.Cocoa.Converters
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var currengroupView = new FNSView();
+            IView view;
+            if (rendererService.ProcessesImageFromNode (currentNode))
+                view = new ImageView ();
+			else
+                view  = new View ();
+
+            var currengroupView = view.NativeObject as NSView;
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
             currengroupView.Configure(currentNode);
 
@@ -67,7 +73,7 @@ namespace FigmaSharp.Cocoa.Converters
                 }
             }
 		
-            return new View(currengroupView);
+            return view;
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

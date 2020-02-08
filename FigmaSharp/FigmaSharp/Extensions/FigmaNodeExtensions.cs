@@ -79,6 +79,9 @@ namespace FigmaSharp
 
         public static bool IsImageNode (this FigmaNode node)
         {
+			if (node.GetType () == typeof (FigmaVectorEntity)) {
+                return true;
+			}
 			if (node is FigmaVectorEntity vectorEntity && vectorEntity.IsVectorImage ()) {
                 return true;
 			}
