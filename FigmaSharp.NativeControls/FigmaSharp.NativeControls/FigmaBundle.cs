@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+
 using FigmaSharp.Models;
-using System.Collections.Generic;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
@@ -127,16 +129,19 @@ namespace FigmaSharp
 
 		#region Static Methods
 
-		public static FigmaBundle Create (string fileId, string directoryPath)
+		public static FigmaBundle Create (IFigmaFileProvider fileProvider, string directoryPath)
 		{
 			var bundle = new FigmaBundle () {
 				DirectoryPath = directoryPath
 			};
-			bundle.Manifest = new FigmaManifest () {
+
+			bundle.Manifest = new FigmaManifest() {
 				ApiVersion = AppContext.Current.Version,
-				RemoteApiVersion = AppContext.Api.Version.ToString (),
+				RemoteApiVersion = AppContext.Api.Version.ToString(),
 				Date = DateTime.Now,
-				FileId = fileId
+				FileId = fileProvider.Response.document.id,
+				DocumentTitle = fileProvider.Response.name
+				DocumentVersion = fileProvider.Response.version
 			};
 
 			return bundle;

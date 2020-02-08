@@ -279,7 +279,7 @@ namespace MonoDevelop.Figma.Commands
 
 			//Bundle generation - We generate an empty bundle and store in the folder
 			var fullBundlePath = Path.Combine (figmaFolder, bundleName);
-			var bundle = FigmaBundle.Create (fileId, fullBundlePath);
+			var bundle = FigmaBundle.Create (fileProvider, fullBundlePath);
 
 			//generate .figma file
 			bundle.LoadLocalDocument ();
