@@ -11,11 +11,11 @@ namespace FigmaSharp.Cocoa
 	{
 		public static void Configure (this StringBuilder builder, FigmaNode figmaNode, string name)
 		{
+			builder.WriteEquality (name, nameof (NSView.WantsLayer), true);
+
 			if (!figmaNode.visible) {
 				builder.WriteEquality (name, nameof (NSView.Hidden), !figmaNode.visible);
 			}
-
-			builder.WriteEquality (name, nameof (NSView.WantsLayer), true);
 
 			//if (drawFrameSize && figmaNode is IAbsoluteBoundingBox container) {
 			//	var sizeConstructor = typeof (CGSize).GetConstructor (
@@ -60,8 +60,7 @@ namespace FigmaSharp.Cocoa
 		{
 			//Configure(builder, name, (FigmaNode)text);
 
-			var alignment = FigmaExtensions.ToNSTextAlignment (text.style.textAlignHorizontal);
-
+		
 			var propertyAttributedStringValue = $"{name}.{nameof (NSTextField.AttributedStringValue)}";
 			var propertyTextColor = $"{name}.{nameof (NSTextField.TextColor)}";
 			var propertyFont = $"{name}.{nameof (NSTextField.Font)}";
@@ -69,7 +68,7 @@ namespace FigmaSharp.Cocoa
 			var propertyAlphaValue = $"{name}.{nameof (NSTextField.AlphaValue)}";
 
 			builder.AppendLine (string.Format ("{0} = {1};", propertyFont, text.style.ToNSFontDesignerString ()));
-			builder.AppendLine (string.Format ("{0} = {1};", propertyAlignment, alignment.ToDesignerString ()));
+		
 			builder.AppendLine (string.Format ("{0} = {1};", propertyAlphaValue, text.opacity.ToDesignerString ()));
 
 			//label.LineBreakMode = NSLineBreakMode.ByWordWrapping;

@@ -132,7 +132,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 					break;
 			}
 
-			var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
+			var label = figmaInstance.children.OfType<FigmaText> ()
+				.FirstOrDefault (s => s.name == "lbl" && s.visible);
 			if (label != null)
 				builder.WriteEquality (name, nameof (NSButton.Title), label?.characters ?? "", true);
 
