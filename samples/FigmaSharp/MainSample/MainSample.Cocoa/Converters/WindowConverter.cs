@@ -15,8 +15,8 @@ namespace FigmaSharp.Samples
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			var isWindow = currentNode.IsWindowOfType (NativeControlType.WindowSheet)
-				|| currentNode.IsWindowOfType (NativeControlType.WindowPanel);
+			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowSheet)
+				|| currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
 			return isWindow;
 		}
 
@@ -33,13 +33,12 @@ namespace FigmaSharp.Samples
 		
 			var nativeView = view.NativeObject as NSView;
 			nativeView.Configure (frame);
-			nativeView.Layer.BackgroundColor = backgroundWindowColor;
 
-			//var controlType = instance.ToNativeControlComponentType ();
-			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-			//	nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			//}
-
+			var firstElement = currentNode.GetDialogInstanceFromParentContainer ();
+			firstElement.TryGetNativeControlComponentType (out var controlType);
+			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			}
 			return view;
 		}
 
@@ -69,28 +68,26 @@ namespace FigmaSharp.Samples
 				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.WindowStandard);
 			}
 
-			var isWindow = currentNode.IsWindowOfType (NativeControlType.WindowStandard);
+			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowStandard);
 			return isWindow;
 		}
-
-		static CoreGraphics.CGColor backgroundWindowColor =
-			(true ?
-			NSColor.FromRgb (red: 0.96f, green: 0.96f, blue: 0.96f) :
-			NSColor.FromRgb (red: 0.18f, green: 0.18f, blue: 0.18f)).CGColor;
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var view = GetSimulatedWindow ();
 			var nativeView = view.NativeObject as NSView;
-			nativeView.Layer.BackgroundColor = backgroundWindowColor;
+			
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
 
-			currentNode.TryGetNativeControlComponentType (out var controlType);
+			var firstElement = currentNode.GetDialogInstanceFromParentContainer ();
+			firstElement.TryGetNativeControlComponentType (out var controlType);
 			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 				nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+				nativeView.Layer.BackgroundColor = NSColor.FromRgb (red: 0.18f, green: 0.18f, blue: 0.18f).CGColor;
+			}  else {
+				nativeView.Layer.BackgroundColor = NSColor.FromRgb (red: 0.96f, green: 0.96f, blue: 0.96f).CGColor;
 			}
-
 			return view;
 		}
 
