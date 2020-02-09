@@ -40,7 +40,7 @@ namespace FigmaSharp.Designer
 {
 	public class FigmaDesignerSession
 	{
-		readonly FigmaFileRendererService rendererService;
+		readonly FigmaViewRendererService rendererService;
 		readonly FigmaViewRendererDistributionService distributionService;
 		readonly IFigmaFileProvider fileProvider;
 
@@ -51,7 +51,7 @@ namespace FigmaSharp.Designer
 		public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
 		public ProcessedNode[] MainViews => distributionService.MainViews;
 
-		public FigmaDesignerSession (IFigmaFileProvider figmaFileProvider, FigmaFileRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
+		public FigmaDesignerSession (IFigmaFileProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, FigmaViewRendererDistributionService figmaViewRendererDistributionService)
 		{
 			fileProvider = figmaFileProvider;
 			rendererService = figmaViewRendererService;
