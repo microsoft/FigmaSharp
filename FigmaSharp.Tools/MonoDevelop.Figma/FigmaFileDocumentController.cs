@@ -100,7 +100,7 @@ namespace MonoDevelop.Figma
         }
 
         FigmaLocalFileProvider fileProvider;
-        FigmaFileRendererService rendererService;
+        NativeViewRenderingService rendererService;
         FigmaViewRendererDistributionService distributionService;
 
 		protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
@@ -123,7 +123,7 @@ namespace MonoDevelop.Figma
                 var converters = NativeControlsContext.Current.GetConverters ();
                 var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
 
-                rendererService = new FigmaFileRendererService (fileProvider, converters);
+                rendererService = new NativeViewRenderingService (fileProvider, converters);
                 rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededWindowConverter ());
                 rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededSheetDialogConverter ());
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
