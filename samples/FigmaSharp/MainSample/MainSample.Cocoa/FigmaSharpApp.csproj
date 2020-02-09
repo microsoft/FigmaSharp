@@ -62,7 +62,6 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Views\" />
-    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -93,7 +92,6 @@
     <Compile Include="FileContainerView.designer.cs">
       <DependentUpon>FileContainerView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Converters\WindowConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard">

@@ -74,6 +74,7 @@
     <Compile Include="Services\NativeViewRenderingService.cs" />
     <Compile Include="Converters\StepperConverter.cs" />
     <Compile Include="Converters\DisclossureConverter.cs" />
+    <Compile Include="Converters\EmbededWindowConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
