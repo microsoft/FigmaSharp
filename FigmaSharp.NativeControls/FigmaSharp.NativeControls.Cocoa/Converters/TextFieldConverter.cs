@@ -69,7 +69,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var texts = figmaInstance.children
 				.OfType<FigmaText> ();
 
-			var text = texts.FirstOrDefault (s => s.name == "lbl");
+			var text = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
 			if (text != null) {
 				textBox.Text = text.characters;
 				view.Configure (text);
@@ -102,11 +102,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var texts = instance.children.OfType<FigmaText> ();
 
-			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl");
+			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
 
 			if (figmaTextNode != null) {
 				var text = figmaTextNode.characters ?? string.Empty;
-				
 				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
 				//builder.Configure (figmaTextNode, name);
 			}
