@@ -256,6 +256,13 @@ namespace MonoDevelop.Figma.Commands
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
 			var projectBundle = CreateBundleFromProject (currentProject, fileId, fileId, fileProvider, version);
 
+			//set namespace
+			if (currentProject is DotNetProject dotNetProject) {
+				projectBundle.Namespace = $"{dotNetProject.DefaultNamespace}.FigmaBundles" ;
+			} else {
+				projectBundle.Namespace = $"{GetType ().Namespace}.FigmaBundles"; ;
+			}
+
 			//to generate all layers we need a code renderer
 			var converters = NativeControlsContext.Current.GetConverters (true);
 			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
