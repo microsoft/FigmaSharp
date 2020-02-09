@@ -69,8 +69,6 @@ namespace FigmaSharp.Services
 					MainNode = node;
 					ParentMainNode = parent;
 				}
-			} else {
-				builder.AppendLine ();
 			}
 
 			FigmaCodeNode calculatedParentNode = null;
@@ -108,6 +106,7 @@ namespace FigmaSharp.Services
 						identifiers.Add (identifier, lastIndex);
 					}
 
+					builder.AppendLine ();
 					builder.AppendLine ($"// View: {node.Name} NodeName: {node.Node.name} NodeType: {node.Node.type} NodeId: {node.Node.id}");
 					builder.AppendLine ();
 

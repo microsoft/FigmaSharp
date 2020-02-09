@@ -25,7 +25,7 @@ namespace FigmaSharp
 
 			//restore this state
 			var builder = new System.Text.StringBuilder ();
-			builder.AppendLine ("//HACK: Temporal Window Frame Size");
+			//builder.AppendLine ("//HACK: Temporal Window Frame Size");
 
 			if (FigmaNode is IFigmaNodeContainer container) {
 				var properties = container.children
@@ -42,7 +42,15 @@ namespace FigmaSharp
 				AppKit.NSWindowStyle.Closable.GetFullName ()
 			));
 
-			builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), "Bundle Figma Document", inQuotes: true);
+			var windowComponent = FigmaNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
+			if (windowComponent != null) {
+				if (windowComponent.IsWindowOfType (NativeControlType.WindowStandard)) {
+					var title = windowComponent.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "window title");
+					if (title != null) {
+						builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
+					}
+				}
+			}
 
 			if (FigmaNode is IAbsoluteBoundingBox box) {
 				builder.WriteEquality (frameEntity, null, nameof (AppKit.NSWindow.Frame), instanciate: true);
