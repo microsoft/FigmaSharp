@@ -91,7 +91,7 @@ namespace FigmaSharp.Designer
 
 		public FigmaNode GetModel (IView e)
 		{
-			var processed = ProcessedNodes.FirstOrDefault (s => s.View.NativeObject == e.NativeObject);
+			var processed = ProcessedNodes.FirstOrDefault (s => s.View != null && s.View.NativeObject == e.NativeObject);
 			return processed?.FigmaNode;
 		}
 

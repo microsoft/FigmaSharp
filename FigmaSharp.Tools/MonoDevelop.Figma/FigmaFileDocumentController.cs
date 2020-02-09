@@ -124,9 +124,8 @@ namespace MonoDevelop.Figma
                 var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
 
                 rendererService = new FigmaFileRendererService (fileProvider, converters);
-
-                rendererService.CustomConverters.Add (new WindowConverter ());
-                rendererService.CustomConverters.Add (new SheetDialogConverter ());
+                rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededWindowConverter ());
+                rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededSheetDialogConverter ());
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
 
                 session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);

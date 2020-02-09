@@ -20,7 +20,6 @@
         <Folder Include="Resources\" />
         <Folder Include=".figma\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
-        <Folder Include="Converters\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
         <Folder Include="Views\" />
       </ItemGroup>

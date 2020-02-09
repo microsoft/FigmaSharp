@@ -47,7 +47,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox () : new TextBox ();
 			var view = (NSTextField)textBox.NativeObject;
 
-			view.Configure (figmaInstance);
+			view.Configure (currentNode);
+			view.AlphaValue = figmaInstance.opacity;
 
 			figmaInstance.TryGetNativeControlComponentType (out var controlComponentType);
 			switch (controlComponentType) {
@@ -80,6 +81,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (controlComponentType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
 				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
+			} else {
+				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameVibrantLight);
 			}
 
 			return textBox;

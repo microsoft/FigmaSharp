@@ -110,8 +110,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			}
-			return button;
+			} else {
+                view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameVibrantLight);
+            }
+            return button;
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
