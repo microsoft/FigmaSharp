@@ -22,6 +22,20 @@ namespace FigmaSharp.Services
 		const string a11yHelp = "a11y-help:\"";
 		const string a11yGroup = "a11y-group";
 
+		string GetAccessibilityTitleName (FigmaNode node)
+		{
+			return nameof (AppKit.NSView.AccessibilityTitle);
+			//if (node.TryGetNativeControlType (out var nativeControlType)) {
+			//	switch (nativeControlType) {
+			//		case NativeControlType.Button:
+			//		case NativeControlType.CheckBox:
+			//		case NativeControlType.PopupButton:
+			//			return nameof (AppKit.NSView.AccessibilityTitle);
+			//	}
+			//}
+			//return nameof (AppKit.NSView.AccessibilityLabel);
+		}
+
 		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 			bool hasAccessibility = false;
@@ -32,7 +46,7 @@ namespace FigmaSharp.Services
 				hasAccessibility = true;
 			}
 			if (TrySearchParameter (node.Node, a11yLabel, out var label)) {
-				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityLabel), label, inQuotes: true);
+				builder.WriteEquality (node.Name, GetAccessibilityTitleName (node.Node), label, inQuotes: true);
 				hasAccessibility = true;
 			}
 			if (TrySearchParameter (node.Node, a11yHelp, out var help)) {

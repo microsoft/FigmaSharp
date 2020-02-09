@@ -136,11 +136,15 @@ namespace FigmaSharp.Cocoa
 
 		public static string ToNSFontDesignerString(this FigmaTypeStyle style)
         {
-            var font = style.ToNSFont();
-            var family = font.FamilyName;
-            var size = font.PointSize;
-            var viewName = $"{typeof (NSFont).FullName}.{nameof (NSFontManager.SharedFontManager)}";
-            return CodeGenerationHelpers.GetMethod (typeof (NSFont).FullName, nameof (NSFont.FromFontName), $"\"{family}\", {size}", includesSemicolon: false);
+            //var font = style.ToNSFont();
+            //var family = font.FamilyName;
+            var size = style.fontSize;
+
+            //NSFont.SystemFontOfSize (style.fontSize);
+
+            //var viewName = $"{typeof (NSFont).FullName}.{nameof (NSFontManager.SharedFontManager)}";
+            //return CodeGenerationHelpers.GetMethod (typeof (NSFont).FullName, nameof (NSFont.SystemFontOfSize), $"\"{family}\", {size}", includesSemicolon: false);
+            return CodeGenerationHelpers.GetMethod (typeof (NSFont).FullName, nameof (NSFont.SystemFontOfSize), size.ToString (), includesSemicolon: false);
         }
 
         static nfloat GetFontWeight (FigmaTypeStyle style)

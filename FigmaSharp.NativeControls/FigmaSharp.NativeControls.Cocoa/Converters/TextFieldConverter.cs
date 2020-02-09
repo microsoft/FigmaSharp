@@ -108,7 +108,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var text = figmaTextNode.characters ?? string.Empty;
 				
 				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
-				builder.Configure (figmaTextNode, name);
+				//builder.Configure (figmaTextNode, name);
 			}
 
 			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");

@@ -62,8 +62,13 @@ namespace FigmaSharp.Cocoa.Converters
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.WriteEquality (currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters), instanciate: true);
 
-            builder.Configure(figmaText, currentNode.Name);
+            //builder.Configure(figmaText, currentNode.Name);
             builder.Configure (currentNode.Node, currentNode.Name);
+
+            var alignment = FigmaExtensions.ToNSTextAlignment (figmaText.style.textAlignHorizontal);
+			if (alignment != default) {
+                builder.WriteEquality (currentNode.Name, nameof (AppKit.NSTextField.Alignment), alignment);
+            }
             return builder.ToString();
         }
     }
