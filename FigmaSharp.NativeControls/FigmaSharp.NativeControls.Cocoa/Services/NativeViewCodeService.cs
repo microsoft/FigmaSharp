@@ -104,6 +104,12 @@ namespace FigmaSharp.Services
 					var item = nodeContainer.children.FirstOrDefault (s => s.IsNodeWindowContent ());
 					if (item != null && item is IFigmaNodeContainer children) {
 						return children.children;
+					} else {
+						var instance = node.Node.GetDialogInstanceFromParentContainer ();
+						//render all children nodes except instance
+						var nodes = nodeContainer.children.Except (new FigmaNode[] { instance })
+							.ToArray ();
+						return nodes;
 					}
 				}
 			}
