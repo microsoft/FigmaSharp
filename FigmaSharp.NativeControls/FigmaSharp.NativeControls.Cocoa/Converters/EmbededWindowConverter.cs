@@ -20,7 +20,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return isWindow;
 		}
 
-	
+		public static NSColor GetBackgroundColor (bool isWhite)
+		{
+			return isWhite ?
+			NSColor.FromRgba (0.93f, 0.93f, 0.93f, 0.66f) :
+			NSColor.FromRgba (0.29f, 0.29f, 0.29f, 0.66f);
+		}
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
@@ -41,11 +46,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 					if (frame.HasFills && frame.fills[0].color != null) {
 						nativeView.Layer.BackgroundColor = frame.fills[0].color.ToCGColor ();
 					} else {
-						nativeView.Layer.BackgroundColor = EmbededWindowConverter.GetWindowBackgroundColor (false).CGColor;
+						nativeView.Layer.BackgroundColor = GetBackgroundColor (false).CGColor;
 					}
 
 				} else {
-					nativeView.Layer.BackgroundColor = EmbededWindowConverter.GetWindowBackgroundColor (true).CGColor;
+					nativeView.Layer.BackgroundColor = GetBackgroundColor (true).CGColor;
 					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
 					
 				}
@@ -67,7 +72,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public static NSColor GetWindowBackgroundColor (bool isWhite)
 		{
 			return isWhite ?
-			NSColor.FromRgba (0.93f, 0.93f, 0.93f, 0.66f) :
+			NSColor.FromRgba (red: 0.961f, green: 0.961f, blue: 0.961f, alpha: 1) :
 			NSColor.FromRgba (0.29f, 0.29f, 0.29f, 0.66f);
 		}
 
