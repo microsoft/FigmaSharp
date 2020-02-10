@@ -79,7 +79,7 @@ namespace ToCode.Cocoa
 			if (currentSelectedNode == null)
 				return;
 
-			var bundle = FigmaBundle.Empty ("1234", string.Empty);
+			var bundle = FigmaBundle.Empty ("1234", null, string.Empty);
 			var className = currentSelectedNode.GetClassName ();
 			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, className, currentSelectedNode);
 			var publicPartialClass = figmaBundleView.GetPublicPartialClass ();
@@ -92,7 +92,7 @@ namespace ToCode.Cocoa
 			if (currentSelectedNode == null)
 				return;
 			var className = currentSelectedNode.GetClassName ();
-			var bundle = FigmaBundle.Empty ("1234", string.Empty);
+			var bundle = FigmaBundle.Empty ("1234", null, string.Empty);
 			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, className, currentSelectedNode);
 			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer);
 			var code = publicPartialClass.Generate ();
