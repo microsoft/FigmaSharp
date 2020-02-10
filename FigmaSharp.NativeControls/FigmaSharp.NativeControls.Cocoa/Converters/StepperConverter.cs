@@ -79,9 +79,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			builder.Configure (figmaInstance, name);
 
-			//hidden by default
-			builder.WriteEquality (name, nameof (NSProgressIndicator.Hidden), true);
-
 			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.ProgressSpinnerSmall:
