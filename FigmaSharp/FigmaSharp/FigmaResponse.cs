@@ -88,11 +88,15 @@ namespace FigmaSharp.Models
 
 		public void Save (string filePath)
 		{
-            var data = JsonConvert.SerializeObject (this);
             if (File.Exists (filePath)) {
                 File.Delete (filePath);
             }
-            File.WriteAllText (filePath, data);
+            using (var file = File.CreateText (filePath)) {
+				var serializer = new JsonSerializer {
+					Formatting = Formatting.Indented
+				};
+				serializer.Serialize (file, this);
+            }
         }
     }
 
