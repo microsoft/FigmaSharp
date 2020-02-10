@@ -15,7 +15,7 @@ namespace FigmaSharp.Tests
         {
             var DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/";
             var RemoteApiVersion = "1.1";
-            var DocumentVersion = 0.3f;
+            var DocumentVersion = "0.3";
             var dateNow = DateTime.Now;
 
             var manifest = new FigmaManifest () {
@@ -53,7 +53,7 @@ namespace FigmaSharp.Tests
             codeGenerator.Manifest = new FigmaManifest () {
                 Date = DateTime.Now,
                 FileId = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
-                DocumentVersion = 0.1f,
+                DocumentVersion = "0.1f",
                 RemoteApiVersion = "1.1"
             };
 
