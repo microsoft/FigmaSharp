@@ -201,7 +201,7 @@ namespace FigmaSharp
 		public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
 		{
 			var mainNodes = figmaFileProvider.Nodes
-				.Where (s => s.Parent is FigmaCanvas && !s.name.StartsWith ("#") && !s.name.StartsWith ("//") && s is FigmaFrameEntity)
+				.Where (s => s.Parent is FigmaCanvas && !s.name.StartsWith ("#") && !s.name.StartsWith ("//") && s.GetType () == typeof (FigmaFrameEntity))
 				.ToArray ();
 
 			foreach (var item in mainNodes) {
