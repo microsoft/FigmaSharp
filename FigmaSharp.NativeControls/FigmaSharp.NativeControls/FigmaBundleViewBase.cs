@@ -37,7 +37,7 @@ namespace FigmaSharp
 			partialDesignerClass.Manifest = new FigmaManifest () {
 				Date = DateTime.Now,
 				FileId = bundle.FileId,
-				DocumentVersion = 0.1f,
+				DocumentVersion = "0.1f",
 				RemoteApiVersion = AppContext.Api.Version.ToString (),
 				ApiVersion = AppContext.Current.Version
 			};

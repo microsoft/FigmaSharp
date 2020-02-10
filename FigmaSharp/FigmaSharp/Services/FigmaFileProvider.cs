@@ -108,9 +108,11 @@ namespace FigmaSharp.Services
 	{
 		public override bool NeedsImageLinks => true;
 
+		public FigmaFileVersion Version { get; set; }
+
 		public override string GetContentTemplate (string file)
 		{
-			return AppContext.Api.GetContentFile (new FigmaFileQuery (file));
+			return AppContext.Api.GetContentFile (new FigmaFileQuery (file, Version));
 		}
 
 		public IEnumerable<string> GetKeys (List<FigmaImageResponse> responses, string image)
