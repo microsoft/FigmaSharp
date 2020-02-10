@@ -113,12 +113,19 @@ namespace FigmaSharp
                 index = customName.IndexOf ('\"');
                 if (index > -1 && index < customName.Length) {
                     customName = customName.Substring (0, index);
+                    customName = RemoveIllegalCharacters (customName);
                     return true;
                 } 
             }
-            customName = node.name;
+            customName = RemoveIllegalCharacters (node.name);
             return false;
         }
+
+		static string RemoveIllegalCharacters (string name)
+		{
+            name = name.Replace ("-", "");
+            return name;
+		}
 
         public static string GetClassName (this FigmaNode node)
         {
