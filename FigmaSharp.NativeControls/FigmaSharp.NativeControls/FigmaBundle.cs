@@ -193,7 +193,7 @@ namespace FigmaSharp
 				}
 
 				var figmaImageResponse = AppContext.Api.GetImages (fileId, figmaImageIds);
-				FileHelper.SaveFiles (resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
+				FileHelper.SaveFiles (figmaResponse, resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
 			}
 		}
 

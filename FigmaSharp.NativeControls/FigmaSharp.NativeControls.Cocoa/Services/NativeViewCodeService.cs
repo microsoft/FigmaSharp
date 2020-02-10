@@ -126,7 +126,7 @@ namespace FigmaSharp.Services
 
 		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, out string identifier)
 		{
-			if (node.Node.TryGetNodeCustomName (out identifier)) {
+			if (node.Node.TryGetCodeViewName (out identifier)) {
 				return true;
 			}
 			return base.TryGetCodeViewName (node, parent, out identifier);

@@ -31,13 +31,14 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using FigmaSharp.Converters;
+using System.Linq;
 
 namespace FigmaSharp
 {
     public static class FileHelper
     {
         //TODO: Change to async multithread
-        public static void SaveFiles(string destinationDirectory, string format, Dictionary<string, string> remotefile)
+        public static void SaveFiles(Models.FigmaFileResponse figmaResponse, string destinationDirectory, string format, Dictionary<string, string> remotefile)
         {
             if (!Directory.Exists(destinationDirectory))
             {
@@ -53,7 +54,16 @@ namespace FigmaSharp
                 }
 
                 var key = FigmaResourceConverter.FromResource(file.Key);
-                var fileName = string.Concat(Path.GetFileName(key), format);
+             
+                var figmaNode = figmaResponse.document.FindNode (s => s.id == file.Key)
+					.FirstOrDefault ();
+
+                string customNodeName;
+				if (!figmaNode.TryGetNodeCustomName (out customNodeName)) {
+                    customNodeName = figmaNode.id;
+                }
+
+                var fileName = string.Concat (customNodeName, format);
                 var fullPath = Path.Combine(destinationDirectory, fileName);
 
                 if (File.Exists(fullPath))

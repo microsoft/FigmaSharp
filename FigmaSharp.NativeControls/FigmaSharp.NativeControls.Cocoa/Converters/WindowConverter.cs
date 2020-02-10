@@ -29,10 +29,12 @@ using AppKit;
 using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
+using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -62,6 +64,11 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.WriteConstructor (currentNode.Name, typeof (NSImageView));
             builder.Configure (currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+            currentNode.Node.TryGetNodeCustomName (out string nodeName);
+
+            var imageNamedMethod = CodeGenerationHelpers.GetMethod (typeof (NSImage).FullName, nameof (NSImage.ImageNamed), nodeName, true);
+            builder.WriteEquality (currentNode.Name, nameof (NSImageView.Image), imageNamedMethod);
+
             return builder.ToString ();
         }
 	}
