@@ -162,12 +162,27 @@ namespace FigmaSharp
 			}
 		}
 
+		public static IEnumerable<FigmaSharp.Models.FigmaNode> OfTypeImage (FigmaNode child)
+		{
+			if (child.name.Contains ("!image") || child is FigmaVector) {
+				yield return child;
+			}
+
+			if (child is IFigmaNodeContainer nodeContainer) {
+				foreach (var item in nodeContainer.children) {
+					foreach (var resultItems in OfTypeImage (item)) {
+						yield return resultItems;
+					}
+				}
+			}
+		}
+
 		//Generates all the resources from the current .figmafile
 		internal static void GenerateOutputResourceFiles (string fileId, FigmaFileResponse figmaResponse, string resourcesDirectoryPath)
 		{
 			var mainNode = figmaResponse.document.children.FirstOrDefault ();
 
-			var figmaImageIds = mainNode.OfTypeImage ()
+			var figmaImageIds = OfTypeImage (mainNode)
 				.Select (s => s.id)
 				.ToArray ();
 
