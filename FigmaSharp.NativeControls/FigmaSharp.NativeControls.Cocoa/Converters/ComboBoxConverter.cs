@@ -87,9 +87,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			builder.Configure (currentNode.Node, name);
 
-			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
-			builder.WriteEquality (name, nameof (NSButton.Title), string.Empty, true);
-
 			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.PopUpButtonSmall:
@@ -107,7 +104,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		   .FirstOrDefault (s => s.name == "lbl");
 
 			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { label.characters });
+				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { $"\"{label.characters}\"" });
 				builder.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
 			}
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
