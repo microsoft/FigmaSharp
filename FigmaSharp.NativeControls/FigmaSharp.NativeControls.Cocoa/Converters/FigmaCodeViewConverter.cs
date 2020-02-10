@@ -15,8 +15,7 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
         {
 			if (currentNode.Node.Parent != null && propertyName == CodeProperties.AddChild) {
 				//window case
-				if (currentNode.Node.Parent.IsWindowContent () || currentNode.Node.Parent.IsDialogParentContainer (NativeControlType.WindowSheet) || currentNode.Node.Parent.IsDialogParentContainer (NativeControlType.WindowPanel)) {
-
+				if (currentNode.Node.Parent.IsWindowContent () || currentNode.Node.Parent.IsDialogParentContainer ()) {
                     var contentView = $"{CodeGenerationHelpers.This}.{nameof (NSWindow.ContentView)}";
                     return CodeGenerationHelpers.GetMethod (contentView, nameof (NSView.AddSubview), currentNode.Name);
                 }

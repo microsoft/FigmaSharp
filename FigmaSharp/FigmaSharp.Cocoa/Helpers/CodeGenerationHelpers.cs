@@ -7,7 +7,7 @@ namespace FigmaSharp.Cocoa
 	{
 		public const string This = "this";
 
-		public static string StringEmpty { get; } = $"{typeof (string).Name}.{nameof (string.Empty)}";
+		public static string StringEmpty { get; } = $"{typeof (string).FullName}.{nameof (string.Empty)}";
 
 		public static string GetConstructor (string viewName, Type type)
 		{

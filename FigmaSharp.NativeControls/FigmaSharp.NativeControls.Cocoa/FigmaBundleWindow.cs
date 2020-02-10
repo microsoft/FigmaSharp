@@ -5,6 +5,8 @@ using FigmaSharp.Services;
 using FigmaSharp.NativeControls;
 using FigmaSharp.NativeControls.Cocoa;
 using System.Linq;
+using System;
+using AppKit;
 
 namespace FigmaSharp
 {
@@ -42,13 +44,30 @@ namespace FigmaSharp
 				AppKit.NSWindowStyle.Closable.GetFullName ()
 			));
 
+
 			var windowComponent = FigmaNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 			if (windowComponent != null) {
-				if (windowComponent.IsWindowOfType (NativeControlType.WindowStandard)) {
-					var title = windowComponent.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "window title");
-					if (title != null) {
-						builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
+
+				if (windowComponent.TryGetNativeControlComponentType (out var nativeControlComponentType)) {
+					windowComponent.TryGetNativeControlType (out var nativeControlType);
+
+
+					if (nativeControlType == NativeControlType.WindowStandard) {
+						var title = windowComponent.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "window title");
+						if (title != null) {
+							builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
+						}
 					}
+
+					string appareanceStyle;
+					if (nativeControlComponentType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+						appareanceStyle = $"{typeof (NSAppearance).FullName}.{nameof (NSAppearance.NameDarkAqua)}";
+					} else {
+						appareanceStyle = $"{typeof (NSAppearance).FullName}.{nameof (NSAppearance.NameVibrantLight)}";
+					}
+
+					var getAppareanceMethod = CodeGenerationHelpers.GetMethod (typeof (NSAppearance).FullName, nameof (NSAppearance.GetAppearance), appareanceStyle);
+					builder.WriteEquality (CodeGenerationHelpers.This, nameof (NSWindow.Appearance), getAppareanceMethod);
 				}
 			}
 

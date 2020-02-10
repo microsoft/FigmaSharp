@@ -249,7 +249,7 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode)
         {
-            return figmaNode is IFigmaNodeContainer container && container.children.OfType<FigmaInstance> ().Any (s => s.IsDialog ());
+            return figmaNode is IFigmaNodeContainer container && container.children.Any (s => s.IsDialog ());
         }
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
