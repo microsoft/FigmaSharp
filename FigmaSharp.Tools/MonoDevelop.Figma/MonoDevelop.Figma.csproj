@@ -19,9 +19,9 @@
       <ItemGroup>
         <Folder Include="Resources\" />
         <Folder Include=".figma\" />
+        <Folder Include="Views\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
-        <Folder Include="Views\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
@@ -89,7 +89,6 @@
         <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\document.figma" />
       </ItemGroup>
       <ItemGroup>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaBundleView.designer.cs">
-        </Compile>
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\bundleFigmaDocument.designer.cs" />
       </ItemGroup>
 </Project>
