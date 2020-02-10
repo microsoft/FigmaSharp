@@ -66,7 +66,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (label != null) {
 				button.AddItem (label.characters);
-				view.Font = label.style.ToNSFont ();
+				//view.Font = label.style.ToNSFont ();
 			}
 
 			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
@@ -104,10 +104,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 					break;
 			}
 
-			//var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
-			//if (label != null) {
-			//	builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
-			//}
+			var label = figmaInstance.children
+			   .OfType<FigmaText> ()
+			   .FirstOrDefault (s => s.name == "lbl");
+
+			if (label != null && !string.IsNullOrEmpty (label.characters)) {
+				builder.WriteMethod (name, nameof (NSPopUpButton.AddItem), label.characters, inQuotes:true);
+			}
 
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));

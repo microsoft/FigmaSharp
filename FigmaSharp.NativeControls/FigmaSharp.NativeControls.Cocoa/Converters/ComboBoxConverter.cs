@@ -58,6 +58,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 					break;
 			}
 
+			var label = figmaInstance.children
+			   .OfType<FigmaText> ()
+			   .FirstOrDefault (s => s.name == "lbl");
+
+			if (label != null && !string.IsNullOrEmpty (label.characters)) {
+				view.Add (new Foundation.NSString (label.characters));
+			}
+
 			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
 			} else {
@@ -94,11 +102,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 					break;
 			}
 
-			//var label = figmaInstance.children.OfType<FigmaText> ().FirstOrDefault ();
-			//if (!string.IsNullOrEmpty (label?.characters)) {
-			//	builder.AppendLine (string.Format ("{0}.AddItem (\"{1}\");", name, label.characters));
-			//}
+			var label = figmaInstance.children
+		   .OfType<FigmaText> ()
+		   .FirstOrDefault (s => s.name == "lbl");
 
+			if (label != null && !string.IsNullOrEmpty (label.characters)) {
+				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { label.characters });
+				builder.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
+			}
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
 			//}
