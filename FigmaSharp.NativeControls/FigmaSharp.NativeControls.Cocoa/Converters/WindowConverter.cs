@@ -36,7 +36,37 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class WindowStandardConverter : WindowStandardConverterBase
+	public class ImageRenderConverter : FigmaNativeControlConverter
+	{
+		public override bool CanConvert (FigmaNode currentNode)
+		{
+            return currentNode.name.StartsWith ("!image");
+        }
+
+		public override bool ScanChildren (FigmaNode currentNode)
+		{
+            return false;
+		}
+
+		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		{
+            var vector = new FigmaSharp.Views.Cocoa.ImageView ();
+            var currengroupView = (NSImageView)vector.NativeObject;
+            currengroupView.Configure (currentNode);
+            return vector;
+        }
+
+		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		{
+            var builder = new StringBuilder ();
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
+                builder.WriteConstructor (currentNode.Name, typeof (NSImageView));
+            builder.Configure (currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+            return builder.ToString ();
+        }
+	}
+
+	public class WindowStandardConverter : WindowStandardConverterBase
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
