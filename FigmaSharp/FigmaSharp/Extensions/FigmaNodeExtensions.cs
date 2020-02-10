@@ -103,29 +103,21 @@ namespace FigmaSharp
             return name;
         }
 
-        public static bool TryGetNodeCustomName (this FigmaNode node, out string customName)
-        {
-            customName = node.name;
-            var index = customName.IndexOf ('\"');
-            if (index > -1 && index < customName.Length - 1) {
-                customName = customName.Substring (index + 1);
-
-                index = customName.IndexOf ('\"');
-                if (index > -1 && index < customName.Length) {
-                    customName = customName.Substring (0, index);
-                    customName = RemoveIllegalCharacters (customName);
-                    return true;
-                } 
-            }
-            customName = RemoveIllegalCharacters (node.name);
-            return false;
-        }
-
 		static string RemoveIllegalCharacters (string name)
 		{
             name = name.Replace ("-", "");
             return name;
 		}
+
+        public static bool TryGetCodeViewName (this FigmaNode node, out string customName)
+        {
+            if (node.TryGetNodeCustomName (out customName)) {
+                customName = RemoveIllegalCharacters (customName);
+                return true;
+            };
+            customName = RemoveIllegalCharacters (node.name);
+            return false;
+        }
 
         public static string GetClassName (this FigmaNode node)
         {
@@ -269,6 +261,27 @@ namespace FigmaSharp
             } else if (sender is FigmaDocument document) {
                 foreach (var child in document.children) {
                     foreach (var image in child.FindImageNodes ()) {
+                        yield return image;
+                    }
+                }
+            }
+        }
+
+        public static IEnumerable<FigmaNode> FindNode (this FigmaNode sender, Func<FigmaNode, bool> condition)
+        {
+            if (condition (sender)) {
+                yield return sender;
+            }
+
+            if (sender is IFigmaNodeContainer container) {
+                foreach (var child in container.children) {
+                    foreach (var image in child.FindNode (condition)) {
+                        yield return image;
+                    }
+                }
+            } else if (sender is FigmaDocument document) {
+                foreach (var child in document.children) {
+                    foreach (var image in child.FindNode (condition)) {
                         yield return image;
                     }
                 }

@@ -298,34 +298,6 @@ namespace MonoDevelop.Figma.Commands
 			bundle.LoadRemoteMainLayers (fileProvider);
 
 			return bundle;
-
-			//var window = new Gtk.Dialog ();
-			//window.Modal = true;
-			//window.SetSizeRequest (200, 300);
-			//window.Title = "Figma Bundle Generator";
-
-			////var resourcesFullPath = Path.Combine (currentProject.BaseDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
-
-			////var fileFullPath = Path.Combine (currentProject.BaseDirectory.FullPath, AddFigmaDocumentSource);
-
-			//var fileProvider = new FigmaManifestFileProvider (this.GetType ().Assembly, AddFigmaDocumentSource);
-			//fileProvider.Load (AddFigmaDocumentSource);
-
-			//var converters = FigmaSharp.NativeControls.Cocoa.Resources.GetConverters ();
-			//var rendererService = new FigmaViewRendererService (fileProvider, converters);
-			//var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
-			//var view = rendererService.RenderByPath<IView> (rendererOptions, "");
-
-			////var urlTextField = rendererService.Find<TextBox> ("FigmaUrlTextField");
-			////var bundleButton = rendererService.FindViewByName<Button> ("BundleButton");
-			////var cancelButton = rendererService.FindViewByName<Button> ("CancelButton");
-
-			//var gtkViewHost = new Gtk.GtkNSViewHost (view.NativeObject as AppKit.NSView);
-			//if (window.Child is Gtk.VBox vb) {
-			//	vb.PackStart (gtkViewHost, true, true, 0);
-			//	vb.ShowAll ();
-			//}
-			//MessageService.ShowCustomDialog (window, IdeApp.Workbench.RootWindow);
 		}
 
 		async Task IncludeBundleInProject (Project currentProject, FigmaBundle bundle, bool includeImages = false)
@@ -369,7 +341,10 @@ namespace MonoDevelop.Figma.Commands
 
 				foreach (var item in images) {
 					if (!currentProject.PathExistsInProject (item)) {
-						currentProject.AddFile (item);
+						var projectFile = new ProjectFile (item, BuildAction.BundleResource);
+						var name = item.FileName;
+						projectFile.Metadata.SetValue ("LogicalName", name, "");
+						currentProject.AddFile (projectFile);
 					}
 				}
 			}
@@ -386,9 +361,8 @@ namespace MonoDevelop.Figma.Commands
 				}
 			}
 
-			currentProject.NeedsReload = true;
 			await IdeApp.ProjectOperations.SaveAsync (currentProject);
-
+			currentProject.NeedsReload = true;
 		}
 	}
 
