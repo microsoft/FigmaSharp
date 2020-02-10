@@ -61,7 +61,7 @@ namespace MonoDevelop.Figma.Commands
 
 					if (!File.Exists (manifestFilePath)) {
 						var manifest = new FigmaManifest () {
-							DocumentVersion = 0,
+							DocumentVersion = "0",
 							ApiVersion = FigmaSharp.AppContext.Current.Version,
 							RemoteApiVersion = FigmaSharp.AppContext.Api.Version.ToString (),
 							Date = DateTime.Now
@@ -224,7 +224,9 @@ namespace MonoDevelop.Figma.Commands
 			var figmaBundleWindow = new FigmaBundles.bundleFigmaDocument ();
 			figmaBundleWindow.BundleCreated += async (s, e) => {
 				var window = (FigmaBundles.bundleFigmaDocument)s;
-				await GenerateBundle (window.FileId, window.SelectedFileVersion);
+
+				var includeImages = true;
+				await GenerateBundle (window.FileId, window.SelectedFileVersion, includeImages);
 				window.Close ();
 			};
 
@@ -234,7 +236,7 @@ namespace MonoDevelop.Figma.Commands
 			IdeServices.DesktopService.FocusWindow (figmaBundleWindow);
 		}
 
-		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version)
+		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version, bool includeImages)
 		{
 			//when window is closed we need to create all the stuff
 		
@@ -254,7 +256,7 @@ namespace MonoDevelop.Figma.Commands
 			fileProvider.Load (fileId);
 
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
-			var projectBundle = CreateBundleFromProject (currentProject, fileId, fileId, fileProvider, version);
+			var projectBundle = CreateBundleFromProject (currentProject, fileId, version, fileProvider, includeImages: includeImages);
 
 			//set namespace
 			if (currentProject is DotNetProject dotNetProject) {
@@ -276,7 +278,7 @@ namespace MonoDevelop.Figma.Commands
 			await IncludeBundleInProject (currentProject, projectBundle).ConfigureAwait (true);
 		}
 
-		FigmaBundle CreateBundleFromProject (Project project, string bundleName, string fileId, IFigmaFileProvider fileProvider, FigmaSharp.Models.FigmaFileVersion version = null, bool includeImages = false)
+		FigmaBundle CreateBundleFromProject (Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider, bool includeImages)
 		{
 			var figmaFolder = Path.Combine (project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
 
@@ -285,8 +287,9 @@ namespace MonoDevelop.Figma.Commands
 			}
 
 			//Bundle generation - We generate an empty bundle and store in the folder
-			var fullBundlePath = Path.Combine (figmaFolder, bundleName);
-			var bundle = FigmaBundle.Create (fileId, fullBundlePath);
+			var fullBundlePath = Path.Combine (figmaFolder, fileId);
+
+			var bundle = FigmaBundle.Empty (fileId, version, fullBundlePath);
 
 			//generate .figma file
 			bundle.LoadLocalDocument ();

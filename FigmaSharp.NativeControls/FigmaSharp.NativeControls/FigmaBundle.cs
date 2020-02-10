@@ -8,6 +8,7 @@ namespace FigmaSharp
 {
 	public class FigmaBundle
 	{
+		public FigmaFileVersion Version { get; set; }
 		public FigmaFileResponse Document { get; set; }
 		public FigmaManifest Manifest { get; set; }
 
@@ -93,7 +94,12 @@ namespace FigmaSharp
 		internal void LoadLocalDocument ()
 		{
 			//generate also Document.figma
-			Document = AppContext.Api.GetFile (new FigmaFileQuery (FileId));
+			Document = AppContext.Api.GetFile (new FigmaFileQuery (FileId, Version));
+
+			if (Manifest != null && Document != null) {
+				Manifest.DocumentTitle = Document.name;
+				Manifest.DocumentVersion = Document.version;
+			}
 		}
 
 		//Generates the .figmafile
@@ -127,16 +133,17 @@ namespace FigmaSharp
 
 		#region Static Methods
 
-		public static FigmaBundle Create (string fileId, string directoryPath)
+		public static FigmaBundle Empty (string fileId, FigmaFileVersion version, string directoryPath)
 		{
 			var bundle = new FigmaBundle () {
-				DirectoryPath = directoryPath
+				DirectoryPath = directoryPath,
+				Version = version
 			};
 			bundle.Manifest = new FigmaManifest () {
 				ApiVersion = AppContext.Current.Version,
 				RemoteApiVersion = AppContext.Api.Version.ToString (),
 				Date = DateTime.Now,
-				FileId = fileId
+				FileId = fileId,
 			};
 
 			return bundle;
