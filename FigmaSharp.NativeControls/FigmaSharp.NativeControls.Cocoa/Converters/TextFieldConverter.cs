@@ -76,7 +76,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholder != null)
+			if (placeholder != null && placeholder.characters != "placeholder")
 				view.PlaceholderString = placeholder.characters;
 
 			if (controlComponentType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
@@ -90,7 +90,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var instance = (FigmaInstance)currentNode.Node;
+			var instance = (FigmaFrameEntity)currentNode.Node;
 			var name = currentNode.Name;
 
 			var builder = new StringBuilder ();
@@ -111,7 +111,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholderTextNode != null)
+			if (placeholderTextNode != null && placeholderTextNode.characters != "placeholder")
 				builder.WriteEquality (name, nameof (NSTextField.PlaceholderString), placeholderTextNode.characters, true);
 
 			return builder.ToString ();
