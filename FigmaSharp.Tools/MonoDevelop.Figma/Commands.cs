@@ -221,9 +221,9 @@ namespace MonoDevelop.Figma.Commands
 
 		protected override void OnRun ()
 		{
-			var figmaBundleWindow = new FigmaBundleWindow ();
+			var figmaBundleWindow = new FigmaBundles.bundleFigmaDocument ();
 			figmaBundleWindow.BundleCreated += async (s, e) => {
-				var window = (FigmaBundleWindow)s;
+				var window = (FigmaBundles.bundleFigmaDocument)s;
 				await GenerateBundle (window.FileId, window.SelectedFileVersion);
 				window.Close ();
 			};

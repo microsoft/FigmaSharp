@@ -2,21 +2,18 @@
 */
 using System;
 using AppKit;
-using FigmaSharp.Cocoa.Converters;
-using FigmaSharp.Services;
 using System.Linq;
 using FigmaSharp.Models;
-using Foundation;
 using System.Threading.Tasks;
 using FigmaSharp;
 
-namespace MonoDevelop.Figma
+namespace MonoDevelop.Figma.FigmaBundles
 {
-	public partial class FigmaBundleWindow : AppKit.NSWindow
+	public partial class bundleFigmaDocument : AppKit.NSWindow
 	{
-		public string FileId => FigmaUrlTextField.StringValue;
+		public string FileId => figmaUrlTextField.StringValue;
 
-		public FigmaBundleWindow ()
+		public bundleFigmaDocument ()
 		{
 			InitializeComponent ();
 
@@ -27,8 +24,8 @@ namespace MonoDevelop.Figma
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
-				if (VersionComboBox.ItemCount > 0 && VersionComboBox.ItemCount == versions.Length + 1 && VersionComboBox.IndexOfSelectedItem > -1) {
-					return versions[(int)VersionComboBox.IndexOfSelectedItem];
+				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1) {
+					return versions[(int)versionComboBox.IndexOfSelectedItem];
 				}
 				return null;
 			}
@@ -37,34 +34,36 @@ namespace MonoDevelop.Figma
 		// Shared initialization code
 		void Initialize ()
 		{
-			FigmaUrlTextField.Changed += FigmaUrlTextField_Changed;
-			VersionComboBox.Activated += ItemsRefreshState_Handler;
+			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
+			versionComboBox.Activated += ItemsRefreshState_Handler;
 
-			TemplateCodeOptionBox.Activated += ItemsRefreshState_Handler;
-			TemplateMarkUpOptionBox.Activated += ItemsRefreshState_Handler;
-			TemplateNoneOptionBox.Activated += ItemsRefreshState_Handler;
+			templateCodeOptionBox.Activated += ItemsRefreshState_Handler;
+			templateMarkUpOptionBox.Activated += ItemsRefreshState_Handler;
+			templateNoneOptionBox.Activated += ItemsRefreshState_Handler;
 
-			CancelButton.Activated += CancelButton_Activated;
-			BundleButton.Activated += BundleButton_Activated;
+			cancelButton.Activated += CancelButton_Activated;
+			bundleButton.Activated += BundleButton_Activated;
+
+			templateNoneOptionBox.Enabled =
+			templateMarkUpOptionBox.Enabled = false;
 
 			RefreshStates ();
-
 		}
 
 		void RefreshStates ()
 		{
-			TemplateCodeOptionBox.Enabled =
+			templateCodeOptionBox.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			VersionComboBox.Enabled = SelectedFileVersion != null;
+			versionComboBox.Enabled = SelectedFileVersion != null;
 
 			RefreshBundleButtonState ();
 		}
 
 		void RefreshBundleButtonState ()
 		{
-			BundleButton.Enabled =
-				SelectedFileVersion != null && (TemplateCodeOptionBox.State == NSCellStateValue.On || TemplateMarkUpOptionBox.State == NSCellStateValue.On || TemplateNoneOptionBox.State == NSCellStateValue.On);
+			bundleButton.Enabled =
+				SelectedFileVersion != null && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
 		}
 
 		public event EventHandler BundleCreated;
@@ -86,17 +85,17 @@ namespace MonoDevelop.Figma
 
 		private async void FigmaUrlTextField_Changed (object sender, EventArgs e)
 		{
-			LoadingProgressIndicator.Hidden = false;
-			LoadingProgressIndicator.StartAnimation (LoadingProgressIndicator);
+			loadingProgressIndicator.Hidden = false;
+			loadingProgressIndicator.StartAnimation (loadingProgressIndicator);
 
 			//loads current versions
-			VersionComboBox.RemoveAllItems ();
-			VersionComboBox.Enabled = false;
+			versionComboBox.RemoveAllItems ();
+			versionComboBox.Enabled = false;
 
 			RefreshStates ();
 
 			if (FigmaApiHelper.TryParseFileUrl (FileId, out string fileId)) {
-				FigmaUrlTextField.StringValue = fileId;
+				figmaUrlTextField.StringValue = fileId;
 			}
 
 			versions = await Task.Run (() => {
@@ -114,8 +113,8 @@ namespace MonoDevelop.Figma
 
 			});
 
-			LoadingProgressIndicator.StopAnimation (LoadingProgressIndicator);
-			LoadingProgressIndicator.Hidden = true;
+			loadingProgressIndicator.StopAnimation (loadingProgressIndicator);
+			loadingProgressIndicator.Hidden = true;
 
 			if (versions != null) {
 				var menu = new NSMenu();
@@ -132,8 +131,8 @@ namespace MonoDevelop.Figma
 					}
 				}
 
-				VersionComboBox.Menu = menu;
-				VersionComboBox.SelectItem(0);
+				versionComboBox.Menu = menu;
+				versionComboBox.SelectItem(0);
 				menu.Update();
 			}
 
