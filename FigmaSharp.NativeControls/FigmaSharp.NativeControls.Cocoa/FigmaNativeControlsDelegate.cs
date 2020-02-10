@@ -17,6 +17,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			if (converters == null) {
 				converters = new FigmaViewConverter[] {
+					new ImageRenderConverter (),
 					new StepperConverter (),
 					new DisclossureConverter (),
 					new SpinnerConverter (),
