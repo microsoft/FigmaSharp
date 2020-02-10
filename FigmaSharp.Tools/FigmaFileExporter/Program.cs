@@ -88,7 +88,7 @@ namespace FigmaDocumentExporter.Shell
 				var figmaImageIds = figmaModelImages.Select (s => s.id).ToArray ();
 				if (figmaImageIds.Length > 0) {
 					var figmaImageResponse = FigmaSharp.AppContext.Api.GetImages (fileId, figmaImageIds);
-					FileHelper.SaveFiles (outputDirectory, ".png", figmaImageResponse.images);
+					FileHelper.SaveFiles (response, outputDirectory, ".png", figmaImageResponse.images);
 				}
 				Console.WriteLine ("[Import] Success.");
 			}
