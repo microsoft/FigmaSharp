@@ -169,7 +169,7 @@ namespace FigmaSharp.NativeControls
           
 			//Pop Up Button
             ( "Pop Up Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
-            ( "Pop Up Button/Standard Dark", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
+            ( "Pop Up Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
             ( "Pop Up Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
             ( "Pop Up Button/Small Dark", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
 
@@ -181,8 +181,8 @@ namespace FigmaSharp.NativeControls
 
 			//Pull Down Button
 			( "Pull Down Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
-            ( "Pull Down Button/Standard Dark", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
-            ( "Pull Down Button/Small", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
+            ( "Pull Down Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
+            ( "Pull Down Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
             ( "Pull Down Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
 
 			//General
@@ -349,7 +349,7 @@ namespace FigmaSharp.NativeControls
 
         static NativeControlComponentType GetNativeControlComponentType (string name)
         {
-            var found = data.FirstOrDefault (s => s.name == name || s.name == name);
+            var found = data.FirstOrDefault (s => s.name == name);
             if (found.Equals (default)) {
                 Console.WriteLine ("Component Key not found: {0}", name);
                 return NativeControlComponentType.NotDefined;

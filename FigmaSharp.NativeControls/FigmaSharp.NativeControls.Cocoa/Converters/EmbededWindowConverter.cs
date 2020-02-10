@@ -46,6 +46,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 				} else {
 					nativeView.Layer.BackgroundColor = EmbededWindowConverter.GetWindowBackgroundColor (true).CGColor;
+					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
+					
 				}
 
 			}
@@ -115,6 +117,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 				} else {
 					nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (true).CGColor;
+					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
 				}
 
 			}
