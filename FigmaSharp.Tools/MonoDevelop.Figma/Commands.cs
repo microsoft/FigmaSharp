@@ -256,7 +256,7 @@ namespace MonoDevelop.Figma.Commands
 			fileProvider.Load (fileId);
 
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
-			var projectBundle = CreateBundleFromProject (currentProject, fileId, version, fileProvider, includeImages: includeImages);
+			var projectBundle = CreateBundleFromProject (currentProject, fileId, version, fileProvider);
 
 			//set namespace
 			if (currentProject is DotNetProject dotNetProject) {
@@ -271,14 +271,14 @@ namespace MonoDevelop.Figma.Commands
 			var codeRendererService = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
 
 			projectBundle.Save ();
-			projectBundle.SaveLocalDocument (false);
+			projectBundle.SaveLocalDocument (includeImages);
 			projectBundle.SaveViews (codeRendererService);
 
 			//now we need to add to Monodevelop all the stuff
-			await IncludeBundleInProject (currentProject, projectBundle).ConfigureAwait (true);
+			await IncludeBundleInProject (currentProject, projectBundle, includeImages).ConfigureAwait (true);
 		}
 
-		FigmaBundle CreateBundleFromProject (Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider, bool includeImages)
+		FigmaBundle CreateBundleFromProject (Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider)
 		{
 			var figmaFolder = Path.Combine (project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
 
