@@ -45,7 +45,12 @@ namespace MonoDevelop.Figma
 				//}
 
 				if (pr.IsDocumentDirectoryBundle ()) {
-					nodeInfo.Label = pr.Path.FileNameWithoutExtension;
+					var bundle = FigmaSharp.FigmaBundle.FromDirectoryPath (pr.Path.FullPath);
+					if (bundle != null && bundle.Manifest != null && !string.IsNullOrEmpty (bundle.Manifest.DocumentTitle)) {
+						nodeInfo.Label = bundle.Manifest.DocumentTitle;
+					} else {
+						nodeInfo.Label = pr.Path.FileNameWithoutExtension;
+					}
 					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.Package);
 					return;
 				}
