@@ -36,6 +36,7 @@ deploy:
   - provider: releases
     on:
       repo: netonjm/FigmaSharp
+      tags: false
     file:
       - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
       - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
