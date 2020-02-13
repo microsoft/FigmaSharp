@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
@@ -37,8 +36,13 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class TextFieldConverter : TextFieldConverterBase
+	public class TextFieldConverter : FigmaNativeControlConverter
 	{
+		public override bool CanConvert(FigmaNode currentNode)
+		{
+			return currentNode.TryGetNativeControlType(out var value) && (value == NativeControlType.TextField || value == NativeControlType.Filter);
+		}
+
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity) currentNode;

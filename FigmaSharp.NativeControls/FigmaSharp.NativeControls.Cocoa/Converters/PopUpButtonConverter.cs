@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -38,8 +37,13 @@ using System.Text;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class PopUpButtonConverter : PopUpButtonConverterBase
+	public class PopUpButtonConverter : FigmaNativeControlConverter
 	{
+		public override bool CanConvert(FigmaNode currentNode)
+		{
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.PopupButton;
+		}
+
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode;

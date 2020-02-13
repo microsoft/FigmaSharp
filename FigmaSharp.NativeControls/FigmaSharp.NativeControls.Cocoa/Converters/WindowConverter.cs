@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
 using FigmaSharp;
@@ -73,8 +72,13 @@ namespace FigmaSharp.NativeControls.Cocoa
         }
 	}
 
-	public class WindowStandardConverter : WindowStandardConverterBase
+	public class WindowStandardConverter : FigmaNativeControlConverter
     {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowStandard;
+        }
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             return null;
@@ -86,8 +90,13 @@ namespace FigmaSharp.NativeControls.Cocoa
         }
     }
 
-    public class WindowSheetConverter : WindowSheetConverterBase
+    public class WindowSheetConverter : FigmaNativeControlConverter
     {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowSheet;
+        }
+
         public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             return null;
@@ -99,8 +108,13 @@ namespace FigmaSharp.NativeControls.Cocoa
         }
     }
 
-    public class WindowPanelConverter : WindowPanelConverterBase
+    public class WindowPanelConverter : FigmaNativeControlConverter
     {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowPanel;
+        }
+
         public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             return null;

@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -38,8 +37,13 @@ using System.Text;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class CheckConverter : CheckConverterBase
+    public class CheckConverter : FigmaNativeControlConverter
     {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
+        }
+
         public override bool ScanChildren(FigmaNode currentNode)
         {
             return false;

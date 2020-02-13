@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
@@ -38,8 +37,13 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class SpinnerConverter : SpinnerConverterBase
+	public class SpinnerConverter : FigmaNativeControlConverter
 	{
+		public override bool CanConvert(FigmaNode currentNode)
+		{
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ProgressSpinner;
+		}
+
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode;

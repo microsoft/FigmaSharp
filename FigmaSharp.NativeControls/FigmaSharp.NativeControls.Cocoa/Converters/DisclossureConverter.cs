@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System.Text;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -37,8 +36,13 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class DisclossureConverter : DisclosureTriangleConverterBase
+	public class DisclossureConverter : FigmaNativeControlConverter
 	{
+		public override bool CanConvert(FigmaNode currentNode)
+		{
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.DisclosureTriange;
+		}
+
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode;

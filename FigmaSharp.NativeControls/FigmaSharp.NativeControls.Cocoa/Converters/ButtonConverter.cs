@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using AppKit;
-using FigmaSharp.NativeControls.Base;
 using System.Linq;
 using System.Text;
 using FigmaSharp.Cocoa;
@@ -38,9 +37,14 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class ButtonConverter : ButtonConverterBase
+    public class ButtonConverter : FigmaNativeControlConverter
     {
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
+        }
+
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaInstance = (FigmaFrameEntity)currentNode;
 
