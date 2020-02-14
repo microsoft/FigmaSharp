@@ -38,7 +38,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class RectangleVectorConverter : RectangleVectorConverterBase
+    public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {

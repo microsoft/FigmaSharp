@@ -17,7 +17,7 @@ namespace FigmaSharp.Cocoa
             new FigmaRegularPolygonConverter (),
             new FigmaTextConverter (),
             new FigmaLineConverter (),
-            new RectangleVectorConverter (),
+            new FigmaRectangleVectorConverter (),
             new FigmaElipseConverter (),
             new FigmaVectorViewConverter (),
             new FigmaFrameEntityConverter (),
