@@ -41,7 +41,7 @@ deploy:
       - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
     prerelease: true
     overwrite: true
-    cleanup: false
+    skip_cleanup: true
     token:
       secure: Q673xZSt9qqDa1EAJDghkiNU/2vl/lHEtrw6zK0Y9s6eMGetVNubzdjW7MsG4cdbR52fzES1PRf421AT5mGAe29/B51uoaxkkDTdVDcMxL2SM/Lw8N1B6WdfpxBPFHVQhF0L1nGufdu8yIuHoFZy1WrqtNpnrlM0TWRdV1xbt3yRXu1GgPFx+FXNN7GcAuXry+PJmz2CqE5OaxN7j8btQ1s/cQGjW4hLxrM5aGad19Xq97uO/kaWN2XmWD5Bv1AWm8ZsSoxyRB5KJAgj6DfwHLkGWDcbHlAyZsZDSYUgkqjXXfXEkzqOuWX1C+sQTN3KjRCjYiadcbvUsoG9Qg4pO8DSehFnxoprsNOfbyZn7BdP+1v+FCBXAO46l/TcrKsbe8RgdKqb/fSiopg+ZbHRkvXzZ+2wtqPROhRzJ43KtalAl4rnYT8cYScBRmL90QUjnos7DwGDQhWvaFhQJj2YzAYazjccz2gCUnD9IWzLkSa5X2PVN+XYJSdaYitsikl3RxbPmk+Aulp3bizpbX07fEc3NZdcWwGr0wZx8YsLQltzPyKZuOcqHp7EDwDqQzMApv+AYwyF4B9mf3vceNJY+/6vGU8J4eQ7L0Lv7W5LeD0T1YPVM7Tk3lEBmzxVJpain566X1p6J+Wbcv5Fqc+1ht/ssPPcFm87fAnGw55PwL4=
 
