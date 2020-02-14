@@ -339,6 +339,46 @@ namespace FigmaSharp.Models
         [DisplayName ("Fills")]
         public FigmaPaint[] fills { get; set; }
         public bool HasFills => fills?.Length > 0;
+
+        public string layoutMode { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Mode")]
+        public FigmaLayoutMode LayoutMode
+        {
+            get
+            {
+                if (string.IsNullOrEmpty (layoutMode))
+                    return FigmaLayoutMode.None;
+
+                foreach (var item in Enum.GetValues (typeof (FigmaLayoutMode)))
+                {
+                    if (item.ToString().ToUpper() == layoutMode)
+                        return (FigmaLayoutMode) item;
+                }
+                return FigmaLayoutMode.None;
+            }
+        }
+
+        [Category("AutoLayout")]
+        [DisplayName("Item Spacing")]
+        public float itemSpacing { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Horizontal Padding")]
+        public float horizontalPadding { get; set; }
+
+        [DisplayName("Vertical Padding")]
+        public float verticalPadding { get; set; } 
+
+
+    }
+
+    public enum FigmaLayoutMode
+    {
+        None,
+        Vertical,
+        Horizontal
     }
 
     public class FigmaVector : FigmaNode
