@@ -100,33 +100,33 @@
     </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+    <BundleResource Include="FigmaSharpApp.icns" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
       <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
       <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
       <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
+    <ProjectReference Include="..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
       <Project>{80D20B03-FF89-47CF-A676-B67B9DE2DAF2}</Project>
       <Name>FigmaSharp.NativeControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
+    <ProjectReference Include="..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
       <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
       <Name>FigmaSharp.NativeControls.Cocoa</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
       <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="FigmaSharpApp.icns" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
