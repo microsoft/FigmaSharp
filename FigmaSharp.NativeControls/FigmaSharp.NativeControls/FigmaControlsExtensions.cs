@@ -136,20 +136,6 @@ namespace FigmaSharp.NativeControls
     {
         static IReadOnlyList<(string name, NativeControlComponentType nativeControlComponentType, NativeControlType nativeControlType)> data = new List<(string name, NativeControlComponentType nativeControlComponentType, NativeControlType nativeControlType)>
         {
-#region Deprecated
-
-			//macos controls/button/small/button disabled 
-				//deprecated
-			( "macos controls/button/standard/button", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
-            ( "macos controls/button/standard/button ~dark", NativeControlComponentType.ButtonSmallDark,  NativeControlType.Button),
-
-            ( "macos controls/button/standard/button default", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
-
-            ( "macos controls/progress/progess indicator", NativeControlComponentType.ProgressSpinnerStandard,  NativeControlType.ProgressSpinner),
-            ( "macos controls/progress/progess indicator small", NativeControlComponentType.ProgressSpinnerSmall,  NativeControlType.ProgressSpinner),
-			
-#endregion
-
             ( "Button/Standard", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
             ( "Button/Standard HC", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
             ( "Button/Large", NativeControlComponentType.ButtonLarge,  NativeControlType.Button ),
