@@ -25,19 +25,22 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
+
 using System;
+using System.Linq;
+using System.Text;
+
+using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using System.Linq;
-using FigmaSharp.Views;
 using FigmaSharp.Services;
+using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using System.Text;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class ComboBoxConverter : FigmaNativeControlConverter
+    public class ComboBoxConverter : FigmaNativeControlConverter
 	{
 		public override bool CanConvert(FigmaNode currentNode)
 		{

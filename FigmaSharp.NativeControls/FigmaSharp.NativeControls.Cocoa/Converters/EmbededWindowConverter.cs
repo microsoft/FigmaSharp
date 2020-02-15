@@ -1,17 +1,16 @@
 ﻿using System;
+
 using AppKit;
-using FigmaSharp;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Views.Cocoa;
-using System.Linq;
 using FigmaSharp.Views;
-using FigmaSharp.NativeControls;
+using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class EmbededSheetDialogConverter : FigmaViewConverter
+    public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{

@@ -25,14 +25,17 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
+
+using System;
 using System.Linq;
 using System.Text;
+
+using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using System;
-using FigmaSharp.Views;
 using FigmaSharp.Services;
+using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa

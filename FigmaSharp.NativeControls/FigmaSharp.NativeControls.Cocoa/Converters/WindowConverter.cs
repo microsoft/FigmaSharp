@@ -25,19 +25,19 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
-using System.Linq;
+
 using System.Text;
-using FigmaSharp;
+
+using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using FigmaSharp.Views;
 using FigmaSharp.Services;
-using FigmaSharp.NativeControls;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class ImageRenderConverter : FigmaNativeControlConverter
+    public class ImageRenderConverter : FigmaNativeControlConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
