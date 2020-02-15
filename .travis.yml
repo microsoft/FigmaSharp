@@ -24,12 +24,12 @@ script:
   - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
 
   # Build FigmaSharpExtension
-  - msbuild FigmaSharp.Tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
+  - msbuild tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
 
 before_deploy:
   - cd ${TRAVIS_BUILD_DIR}/samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release
   - zip --recurse-paths FigmaSharpApp-${TRAVIS_COMMIT}.zip FigmaSharpApp.app && mv FigmaSharpApp-${TRAVIS_COMMIT}.zip ${TRAVIS_BUILD_DIR}
-  - mv ${TRAVIS_BUILD_DIR}/FigmaSharp.Tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
+  - mv ${TRAVIS_BUILD_DIR}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
 
 deploy:
   # Publish each build to GitHub Releases
