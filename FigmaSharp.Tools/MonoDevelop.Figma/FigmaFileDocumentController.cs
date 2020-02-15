@@ -125,7 +125,7 @@ namespace MonoDevelop.Figma
 
                 rendererService = new NativeViewRenderingService (fileProvider, converters);
                 rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededWindowConverter ());
-                rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededSheetDialogConverter ());
+                rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbeddedSheetDialogConverter ());
                 distributionService = new FigmaViewRendererDistributionService(rendererService);
 
                 session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
