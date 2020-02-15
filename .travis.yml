@@ -21,13 +21,13 @@ before_script:
 
 script:
   # Build FigmaSharpApp
-  - msbuild samples/FigmaSharp/MainSample/MainSample.Cocoa/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
+  - msbuild tools/FigmaSharpApp/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
 
   # Build FigmaSharpExtension
   - msbuild tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
 
 before_deploy:
-  - cd ${TRAVIS_BUILD_DIR}/samples/FigmaSharp/MainSample/MainSample.Cocoa/bin/Release
+  - cd ${TRAVIS_BUILD_DIR}/tools/FigmaSharpApp/bin/Release
   - zip --recurse-paths FigmaSharpApp-${TRAVIS_COMMIT}.zip FigmaSharpApp.app && mv FigmaSharpApp-${TRAVIS_COMMIT}.zip ${TRAVIS_BUILD_DIR}
   - mv ${TRAVIS_BUILD_DIR}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
 
