@@ -43,7 +43,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.DisclosureTriangle;
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.DisclosureTriange;
 		}
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
