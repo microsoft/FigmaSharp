@@ -52,5 +52,6 @@ namespace FigmaSharp
         void BeginInvoke(Action handler);
         
         FigmaCodePropertyConverterBase GetCodePropertyConverter ();
+        FigmaViewPropertySetterBase GetPropertySetter();
     }
 }

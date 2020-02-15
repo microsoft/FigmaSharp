@@ -113,9 +113,9 @@ namespace FigmaSharp
         }
 
         public static FigmaApi Api { get; } = new FigmaApi ();
-
         public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
+        public FigmaViewPropertySetterBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
 
-		#endregion
-	}
+        #endregion
+    }
 }

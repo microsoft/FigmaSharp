@@ -58,8 +58,7 @@ namespace FigmaSharp
         /// <value>The content view.</value>
         public IView ContentView { get; private set; }
 
-        readonly FigmaFileRendererService fileService;
-        readonly FigmaViewRendererDistributionService rendererService;
+        readonly FigmaViewRendererService rendererService;
         readonly FigmaManifestFileProvider figmaLocalFileProvider;
 
         string file;
@@ -69,17 +68,20 @@ namespace FigmaSharp
         /// </summary>
         /// <param name="file">File.</param>
         /// <param name="figmaViewConverters">Figma view converters.</param>
-        public FigmaFile (string file, FigmaViewConverter[] figmaViewConverters)
+        public FigmaFile (string file, FigmaViewConverter[] figmaViewConverters, FigmaViewPropertySetterBase propertySetter)
         {
             this.file = file;
 
             ContentView = AppContext.Current.CreateEmptyView();
             FigmaImages = new List<IImageView>();
 
+            if (propertySetter == null)
+                propertySetter = AppContext.Current.GetPropertySetter();
+
             var assembly = System.Reflection.Assembly.GetCallingAssembly();
             figmaLocalFileProvider = new FigmaManifestFileProvider(assembly, file);
-            fileService = new FigmaFileRendererService (figmaLocalFileProvider, figmaViewConverters);
-            rendererService = new FigmaViewRendererDistributionService(fileService);
+            rendererService = new FigmaViewRendererService(figmaLocalFileProvider, figmaViewConverters, propertySetter);
+    
         }
 
         /// <summary>
@@ -91,8 +93,13 @@ namespace FigmaSharp
             try
             {
                 FigmaImages.Clear();
-                fileService.Start(file, ContentView);
-                rendererService.Start();
+                rendererService. Start(file, ContentView);
+
+                var mainNodes = rendererService.NodesProcessed
+                    .Where(s => s.ParentView == null)
+                    .ToArray();
+
+                new StoryboardLayoutManager().Run(ContentView, rendererService);
             }
             catch (Exception ex)
             {

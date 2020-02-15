@@ -68,7 +68,9 @@ namespace FigmaSharp.Views.Cocoa
 		public Slider (FNSSlider slider) : base (slider)
 		{
 			this.slider = slider;
+            this.slider.TranslatesAutoresizingMaskIntoConstraints = false;
 			this.slider.Activated += Slider_Activated;
+
 		}
 
 		private void Slider_Activated (object sender, EventArgs e)

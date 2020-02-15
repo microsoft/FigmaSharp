@@ -46,6 +46,7 @@ namespace FigmaSharp.Views.Cocoa
 		public ComboBox (FNSPopUpButton textField) : base (textField)
 		{
 			this.combo = textField;
+            this.combo.TranslatesAutoresizingMaskIntoConstraints = false;
 			this.combo.Activated += Combo_Activated;
 		}
 

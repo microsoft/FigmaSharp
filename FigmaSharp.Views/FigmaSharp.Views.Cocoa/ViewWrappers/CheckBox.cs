@@ -53,10 +53,10 @@ namespace FigmaSharp.Views.Cocoa
 
 		public CheckBox (FNSButton button) : base (button)
 		{
-			button.SetButtonType (NSButtonType.Switch);
-			button.Title = string.Empty;
-
-			this.button = button;
+           	this.button = button; 
+			this.button.SetButtonType (NSButtonType.Switch);
+			this.button.Title = string.Empty;
+            this.button.TranslatesAutoresizingMaskIntoConstraints = false;
 			this.button.Activated += Button_Activated;
 		}
 

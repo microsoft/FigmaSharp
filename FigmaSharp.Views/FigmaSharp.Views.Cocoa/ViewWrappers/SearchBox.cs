@@ -43,8 +43,8 @@ namespace FigmaSharp.Views.Cocoa
 		public SearchBox (FNSSearchField searchField) : base (searchField)
 		{
 			this.searchField = searchField;
-
-			searchField.Changed += TextField_Changed;
+			this.searchField.TranslatesAutoresizingMaskIntoConstraints = false;
+			this.searchField.Changed += TextField_Changed;
 		}
 
 		private void TextField_Changed (object sender, EventArgs e)

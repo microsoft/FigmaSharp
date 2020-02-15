@@ -44,7 +44,7 @@ namespace FigmaSharp.NativeControls.Cocoa
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Button;
         }
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
@@ -64,7 +64,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             }
 
             view.Configure (figmaInstance);
-			
+
             switch (controlType)
             {
                 case NativeControlComponentType.ButtonLarge:

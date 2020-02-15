@@ -285,6 +285,26 @@ namespace FigmaSharp
             }
         }
 
+        public static Rectangle GetBoundRectangle (this IEnumerable<FigmaNode> customViews)
+        {
+            Rectangle point = Rectangle.Zero;
+            foreach (var item in customViews)
+            {
+                if (item is IAbsoluteBoundingBox boundingBox) {
+                    if (boundingBox.absoluteBoundingBox.Left < point.X)
+                        point.X = boundingBox.absoluteBoundingBox.Left;
+                    if (boundingBox.absoluteBoundingBox.Top < point.Y)
+                        point.Y = boundingBox.absoluteBoundingBox.Top;
+
+                    if (boundingBox.absoluteBoundingBox.Right > point.Right)
+                        point.Width = boundingBox.absoluteBoundingBox.Right - point.Left;
+                    if (boundingBox.absoluteBoundingBox.Bottom > point.Bottom)
+                        point.Height = boundingBox.absoluteBoundingBox.Bottom - point.Top;
+                }
+            }
+            return point;
+        }
+
         public static void Recursively(this FigmaNode[] customViews, string filter, List<FigmaNode> viewsFound)
         {
             foreach (var item in customViews)

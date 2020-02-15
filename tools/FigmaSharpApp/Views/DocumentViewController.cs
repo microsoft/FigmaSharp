@@ -37,6 +37,8 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
+using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Samples
 {
@@ -90,16 +92,17 @@ namespace FigmaSharp.Samples
 			View.Window.WeakDelegate = windowDelegate;
 
 			if (scrollview == null) {
-
 				scrollview = new ScrollView ();
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
 				View.AddSubview (nativeScrollView);
+
 				nativeScrollView.Frame = View.Bounds;
 				nativeScrollView.ScrollerStyle = NSScrollerStyle.Overlay;
 
 				nativeScrollView.ScrollerInsets = new NSEdgeInsets() { Top = 2, Bottom = 2, Left = 2, Right = 2 };
 				nativeScrollView.AllowsMagnification = true;
 				nativeScrollView.UsesPredominantAxisScrolling = false;
+				nativeScrollView.TranslatesAutoresizingMaskIntoConstraints = true;
 
 				windowController = (DocumentWindowController)this.View.Window.WindowController;
 				windowController.VersionSelected += WindowController_VersionSelected;
@@ -132,77 +135,28 @@ namespace FigmaSharp.Samples
 				{
 					AppContext.Current.SetAccessToken (Token);
 
-					var converters = NativeControlsContext.Current
-						.GetConverters ()
-						.ToList ();
-					converters.Add (new NativeControls.Cocoa.EmbeddedSheetDialogConverter ());
-					converters.Add (new NativeControls.Cocoa.EmbededWindowConverter ());
+					Console.WriteLine ("TOKEN: " + Token);
 
 					var options = new FigmaViewRendererServiceOptions () { StartPage = startPage };
 					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID };
-					var rendererService = new NativeViewRenderingService (fileProvider, converters.ToArray ());
-					rendererService.Start (Link_ID, scrollview, options);
+					var rendererService = new NativeViewRenderingService (fileProvider);
 
-					var distributionService = new FigmaViewRendererDistributionService (rendererService);
-					distributionService.Start ();
+                    //we want to include some special converters to handle windows like normal view containers
+					rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
+					rendererService.CustomConverters.Add(new EmbededWindowConverter());
+
+					rendererService.Start (Link_ID, scrollview.ContentView, options);
+
+					new StoryboardLayoutManager()
+                        .Run (scrollview.ContentView, rendererService);
 
 					fileProvider.ImageLinksProcessed += (s, e) => {
 						// done
 					};
 
-					//We want know the background color of the figma camvas and apply to our scrollview
-					var canvas = fileProvider.Nodes.OfType<FigmaCanvas> ().FirstOrDefault ();
-					if (canvas != null)
-						scrollview.BackgroundColor = canvas.backgroundColor;
+					var nativeScrollView = scrollview.NativeObject as NSScrollView;
 
-					////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-					scrollview.AdjustToContent ();
-
-					if (windowController.Window == null)
-						return;
-
-					NSView windowView = windowController.Window.ContentView;
-
-					NSScrollView scrollView = (scrollview.NativeObject as NSScrollView);
-					NSView documentView = (scrollView.DocumentView as NSView);
-
-
-					// Center the document
-					var posX = 0.5 * (windowView.Frame.Width  - documentView.Frame.Width);
-					var posY = 0.5 * (windowView.Frame.Height - documentView.Frame.Height);
-
-					NSView wrapper = new NSView(windowView.Bounds);
-
-					wrapper.AutoresizingMask = documentView.AutoresizingMask = NSViewResizingMask.MaxXMargin |
-						NSViewResizingMask.MinXMargin | NSViewResizingMask.MinYMargin | NSViewResizingMask.MaxYMargin;
-
-					documentView.SetFrameOrigin(new CGPoint(posX, posY));
-
-
-					// Add padding if the document is larger than the window
-					const int padding = 64;
-
-					if (documentView.Frame.Width + padding > windowView.Frame.Width) {
-						wrapper.SetFrameSize(new CGSize(documentView.Frame.Width + (padding * 2), wrapper.Frame.Height));
-						documentView.SetFrameOrigin (new CGPoint(padding, padding));
-					}
-
-					if (documentView.Frame.Height + padding > windowView.Frame.Height) {
-						wrapper.SetFrameSize(new CGSize(wrapper.Frame.Width, documentView.Frame.Height + (padding * 2)));
-						documentView.SetFrameOrigin(new CGPoint(padding, padding));
-					}
-
-
-					wrapper.AddSubview(documentView);
-					scrollView.DocumentView = wrapper;
-
-
-					// Scroll to top left
-					scrollView.ContentView.ScrollPoint(new CGPoint(0, documentView.Frame.Size.Height));
-					scrollView.ReflectScrolledClipView(scrollView.ContentView);
-
-
-					windowController.Title = fileProvider.Response.name;
+					windowController.Title = fileProvider.Response?.name ?? "";
 
 					windowController.UpdateVersionMenu (Link_ID);
 					windowController.UpdatePagesPopupButton (fileProvider);

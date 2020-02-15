@@ -44,7 +44,7 @@ namespace FigmaSharp.Views.Cocoa
 		public TextBox (FNSTextField textField) : base (textField)
 		{
 			this.textField = textField;
-
+            this.textField.TranslatesAutoresizingMaskIntoConstraints = false;
 			textField.Changed += TextField_Changed;
 		}
 

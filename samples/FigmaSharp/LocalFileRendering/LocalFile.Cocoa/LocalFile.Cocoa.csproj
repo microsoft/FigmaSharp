@@ -9,8 +9,9 @@
     <RootNamespace>LocalFile.Cocoa</RootNamespace>
     <AssemblyName>LocalFile.Cocoa</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-     <ReleaseVersion>0.1.1</ReleaseVersion>
+            <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+            <ReleaseVersion>0.1.1</ReleaseVersion>
+            <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,6 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="DocumentExample.cs" />
+    <Compile Include="FigmaStoryboard.figma.cs">
+      <DependentUpon>FigmaStoryboard.figma</DependentUpon>
+      <LogicalName>Storyboard.figma.cs</LogicalName>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -99,6 +105,9 @@
     <EmbeddedResource Include="Resources\101-43.png" />
     <EmbeddedResource Include="Resources\101-45.png" />
     <EmbeddedResource Include="Resources\101-8.png" />
+    <EmbeddedResource Include="FigmaStoryboard.figma">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -129,6 +138,5 @@
       <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\LocalFile.Shared\LocalFile.Shared.projitems" Label="Shared" Condition="Exists('..\LocalFile.Shared\LocalFile.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

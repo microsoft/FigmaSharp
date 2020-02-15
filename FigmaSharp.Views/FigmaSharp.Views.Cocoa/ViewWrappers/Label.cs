@@ -43,7 +43,8 @@ namespace FigmaSharp.Views.Cocoa
 		public Label (FNSTextField textField) : base (textField)
 		{
 			this.textField = textField;
-		}
+            this.textField.TranslatesAutoresizingMaskIntoConstraints = false;
+        }
 
 		public string Text {
 			get => textField.StringValue;

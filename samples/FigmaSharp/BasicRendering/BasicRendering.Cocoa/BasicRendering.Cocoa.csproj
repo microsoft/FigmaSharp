@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
      <ReleaseVersion>0.1.1</ReleaseVersion>
+     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ExampleViewManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

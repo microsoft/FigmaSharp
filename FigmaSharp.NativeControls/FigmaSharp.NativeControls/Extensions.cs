@@ -29,6 +29,8 @@
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using System.Linq;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp
 {
@@ -42,42 +44,46 @@ namespace FigmaSharp
             return false;
         }
 
-		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow,  params string[] path)
-		{
-			RenderInWindow(sender, mainWindow, new FigmaViewRendererServiceOptions(), path);
-		}
-
-		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, FigmaViewRendererServiceOptions options, params string[] path)
+		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, string windowLayerName, FigmaViewRendererServiceOptions options = null)
         {
-            //var windowFigmaNode = sender.FileProvider.FindByName (path[0]);
+            var windowFigmaNode = sender.FileProvider.FindByName (windowLayerName);
 
-            //sender.RenderInWindow (mainWindow, windowFigmaNode, options);
+            FigmaNode content = null;
 
-            //var windowBoundingBox = (IAbsoluteBoundingBox)windowFigmaNode;
+            if (windowFigmaNode is IFigmaNodeContainer figmaNodeContainer)
+            {
+                content = figmaNodeContainer.children.FirstOrDefault(s => s.IsNodeWindowContent());
 
-            ////var contentPath = path.Concat(new[] { "content" }).ToArray();
+                var windowComponent = windowFigmaNode.GetDialogInstanceFromParentContainer();
 
-            ////var contentFigmaNode = (IAbsoluteBoundingBox)windowFigmaNode;
-            //var contentView = sender.RenderByNode<IView>(windowFigmaNode, options);
-            //mainWindow.Content = contentView;
+                if (options == null)
+                {
+                    options = new FigmaViewRendererServiceOptions();
+                    options.AreImageProcessed = false;
+                }
 
-            //mainWindow.Size = windowBoundingBox.absoluteBoundingBox.Size;
+                options.ToIgnore = new FigmaNode[] { windowComponent };
 
-            //var windowNodeContainer = (IFigmaNodeContainer)windowFigmaNode;
-            //var windowComponent = windowNodeContainer.children
-            //    .OfType<FigmaInstance>()
-            //    .FirstOrDefault(s => s.Component.key == "b666bac2b68d976c9e3e5b52a0956a9f1857c1f2");
+                if (windowComponent != null)
+                {
+                    var windowLabel = windowComponent.children
+                        .OfType<FigmaText>()
+                        .FirstOrDefault();
+                    if (windowLabel != null)
+                        mainWindow.Title = windowLabel.characters;
+                }
+            }
 
-            //var windowLabel = windowComponent.children
-            //    .OfType<FigmaText>()
-            //    .FirstOrDefault();
+            if (windowFigmaNode is IAbsoluteBoundingBox box)
+                mainWindow.Size = box.absoluteBoundingBox.Size;
 
-            //mainWindow.Title = windowLabel.characters;
+            if (content == null)
+            {
+                content = windowFigmaNode;
+            }
 
-			//var difX = contentFigmaNode.absoluteBoundingBox.X - windowBoundingBox.absoluteBoundingBox.X;
-			//var difY = contentFigmaNode.absoluteBoundingBox.Y - windowBoundingBox.absoluteBoundingBox.Y;
-
-			//contentView.SetPosition (difX, difY);
+            var renderContent = sender.RenderByNode(content, mainWindow.Content, options);
+            mainWindow.Content = renderContent;
 		}
     }
 }

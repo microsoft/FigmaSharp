@@ -63,6 +63,16 @@ namespace FigmaSharp
 		}
 
 		public static Point Zero { get; set; } = new Point ();
+
+        public Point Substract(Point center)
+        {
+			return new Point(X - center.X, Y - center.Y);
+        }
+
+		public Point UnionWith (Point center)
+		{
+			return new Point(X + center.X, Y + center.Y);
+		}
 	}
 
 	public class Size : IEquatable<Size>
@@ -209,6 +219,6 @@ namespace FigmaSharp
 			return string.Format ("{{{0},{1},{2},{3}}}", X, Y, Width, Height);
 		}
 
-		public Point Center () => new Point (Width / 2f, Height / 2f);
+		public Point Center => new Point (Width / 2f, Height / 2f);
 	}
 }

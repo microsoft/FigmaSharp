@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * CustomTextFieldConverter.cs
  * 
  * Author:
@@ -26,6 +26,8 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
+using System.Linq;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls;
 using FigmaSharp.Views;
@@ -34,20 +36,13 @@ namespace FigmaSharp.Services
 {
     public class NativeViewRenderingService : FigmaViewRendererService
 	{
-		public NativeViewRenderingService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
+		public NativeViewRenderingService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaViewPropertySetterBase propertySetter = null)
+            : base (figmaProvider,
+                  figmaViewConverters ?? NativeControlsContext.Current.GetConverters (),
+                  propertySetter ?? NativeControlsContext.Current.GetViewPropertySetter()
+                  )
 		{
-		}
 
-		public void RenderInWindow (IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options)
-		{
-			if (node is IAbsoluteBoundingBox bounNode) {
-				mainWindow.Size = new Size (bounNode.absoluteBoundingBox.Width, bounNode.absoluteBoundingBox.Height);
-			}
-
-			ProcessFromNode (node, null, options);
-			var processedNode = FindProcessedNodeById (node.id);
-			Recursively (processedNode);
-			mainWindow.Content = processedNode.View;
 		}
 
 		public override bool ProcessesImageFromNode (FigmaNode node)
@@ -70,5 +65,5 @@ namespace FigmaSharp.Services
 			}
 			return false;
 		}
-	}
+    }
 }

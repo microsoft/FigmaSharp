@@ -48,10 +48,11 @@ namespace FigmaSharp.Views.Cocoa
 		{
 			this.imageView = imageView;
 			this.imageView.WantsLayer = true;
-			//imageLayer = new CALayer();
-			//imageLayer.BackgroundColor = NSColor.Blue.CGColor;
-			//imageView.Layer.AddSublayer(imageLayer);
-		}
+            this.imageView.TranslatesAutoresizingMaskIntoConstraints = false;
+            //imageLayer = new CALayer();
+            //imageLayer.BackgroundColor = NSColor.Blue.CGColor;
+            //imageView.Layer.AddSublayer(imageLayer);
+        }
 
 		IImage image;
 		public IImage Image {

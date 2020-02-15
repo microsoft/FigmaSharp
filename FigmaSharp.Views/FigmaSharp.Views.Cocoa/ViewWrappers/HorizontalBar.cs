@@ -41,7 +41,8 @@ namespace FigmaSharp.Views.Cocoa
 		public HorizontalBar (FNSBox box) : base (box)
 		{
 			box.BoxType = NSBoxType.NSBoxSeparator;
-		}
+            box.TranslatesAutoresizingMaskIntoConstraints = false;
+        }
 
 		public override void Dispose ()
 		{

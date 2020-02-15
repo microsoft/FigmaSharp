@@ -54,6 +54,7 @@ namespace FigmaSharp.Views.Cocoa
 				}
 				contentScrollview = (NSView)value.NativeObject;
 				contentScrollView = value;
+				contentScrollView.Parent = this;
 				this.scrollView.DocumentView = contentScrollview;
 			}
 		}
@@ -65,28 +66,39 @@ namespace FigmaSharp.Views.Cocoa
 		public ScrollView (FNSScrollview scrollView) : base (scrollView)
 		{
 			this.scrollView = scrollView;
-
-			contentScrollview = scrollView.DocumentView as NSView;
-			if (contentScrollview == null) {
-				contentScrollview = new FNSView ();
-				this.scrollView.DocumentView = contentScrollview;
+			var content = scrollView.DocumentView as NSView;
+            if (content == null)
+            {
+				content = new FNSView();
 			}
-			contentScrollView = new View (contentScrollview);
 
+
+			ContentView = new View(content);
 			this.scrollView.HasVerticalScroller = true;
 			this.scrollView.HasHorizontalScroller = true;
 			this.scrollView.AutomaticallyAdjustsContentInsets = false;
 			this.scrollView.AutohidesScrollers = false;
 			this.scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
+			this.scrollView.ContentInsets = new NSEdgeInsets(50, 10, 10, 10);
 		}
 
 		public override IReadOnlyList<IView> Children => contentScrollView.Children;
 
-		protected override void OnAddChild (IView view) => contentScrollView.AddChild (view);
+		protected override void OnAddChild(IView view)
+		{
+			if (contentScrollView.Children.Contains(view))
+				return;
+
+			view.Parent = this;
+			contentScrollView.AddChild(view);
+		}
 
 		public override void ClearSubviews () => contentScrollView.ClearSubviews ();
 
-		protected override void OnRemoveChild (IView view) => contentScrollView.ClearSubviews ();
+		protected override void OnRemoveChild(IView view)
+		{
+			contentScrollView.RemoveChild(view);
+		}
 
 		public void AdjustToContent ()
 		{
@@ -100,13 +112,16 @@ namespace FigmaSharp.Views.Cocoa
 					contentRect = contentRect.UnionWith (items[i].Allocation);
 				}
 			}
-			SetContentSize (contentRect.Width, contentRect.Height);
+
+			//SetContentSize (contentRect.Width, contentRect.Height);
+			ContentView.Size = contentRect.Size;
 		}
 
 		public void SetContentSize (float width, float height)
 		{
-			if (scrollView.DocumentView is NSView content) {
-				content.SetFrameSize (new CGSize (width, height));
+            if (ContentView != null)
+            {
+				ContentView.Size = new Size(width, height);
 			}
 		}
 	}

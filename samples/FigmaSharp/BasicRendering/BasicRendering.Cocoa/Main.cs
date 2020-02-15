@@ -28,16 +28,20 @@ using System;
 using AppKit;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using ExampleFigma;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views;
+using FigmaSharp.Services;
+using System.Linq;
+using FigmaSharp.Models;
 
 namespace LocalFile.Cocoa
 {
 	static class MainClass
 	{
-		static ExampleViewManager manager;
+		//static ExampleViewManager manager;
 		static IScrollView scrollView;
+
+        const string fileName = "NTCS6WenCj7JrvIv5Raeaq";
 
 		static void Main (string[] args)
 		{
@@ -48,19 +52,36 @@ namespace LocalFile.Cocoa
 
 			var stackView = new StackView () { Orientation = LayoutOrientation.Vertical };
 
+			scrollView = new ScrollView();
+
 			var mainWindow = new Window (new Rectangle (0, 0, 540, 800)) {
-				Content = stackView
+				Content = scrollView
 			};
 
 			mainWindow.Closing += delegate { NSRunningApplication.CurrentApplication.Terminate (); };
 
-			scrollView = new ScrollView ();
-			stackView.AddChild (scrollView);
+			//TIP: the render consist in 2 steps:
+			//1) generate all the views, decorating and calculate sizes
+			//2) with this views we generate the hierarchy and position all the views based in the
+			//native toolkit positioning system
 
-			manager = new ExampleViewManager (scrollView);
-		
+			//in this case we want use a remote file provider (figma url from our document)
+			var fileProvider = new FigmaRemoteFileProvider();
+
+			//we initialize our renderer service, this uses all the converters passed
+			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
+			var rendererService = new FigmaViewRendererService (fileProvider);
+			rendererService.Start (fileName, scrollView.ContentView);
+
+			//now we have all the views processed and the relationship we can distribute all the views into the desired base view
+			var layoutManager = new StoryboardLayoutManager();
+			layoutManager.Run (scrollView.ContentView, rendererService);
+
+			//NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
+			scrollView.AdjustToContent();
+
 			mainWindow.Show ();
-			mainWindow.Title = manager.WindowTitle;
+			//mainWindow.Title = manager.WindowTitle;
 
 			NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
 			NSApplication.SharedApplication.Run ();
