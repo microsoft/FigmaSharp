@@ -38,16 +38,14 @@ namespace Game.Cocoa
         {
 			Resizable = false;
 
-            //we get the default basic view converters from the current loaded toolkit
-            var converters = FigmaSharp.AppContext.Current.GetFigmaConverters();
-
             //in this case we want use a remote file provider (figma url from our document)
             var fileProvider = new FigmaRemoteFileProvider();
             fileProvider.Load("Jv8kwhoRsrmtJDsSHcTgWGYu");
 
-            //we initialize our renderer service, this uses all the converters passed
-            //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
-            var rendererService = new FigmaViewRendererService(fileProvider, converters);
+			//we initialize our renderer service, this uses all the converters passed
+			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
+			
+            var rendererService = new FigmaViewRendererService(fileProvider);
 
 			//play background music
 			backgroundMusic = new MusicPlayer ("Background", "mp3");
@@ -57,10 +55,9 @@ namespace Game.Cocoa
 			gameOverSound = new MusicPlayer("GameOver", "mp3");
 
 			//we want load the entire level 1
-			IView view = rendererService.RenderByName <IView>("Level1");
-			Content = view;
+			rendererService.RenderInWindow (this, "Level1");
 
-            playerTile = rendererService.FindViewStartsWith<IImageView>("Player");
+			playerTile = rendererService.FindViewStartsWith<IImageView>("Player");
 
             startingPoint = playerTile.Allocation.Origin;
 
@@ -74,6 +71,7 @@ namespace Game.Cocoa
 			heartTiles = rendererService.FindViewsStartsWith<IImageView>("Heart")
 				.OrderBy(s => s.Allocation.X)
 				.ToList();
+
 			WorldUpdate();
 		}
 

@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * CustomTextFieldConverter.cs
  * 
  * Author:
@@ -26,6 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
+using FigmaSharp.NativeControls.Cocoa.Converters;
 using System.Linq;
 
 using FigmaSharp.Models;
@@ -35,12 +38,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class FigmaNativeControlsDelegate : IFigmaNativeControlsDelegate
 	{
-		static readonly FigmaCodePropertyConverterBase addNativeChildConverter = new NativeControlsPropertyConverter ();
+		static readonly FigmaCodePropertyConverterBase codePropertyConverter = new NativeControlsPropertyConverter ();
+
+		static readonly FigmaViewPropertySetterBase viewPropertySetter = new FigmaViewPropertySetter ();
+
 		static FigmaViewConverter[] allConverters;
 		static FigmaViewConverter[] converters;
 
 		public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
-		  => addNativeChildConverter;
+		  => codePropertyConverter;
 
 		public FigmaViewConverter[] GetConverters (bool includeAll = true)
 		{
@@ -84,5 +90,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 			return new FigmaBundleView (bundle, name, figmaNode);
 		}
+
+		public FigmaViewPropertySetterBase GetViewPropertySetter() => viewPropertySetter;
+
 	}
 }

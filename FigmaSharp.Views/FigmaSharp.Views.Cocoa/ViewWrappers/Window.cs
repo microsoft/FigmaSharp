@@ -157,19 +157,9 @@ namespace FigmaSharp.Views.Cocoa
 		public Window (FNWindow window)
 		{
 			this.window = window;
-
 			this.window.AutorecalculatesKeyViewLoop = true;
-			window.ContentView = new FNSView ();
-
-
-			content = new View (window.ContentView);
+			Content = new View();
 			window.KeyDownPressed += OnKeyDownPressed;
-
-			this.window.WillClose += Window_WillClose;
-			resizeNotification = NSNotificationCenter.DefaultCenter.AddObserver (NSWindow.DidResizeNotification, (s) => {
-				if (s.Object == window)
-					Resize?.Invoke (this, EventArgs.Empty);
-			});
 		}
 
 		protected virtual void OnKeyDownPressed (object sender, Key args)
@@ -194,7 +184,11 @@ namespace FigmaSharp.Views.Cocoa
 			get => content;
 			set {
 				content = value;
-				this.window.ContentView = content.NativeObject as NSView;
+                if (content.NativeObject is NSView view)
+				{
+					this.window.ContentView = view;
+				}
+			
 			}
 		}
 

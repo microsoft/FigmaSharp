@@ -43,6 +43,7 @@ namespace FigmaSharp.Views.Cocoa
 		public Stepper (FNSStepper stepper) : base (stepper)
 		{
 			this.stepper = stepper;
+            this.stepper.TranslatesAutoresizingMaskIntoConstraints = false;
 		}
 	}
 

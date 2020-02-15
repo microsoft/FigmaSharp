@@ -62,10 +62,11 @@ namespace FigmaSharp.Views.Cocoa
 
 		public StackView (FNSStackView stackView) : base (stackView)
 		{
-			stackView.WantsLayer = true;
-			stackView.Distribution = NSStackViewDistribution.GravityAreas;
-			stackView.Alignment = NSLayoutAttribute.Top;
-			this.stackView = stackView;
+            this.stackView = stackView;
+			this.stackView.WantsLayer = true;
+            this.stackView.TranslatesAutoresizingMaskIntoConstraints = false;
+			this.stackView.Distribution = NSStackViewDistribution.GravityAreas;
+			this.stackView.Alignment = NSLayoutAttribute.Top;
 		}
 
 		protected override void OnAddChild (IView view)

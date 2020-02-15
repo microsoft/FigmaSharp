@@ -62,6 +62,7 @@ namespace FigmaSharp.Views.Cocoa
 		public Button (FNSButton button) : base (button)
 		{
 			this.button = button;
+			this.button.TranslatesAutoresizingMaskIntoConstraints = false;
 			this.button.Activated += Button_Activated;
 		}
 

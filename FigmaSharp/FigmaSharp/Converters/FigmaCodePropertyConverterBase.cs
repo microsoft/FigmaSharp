@@ -36,7 +36,13 @@ namespace FigmaSharp
         public const string Position = "Position";
         public const string AddChild = "AddChild";
         public const string Frame = "Frame";
-    } 
+        public const string Constraints = "Constraints";
+    }
+
+    public abstract class FigmaViewPropertySetterBase
+    {
+        public abstract void Configure (string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService);
+    }
 
     public abstract class FigmaCodePropertyConverterBase
     {

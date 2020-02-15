@@ -52,6 +52,7 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace MonoDevelop.Figma
 {
@@ -69,27 +70,29 @@ namespace MonoDevelop.Figma
 
         FigmaDesignerOutlinePad outlinePad;
 
+        FigmaLocalFileProvider fileProvider;
+        NativeViewRenderingService rendererService;
+        StoryboardLayoutManager layoutManager;
+
         private FilePath filePath;
 
         Gtk.Widget _content;
         //PropertyGrid grid;
 
-        readonly IScrollView scrollViewWrapper;
+        readonly IScrollView scrollview;
 
         public FigmaFileDocumentController()
         {
-            scrollViewWrapper = new ScrollView ();
-            _content = new GtkNSViewHost (scrollViewWrapper.NativeObject as NSView);
-
+            scrollview = new ScrollView ();
+            var nativeScrollview = (FigmaSharp.Views.Native.Cocoa.FNSScrollview)scrollview.NativeObject;
+            _content = new GtkNSViewHost (nativeScrollview);
+            nativeScrollview.TranslatesAutoresizingMaskIntoConstraints = true;
             _content.ShowAll();
-
-            //grid = PropertyPad.Instance.Control;
-            //grid.Changed += PropertyPad_Changed;
         }
 
         void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload(scrollViewWrapper, filePath.FileName, fileOptions);
+            session.Reload(scrollview, filePath.FileName, fileOptions);
         }
 
         protected override Task OnSave()
@@ -98,10 +101,6 @@ namespace MonoDevelop.Figma
             HasUnsavedChanges = false;
             return Task.FromResult(true);
         }
-
-        FigmaLocalFileProvider fileProvider;
-        NativeViewRenderingService rendererService;
-        FigmaViewRendererDistributionService distributionService;
 
 		protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
         {
@@ -117,18 +116,16 @@ namespace MonoDevelop.Figma
                 figmaDelegate = new FigmaDesignerDelegate();
               
                 var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
-                fileProvider = new FigmaLocalFileProvider (localPath);
-                fileProvider.File = filePath.FullPath;
 
-                var converters = NativeControlsContext.Current.GetConverters ();
-                var rendererOptions = new FigmaViewRendererServiceOptions () { ScanChildrenFromFigmaInstances = false };
+                fileProvider = new FigmaLocalFileProvider(localPath) { File = filePath.FullPath };
+                rendererService = new NativeViewRenderingService (fileProvider);
 
-                rendererService = new NativeViewRenderingService (fileProvider, converters);
-                rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbededWindowConverter ());
-                rendererService.CustomConverters.Add (new FigmaSharp.NativeControls.Cocoa.EmbeddedSheetDialogConverter ());
-                distributionService = new FigmaViewRendererDistributionService(rendererService);
+                rendererService.CustomConverters.Add (new EmbededWindowConverter ());
+                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter ());
 
-                session = new FigmaDesignerSession(fileProvider, rendererService, distributionService);
+                layoutManager = new StoryboardLayoutManager();
+
+                session = new FigmaDesignerSession(fileProvider, rendererService, layoutManager);
                 //session.ModifiedChanged += HandleModifiedChanged;
                 session.ReloadFinished += Session_ReloadFinished;
 
@@ -148,7 +145,7 @@ namespace MonoDevelop.Figma
 
             if (fileDescriptor.Owner is DotNetProject project)
             {
-                session.Reload(scrollViewWrapper, fileProvider.File, new FigmaViewRendererServiceOptions () {
+                session.Reload(scrollview.ContentView, fileProvider.File, new FigmaViewRendererServiceOptions () {
 					ScanChildrenFromFigmaInstances = false
 				});
             }
@@ -211,10 +208,15 @@ namespace MonoDevelop.Figma
             //We want know the background color of the figma camvas and apply to our scrollview
             var canvas = fileProvider.Nodes.OfType<FigmaCanvas> ().FirstOrDefault ();
             if (canvas != null)
-                scrollViewWrapper.BackgroundColor = canvas.backgroundColor;
-
-            //we need reload after set the content to ensure the scrollview
-            scrollViewWrapper.AdjustToContent();
+            {
+                scrollview.BackgroundColor = canvas.backgroundColor;
+                scrollview.SetContentSize(canvas.absoluteBoundingBox.Width, canvas.absoluteBoundingBox.Height);
+            } else
+            {
+                //we need reload after set the content to ensure the scrollview
+                scrollview.AdjustToContent();
+            }
+        
         }
 
         public void Reposition(ProcessedNode[] mainNodes)
@@ -287,7 +289,7 @@ namespace MonoDevelop.Figma
 
         void RefreshAll()
         {
-            session.Reload(scrollViewWrapper, filePath, fileOptions);
+            session.Reload(scrollview, filePath, fileOptions);
             if (outlinePad != null)
             {
                 outlinePad.GenerateTree(session.Response.document, figmaDelegate);

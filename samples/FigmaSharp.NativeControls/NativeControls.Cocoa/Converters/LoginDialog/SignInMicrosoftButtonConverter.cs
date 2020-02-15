@@ -61,7 +61,7 @@ namespace LocalFile.Cocoa
 
 			IView msLogoView = null;
 			if (rendererService is FigmaViewRendererService viewRendererService)
-				msLogoView = viewRendererService.RenderByName<IView>(LogoImageName);
+				msLogoView = viewRendererService.RenderByName<IView>(LogoImageName, null);
 		
 			var flatButton =  new FixedFlatButton(text, msLogoView.NativeObject as NSView);
 

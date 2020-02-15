@@ -30,8 +30,6 @@ namespace FigmaSharp.Views
 {
 	public interface IScrollView : IView
 	{
-		Color BackgroundColor { get; set; }
-
 		void AdjustToContent ();
 		void SetContentSize (float width, float height);
 

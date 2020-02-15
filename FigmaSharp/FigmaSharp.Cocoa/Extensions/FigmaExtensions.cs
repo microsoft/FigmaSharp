@@ -238,46 +238,6 @@ namespace FigmaSharp.Cocoa
             );
         }
 
-        public static void CreateConstraints(this NSView view, NSView parent, FigmaLayoutConstraint constraints, Rectangle absoluteBoundingBox, Rectangle absoluteBoundBoxParent)
-        {
-            System.Console.WriteLine("Create constraint  horizontal:{0} vertical:{1}", constraints.horizontal, constraints.vertical);
-
-            if (constraints.horizontal.Contains("RIGHT"))
-            {
-                var endPosition1 = absoluteBoundingBox.X + absoluteBoundingBox.Width;
-                var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
-                var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
-                view.RightAnchor.ConstraintEqualToAnchor(parent.RightAnchor, -value).Active = true;
-
-                var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-                view.LeftAnchor.ConstraintEqualToAnchor(parent.LeftAnchor, value2).Active = true;
-            }
-
-            if (constraints.horizontal != "RIGHT")
-            {
-                var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-                view.LeftAnchor.ConstraintEqualToAnchor(parent.LeftAnchor, value2).Active = true;
-            }
-
-            if (constraints.horizontal.Contains("BOTTOM"))
-            {
-                var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
-                view.TopAnchor.ConstraintEqualToAnchor(parent.TopAnchor, value).Active = true;
-
-                var endPosition1 = absoluteBoundingBox.Y + absoluteBoundingBox.Height;
-                var endPosition2 = absoluteBoundBoxParent.Y + absoluteBoundBoxParent.Height;
-                var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
-
-                view.BottomAnchor.ConstraintEqualToAnchor(parent.BottomAnchor, -value2).Active = true;
-            }
-
-            if (constraints.horizontal != "BOTTOM")
-            {
-                var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
-                view.TopAnchor.ConstraintEqualToAnchor(parent.TopAnchor, value).Active = true;
-            }
-        }
-
         #endregion
 
     }

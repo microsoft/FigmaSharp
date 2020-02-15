@@ -53,10 +53,10 @@ namespace FigmaSharp.Views.Cocoa
 
 		public RadioBox (FNSButton button) : base (button)
 		{
-			button.SetButtonType (NSButtonType.Radio);
-			button.Title = string.Empty;
-
-			this.button = button;
+            this.button = button;
+			this.button.SetButtonType (NSButtonType.Radio);
+			this.button.Title = string.Empty;
+            this.button.TranslatesAutoresizingMaskIntoConstraints = false;
 			this.button.Activated += Button_Activated;
 		}
 

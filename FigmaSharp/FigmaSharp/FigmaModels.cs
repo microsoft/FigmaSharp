@@ -592,6 +592,11 @@ namespace FigmaSharp.Models
         [Category ("General")]
         [DisplayName ("Horizontal")]
         public string horizontal { get; set; }
+
+        public bool IsFlexibleHorizontal => (horizontal.Contains("LEFT") && horizontal.Contains("RIGHT")) || horizontal == "SCALE";
+        public bool IsFlexibleVertical => (vertical.Contains("TOP") && vertical.Contains("BOTTOM")) || vertical == "SCALE";
+
+        public bool HasAnyCenterConstraint => vertical == "CENTER" || vertical == "SCALE" || horizontal == "CENTER" || horizontal == "SCALE";
     }
 
     public class FigmaLayoutGrid

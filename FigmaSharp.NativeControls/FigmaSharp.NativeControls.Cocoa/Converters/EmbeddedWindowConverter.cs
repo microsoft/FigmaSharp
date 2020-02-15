@@ -33,8 +33,8 @@ using AppKit;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -54,14 +54,23 @@ namespace FigmaSharp.NativeControls.Cocoa
 			NSColor.FromRgba (0.29f, 0.29f, 0.29f, 0.66f);
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = EmbededWindowConverter.GetSimulatedWindow ();
+			var view = EmbededWindowConverter.GetSimulatedWindow();
+
+			var button = new NSButton() { Title = "Simulate" };
+			button.Activated += (s, e) => {
+
+			};
 		
 			var nativeView = view.NativeObject as NSView;
-			nativeView.Configure (frame);
+			nativeView.Configure(frame);
 
+			nativeView.AddSubview (button);
+			var yposition = (float) nativeView.Frame.Height - button.IntrinsicContentSize.Height;
+			button.Frame = new CoreGraphics.CGRect(0, yposition, button.IntrinsicContentSize.Width, button.IntrinsicContentSize.Height);
+	
 			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 
 			if (firstElement != null) {
@@ -81,10 +90,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
 					
 				}
-
 			}
-
-	
 			return view;
 		}
 

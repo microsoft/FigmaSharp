@@ -11,6 +11,7 @@
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
      <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
      <ReleaseVersion>0.1.1</ReleaseVersion>
+     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -126,6 +127,5 @@
       <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\NativeControls.Shared\NativeControls.Shared.projitems" Label="Shared" Condition="Exists('..\NativeControls.Shared\NativeControls.Shared.projitems')" />
      <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

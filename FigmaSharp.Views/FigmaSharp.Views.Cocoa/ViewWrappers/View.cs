@@ -29,6 +29,7 @@
 using System.Collections.Generic;
 using AppKit;
 using FigmaSharp.Views.Native.Cocoa;
+using System.Linq;
 
 namespace FigmaSharp.Views.Cocoa
 {
@@ -49,16 +50,105 @@ namespace FigmaSharp.Views.Cocoa
 		readonly List<IView> children = new List<IView> ();
 		public virtual IReadOnlyList<IView> Children => children;
 
+        public float X {
+            get
+            {
+				if (nativeView.Superview != null)
+                {
+					var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Left && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Left);
+					if (xConstraint != null)
+					{
+						return (float)xConstraint.Constant;
+					}
+				}
+				return 0;
+			}
+			set
+			{
+				if (nativeView.Superview == null)
+					return;
+
+				var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Left && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Left);
+				if (xConstraint != null)
+				{
+					xConstraint.Constant = value;
+				}
+				else
+				{
+					nativeView.LeftAnchor.ConstraintEqualToAnchor(nativeView.Superview.LeftAnchor, value).Active = true;
+				}
+			}
+        }
+
+		public float Y
+		{
+			get
+			{
+				if (nativeView.Superview != null)
+				{
+
+					var yConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Top && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Top);
+					if (yConstraint != null)
+					{
+						return (float)yConstraint.Constant;
+					}
+				}
+				return 0;
+			}
+			set
+			{
+				if (nativeView.Superview == null)
+					return;
+
+				var yConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Top && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Top);
+				if (yConstraint != null) {
+					yConstraint.Constant = value;
+				}
+				else
+				{
+					nativeView.TopAnchor.ConstraintEqualToAnchor(nativeView.Superview.TopAnchor, value).Active = true;
+				}
+			}
+		}
+
+
 		public float Width {
-			get => (float)nativeView.Frame.Width;
+			get
+			{
+				var widthConstraint = nativeView.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Width);
+                if (widthConstraint != null) {
+					return (float) widthConstraint.Constant;
+                }
+				return (float)nativeView.Frame.Width;
+			}
 			set {
-				SetSize (value, (float)nativeView.Frame.Height);
+				var widthConstraint = nativeView.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Width);
+				if (widthConstraint != null)
+				{
+					widthConstraint.Constant = value;
+				}
+				else
+				{
+					nativeView.WidthAnchor.ConstraintEqualToConstant(value).Active = true;
+				}
 			}
 		}
 		public float Height {
-			get => (float)nativeView.Frame.Height;
+			get {
+				var heightConstraint = nativeView.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Height);
+				if (heightConstraint != null) {
+					return (float)heightConstraint.Constant;
+				}
+				return (float)nativeView.Frame.Height;
+			}
 			set {
-				SetSize ((float)nativeView.Frame.Width, value);
+				var heightConstraint = nativeView.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Height);
+				if (heightConstraint != null) {
+					heightConstraint.Constant = value;
+				} else
+                {
+					nativeView.HeightAnchor.ConstraintEqualToConstant(value).Active = true;
+				}
 			}
 		}
 
@@ -107,6 +197,7 @@ namespace FigmaSharp.Views.Cocoa
 		{
 			this.nativeView = nativeView;
 			this.nativeView.WantsLayer = true;
+			this.nativeView.TranslatesAutoresizingMaskIntoConstraints = false;
 		}
 
 		Transform transform;
@@ -142,18 +233,22 @@ namespace FigmaSharp.Views.Cocoa
 
 		public void AddChild (IView view)
 		{
-			view.Parent = this;
-			children.Add (view);
 			OnAddChild (view);
 		}
 
 		protected virtual void OnAddChild (IView view)
 		{
+			view.Parent = this;
+			children.Add(view);
 			nativeView.AddSubview (view.NativeObject as NSView);
 		}
 
 		protected virtual void OnRemoveChild (IView view)
 		{
+			if (children.Contains(view))
+			{
+				children.Remove(view);
+			}
 			((NSView)view.NativeObject).RemoveFromSuperview ();
 		}
 
@@ -178,10 +273,7 @@ namespace FigmaSharp.Views.Cocoa
 
 		public virtual void RemoveChild (IView view)
 		{
-			if (children.Contains (view)) {
-				children.Remove (view);
-				OnRemoveChild (view);
-			}
+			OnRemoveChild(view);
 		}
 
 		public void Focus ()
@@ -196,17 +288,23 @@ namespace FigmaSharp.Views.Cocoa
 		}
 
 		public Rectangle Allocation {
-			get => new Rectangle ((float)nativeView.Frame.X, (float)nativeView.Frame.Y, (float)nativeView.Frame.Width, (float)nativeView.Frame.Height);
+			get => new Rectangle (X, Y, Width, Height);
 			set => SetAllocation (value.X, value.Y, value.Width, value.Height);
 		}
 
-		public void SetPosition (float x, float y) => nativeView.SetFrameOrigin (new CoreGraphics.CGPoint (x, y));
+		public void SetPosition(float x, float y)
+		{
+			X = x;
+			Y = y;
+		}
 		public void SetPosition (Point point) => SetPosition (point.X, point.Y);
 
 		public void SetSize (float width, float height)
 		{
 			bool hasChanged = width != Width || height != Height;
-			nativeView.SetFrameSize (new CoreGraphics.CGSize (width, height));
+			//nativeView.SetFrameSize (new CoreGraphics.CGSize (width, height));
+			Width = width;
+			Height = height;
 			if (hasChanged)
 				OnChangeFrameSize (new Size (width, height));
 		}
@@ -216,7 +314,8 @@ namespace FigmaSharp.Views.Cocoa
 		public void SetAllocation (float x, float y, float width, float height)
 		{
 			bool hasChanged = width != Width || height != Height;
-			nativeView.Frame = new CoreGraphics.CGRect (x, y, width, height);
+			SetPosition(x, y);
+			SetSize(width, height);
 			if (hasChanged)
 				OnChangeFrameSize (new Size (width, height));
 		}
