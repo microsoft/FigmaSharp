@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.NativeControls.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cocoa", "Cocoa", "{C9D27015-1694-4E86-A3EF-010227C1F5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Tests", "FigmaSharp.Tests\FigmaSharp.Tests.csproj", "{97A18BDA-8AA6-40E6-9928-B30B49C134E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\FigmaSharp.Tests.csproj", "{97A18BDA-8AA6-40E6-9928-B30B49C134E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaFileExporter", "tools\FigmaFileExporter\FigmaFileExporter.csproj", "{8D690230-EBA5-4260-938C-9F9847DC13A6}"
 EndProject
