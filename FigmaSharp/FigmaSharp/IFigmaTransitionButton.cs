@@ -1,4 +1,6 @@
-﻿/* 
+﻿/*
+ * IFigmaTransitionButton.cs
+ * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
  *

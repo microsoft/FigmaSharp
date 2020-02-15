@@ -25,9 +25,8 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using FigmaSharp.Views;
+
 using FigmaSharp.Models;
-using FigmaSharp.Services;
 
 namespace FigmaSharp.Converters
 {

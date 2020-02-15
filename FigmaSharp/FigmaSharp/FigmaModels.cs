@@ -29,14 +29,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using Newtonsoft.Json;
-using System.Linq;
+
 using FigmaSharp.Views;
+
+using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
-    public interface INodeImage
+	public interface INodeImage
     {
         bool HasImage();
     }
