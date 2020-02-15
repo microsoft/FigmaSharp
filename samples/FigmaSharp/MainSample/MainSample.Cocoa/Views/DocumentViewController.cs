@@ -108,7 +108,7 @@ namespace FigmaSharp.Samples
 					var converters = NativeControlsContext.Current
 						.GetConverters ()
 						.ToList ();
-					converters.Add (new NativeControls.Cocoa.EmbededSheetDialogConverter ());
+					converters.Add (new NativeControls.Cocoa.EmbeddedSheetDialogConverter ());
 					converters.Add (new NativeControls.Cocoa.EmbededWindowConverter ());
 					
 					Console.WriteLine ("TOKEN: " + Token);

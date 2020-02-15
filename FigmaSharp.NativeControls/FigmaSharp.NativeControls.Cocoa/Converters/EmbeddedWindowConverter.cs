@@ -57,7 +57,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = EmbeddedWindowConverter.GetSimulatedWindow ();
+			var view = EmbededWindowConverter.GetSimulatedWindow ();
 		
 			var nativeView = view.NativeObject as NSView;
 			nativeView.Configure (frame);
@@ -94,7 +94,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 	}
 
-	public class EmbeddedWindowConverter : FigmaViewConverter
+	public class EmbededWindowConverter : FigmaViewConverter
 	{
 		public static NSColor GetWindowBackgroundColor (bool isWhite)
 		{
