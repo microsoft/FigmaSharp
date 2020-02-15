@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleName</key>
 	<string>FigmaSharp</string>
+	<key>CFBundleDisplayName</key>
+	<string>FigmaSharp</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.microsoft.FigmaSharp</string>
 	<key>CFBundleShortVersionString</key>
