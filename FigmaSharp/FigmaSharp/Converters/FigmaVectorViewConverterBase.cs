@@ -27,7 +27,6 @@
  */
 
 using FigmaSharp.Models;
-using FigmaSharp.Views;
 
 namespace FigmaSharp.Converters
 {

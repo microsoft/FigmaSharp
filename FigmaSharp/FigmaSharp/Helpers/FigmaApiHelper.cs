@@ -25,20 +25,19 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using Newtonsoft.Json;
+
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Text;
 using System.Linq;
 using System.Reflection;
 
 using FigmaSharp.Models;
 
+using Newtonsoft.Json;
+
 namespace FigmaSharp
 {
-    public static class FigmaApiHelper
+	public static class FigmaApiHelper
     {
         const string prefix = "/file/";
         const char urlSeparatorChar = '/';

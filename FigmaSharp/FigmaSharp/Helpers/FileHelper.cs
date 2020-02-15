@@ -25,17 +25,19 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+
 using FigmaSharp.Converters;
-using System.Linq;
 
 namespace FigmaSharp
 {
-    public static class FileHelper
+	public static class FileHelper
     {
         //TODO: Change to async multithread
         public static void SaveFiles(Models.FigmaFileResponse figmaResponse, string destinationDirectory, string format, Dictionary<string, string> remotefile)

@@ -26,15 +26,16 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
+
+using FigmaSharp.Models;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using FigmaSharp.Views;
-using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
-    public class FigmaResponseConverter : JsonConverter
+	public class FigmaResponseConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFile.cs 
+ * Resources.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>

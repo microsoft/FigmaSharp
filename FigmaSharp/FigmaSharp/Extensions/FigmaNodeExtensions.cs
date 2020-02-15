@@ -26,15 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
-using System.Linq;
-using System.Threading.Tasks;
 using System;
-using FigmaSharp.Views;
-using FigmaSharp.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+
+using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
