@@ -1,11 +1,7 @@
-﻿using System;
-using AppKit;
+﻿using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
-using FigmaSharp.NativeControls;
-using FigmaSharp.NativeControls.Cocoa;
-using FigmaSharp;
-using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Cocoa.Converters
 {
