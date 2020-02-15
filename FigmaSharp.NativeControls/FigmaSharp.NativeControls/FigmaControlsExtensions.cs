@@ -16,7 +16,7 @@ namespace FigmaSharp.NativeControls
 		PopupButton = 6,
 		ComboBox = 7,
 		ProgressSpinner = 8,
-        DisclosureTriange = 9,
+        DisclosureTriangle = 9,
         Stepper = 10,
 		Label = 11,
         WindowStandard = 50,
@@ -198,8 +198,8 @@ namespace FigmaSharp.NativeControls
 
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.ProgressSpinner),
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
-            ( "Disclosure Triangle/Standard", NativeControlComponentType.DisclosureTriangleStandard, NativeControlType.DisclosureTriange),
-            ( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.DisclosureTriange),
+            ( "Disclosure Triangle/Standard", NativeControlComponentType.DisclosureTriangleStandard, NativeControlType.DisclosureTriangle),
+            ( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.DisclosureTriangle),
 
             ( "Stepper/Standard", NativeControlComponentType.StepperStandard, NativeControlType.Stepper),
             ( "Stepper/Standard Dark", NativeControlComponentType.StepperStandardDark, NativeControlType.Stepper),

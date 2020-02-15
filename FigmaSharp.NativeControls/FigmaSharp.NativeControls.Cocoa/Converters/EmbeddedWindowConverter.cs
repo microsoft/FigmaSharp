@@ -38,7 +38,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class EmbededSheetDialogConverter : FigmaViewConverter
+    public class EmbeddedSheetDialogConverter : FigmaViewConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{
@@ -57,7 +57,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = EmbededWindowConverter.GetSimulatedWindow ();
+			var view = EmbeddedWindowConverter.GetSimulatedWindow ();
 		
 			var nativeView = view.NativeObject as NSView;
 			nativeView.Configure (frame);
@@ -94,7 +94,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 	}
 
-	public class EmbededWindowConverter : FigmaViewConverter
+	public class EmbeddedWindowConverter : FigmaViewConverter
 	{
 		public static NSColor GetWindowBackgroundColor (bool isWhite)
 		{
