@@ -173,8 +173,6 @@ namespace FigmaSharp.NativeControls
 			( "Radio/Small HC", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
             ( "Radio/Standard HC", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
 
-            ( "92f3aa0d8397ca5f0bf76e818e2300152394836a", NativeControlComponentType.RadioSingleStandard, NativeControlType.RadioButton),
-
             ( "Checkbox/Standard", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
             ( "Checkbox/Standard HC", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
             ( "Checkbox/Standard Dark", NativeControlComponentType.CheckboxStandardDark, NativeControlType.CheckBox),
