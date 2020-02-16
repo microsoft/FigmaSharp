@@ -25,10 +25,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
+
 using Gtk;
+
 using MonoDevelop.Components;
 using MonoDevelop.Core;
+using MonoDevelop.Core.Logging;
 using MonoDevelop.Ide.Gui.Dialogs;
 
 namespace MonoDevelop.Figma
@@ -71,13 +75,14 @@ namespace MonoDevelop.Figma
 			var tokenLabel = new Label ();
 			tokenLabel.Text = GettextCatalog.GetString ("Personal Access Token:");
 
-			tokenEntry = new Entry(FigmaRuntime.Token) {
+			tokenEntry = new Entry() {
+				Text = GetToken(),
 				Visibility = false,
 				WidthRequest = 400
 			};
 
-			tokenEntry.Changed += NeedsStoreValue;
-			tokenEntry.FocusOutEvent += NeedsStoreValue;
+			tokenEntry.Changed += (sender, args) => StoreToken(sender, args, tokenEntry.Text);
+			tokenEntry.FocusOutEvent += (sender, args) => StoreToken(sender, args, tokenEntry.Text);
 
 			tokenLayout.PackStart (tokenLabel, false, false, 0);
 			tokenLayout.PackStart (tokenEntry, false, false, 6);
@@ -107,15 +112,46 @@ namespace MonoDevelop.Figma
            
         }
 
-        void NeedsStoreValue (object sender, EventArgs e)
+
+		void StoreToken (object sender, EventArgs args, string token)
 		{
-			FigmaRuntime.Token = tokenEntry.Text;
+			FigmaRuntime.Token = token;
+
+			try
+			{
+				FigmaSharp.Helpers.TokenStore.SharedTokenStore.SetToken(token);
+
+			}
+			catch (Exception e) {
+				LoggingService.Log(LogLevel.Warn, "Could not store token in Keychain: " + e.Message);
+			}
+
 		}
+
+		string GetToken()
+		{
+			string token = "";
+
+			try
+			{
+				token = FigmaSharp.Helpers.TokenStore.SharedTokenStore.GetToken();
+
+			}
+			catch (Exception e)
+			{
+				LoggingService.Log(LogLevel.Warn, "Could not get token from Keychain: " + e.Message);
+			}
+
+			FigmaRuntime.Token = token;
+			return token;
+		}
+
 
 		internal void ApplyChanges ()
 		{
 			FigmaRuntime.Token = tokenEntry.Text;
 		}
+
 
         public override void Dispose()
         {
@@ -133,10 +169,12 @@ namespace MonoDevelop.Figma
 			return widget;
 		}
 
+
 		public FilePath LoadSdkLocationSetting ()
 		{
 			return FigmaRuntime.Token;
 		}
+
 
 		public void SaveSdkLocationSetting (FilePath location)
 		{
@@ -145,6 +183,7 @@ namespace MonoDevelop.Figma
 			}
 			FigmaRuntime.Token = location;
 		}
+
 
 		public override void ApplyChanges ()
 		{

@@ -30,7 +30,7 @@ using System.Text;
 
 using Security;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharp.Helpers
 {
 	class TokenStore
 	{

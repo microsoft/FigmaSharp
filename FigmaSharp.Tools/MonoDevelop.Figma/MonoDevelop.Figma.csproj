@@ -22,6 +22,7 @@
         <Folder Include="Views\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
+        <Folder Include="Helpers\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
@@ -90,5 +91,8 @@
       </ItemGroup>
       <ItemGroup>
         <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\bundleFigmaDocument.designer.cs" />
+        <Compile Include="..\..\samples\FigmaSharp\MainSample\MainSample.Cocoa\Helpers\TokenStore.cs">
+          <Link>Helpers\TokenStore.cs</Link>
+        </Compile>
       </ItemGroup>
 </Project>
