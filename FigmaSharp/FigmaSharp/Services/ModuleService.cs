@@ -140,7 +140,7 @@ namespace FigmaSharp.Services
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("[{0}] Error loading.", fileName);
+                    Console.WriteLine("[{0}] Error loading: {1}", fileName, ex);
                 }
             }
 
@@ -185,6 +185,7 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
             }
         }
 
@@ -254,6 +255,7 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
             }
         }
 
