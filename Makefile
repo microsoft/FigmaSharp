@@ -36,27 +36,21 @@ sdk: nuget-download
 package: check-dependencies
 	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /restore
 	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /restore
-	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release /restore
 
 	mono nuget.exe restore FigmaSharp.sln
 	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /restore
 	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /restore
-	msbuild FigmaSharp/FigmaSharp.Forms/FigmaSharp.Forms.csproj /p:Configuration=Release /restore
 
 	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls/FigmaSharp.NativeControls.csproj /p:Configuration=Release /restore
 	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Cocoa/FigmaSharp.NativeControls.Cocoa.csproj /p:Configuration=Release /restore
-	msbuild FigmaSharp.NativeControls/FigmaSharp.NativeControls.Forms/FigmaSharp.NativeControls.Forms.csproj /p:Configuration=Release /restore
 
 	mono nuget.exe pack NuGet/FigmaSharp.Views.nuspec
 	mono nuget.exe pack NuGet/FigmaSharp.Views.Cocoa.nuspec
-	mono nuget.exe pack NuGet/FigmaSharp.Views.Forms.nuspec
 
 	mono nuget.exe pack NuGet/FigmaSharp.nuspec
 	mono nuget.exe pack NuGet/FigmaSharp.Cocoa.nuspec
-	mono nuget.exe pack NuGet/FigmaSharp.Forms.nuspec
 
 	mono nuget.exe pack NuGet/FigmaSharp.NativeControls.nuspec
 	mono nuget.exe pack NuGet/FigmaSharp.NativeControls.Cocoa.nuspec
-	mono nuget.exe pack NuGet/FigmaSharp.NativeControls.Forms.nuspec
 
 .PHONY: all clean pack install submodules sdk nuget-download check-dependencies
