@@ -9,8 +9,9 @@
     <RootNamespace>NativeControls.Cocoa</RootNamespace>
     <AssemblyName>NativeControls.Cocoa</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
      <ReleaseVersion>0.1.1</ReleaseVersion>
+     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
