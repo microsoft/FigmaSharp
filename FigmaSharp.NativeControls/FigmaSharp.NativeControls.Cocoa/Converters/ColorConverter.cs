@@ -98,7 +98,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			("Chrome/Control BG", NSColor.ControlBackground),
 			("Chrome/Content Selected BG", NSColor.SelectedContentBackgroundColor),
 			("Chrome/Content Selected Unemphasized BG", NSColor.UnemphasizedSelectedContentBackgroundColor),
-			("Chrome/Content Alternating BG", NSColor.AlternatingContentBackgroundColors[0]), // TODO Check
+			("Chrome/Content Alternating BG", NSColor.AlternatingContentBackgroundColors[1]),
 			("Chrome/Control", NSColor.Control),
 			("Chrome/Control Selected", NSColor.SelectedControl),
 			("Chrome/Control Accent", NSColor.ControlAccentColor),
