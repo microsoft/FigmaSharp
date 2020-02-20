@@ -78,6 +78,7 @@
     <Compile Include="Converters\LabelConverter.cs" />
     <Compile Include="Converters\FigmaNativeControlConverter.cs" />
     <Compile Include="FakeWindowView.cs" />
+    <Compile Include="Converters\ColorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
