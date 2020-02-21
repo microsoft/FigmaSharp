@@ -22,8 +22,6 @@ Try out automatic builds of the example app and Visual Studio extension from the
 
 # Building from source
 
-Restore the external dependencies by running `git submodule update --init --recursive`.
-
 To run the examples, open `FigmaSharp.sln` in [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/).
 In each example project's **Project Options**, go to **Run → Configurations → Default** and add an environment variable called `TOKEN`, then paste in your Personal Access Token.
 
