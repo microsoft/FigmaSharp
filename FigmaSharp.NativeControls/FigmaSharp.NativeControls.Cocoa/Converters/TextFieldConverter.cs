@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Linq;
 using System.Text;
 
@@ -83,7 +84,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholder != null && placeholder.characters != "placeholder")
+			if (placeholder != null && !placeholder.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
 				view.PlaceholderString = placeholder.characters;
 
 			if (controlComponentType.ToString ().EndsWith ("Dark", System.StringComparison.Ordinal)) {
@@ -118,8 +119,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholderTextNode != null && placeholderTextNode.characters != "placeholder")
-				builder.WriteEquality (name, nameof (NSTextField.PlaceholderString), placeholderTextNode.characters, true);
+			if (placeholderTextNode != null && !placeholderTextNode.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
+				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), placeholderTextNode.characters, true);
 
 			return builder.ToString ();
 		}
