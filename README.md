@@ -11,11 +11,13 @@ FigmaSharp converts Figma documents into .NET objects or code to turn them into 
 
 # Getting started
 
+We recommend reading through the [Wiki](https://github.com/netonjm/FigmaSharp/wiki) to get a sense of the FigmaSharp workflow.
+
 To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**.
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
 This will be your only chance to copy the token, so make sure you keep a copy in a secure place.
 
-We recommend trying out automatic builds of the example app and Visual Studio extension on the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
+Try out automatic builds of the example app and Visual Studio extension from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
 
 
 # Building from source
