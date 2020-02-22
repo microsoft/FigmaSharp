@@ -76,6 +76,11 @@ namespace FigmaSharp.Samples
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
 				View.AddSubview (nativeScrollView);
 				nativeScrollView.Frame = View.Bounds;
+				nativeScrollView.ScrollerStyle = NSScrollerStyle.Overlay;
+
+				nativeScrollView.ScrollerInsets = new NSEdgeInsets() { Top = 2, Bottom = 2, Left = 2, Right = 2 };
+				nativeScrollView.AllowsMagnification = true;
+				nativeScrollView.UsesPredominantAxisScrolling = false;
 
 				windowController = (DocumentWindowController)this.View.Window.WindowController;
 				windowController.VersionSelected += WindowController_VersionSelected;
