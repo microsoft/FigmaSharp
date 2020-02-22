@@ -66,6 +66,12 @@ namespace FigmaSharp.Samples
 			OpenButton.Enabled = CheckFormIsFilled ();
 		}
 
+		public override void ViewDidAppear()
+		{
+			base.ViewDidAppear();
+			OpenLocationWindow.Window.Center();
+		}
+
 		void TokenTextFieldChanged (Object sender, EventArgs args)
 		{
 			string token_message = TokenStatusTextField.StringValue;
