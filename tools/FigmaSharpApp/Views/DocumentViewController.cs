@@ -26,12 +26,15 @@
 
 
 using System;
-using System.Threading;
 using System.Linq;
+using System.Threading;
+
 using AppKit;
-using FigmaSharp.Services;
+using CoreGraphics;
 using Foundation;
+
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 
