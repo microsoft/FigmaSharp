@@ -128,12 +128,19 @@ namespace FigmaSharp.Samples
 		void PositionWindow ()
 		{
 			WindowCount++;
+
 			CGRect frame = Window.Frame;
 
 			frame.X += NEW_WINDOW_OFFSET * WindowCount;
 			frame.Y -= NEW_WINDOW_OFFSET * WindowCount;
 
+			frame.Width  = NSScreen.MainScreen.Frame.Width * 0.8f;
+			frame.Height = NSScreen.MainScreen.Frame.Height * 0.8f;
+
 			Window.SetFrame (frame, display: true);
+
+			if (WindowCount == 1)
+				Window.Center();
 		}
 
 		public void ShowError (string linkId)
