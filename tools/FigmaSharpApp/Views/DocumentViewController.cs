@@ -64,13 +64,13 @@ namespace FigmaSharp.Samples
 		{
 			Token = token;
 			Link_ID = linkId;
-			Load (version_id: versionId, page_id: pageId, startPage:0);
+			ToggleSpinnerState(toggle_on: true);
+			Load(version_id: versionId, page_id: pageId, startPage:0);
 		}
 
 		public void OnInitialize ()
 		{
 			if (scrollview == null) {
-				///View.AddSubview(progressIndicator);
 
 				scrollview = new ScrollView ();
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
@@ -97,9 +97,9 @@ namespace FigmaSharp.Samples
 
 		void Load (string version_id = "", string page_id = "", int startPage = 0)
 		{
-			if (string.IsNullOrEmpty (Link_ID)) {
+			if (string.IsNullOrEmpty (Link_ID))
 				return;
-			}
+
 			windowController.Title = string.Format ("Opening “{0}”…", Link_ID);
 
 			ToggleSpinnerState (toggle_on: true);
@@ -154,7 +154,7 @@ namespace FigmaSharp.Samples
 					NSView wrapper = new NSView(new CGRect(0, 0, windowView.Frame.Width, windowView.Frame.Height));
 
 					wrapper.AutoresizingMask = documentView.AutoresizingMask = NSViewResizingMask.MaxXMargin |
-						NSViewResizingMask.MinXMargin | NSViewResizingMask.MaxYMargin | NSViewResizingMask.MinYMargin;
+						NSViewResizingMask.MinXMargin | NSViewResizingMask.MinYMargin;
 
 					documentView.SetFrameOrigin(new CGPoint(posX, posY));
 
@@ -200,10 +200,12 @@ namespace FigmaSharp.Samples
 		public void ToggleSpinnerState (bool toggle_on)
 		{
 			if (toggle_on) {
+				View.AddSubview(Spinner);
 				Spinner.Hidden = false;
 				Spinner.StartAnimation (this);
 
 			} else {
+				Spinner.RemoveFromSuperview();
 				Spinner.Hidden = true;
 				Spinner.StopAnimation (this);
 			}
