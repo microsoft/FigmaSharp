@@ -141,6 +141,47 @@ namespace FigmaSharp.Samples
 					////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
 					scrollview.AdjustToContent ();
 
+
+					NSScrollView scrollView = (scrollview.NativeObject as NSScrollView);
+					NSView windowView = windowController.Window.ContentView;
+					NSView documentView = (scrollView.DocumentView as NSView);
+
+
+					// Center the document
+					var posX = 0.5 * (windowView.Frame.Width  - documentView.Frame.Width);
+					var posY = 0.5 * (windowView.Frame.Height - documentView.Frame.Height);
+
+					NSView wrapper = new NSView(new CGRect(0, 0, windowView.Frame.Width, windowView.Frame.Height));
+
+					wrapper.AutoresizingMask = documentView.AutoresizingMask = NSViewResizingMask.MaxXMargin |
+						NSViewResizingMask.MinXMargin | NSViewResizingMask.MaxYMargin | NSViewResizingMask.MinYMargin;
+
+					documentView.SetFrameOrigin(new CGPoint(posX, posY));
+
+
+					// Add padding if the document is larger than the window
+					const int padding = 64;
+
+					if (documentView.Frame.Width + padding > windowView.Frame.Width) {
+						wrapper.SetFrameSize(new CGSize(documentView.Frame.Width + (padding * 2), wrapper.Frame.Height));
+						documentView.SetFrameOrigin (new CGPoint(padding, padding));
+					}
+
+					if (documentView.Frame.Height + padding > windowView.Frame.Height) {
+						wrapper.SetFrameSize(new CGSize(wrapper.Frame.Width, documentView.Frame.Height + (padding * 2)));
+						documentView.SetFrameOrigin(new CGPoint(padding, padding));
+					}
+
+
+					wrapper.AddSubview(documentView);
+					scrollView.DocumentView = wrapper;
+
+
+					// Scroll to top left
+					scrollView.ContentView.ScrollPoint(new CGPoint(0, documentView.Frame.Size.Height));
+					scrollView.ReflectScrolledClipView(scrollView.ContentView);
+
+
 					windowController.Title = fileProvider.Response.name;
 
 					windowController.UpdateVersionMenu ();
