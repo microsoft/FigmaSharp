@@ -26,6 +26,7 @@
 
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using AppKit;
@@ -90,7 +91,7 @@ namespace FigmaSharp.Samples
 				named_version_items.Add (item);
 
 			} else {
-				item.Title = timestamp.ToString ("r");
+				item.Title = timestamp.ToString ("g");
 				other_version_items.Add (item);
 			}
 		}
@@ -117,7 +118,7 @@ namespace FigmaSharp.Samples
 			menu.AddItem (NSMenuItem.SeparatorItem);
 			menu.AddItem (new NSMenuItem ("Autosaved") { Enabled = false });
 
-			foreach (NSMenuItem item in other_version_items)
+			foreach (NSMenuItem item in other_version_items.Skip(1)) // First item is "Current"
 				menu.AddItem (item);
 
 			menu.Update ();

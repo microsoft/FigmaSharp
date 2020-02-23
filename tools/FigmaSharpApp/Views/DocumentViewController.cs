@@ -55,8 +55,19 @@ namespace FigmaSharp.Samples
 
 		public DocumentViewController (IntPtr handle) : base (handle)
 		{
-
 		}
+
+
+		class WindowDelegate : NSWindowDelegate
+		{
+			public event EventHandler WindowFocused = delegate { };
+
+			public override void DidBecomeKey(NSNotification notification)
+			{
+				WindowFocused(this, new EventArgs());
+			}
+		}
+
 
 		public void Reload (string versionId = "", string pageId = "", int startPage = 0) => Load (versionId, pageId, startPage);
 
@@ -70,6 +81,14 @@ namespace FigmaSharp.Samples
 
 		public void OnInitialize ()
 		{
+			var windowDelegate = new WindowDelegate();
+
+			windowDelegate.WindowFocused += delegate {
+				windowController.UpdateVersionMenu(Link_ID);
+			};
+
+			View.Window.WeakDelegate = windowDelegate;
+
 			if (scrollview == null) {
 
 				scrollview = new ScrollView ();
@@ -154,7 +173,7 @@ namespace FigmaSharp.Samples
 					NSView wrapper = new NSView(new CGRect(0, 0, windowView.Frame.Width, windowView.Frame.Height));
 
 					wrapper.AutoresizingMask = documentView.AutoresizingMask = NSViewResizingMask.MaxXMargin |
-						NSViewResizingMask.MinXMargin | NSViewResizingMask.MinYMargin;
+						NSViewResizingMask.MinXMargin | NSViewResizingMask.MinYMargin | NSViewResizingMask.MaxYMargin;
 
 					documentView.SetFrameOrigin(new CGPoint(posX, posY));
 
@@ -184,7 +203,7 @@ namespace FigmaSharp.Samples
 
 					windowController.Title = fileProvider.Response.name;
 
-					windowController.UpdateVersionMenu ();
+					windowController.UpdateVersionMenu (Link_ID);
 					windowController.UpdatePagesPopupButton (fileProvider);
 					windowController.EnableButtons (true);
 
