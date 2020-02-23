@@ -27,13 +27,11 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 using AppKit;
 using CoreGraphics;
 using Foundation;
 
-using FigmaSharp;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
@@ -41,9 +39,6 @@ namespace FigmaSharp.Samples
 {
 	public partial class DocumentWindowController : NSWindowController
 	{
-		public static int WindowCount { get; private set; }
-		const int NEW_WINDOW_OFFSET = 38;
-
 		public string Title {
 			get { return TitleTextField.StringValue; }
 			set { TitleTextField.StringValue = value; }
@@ -58,11 +53,23 @@ namespace FigmaSharp.Samples
 		{
 		}
 
+
 		public override void WindowDidLoad ()
 		{
-			PositionWindow ();
 			base.WindowDidLoad ();
+
+			CGRect frame = Window.Frame;
+			ShouldCascadeWindows = true;
+
+			frame.Width  = NSScreen.MainScreen.Frame.Width  * 0.8f;
+			frame.Height = NSScreen.MainScreen.Frame.Height * 0.8f;
+
+			Window.SetFrame(frame, display: true);
+
+			if (NSApplication.SharedApplication.Windows.Length == 3) // Magic number :(
+				Window.Center();
 		}
+
 
 		FigmaCanvas[] elements;
 
@@ -130,6 +137,7 @@ namespace FigmaSharp.Samples
 			VersionMenu.UseAsVersionsMenu ();
 		}
 
+
 		partial void RefreshClicked (NSObject sender)
 		{
 			RefreshRequested?.Invoke (this, EventArgs.Empty);
@@ -148,23 +156,6 @@ namespace FigmaSharp.Samples
 			}
 		}
 
-		void PositionWindow ()
-		{
-			WindowCount++;
-
-			CGRect frame = Window.Frame;
-
-			frame.X += NEW_WINDOW_OFFSET * WindowCount;
-			frame.Y -= NEW_WINDOW_OFFSET * WindowCount;
-
-			frame.Width  = NSScreen.MainScreen.Frame.Width * 0.8f;
-			frame.Height = NSScreen.MainScreen.Frame.Height * 0.8f;
-
-			Window.SetFrame (frame, display: true);
-
-			if (WindowCount == 1)
-				Window.Center();
-		}
 
 		public void ShowError (string linkId)
 		{
@@ -177,7 +168,6 @@ namespace FigmaSharp.Samples
 			alert.AddButton ("Close");
 			alert.RunSheetModal (Window);
 
-			WindowCount--;
 			Window.PerformClose (this);
 		}
 	}

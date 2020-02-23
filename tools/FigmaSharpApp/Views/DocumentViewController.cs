@@ -137,8 +137,6 @@ namespace FigmaSharp.Samples
 						.ToList ();
 					converters.Add (new NativeControls.Cocoa.EmbeddedSheetDialogConverter ());
 					converters.Add (new NativeControls.Cocoa.EmbededWindowConverter ());
-					
-					Console.WriteLine ("TOKEN: " + Token);
 
 					var options = new FigmaViewRendererServiceOptions () { StartPage = startPage };
 					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID };
