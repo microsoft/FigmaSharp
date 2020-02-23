@@ -27,17 +27,15 @@
 
 using System;
 using System.Linq;
-using System.Threading;
+using System.Threading.Tasks;
 
 using AppKit;
 using CoreGraphics;
 using Foundation;
 
 using FigmaSharp;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Samples
 {
@@ -89,22 +87,47 @@ namespace FigmaSharp.Samples
 			PagePopUpButton.Enabled = enable;
 		}
 
-		public void UpdateVersionMenu ()
-		{
-			var menu = new VersionMenu ();
 
-			menu.VersionSelected += delegate (string version_id) {
+		VersionMenu VersionMenu;
+
+		public async void UpdateVersionMenu (string link_id)
+		{
+			if (VersionMenu != null) {
+				VersionMenu.UseAsVersionsMenu();
+				return;
+			}
+
+			VersionMenu = new VersionMenu();
+
+			VersionMenu.VersionSelected += delegate (string version_id) {
 				VersionSelected?.Invoke (this, version_id);
 			};
 
-			menu.AddItem ("1", "FigmaSharp.Cocoa 0.0.1", DateTime.Now);
-			menu.AddItem ("2", "FigmaSharp.Cocoa 0.0.2", DateTime.Now);
-			menu.AddItem ("3", "FigmaSharp.Cocoa 0.0.3", DateTime.Now);
-			menu.AddItem ("4", DateTime.Now);
-			menu.AddItem ("5", DateTime.Now.AddDays (-7));
-			menu.AddItem ("6", DateTime.Now.AddDays (-14));
+			FigmaFileVersion[] versions = null;
 
-			menu.UseAsVersionsMenu ();
+			try
+			{
+				var query = new FigmaFileVersionQuery(link_id);
+
+				AppContext.Current.SetAccessToken(TokenStore.SharedTokenStore.GetToken());
+				versions = AppContext.Api.GetFileVersions(query).versions;
+				versions = versions.GroupBy(x => x.created_at)
+					.Select(group => group.First())
+					.ToArray();
+
+			} catch (Exception ex) {
+				Console.WriteLine(ex);
+			}
+
+			foreach (var version in versions)
+			{
+				if (version.label != null && !string.IsNullOrWhiteSpace(version.label))
+					VersionMenu.AddItem(version.id, version.label, version.created_at);
+				else
+					VersionMenu.AddItem(version.id, version.created_at);
+			}
+
+			VersionMenu.UseAsVersionsMenu ();
 		}
 
 		partial void RefreshClicked (NSObject sender)
