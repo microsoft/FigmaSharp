@@ -72,6 +72,11 @@ namespace FigmaSharp
 				AppKit.NSWindowStyle.Closable.GetFullName ()
 			));
 
+			builder.AppendLine(string.Format("{0}.{1} |= {2};",
+				CodeGenerationHelpers.This,
+				nameof(AppKit.NSWindow.StyleMask),
+				AppKit.NSWindowStyle.Resizable.GetFullName()
+			));
 
 			var windowComponent = FigmaNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 			if (windowComponent != null) {
