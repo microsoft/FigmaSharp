@@ -27,6 +27,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 
 using AppKit;
 using CoreGraphics;
@@ -110,31 +111,30 @@ namespace FigmaSharp.Samples
 				VersionSelected?.Invoke (this, version_id);
 			};
 
-			FigmaFileVersion[] versions = null;
 
-			try
-			{
+			new Thread(() => {
+
 				var query = new FigmaFileVersionQuery(link_id);
 
 				AppContext.Current.SetAccessToken(TokenStore.SharedTokenStore.GetToken());
-				versions = AppContext.Api.GetFileVersions(query).versions;
+
+				FigmaFileVersion[] versions = AppContext.Api.GetFileVersions(query).versions;
 				versions = versions.GroupBy(x => x.created_at)
 					.Select(group => group.First())
 					.ToArray();
 
-			} catch (Exception ex) {
-				Console.WriteLine(ex);
-			}
+				InvokeOnMainThread(() => {
+					foreach (var version in versions) {
+						if (version.label != null && !string.IsNullOrWhiteSpace(version.label))
+							VersionMenu.AddItem(version.id, version.label, version.created_at);
+						else
+							VersionMenu.AddItem(version.id, version.created_at);
+					}
 
-			foreach (var version in versions)
-			{
-				if (version.label != null && !string.IsNullOrWhiteSpace(version.label))
-					VersionMenu.AddItem(version.id, version.label, version.created_at);
-				else
-					VersionMenu.AddItem(version.id, version.created_at);
-			}
+					VersionMenu.UseAsVersionsMenu();
+				});
 
-			VersionMenu.UseAsVersionsMenu ();
+			}).Start();
 		}
 
 
