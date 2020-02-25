@@ -139,7 +139,6 @@ namespace FigmaSharp.Samples
 
 					VersionMenu.UseAsVersionsMenu();
 				});
-
 			});
 		}
 
