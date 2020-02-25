@@ -27,7 +27,7 @@
 
 using System;
 using System.Linq;
-using System.Threading;
+using System.Threading.Tasks;
 
 using AppKit;
 using CoreGraphics;
@@ -126,10 +126,10 @@ namespace FigmaSharp.Samples
 
 			scrollview.ClearSubviews ();
 
-			new Thread (() => {
-
-				this.InvokeOnMainThread (() => {
-
+			Task.Run(() =>
+			{
+				InvokeOnMainThread (() =>
+				{
 					AppContext.Current.SetAccessToken (Token);
 
 					var converters = NativeControlsContext.Current
@@ -208,8 +208,7 @@ namespace FigmaSharp.Samples
 					ToggleSpinnerState (toggle_on: false);
 
 				});
-
-			}).Start ();
+			});
 		}
 
 		#region Spinner
