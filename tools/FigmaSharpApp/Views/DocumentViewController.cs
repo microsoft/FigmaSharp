@@ -218,11 +218,11 @@ namespace FigmaSharp.Samples
 		{
 			if (toggle_on) {
 				View.AddSubview(Spinner);
+
 				Spinner.Hidden = false;
 				Spinner.StartAnimation (this);
 
 			} else {
-				Spinner.RemoveFromSuperview();
 				Spinner.Hidden = true;
 				Spinner.StopAnimation (this);
 			}
