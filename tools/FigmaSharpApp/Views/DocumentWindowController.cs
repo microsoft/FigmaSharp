@@ -55,6 +55,8 @@ namespace FigmaSharp.Samples
 		}
 
 
+		static bool firstWindow = true;
+
 		public override void WindowDidLoad ()
 		{
 			base.WindowDidLoad ();
@@ -67,8 +69,10 @@ namespace FigmaSharp.Samples
 
 			Window.SetFrame(frame, display: true);
 
-			if (NSApplication.SharedApplication.Windows.Length == 3) // Magic number :(
+			if (firstWindow)
 				Window.Center();
+
+			firstWindow = false;
 		}
 
 
