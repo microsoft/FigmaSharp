@@ -168,7 +168,7 @@ namespace FigmaSharp.Samples
 					var posX = 0.5 * (windowView.Frame.Width  - documentView.Frame.Width);
 					var posY = 0.5 * (windowView.Frame.Height - documentView.Frame.Height);
 
-					NSView wrapper = new NSView(new CGRect(0, 0, windowView.Frame.Width, windowView.Frame.Height));
+					NSView wrapper = new NSView(windowView.Bounds);
 
 					wrapper.AutoresizingMask = documentView.AutoresizingMask = NSViewResizingMask.MaxXMargin |
 						NSViewResizingMask.MinXMargin | NSViewResizingMask.MinYMargin | NSViewResizingMask.MaxYMargin;
