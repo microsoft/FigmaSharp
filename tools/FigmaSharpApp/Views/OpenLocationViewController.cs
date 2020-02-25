@@ -69,7 +69,9 @@ namespace FigmaSharp.Samples
 		public override void ViewDidAppear()
 		{
 			base.ViewDidAppear();
-			OpenLocationWindow.Window.Center();
+
+			if (OpenLocationWindow.Window != null)
+				OpenLocationWindow.Window.Center();
 		}
 
 		void TokenTextFieldChanged (Object sender, EventArgs args)

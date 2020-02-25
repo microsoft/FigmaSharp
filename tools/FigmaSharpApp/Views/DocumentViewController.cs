@@ -158,9 +158,12 @@ namespace FigmaSharp.Samples
 					////NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
 					scrollview.AdjustToContent ();
 
+					if (windowController.Window == null)
+						return;
+
+					NSView windowView = windowController.Window.ContentView;
 
 					NSScrollView scrollView = (scrollview.NativeObject as NSScrollView);
-					NSView windowView = windowController.Window.ContentView;
 					NSView documentView = (scrollView.DocumentView as NSView);
 
 
