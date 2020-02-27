@@ -33,11 +33,11 @@ using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
-	public partial class bundleFigmaDocument : AppKit.NSWindow
+	public partial class bundleFigmaWindow : NSWindow
 	{
 		public string FileId => figmaUrlTextField.StringValue;
 
-		public bundleFigmaDocument ()
+		public bundleFigmaWindow ()
 		{
 			InitializeComponent ();
 
@@ -48,8 +48,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
-				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1) {
-					return versions[(int)versionComboBox.IndexOfSelectedItem];
+				if (versionPopUp.ItemCount > 0 && versionPopUp.ItemCount == versions.Length + 1 && versionPopUp.IndexOfSelectedItem > -1) {
+					return versions[(int)versionPopUp.IndexOfSelectedItem];
 				}
 				return null;
 			}
@@ -59,27 +59,27 @@ namespace MonoDevelop.Figma.FigmaBundles
 		void Initialize ()
 		{
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
-			versionComboBox.Activated += ItemsRefreshState_Handler;
+			versionPopUp.Activated += ItemsRefreshState_Handler;
 
-			templateCodeOptionBox.Activated += ItemsRefreshState_Handler;
-			templateMarkUpOptionBox.Activated += ItemsRefreshState_Handler;
-			templateNoneOptionBox.Activated += ItemsRefreshState_Handler;
+			codeRadio.Activated += ItemsRefreshState_Handler;
+			templateRadio.Activated += ItemsRefreshState_Handler;
+			nothingRadio.Activated += ItemsRefreshState_Handler;
 
 			cancelButton.Activated += CancelButton_Activated;
 			bundleButton.Activated += BundleButton_Activated;
 
-			templateNoneOptionBox.Enabled =
-			templateMarkUpOptionBox.Enabled = false;
+			nothingRadio.Enabled =
+			templateRadio.Enabled = false;
 
 			RefreshStates ();
 		}
 
 		void RefreshStates ()
 		{
-			templateCodeOptionBox.Enabled =
+			codeRadio.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			versionComboBox.Enabled = SelectedFileVersion != null;
+			versionPopUp.Enabled = SelectedFileVersion != null;
 
 			RefreshBundleButtonState ();
 		}
@@ -87,7 +87,10 @@ namespace MonoDevelop.Figma.FigmaBundles
 		void RefreshBundleButtonState ()
 		{
 			bundleButton.Enabled =
-				SelectedFileVersion != null && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
+				SelectedFileVersion != null &&
+				(codeRadio.State ==     NSCellStateValue.On ||
+				 templateRadio.State == NSCellStateValue.On ||
+				 nothingRadio.State ==  NSCellStateValue.On);
 		}
 
 		public event EventHandler BundleCreated;
@@ -109,12 +112,12 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		private async void FigmaUrlTextField_Changed (object sender, EventArgs e)
 		{
-			loadingProgressIndicator.Hidden = false;
-			loadingProgressIndicator.StartAnimation (loadingProgressIndicator);
+			versionSpinner.Hidden = false;
+			versionSpinner.StartAnimation (versionSpinner);
 
 			//loads current versions
-			versionComboBox.RemoveAllItems ();
-			versionComboBox.Enabled = false;
+			versionPopUp.RemoveAllItems ();
+			versionPopUp.Enabled = false;
 
 			RefreshStates ();
 
@@ -137,8 +140,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 			});
 
-			loadingProgressIndicator.StopAnimation (loadingProgressIndicator);
-			loadingProgressIndicator.Hidden = true;
+			versionSpinner.StopAnimation (versionSpinner);
+			versionSpinner.Hidden = true;
 
 			if (versions != null) {
 				var menu = new NSMenu();
