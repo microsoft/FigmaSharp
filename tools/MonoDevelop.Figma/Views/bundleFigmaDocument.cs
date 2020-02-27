@@ -44,7 +44,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			Initialize ();
 		}
 
-		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
+		FigmaFileVersion[] versions = new FigmaFileVersion[0];
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
@@ -95,22 +95,22 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		public event EventHandler BundleCreated;
 
-		private void BundleButton_Activated (object sender, EventArgs e)
+		void BundleButton_Activated (object sender, EventArgs e)
 		{
 			BundleCreated?.Invoke (this, e);
 		}
 
-		private void CancelButton_Activated (object sender, EventArgs e)
+		void CancelButton_Activated (object sender, EventArgs e)
 		{
-			this.Close ();
+			Close ();
 		}
 
-		private void ItemsRefreshState_Handler (object sender, EventArgs e)
+		void ItemsRefreshState_Handler (object sender, EventArgs e)
 		{
 			RefreshStates ();
 		}
 
-		private async void FigmaUrlTextField_Changed (object sender, EventArgs e)
+		async void FigmaUrlTextField_Changed (object sender, EventArgs e)
 		{
 			versionSpinner.Hidden = false;
 			versionSpinner.StartAnimation (versionSpinner);
