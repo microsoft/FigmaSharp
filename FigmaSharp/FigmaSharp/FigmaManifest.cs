@@ -73,7 +73,7 @@ namespace FigmaSharp
 
 		public void ToComment (StringBuilder builder)
 		{
-			string date = Date.ToString("yyyy-MM-dd HH:mm");
+			string date = Date.ToString("yyyy-MM-dd");
 			string time = Date.ToString("HH:mm");
 
 			builder.AppendLine ($"This file was auto-generated using");
