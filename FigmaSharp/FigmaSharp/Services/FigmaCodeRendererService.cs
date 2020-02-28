@@ -106,8 +106,12 @@ namespace FigmaSharp.Services
 						identifiers.Add (identifier, lastIndex);
 					}
 
-					builder.AppendLine ();
-					builder.AppendLine ($"// View: {node.Name} NodeName: {node.Node.name} NodeType: {node.Node.type} NodeId: {node.Node.id}");
+					builder.AppendLine();
+					builder.AppendLine();
+					builder.AppendLine ($"// View:     {node.Name}");
+					builder.AppendLine ($"// NodeName: {node.Node.name}");
+					builder.AppendLine ($"// NodeType: {node.Node.type}");
+					builder.AppendLine ($"// NodeId:   {node.Node.id}");
 					builder.AppendLine ();
 
 					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
