@@ -25,22 +25,22 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+using System.Linq;
 using System;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
+using CoreGraphics;
 using FigmaSharp;
-using FigmaSharp.Models;
-using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Services;
-
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
+using System.Threading.Tasks;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace MonoDevelop.Figma.Commands
 {
@@ -223,15 +223,11 @@ namespace MonoDevelop.Figma.Commands
 		{
 			var figmaBundleWindow = new FigmaBundles.bundleFigmaDocument ();
 			figmaBundleWindow.BundleCreated += async (s, e) => {
-				string fileId = figmaBundleWindow.FileId;
-				FigmaFileVersion selectedFileVersion = figmaBundleWindow.SelectedFileVersion;
+				var window = (FigmaBundles.bundleFigmaDocument)s;
 
-				figmaBundleWindow.InvokeOnMainThread(() => {
-					figmaBundleWindow.OrderOut(figmaBundleWindow);
-					figmaBundleWindow.Close();
-				});
-
-				//await GenerateBundle (fileId, selectedFileVersion, includeImages: true);
+				var includeImages = true;
+				await GenerateBundle (window.FileId, window.SelectedFileVersion, includeImages);
+				window.Close ();
 			};
 
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
