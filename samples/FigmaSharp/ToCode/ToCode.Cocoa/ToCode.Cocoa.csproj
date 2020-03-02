@@ -131,7 +131,7 @@
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
       <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Tools\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
+    <ProjectReference Include="..\..\..\..\tools\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
       <Project>{4E7F6BD9-33C0-4544-9186-7FDCD0047F4B}</Project>
       <Name>FigmaSharp.Designer</Name>
     </ProjectReference>
