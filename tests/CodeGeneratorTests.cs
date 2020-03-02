@@ -26,7 +26,7 @@ namespace FigmaSharp.Tests
             };
             var builder = new StringBuilder ();
             manifest.ToComment (builder);
-            Assert.IsNotNullOrEmpty (builder.ToString ());
+            Assert.IsNotEmpty (builder.ToString ());
 
             var tempDirectory = Path.GetTempPath ();
             var file = Path.Combine (tempDirectory, "manifest");
@@ -61,7 +61,7 @@ namespace FigmaSharp.Tests
             codeGenerator.ClassName = "MyGeneratedCustomView";
             codeGenerator.Namespace = "LocalFile.Cocoa";
             var classCode = codeGenerator.Generate ();
-            Assert.IsNotNullOrEmpty (classCode);
+            Assert.IsNotEmpty(classCode);
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace FigmaSharp.Tests
             codeGenerator.Namespace = "LocalFile.Cocoa";
             codeGenerator.BaseClass = "AppKit.NSView";
             var classCode = codeGenerator.Generate ();
-            Assert.IsNotNullOrEmpty (classCode);
+            Assert.IsNotEmpty(classCode);
         }
     }
 }

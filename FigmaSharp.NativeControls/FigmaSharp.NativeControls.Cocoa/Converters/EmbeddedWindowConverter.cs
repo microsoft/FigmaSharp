@@ -38,7 +38,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class EmbeddedSheetDialogConverter : FigmaViewConverter
+    public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
 		public override bool CanConvert (FigmaNode currentNode)
 		{

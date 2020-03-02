@@ -26,7 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Models;
 using FigmaSharp.Services;
+using FigmaSharp.Views;
 
 namespace FigmaSharp
 {

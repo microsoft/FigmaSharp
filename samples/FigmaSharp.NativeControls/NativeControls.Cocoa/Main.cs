@@ -82,7 +82,6 @@ namespace LocalFile.Cocoa
 		static void Example1()
 		{
 			const string fileName = "FwVa4JS5QsohRhNEnEBKslFk";
-			const string mainWindowLayerName = "FigmaBundleWindow";
 
 			var fileProvider = new FigmaRemoteFileProvider ();
 			fileProvider.Load(fileName);
