@@ -164,7 +164,7 @@ namespace MonoDevelop.Figma
             }
             //var currentWrapper = GetWrapper (model);
 			
-            DesignerSupport.DesignerSupport.Service.PropertyPad.SetCurrentObject (model, new object[] { model });
+            DesignerSupport.DesignerSupport.Service.PropertyPad?.SetCurrentObject (model, new object[] { model });
             //PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
         }
 
