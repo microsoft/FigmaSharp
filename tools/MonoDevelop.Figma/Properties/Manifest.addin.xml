@@ -61,6 +61,7 @@
     <Extension path = "/MonoDevelop/Core/StockIcons">
         <StockIcon stockid = "vs-pad-figma" resource = "vs-pad-figma.png" size = "Menu"/>
         <StockIcon stockid = "vs-prefs-figma" resource = "vs-prefs-figma.png" size = "Menu"/>
+        <StockIcon stockid = "vs-folder-figma" resource = "folder-figmasharp-16.png" size = "Menu"/>
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Commands">

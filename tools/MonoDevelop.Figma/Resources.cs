@@ -52,7 +52,7 @@ namespace MonoDevelop.Figma
 
         internal static class Icons
         {
-            public const string FigmaPad = "vs-pad-figma";
+            public const string FigmaPad = "vs-folder-figma";
         }
 
         internal class Directories
