@@ -157,7 +157,7 @@ namespace FigmaSharp.Cocoa
             //view.AlphaValue = child.opacity;
         }
 
-        public static void Configure(this NSTextField label, FigmaText text)
+        public static void Configure(this NSTextField label, FigmaText text, bool configureColor = true)
         {
             label.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
             label.AlphaValue = text.opacity;
@@ -168,9 +168,12 @@ namespace FigmaSharp.Cocoa
                 cell.VerticalAligment = text.style.textAlignVertical == "CENTER" ? VerticalTextAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalTextAlignment.Top : VerticalTextAlignment.Bottom;
             }
 
+            if (!configureColor) {
+                return;
+			}
+
             var fills = text.fills.FirstOrDefault();
-            if (fills != null && fills.visible)
-            {
+            if (fills != null && fills.visible) {
                 label.TextColor = fills.color.ToNSColor();
             }
 

@@ -104,6 +104,8 @@ namespace FigmaSharp.NativeControls
         LabelStandardDark = 67,
         LabelSmallDark = 68,
 
+        LabelGroup = 69,
+
         ComboBoxStandard = 70,
         ComboBoxSmall = 71,
         ComboBoxStandardDark = 72,
@@ -228,6 +230,8 @@ namespace FigmaSharp.NativeControls
             ( "Label/Standard HC Dark", NativeControlComponentType.LabelStandard, NativeControlType.Label),
             ( "Label/Secondary HC Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
             ( "Label/Small HC Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
+
+            ( "Label/Group", NativeControlComponentType.LabelGroup, NativeControlType.Label),
 
             ( "Window/Standard", NativeControlComponentType.WindowStandard, NativeControlType.WindowStandard),
             ( "Window/Standard Dark", NativeControlComponentType.WindowStandardDark, NativeControlType.WindowStandard),

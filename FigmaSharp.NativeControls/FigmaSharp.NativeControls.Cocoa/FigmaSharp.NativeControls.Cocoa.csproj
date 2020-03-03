@@ -75,6 +75,7 @@
     <Compile Include="Converters\StepperConverter.cs" />
     <Compile Include="Converters\DisclosureConverter.cs" />
     <Compile Include="Converters\EmbeddedWindowConverter.cs" />
+    <Compile Include="Converters\LabelConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
