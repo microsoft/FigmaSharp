@@ -35,6 +35,7 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -59,22 +60,42 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var frame = (FigmaFrameEntity)currentNode;
 			var view = EmbededWindowConverter.GetSimulatedWindow();
 
-			var button = new NSButton() { Title = "Simulate" };
-			button.Activated += (s, e) => {
-
-			};
-		
 			var nativeView = view.NativeObject as NSView;
 			nativeView.Configure(frame);
 
-			nativeView.AddSubview (button);
-			var yposition = (float) nativeView.Frame.Height - button.IntrinsicContentSize.Height;
-			button.Frame = new CoreGraphics.CGRect(0, yposition, button.IntrinsicContentSize.Width, button.IntrinsicContentSize.Height);
-	
+			var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false, Title = "Press" };
+			button.BezelStyle = NSBezelStyle.HelpButton;
+			button.Title = string.Empty;
+			button.ToolTip = "Press to simulate a Sheet";
+			button.Activated += (s, e) => {
+
+				if (nativeView.Window == null)
+					return;
+
+				var window = new Window(view.Allocation);
+
+				window.KeyDown += (send, eve) => {
+					NSApplication.SharedApplication.EndSheet((NSWindow)window.NativeObject);
+					window.Close();
+				};
+
+				var fileProvider = new FigmaRemoteFileProvider();
+				fileProvider.Load(rendererService.FileProvider.File);
+				var secondaryRender = new NativeViewRenderingService(fileProvider);
+				////we want to include some special converters to handle windows like normal view containers
+				//rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
+				//rendererService.CustomConverters.Add(new EmbededWindowConverter());
+				secondaryRender.RenderInWindow(window, currentNode);
+				NSApplication.SharedApplication.BeginSheet((NSWindow)window.NativeObject, nativeView.Window);
+			};
+
+			nativeView.AddSubview(button);
+			button.TopAnchor.ConstraintEqualToAnchor(nativeView.TopAnchor, 3).Active = true;
+			button.RightAnchor.ConstraintEqualToAnchor(nativeView.RightAnchor, -3).Active = true;
+
 			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 
 			if (firstElement != null) {
-
 				firstElement.TryGetNativeControlComponentType (out var controlType);
 				if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
 					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
