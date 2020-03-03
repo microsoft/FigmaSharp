@@ -269,10 +269,10 @@ namespace FigmaSharp.Services
         {
             Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
-            if (currentNode.name.StartsWith ("#") || currentNode.name.StartsWith ("//")) {
-                Console.WriteLine ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
-                return;
-            }
+            //if (currentNode.name.StartsWith ("#") || currentNode.name.StartsWith ("//")) {
+            //    Console.WriteLine ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
+            //    return;
+            //}
 
             if (SkipsNode (currentNode, parent, options))
                 return;
