@@ -355,9 +355,15 @@ namespace MonoDevelop.Figma.Commands
 				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, viewsDirectoryPath));
 			}
 
-			foreach (var path in Directory.EnumerateFiles (viewsDirectoryPath)) {
-				if (!currentProject.PathExistsInProject (path)) {
-					currentProject.AddFile (path);
+			foreach (var view in bundle.Views)
+			{
+				if (!currentProject.PathExistsInProject(view.PublicCsClassFilePath))
+					currentProject.AddFile(view.PublicCsClassFilePath);
+
+				if (!currentProject.PathExistsInProject(view.PartialDesignerClassFilePath))
+				{
+					var partialFilePath = currentProject.AddFile(view.PartialDesignerClassFilePath);
+					partialFilePath.DependsOn = view.PublicCsClassFilePath;
 				}
 			}
 
