@@ -72,14 +72,18 @@ namespace FigmaSharp.Views.Cocoa
 				content = new FNSView();
 			}
 
-
 			ContentView = new View(content);
+
 			this.scrollView.HasVerticalScroller = true;
 			this.scrollView.HasHorizontalScroller = true;
+
 			this.scrollView.AutomaticallyAdjustsContentInsets = false;
 			this.scrollView.AutohidesScrollers = false;
-			this.scrollView.ScrollerStyle = NSScrollerStyle.Legacy;
-			this.scrollView.ContentInsets = new NSEdgeInsets(50, 10, 10, 10);
+			this.scrollView.ScrollerStyle = NSScrollerStyle.Overlay;
+			this.scrollView.AllowsMagnification = true;
+			this.scrollView.UsesPredominantAxisScrolling = false;
+
+			this.scrollView.ScrollerInsets = new NSEdgeInsets() { Top = 2, Bottom = 2, Left = 2, Right = 2 };
 		}
 
 		public override IReadOnlyList<IView> Children => contentScrollView.Children;
