@@ -63,9 +63,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var nativeView = view.NativeObject as NSView;
 			nativeView.Configure(frame);
 
-			var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false, Title = "Press" };
+			var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false, Title = string.Empty };
 			button.BezelStyle = NSBezelStyle.HelpButton;
-			button.Title = string.Empty;
 			button.ToolTip = "Press to simulate a Sheet";
 			button.Activated += (s, e) => {
 
@@ -134,6 +133,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var view = new View ();
 			var nativeView = view.NativeObject as NSView;
+		
 			nativeView.Layer.BorderWidth = 1;
 			nativeView.Layer.BorderColor = NSColor.Gray.CGColor;
 			nativeView.Layer.ShadowOpacity = 1.0f;
@@ -161,8 +161,24 @@ namespace FigmaSharp.NativeControls.Cocoa
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
 
-			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
+			var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false, Title = "" };
+			button.BezelStyle = NSBezelStyle.HelpButton;
+			button.ToolTip = "Press to simulate a Window";
+			button.Activated += (s, e) => {
+				var window = new Window(view.Allocation);
+				var fileProvider = new FigmaRemoteFileProvider();
+				fileProvider.Load(rendererService.FileProvider.File);
+				var secondaryRender = new NativeViewRenderingService(fileProvider);
+				secondaryRender.RenderInWindow(window, currentNode);
+				window.Show ();
+				window.Center();
+			};
 
+			nativeView.AddSubview(button);
+			button.TopAnchor.ConstraintEqualToAnchor(nativeView.TopAnchor, 3).Active = true;
+			button.RightAnchor.ConstraintEqualToAnchor(nativeView.RightAnchor, -3).Active = true;
+
+			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 			if (firstElement != null) {
 			
 				firstElement.TryGetNativeControlComponentType (out var controlType);
