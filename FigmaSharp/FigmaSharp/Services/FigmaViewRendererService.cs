@@ -175,25 +175,15 @@ namespace FigmaSharp.Services
         {
             try
             {
+                var processedParentView = new ProcessedNode() { FigmaNode = figmaNode, View = View };
+                NodesProcessed.Add(processedParentView);
+
                 //in canvas we want calculate the bounds size
-                if (figmaNode is FigmaCanvas canvas)
-                {
-                    //var canvas = fileProvider.Response.document.children.FirstOrDefault();
-                    var processedParentView = new ProcessedNode() { FigmaNode = figmaNode, View = View };
-                    NodesProcessed.Add(processedParentView);
-
-                    //figma cambas
+                if (figmaNode is FigmaCanvas canvas) {
                     canvas.absoluteBoundingBox = canvas.GetCurrentBounds ();
-
-                    if (figmaNode is IFigmaNodeContainer container)
-                    {
-                        foreach (var item in container.children)
-                            GenerateViewsRecursively(item, processedParentView, options);
-                    }
-                } else
-                {
-                    GenerateViewsRecursively(figmaNode, null, options);
                 }
+
+                GenerateViewsRecursively(figmaNode, processedParentView, options);
 
                 //Images
                 if (options.AreImageProcessed)
