@@ -24,7 +24,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
-				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1) {
+				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1 && versions.Length > 0) {
 					return versions[(int)versionComboBox.IndexOfSelectedItem];
 				}
 				return null;
@@ -55,15 +55,17 @@ namespace MonoDevelop.Figma.FigmaBundles
 			templateCodeOptionBox.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			versionComboBox.Enabled = SelectedFileVersion != null;
+			versionComboBox.Enabled = IsItemSelected;
 
 			RefreshBundleButtonState ();
 		}
 
+		bool IsItemSelected => (versions != null && versions.Length == 0) || SelectedFileVersion != null;
+
 		void RefreshBundleButtonState ()
 		{
 			bundleButton.Enabled =
-				SelectedFileVersion != null && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
+				IsItemSelected && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
 		}
 
 		public event EventHandler BundleCreated;
