@@ -158,7 +158,7 @@ namespace FigmaSharp.Views.Cocoa
 		{
 			this.window = window;
 			this.window.AutorecalculatesKeyViewLoop = true;
-			Content = new View();
+			Content = new View(window.ContentView);
 			window.KeyDownPressed += OnKeyDownPressed;
 		}
 
