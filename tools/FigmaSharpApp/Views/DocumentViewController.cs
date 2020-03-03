@@ -124,7 +124,6 @@ namespace FigmaSharp.Samples
 
 					Console.WriteLine ("TOKEN: " + Token);
 
-					var options = new FigmaViewRendererServiceOptions () { StartPage = startPage };
 					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID, Version = version };
 					var rendererService = new NativeViewRenderingService (fileProvider);
 
@@ -132,7 +131,7 @@ namespace FigmaSharp.Samples
 					rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
 					rendererService.CustomConverters.Add(new EmbededWindowConverter());
 
-					rendererService.Start (Link_ID, scrollview.ContentView, options);
+					rendererService.Start (Link_ID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = startPage });
 
 					new StoryboardLayoutManager()
                         .Run (scrollview.ContentView, rendererService);
