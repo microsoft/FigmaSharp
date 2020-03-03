@@ -45,7 +45,7 @@ namespace FigmaSharp.Samples
 			set { TitleTextField.StringValue = value; }
 		}
 
-		public event EventHandler<string> VersionSelected;
+		public event EventHandler<Models.FigmaFileVersion> VersionSelected;
 		public event EventHandler<int> PageChanged;
 
 		public event EventHandler RefreshRequested;
@@ -110,11 +110,9 @@ namespace FigmaSharp.Samples
 			}
 
 			VersionMenu = new VersionMenu();
-
-			VersionMenu.VersionSelected += delegate (string version_id) {
-				VersionSelected?.Invoke (this, version_id);
+			VersionMenu.VersionSelected += (s,e) => {
+				VersionSelected?.Invoke (this, e);
 			};
-
 
 			Task.Run(() =>
 			{
@@ -127,16 +125,10 @@ namespace FigmaSharp.Samples
 					.Select(group => group.First())
 					.ToArray();
 
-				InvokeOnMainThread(() =>
-				{
-					foreach (var version in versions)
-					{
-						if (version.label != null && !string.IsNullOrWhiteSpace(version.label))
-							VersionMenu.AddItem(version.id, version.label, version.created_at);
-						else
-							VersionMenu.AddItem(version.id, version.created_at);
+				InvokeOnMainThread(() => {
+					foreach (var version in versions) {
+						VersionMenu.AddItem (version);
 					}
-
 					VersionMenu.UseAsVersionsMenu();
 				});
 			});

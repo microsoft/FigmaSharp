@@ -24,21 +24,15 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AppKit;
-using CoreGraphics;
 using Foundation;
-
-using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.NativeControls.Cocoa;
-using FigmaSharp.Cocoa;
 
 namespace FigmaSharp.Samples
 {
@@ -59,7 +53,6 @@ namespace FigmaSharp.Samples
 		{
 		}
 
-
 		class WindowDelegate : NSWindowDelegate
 		{
 			public event EventHandler WindowFocused = delegate { };
@@ -70,15 +63,14 @@ namespace FigmaSharp.Samples
 			}
 		}
 
+		public void Reload (Models.FigmaFileVersion version = null, string pageId = "", int startPage = 0) => Load (version, pageId, startPage);
 
-		public void Reload (string versionId = "", string pageId = "", int startPage = 0) => Load (versionId, pageId, startPage);
-
-		public void LoadDocument (string token, string linkId, string versionId = "", string pageId = "")
+		public void LoadDocument (string token, string linkId, Models.FigmaFileVersion version = null, string pageId = "")
 		{
 			Token = token;
 			Link_ID = linkId;
 			ToggleSpinnerState(toggle_on: true);
-			Load(version_id: versionId, page_id: pageId, startPage:0);
+			Load(version: version, page_id: pageId, startPage:0);
 		}
 
 		public void OnInitialize ()
@@ -112,12 +104,12 @@ namespace FigmaSharp.Samples
 		}
 
 		private void WindowController_PageChanged (object sender, int startPage) => Reload (startPage: startPage);
-		private void WindowController_VersionSelected (object sender, string versionId) => Reload (versionId);
+		private void WindowController_VersionSelected (object sender, Models.FigmaFileVersion version) => Reload (version: version);
 		private void WindowController_RefreshRequested (object sender, EventArgs e) => Reload ();
 
 		//NSProgressIndicator progressIndicator;
 
-		void Load (string version_id = "", string page_id = "", int startPage = 0)
+		void Load (Models.FigmaFileVersion version = null, string page_id = "", int startPage = 0)
 		{
 			if (string.IsNullOrEmpty (Link_ID))
 				return;
@@ -138,7 +130,7 @@ namespace FigmaSharp.Samples
 					Console.WriteLine ("TOKEN: " + Token);
 
 					var options = new FigmaViewRendererServiceOptions () { StartPage = startPage };
-					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID };
+					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID, Version = version };
 					var rendererService = new NativeViewRenderingService (fileProvider);
 
                     //we want to include some special converters to handle windows like normal view containers
