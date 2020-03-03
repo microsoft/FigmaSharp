@@ -3,8 +3,8 @@ CONFIG?=Debug
 ARGS:=/p:Configuration="${CONFIG}" $(ARGS)
 
 all:
-	echo "Building FigmaSharp..."
-	msbuild FigmaSharp.sln $(ARGS)
+	echo "Building FigmaSharp.Mac..."
+	msbuild FigmaSharp.Mac.sln $(ARGS)
 
 clean:
 	find . -type d -name bin -exec rm -rf {} \;
@@ -12,10 +12,10 @@ clean:
 	find . -type d -name packages -exec rm -rf {} \;
 
 pack:
-	msbuild FigmaSharp.sln $(ARGS) /p:CreatePackage=true /restore
+	msbuild FigmaSharp.Mac.sln $(ARGS) /p:CreatePackage=true /restore
 
 install:
-	msbuild FigmaSharp.sln $(ARGS) /p:InstallAddin=true /restore
+	msbuild FigmaSharp.Mac.sln $(ARGS) /p:InstallAddin=true /restore
 
 check-dependencies:
 	#updating the submodules
@@ -27,11 +27,11 @@ check-dependencies:
 	fi
 
 submodules: nuget-download
-	echo "Restoring FigmaSharp..."
-	msbuild FigmaSharp.sln /restore
+	echo "Restoring FigmaSharp.Mac..."
+	msbuild FigmaSharp.Mac.sln /restore
 
 sdk: nuget-download
-	mono src/.nuget/nuget.exe pack FigmaSharp.nuspec
+	mono src/.nuget/nuget.exe pack FigmaSharp.Mac.nuspec
 
 package: check-dependencies
 	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /restore
