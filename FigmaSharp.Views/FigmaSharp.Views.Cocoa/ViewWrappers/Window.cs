@@ -90,6 +90,11 @@ namespace FigmaSharp.Views.Cocoa
 			}
 		}
 
+		public void Close()
+		{
+			window.Close();
+		}
+
 		public bool Borderless {
 			get => window.StyleMask.HasFlag (NSWindowStyle.Borderless);
 			set {
