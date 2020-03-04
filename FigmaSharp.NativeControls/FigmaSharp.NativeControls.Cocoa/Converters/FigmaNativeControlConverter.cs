@@ -47,7 +47,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             var converted = OnConvertToView(currentNode, parent, rendererService);
             if (converted != null) {
                 var nativeView = converted.NativeObject as AppKit.NSView;
-
                 if (currentNode.IsA11Group ())
                     nativeView.AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
 
@@ -61,7 +60,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                     }
 				}
                 //help
-                if (currentNode.TrySearchA11Label(out var help))
+                if (currentNode.TrySearchA11Help(out var help))
                     nativeView.AccessibilityHelp = help;
             }
             return converted;
