@@ -123,8 +123,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
 			builder.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Radio);
 
-			builder.Configure (currentNode.Node, name);
-
 			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 
 			switch (controlType) {
