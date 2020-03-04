@@ -243,10 +243,20 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsWindowContent (this FigmaNode node)
         {
-            if (!node.Parent?.IsDialogParentContainer (NativeControlType.WindowStandard) ?? true) {
-                return false;
+            return (node.Parent?.IsDialogParentContainer() ?? false) && node.IsNodeWindowContent ();
+        }
+
+        public static FigmaNode GetWindowContent (this FigmaNode node)
+        {
+            if (node is IFigmaNodeContainer nodeContainer)
+            {
+                if (node.IsDialogParentContainer())
+                {
+                    var content = nodeContainer.children.FirstOrDefault(s => s.IsWindowContent());
+                    return content;
+                }
             }
-            return node.IsNodeWindowContent ();
+            return null;
         }
 
         public static bool IsMainDocumentView (this FigmaNode node)
