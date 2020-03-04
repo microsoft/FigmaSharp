@@ -43,47 +43,6 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
-		{
-			bool hasAccessibility = false;
-			if (node.Node.IsA11Group ()) {
-				var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof (AppKit.NSAccessibilityRoles.GroupRole)}";
-				new AppKit.NSView ().AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
-				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityRole), fullRoleName);
-				hasAccessibility = true;
-			}
-			if (node.Node.TrySearchA11Label (out var label)) {
-				builder.WriteEquality (node.Name, nameof(AppKit.NSView.AccessibilityLabel), label, inQuotes: true);
-				hasAccessibility = true;
-			}
-			if (node.Node.TrySearchA11Help (out var help)) {
-				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
-				hasAccessibility = true;
-			}
-
-			if (hasAccessibility)
-				builder.AppendLine ();
-		}
-
-		bool TrySearchParameter (FigmaNode node, string parameter, out string value)
-		{
-			value = node.name;
-			try {
-				var index = value.IndexOf (parameter);
-				if (index > -1 && index < value.Length) {
-					value = value.Substring (index + parameter.Length);
-					index = value.IndexOf ("\"");
-					if (index > -1 && index < value.Length) {
-						value = value.Substring (0, index);
-						return true;
-					}
-				}
-			} catch (Exception) {
-			}
-			value = null;
-			return false;
-		}
-
 		#region Rendering
 
 		internal override bool IsNodeSkipped (FigmaCodeNode node)

@@ -63,7 +63,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return label;
         }
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
             var figmaInstance = (FigmaInstance)currentNode.Node;
             var figmaText = (FigmaText)figmaInstance.children
@@ -84,7 +84,8 @@ namespace FigmaSharp.NativeControls.Cocoa
             {
                 builder.WriteEquality(currentNode.Name, nameof(AppKit.NSTextField.Alignment), alignment);
             }
-            return builder.ToString();
+            return builder;
         }
+
 	}
 }

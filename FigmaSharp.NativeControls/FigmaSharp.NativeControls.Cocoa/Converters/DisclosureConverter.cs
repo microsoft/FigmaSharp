@@ -69,7 +69,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
@@ -94,7 +94,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					break;
 			}
 
-			return builder.ToString ();
+			return builder;
 		}
 	}
 }
