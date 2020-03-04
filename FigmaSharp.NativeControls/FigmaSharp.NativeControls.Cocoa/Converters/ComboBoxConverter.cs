@@ -47,7 +47,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ComboBox;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var view = new NSComboBox ();
 			var figmaInstance = (FigmaFrameEntity)currentNode;

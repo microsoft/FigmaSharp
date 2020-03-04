@@ -36,17 +36,18 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class StepperConverter : FigmaViewConverter
+    public class StepperConverter : FigmaNativeControlConverter
 	{
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Stepper;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode;
 			var view = new Stepper ();

@@ -43,38 +43,20 @@ namespace FigmaSharp.Services
 
 		}
 
-		const string a11yLabel = "a11y-label:\"";
-		const string a11yHelp = "a11y-help:\"";
-		const string a11yGroup = "a11y-group";
-
-		string GetAccessibilityTitleName (FigmaNode node)
-		{
-			return nameof (AppKit.NSView.AccessibilityTitle);
-			//if (node.TryGetNativeControlType (out var nativeControlType)) {
-			//	switch (nativeControlType) {
-			//		case NativeControlType.Button:
-			//		case NativeControlType.CheckBox:
-			//		case NativeControlType.PopupButton:
-			//			return nameof (AppKit.NSView.AccessibilityTitle);
-			//	}
-			//}
-			//return nameof (AppKit.NSView.AccessibilityLabel);
-		}
-
 		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 			bool hasAccessibility = false;
-			if (node.Node.name.Contains (a11yGroup)) {
+			if (node.Node.IsA11Group ()) {
 				var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof (AppKit.NSAccessibilityRoles.GroupRole)}";
 				new AppKit.NSView ().AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
 				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityRole), fullRoleName);
 				hasAccessibility = true;
 			}
-			if (TrySearchParameter (node.Node, a11yLabel, out var label)) {
-				builder.WriteEquality (node.Name, GetAccessibilityTitleName (node.Node), label, inQuotes: true);
+			if (node.Node.TrySearchA11Label (out var label)) {
+				builder.WriteEquality (node.Name, nameof(AppKit.NSView.AccessibilityLabel), label, inQuotes: true);
 				hasAccessibility = true;
 			}
-			if (TrySearchParameter (node.Node, a11yHelp, out var help)) {
+			if (node.Node.TrySearchA11Help (out var help)) {
 				builder.WriteEquality (node.Name, nameof (AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
 				hasAccessibility = true;
 			}
