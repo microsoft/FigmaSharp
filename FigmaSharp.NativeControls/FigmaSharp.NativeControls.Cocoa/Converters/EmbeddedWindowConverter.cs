@@ -60,14 +60,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var frame = (FigmaFrameEntity)currentNode;
 			var view = EmbededWindowConverter.GetSimulatedWindow();
 
-			var nativeView = view.NativeObject as NSView;
+			var nativeView = view.NativeObject as ActionsView;
 			nativeView.Configure(frame);
 
-			var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false, Title = string.Empty };
-			button.BezelStyle = NSBezelStyle.HelpButton;
-			button.ToolTip = "Press to simulate a Sheet";
-			button.Activated += (s, e) => {
-
+			nativeView.LiveButton.Activated += (s, e) => {
 				if (nativeView.Window == null)
 					return;
 
@@ -87,10 +83,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				secondaryRender.RenderInWindow(window, currentNode);
 				NSApplication.SharedApplication.BeginSheet((NSWindow)window.NativeObject, nativeView.Window);
 			};
-
-			nativeView.AddSubview(button);
-			button.TopAnchor.ConstraintEqualToAnchor(nativeView.TopAnchor, 3).Active = true;
-			button.RightAnchor.ConstraintEqualToAnchor(nativeView.RightAnchor, -3).Active = true;
 
 			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 
@@ -120,6 +112,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 	}
 
+
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
 		public static NSColor GetWindowBackgroundColor (bool isWhite)
@@ -131,7 +124,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public static IView GetSimulatedWindow ()
 		{
-			var view = new View ();
+			var view = new View (new ActionsView());
 			var nativeView = view.NativeObject as NSView;
 		
 			nativeView.Layer.BorderWidth = 1;
@@ -156,15 +149,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var frame = (FigmaFrameEntity)currentNode;
 			var view = GetSimulatedWindow ();
-			var nativeView = view.NativeObject as NSView;
+			var nativeView = view.NativeObject as ActionsView;
 
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
 
-			var button = new NSButton() { TranslatesAutoresizingMaskIntoConstraints = false, Title = "" };
-			button.BezelStyle = NSBezelStyle.HelpButton;
-			button.ToolTip = "Press to simulate a Window";
-			button.Activated += (s, e) => {
+			nativeView.LiveButton.Activated += (s, e) => {
 				var window = new Window(view.Allocation);
 				var fileProvider = new FigmaRemoteFileProvider();
 				fileProvider.Load(rendererService.FileProvider.File);
@@ -173,10 +163,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				window.Show ();
 				window.Center();
 			};
-
-			nativeView.AddSubview(button);
-			button.TopAnchor.ConstraintEqualToAnchor(nativeView.TopAnchor, 3).Active = true;
-			button.RightAnchor.ConstraintEqualToAnchor(nativeView.RightAnchor, -3).Active = true;
 
 			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
 			if (firstElement != null) {
@@ -203,6 +189,63 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
+		}
+	}
+
+
+	class ActionsView : NSView
+	{
+		public NSButton LiveButton;
+
+		public ActionsView()
+		{
+			LiveButton = new NSButton()
+			{
+				Bordered = false,
+				Hidden = true,
+				Image = NSImage.ImageNamed("NSQuickLookTemplate"),
+				ToolTip = "Preview in a window",
+				TranslatesAutoresizingMaskIntoConstraints = false,
+			};
+
+			AddSubview(LiveButton);
+
+			const int buttonOffset = 9;
+
+			LiveButton.TopAnchor.ConstraintEqualToAnchor(TopAnchor, buttonOffset).Active = true;
+			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, buttonOffset * -1).Active = true;
+		}
+
+
+		NSTrackingArea trackingArea;
+
+		public override void UpdateTrackingAreas()
+		{
+			base.UpdateTrackingAreas();
+
+			if (trackingArea != null)
+			{
+				RemoveTrackingArea(trackingArea);
+				trackingArea.Dispose();
+			}
+
+			var options = NSTrackingAreaOptions.MouseMoved | NSTrackingAreaOptions.ActiveInKeyWindow | NSTrackingAreaOptions.MouseEnteredAndExited;
+
+			trackingArea = new NSTrackingArea(Bounds, options, this, null);
+			AddTrackingArea(trackingArea);
+		}
+
+
+		public override void MouseEntered(NSEvent theEvent)
+		{
+			base.MouseEntered(theEvent);
+			LiveButton.Hidden = false;
+		}
+
+		public override void MouseExited(NSEvent theEvent)
+		{
+			base.MouseExited(theEvent);
+			LiveButton.Hidden = true;
 		}
 	}
 }
