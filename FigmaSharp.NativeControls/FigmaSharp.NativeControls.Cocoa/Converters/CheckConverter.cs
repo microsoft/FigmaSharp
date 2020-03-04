@@ -99,7 +99,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return new View(view);
         }
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
@@ -170,7 +170,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             //        //button.Font = figmaText.style.ToNSFont();
             //    }
             //}
-            return builder.ToString ();
+            return builder;
 
         }
     }

@@ -96,7 +96,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return textBox;
 		}
 
-		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode.Node;
 			var name = currentNode.Name;
@@ -122,7 +122,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (placeholderTextNode != null && !placeholderTextNode.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
 				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), placeholderTextNode.characters, true);
 
-			return builder.ToString ();
+			return builder;
 		}
 	}
 }

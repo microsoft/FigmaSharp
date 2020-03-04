@@ -134,7 +134,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return button;
         }
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var builder = new StringBuilder();
 
@@ -195,7 +195,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                     //view.Font = label.style.ToNSFont ();
                 }
             }
-            return builder.ToString();
+            return builder;
         }
 
 	}

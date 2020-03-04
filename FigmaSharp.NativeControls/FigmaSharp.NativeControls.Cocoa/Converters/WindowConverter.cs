@@ -44,11 +44,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.name.StartsWith ("!image");
         }
 
-		public override bool ScanChildren (FigmaNode currentNode)
-		{
-            return false;
-		}
-
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
             var vector = new FigmaSharp.Views.Cocoa.ImageView ();
@@ -57,7 +52,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return vector;
         }
 
-		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
             var builder = new StringBuilder ();
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
@@ -68,7 +63,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             var imageNamedMethod = CodeGenerationHelpers.GetMethod (typeof (NSImage).FullName, nameof (NSImage.ImageNamed), nodeName, true);
             builder.WriteEquality (currentNode.Name, nameof (NSImageView.Image), imageNamedMethod);
 
-            return builder.ToString ();
+            return builder;
         }
 	}
 
@@ -84,9 +79,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             return null;
         }
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            return string.Empty;
+            return new StringBuilder();
         }
     }
 
@@ -102,9 +97,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             return null;
         }
 
-        public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            return string.Empty;
+            return new StringBuilder();
         }
     }
 
@@ -120,9 +115,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             return null;
         }
 
-        public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            return string.Empty;
+            return new StringBuilder ();
         }
     }
 }

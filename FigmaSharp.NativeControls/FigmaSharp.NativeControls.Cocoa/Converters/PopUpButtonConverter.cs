@@ -85,7 +85,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return button;
 		}
 
-		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
@@ -123,7 +123,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
 			//}
 
-			return builder.ToString ();
+			return builder;
 		}
 	}
 }

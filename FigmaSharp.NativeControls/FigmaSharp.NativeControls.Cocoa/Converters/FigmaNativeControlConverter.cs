@@ -27,6 +27,8 @@
  */
 
 using System;
+using System.Text;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -58,8 +60,6 @@ namespace FigmaSharp.NativeControls.Cocoa
                         nativeView.AccessibilityLabel = label;
                     }
 				}
-                   
-
                 //help
                 if (currentNode.TrySearchA11Label(out var help))
                     nativeView.AccessibilityHelp = help;
@@ -68,5 +68,40 @@ namespace FigmaSharp.NativeControls.Cocoa
         }
 
         protected abstract IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService);
+
+		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		{
+            var builder = OnConvertToCode (currentNode, parentNode, rendererService);
+            if (builder != null)
+            {
+                bool hasAccessibility = false;
+                if (currentNode.Node.IsA11Group())
+                {
+                    var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
+                    new AppKit.NSView().AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
+                    builder.WriteEquality (currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
+                    hasAccessibility = true;
+                }
+                if (currentNode.Node.TrySearchA11Label(out var label))
+                {
+                    builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityLabel), label, inQuotes: true);
+                    hasAccessibility = true;
+                }
+                if (currentNode.Node.TrySearchA11Help(out var help))
+                {
+                    builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
+                    hasAccessibility = true;
+                }
+
+                if (hasAccessibility)
+                    builder.AppendLine();
+
+                return builder.ToString ();
+            }
+            return string.Empty;
+        }
+
+        protected abstract StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
+
     }
 }
