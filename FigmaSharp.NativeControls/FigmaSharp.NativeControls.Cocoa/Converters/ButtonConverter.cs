@@ -40,41 +40,44 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class ButtonConverter : FigmaNativeControlConverter
+	public class ButtonConverter : FigmaNativeControlConverter
     {
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Button;
         }
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaInstance = (FigmaFrameEntity)currentNode;
 
             var button = new Button();
-			var view = (NSButton)button.NativeObject;
-			view.Title = "";
+            var view = (NSButton)button.NativeObject;
+            view.Title = "";
 
-            figmaInstance.TryGetNativeControlComponentType (out var controlType);
+            figmaInstance.TryGetNativeControlComponentType(out var controlType);
 
-            if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark) {
+            if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark)
+            {
                 view.BezelStyle = NSBezelStyle.HelpButton;
-            } else {
+            }
+            else
+            {
                 view.BezelStyle = NSBezelStyle.Rounded;
             }
 
-            view.Configure (figmaInstance);
+            view.Configure(figmaInstance);
 
             switch (controlType)
             {
                 case NativeControlComponentType.ButtonLarge:
                 case NativeControlComponentType.ButtonLargeDark:
-					view.ControlSize = NSControlSize.Regular;
+                    view.ControlSize = NSControlSize.Regular;
                     break;
                 case NativeControlComponentType.ButtonStandard:
                 case NativeControlComponentType.ButtonStandardDark:
-				
-					view.ControlSize = NSControlSize.Regular;
+
+                    view.ControlSize = NSControlSize.Regular;
                     break;
                 case NativeControlComponentType.ButtonSmall:
                 case NativeControlComponentType.ButtonSmallDark:
@@ -92,33 +95,41 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .OfType<FigmaText>()
                     .FirstOrDefault();
 
-                if (label != null) {
-					button.Text = label.characters;
+                if (label != null)
+                {
+                    button.Text = label.characters;
                     view.Font = label.style.ToNSFont();
                 }
 
-                if (group.name == "Disabled") {
-					button.Enabled = false;
-                } else if (group.name == "Default") {
+                if (group.name == "Disabled")
+                {
+                    button.Enabled = false;
+                }
+                else if (group.name == "Default")
+                {
                     view.KeyEquivalent = "\r";
                 }
-            } else
-			{
-				var label = figmaInstance.children
-				   .OfType<FigmaText>()
-				   .FirstOrDefault();
+            }
+            else
+            {
+                var label = figmaInstance.children
+                   .OfType<FigmaText>()
+                   .FirstOrDefault();
 
-				if (label != null)
-				{
-					button.Text = label.characters;
-					view.Font = label.style.ToNSFont();
-				}
-			}
+                if (label != null)
+                {
+                    button.Text = label.characters;
+                    view.Font = label.style.ToNSFont();
+                }
+            }
 
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			} else {
-                view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
+            if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal))
+            {
+                view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+            }
+            else
+            {
+                view.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAqua);
             }
             return button;
         }
@@ -186,5 +197,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             }
             return builder.ToString();
         }
-    }
+
+	}
 }

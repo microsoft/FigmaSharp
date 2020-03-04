@@ -31,12 +31,56 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using System.Linq;
 using FigmaSharp.NativeControls;
+using System;
 
 namespace FigmaSharp
 {
     public static class Extensions
     {
-		public static bool IsFigmaImageViewNode (this FigmaNode node)
+        const string a11yLabel = "a11y-label:\"";
+        const string a11yHelp = "a11y-help:\"";
+        const string a11yGroup = "a11y-group";
+
+        static bool TrySearchParameter(FigmaNode node, string parameter, out string value)
+        {
+            value = node.name;
+            try
+            {
+                var index = value.IndexOf(parameter);
+                if (index > -1 && index < value.Length)
+                {
+                    value = value.Substring(index + parameter.Length);
+                    index = value.IndexOf("\"");
+                    if (index > -1 && index < value.Length)
+                    {
+                        value = value.Substring(0, index);
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+            value = null;
+            return false;
+        }
+
+        public static bool IsA11Group (this FigmaNode node)
+        {
+            return (node.name.Contains(a11yGroup));
+        }
+
+        public static bool TrySearchA11Label(this FigmaNode node, out string label)
+        {
+            return TrySearchParameter (node, a11yLabel, out label);
+        }
+
+        public static bool TrySearchA11Help(this FigmaNode node, out string label)
+        {
+            return TrySearchParameter(node, a11yHelp, out label);
+        }
+
+        public static bool IsFigmaImageViewNode (this FigmaNode node)
 		{
 			if (node.name.Contains ("!image")) {
                 return true;

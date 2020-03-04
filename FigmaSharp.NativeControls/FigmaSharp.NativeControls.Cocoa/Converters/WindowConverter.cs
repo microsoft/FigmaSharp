@@ -49,7 +49,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return false;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
             var vector = new FigmaSharp.Views.Cocoa.ImageView ();
             var currengroupView = (NSImageView)vector.NativeObject;
@@ -79,7 +79,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowStandard;
         }
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             return null;
         }
@@ -97,7 +97,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowSheet;
         }
 
-        public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             return null;
         }
@@ -115,7 +115,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowPanel;
         }
 
-        public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             return null;
         }

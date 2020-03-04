@@ -76,6 +76,7 @@
     <Compile Include="Converters\DisclosureConverter.cs" />
     <Compile Include="Converters\EmbeddedWindowConverter.cs" />
     <Compile Include="Converters\LabelConverter.cs" />
+    <Compile Include="Converters\FigmaNativeControlConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

@@ -47,12 +47,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
         }
 
-        public override bool ScanChildren(FigmaNode currentNode)
-        {
-            return false;
-        }
-
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaInstance = (FigmaFrameEntity)currentNode;
 
