@@ -289,15 +289,24 @@ namespace FigmaSharp.Services
                 Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
-            if (NodeScansChildren (currentNode, converter, options) && currentNode is IFigmaNodeContainer nodeContainer)
+            if (NodeScansChildren (currentNode, converter, options))
             {
-                foreach (var item in nodeContainer.children) {
+                foreach (var item in GetCurrentChildren (currentNode, parent?.FigmaNode, converter, options)) {
                     GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
                 }
             }
         }
 
-		protected virtual bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+		{
+            if (currentNode is IFigmaNodeContainer nodeContainer)
+			{
+                return nodeContainer.children;
+            }
+            return Enumerable.Empty<FigmaNode>();
+        }
+
+        protected virtual bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
             if (converter == null)
                 return false;

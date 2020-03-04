@@ -85,11 +85,6 @@ namespace FigmaSharp
             return false;
         }
 
-        public static bool IsWindowContent (this FigmaNode node)
-        {
-            return GetNodeTypeName (node) == "content";
-        }
-
         public static string GetNodeTypeName (this FigmaNode node)
 		{
             var name = node.name;

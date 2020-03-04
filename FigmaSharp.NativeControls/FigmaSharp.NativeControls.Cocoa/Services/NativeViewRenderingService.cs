@@ -27,6 +27,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls;
@@ -43,6 +44,15 @@ namespace FigmaSharp.Services
                   )
 		{
 
+		}
+
+		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+		{
+            var windowContent = currentNode.GetWindowContent();
+            if (windowContent != null && windowContent is IFigmaNodeContainer nodeContainer) {
+                return nodeContainer.children;
+            }
+			return base.GetCurrentChildren(currentNode, parentNode, converter, options);
 		}
 
 		public override bool ProcessesImageFromNode (FigmaNode node)
