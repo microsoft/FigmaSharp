@@ -84,6 +84,11 @@ namespace FigmaSharp.Cocoa
             return string.Concat (value.ToString(),"f");
         }
 
+        public static string ToDesignerString(this double value)
+        {
+            return string.Concat(value.ToString(), "f");
+        }
+
         public static NSTextAlignment ToNSTextAlignment(string value)
         {
             return value == "CENTER" ? NSTextAlignment.Center : value == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;

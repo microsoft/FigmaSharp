@@ -31,7 +31,7 @@ namespace FigmaSharp
 	public class Color
 	{
 		public Color () { }
-		public Color (float r, float g, float b, float a)
+		public Color (double r, double g, double b, double a)
 		{
 			R = r;
 			G = g;
@@ -39,7 +39,7 @@ namespace FigmaSharp
 			A = a;
 		}
 
-		public Color (float r, float g, float b)
+		public Color (double r, double g, double b)
 		{
 			R = r;
 			G = g;
@@ -47,10 +47,10 @@ namespace FigmaSharp
 			A = 1;
 		}
 
-		public float R { get; set; }
-		public float G { get; set; }
-		public float B { get; set; }
-		public float A { get; set; }
+		public double R { get; set; }
+		public double G { get; set; }
+		public double B { get; set; }
+		public double A { get; set; }
 
 
 		public static Color Red => new Color (1, 0, 0, 1);

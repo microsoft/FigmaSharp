@@ -42,22 +42,22 @@ namespace MonoDevelop.Figma
             this.color = color;
         }
 
-        public float R
+        public double R
         {
             get => color.R;
             set => color.R = value;
         }
-        public float G
+        public double G
         {
             get => color.G;
             set => color.G = value;
         }
-        public float B
+        public double B
         {
             get => color.B;
             set => color.B = value;
         }
-        public float A
+        public double A
         {
             get => color.A;
             set => color.A = value;
@@ -93,10 +93,10 @@ namespace MonoDevelop.Figma
                 try
                 {
                     var splitted = value.Split(';');
-                    vector.backgroundColor.R = float.Parse (splitted[0]);
-                    vector.backgroundColor.G = float.Parse (splitted[1]);
-                    vector.backgroundColor.B = float.Parse (splitted[2]);
-                    vector.backgroundColor.A = float.Parse (splitted[3]);
+                    vector.backgroundColor.R = double.Parse (splitted[0]);
+                    vector.backgroundColor.G = double.Parse (splitted[1]);
+                    vector.backgroundColor.B = double.Parse (splitted[2]);
+                    vector.backgroundColor.A = double.Parse (splitted[3]);
                 }
                 catch (System.Exception)
                 {

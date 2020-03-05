@@ -104,7 +104,7 @@ namespace FigmaSharp.Cocoa
 
         static Color MixOpacity (this Color color, float opacity)
         {
-            return new Color { A = Math.Min(color.A, opacity), R = color.R, G = color.G, B = color.B };
+            return new Color { A = color.A, R = color.R, G = color.G, B = color.B };
         }
 
         public static void Configure(this NSView view, RectangleVector child)

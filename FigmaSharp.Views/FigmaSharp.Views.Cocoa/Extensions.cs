@@ -32,7 +32,7 @@ namespace FigmaSharp
 			if (color.R == 0 && color.G == 0 && color.R == 0 && color.A == 0)
 				return NSColor.Clear.CGColor;
 			var alpha = (float) (opacity == -1 ? color.A : opacity);
-			var cg = new CGColor (color.R, color.G, color.B, alpha);
+			var cg = new CGColor ((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, alpha);
 			return cg;
 		}
 
@@ -48,7 +48,7 @@ namespace FigmaSharp
 		{
 			if (color.R == 0 && color.G == 0 && color.R == 0 && color.A == 0)
 				return NSColor.Clear;
-			return NSColor.FromRgba (color.R, color.G, color.B, color.A);
+			return NSColor.FromRgba ((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, (nfloat)color.A);
 		}
 
 		public static Color ToColor (this NSColor color)
