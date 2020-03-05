@@ -280,11 +280,13 @@ namespace FigmaSharp
             }
         }
 
-        public static Rectangle GetBoundRectangle (this IEnumerable<FigmaNode> customViews)
+        public static Rectangle GetBoundRectangle (this IEnumerable<FigmaNode> customViews, bool includeHidden = false)
         {
             Rectangle point = Rectangle.Zero;
             foreach (var item in customViews)
             {
+                if (!includeHidden && !item.visible)
+                    continue;
                 if (item is IAbsoluteBoundingBox boundingBox) {
                     if (boundingBox.absoluteBoundingBox.Left < point.X)
                         point.X = boundingBox.absoluteBoundingBox.Left;
