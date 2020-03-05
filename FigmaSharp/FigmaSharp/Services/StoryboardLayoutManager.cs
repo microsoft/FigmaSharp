@@ -42,6 +42,7 @@ namespace FigmaSharp.Services
                 if (contentView.Parent is IScrollView scrollview)
                 {
                     scrollview.SetContentSize(rectangle.Width + LeftMargin * 2, rectangle.Height + TopMargin * 2);
+                    scrollview.BackgroundColor = canvas.backgroundColor;
                 }
             }
         
