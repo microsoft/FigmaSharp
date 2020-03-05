@@ -211,7 +211,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			AddSubview(LiveButton);
 
-			const int buttonOffset = 9;
+			const int buttonOffset = 6;
 
 			LiveButton.TopAnchor.ConstraintEqualToAnchor(TopAnchor, buttonOffset).Active = true;
 			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, buttonOffset * -1).Active = true;
