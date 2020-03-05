@@ -289,7 +289,7 @@ namespace FigmaSharp
                 if (!includeHidden && !item.visible)
                     continue;
                 if (item is IAbsoluteBoundingBox boundingBox) {
-                    if (i == 0) {
+                    if (point == null) {
                         point = boundingBox.absoluteBoundingBox;
                     } else {
                         if (boundingBox.absoluteBoundingBox.Left < point.X)
