@@ -29,11 +29,7 @@ namespace FigmaSharp
 
 		public static CGColor ToCGColor (this Color color, float opacity = -1)
 		{
-			if (color.R == 0 && color.G == 0 && color.R == 0 && color.A == 0)
-				return NSColor.Clear.CGColor;
-			var alpha = (float) (opacity == -1 ? color.A : opacity);
-			var cg = new CGColor ((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, alpha);
-			return cg;
+			return color.ToNSColor(opacity).CGColor;
 		}
 
 		public static Color ToColor (this CGColor color)
@@ -44,11 +40,12 @@ namespace FigmaSharp
 			return new Color ();
 		}
 
-		public static NSColor ToNSColor (this Color color)
+		public static NSColor ToNSColor (this Color color, float opacity = -1)
 		{
 			if (color.R == 0 && color.G == 0 && color.R == 0 && color.A == 0)
 				return NSColor.Clear;
-			return NSColor.FromRgba ((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, (nfloat)color.A);
+			var alpha = (opacity == -1 ? color.A : opacity);
+			return NSColor.FromDeviceRgba ((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, (nfloat)alpha);
 		}
 
 		public static Color ToColor (this NSColor color)
