@@ -11,9 +11,8 @@ namespace FigmaSharp.Services
            
         }
 
-        public int TopMargin { get; set; } = 10;
-        public int LeftMargin { get; set; } = 10;
-        public int Space { get; set; } = 10;
+        public int HorizontalMargins { get; set; } = 64;
+        public int VerticalMargins { get; set; } = 64;
 
         public void Run(IView contentView, FigmaViewRendererService rendererService)
         {
@@ -41,15 +40,15 @@ namespace FigmaSharp.Services
                 contentView.BackgroundColor = canvas.backgroundColor;
                 if (contentView.Parent is IScrollView scrollview)
                 {
-                    scrollview.SetContentSize(rectangle.Width + LeftMargin * 2, rectangle.Height + TopMargin * 2);
                     scrollview.BackgroundColor = canvas.backgroundColor;
+                    scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
             }
         
             foreach (var node in orderedNodes) {
                 if (node.FigmaNode is IAbsoluteBoundingBox box)
                 {
-                    node.View.SetPosition(-rectangle.X + box.absoluteBoundingBox.X + LeftMargin, -rectangle.Y + box.absoluteBoundingBox.Y + TopMargin);
+                    node.View.SetPosition(-rectangle.X + box.absoluteBoundingBox.X + VerticalMargins, -rectangle.Y + box.absoluteBoundingBox.Y + HorizontalMargins);
                 }
             }
         }
