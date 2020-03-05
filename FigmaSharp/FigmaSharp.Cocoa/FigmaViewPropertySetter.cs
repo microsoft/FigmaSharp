@@ -31,9 +31,6 @@ namespace FigmaSharp.Cocoa
                     var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)parentNode)
                         .absoluteBoundingBox;
 
-                    nativeView.TranslatesAutoresizingMaskIntoConstraints = false;
-                    parentNativeView.TranslatesAutoresizingMaskIntoConstraints = false;
-
                     if (constraints.horizontal.Contains("RIGHT") || constraints.horizontal == "SCALE")
                     {
                         var endPosition1 = absoluteBoundingBox.X + absoluteBoundingBox.Width;

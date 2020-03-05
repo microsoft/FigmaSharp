@@ -189,11 +189,12 @@ namespace FigmaSharp.Views.Cocoa
 			get => content;
 			set {
 				content = value;
-                if (content.NativeObject is NSView view)
+
+				if (content.NativeObject is NSView view)
 				{
+					view.TranslatesAutoresizingMaskIntoConstraints = true;
 					this.window.ContentView = view;
 				}
-			
 			}
 		}
 

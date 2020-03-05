@@ -68,7 +68,7 @@ namespace FigmaSharp.Views.Cocoa
 				if (nativeView.Superview == null)
 					return;
 
-				var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Left && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Left);
+				var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Left && s.SecondItem == nativeView.Superview);
 				if (xConstraint != null)
 				{
 					xConstraint.Constant = value;
@@ -86,8 +86,7 @@ namespace FigmaSharp.Views.Cocoa
 			{
 				if (nativeView.Superview != null)
 				{
-
-					var yConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Top && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Top);
+					var yConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Top && s.SecondItem == nativeView.Superview);
 					if (yConstraint != null)
 					{
 						return (float)yConstraint.Constant;
@@ -99,8 +98,7 @@ namespace FigmaSharp.Views.Cocoa
 			{
 				if (nativeView.Superview == null)
 					return;
-
-				var yConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Top && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Top);
+				var yConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Top && s.SecondItem == nativeView.Superview);
 				if (yConstraint != null) {
 					yConstraint.Constant = value;
 				}
