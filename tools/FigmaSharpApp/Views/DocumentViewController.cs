@@ -142,7 +142,7 @@ namespace FigmaSharp.Samples
 
 					var nativeScrollView = scrollview.NativeObject as NSScrollView;
 
-					windowController.Title = fileProvider.Response?.name ?? "";
+					windowController.Window.Title = windowController.Title = fileProvider.Response?.name ?? "";
 
 					NSColor backgroundColor = fileProvider.Response?.document.children[0].backgroundColor.ToNSColor();
 					windowController.Window.BackgroundColor = backgroundColor;
