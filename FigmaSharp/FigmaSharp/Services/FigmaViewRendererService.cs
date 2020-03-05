@@ -402,7 +402,7 @@ namespace FigmaSharp.Services
             RenderInWindow(mainWindow, node, options);
         }
 
-        public void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
+        public virtual void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
         {
             if (node is IAbsoluteBoundingBox bounNode) {
                 mainWindow.Size = new Size(bounNode.absoluteBoundingBox.Width, bounNode.absoluteBoundingBox.Height);

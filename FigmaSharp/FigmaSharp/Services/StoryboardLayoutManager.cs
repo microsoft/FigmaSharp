@@ -29,7 +29,9 @@ namespace FigmaSharp.Services
         .ToArray();
 
             //we need correct current initial positioning
-            var rectangle = orderedNodes.Select(s => s.FigmaNode).GetBoundRectangle();
+            var rectangle = orderedNodes
+                .Select(s => s.FigmaNode)
+                .GetBoundRectangle();
 
             //We want know the background color of the figma camvas and apply to our scrollview
             var canvas = rendererService.FileProvider.Nodes
