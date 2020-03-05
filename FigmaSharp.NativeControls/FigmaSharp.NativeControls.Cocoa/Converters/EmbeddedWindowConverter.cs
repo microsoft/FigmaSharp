@@ -115,11 +115,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
-		public static NSColor GetWindowBackgroundColor (bool isWhite)
+		public static NSColor GetWindowBackgroundColor (bool darkTheme)
 		{
-			return isWhite ?
-			NSColor.FromRgba (red: 0.961f, green: 0.961f, blue: 0.961f, alpha: 1) :
-			NSColor.FromRgba (0.29f, 0.29f, 0.29f, 0.66f);
+			return darkTheme ?
+				NSColor.FromRgba(red: 0.196f, green: 0.196f, blue: 0.196f, alpha: 1) :
+				NSColor.FromRgba(red: 0.961f, green: 0.961f, blue: 0.961f, alpha: 1);
+
 		}
 
 		public static IView GetSimulatedWindow ()
@@ -173,11 +174,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 					if (frame.HasFills && frame.fills[0].color != null) {
 						nativeView.Layer.BackgroundColor = frame.fills[0].color.ToCGColor ();
 					} else {
-						nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (false).CGColor;
+						nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (darkTheme: true).CGColor;
 					}
 
 				} else {
-					nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (true).CGColor;
+					nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (darkTheme: false).CGColor;
 					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
 				}
 
