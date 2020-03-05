@@ -504,7 +504,7 @@ Gw
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" id="iXD-EU-bKJ">
+                                    <button key="view" toolTip="Refresh" verticalHuggingPriority="750" id="iXD-EU-bKJ">
                                         <rect key="frame" x="0.0" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
@@ -516,6 +516,24 @@ Gw
                                     </button>
                                     <connections>
                                         <action selector="RefreshClicked:" target="qmD-kN-bD5" id="he4-XR-IPe"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="1D5468D2-8E08-45EB-9DDF-5D18A54E00E6" label="Dark Mode" paletteLabel="Dark Mode" id="ipb-hp-J6A">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="56" height="32"/>
+                                    <size key="maxSize" width="56" height="32"/>
+                                    <button key="view" toolTip="Dark Mode" verticalHuggingPriority="750" id="du5-wr-dXP">
+                                        <rect key="frame" x="5" y="14" width="56" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">r</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="RefreshClicked:" target="qmD-kN-bD5" id="WY3-Qu-9XQ"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="815A7408-E296-476E-A40B-09DA766A5965" label="Title" paletteLabel="Title" sizingBehavior="auto" id="nwy-jM-blc">
@@ -567,6 +585,7 @@ Gw
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="NHv-Gm-Lms"/>
+                                <toolbarItem reference="ipb-hp-J6A"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
                                 <toolbarItem reference="nwy-jM-blc"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
