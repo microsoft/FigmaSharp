@@ -35,19 +35,16 @@ namespace FigmaSharp.Services
             var canvas = rendererService.FileProvider.Nodes
                 .OfType<FigmaCanvas>()
                 .FirstOrDefault();
-            if (canvas != null)
-            {
+            if (canvas != null) {
                 contentView.BackgroundColor = canvas.backgroundColor;
-                if (contentView.Parent is IScrollView scrollview)
-                {
+                if (contentView.Parent is IScrollView scrollview) {
                     scrollview.BackgroundColor = canvas.backgroundColor;
                     scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
             }
         
             foreach (var node in orderedNodes) {
-                if (node.FigmaNode is IAbsoluteBoundingBox box)
-                {
+                if (node.FigmaNode is IAbsoluteBoundingBox box) {
                     node.View.SetPosition(-rectangle.X + box.absoluteBoundingBox.X + VerticalMargins, -rectangle.Y + box.absoluteBoundingBox.Y + HorizontalMargins);
                 }
             }

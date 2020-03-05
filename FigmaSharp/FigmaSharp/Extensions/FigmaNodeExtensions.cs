@@ -282,23 +282,28 @@ namespace FigmaSharp
 
         public static Rectangle GetBoundRectangle (this IEnumerable<FigmaNode> customViews, bool includeHidden = false)
         {
-            Rectangle point = Rectangle.Zero;
-            foreach (var item in customViews)
-            {
+            Rectangle point = null;
+            FigmaNode item;
+			for (int i = 0; i < customViews.Count (); i++) {
+                item = customViews.ElementAt(i);
                 if (!includeHidden && !item.visible)
                     continue;
                 if (item is IAbsoluteBoundingBox boundingBox) {
-                    if (boundingBox.absoluteBoundingBox.Left < point.X)
-                        point.X = boundingBox.absoluteBoundingBox.Left;
-                    if (boundingBox.absoluteBoundingBox.Top < point.Y)
-                        point.Y = boundingBox.absoluteBoundingBox.Top;
+                    if (i == 0) {
+                        point = boundingBox.absoluteBoundingBox;
+                    } else {
+                        if (boundingBox.absoluteBoundingBox.Left < point.X)
+                            point.X = boundingBox.absoluteBoundingBox.Left;
+                        if (boundingBox.absoluteBoundingBox.Top < point.Y)
+                            point.Y = boundingBox.absoluteBoundingBox.Top;
 
-                    if (boundingBox.absoluteBoundingBox.Right > point.Right)
-                        point.Width = boundingBox.absoluteBoundingBox.Right - point.Left;
-                    if (boundingBox.absoluteBoundingBox.Bottom > point.Bottom)
-                        point.Height = boundingBox.absoluteBoundingBox.Bottom - point.Top;
+                        if (boundingBox.absoluteBoundingBox.Right > point.Right)
+                            point.Width = boundingBox.absoluteBoundingBox.Right - point.Left;
+                        if (boundingBox.absoluteBoundingBox.Bottom > point.Bottom)
+                            point.Height = boundingBox.absoluteBoundingBox.Bottom - point.Top;
+                    }
                 }
-            }
+			}
             return point;
         }
 
