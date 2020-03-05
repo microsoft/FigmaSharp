@@ -134,7 +134,7 @@ namespace FigmaSharp.Samples
 					rendererService.Start (Link_ID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = startPage });
 
 					new StoryboardLayoutManager()
-                        .Run (scrollview.ContentView, rendererService);
+						.Run (scrollview.ContentView, rendererService);
 
 					fileProvider.ImageLinksProcessed += (s, e) => {
 						// done
