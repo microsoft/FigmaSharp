@@ -144,9 +144,14 @@ namespace FigmaSharp.Samples
 
 					windowController.Title = fileProvider.Response?.name ?? "";
 
+					NSColor backgroundColor = fileProvider.Response?.document.children[0].backgroundColor.ToNSColor();
+					windowController.Window.BackgroundColor = backgroundColor;
+					nativeScrollView.BackgroundColor = backgroundColor;
+
 					windowController.UpdateVersionMenu (Link_ID);
 					windowController.UpdatePagesPopupButton (fileProvider);
 					windowController.EnableButtons (true);
+
 
 					ToggleSpinnerState (toggle_on: false);
 
