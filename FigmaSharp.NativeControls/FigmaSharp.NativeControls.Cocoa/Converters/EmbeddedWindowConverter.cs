@@ -128,7 +128,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var nativeView = view.NativeObject as NSView;
 		
 			nativeView.Layer.BorderWidth = 1;
-			nativeView.Layer.BorderColor = NSColor.Gray.CGColor;
+			nativeView.Layer.BorderColor = NSColor.FromRgba(0, 0, 0, 97).CGColor;
 			nativeView.Layer.ShadowOpacity = 1.0f;
 			nativeView.Layer.ShadowRadius = 20;
 			nativeView.Layer.ShadowOffset = new CoreGraphics.CGSize (0, -10);
