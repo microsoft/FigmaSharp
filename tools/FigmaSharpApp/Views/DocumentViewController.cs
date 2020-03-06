@@ -45,7 +45,7 @@ namespace FigmaSharp.Samples
 		public string Page_ID = null;
 
 		ScrollView scrollview;
-		FNSScrollview nativeScrollView;
+		NSScrollView nativeScrollView;
 
 		DocumentWindowController windowController;
 
@@ -102,7 +102,6 @@ namespace FigmaSharp.Samples
 		private void WindowController_VersionSelected (object sender, Models.FigmaFileVersion version) => Reload (version: version);
 		private void WindowController_RefreshRequested (object sender, EventArgs e) => Reload ();
 
-		//NSProgressIndicator progressIndicator;
 
 		void Load (Models.FigmaFileVersion version = null, string page_id = "", int startPage = 0)
 		{
@@ -140,24 +139,32 @@ namespace FigmaSharp.Samples
 						// done
 					};
 
-					var nativeScrollView = scrollview.NativeObject as NSScrollView;
+					nativeScrollView = scrollview.NativeObject as NSScrollView;
 
 					windowController.Window.Title = windowController.Title = fileProvider.Response?.name ?? "";
 
 					NSColor backgroundColor = fileProvider.Response?.document.children[0].backgroundColor.ToNSColor();
 					windowController.Window.BackgroundColor = backgroundColor;
-					nativeScrollView.BackgroundColor = backgroundColor;
 
+					nativeScrollView.AllowsMagnification = true;
+					nativeScrollView.BackgroundColor = backgroundColor;
+					nativeScrollView.MaxMagnification = 16f;
+					nativeScrollView.MinMagnification = 0.25f;
+					
 					windowController.UpdateVersionMenu (Link_ID);
 					windowController.UpdatePagesPopupButton (fileProvider);
 					windowController.EnableButtons (true);
-
 
 					ToggleSpinnerState (toggle_on: false);
 
 				});
 			});
 		}
+
+		public void ZoomIn()  { nativeScrollView.Magnification *= 2f; }
+		public void ZoomOut() { nativeScrollView.Magnification *= 0.5f; }
+		public void Zoom100() { nativeScrollView.Magnification = 1; }
+
 
 		#region Spinner
 

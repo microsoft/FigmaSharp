@@ -17,17 +17,26 @@ namespace FigmaSharp.Samples
 
 		[Outlet]
 		AppKit.NSProgressIndicator Spinner { get; set; }
+
+		[Action ("Zoom100Clicked:")]
+		partial void Zoom100Clicked (Foundation.NSObject sender);
+
+		[Action ("ZoomInClicked:")]
+		partial void ZoomInClicked (Foundation.NSObject sender);
+
+		[Action ("ZoomOutClicked:")]
+		partial void ZoomOutClicked (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (Spinner != null) {
-				Spinner.Dispose ();
-				Spinner = null;
-			}
-
 			if (MainScrollView != null) {
 				MainScrollView.Dispose ();
 				MainScrollView = null;
+			}
+
+			if (Spinner != null) {
+				Spinner.Dispose ();
+				Spinner = null;
 			}
 		}
 	}

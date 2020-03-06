@@ -73,5 +73,21 @@ namespace FigmaSharp.Samples
 			var url = new NSUrl (source_code_address);
 			NSWorkspace.SharedWorkspace.OpenUrl (url);
 		}
+
+		partial void ZoomInClicked(NSObject sender)
+		{
+			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).ZoomIn();
+		}
+
+		partial void ZoomOutClicked(NSObject sender)
+		{
+			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).ZoomOut();
+		}
+
+		partial void Zoom100Clicked(NSObject sender)
+		{
+			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).Zoom100();
+		}
 	}
 }
+

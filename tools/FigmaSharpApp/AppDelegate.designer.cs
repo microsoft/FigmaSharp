@@ -19,6 +19,15 @@ namespace FigmaSharp.Samples
 
 		[Action ("WikiClicked:")]
 		partial void WikiClicked (Foundation.NSObject sender);
+
+		[Action ("Zoom100Clicked:")]
+		partial void Zoom100Clicked (Foundation.NSObject sender);
+
+		[Action ("ZoomInClicked:")]
+		partial void ZoomInClicked (Foundation.NSObject sender);
+
+		[Action ("ZoomOutClicked:")]
+		partial void ZoomOutClicked (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
