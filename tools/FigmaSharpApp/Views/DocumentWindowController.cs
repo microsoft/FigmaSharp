@@ -142,14 +142,14 @@ namespace FigmaSharp.Samples
 
 		public void ToggleSpinnerState (bool toggle_on)
 		{
-			if (MainToolbar.VisibleItems[1].Identifier == "Spinner") {
-				(MainToolbar.VisibleItems[1].View as NSProgressIndicator).StopAnimation (this);
-				MainToolbar.RemoveItem (1);
+			if (MainToolbar.VisibleItems[2].Identifier == "Spinner") {
+				(MainToolbar.VisibleItems[2].View as NSProgressIndicator).StopAnimation (this);
+				MainToolbar.RemoveItem (2);
 			}
 
 			if (toggle_on) {
-				MainToolbar.InsertItem ("Spinner", 1);
-				(MainToolbar.VisibleItems[1].View as NSProgressIndicator).StartAnimation (this);
+				MainToolbar.InsertItem ("Spinner", 2);
+				(MainToolbar.VisibleItems[2].View as NSProgressIndicator).StartAnimation (this);
 			}
 		}
 

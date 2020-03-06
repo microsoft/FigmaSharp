@@ -120,23 +120,20 @@ namespace FigmaSharp.Samples
 				InvokeOnMainThread (() =>
 				{
 					AppContext.Current.SetAccessToken (Token);
-
-					Console.WriteLine ("TOKEN: " + Token);
-
 					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID, Version = version };
-					var rendererService = new NativeViewRenderingService (fileProvider);
 
-                    //we want to include some special converters to handle windows like normal view containers
+					var rendererService = new NativeViewRenderingService (fileProvider);
 					rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
 					rendererService.CustomConverters.Add(new EmbededWindowConverter());
-
 					rendererService.Start (Link_ID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = startPage });
 
-					new StoryboardLayoutManager()
-						.Run (scrollview.ContentView, rendererService);
+					new StoryboardLayoutManager().Run (scrollview.ContentView, rendererService);
 
 					fileProvider.ImageLinksProcessed += (s, e) => {
-						// done
+						InvokeOnMainThread(() =>
+						{
+							windowController.ToggleSpinnerState(toggle_on: false);
+						});
 					};
 
 					nativeScrollView = scrollview.NativeObject as NSScrollView;
@@ -156,7 +153,7 @@ namespace FigmaSharp.Samples
 					windowController.EnableButtons (true);
 
 					ToggleSpinnerState (toggle_on: false);
-
+					windowController.ToggleSpinnerState(toggle_on: true);
 				});
 			});
 		}
