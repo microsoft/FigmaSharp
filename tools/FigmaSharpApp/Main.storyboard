@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct" initialViewController="WaF-y5-496">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -282,6 +281,44 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="View" id="myR-U8-2f3" userLabel="View">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="View" id="DWs-33-bmY">
+                                    <items>
+                                        <menuItem title="Light Theme" state="on" id="ohA-FC-JQL" userLabel="Light Theme">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openDocument:" target="Ady-hI-5gd" id="Hjy-In-fti"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Dark Theme" keyEquivalent="d" id="WqG-Qi-8SB" userLabel="Dark Theme">
+                                            <connections>
+                                                <action selector="openDocument:" target="Ady-hI-5gd" id="IWy-Qb-E5X"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="hkz-zh-Jpr"/>
+                                        <menuItem title="Zoom In" keyEquivalent="+" id="Ikx-gk-kO8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="ZoomInClicked:" target="Voe-Tx-rLC" id="uPA-ri-aSD"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom Out" keyEquivalent="-" id="A0p-gZ-oln">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="ZoomOutClicked:" target="Voe-Tx-rLC" id="h39-dk-bEe"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom 100%" keyEquivalent=")" id="7mW-UQ-r2X">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="Zoom100Clicked:" target="Voe-Tx-rLC" id="3Kr-IO-jC9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="kjU-ZU-7zj"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Versions" id="9rR-0a-lOy">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Versions" id="nFI-MI-qFK">
@@ -337,7 +374,7 @@
                                                 <action selector="APIDocumentationClicked:" target="Voe-Tx-rLC" id="GYb-bz-NDB"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Source Code" id="CAs-ei-MFB">
+                                        <menuItem title="Source Code" state="on" id="CAs-ei-MFB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="SourceCodeClicked:" target="Voe-Tx-rLC" id="Ol9-mY-q4d"/>
@@ -387,7 +424,7 @@
                                 <rect key="frame" x="191" y="98" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="☰  →  Help and Account  →  Personal Access Tokens" allowsEditingTextAttributes="YES" id="guI-t9-Uwa">
-                                    <font key="font" metaFont="message" size="11"/>
+                                    <font key="font" metaFont="label" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -396,7 +433,7 @@
                                 <rect key="frame" x="190" y="114" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="Get your token from the Figma app:" allowsEditingTextAttributes="YES" id="kCe-3j-BSd">
-                                    <font key="font" metaFont="message" size="11"/>
+                                    <font key="font" metaFont="label" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -505,7 +542,7 @@ Gw
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
-                                    <button key="view" toolTip="Refresh" verticalHuggingPriority="750" id="iXD-EU-bKJ">
+                                    <button key="view" verticalHuggingPriority="750" id="iXD-EU-bKJ">
                                         <rect key="frame" x="0.0" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
@@ -523,10 +560,10 @@ Gw
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
-                                    <button key="view" toolTip="Dark Mode" verticalHuggingPriority="750" id="du5-wr-dXP">
+                                    <button key="view" verticalHuggingPriority="750" id="du5-wr-dXP">
                                         <rect key="frame" x="5" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
+                                        <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">r</string>
@@ -570,7 +607,7 @@ Gw
                                         <rect key="frame" x="0.0" y="14" width="49" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Page:" id="15S-mK-Y1y">
-                                            <font key="font" metaFont="message" size="11"/>
+                                            <font key="font" metaFont="label" size="11"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
