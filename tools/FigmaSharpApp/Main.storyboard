@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct" initialViewController="WaF-y5-496">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -386,7 +387,7 @@
                                 <rect key="frame" x="191" y="98" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="☰  →  Help and Account  →  Personal Access Tokens" allowsEditingTextAttributes="YES" id="guI-t9-Uwa">
-                                    <font key="font" metaFont="menu" size="11"/>
+                                    <font key="font" metaFont="message" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -395,7 +396,7 @@
                                 <rect key="frame" x="190" y="114" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="Get your token from the Figma app:" allowsEditingTextAttributes="YES" id="kCe-3j-BSd">
-                                    <font key="font" metaFont="menu" size="11"/>
+                                    <font key="font" metaFont="message" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -492,7 +493,7 @@ Gw
         <scene sceneID="FGq-xg-hEP">
             <objects>
                 <windowController id="qmD-kN-bD5" customClass="DocumentWindowController" sceneMemberID="viewController">
-                    <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="csp-8t-ctO">
+                    <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titleVisibility="hidden" id="csp-8t-ctO">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="317" width="640" height="480"/>
@@ -569,7 +570,7 @@ Gw
                                         <rect key="frame" x="0.0" y="14" width="49" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Page:" id="15S-mK-Y1y">
-                                            <font key="font" metaFont="menu" size="11"/>
+                                            <font key="font" metaFont="message" size="11"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
