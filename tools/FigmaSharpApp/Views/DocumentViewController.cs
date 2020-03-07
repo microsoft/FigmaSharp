@@ -140,7 +140,7 @@ namespace FigmaSharp.Samples
 
 					windowController.Window.Title = windowController.Title = fileProvider.Response?.name ?? "";
 
-					NSColor backgroundColor = fileProvider.Response?.document.children[0].backgroundColor.ToNSColor();
+					NSColor backgroundColor = fileProvider.Response?.document.children[pageIndex].backgroundColor.ToNSColor();
 					windowController.Window.BackgroundColor = backgroundColor;
 
 					nativeScrollView.AllowsMagnification = true;
