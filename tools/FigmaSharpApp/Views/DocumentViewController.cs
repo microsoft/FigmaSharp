@@ -27,12 +27,15 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using AppKit;
 using Foundation;
+
+using FigmaSharp.Models;
+using FigmaSharp.NativeControls.Cocoa;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
-using FigmaSharp.NativeControls.Cocoa;
 
 namespace FigmaSharp.Samples
 {
@@ -40,18 +43,20 @@ namespace FigmaSharp.Samples
 	{
 		public string Token = "";
 
-		public string Link_ID = "";
-		public string Version_ID = null;
-		public string Page_ID = null;
+		public string DocumentID;
+		public string VersionID;
+		public int PageIndex = 0;
 
 		ScrollView scrollview;
 		NSScrollView nativeScrollView;
 
 		DocumentWindowController windowController;
 
-		public DocumentViewController (IntPtr handle) : base (handle)
+
+		public DocumentViewController(IntPtr handle) : base(handle)
 		{
 		}
+
 
 		class WindowDelegate : NSWindowDelegate
 		{
@@ -63,30 +68,22 @@ namespace FigmaSharp.Samples
 			}
 		}
 
-		public void Reload (Models.FigmaFileVersion version = null, string pageId = "", int startPage = 0) => Load (version, pageId, startPage);
 
-		public void LoadDocument (string token, string linkId, Models.FigmaFileVersion version = null, string pageId = "")
-		{
-			Token = token;
-			Link_ID = linkId;
-			ToggleSpinnerState(toggle_on: true);
-			Load(version: version, page_id: pageId, startPage:0);
-		}
-
-		public void OnInitialize ()
+		public void OnInitialize()
 		{
 			var windowDelegate = new WindowDelegate();
 
 			windowDelegate.WindowFocused += delegate {
-				windowController.UpdateVersionMenu(Link_ID);
+				windowController.UpdateVersionMenu(DocumentID);
 			};
 
 			View.Window.WeakDelegate = windowDelegate;
 
-			if (scrollview == null) {
-				scrollview = new ScrollView ();
+			if (scrollview == null)
+			{
+				scrollview = new ScrollView();
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
-				View.AddSubview (nativeScrollView);
+				View.AddSubview(nativeScrollView);
 
 				nativeScrollView.Frame = View.Bounds;
 				nativeScrollView.TranslatesAutoresizingMaskIntoConstraints = true;
@@ -98,17 +95,49 @@ namespace FigmaSharp.Samples
 			}
 		}
 
-		private void WindowController_PageChanged (object sender, int startPage) => Reload (startPage: startPage);
-		private void WindowController_VersionSelected (object sender, Models.FigmaFileVersion version) => Reload (version: version);
-		private void WindowController_RefreshRequested (object sender, EventArgs e) => Reload ();
 
-
-		void Load (Models.FigmaFileVersion version = null, string page_id = "", int startPage = 0)
+		public void LoadDocument(string token, string documentId, FigmaFileVersion version = null)
 		{
-			if (string.IsNullOrEmpty (Link_ID))
+			Token = token;
+			DocumentID = documentId;
+
+			ToggleSpinnerState(toggle_on: true);
+			Load(version: version, pageIndex: PageIndex);
+		}
+
+		public void Reload(FigmaFileVersion version = null, int pageIndex = 0)
+		{
+			Load(version: version, pageIndex: pageIndex);
+		}
+
+
+		void WindowController_PageChanged(object sender, int pageIndex)
+		{
+			if (pageIndex == PageIndex)
 				return;
 
-			windowController.Title = string.Format ("Opening “{0}”…", Link_ID);
+			PageIndex = pageIndex;
+			Reload(pageIndex: pageIndex);
+		}
+
+		void WindowController_VersionSelected(object sender, FigmaFileVersion version)
+		{
+			PageIndex = 0;
+			Reload(version: version);
+		}
+
+		void WindowController_RefreshRequested(object sender, EventArgs e)
+		{
+			Reload();
+		}
+
+
+		void Load (FigmaFileVersion version = null, int pageIndex = 0)
+		{
+			if (string.IsNullOrEmpty (DocumentID))
+				return;
+
+			windowController.Title = string.Format ("Opening “{0}”…", DocumentID);
 
 			ToggleSpinnerState (toggle_on: true);
 			windowController.EnableButtons (false);
@@ -120,12 +149,12 @@ namespace FigmaSharp.Samples
 				InvokeOnMainThread (() =>
 				{
 					AppContext.Current.SetAccessToken (Token);
-					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID, Version = version };
+					var fileProvider = new FigmaRemoteFileProvider () { File = DocumentID, Version = version };
 
 					var rendererService = new NativeViewRenderingService (fileProvider);
 					rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
 					rendererService.CustomConverters.Add(new EmbededWindowConverter());
-					rendererService.Start (Link_ID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = startPage });
+					rendererService.Start (DocumentID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
 
 					new StoryboardLayoutManager().Run (scrollview.ContentView, rendererService);
 
@@ -136,6 +165,7 @@ namespace FigmaSharp.Samples
 						});
 					};
 
+
 					nativeScrollView = scrollview.NativeObject as NSScrollView;
 
 					windowController.Window.Title = windowController.Title = fileProvider.Response?.name ?? "";
@@ -145,11 +175,13 @@ namespace FigmaSharp.Samples
 
 					nativeScrollView.AllowsMagnification = true;
 					nativeScrollView.BackgroundColor = backgroundColor;
+					(nativeScrollView.DocumentView as NSView).Layer.BackgroundColor = backgroundColor.CGColor;
+
 					nativeScrollView.MaxMagnification = 16f;
 					nativeScrollView.MinMagnification = 0.25f;
-					
-					windowController.UpdateVersionMenu (Link_ID);
 					windowController.UpdatePagesPopupButton (fileProvider);
+
+					windowController.UpdateVersionMenu (DocumentID);
 					windowController.EnableButtons (true);
 
 					ToggleSpinnerState (toggle_on: false);

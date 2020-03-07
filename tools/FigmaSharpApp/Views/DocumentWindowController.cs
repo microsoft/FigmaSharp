@@ -76,22 +76,21 @@ namespace FigmaSharp.Samples
 		}
 
 
-		FigmaCanvas[] elements;
-
 		public void UpdatePagesPopupButton (IFigmaFileProvider fileProvider)
 		{
-			elements = fileProvider.Nodes
-				.OfType<FigmaCanvas> ()
-				.ToArray ();
+			PagePopUpButton.RemoveAllItems();
 
-			foreach (var item in elements) {
+			foreach (var item in fileProvider.Nodes.OfType<FigmaCanvas>().ToArray()) {
 				PagePopUpButton.AddItem (item.name);
-				PagePopUpButton.Activated += (s, e) => {
-					var button = (NSPopUpButton)s;
-					PageChanged?.Invoke (this, (int) button.IndexOfSelectedItem );
+
+				PagePopUpButton.Activated += delegate {
+					PageChanged?.Invoke (this, (int) PagePopUpButton.IndexOfSelectedItem );
 				};
 			}
+
+			PagePopUpButton.SelectItem((ContentViewController as DocumentViewController).PageIndex);
 		}
+
 
 		public void EnableButtons (bool enable)
 		{
@@ -114,7 +113,7 @@ namespace FigmaSharp.Samples
 				VersionSelected?.Invoke (this, e);
 			};
 
-			Task.Run(() =>
+			_ = Task.Run(() =>
 			{
 				var query = new FigmaFileVersionQuery(link_id);
 
@@ -126,9 +125,9 @@ namespace FigmaSharp.Samples
 					.ToArray();
 
 				InvokeOnMainThread(() => {
-					foreach (var version in versions) {
+					foreach (var version in versions)
 						VersionMenu.AddItem (version);
-					}
+
 					VersionMenu.UseAsVersionsMenu();
 				});
 			});
