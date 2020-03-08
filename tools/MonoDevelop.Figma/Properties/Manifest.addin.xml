@@ -16,6 +16,7 @@
     
     <Extension path = "/MonoDevelop/Ide/Pads/ProjectPad">
         <NodeBuilder class = "MonoDevelop.Figma.CustomFigmaBundlerNodeBuilder"/>
+        <NodeBuilder class = "MonoDevelop.Figma.FigmaFolderNodeBuilder"/>
     </Extension>
     
      <Extension path = "/MonoDevelop/DesignerSupport/PropertyProviders">
