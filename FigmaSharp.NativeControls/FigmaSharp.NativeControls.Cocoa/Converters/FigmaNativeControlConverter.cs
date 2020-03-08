@@ -68,22 +68,38 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         protected abstract IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService);
 
+        string GetAccessibilityTitle (NativeControlType nativeControlType)
+        {
+			switch (nativeControlType)
+			{
+                case NativeControlType.Button:
+                case NativeControlType.CheckBox:
+                case NativeControlType.RadioButton:
+                    return nameof(AppKit.NSView.AccessibilityTitle);
+                default:
+					break;
+			}
+            return nameof(AppKit.NSView.AccessibilityLabel);
+        }
+
 		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
             var builder = OnConvertToCode (currentNode, parentNode, rendererService);
             if (builder != null)
             {
+                currentNode.Node.TryGetNativeControlType(out var nativeControlType);
+
                 bool hasAccessibility = false;
                 if (currentNode.Node.IsA11Group())
                 {
                     var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
-                    new AppKit.NSView().AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
+
                     builder.WriteEquality (currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
                     hasAccessibility = true;
                 }
                 if (currentNode.Node.TrySearchA11Label(out var label))
                 {
-                    builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityLabel), label, inQuotes: true);
+                    builder.WriteEquality(currentNode.Name, GetAccessibilityTitle (nativeControlType), label, inQuotes: true);
                     hasAccessibility = true;
                 }
                 if (currentNode.Node.TrySearchA11Help(out var help))
