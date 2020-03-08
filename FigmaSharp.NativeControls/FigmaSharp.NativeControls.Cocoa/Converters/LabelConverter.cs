@@ -45,7 +45,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Label;
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
             var figmaInstance = (FigmaInstance)currentNode;
             var figmaText = (FigmaText)figmaInstance.children.FirstOrDefault(s => s.name == "lbl");

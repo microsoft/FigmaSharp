@@ -41,7 +41,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             var elipseView = new ImageView();// { TranslatesAutoresizingMaskIntoConstraints = false };
             var elipse = (FigmaElipse)currentNode;

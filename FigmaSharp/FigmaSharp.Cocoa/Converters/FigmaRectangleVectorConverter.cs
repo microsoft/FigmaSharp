@@ -40,7 +40,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             var vectorEntity = (RectangleVector)currentNode;
             var vector = new ImageView ();

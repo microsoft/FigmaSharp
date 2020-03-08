@@ -38,7 +38,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
 			var vector = new ImageView();
 			var currengroupView = (NSImageView)vector.NativeObject;

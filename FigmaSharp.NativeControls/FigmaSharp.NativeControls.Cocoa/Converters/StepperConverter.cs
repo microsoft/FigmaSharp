@@ -47,7 +47,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Stepper;
 		}
 
-		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode;
 			var view = new Stepper ();

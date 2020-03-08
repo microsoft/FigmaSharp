@@ -39,7 +39,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             var vectorEntity = (FigmaVectorEntity)currentNode;
             var vector = new ImageView();

@@ -39,7 +39,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             var figmaLineView = new HorizontalBar ();
             var nativeView = (FNSBox)figmaLineView.NativeObject;

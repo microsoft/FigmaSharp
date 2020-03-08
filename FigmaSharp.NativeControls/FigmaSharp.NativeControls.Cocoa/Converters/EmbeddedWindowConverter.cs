@@ -55,7 +55,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			NSColor.FromRgba (0.29f, 0.29f, 0.29f, 0.66f);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
 			var view = EmbededWindowConverter.GetSimulatedWindow();
@@ -145,7 +145,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return isWindow;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
 			var view = GetSimulatedWindow ();
@@ -158,8 +158,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var window = new Window(view.Allocation);
 				var fileProvider = new FigmaRemoteFileProvider();
 				fileProvider.Load(rendererService.FileProvider.File);
+				var options = new FigmaViewRendererServiceOptions() {
+					ConstraintsInMainViews = true
+				};
+
 				var secondaryRender = new NativeViewRenderingService(fileProvider);
-				secondaryRender.RenderInWindow(window, currentNode);
+				secondaryRender.RenderInWindow(window, currentNode, options);
 				window.Show ();
 				window.Center();
 			};

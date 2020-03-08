@@ -46,7 +46,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ProgressSpinner;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode;
 			var view = new Spinner ();

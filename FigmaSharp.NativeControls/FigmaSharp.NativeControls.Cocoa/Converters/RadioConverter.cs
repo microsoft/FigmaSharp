@@ -52,7 +52,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return false;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode;
 

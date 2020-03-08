@@ -9,7 +9,7 @@ namespace FigmaSharp.Cocoa
 {
     public class FigmaViewPropertySetter : FigmaViewPropertySetterBase
     {
-        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService)
+        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaViewRendererService rendererService)
         {
             if (propertyName == CodeProperties.AddChild)
             {
@@ -18,11 +18,6 @@ namespace FigmaSharp.Cocoa
             }
             if (propertyName == CodeProperties.Constraints)
             {
-                if (rendererService.IsFirstNode (currentNode))
-                {
-                    return;
-                }
-
                 if (currentNode is IConstraints constrainedNode && view.NativeObject is AppKit.NSView nativeView && parent.NativeObject is AppKit.NSView parentNativeView)
                 {
                     var constraints = constrainedNode.constraints;

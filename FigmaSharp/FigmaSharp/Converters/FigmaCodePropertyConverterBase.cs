@@ -43,7 +43,7 @@ namespace FigmaSharp
 
     public abstract class FigmaViewPropertySetterBase
     {
-        public abstract void Configure (string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService);
+        public abstract void Configure (string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaViewRendererService rendererService);
     }
 
     public abstract class FigmaCodePropertyConverterBase

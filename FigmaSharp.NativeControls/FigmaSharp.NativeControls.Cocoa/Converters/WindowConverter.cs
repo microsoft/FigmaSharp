@@ -44,7 +44,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.name.StartsWith ("!image");
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
 		{
             var vector = new FigmaSharp.Views.Cocoa.ImageView ();
             var currengroupView = (NSImageView)vector.NativeObject;
@@ -74,7 +74,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowStandard;
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             return null;
         }
@@ -92,7 +92,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowSheet;
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             return null;
         }
@@ -110,7 +110,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.WindowPanel;
         }
 
-        protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererService rendererService)
         {
             return null;
         }

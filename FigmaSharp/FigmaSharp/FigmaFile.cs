@@ -93,7 +93,7 @@ namespace FigmaSharp
             try
             {
                 FigmaImages.Clear();
-                rendererService. Start(file, ContentView);
+                rendererService.Start (ContentView);
 
                 var mainNodes = rendererService.NodesProcessed
                     .Where(s => s.ParentView == null)

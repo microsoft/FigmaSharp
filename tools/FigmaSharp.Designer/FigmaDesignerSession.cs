@@ -67,9 +67,8 @@ namespace FigmaSharp.Designer
         {
             try
             {
-                rendererService.Start(file, contentView, options);
+                rendererService.Start(contentView, file, options);
                 distributionService.Run(contentView, rendererService);
-
                 ReloadFinished?.Invoke(this, EventArgs.Empty);
             }
             catch (DirectoryNotFoundException ex)

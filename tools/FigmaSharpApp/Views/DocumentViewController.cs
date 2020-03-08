@@ -126,12 +126,13 @@ namespace FigmaSharp.Samples
 
 					var fileProvider = new FigmaRemoteFileProvider () { File = Link_ID, Version = version };
 					var rendererService = new NativeViewRenderingService (fileProvider);
+					var options = new FigmaViewRendererServiceOptions() { StartPage = startPage };
 
-                    //we want to include some special converters to handle windows like normal view containers
+					//we want to include some special converters to handle windows like normal view containers
 					rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
 					rendererService.CustomConverters.Add(new EmbededWindowConverter());
 
-					rendererService.Start (Link_ID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = startPage });
+					rendererService.Start (scrollview.ContentView, options: options);
 
 					new StoryboardLayoutManager()
 						.Run (scrollview.ContentView, rendererService);

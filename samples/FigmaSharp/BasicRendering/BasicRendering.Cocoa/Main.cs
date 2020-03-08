@@ -66,12 +66,12 @@ namespace LocalFile.Cocoa
 			//native toolkit positioning system
 
 			//in this case we want use a remote file provider (figma url from our document)
-			var fileProvider = new FigmaRemoteFileProvider();
+			var fileProvider = new FigmaRemoteFileProvider() { File = fileName };
 
 			//we initialize our renderer service, this uses all the converters passed
 			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
 			var rendererService = new FigmaViewRendererService (fileProvider);
-			rendererService.Start (fileName, scrollView.ContentView);
+			rendererService.Start (scrollView.ContentView);
 
 			//now we have all the views processed and the relationship we can distribute all the views into the desired base view
 			var layoutManager = new StoryboardLayoutManager();
