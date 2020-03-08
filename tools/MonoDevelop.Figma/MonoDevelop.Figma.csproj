@@ -15,6 +15,7 @@
   </ItemGroup>
       <ItemGroup>
     <AddinReference Include="MonoDevelop.DesignerSupport" />
+    <AddinReference Include="MonoDevelop.CSharpBinding" />
   </ItemGroup>
       <ItemGroup>
         <Folder Include="Resources\" />

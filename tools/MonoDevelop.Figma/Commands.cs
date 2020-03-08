@@ -179,7 +179,7 @@ namespace MonoDevelop.Figma.Commands
 				var bundle = FigmaBundle.FromDirectoryPath (currentFolder.Path.FullPath);
 				if (bundle != null) {
 
-					var currentProject = currentFolder.Project;
+					var currentProject = currentFolder.Project as DotNetProject;
 
 					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
 					fileProvider.Load (bundle.DocumentFilePath);
