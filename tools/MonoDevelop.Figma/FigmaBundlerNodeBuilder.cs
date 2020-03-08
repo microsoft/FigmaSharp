@@ -67,4 +67,9 @@ namespace MonoDevelop.Figma
 		//		return -200;
 		//	}
 	}
+
+	internal class FigmaFileViewNodeCommandHandler : NodeCommandHandler
+	{
+
+	}
 }
