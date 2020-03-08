@@ -76,11 +76,11 @@ namespace FigmaSharp.Samples
 		}
 
 
-		public void UpdatePagesPopupButton (IFigmaFileProvider fileProvider)
+		public void UpdatePagesPopupButton (FigmaDocument document)
 		{
 			PagePopUpButton.RemoveAllItems();
 
-			foreach (var item in fileProvider.Nodes.OfType<FigmaCanvas>().ToArray()) {
+			foreach (var item in document.children.ToArray()) {
 				PagePopUpButton.AddItem (item.name);
 
 				PagePopUpButton.Activated += delegate {
@@ -151,7 +151,6 @@ namespace FigmaSharp.Samples
 				(MainToolbar.VisibleItems[2].View as NSProgressIndicator).StartAnimation (this);
 			}
 		}
-
 
 		public void ShowError (string linkId)
 		{
