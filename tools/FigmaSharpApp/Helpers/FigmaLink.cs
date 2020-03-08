@@ -27,7 +27,7 @@
 
 using System;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	class FigmaLink
 	{

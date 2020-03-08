@@ -33,10 +33,10 @@ using AppKit;
 using CoreGraphics;
 using Foundation;
 
+using FigmaSharp;
 using FigmaSharp.Models;
-using FigmaSharp.Services;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	public partial class DocumentWindowController : NSWindowController
 	{
@@ -45,7 +45,7 @@ namespace FigmaSharp.Samples
 			set { TitleTextField.StringValue = value; }
 		}
 
-		public event EventHandler<Models.FigmaFileVersion> VersionSelected;
+		public event EventHandler<FigmaFileVersion> VersionSelected;
 		public event EventHandler<int> PageChanged;
 
 		public event EventHandler RefreshRequested;
@@ -117,9 +117,9 @@ namespace FigmaSharp.Samples
 			{
 				var query = new FigmaFileVersionQuery(link_id);
 
-				AppContext.Current.SetAccessToken(TokenStore.SharedTokenStore.GetToken());
+				FigmaSharp.AppContext.Current.SetAccessToken(TokenStore.SharedTokenStore.GetToken());
 
-				FigmaFileVersion[] versions = AppContext.Api.GetFileVersions(query).versions;
+				FigmaFileVersion[] versions = FigmaSharp.AppContext.Api.GetFileVersions(query).versions;
 				versions = versions.GroupBy(x => x.created_at)
 					.Select(group => group.First())
 					.ToArray();

@@ -32,13 +32,14 @@ using System.Collections.Generic;
 using AppKit;
 using Foundation;
 using ObjCRuntime;
+
 using FigmaSharp.Models;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	class MenuVersionItem : NSMenuItem
 	{
-		public Models.FigmaFileVersion Version { get; set; }
+		public FigmaFileVersion Version { get; set; }
 
 		public MenuVersionItem()
 		{
