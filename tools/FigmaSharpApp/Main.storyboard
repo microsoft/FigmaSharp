@@ -143,17 +143,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="DWs-33-bmY">
                                     <items>
-                                        <menuItem title="Light Theme" state="on" id="ohA-FC-JQL" userLabel="Light Theme">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Toggle Dark Mode" keyEquivalent="d" id="v8x-ws-8f6" userLabel="Dark Mode">
                                             <connections>
-                                                <action selector="openDocument:" target="Ady-hI-5gd" id="Hjy-In-fti"/>
+                                                <action selector="ToggleDarkModeClicked:" target="Voe-Tx-rLC" id="nhS-P5-P7I"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Dark Theme" keyEquivalent="d" id="WqG-Qi-8SB" userLabel="Dark Theme">
-                                            <connections>
-                                                <action selector="openDocument:" target="Ady-hI-5gd" id="IWy-Qb-E5X"/>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem title="Toggle Contrast Mode" enabled="NO" keyEquivalent="e" id="gPq-H5-ZSw" userLabel="Contrast Mode"/>
                                         <menuItem isSeparatorItem="YES" id="hkz-zh-Jpr"/>
                                         <menuItem title="Zoom In" keyEquivalent="+" id="Ikx-gk-kO8">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -209,6 +204,9 @@
                                         <menuItem isSeparatorItem="YES" id="kjU-ZU-7zj"/>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <action selector="DarkModeClicked:" target="hnw-xV-0zn" id="Icv-Jg-eMj"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Versions" id="9rR-0a-lOy">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -309,7 +307,7 @@
                                 <rect key="frame" x="191" y="98" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="☰  →  Help and Account  →  Personal Access Tokens" allowsEditingTextAttributes="YES" id="guI-t9-Uwa">
-                                    <font key="font" metaFont="toolTip"/>
+                                    <font key="font" metaFont="menu" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -318,7 +316,7 @@
                                 <rect key="frame" x="190" y="114" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="Get your token from the Figma app:" allowsEditingTextAttributes="YES" id="kCe-3j-BSd">
-                                    <font key="font" metaFont="toolTip"/>
+                                    <font key="font" metaFont="menu" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -409,7 +407,7 @@ Gw
                 </viewController>
                 <customObject id="p57-B5-ZDL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="651.5" y="627"/>
+            <point key="canvasLocation" x="668" y="630"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="FGq-xg-hEP">
@@ -441,23 +439,22 @@ Gw
                                         <action selector="RefreshClicked:" target="qmD-kN-bD5" id="he4-XR-IPe"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="1D5468D2-8E08-45EB-9DDF-5D18A54E00E6" label="Dark Mode" paletteLabel="Dark Mode" id="ipb-hp-J6A">
-                                    <nil key="toolTip"/>
+                                <toolbarItem implicitItemIdentifier="1D5468D2-8E08-45EB-9DDF-5D18A54E00E6" label="Dark Mode" paletteLabel="Dark Mode" toolTip="Dark Mode" id="ipb-hp-J6A">
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" id="du5-wr-dXP">
                                         <rect key="frame" x="5" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
+                                        <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">r</string>
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="DarkModeClicked:" target="qmD-kN-bD5" id="rav-9O-bsZ"/>
+                                        </connections>
                                     </button>
-                                    <connections>
-                                        <action selector="RefreshClicked:" target="qmD-kN-bD5" id="WY3-Qu-9XQ"/>
-                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="815A7408-E296-476E-A40B-09DA766A5965" label="Title" paletteLabel="Title" sizingBehavior="auto" id="nwy-jM-blc">
                                     <nil key="toolTip"/>
@@ -492,7 +489,7 @@ Gw
                                         <rect key="frame" x="0.0" y="14" width="49" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Page:" id="15S-mK-Y1y">
-                                            <font key="font" metaFont="toolTip"/>
+                                            <font key="font" metaFont="menu" size="11"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>

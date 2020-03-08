@@ -27,6 +27,9 @@ namespace FigmaSharp.Samples
 		[Outlet]
 		AppKit.NSTextField TitleTextField { get; set; }
 
+		[Action ("DarkModeClicked:")]
+		partial void DarkModeClicked (Foundation.NSObject sender);
+
 		[Action ("RefreshClicked:")]
 		partial void RefreshClicked (Foundation.NSObject sender);
 		

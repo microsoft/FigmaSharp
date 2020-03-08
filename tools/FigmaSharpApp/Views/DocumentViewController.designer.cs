@@ -18,6 +18,9 @@ namespace FigmaSharp.Samples
 		[Outlet]
 		AppKit.NSProgressIndicator Spinner { get; set; }
 
+		[Action ("DarkModeClicked:")]
+		partial void DarkModeClicked (Foundation.NSObject sender);
+
 		[Action ("Zoom100Clicked:")]
 		partial void Zoom100Clicked (Foundation.NSObject sender);
 

@@ -139,6 +139,12 @@ namespace FigmaSharp.Samples
 			RefreshRequested?.Invoke (this, EventArgs.Empty);
 		}
 
+
+		partial void DarkModeClicked(NSObject sender)
+		{
+			(NSApplication.SharedApplication.Delegate as AppDelegate).ToggleDarkMode();
+		}
+
 		public void ToggleSpinnerState (bool toggle_on)
 		{
 			if (MainToolbar.VisibleItems[2].Identifier == "Spinner") {
