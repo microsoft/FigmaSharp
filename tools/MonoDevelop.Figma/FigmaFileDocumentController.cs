@@ -92,7 +92,7 @@ namespace MonoDevelop.Figma
 
         void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload(scrollview, filePath.FileName, fileOptions);
+            session.Reload(scrollview.ContentView, filePath.FileName, fileOptions);
         }
 
         protected override Task OnSave()
@@ -144,13 +144,7 @@ namespace MonoDevelop.Figma
                 //IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
                 IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
             }
-
-            if (fileDescriptor.Owner is DotNetProject project)
-            {
-                session.Reload(scrollview.ContentView, fileProvider.File, new FigmaViewRendererServiceOptions () {
-					ScanChildrenFromFigmaInstances = false
-				});
-            }
+            RefreshAll();
             await base.OnInitialize(modelDescriptor, status);
         }
 
@@ -201,37 +195,6 @@ namespace MonoDevelop.Figma
 
         void Session_ReloadFinished(object sender, EventArgs e)
         {
-			var mainNodes = session.ProcessedNodes
-			   .Where (s => s.ParentView == null)
-			   .ToArray ();
-
-			Reposition (mainNodes);
-
-            //We want know the background color of the figma camvas and apply to our scrollview
-            var canvas = fileProvider.Nodes.OfType<FigmaCanvas> ().FirstOrDefault ();
-            if (canvas != null)
-            {
-                scrollview.BackgroundColor = canvas.backgroundColor;
-                scrollview.SetContentSize(canvas.absoluteBoundingBox.Width, canvas.absoluteBoundingBox.Height);
-            } else
-            {
-                //we need reload after set the content to ensure the scrollview
-                scrollview.AdjustToContent();
-            }
-        
-        }
-
-        public void Reposition(ProcessedNode[] mainNodes)
-        {
-            //Alignment 
-            const int Margin = 20;
-            float currentX = Margin;
-            foreach (var processedNode in mainNodes)
-            {
-                var view = processedNode.View;
-                view.SetPosition(currentX, 0);
-                currentX += view.Width + Margin;
-            }
         }
 
         private void OnDocumentOpened(object sender, DocumentEventArgs e)
@@ -291,7 +254,7 @@ namespace MonoDevelop.Figma
 
         void RefreshAll()
         {
-            session.Reload(scrollview, filePath, fileOptions);
+            session.Reload(scrollview.ContentView, filePath, fileOptions);
             if (outlinePad != null)
             {
                 outlinePad.GenerateTree(session.Response.document, figmaDelegate);
