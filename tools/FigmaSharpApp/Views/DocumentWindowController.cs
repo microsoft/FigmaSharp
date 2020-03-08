@@ -166,5 +166,15 @@ namespace FigmaSharp.Samples
 
 			Window.PerformClose (this);
 		}
+
+
+		public override void KeyDown(NSEvent theEvent)
+		{
+			if (theEvent.ModifierFlags.HasFlag(NSEventModifierMask.CommandKeyMask) &&
+				theEvent.CharactersIgnoringModifiers == "w")
+			{
+				Window.PerformClose(this);
+			}
+		}
 	}
 }
