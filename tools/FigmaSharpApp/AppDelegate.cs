@@ -43,35 +43,38 @@ namespace FigmaSharp.Samples
 
 		public override void DidFinishLaunching (NSNotification notification)
 		{
-			UsesDarkTheme = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
+			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
 		}
 
 
-		public override void WillTerminate (NSNotification notification)
+		// View menu
+		public bool UsesDarkMode = false;
+
+		partial void ToggleDarkModeClicked(NSObject sender)
 		{
+			ToggleDarkMode();
 		}
 
-
-		string wiki_address = "https://github.com/netonjm/FigmaSharp/wiki";
-		string api_documentation_address = "https://netonjm.github.io/FigmaSharp/api/";
-		string source_code_address = "https://github.com/netonjm/FigmaSharp";
-
-		partial void WikiClicked (NSObject sender)
+		public void ToggleDarkMode()
 		{
-			var url = new NSUrl (wiki_address);
-			NSWorkspace.SharedWorkspace.OpenUrl (url);
+			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
+
+			if (UsesDarkMode)
+			{
+				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAqua);
+				UsesDarkMode = false;
+
+			}
+			else
+			{
+				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+				UsesDarkMode = true;
+			}
 		}
 
-		partial void APIDocumentationClicked (NSObject sender)
+		partial void RefreshClicked(NSObject sender)
 		{
-			var url = new NSUrl (api_documentation_address);
-			NSWorkspace.SharedWorkspace.OpenUrl (url);
-		}
-
-		partial void SourceCodeClicked (NSObject sender)
-		{
-			var url = new NSUrl (source_code_address);
-			NSWorkspace.SharedWorkspace.OpenUrl (url);
+			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).Reload();
 		}
 
 		partial void ZoomInClicked(NSObject sender)
@@ -90,32 +93,27 @@ namespace FigmaSharp.Samples
 		}
 
 
+		// Help menu
+		string wiki_address = "https://github.com/netonjm/FigmaSharp/wiki";
+		string api_documentation_address = "https://netonjm.github.io/FigmaSharp/api/";
+		string source_code_address = "https://github.com/netonjm/FigmaSharp";
 
-
-
-		bool UsesDarkTheme = false;
-
-		partial void ToggleDarkModeClicked(NSObject sender)
+		partial void WikiClicked(NSObject sender)
 		{
-			ToggleDarkMode();
+			var url = new NSUrl(wiki_address);
+			NSWorkspace.SharedWorkspace.OpenUrl(url);
 		}
 
-		public void ToggleDarkMode()
+		partial void APIDocumentationClicked(NSObject sender)
 		{
-			NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAccessibilityHighContrastAqua);
-			//UsesDarkTheme = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
+			var url = new NSUrl(api_documentation_address);
+			NSWorkspace.SharedWorkspace.OpenUrl(url);
+		}
 
-			//UsesDarkTheme = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
-			/*
-			if (UsesDarkTheme) {
-				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAccessibilityHighContrastAqua);
-				UsesDarkTheme = false;
-
-			} else {
-				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAccessibilityHighContrastDarkAqua);
-				UsesDarkTheme = true;
-			}
-			*/
+		partial void SourceCodeClicked(NSObject sender)
+		{
+			var url = new NSUrl(source_code_address);
+			NSWorkspace.SharedWorkspace.OpenUrl(url);
 		}
 	}
 }
