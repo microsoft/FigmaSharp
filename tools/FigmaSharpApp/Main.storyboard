@@ -143,13 +143,18 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="DWs-33-bmY">
                                     <items>
-                                        <menuItem title="Toggle Dark Mode" keyEquivalent="d" id="v8x-ws-8f6" userLabel="Dark Mode">
+                                        <menuItem title="Refresh" keyEquivalent="r" id="NHL-b3-NZo" userLabel="Dark Mode">
                                             <connections>
-                                                <action selector="ToggleDarkModeClicked:" target="Voe-Tx-rLC" id="nhS-P5-P7I"/>
+                                                <action selector="RefreshClicked:" target="Voe-Tx-rLC" id="ljA-jF-eKH"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Toggle Contrast Mode" enabled="NO" keyEquivalent="e" id="gPq-H5-ZSw" userLabel="Contrast Mode"/>
                                         <menuItem isSeparatorItem="YES" id="hkz-zh-Jpr"/>
+                                        <menuItem title="Toggle Dark Mode" keyEquivalent="d" id="v8x-ws-8f6" userLabel="Dark Mode">
+                                            <connections>
+                                                <action selector="ToggleDarkModeClicked:" target="Voe-Tx-rLC" id="r1P-wG-Zk2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="KMg-xS-h7a"/>
                                         <menuItem title="Zoom In" keyEquivalent="+" id="Ikx-gk-kO8">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -421,8 +426,7 @@ Gw
                         <value key="minSize" type="size" width="320" height="320"/>
                         <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="z7L-HX-hhV">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" image="NSRefreshTemplate" id="NHv-Gm-Lms">
-                                    <nil key="toolTip"/>
+                                <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" toolTip="Refresh" image="NSRefreshTemplate" id="NHv-Gm-Lms">
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" id="iXD-EU-bKJ">
