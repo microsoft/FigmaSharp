@@ -41,6 +41,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
+		public bool IsActionButtonVisible { get; set; } = true;
+
+		IFigmaFileProvider newWindowProvider;
+		public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
+		{
+			this.newWindowProvider = newWindowProvider;
+		}
+
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowSheet)
@@ -74,9 +82,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 					window.Close();
 				};
 
-				var fileProvider = new FigmaRemoteFileProvider();
-				fileProvider.Load(rendererService.FileProvider.File);
-				var secondaryRender = new NativeViewRenderingService(fileProvider);
+				newWindowProvider.Load(rendererService.FileProvider.File);
+				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
 				////we want to include some special converters to handle windows like normal view containers
 				//rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
 				//rendererService.CustomConverters.Add(new EmbededWindowConverter());
@@ -93,11 +100,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 	}
 
-
-
-
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
+		public bool IsActionButtonVisible { get; set; } = true;
+		
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			if (currentNode.IsWindowContent ()) {
@@ -120,9 +126,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			nativeView.LiveButton.Activated += (s, e) => {
 				var window = new Window(view.Allocation);
-				var fileProvider = new FigmaRemoteFileProvider();
-				fileProvider.Load(rendererService.FileProvider.File);
-				var secondaryRender = new NativeViewRenderingService(fileProvider);
+				newWindowProvider.Load(rendererService.FileProvider.File);
+				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
 				secondaryRender.RenderInWindow(window, currentNode);
 				(window.NativeObject as NSWindow).Appearance = (s as NSView).EffectiveAppearance;
 				window.Show ();
