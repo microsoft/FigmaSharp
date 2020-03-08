@@ -120,8 +120,10 @@ namespace MonoDevelop.Figma
                 fileProvider = new FigmaLocalFileProvider(localPath) { File = filePath.FullPath };
                 rendererService = new NativeViewRenderingService (fileProvider);
 
-                rendererService.CustomConverters.Add (new EmbededWindowConverter ());
-                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter ());
+                //we generate a new file provider for embeded windows
+                var tmpRemoteProvider = new FigmaLocalFileProvider(localPath) { File = filePath.FullPath };
+                rendererService.CustomConverters.Add (new EmbededWindowConverter(tmpRemoteProvider) { IsActionButtonVisible = false });
+                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter(tmpRemoteProvider) { IsActionButtonVisible = false });
 
                 layoutManager = new StoryboardLayoutManager();
 
