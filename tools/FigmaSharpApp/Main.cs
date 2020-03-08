@@ -26,15 +26,15 @@
 
 
 using AppKit;
-using FigmaSharp.Cocoa;
+using FigmaSharp.NativeControls.Cocoa;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	static class MainClass
 	{
 		static void Main (string[] args)
 		{
-            NativeControls.Cocoa.NativeControlsApplication.Init ();
+			NativeControlsApplication.Init ();
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}

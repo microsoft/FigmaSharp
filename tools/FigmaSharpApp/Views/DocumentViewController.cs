@@ -37,7 +37,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	public partial class DocumentViewController : NSViewController
 	{
@@ -153,7 +153,7 @@ namespace FigmaSharp.Samples
 			{
 				InvokeOnMainThread (() =>
 				{
-					AppContext.Current.SetAccessToken (Token);
+					FigmaSharp.AppContext.Current.SetAccessToken (Token);
 
 					if (response == null || version != null)
 					{

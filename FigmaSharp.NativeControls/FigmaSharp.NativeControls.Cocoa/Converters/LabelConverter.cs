@@ -27,14 +27,15 @@
  */
 
 using System;
+using System.Linq;
 using System.Text;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
-using System.Linq;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {

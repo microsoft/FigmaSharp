@@ -30,7 +30,7 @@ using System;
 using AppKit;
 using Foundation;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	public partial class OpenLocationViewController : NSViewController
 	{
