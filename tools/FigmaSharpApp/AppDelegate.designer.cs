@@ -14,8 +14,14 @@ namespace FigmaSharp.Samples
 		[Action ("APIDocumentationClicked:")]
 		partial void APIDocumentationClicked (Foundation.NSObject sender);
 
+		[Action ("DarkModeClicked:")]
+		partial void DarkModeClicked (Foundation.NSObject sender);
+
 		[Action ("SourceCodeClicked:")]
 		partial void SourceCodeClicked (Foundation.NSObject sender);
+
+		[Action ("ToggleDarkModeClicked:")]
+		partial void ToggleDarkModeClicked (Foundation.NSObject sender);
 
 		[Action ("WikiClicked:")]
 		partial void WikiClicked (Foundation.NSObject sender);

@@ -43,7 +43,7 @@ namespace FigmaSharp.Samples
 
 		public override void DidFinishLaunching (NSNotification notification)
 		{
-
+			UsesDarkTheme = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
 		}
 
 
@@ -88,6 +88,34 @@ namespace FigmaSharp.Samples
 		{
 			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).Zoom100();
 		}
+
+
+
+
+
+		bool UsesDarkTheme = false;
+
+		partial void ToggleDarkModeClicked(NSObject sender)
+		{
+			ToggleDarkMode();
+		}
+
+		public void ToggleDarkMode()
+		{
+			NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAccessibilityHighContrastAqua);
+			//UsesDarkTheme = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
+
+			//UsesDarkTheme = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
+			/*
+			if (UsesDarkTheme) {
+				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAccessibilityHighContrastAqua);
+				UsesDarkTheme = false;
+
+			} else {
+				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAccessibilityHighContrastDarkAqua);
+				UsesDarkTheme = true;
+			}
+			*/
+		}
 	}
 }
-
