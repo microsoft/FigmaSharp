@@ -103,6 +103,11 @@ namespace FigmaSharp.NativeControls
         LabelSmall = 66,
         LabelStandardDark = 67,
         LabelSmallDark = 68,
+        LabelSecondary = 4324,
+        LabelSecondaryDark = 2423,
+
+        LinkStandard = 3113,
+        LinkSmall = 3223,
 
         LabelGroup = 69,
 
@@ -120,7 +125,7 @@ namespace FigmaSharp.NativeControls
         DisclosureTriangleStandardDark = 86,
 
         StepperSmallDark = 90,
-		StepperStandardDark = 91,
+        StepperStandardDark = 91,
         StepperSmall = 92,
         StepperStandard = 93,
 
@@ -132,7 +137,7 @@ namespace FigmaSharp.NativeControls
         WindowStandard = 120,
         WindowStandardDark = 121,
 
-	}
+    }
 
     public static class FigmaControlsExtension
     {
@@ -226,12 +231,17 @@ namespace FigmaSharp.NativeControls
             ( "Label/Standard Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
             ( "Label/Small", NativeControlComponentType.LabelSmall, NativeControlType.Label),
             ( "Label/Small Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
+            ( "Label/Secondary", NativeControlComponentType.LabelSecondary, NativeControlType.Label),
+            ( "Label/Secondary Dark", NativeControlComponentType.LabelSecondaryDark, NativeControlType.Label),
 
             ( "Label/Standard HC Dark", NativeControlComponentType.LabelStandard, NativeControlType.Label),
             ( "Label/Secondary HC Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
             ( "Label/Small HC Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
 
             ( "Label/Group", NativeControlComponentType.LabelGroup, NativeControlType.Label),
+
+            ( "Link/Standard", NativeControlComponentType.LinkStandard, NativeControlType.Label),
+            ( "Link/Small", NativeControlComponentType.LinkSmall, NativeControlType.Label),
 
             ( "Window/Standard", NativeControlComponentType.WindowStandard, NativeControlType.WindowStandard),
             ( "Window/Standard Dark", NativeControlComponentType.WindowStandardDark, NativeControlType.WindowStandard),
