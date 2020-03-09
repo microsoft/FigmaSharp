@@ -36,6 +36,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views;
 using FigmaSharp.NativeControls;
+using System.Linq;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -131,6 +132,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				secondaryRender.RenderInWindow(window, currentNode);
 				(window.NativeObject as NSWindow).Appearance = (s as NSView).EffectiveAppearance;
 				window.Show ();
+
 				window.Center();
 			};
 

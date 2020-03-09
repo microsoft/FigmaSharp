@@ -290,7 +290,7 @@ namespace FigmaSharp
                     continue;
                 if (item is IAbsoluteBoundingBox boundingBox) {
                     if (point == null) {
-                        point = boundingBox.absoluteBoundingBox;
+                        point = boundingBox.absoluteBoundingBox.Copy();
                     } else {
                         if (boundingBox.absoluteBoundingBox.Left < point.X)
                             point.X = boundingBox.absoluteBoundingBox.Left;

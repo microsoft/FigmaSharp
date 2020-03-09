@@ -18,11 +18,6 @@ namespace FigmaSharp.Cocoa
             }
             if (propertyName == CodeProperties.Constraints)
             {
-                if (rendererService.IsFirstNode (currentNode))
-                {
-                    return;
-                }
-
                 if (currentNode is IConstraints constrainedNode && view.NativeObject is AppKit.NSView nativeView && parent.NativeObject is AppKit.NSView parentNativeView)
                 {
                     var constraints = constrainedNode.constraints;

@@ -271,6 +271,23 @@ namespace FigmaSharp.NativeControls
             return figmaNode is IFigmaNodeContainer container && container.children.Any (s => s.IsDialog ());
         }
 
+        public static IEnumerable<FigmaNode> GetChildren (this FigmaNode figmaNode)
+        {
+            var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
+            var contentNode = figmaNode.GetWindowContent() ?? figmaNode;
+
+            if (contentNode is IFigmaNodeContainer container)
+			{
+				foreach (var item in container.children)
+				{
+                    if (item == figmaInstance)
+                        continue;
+
+                    yield return item;
+                }
+            }
+        }
+
         public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
         {
             return figmaNode is IFigmaNodeContainer container && container.children.OfType<FigmaInstance> ().Any (s => s.IsWindowOfType (controlType));
