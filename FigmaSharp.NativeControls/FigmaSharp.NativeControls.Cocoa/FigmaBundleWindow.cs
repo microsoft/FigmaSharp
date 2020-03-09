@@ -91,16 +91,6 @@ namespace FigmaSharp
 							builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
 						}
 					}
-
-					string appareanceStyle;
-					if (nativeControlComponentType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-						appareanceStyle = $"{typeof (NSAppearance).FullName}.{nameof (NSAppearance.NameDarkAqua)}";
-					} else {
-						appareanceStyle = $"{typeof (NSAppearance).FullName}.{nameof (NSAppearance.NameVibrantLight)}";
-					}
-
-					var getAppareanceMethod = CodeGenerationHelpers.GetMethod (typeof (NSAppearance).FullName, nameof (NSAppearance.GetAppearance), appareanceStyle);
-					builder.WriteEquality (CodeGenerationHelpers.This, nameof (NSWindow.Appearance), getAppareanceMethod);
 				}
 			}
 

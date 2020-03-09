@@ -46,8 +46,6 @@ namespace FigmaSharp.Views
 		bool ShowMiniaturizeButton { get; set; }
 		bool ShowTitle { get; set; }
 
-		bool IsDark { get; set; }
-
 		IView Content { get; set; }
 
 		void AddChild (IWindow window);

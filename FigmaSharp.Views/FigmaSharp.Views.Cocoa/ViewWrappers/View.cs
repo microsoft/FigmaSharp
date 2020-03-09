@@ -335,11 +335,6 @@ namespace FigmaSharp.Views.Cocoa
 			}
 		}
 
-		public bool IsDark {
-			get => nativeView.Appearance == NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			set => nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-		}
-
 		public virtual void Dispose ()
 		{
 

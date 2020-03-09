@@ -68,12 +68,6 @@ namespace FigmaSharp.Services
             if (windowInstance != null) {
 
                 windowInstance.TryGetNativeControlComponentType(out var controlType);
-                var nativeWindow = mainWindow.NativeObject as AppKit.NSWindow;
-                if (controlType.ToString().EndsWith("Dark", StringComparison.Ordinal)) {
-                    nativeWindow.Appearance = AppKit.NSAppearance.GetAppearance(AppKit.NSAppearance.NameDarkAqua);
-                } else {
-                    nativeWindow.Appearance = AppKit.NSAppearance.GetAppearance(AppKit.NSAppearance.NameAqua);
-                }
             }
         }
 

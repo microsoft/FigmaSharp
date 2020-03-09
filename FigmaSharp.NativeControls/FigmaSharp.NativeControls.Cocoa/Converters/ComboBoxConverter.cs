@@ -73,12 +73,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				view.Add (new Foundation.NSString (label.characters));
 			}
 
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			} else {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
-			}
-
 			return new View (view);
 		}
 

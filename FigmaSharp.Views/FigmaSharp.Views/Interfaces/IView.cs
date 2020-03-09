@@ -36,7 +36,6 @@ namespace FigmaSharp.Views
 		float Height { get; set; }
 
 		bool Hidden { get; set; }
-		bool IsDark { get; set; }
 
 		string Identifier { get; set; }
 		string NodeName { get; set; }
