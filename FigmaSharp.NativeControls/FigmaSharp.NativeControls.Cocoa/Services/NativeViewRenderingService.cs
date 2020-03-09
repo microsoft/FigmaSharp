@@ -86,5 +86,16 @@ namespace FigmaSharp.Services
 			}
 			return false;
 		}
-    }
+
+		internal ProcessedNode[] GetProcessedNodes(FigmaNode[] mainNodes)
+		{
+            ProcessedNode[] resultNodes = new ProcessedNode[mainNodes.Length];
+			for (int i = 0; i < mainNodes.Length; i++)
+			{
+                var currentNode = mainNodes[i];
+                resultNodes[i] = NodesProcessed.FirstOrDefault(s => s.FigmaNode == currentNode);
+            }
+            return resultNodes;
+		}
+	}
 }

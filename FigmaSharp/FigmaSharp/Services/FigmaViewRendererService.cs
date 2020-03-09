@@ -181,12 +181,20 @@ namespace FigmaSharp.Services
                 //in canvas we want calculate the bounds size
                 if (figmaNode is FigmaCanvas canvas) {
                     canvas.absoluteBoundingBox = canvas.GetCurrentBounds ();
+                } 
+
+                if (figmaNode is FigmaCanvas || !options.GenerateMainView)
+				{
                     if (figmaNode is IFigmaNodeContainer container)
-                    foreach (var item in container.children)
-                        GenerateViewsRecursively(item, processedParentView, options);
-                } else {
+					{
+                        foreach (var item in container.children)
+                            GenerateViewsRecursively(item, processedParentView, options);
+                    }
+                } else
+				{
                     GenerateViewsRecursively(figmaNode, processedParentView, options);
                 }
+
 
                 //Images
                 if (options.AreImageProcessed)
@@ -542,6 +550,8 @@ namespace FigmaSharp.Services
         public bool LoadFileProvider { get; set; } = true;
 
         public bool ConfigureViews { get; set; } = true;
+
+        public bool GenerateMainView { get; set; } = true;
 
         public bool FrameInMainViews { get; set; } = false;
 
