@@ -11,7 +11,9 @@ namespace FigmaSharp.Services
            
         }
 
-        public int HorizontalMargins { get; set; } = 64;
+		public bool UsesConstraints { get; set; }
+
+		public int HorizontalMargins { get; set; } = 64;
         public int VerticalMargins { get; set; } = 64;
 
         public void Run(IView contentView, FigmaViewRendererService rendererService)
@@ -46,10 +48,24 @@ namespace FigmaSharp.Services
                     scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
             }
-        
-            foreach (var node in orderedNodes) {
-                rendererService.PropertySetter.Configure(CodeProperties.Constraints,
-                    node.View, node.FigmaNode, node.ParentView?.View, node.ParentView?.FigmaNode, rendererService);
+
+            if (UsesConstraints) {
+                foreach (var node in orderedNodes)
+                    rendererService.PropertySetter.Configure(CodeProperties.Constraints,
+                        node.View, node.FigmaNode, node.ParentView?.View, node.ParentView?.FigmaNode, rendererService);
+            } else {
+                var rectangle = orderedNodes
+                       .Select(s => s.FigmaNode)
+                       .GetBoundRectangle();
+
+                foreach (var node in orderedNodes)
+                {
+                    //we need correct current initial positioning
+                    if (node.FigmaNode is IAbsoluteBoundingBox box)
+                    {
+                        node.View.SetPosition(-rectangle.X + box.absoluteBoundingBox.X + VerticalMargins, -rectangle.Y + box.absoluteBoundingBox.Y + HorizontalMargins);
+                    }
+                } 
             }
         }
     }
