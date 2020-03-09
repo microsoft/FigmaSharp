@@ -98,7 +98,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 if (label != null)
                 {
                     button.Text = label.characters;
-                    view.Font = label.style.ToNSFont();
+                    //view.Font = label.style.ToNSFont();
                 }
 
                 if (group.name == "Disabled")
