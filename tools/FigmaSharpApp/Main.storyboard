@@ -167,15 +167,15 @@
                                                 <action selector="ZoomInClicked:" target="Voe-Tx-rLC" id="26S-CC-0Nd"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom In" hidden="YES" keyEquivalent="=" allowsKeyEquivalentWhenHidden="YES" id="cDP-Ef-OhQ">
-                                            <connections>
-                                                <action selector="ZoomOutClicked:" target="Voe-Tx-rLC" id="pTJ-xz-Abd"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Zoom In" hidden="YES" keyEquivalent="=" allowsKeyEquivalentWhenHidden="YES" id="yIa-43-F5j">
+                                        <menuItem title="Zoom In" hidden="YES" keyEquivalent="=" allowsKeyEquivalentWhenHidden="YES" id="OcZ-63-khA">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                             <connections>
-                                                <action selector="ZoomOutClicked:" target="Voe-Tx-rLC" id="UsR-26-6Oo"/>
+                                                <action selector="ZoomInClicked:" target="Voe-Tx-rLC" id="Ymt-SA-hVa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom In" hidden="YES" keyEquivalent="=" allowsKeyEquivalentWhenHidden="YES" id="l8x-3e-sqU">
+                                            <connections>
+                                                <action selector="ZoomInClicked:" target="Voe-Tx-rLC" id="RPj-up-8eC"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Zoom Out" keyEquivalent="-" id="A0p-gZ-oln">
@@ -184,9 +184,15 @@
                                                 <action selector="ZoomOutClicked:" target="Voe-Tx-rLC" id="h39-dk-bEe"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom Out" hidden="YES" keyEquivalent="-" allowsKeyEquivalentWhenHidden="YES" id="i4R-8z-ZIl">
+                                        <menuItem title="Zoom Out" hidden="YES" keyEquivalent="-" allowsKeyEquivalentWhenHidden="YES" id="JVh-HT-P0z">
                                             <connections>
-                                                <action selector="LightThemeClicked:" target="Voe-Tx-rLC" id="Frj-gE-UNH"/>
+                                                <action selector="ZoomOutClicked:" target="Voe-Tx-rLC" id="QbC-gG-Nzk"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom Out" hidden="YES" keyEquivalent="-" allowsKeyEquivalentWhenHidden="YES" id="hnw-bg-hWv">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                            <connections>
+                                                <action selector="ZoomOutClicked:" target="Voe-Tx-rLC" id="dq6-vz-ccJ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Zoom 100%" keyEquivalent="0" id="ioI-bV-tdM">
