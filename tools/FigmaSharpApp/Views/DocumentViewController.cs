@@ -58,17 +58,6 @@ namespace FigmaSharpApp
 		}
 
 
-		class WindowDelegate : NSWindowDelegate
-		{
-			public event EventHandler WindowFocused = delegate { };
-
-			public override void DidBecomeKey(NSNotification notification)
-			{
-				WindowFocused(this, new EventArgs());
-			}
-		}
-
-
 		public void OnInitialize()
 		{
 			var windowDelegate = new WindowDelegate();
@@ -170,35 +159,27 @@ namespace FigmaSharpApp
 						rendererService = new NativeViewRenderingService(fileProvider);
 						rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
 						rendererService.CustomConverters.Add(new EmbededWindowConverter());
-
-					} else {
-
 					}
-
 
 					scrollview.ClearSubviews();
 					rendererService.Start(DocumentID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
 					new StoryboardLayoutManager().Run (scrollview.ContentView, rendererService);
 
 					response = fileProvider.Response;
-
+					windowController.Window.Title = windowController.Title = response.name;
 
 					nativeScrollView = scrollview.NativeObject as NSScrollView;
 
-					windowController.Window.Title = windowController.Title = response.name;
-
 					NSColor backgroundColor = response.document.children[pageIndex].backgroundColor.ToNSColor();
 					windowController.Window.BackgroundColor = backgroundColor;
-
-					nativeScrollView.AllowsMagnification = true;
 					nativeScrollView.BackgroundColor = backgroundColor;
 					(nativeScrollView.DocumentView as NSView).Layer.BackgroundColor = backgroundColor.CGColor;
 
+					nativeScrollView.AllowsMagnification = true;
 					nativeScrollView.MaxMagnification = 16f;
 					nativeScrollView.MinMagnification = 0.25f;
 
 					windowController.UpdatePagesPopupButton (response.document);
-
 					windowController.UpdateVersionMenu (DocumentID);
 					windowController.EnableButtons (true);
 
@@ -229,6 +210,18 @@ namespace FigmaSharpApp
 		}
 
 		#endregion
+
+
+		class WindowDelegate : NSWindowDelegate
+		{
+			public event EventHandler WindowFocused = delegate { };
+
+			public override void DidBecomeKey(NSNotification notification)
+			{
+				WindowFocused(this, new EventArgs());
+			}
+		}
+
 
 		public override NSObject RepresentedObject {
 			get {
