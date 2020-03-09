@@ -37,35 +37,67 @@ using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 
+using AppKit;
+using Foundation;
+
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class LabelConverter : FigmaNativeControlConverter
-	{
-		public override bool CanConvert(FigmaNode currentNode)
-		{
+    public class LabelConverter : FigmaNativeControlConverter
+    {
+        public override bool CanConvert(FigmaNode currentNode)
+        {
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Label;
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
-		{
+
+        protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
             var figmaInstance = (FigmaInstance)currentNode;
-            var figmaText = (FigmaText)figmaInstance.children.FirstOrDefault(s => s.name == "lbl");
+            var figmaText = (FigmaText)figmaInstance.children.FirstOrDefault(s => s.type == "TEXT");
+            currentNode.TryGetNativeControlComponentType(out NativeControlComponentType componentType);
 
             if (figmaText == null)
                 return null;
 
-            Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);
-            var label = new Label();
+            var label = new Label() { Text = figmaText.characters };
             var textField = label.NativeObject as FNSTextField;
-            textField.Font = figmaText.style.ToNSFont();
-            label.Text = figmaText.characters;
-            textField.Configure(figmaText, false);
-            textField.Configure(currentNode);
+
+            if (componentType == NativeControlComponentType.LabelGroup)
+                textField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
+
+            if (componentType == NativeControlComponentType.LabelSecondary)
+                textField.TextColor = NSColor.SecondaryLabelColor;
+
+            if (componentType == NativeControlComponentType.LabelSecondary ||
+                componentType == NativeControlComponentType.LabelSmall ||
+                componentType == NativeControlComponentType.LinkSmall)
+            {
+                textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+            }
+
+            if (componentType == NativeControlComponentType.LinkStandard ||
+                componentType == NativeControlComponentType.LinkSmall)
+            {
+                var attributedString = new NSMutableAttributedString(textField.AttributedStringValue);
+
+                attributedString.AddAttribute(NSStringAttributeKey.UnderlineStyle,
+                                              NSNumber.FromNInt((int) NSUnderlineStyle.Single),
+                                              new NSRange(0, attributedString.Length));
+
+                attributedString.AddAttribute(NSStringAttributeKey.ForegroundColor,
+                                              NSColor.LinkColor,
+                                              new NSRange(0, attributedString.Length));
+
+                textField.AttributedStringValue = attributedString;
+            }
+
+            Console.WriteLine("Component: '{0}' with characters '{1}'…", componentType, figmaText.characters);
             return label;
         }
 
+
         protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
-		{
+        {
             var figmaInstance = (FigmaInstance)currentNode.Node;
             var figmaText = (FigmaText)figmaInstance.children
                 .FirstOrDefault(s => s.name == "lbl");
@@ -88,5 +120,5 @@ namespace FigmaSharp.NativeControls.Cocoa
             return builder;
         }
 
-	}
+    }
 }
