@@ -76,12 +76,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				//view.Font = label.style.ToNSFont ();
 			}
 
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			} else {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
-			}
-
 			return button;
 		}
 

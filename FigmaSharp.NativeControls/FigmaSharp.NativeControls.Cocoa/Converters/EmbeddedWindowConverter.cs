@@ -84,25 +84,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				NSApplication.SharedApplication.BeginSheet((NSWindow)window.NativeObject, nativeView.Window);
 			};
 
-			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
-
-			if (firstElement != null) {
-				firstElement.TryGetNativeControlComponentType (out var controlType);
-				if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-
-					if (frame.HasFills && frame.fills[0].color != null) {
-						nativeView.Layer.BackgroundColor = frame.fills[0].color.ToCGColor ();
-					} else {
-						nativeView.Layer.BackgroundColor = GetBackgroundColor (false).CGColor;
-					}
-
-				} else {
-					nativeView.Layer.BackgroundColor = GetBackgroundColor (true).CGColor;
-					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
-					
-				}
-			}
 			return view;
 		}
 
@@ -164,25 +145,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				window.Show ();
 				window.Center();
 			};
-
-			var firstElement = currentNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
-			if (firstElement != null) {
-			
-				firstElement.TryGetNativeControlComponentType (out var controlType);
-				if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-					if (frame.HasFills && frame.fills[0].color != null) {
-						nativeView.Layer.BackgroundColor = frame.fills[0].color.ToCGColor ();
-					} else {
-						nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (darkTheme: true).CGColor;
-					}
-
-				} else {
-					nativeView.Layer.BackgroundColor = GetWindowBackgroundColor (darkTheme: false).CGColor;
-					nativeView.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
-				}
-
-			}
 
 			return view;
 		}

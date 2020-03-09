@@ -90,12 +90,6 @@ namespace FigmaSharp.NativeControls.Cocoa
                 .OfType<FigmaGroup> ()
                 .Any (s => s.name == "Disabled" && s.visible);
 
-			if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-				view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			} else {
-                view.Appearance = NSAppearance.GetAppearance (NSAppearance.NameAqua);
-            }
-
             return new View(view);
         }
 

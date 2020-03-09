@@ -41,11 +41,6 @@ namespace FigmaSharp.Views.Cocoa
 		NSObject resizeNotification;
 		FNWindow window;
 
-		public bool IsDark {
-			get => NSAppearance.CurrentAppearance == NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-			set => NSAppearance.GetAppearance (NSAppearance.NameDarkAqua);
-		}
-
 		public string Title {
 			get => window.Title;
 			set => window.Title = value;
