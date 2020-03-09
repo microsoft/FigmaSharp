@@ -7,11 +7,14 @@
 using Foundation;
 using System.CodeDom.Compiler;
 
-namespace FigmaSharp.Samples
+namespace FigmaSharpApp
 {
 	[Register ("DocumentWindowController")]
 	partial class DocumentWindowController
 	{
+		[Outlet]
+		AppKit.NSButton DarkModeButton { get; set; }
+
 		[Outlet]
 		AppKit.NSToolbar MainToolbar { get; set; }
 
@@ -32,9 +35,17 @@ namespace FigmaSharp.Samples
 
 		[Action ("RefreshClicked:")]
 		partial void RefreshClicked (Foundation.NSObject sender);
+
+		[Action ("ToggleDarkModeClicked:")]
+		partial void ToggleDarkModeClicked (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (DarkModeButton != null) {
+				DarkModeButton.Dispose ();
+				DarkModeButton = null;
+			}
+
 			if (MainToolbar != null) {
 				MainToolbar.Dispose ();
 				MainToolbar = null;

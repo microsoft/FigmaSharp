@@ -52,6 +52,7 @@ namespace FigmaSharpApp
 
 		public DocumentWindowController (IntPtr handle) : base (handle)
 		{
+			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
 		}
 
 
@@ -72,8 +73,30 @@ namespace FigmaSharpApp
 			if (firstWindow)
 				Window.Center();
 
+			if (UsesDarkMode)
+				DarkModeButton.State = NSCellStateValue.On;
+
 			firstWindow = false;
 		}
+
+
+		public bool UsesDarkMode = false;
+
+		public void ToggleDarkMode()
+		{
+			if (UsesDarkMode) {
+				Window.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAqua);
+				DarkModeButton.State = NSCellStateValue.Off;
+				UsesDarkMode = false;
+
+			} else {
+				Window.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+				DarkModeButton.State = NSCellStateValue.On;
+				UsesDarkMode = true;
+			}
+		}
+
+		partial void DarkModeClicked(NSObject sender) => ToggleDarkMode();
 
 
 		public void UpdatePagesPopupButton (FigmaDocument document)
@@ -139,11 +162,6 @@ namespace FigmaSharpApp
 			RefreshRequested?.Invoke (this, EventArgs.Empty);
 		}
 
-
-		partial void DarkModeClicked(NSObject sender)
-		{
-			(NSApplication.SharedApplication.Delegate as AppDelegate).ToggleDarkMode();
-		}
 
 		public void ToggleSpinnerState (bool toggle_on)
 		{

@@ -207,7 +207,7 @@ namespace FigmaSharpApp
 			});
 		}
 
-		public void ZoomIn()  { nativeScrollView.Magnification *= 2f; }
+		public void ZoomIn()  { nativeScrollView.Magnification *= 2; }
 		public void ZoomOut() { nativeScrollView.Magnification *= 0.5f; }
 		public void Zoom100() { nativeScrollView.Magnification = 1; }
 

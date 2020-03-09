@@ -36,36 +36,15 @@ namespace FigmaSharpApp
 		{
 		}
 
-
 		public override void DidFinishLaunching (NSNotification notification)
 		{
-			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
 		}
 
 
 		// View menu
-		public bool UsesDarkMode = false;
-
 		partial void ToggleDarkModeClicked(NSObject sender)
 		{
-			ToggleDarkMode();
-		}
-
-		public void ToggleDarkMode()
-		{
-			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
-
-			if (UsesDarkMode)
-			{
-				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAqua);
-				UsesDarkMode = false;
-
-			}
-			else
-			{
-				NSApplication.SharedApplication.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
-				UsesDarkMode = true;
-			}
+			(NSApplication.SharedApplication.MainWindow.WindowController as DocumentWindowController).ToggleDarkMode();
 		}
 
 		partial void RefreshClicked(NSObject sender)
