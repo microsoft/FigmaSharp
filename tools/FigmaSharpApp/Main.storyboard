@@ -452,8 +452,6 @@ Gw
                                         <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
-                                            <string key="keyEquivalent">r</string>
-                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="DarkModeClicked:" target="qmD-kN-bD5" id="rav-9O-bsZ"/>
@@ -522,6 +520,7 @@ Gw
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="DarkModeButton" destination="du5-wr-dXP" id="ZqO-BX-oqq"/>
                         <outlet property="MainToolbar" destination="z7L-HX-hhV" id="1Xy-J8-wDQ"/>
                         <outlet property="PagePopUpButton" destination="fWU-rn-Zi4" id="SI2-eg-muq"/>
                         <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="ZWE-0H-D3R"/>
