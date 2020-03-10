@@ -62,36 +62,33 @@ namespace FigmaSharp.NativeControls.Cocoa
             var label = new Label() { Text = figmaText.characters };
             var textField = label.NativeObject as FNSTextField;
 
-            if (componentType == NativeControlComponentType.LabelGroup)
-                textField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
-
-            if (componentType == NativeControlComponentType.LabelSecondary)
-                textField.TextColor = NSColor.SecondaryLabelColor;
-
-            if (componentType == NativeControlComponentType.LabelSecondary ||
-                componentType == NativeControlComponentType.LabelSmall ||
-                componentType == NativeControlComponentType.LinkSmall)
+            switch (componentType)
             {
-                textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
-            }
+                case NativeControlComponentType.LabelGroup:
+                    textField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
+                    break;
 
-            if (componentType == NativeControlComponentType.LinkStandard ||
-                componentType == NativeControlComponentType.LinkSmall)
-            {
-                var attributedString = new NSMutableAttributedString(textField.AttributedStringValue);
+                case NativeControlComponentType.LinkStandard:
+                    CreateLink(textField);
+                    break;
 
-                attributedString.AddAttribute(NSStringAttributeKey.UnderlineStyle,
-                                              NSNumber.FromNInt((int) NSUnderlineStyle.Single),
-                                              new NSRange(0, attributedString.Length));
+                case NativeControlComponentType.LabelSecondary:
+                    textField.TextColor = NSColor.SecondaryLabelColor;
+                    textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+                    break;
 
-                attributedString.AddAttribute(NSStringAttributeKey.ForegroundColor,
-                                              NSColor.LinkColor,
-                                              new NSRange(0, attributedString.Length));
+                case NativeControlComponentType.LabelSmall:
+                    textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+                    break;
 
-                textField.AttributedStringValue = attributedString;
+                case NativeControlComponentType.LinkSmall:
+                    CreateLink(textField);
+                    textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+                    break;
             }
 
             Console.WriteLine("Component: '{0}' with characters '{1}'…", componentType, figmaText.characters);
+
             return label;
         }
 
@@ -120,5 +117,20 @@ namespace FigmaSharp.NativeControls.Cocoa
             return builder;
         }
 
+
+        void CreateLink(NSTextField textField)
+        {
+            var attributedString = new NSMutableAttributedString(textField.AttributedStringValue);
+
+            attributedString.AddAttribute(NSStringAttributeKey.UnderlineStyle,
+                                          NSNumber.FromNInt((int)NSUnderlineStyle.Single),
+                                          new NSRange(0, attributedString.Length));
+
+            attributedString.AddAttribute(NSStringAttributeKey.ForegroundColor,
+                                          NSColor.LinkColor,
+                                          new NSRange(0, attributedString.Length));
+
+            textField.AttributedStringValue = attributedString;
+        }
     }
 }
