@@ -40,11 +40,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			CreateTitleBar(title);
 			CreateTrafficLights();
-			CreateTrafficLights();
 			CreateLiveButton();
 			CreateHighlight();
 		}
-
 
 		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
 
