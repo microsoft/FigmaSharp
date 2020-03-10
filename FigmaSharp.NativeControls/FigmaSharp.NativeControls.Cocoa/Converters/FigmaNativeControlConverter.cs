@@ -70,20 +70,20 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         string GetAccessibilityTitle (NativeControlType nativeControlType)
         {
-			switch (nativeControlType)
-			{
+            switch (nativeControlType)
+              {
                 case NativeControlType.Button:
                 case NativeControlType.CheckBox:
                 case NativeControlType.RadioButton:
                     return nameof(AppKit.NSView.AccessibilityTitle);
                 default:
-					break;
-			}
+                break;
+            }
             return nameof(AppKit.NSView.AccessibilityLabel);
         }
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
-		{
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        {
             var builder = OnConvertToCode (currentNode, parentNode, rendererService);
             if (builder != null)
             {
