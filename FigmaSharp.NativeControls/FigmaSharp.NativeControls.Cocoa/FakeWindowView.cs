@@ -71,7 +71,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			separator.BoxType = NSBoxType.NSBoxCustom;
 			separator.BorderWidth = 1;
-			separator.BorderColor = NSColor.ControlShadow;
 
 			AddSubview(titleBar);
 			AddSubview(titleField);
@@ -146,6 +145,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			Layer.BorderColor = NSColor.ControlDarkShadow.CGColor;
 
 
+			// Title bar
 			titleBar.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 22);
 
 			if (DarkMode)
@@ -167,8 +167,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 			minButton.Frame   = new CGRect(posX + width + spacing, Frame.Height - posY - height, width, height);
 			maxButton.Frame   = new CGRect(posX + width + spacing + width + spacing, Frame.Height - posY - height, width, height);
 
+
+			// Separator
 			separator.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 1);
 
+			if (DarkMode)
+				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.5f);
+			else
+				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.12f);
+
+
+			// Highlight
 			highlight.Frame = new CGRect(1, 1, Frame.Width - 2, Frame.Height - 2);
 			highlight.Hidden = !DarkMode;
 
