@@ -34,7 +34,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public FakeWindowView (string title)
 		{
 			WantsLayer = true;
-
 			Layer.BorderWidth = 0.5f;
 			Layer.CornerRadius = 7;
 
@@ -45,7 +44,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 
 		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
-
 
 		NSBox titleBar = new NSBox();
 		NSBox separator = new NSBox();

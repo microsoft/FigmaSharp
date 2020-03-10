@@ -27,16 +27,13 @@
  */
 
 using System;
-
+using System.Linq;
 using AppKit;
-
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views;
-using FigmaSharp.NativeControls;
-using System.Linq;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -104,7 +101,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
 		public bool IsActionButtonVisible { get; set; } = true;
-		
+
+		IFigmaFileProvider newWindowProvider;
+		public EmbededWindowConverter(IFigmaFileProvider newWindowProvider)
+		{
+			this.newWindowProvider = newWindowProvider;
+		}
+
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			if (currentNode.IsWindowContent ()) {
@@ -120,6 +123,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var frame = (FigmaFrameEntity)currentNode;
 
 			var nativeView = new FakeWindowView("Window");
+			nativeView.LiveButton.Hidden = !IsActionButtonVisible;
+
 			var view = new View(nativeView);
 
 			nativeView.Layer.CornerRadius = 5;
@@ -129,10 +134,18 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var window = new Window(view.Allocation);
 				newWindowProvider.Load(rendererService.FileProvider.File);
 				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
-				secondaryRender.RenderInWindow(window, currentNode);
-				(window.NativeObject as NSWindow).Appearance = (s as NSView).EffectiveAppearance;
-				window.Show ();
 
+				var options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
+				secondaryRender.RenderInWindow(window, currentNode, options);
+
+				var mainNodes = currentNode.GetChildren()
+					.ToArray();
+
+				ProcessedNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
+				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };
+				layoutManager.Run(processedNodes, window.Content, secondaryRender);
+
+				window.Show();
 				window.Center();
 			};
 
