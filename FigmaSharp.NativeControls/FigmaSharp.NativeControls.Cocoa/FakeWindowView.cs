@@ -40,7 +40,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			CreateTitleBar(title);
 			CreateTrafficLights();
-			CreateTrafficLights();
 			CreateLiveButton();
 			CreateHighlight();
 		}
@@ -139,6 +138,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override void UpdateLayer()
 		{
 			base.UpdateLayer();
+
 
 			// Window
 			Layer.BackgroundColor = NSColor.WindowBackground.CGColor;
