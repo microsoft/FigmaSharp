@@ -70,7 +70,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			   .FirstOrDefault (s => s.name == "lbl");
 
 			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				view.Add (new Foundation.NSString (label.characters));
+				view.StringValue = label.characters;
 			}
 
 			return new View (view);
