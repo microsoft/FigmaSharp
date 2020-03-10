@@ -59,11 +59,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			titleBar.BorderWidth = 0;
 			titleBar.BoxType = NSBoxType.NSBoxCustom;
-			titleBar.CornerRadius = 6;
 
 			titleField.StringValue = title;
 			titleField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 			titleField.Alignment = NSTextAlignment.Center;
+			titleField.TextColor = NSColor.Text;
 			titleField.DrawsBackground = false;
 			titleField.Editable = false;
 			titleField.Bezeled = false;
