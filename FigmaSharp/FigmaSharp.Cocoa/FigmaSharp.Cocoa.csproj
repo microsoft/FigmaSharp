@@ -64,6 +64,7 @@
     <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
     <Compile Include="FigmaViewPropertySetter.cs" />
+    <Compile Include="FigmaVersionMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
