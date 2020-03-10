@@ -306,9 +306,6 @@ namespace FigmaSharp.NativeControls
             nativeControlComponentType = NativeControlComponentType.NotDefined;
             if (node is FigmaComponentEntity) {
                 nativeControlComponentType = GetNativeControlComponentType (node.name);
-                if (nativeControlComponentType == NativeControlComponentType.NotDefined) {
-                    nativeControlComponentType = GetNativeControlComponentType (node.id);
-                }
                 return nativeControlComponentType != NativeControlComponentType.NotDefined;
             }
 
@@ -325,9 +322,6 @@ namespace FigmaSharp.NativeControls
             nativeControlType = NativeControlType.NotDefined;
 			if (node is FigmaComponentEntity) {
                 nativeControlType = GetNativeControlType (node.name);
-				if (nativeControlType == NativeControlType.NotDefined) {
-                    nativeControlType = GetNativeControlType (node.id);
-                }
                 return nativeControlType != NativeControlType.NotDefined;
             }
 
@@ -342,24 +336,18 @@ namespace FigmaSharp.NativeControls
         public static NativeControlComponentType ToNativeControlComponentType (this FigmaComponent figmaComponent)
         {
             var type = GetNativeControlComponentType (figmaComponent.name);
-            if (type == NativeControlComponentType.NotDefined) {
-                return GetNativeControlComponentType (figmaComponent.key);
-            }
             return type;
         }
 
         public static NativeControlType ToNativeControlType (this FigmaComponent figmaComponent)
         {
             var type = GetNativeControlType (figmaComponent.name);
-			if (type == NativeControlType.NotDefined) {
-                return GetNativeControlType (figmaComponent.key);
-            }
             return type;
         }
 
 		static NativeControlType GetNativeControlType (string name)
 		{
-            var found = data.FirstOrDefault (s => s.name == name || s.name == name);
+            var found = data.FirstOrDefault (s => s.name == name);
             if (found.Equals (default)) {
                 Console.WriteLine ("Component Key not found: {0}", name);
                 return NativeControlType.NotDefined;
