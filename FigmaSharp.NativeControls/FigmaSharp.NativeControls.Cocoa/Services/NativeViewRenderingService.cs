@@ -66,8 +66,13 @@ namespace FigmaSharp.Services
 
             var windowInstance = node.GetDialogInstanceFromParentContainer();
             if (windowInstance != null) {
-
-                windowInstance.TryGetNativeControlComponentType(out var controlType);
+                //windowInstance.TryGetNativeControlComponentType(out var controlType);
+                var title = windowInstance.children
+                    .OfType<FigmaText>()
+                    .FirstOrDefault();
+                if (title != null) {
+                    mainWindow.Title = title.characters;
+                }
             }
         }
 
