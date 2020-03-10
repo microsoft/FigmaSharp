@@ -58,9 +58,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = EmbededWindowConverter.GetSimulatedWindow();
+			var view = new View(new FakeWindowView("Window"));
 
-			var nativeView = view.NativeObject as ActionsView;
+			var nativeView = view.NativeObject as FakeWindowView;
 			nativeView.Configure(frame);
 
 			nativeView.LiveButton.Activated += (s, e) => {
@@ -94,29 +94,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 	}
 
 
+
+
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
-		public static NSColor GetWindowBackgroundColor (bool darkTheme)
-		{
-			return darkTheme ?
-				NSColor.FromRgba(red: 0.196f, green: 0.196f, blue: 0.196f, alpha: 1) :
-				NSColor.FromRgba(red: 0.961f, green: 0.961f, blue: 0.961f, alpha: 1);
-
-		}
-
-		public static IView GetSimulatedWindow ()
-		{
-			var view = new View (new ActionsView());
-			var nativeView = view.NativeObject as NSView;
-		
-			nativeView.Layer.BorderWidth = 1;
-			nativeView.Layer.BorderColor = NSColor.FromRgba(0, 0, 0, 97).CGColor;
-			nativeView.Layer.ShadowOpacity = 1.0f;
-			nativeView.Layer.ShadowRadius = 20;
-			nativeView.Layer.ShadowOffset = new CoreGraphics.CGSize (0, -10);
-			return view;
-		}
-
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			if (currentNode.IsWindowContent ()) {
@@ -130,8 +111,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = GetSimulatedWindow ();
-			var nativeView = view.NativeObject as ActionsView;
+			var view = new View(new FakeWindowView("Window"));
+
+			var nativeView = view.NativeObject as FakeWindowView;
 
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
@@ -142,6 +124,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				fileProvider.Load(rendererService.FileProvider.File);
 				var secondaryRender = new NativeViewRenderingService(fileProvider);
 				secondaryRender.RenderInWindow(window, currentNode);
+				(window.NativeObject as NSWindow).Appearance = (s as NSView).EffectiveAppearance;
 				window.Show ();
 				window.Center();
 			};
@@ -152,63 +135,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
-		}
-	}
-
-
-	class ActionsView : NSView
-	{
-		public NSButton LiveButton;
-
-		public ActionsView()
-		{
-			LiveButton = new NSButton()
-			{
-				Bordered = false,
-				Hidden = true,
-				Image = NSImage.ImageNamed("NSQuickLookTemplate"),
-				ToolTip = "Preview in a window",
-				TranslatesAutoresizingMaskIntoConstraints = false,
-			};
-
-			AddSubview(LiveButton);
-
-			const int buttonOffset = 6;
-
-			LiveButton.TopAnchor.ConstraintEqualToAnchor(TopAnchor, buttonOffset).Active = true;
-			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, buttonOffset * -1).Active = true;
-		}
-
-
-		NSTrackingArea trackingArea;
-
-		public override void UpdateTrackingAreas()
-		{
-			base.UpdateTrackingAreas();
-
-			if (trackingArea != null)
-			{
-				RemoveTrackingArea(trackingArea);
-				trackingArea.Dispose();
-			}
-
-			var options = NSTrackingAreaOptions.MouseMoved | NSTrackingAreaOptions.ActiveInKeyWindow | NSTrackingAreaOptions.MouseEnteredAndExited;
-
-			trackingArea = new NSTrackingArea(Bounds, options, this, null);
-			AddTrackingArea(trackingArea);
-		}
-
-
-		public override void MouseEntered(NSEvent theEvent)
-		{
-			base.MouseEntered(theEvent);
-			LiveButton.Hidden = false;
-		}
-
-		public override void MouseExited(NSEvent theEvent)
-		{
-			base.MouseExited(theEvent);
-			LiveButton.Hidden = true;
 		}
 	}
 }
