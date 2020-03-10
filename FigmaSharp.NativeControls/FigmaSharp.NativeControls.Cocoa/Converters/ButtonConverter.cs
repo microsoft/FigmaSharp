@@ -85,6 +85,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
+            view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+
             var group = figmaInstance.children
                 .OfType<FigmaGroup>()
                 .FirstOrDefault(s => s.visible);
