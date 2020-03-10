@@ -59,7 +59,6 @@ namespace LocalFile.Cocoa
 
 			var flatButton = new FixedFlatButton(text);
 			var button = TransitionHelper.CreateButtonFromFigmaNode(flatButton, currentNode);
-			button.IsDark = true;
 			return button;
 		}
 

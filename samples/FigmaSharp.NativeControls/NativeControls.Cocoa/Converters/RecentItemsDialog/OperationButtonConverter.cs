@@ -50,7 +50,7 @@ namespace LocalFile.Cocoa
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var spinner = new Spinner() { IsDark = true };
+			var spinner = new Spinner();
 			return spinner;
 		}
 

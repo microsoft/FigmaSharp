@@ -66,7 +66,6 @@ namespace LocalFile.Cocoa
 			var flatButton =  new FixedFlatButton(text, msLogoView.NativeObject as NSView);
 
 			IButton button = TransitionHelper.CreateButtonFromFigmaNode (flatButton, currentNode);
-			button.IsDark = true;
 			return button;
 		}
 
