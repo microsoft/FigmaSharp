@@ -62,8 +62,11 @@ namespace FigmaSharpApp
 		{
 			var windowDelegate = new WindowDelegate();
 
-			windowDelegate.WindowFocused += delegate {
-				windowController.UpdateVersionMenu(DocumentID);
+			windowDelegate.GotFocus += async (s, e) => {
+				await windowController.UpdateVersionMenu (DocumentID);
+			};
+			windowDelegate.LostFocus += (s, e) => {
+				windowController.ClearVersionMenu ();
 			};
 
 			View.Window.WeakDelegate = windowDelegate;
@@ -119,7 +122,6 @@ namespace FigmaSharpApp
 		{
 			Reload();
 		}
-
 
 		FigmaFileResponse response;
 		FigmaRemoteFileProvider fileProvider;
@@ -211,17 +213,20 @@ namespace FigmaSharpApp
 
 		#endregion
 
-
 		class WindowDelegate : NSWindowDelegate
 		{
-			public event EventHandler WindowFocused = delegate { };
+			public event EventHandler GotFocus;
+			public event EventHandler LostFocus;
 
 			public override void DidBecomeKey(NSNotification notification)
 			{
-				WindowFocused(this, new EventArgs());
+				GotFocus?.Invoke (this, EventArgs.Empty);
+			}
+			public override void DidResignKey(NSNotification notification)
+			{
+				LostFocus?.Invoke(this, EventArgs.Empty);
 			}
 		}
-
 
 		public override NSObject RepresentedObject {
 			get {

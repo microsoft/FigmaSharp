@@ -35,6 +35,7 @@ using Foundation;
 
 using FigmaSharp;
 using FigmaSharp.Models;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharpApp
 {
@@ -55,12 +56,20 @@ namespace FigmaSharpApp
 			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
 		}
 
-
 		static bool firstWindow = true;
+
+		NSMenuItem versionsMainMenu;
+		FigmaVersionMenu menuManager;
 
 		public override void WindowDidLoad ()
 		{
 			base.WindowDidLoad ();
+
+			menuManager = new FigmaVersionMenu ();
+			menuManager.VersionSelected += (s, e) => {
+				VersionSelected?.Invoke (this, e);
+			};
+			versionsMainMenu = NSApplication.SharedApplication.MainMenu.ItemWithTitle("Versions");
 
 			CGRect frame = Window.Frame;
 			ShouldCascadeWindows = true;
@@ -78,7 +87,6 @@ namespace FigmaSharpApp
 
 			firstWindow = false;
 		}
-
 
 		public bool UsesDarkMode = false;
 
@@ -98,7 +106,6 @@ namespace FigmaSharpApp
 
 		partial void DarkModeClicked(NSObject sender) => ToggleDarkMode();
 
-
 		public void UpdatePagesPopupButton (FigmaDocument document)
 		{
 			PagePopUpButton.RemoveAllItems();
@@ -114,55 +121,61 @@ namespace FigmaSharpApp
 			PagePopUpButton.SelectItem((ContentViewController as DocumentViewController).PageIndex);
 		}
 
-
 		public void EnableButtons (bool enable)
 		{
 			RefreshButton.Enabled = enable;
 			PagePopUpButton.Enabled = enable;
 		}
 
-
-		VersionMenu VersionMenu;
-
-		public async void UpdateVersionMenu (string link_id)
+		bool UseAsVersionsMenu ()
 		{
-			if (VersionMenu != null) {
-				VersionMenu.UseAsVersionsMenu();
+			if (versionsMainMenu == null)
+				return false;
+			menuManager.Generate(versionsMainMenu.Submenu);
+			return true;
+		}
+
+		internal void ClearVersionMenu()
+		{
+			menuManager.Clear (versionsMainMenu.Submenu);
+		}
+
+		public async Task UpdateVersionMenu (string link_id)
+		{
+			if (!UseAsVersionsMenu()) {
 				return;
 			}
 
-			VersionMenu = new VersionMenu();
-			VersionMenu.VersionSelected += (s,e) => {
-				VersionSelected?.Invoke (this, e);
+			versionsMainMenu.Activated += (s,e) => {
+				FigmaFileVersion version = menuManager.GetFileVersion(versionsMainMenu);
+				if (version != null)
+					VersionSelected?.Invoke (this, version);
 			};
 
-			_ = Task.Run(() =>
+			var versions = await Task.Run(() =>
 			{
 				var query = new FigmaFileVersionQuery(link_id);
 
 				FigmaSharp.AppContext.Current.SetAccessToken(TokenStore.SharedTokenStore.GetToken());
 
-				FigmaFileVersion[] versions = FigmaSharp.AppContext.Api.GetFileVersions(query).versions;
-				versions = versions.GroupBy(x => x.created_at)
+				return FigmaSharp.AppContext.Api.GetFileVersions(query)
+					.versions.GroupBy(x => x.created_at)
 					.Select(group => group.First())
-					.ToArray();
-
-				InvokeOnMainThread(() => {
-					foreach (var version in versions)
-						VersionMenu.AddItem (version);
-
-					VersionMenu.UseAsVersionsMenu();
-				});
+					.ToArray ();
 			});
-		}
 
+			menuManager.Clear();
+
+			foreach (var version in versions)
+				menuManager.AddItem(version);
+
+			UseAsVersionsMenu();
+		}
 
 		partial void RefreshClicked (NSObject sender)
 		{
 			RefreshRequested?.Invoke (this, EventArgs.Empty);
 		}
-
-
 
 		public void ToggleSpinnerState (bool toggle_on)
 		{
@@ -171,7 +184,6 @@ namespace FigmaSharpApp
 			else
 				ToolbarSpinner.StopAnimation(this);
 		}
-
 
 		public void ShowError (string linkId)
 		{
@@ -186,7 +198,6 @@ namespace FigmaSharpApp
 
 			Window.PerformClose (this);
 		}
-
 
 		public override void KeyDown(NSEvent theEvent)
 		{

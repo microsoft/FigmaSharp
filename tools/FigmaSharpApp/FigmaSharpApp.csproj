@@ -81,7 +81,6 @@
     <Compile Include="Views\DocumentViewController.designer.cs">
       <DependentUpon>DocumentViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\VersionMenu.cs" />
     <Compile Include="Views\DocumentWindowController.cs" />
     <Compile Include="Views\DocumentWindowController.designer.cs">
       <DependentUpon>DocumentWindowController.cs</DependentUpon>
