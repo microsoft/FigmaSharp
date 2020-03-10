@@ -111,9 +111,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = new View(new FakeWindowView("Window"));
 
-			var nativeView = view.NativeObject as FakeWindowView;
+			var nativeView = new FakeWindowView("Window");
+			var view = new View(nativeView);
 
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
