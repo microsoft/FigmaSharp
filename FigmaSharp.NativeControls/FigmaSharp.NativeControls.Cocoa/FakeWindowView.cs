@@ -155,18 +155,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (DarkMode)
 				titleBar.FillColor = NSColor.White.ColorWithAlphaComponent(0.1f);
 			else
-				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.06f);
+				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.07f);
 
 			titleField.Frame = new CGRect(0, Frame.Height - 25, Frame.Width, 22);
 			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.8f);
 
 
 			// Traffic light positions
-			int posX = 9;
-			int posY = 5;
+			int posX = 9, posY = 5;
+			int width = 12, height = width;
 			int spacing = 8;
-			int width = 12;
-			int height = width;
 
 			closeButton.Frame = new CGRect(posX, Frame.Height - posY - height, width, height);
 			minButton.Frame   = new CGRect(posX + width + spacing, Frame.Height - posY - height, width, height);
