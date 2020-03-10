@@ -43,8 +43,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			CreateTrafficLights();
 			CreateLiveButton();
 			CreateHighlight();
-
-			UpdateLayer();
 		}
 
 
@@ -140,6 +138,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override void UpdateLayer()
 		{
+			base.UpdateLayer();
+
 			// Window
 			Layer.BackgroundColor = NSColor.WindowBackground.CGColor;
 
@@ -150,42 +150,49 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 
 			// Title bar
-			titleBar.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 22);
-
 			if (DarkMode)
 				titleBar.FillColor = NSColor.White.ColorWithAlphaComponent(0.1f);
 			else
 				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.07f);
 
-			titleField.Frame = new CGRect(0, Frame.Height - 25, Frame.Width, 22);
 			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.8f);
 
 
-			// Traffic light positions
+			// Separator
+			if (DarkMode)
+				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.5f);
+			else
+				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.12f);
+		}
+
+
+		public override void SetFrameSize(CGSize newSize)
+		{
+			base.SetFrameSize(newSize);
+
+
+			// Title bar
+			titleBar.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 22);
+			titleField.Frame = new CGRect(0, Frame.Height - 25, Frame.Width, 22);
+
+
+			// Traffic lights
 			int posX = 9, posY = 5;
 			int width = 12, height = width;
 			int spacing = 8;
 
 			closeButton.Frame = new CGRect(posX, Frame.Height - posY - height, width, height);
-			minButton.Frame   = new CGRect(posX + width + spacing, Frame.Height - posY - height, width, height);
-			maxButton.Frame   = new CGRect(posX + width + spacing + width + spacing, Frame.Height - posY - height, width, height);
+			minButton.Frame = new CGRect(posX + width + spacing, Frame.Height - posY - height, width, height);
+			maxButton.Frame = new CGRect(posX + width + spacing + width + spacing, Frame.Height - posY - height, width, height);
 
 
 			// Separator
 			separator.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 1);
 
-			if (DarkMode)
-				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.5f);
-			else
-				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.12f);
-
 
 			// Highlight
 			highlight.Frame = new CGRect(1, 1, Frame.Width - 2, Frame.Height - 2);
 			highlight.Hidden = !DarkMode;
-
-
-			base.UpdateLayer();
 		}
 
 
