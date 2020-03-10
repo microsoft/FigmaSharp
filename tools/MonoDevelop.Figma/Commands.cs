@@ -208,6 +208,49 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
+	class FigmaUpdateViewCommandHandler : FigmaCommandHandler
+	{
+		protected override void OnUpdate(CommandInfo info)
+		{
+			
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
+				currentFolder.IsDocumentDirectoryBundle()
+				)
+			{
+				var manifestFilePath = Path.Combine(currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
+				if (File.Exists(manifestFilePath)) {
+					info.Visible = info.Enabled = true;
+					return;
+				}
+			};
+		
+			info.Visible = info.Enabled = false;
+		}
+
+		protected override void OnRun()
+		{
+			var currentFolder = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFolder;
+			if (currentFolder == null)
+				return;
+
+			var bundle = FigmaBundle.FromDirectoryPath(currentFolder.Path.FullPath);
+			var figmaBundleWindow = new FigmaBundles.BundleUpdateWindow();
+			figmaBundleWindow.Load(bundle);
+			//figmaBundleWindow.BundleCreated += async (s, e) => {
+			//	var window = (FigmaBundles.bundleFigmaDocument)s;
+
+			//	var includeImages = true;
+			//	await GenerateBundle(window.FileId, window.SelectedFileVersion, includeImages);
+			//	window.Close();
+			//};
+
+			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
+			currentIdeWindow.AddChildWindow(figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
+			MessageService.PlaceDialog(figmaBundleWindow, MessageService.RootWindow);
+			IdeServices.DesktopService.FocusWindow(figmaBundleWindow);
+		}
+	}
+
 	class FigmaNewBundlerCommandHandler : FigmaCommandHandler
 	{
 		protected override void OnUpdate (CommandInfo info)
@@ -379,12 +422,12 @@ namespace MonoDevelop.Figma.Commands
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 				if (currentFolder.IsDocumentDirectoryBundle ()) {
 					var manifestFullFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
-					info.Text = string.Format ("{0} {1}", currentFolder.Project.PathExistsInProject (manifestFullFilePath) ? "Regenerate" : "Generate",  FigmaBundle.DocumentFileName);
+					info.Text = "Reset Bundle";
 					info.Visible = info.Enabled = true;
 					return;
 				}
 			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFile currentFile && currentFile.IsFigmaManifest ()) {
-				info.Text = string.Format ("Regenerate {0}", FigmaBundle.DocumentFileName);
+				info.Text = "Reset";
 				info.Visible = info.Enabled = true;
 				return;
 			}

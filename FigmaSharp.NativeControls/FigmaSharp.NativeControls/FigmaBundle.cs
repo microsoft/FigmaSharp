@@ -191,7 +191,7 @@ namespace FigmaSharp
 			}
 		}
 
-		public static IEnumerable<FigmaSharp.Models.FigmaNode> OfTypeImage (FigmaNode child)
+		public static IEnumerable<FigmaNode> OfTypeImage (FigmaNode child)
 		{
 			if (child.name.Contains ("!image") || child is FigmaVector) {
 				yield return child;
@@ -229,10 +229,7 @@ namespace FigmaSharp
 		//reads all the main layers from the remote document
 		public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
 		{
-			var mainNodes = figmaFileProvider.Nodes
-				.Where (s => s.Parent is FigmaCanvas && !s.name.StartsWith ("#") && !s.name.StartsWith ("//") && s.GetType () == typeof (FigmaFrameEntity))
-				.ToArray ();
-
+			var mainNodes = figmaFileProvider.GetMainLayers();
 			foreach (var item in mainNodes) {
 				GenerateFigmaFile (item);
 			}
