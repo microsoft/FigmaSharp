@@ -221,9 +221,6 @@ namespace FigmaSharp
 
 		public Point Center => new Point (Width / 2f, Height / 2f);
 
-		public Rectangle Copy()
-		{
-			return new Rectangle(X, Y, Width, Height);
-		}
+		public Rectangle Copy() => new Rectangle(X, Y, Width, Height);
 	}
 }
