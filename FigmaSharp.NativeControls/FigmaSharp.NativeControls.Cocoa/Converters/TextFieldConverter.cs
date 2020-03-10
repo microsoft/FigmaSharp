@@ -66,12 +66,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				case NativeControlComponentType.FilterSmallDark:
 					view.ControlSize = NSControlSize.Small;
 					break;
-				case NativeControlComponentType.FilterStandard:
-				case NativeControlComponentType.FilterStandardDark:
-				case NativeControlComponentType.TextFieldStandard:
-				case NativeControlComponentType.TextFieldStandardDark:
-					view.ControlSize = NSControlSize.Regular;
-					break;
 			}
 	
 			var texts = figmaInstance.children
@@ -80,7 +74,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var text = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
 			if (text != null) {
 				textBox.Text = text.characters;
-				view.Configure (text);
+				//view.Configure (text);
 			}
 
 			var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
