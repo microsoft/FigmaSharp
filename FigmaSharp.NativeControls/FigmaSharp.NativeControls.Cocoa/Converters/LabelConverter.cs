@@ -88,8 +88,9 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            Console.WriteLine("Component: '{0}' with characters '{1}'…", componentType, figmaText.characters);
+            textField.Configure(figmaText, configureColor: false);
 
+            Console.WriteLine("Component: '{0}' with characters '{1}'…", componentType, figmaText.characters);
             return label;
         }
 
