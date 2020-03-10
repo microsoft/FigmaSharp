@@ -63,7 +63,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			titleField.StringValue = title;
 			titleField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 			titleField.Alignment = NSTextAlignment.Center;
-			titleField.TextColor = NSColor.Text;
 			titleField.DrawsBackground = false;
 			titleField.Editable = false;
 			titleField.Bezeled = false;
@@ -141,8 +140,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override void UpdateLayer()
 		{
+			// Window
 			Layer.BackgroundColor = NSColor.WindowBackground.CGColor;
-			Layer.BorderColor = NSColor.ControlDarkShadow.CGColor;
+
+			if (DarkMode)
+				Layer.BorderColor = NSColor.ControlDarkShadow.CGColor;
+			else
+				Layer.BorderColor = NSColor.WindowFrame.CGColor;
 
 
 			// Title bar
@@ -154,6 +158,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.06f);
 
 			titleField.Frame = new CGRect(0, Frame.Height - 25, Frame.Width, 22);
+			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.8f);
 
 
 			// Traffic light positions
