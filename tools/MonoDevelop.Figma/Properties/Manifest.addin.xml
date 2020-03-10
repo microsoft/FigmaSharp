@@ -23,49 +23,48 @@
     </Extension>
     
      <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad">
-        <SeparatorItem
-                id="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+       <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator2" insertbefore="AddSectionEnd" />
+       <CommandItem 
+            id = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
+            _label="_Update Bundle"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator2"
         />
+        <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator" insertbefore="AddSectionEnd" />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
             _label="Show Remote File"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
-            insertbefore="AddSectionEnd"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"
             _label="Show Local File"
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
-            insertbefore="AddSectionEnd"
+            insertafter="MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
-            insertbefore="AddSectionEnd"
-        />        
+        />
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">
         <SeparatorItem
-                id="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
+                id="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
+             insertbefore="AddSectionEnd"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
             _label="_Figma Bundle..."
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
-            insertbefore="AddSectionEnd"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
             _label="_Figma View..."
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
-            insertbefore="AddSectionEnd"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
             _label="Empty Figma Manifest..."
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator"
-            insertbefore="AddSectionEnd"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
     </Extension>
     
@@ -88,6 +87,10 @@
                 _label = "Show Remote File"
                 defaultHandler = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
                 _description = "Opens a web browser with the current remote Figma file"/>
+            <Command id = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
+                _label = "Update Figma View"
+                defaultHandler = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
+                _description = "Updates to the selected version the current the View"/>
             <Command id = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"
                 _label = "Show Local File"
                 defaultHandler = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"

@@ -90,5 +90,6 @@
       </ItemGroup>
       <ItemGroup>
         <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\bundleFigmaDocument.designer.cs" />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\BundleUpdateWindow.designer.cs" />
       </ItemGroup>
 </Project>

@@ -51,6 +51,8 @@ namespace FigmaSharp.Services
 		string GetContentTemplate (string file);
 		void OnStartImageLinkProcessing (List<ProcessedNode> imageVectors);
 
+		FigmaNode[] GetMainLayers ();
+
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
@@ -306,6 +308,13 @@ namespace FigmaSharp.Services
 				Console.WriteLine ($"Error reading remote resources. Ensure you added NewtonSoft nuget or cannot parse the to json?");
 				Console.WriteLine (ex);
 			}
+		}
+
+		public FigmaNode[] GetMainLayers()
+		{
+			return Nodes
+				.Where(s => s.Parent is FigmaCanvas && !s.name.StartsWith("#") && !s.name.StartsWith("//") && s.GetType() == typeof(FigmaFrameEntity))
+				.ToArray();
 		}
 
 		public FigmaNode FindByFullPath (string fullPath)
