@@ -144,11 +144,8 @@ namespace FigmaSharp.NativeControls
         static IReadOnlyList<(string name, NativeControlComponentType nativeControlComponentType, NativeControlType nativeControlType)> data = new List<(string name, NativeControlComponentType nativeControlComponentType, NativeControlType nativeControlType)>
         {
             ( "Button/Standard", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
-            ( "Button/Standard HC", NativeControlComponentType.ButtonStandard,  NativeControlType.Button),
             ( "Button/Large", NativeControlComponentType.ButtonLarge,  NativeControlType.Button ),
-            ( "Button/Large HC", NativeControlComponentType.ButtonLarge,  NativeControlType.Button ),
             ( "Button/Small", NativeControlComponentType.ButtonSmall,  NativeControlType.Button ),
-            ( "Button/Small HC", NativeControlComponentType.ButtonSmall,  NativeControlType.Button ),
 
             ( "Button/Large Dark", NativeControlComponentType.ButtonLargeDark,  NativeControlType.Button),
             ( "Button/Standard Dark", NativeControlComponentType.ButtonStandardDark,  NativeControlType.Button),
@@ -156,17 +153,16 @@ namespace FigmaSharp.NativeControls
 
             ( "Button/Help", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
             ( "Button/Help Dark", NativeControlComponentType.ButtonHelpDark,  NativeControlType.Button),
-            ( "Button/Help HC", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
 
-            ( "Text Field/Standard", NativeControlComponentType.TextFieldStandard, NativeControlType.TextField),
-            ( "Text Field/Small", NativeControlComponentType.TextFieldSmall, NativeControlType.TextField),
-            ( "Text Field/Standard Dark", NativeControlComponentType.TextFieldStandardDark, NativeControlType.TextField),
-            ( "Text Field/Small Dark", NativeControlComponentType.TextFieldSmallDark, NativeControlType.TextField),
+            ( "TextField/Standard", NativeControlComponentType.TextFieldStandard, NativeControlType.TextField),
+            ( "TextField/Small", NativeControlComponentType.TextFieldSmall, NativeControlType.TextField),
+            ( "TextField/Standard Dark", NativeControlComponentType.TextFieldStandardDark, NativeControlType.TextField),
+            ( "TextField/Small Dark", NativeControlComponentType.TextFieldSmallDark, NativeControlType.TextField),
 
-            ( "Multiline Text Field/Standard", NativeControlComponentType.MultilineTextFieldStandard, NativeControlType.TextField),
-            ( "Multiline Text Field/Small", NativeControlComponentType.MultilineTextFieldSmall, NativeControlType.TextField),
-            ( "Multiline Text Field/Standard Dark", NativeControlComponentType.MultilineTextFieldStandardDark, NativeControlType.TextField),
-            ( "Multiline Text Field/Small Dark", NativeControlComponentType.MultilineTextFieldSmallDark, NativeControlType.TextField),
+            ( "TextView/Standard", NativeControlComponentType.MultilineTextFieldStandard, NativeControlType.TextField),
+            ( "TextView/Small", NativeControlComponentType.MultilineTextFieldSmall, NativeControlType.TextField),
+            ( "TextView/Standard Dark", NativeControlComponentType.MultilineTextFieldStandardDark, NativeControlType.TextField),
+            ( "TextView/Small Dark", NativeControlComponentType.MultilineTextFieldSmallDark, NativeControlType.TextField),
 
             ( "Search/Small Dark", NativeControlComponentType.FilterSmallDark, NativeControlType.Filter),
             ( "Search/Standard Dark", NativeControlComponentType.FilterStandardDark, NativeControlType.Filter),
@@ -177,39 +173,29 @@ namespace FigmaSharp.NativeControls
             ( "Radio/Standard Dark", NativeControlComponentType.RadioStandardDark, NativeControlType.RadioButton),
             ( "Radio/Small", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
             ( "Radio/Standard", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
-			( "Radio/Small HC", NativeControlComponentType.RadioSmall, NativeControlType.RadioButton),
-            ( "Radio/Standard HC", NativeControlComponentType.RadioStandard, NativeControlType.RadioButton), //Radio/Label/Standard
 
             ( "Checkbox/Standard", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
-            ( "Checkbox/Standard HC", NativeControlComponentType.CheckboxStandard, NativeControlType.CheckBox),
             ( "Checkbox/Standard Dark", NativeControlComponentType.CheckboxStandardDark, NativeControlType.CheckBox),
             ( "Checkbox/Small", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
-			( "Checkbox/Small HC", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
             ( "Checkbox/Small Dark", NativeControlComponentType.CheckboxSmallDark, NativeControlType.CheckBox),
           
 			//Pop Up Button
-            ( "Pop Up Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
-            ( "Pop Up Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
-            ( "Pop Up Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
-            ( "Pop Up Button/Small Dark", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
-
-			//Standard HC
-            ( "Pop Up Button/Standard HC", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
-            ( "Pull Down Button/Standard HC", NativeControlComponentType.PopUpButtonStandard , NativeControlType.PopupButton),
-            ( "Pop Up Button/Small HC", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
-            ( "Pull Down Button/Small HC", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
+            ( "PopUp Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            ( "PopUp Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
+            ( "PopUp Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
+            ( "PopUp Button/Small Dark", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
 
 			//Pull Down Button
-			( "Pull Down Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
-            ( "Pull Down Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
-            ( "Pull Down Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
-            ( "Pull Down Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
+			( "PullDown Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            ( "PullDown Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
+            ( "PullDown Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
+            ( "PullDown Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
 
 			//General
-            ( "Combo Box/Standard", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
-            ( "Combo Box/Small", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
-            ( "Combo Box/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
-            ( "Combo Box/Small Dark", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
+            ( "ComboBox/Standard", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
+            ( "ComboBox/Small", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
+            ( "ComboBox/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
+            ( "ComboBox/Small Dark", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
 
             ( "Progress Spinner/Small", NativeControlComponentType.ProgressSpinnerSmall, NativeControlType.ProgressSpinner),
             ( "Progress Spinner/Small Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
@@ -233,10 +219,6 @@ namespace FigmaSharp.NativeControls
             ( "Label/Small Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
             ( "Label/Secondary", NativeControlComponentType.LabelSecondary, NativeControlType.Label),
             ( "Label/Secondary Dark", NativeControlComponentType.LabelSecondaryDark, NativeControlType.Label),
-
-            ( "Label/Standard HC Dark", NativeControlComponentType.LabelStandard, NativeControlType.Label),
-            ( "Label/Secondary HC Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
-            ( "Label/Small HC Dark", NativeControlComponentType.LabelSmallDark, NativeControlType.Label),
 
             ( "Label/Group", NativeControlComponentType.LabelGroup, NativeControlType.Label),
 
