@@ -163,18 +163,15 @@ namespace FigmaSharpApp
 		}
 
 
+
 		public void ToggleSpinnerState (bool toggle_on)
 		{
-			if (MainToolbar.VisibleItems[2].Identifier == "Spinner") {
-				(MainToolbar.VisibleItems[2].View as NSProgressIndicator).StopAnimation (this);
-				MainToolbar.RemoveItem (2);
-			}
-
-			if (toggle_on) {
-				MainToolbar.InsertItem ("Spinner", 2);
-				(MainToolbar.VisibleItems[2].View as NSProgressIndicator).StartAnimation (this);
-			}
+			if (toggle_on)
+				ToolbarSpinner.StartAnimation(this);
+			else
+				ToolbarSpinner.StopAnimation(this);
 		}
+
 
 		public void ShowError (string linkId)
 		{

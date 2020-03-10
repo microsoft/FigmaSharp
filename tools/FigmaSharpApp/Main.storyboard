@@ -505,7 +505,7 @@ Gw
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="F5DFBB6B-E4C4-4998-B7FE-6DFD7D82076A" explicitItemIdentifier="Spinner" label="Spinner" paletteLabel="Spinner" tag="-1" sizingBehavior="auto" id="zk5-q5-OOS">
                                     <nil key="toolTip"/>
-                                    <progressIndicator key="view" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="Ohc-c8-to8">
+                                    <progressIndicator key="view" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="Ohc-c8-to8">
                                         <rect key="frame" x="16" y="14" width="16" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </progressIndicator>
@@ -514,6 +514,7 @@ Gw
                             <defaultToolbarItems>
                                 <toolbarItem reference="NHv-Gm-Lms"/>
                                 <toolbarItem reference="ipb-hp-J6A"/>
+                                <toolbarItem reference="zk5-q5-OOS"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
                                 <toolbarItem reference="nwy-jM-blc"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
@@ -532,6 +533,7 @@ Gw
                         <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="ZWE-0H-D3R"/>
                         <outlet property="Spinner" destination="zk5-q5-OOS" id="wIB-x2-4u2"/>
                         <outlet property="TitleTextField" destination="zI9-VO-MN3" id="zIy-c7-78l"/>
+                        <outlet property="ToolbarSpinner" destination="Ohc-c8-to8" id="ppc-DV-tk1"/>
                         <segue destination="kAC-hG-JBc" kind="relationship" relationship="window.shadowedContentViewController" id="rg3-ZZ-CIr"/>
                     </connections>
                 </windowController>
