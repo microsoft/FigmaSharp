@@ -6,14 +6,8 @@ namespace FigmaSharp.Services
 {
     public class StoryboardLayoutManager
     {
-        public StoryboardLayoutManager()
-        {
-           
-        }
-
-		public bool UsesConstraints { get; set; }
-
-		public int HorizontalMargins { get; set; } = 64;
+        public bool UsesConstraints { get; set; }
+        public int HorizontalMargins { get; set; } = 64;
         public int VerticalMargins { get; set; } = 64;
 
         public void Run(IView contentView, FigmaViewRendererService rendererService)

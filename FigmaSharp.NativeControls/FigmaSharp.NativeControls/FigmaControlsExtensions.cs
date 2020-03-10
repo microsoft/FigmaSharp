@@ -276,13 +276,10 @@ namespace FigmaSharp.NativeControls
             var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
             var contentNode = figmaNode.GetWindowContent() ?? figmaNode;
 
-            if (contentNode is IFigmaNodeContainer container)
-			{
-				foreach (var item in container.children)
-				{
+            if (contentNode is IFigmaNodeContainer container) {
+                foreach (var item in container.children) {
                     if (item == figmaInstance)
                         continue;
-
                     yield return item;
                 }
             }

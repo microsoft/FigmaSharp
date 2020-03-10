@@ -183,24 +183,18 @@ namespace FigmaSharp.Services
                     canvas.absoluteBoundingBox = canvas.GetCurrentBounds ();
                 } 
 
-                if (figmaNode is FigmaCanvas || !options.GenerateMainView)
-				{
-                    if (figmaNode is IFigmaNodeContainer container)
-					{
+                if (figmaNode is FigmaCanvas || !options.GenerateMainView) {
+                    if (figmaNode is IFigmaNodeContainer container) {
                         foreach (var item in container.children)
                             GenerateViewsRecursively(item, processedParentView, options);
                     }
-                } else
-				{
+                } else {
                     GenerateViewsRecursively(figmaNode, processedParentView, options);
                 }
 
-
                 //Images
-                if (options.AreImageProcessed)
-                {
-                    foreach (var processedNode in NodesProcessed)
-                    {
+                if (options.AreImageProcessed) {
+                    foreach (var processedNode in NodesProcessed) {
                         if (ProcessesImageFromNode (processedNode.FigmaNode)) {
                             ImageVectors.Add (processedNode);
                         }
