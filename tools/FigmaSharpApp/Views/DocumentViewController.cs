@@ -157,8 +157,8 @@ namespace FigmaSharpApp
 						};
 
 						rendererService = new NativeViewRenderingService(fileProvider);
-						rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
-						rendererService.CustomConverters.Add(new EmbededWindowConverter());
+						rendererService.CustomConverters.Add(new EmbededSheetDialogConverter (fileProvider));
+						rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
 					}
 
 					scrollview.ClearSubviews();
