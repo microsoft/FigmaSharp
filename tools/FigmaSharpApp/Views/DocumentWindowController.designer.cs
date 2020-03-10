@@ -30,6 +30,9 @@ namespace FigmaSharpApp
 		[Outlet]
 		AppKit.NSTextField TitleTextField { get; set; }
 
+		[Outlet]
+		AppKit.NSProgressIndicator ToolbarSpinner { get; set; }
+
 		[Action ("DarkModeClicked:")]
 		partial void DarkModeClicked (Foundation.NSObject sender);
 
@@ -59,6 +62,11 @@ namespace FigmaSharpApp
 			if (RefreshButton != null) {
 				RefreshButton.Dispose ();
 				RefreshButton = null;
+			}
+
+			if (ToolbarSpinner != null) {
+				ToolbarSpinner.Dispose ();
+				ToolbarSpinner = null;
 			}
 
 			if (Spinner != null) {
