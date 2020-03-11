@@ -44,8 +44,19 @@ namespace FigmaSharpApp
 		// View menu
 		partial void ToggleDarkModeClicked(NSObject sender)
 		{
-			(NSApplication.SharedApplication.MainWindow.WindowController as DocumentWindowController).ToggleDarkMode();
+			NSWindow window = NSApplication.SharedApplication.MainWindow;
+
+			if (window.WindowController is DocumentWindowController) {
+				(window.WindowController as DocumentWindowController).ToggleDarkMode();
+
+			} else {
+				if (window.EffectiveAppearance.Name == NSAppearance.NameDarkAqua)
+					window.Appearance = NSAppearance.GetAppearance(NSAppearance.NameAqua);
+				else
+					window.Appearance = NSAppearance.GetAppearance(NSAppearance.NameDarkAqua);
+			}
 		}
+
 
 		partial void RefreshClicked(NSObject sender)
 		{
