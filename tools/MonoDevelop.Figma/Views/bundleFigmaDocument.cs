@@ -7,6 +7,10 @@ using FigmaSharp.Models;
 using System.Threading.Tasks;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
+using MonoDevelop.Ide;
+using MonoDevelop.Projects;
+using FigmaSharp.Services;
+using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
@@ -14,9 +18,13 @@ namespace MonoDevelop.Figma.FigmaBundles
 	{
 		public string FileId => figmaUrlTextField.StringValue;
 
-		public bundleFigmaDocument ()
+		Project currentProject;
+
+		public bundleFigmaDocument (Project currentProject)
 		{
 			InitializeComponent ();
+
+			this.currentProject = currentProject;
 
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 
@@ -46,27 +54,67 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		public FigmaFileVersion SelectedFileVersion { get; private set; }
 
-		void RefreshStates ()
+		void RefreshStates (bool enable = true)
 		{
+			figmaUrlTextField.Enabled = enable;
+
 			templateCodeOptionBox.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			versionComboBox.Enabled = versions.Length > 0;
+			versionComboBox.Enabled = enable && versions.Length > 0;
 
-			RefreshBundleButtonState ();
+			RefreshBundleButtonState (enable);
 		}
 
-		void RefreshBundleButtonState ()
+		void RefreshBundleButtonState (bool enable = true)
 		{
-			bundleButton.Enabled =
+			bundleButton.Enabled = enable &&
 				versionComboBox.Enabled && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
 		}
 
-		public event EventHandler BundleCreated;
-
-		private void BundleButton_Activated (object sender, EventArgs e)
+		private async void BundleButton_Activated (object sender, EventArgs e)
 		{
-			BundleCreated?.Invoke (this, e);
+			var includeImages = true;
+			ShowLoading(true);
+			RefreshStates(false);
+
+			string namesSpace;
+			//set namespace
+			if (currentProject is DotNetProject dotNetProject) {
+				namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaBundles";
+			} else {
+				namesSpace = $"{GetType().Namespace}.FigmaBundles";
+			}
+
+			await GenerateBundle(FileId, SelectedFileVersion, namesSpace, includeImages);
+
+			RefreshStates(true);
+			ShowLoading(false);
+
+			PerformClose(this);
+		}
+
+		async Task GenerateBundle(string fileId, FigmaSharp.Models.FigmaFileVersion version, string namesSpace, bool includeImages)
+		{
+			var currentBundle = await Task.Run(() =>
+			{
+				//we need to ask to figma server to get nodes as demmand
+				var fileProvider = new FigmaRemoteFileProvider();
+				fileProvider.Load(fileId);
+
+				//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
+				var bundle = currentProject.CreateBundle(fileId, version, fileProvider, namesSpace);
+
+				//to generate all layers we need a code renderer
+				var codeRendererService = new NativeViewCodeService(fileProvider);
+				bundle.SaveAll(codeRendererService, includeImages);
+
+				return bundle;
+			});
+
+			//now we need to add to Monodevelop all the stuff
+			await currentProject.IncludeBundle(currentBundle, includeImages)
+				.ConfigureAwait(true);
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)
@@ -79,10 +127,22 @@ namespace MonoDevelop.Figma.FigmaBundles
 			RefreshStates ();
 		}
 
+		void ShowLoading (bool value)
+		{
+			if (value)
+			{
+				loadingProgressIndicator.Hidden = false;
+				loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
+			} else
+			{
+				loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
+				loadingProgressIndicator.Hidden = true;
+			}
+		}
+
 		private async void FigmaUrlTextField_Changed (object sender, EventArgs e)
 		{
-			loadingProgressIndicator.Hidden = false;
-			loadingProgressIndicator.StartAnimation (loadingProgressIndicator);
+			ShowLoading(true);
 
 			SelectedFileVersion = null;
 
@@ -108,12 +168,10 @@ namespace MonoDevelop.Figma.FigmaBundles
 					Console.WriteLine (ex);
 					return null;
 				}
-
 			});
 
-			loadingProgressIndicator.StopAnimation (loadingProgressIndicator);
-			loadingProgressIndicator.Hidden = true;
-
+			ShowLoading(false);
+		
 			versionMenu.Clear ();
 
 			if (versions != null) {

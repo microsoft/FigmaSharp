@@ -258,59 +258,27 @@ namespace MonoDevelop.Figma.Commands
 
 		protected override void OnRun ()
 		{
-			var figmaBundleWindow = new FigmaBundles.bundleFigmaDocument ();
-			figmaBundleWindow.BundleCreated += async (s, e) => {
-				var window = (FigmaBundles.bundleFigmaDocument)s;
+			//when window is closed we need to create all the stuff
+			Project currentProject = null;
+			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
+				currentProject = project;
+			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder projectFolder
+				  && projectFolder.IsFigmaDirectory()) {
+				currentProject = projectFolder.Project;
+			}
 
-				var includeImages = true;
-				
-				string namesSpace;
-				//set namespace
-				if (IdeApp.ProjectOperations.CurrentSelectedProject is DotNetProject dotNetProject) {
-					namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaBundles";
-				} else {
-					namesSpace = $"{GetType().Namespace}.FigmaBundles";
-				}
+			if (currentProject == null) {
+				return;
+			}
 
-				await GenerateBundle (window.FileId, window.SelectedFileVersion, namesSpace, includeImages);
-				window.Close ();
-			};
-
+			var figmaBundleWindow = new FigmaBundles.bundleFigmaDocument (currentProject);
+		
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
 			currentIdeWindow.AddChildWindow (figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
 			MessageService.PlaceDialog (figmaBundleWindow, MessageService.RootWindow);
 			IdeServices.DesktopService.FocusWindow (figmaBundleWindow);
 		}
 
-		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version, string namesSpace, bool includeImages)
-		{
-			//when window is closed we need to create all the stuff
-			Project currentProject = null;
-			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
-				currentProject = project;
-			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder projectFolder
-					&& projectFolder.IsFigmaDirectory ()) {
-				currentProject = projectFolder.Project;
-			}
-			if (currentProject == null) {
-				return;
-			}
-
-			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new FigmaRemoteFileProvider ();
-			fileProvider.Load (fileId);
-
-			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
-			var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
-
-			//to generate all layers we need a code renderer
-			var codeRendererService = new NativeViewCodeService (fileProvider);
-			bundle.SaveAll (codeRendererService, includeImages);
-
-			//now we need to add to Monodevelop all the stuff
-			await currentProject.IncludeBundle (bundle, includeImages)
-				.ConfigureAwait (true);
-		}
 	}
 
 	class RegenerateFigmaDocumentCommandHandler : FigmaCommandHandler
