@@ -88,8 +88,8 @@ namespace LocalFile.Cocoa
 
 			var rendererService = new NativeViewRenderingService (fileProvider);
 			//we want to include some special converters to handle windows like normal view containers
-			rendererService.CustomConverters.Add(new EmbededSheetDialogConverter());
-			rendererService.CustomConverters.Add(new EmbededWindowConverter());
+			rendererService.CustomConverters.Add(new EmbededSheetDialogConverter(fileProvider));
+			rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
 
 			rendererService.RenderInWindow (mainWindow);
 
