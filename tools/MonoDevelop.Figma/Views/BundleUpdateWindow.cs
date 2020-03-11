@@ -40,9 +40,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			loadingProgressIndicator.Hidden = true;
 			UpdateButton.Activated += UpdateButton_Activated;
 			CancelButton.Activated += CancelButton_Activated;
-
-			BundlePopUp.Activated += (s,e) => RefreshStates ();
-			versionComboBox.Activated += (s, e) => RefreshStates();
 		}
 
 		private void CancelButton_Activated(object sender, System.EventArgs e)
@@ -104,13 +101,13 @@ namespace MonoDevelop.Figma.FigmaBundles
 			this.project = project;
 
 			ShowLoading(true);
-		
+
+			EnableViews(false);
+
 			BundlePopUp.RemoveAllItems();
 
 			//loads current versions
 			versionComboBox.RemoveAllItems();
-
-			RefreshStates();
 
 			var versionTask = Task.Run(() => {
 				try {
@@ -137,6 +134,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			}
 
 			ShowLoading(false);
+			EnableViews(true);
 
 			if (versions != null && versions.Length > 0) {
 				foreach (var version in versions) {
@@ -149,18 +147,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			//select current version
 			var menu = versionMenu.GetMenuItem (bundle.Version);
 			versionComboBox.SelectItem(menu);
-
-			versionComboBox.Enabled = true;
-
-			RefreshStates();
-		}
-
-		private void RefreshStates()
-		{
-			//BundlePopUp.Enabled = BundlePopUp.ItemCount > 0;
-			//versionComboBox.Enabled = versionComboBox.ItemCount > 0;
-
-			//UpdateButton.Enabled = BundlePopUp.Enabled && versionComboBox.Enabled && BundlePopUp.SelectedItem != null && versionComboBox.SelectedItem != null;
 		}
 	}
 }
