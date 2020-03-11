@@ -53,7 +53,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 		void EnableViews (bool value)
 		{
 			versionComboBox.Enabled = BundlePopUp.Enabled =
-				UpdateButton.Enabled = CancelButton.Enabled = value;
+				UpdateButton.Enabled = value;
 		}
 
 		private async void UpdateButton_Activated(object sender, System.EventArgs e)
