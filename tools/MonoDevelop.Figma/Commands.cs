@@ -236,14 +236,7 @@ namespace MonoDevelop.Figma.Commands
 
 			var bundle = FigmaBundle.FromDirectoryPath(currentFolder.Path.FullPath);
 			var figmaBundleWindow = new FigmaBundles.BundleUpdateWindow();
-			figmaBundleWindow.Load(bundle);
-			//figmaBundleWindow.BundleCreated += async (s, e) => {
-			//	var window = (FigmaBundles.bundleFigmaDocument)s;
-
-			//	var includeImages = true;
-			//	await GenerateBundle(window.FileId, window.SelectedFileVersion, includeImages);
-			//	window.Close();
-			//};
+			figmaBundleWindow.Load (bundle, currentFolder.Project);
 
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
 			currentIdeWindow.AddChildWindow(figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);

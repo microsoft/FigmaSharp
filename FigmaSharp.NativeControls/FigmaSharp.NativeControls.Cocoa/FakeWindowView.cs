@@ -43,9 +43,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			CreateHighlight();
 		}
 
-
 		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
-
 
 		NSBox titleBar = new NSBox();
 		NSBox separator = new NSBox();
@@ -115,7 +113,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, -7).Active = true;
 		}
 
-
 		// Dark mode has a light border inside the window
 		NSBox highlight = new NSBox();
 
@@ -128,7 +125,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			AddSubview(highlight);
 		}
-
 
 		public override void UpdateLayer()
 		{

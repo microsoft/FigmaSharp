@@ -44,14 +44,24 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		private void CancelButton_Activated(object sender, System.EventArgs e)
 		{
-			this.Close();
+			PerformClose(this);
 		}
 
-		private void UpdateButton_Activated(object sender, System.EventArgs e)
+		private async void UpdateButton_Activated(object sender, System.EventArgs e)
 		{
 			var version = versionMenu.GetFileVersion (versionComboBox.SelectedItem);
-			mainBundle.Update(version);
-			this.Close();
+
+			var fileProvider = new FigmaRemoteFileProvider() { Version = version };
+			fileProvider.Load (mainBundle.FileId);
+
+			var codeRendererService = new NativeViewCodeService(fileProvider);
+
+			var includeImages = true;
+
+			mainBundle.Update (version, codeRendererService, includeImages: includeImages);
+
+			await project.IncludeBundle(mainBundle, includeImages: includeImages);
+			PerformClose(this);
 		}
 
 		FigmaBundle mainBundle;
@@ -65,9 +75,12 @@ namespace MonoDevelop.Figma.FigmaBundles
 			}
 		}
 
-		internal async void Load (FigmaBundle bundle)
+		Projects.Project project;
+
+		internal async void Load (FigmaBundle bundle, Projects.Project project)
 		{
-			mainBundle = bundle;
+			this.mainBundle = bundle;
+			this.project = project;
 
 			loadingProgressIndicator.Hidden = false;
 			loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
