@@ -104,16 +104,27 @@ namespace FigmaSharp.Cocoa
 					menu.AddItem(item.menu);
 			}
 
-			var otherVerionItems = other_version_items.Skip(1);
-			if (otherVerionItems.Count () > 0) {
+			var otherVersionItems = other_version_items.Skip(1);
+			if (otherVersionItems.Count () > 0) {
 				menu.AddItem(NSMenuItem.SeparatorItem);
 				menu.AddItem(new NSMenuItem("Autosaved") { Enabled = false });
 
-				foreach (var item in other_version_items.Skip(1)) // First item is "Current"
+				foreach (var item in otherVersionItems) // First item is "Current"
 					menu.AddItem(item.menu);
 			} 
 
 			menu.Update();
+		}
+
+		internal NSMenuItem GetMenuItem (FigmaFileVersion fileVersion)
+		{
+			if (fileVersion == other_version_items.FirstOrDefault ().version)
+				return current_item.menu;
+			var version = named_version_items.FirstOrDefault(s => s.version.id == fileVersion.id).menu;
+			if (version != null)
+				return version;
+			version = other_version_items.FirstOrDefault(s => s.version.id == fileVersion.id).menu;
+			return version;
 		}
 
 		public FigmaFileVersion GetFileVersion (NSMenuItem menu)

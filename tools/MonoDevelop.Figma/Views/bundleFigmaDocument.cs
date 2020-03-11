@@ -19,6 +19,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 			InitializeComponent ();
 
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
+
+			versionComboBox.AutoEnablesItems = false;
 			versionComboBox.Activated += ItemsRefreshState_Handler;
 
 			templateCodeOptionBox.Activated += ItemsRefreshState_Handler;
