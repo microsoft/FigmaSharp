@@ -93,7 +93,8 @@ namespace LocalFile.Cocoa
 
 			rendererService.RenderInWindow (mainWindow);
 
-			new StoryboardLayoutManager().Run (mainWindow.Content, rendererService);
+			new StoryboardLayoutManager()
+				.Run (mainWindow.Content, rendererService);
 
             mainWindow.Center();
 		
