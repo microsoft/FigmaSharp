@@ -57,25 +57,28 @@ namespace FigmaSharpApp
 			}
 		}
 
-
 		partial void RefreshClicked(NSObject sender)
 		{
-			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).Reload();
+			if (NSApplication.SharedApplication.MainWindow.ContentViewController is DocumentViewController viewController)
+				viewController.Reload();
 		}
 
 		partial void ZoomInClicked(NSObject sender)
 		{
-			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).ZoomIn();
+			if (NSApplication.SharedApplication.MainWindow.ContentViewController is DocumentViewController viewController)
+				viewController.ZoomIn();
 		}
 
 		partial void ZoomOutClicked(NSObject sender)
 		{
-			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).ZoomOut();
+			if (NSApplication.SharedApplication.MainWindow.ContentViewController is DocumentViewController viewController)
+				viewController.ZoomOut();
 		}
 
 		partial void Zoom100Clicked(NSObject sender)
 		{
-			(NSApplication.SharedApplication.MainWindow.ContentViewController as DocumentViewController).Zoom100();
+			if (NSApplication.SharedApplication.MainWindow.ContentViewController is DocumentViewController viewController)
+				viewController.Zoom100();
 		}
 
 
