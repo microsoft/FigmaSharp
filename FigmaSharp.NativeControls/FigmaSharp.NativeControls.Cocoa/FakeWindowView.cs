@@ -43,7 +43,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 			CreateHighlight();
 		}
 
+
 		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
+
 
 		NSBox titleBar = new NSBox();
 		NSBox separator = new NSBox();
@@ -78,17 +80,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 		void CreateTrafficLights()
 		{
 			closeButton.BoxType = NSBoxType.NSBoxCustom;
-			closeButton.FillColor = NSColor.SystemRedColor;
 			closeButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.1f);
 			closeButton.CornerRadius = 6;
 
 			minButton.BoxType = NSBoxType.NSBoxCustom;
-			minButton.FillColor = NSColor.SystemYellowColor;
-			minButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.15f);
+			minButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.1f);
 			minButton.CornerRadius = 6;
 
 			maxButton.BoxType = NSBoxType.NSBoxCustom;
-			maxButton.FillColor = NSColor.SystemGreenColor;
 			maxButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.1f);
 			maxButton.CornerRadius = 6;
 
@@ -145,11 +144,23 @@ namespace FigmaSharp.NativeControls.Cocoa
 				Layer.BorderColor = NSColor.WindowFrame.CGColor;
 
 
+			// Window buttons
+			if (DarkMode) {
+				closeButton.FillColor = NSColor.FromRgb(255, 90,  82); // #FF5A52
+				minButton.FillColor   = NSColor.FromRgb(230, 192, 41); // #E6C029
+				maxButton.FillColor   = NSColor.FromRgb(83,  194, 43); // #53C22B
+			} else {
+				closeButton.FillColor = NSColor.FromRgb(255, 95,  87); // #FF5F57
+				minButton.FillColor   = NSColor.FromRgb(255, 189, 46); // #FFBD2E
+				maxButton.FillColor   = NSColor.FromRgb(40,  201, 64); // #28C940
+			}
+
+
 			// Title bar
 			if (DarkMode)
 				titleBar.FillColor = NSColor.White.ColorWithAlphaComponent(0.1f);
 			else
-				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.07f);
+				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.08f);
 
 			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.8f);
 
@@ -159,6 +170,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.5f);
 			else
 				separator.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.12f);
+
+
+			// Highlight
+			highlight.Hidden = !DarkMode;
 		}
 
 
@@ -188,7 +203,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			// Highlight
 			highlight.Frame = new CGRect(1, 1, Frame.Width - 2, Frame.Height - 2);
-			highlight.Hidden = !DarkMode;
 		}
 
 
