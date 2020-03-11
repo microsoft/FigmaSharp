@@ -115,8 +115,6 @@ namespace FigmaSharp
 		public void Update (FigmaFileVersion version, FigmaCodeRendererService codeRendererService, bool includeImages = true)
 		{
 			Version = version;
-			LoadLocalDocument();
-
 			Reload(codeRendererService.figmaProvider);
 			SaveAll(codeRendererService, includeImages, false);
 		}
@@ -149,6 +147,7 @@ namespace FigmaSharp
 			if (Version == null) {
 				Version = new FigmaFileVersion() { id = Manifest.DocumentVersion };
 			}
+			Console.WriteLine($"[Done] Refreshed Bundle from remote Figma API");
 		}
 
 		//Generates the .figmafile
@@ -253,6 +252,7 @@ namespace FigmaSharp
 			var mainNodes = figmaFileProvider.GetMainLayers();
 			foreach (var item in mainNodes) {
 				GenerateFigmaFile (item);
+				Console.WriteLine($"[Done] Generated '{item.name}' file");
 			}
 		}
 
@@ -304,6 +304,7 @@ namespace FigmaSharp
 			Save();
 			SaveLocalDocument(includeImages);
 			SaveViews(codeRendererService, writePublicClassIfExists);
+			Console.WriteLine($"[Done] Saved all the files from Bundle");
 		}
 
 		#endregion
