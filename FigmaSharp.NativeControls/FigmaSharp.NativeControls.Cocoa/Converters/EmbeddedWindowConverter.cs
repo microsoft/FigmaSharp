@@ -54,21 +54,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return isWindow;
 		}
 
-		public static NSColor GetBackgroundColor (bool isWhite)
-		{
-			return isWhite ?
-			NSColor.FromRgba (0.93f, 0.93f, 0.93f, 0.66f) :
-			NSColor.FromRgba (0.29f, 0.29f, 0.29f, 0.66f);
-		}
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = new View(new FakeWindowView("Window"));
+			var view = new View(new FakeSheetView());
 
-			var nativeView = view.NativeObject as FakeWindowView;
+			var nativeView = view.NativeObject as FakeSheetView;
 			nativeView.Configure(frame);
 
+			/* TODO: Create a base FakeView class with common elements
 			nativeView.LiveButton.Activated += (s, e) => {
 				if (nativeView.Window == null)
 					return;
@@ -88,6 +83,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				secondaryRender.RenderInWindow(window, currentNode);
 				NSApplication.SharedApplication.BeginSheet((NSWindow)window.NativeObject, nativeView.Window);
 			};
+			*/
 
 			return view;
 		}
