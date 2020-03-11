@@ -8,12 +8,14 @@ using FigmaSharp;
 using AppKit;
 using FigmaSharp.Services;
 using Foundation;
+using FigmaSharp.Cocoa;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
 	public partial class BundleUpdateWindow : AppKit.NSWindow
 	{
 		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
+		private FigmaVersionMenu versionMenu = new FigmaVersionMenu();
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
@@ -27,16 +29,14 @@ namespace MonoDevelop.Figma.FigmaBundles
 		public BundleUpdateWindow ()
 		{
 			InitializeComponent ();
-			
+			versionComboBox.AutoEnablesItems = false;
 			loadingProgressIndicator.Hidden = true;
 			UpdateButton.Activated += UpdateButton_Activated;
 			CancelButton.Activated += CancelButton_Activated;
 
-			//versionMenu = new VersionMenu ()
-
+			BundlePopUp.Activated += (s,e) => RefreshStates ();
+			versionComboBox.Activated += (s, e) => RefreshStates();
 		}
-
-		VersionMenu versionMenu;
 
 		private void CancelButton_Activated(object sender, System.EventArgs e)
 		{
@@ -50,25 +50,23 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		internal async void Load (FigmaBundle bundle)
 		{
-			BundlePopUp.RemoveAllItems();
-
-			var remoteFile = new FigmaRemoteFileProvider();
-			remoteFile.Load (bundle.FileId);
-
-			var remoteMainViews = remoteFile.GetMainLayers();
-			foreach (var figmaNode in remoteMainViews) {
-				figmaNode.TryGetNodeCustomName(out var name);
-				BundlePopUp.AddItem(name);
-			}
-
 			loadingProgressIndicator.Hidden = false;
 			loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
 
+			BundlePopUp.RemoveAllItems();
+
 			//loads current versions
 			versionComboBox.RemoveAllItems();
-			versionComboBox.Enabled = false;
 
-			versions = await Task.Run(() => {
+			RefreshStates();
+
+			var mainLayersTask = Task.Run(() => {
+				var remoteFile = new FigmaRemoteFileProvider();
+				remoteFile.Load(bundle.FileId);
+				return remoteFile.GetMainLayers();
+			});
+			
+			var versionTask = Task.Run(() => {
 				try
 				{
 					var query = new FigmaFileVersionQuery(bundle.FileId);
@@ -85,31 +83,27 @@ namespace MonoDevelop.Figma.FigmaBundles
 				}
 			});
 
+			await Task.WhenAll (mainLayersTask, versionTask);
+
+			var remoteMainViews = await mainLayersTask;
+			versions = await versionTask;
+
+			foreach (var figmaNode in remoteMainViews) {
+				figmaNode.TryGetNodeCustomName(out var name);
+				BundlePopUp.AddItem(name);
+			}
+
 			loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
 			loadingProgressIndicator.Hidden = true;
 
-			if (versions != null)
-			{
-				var menu = new NSMenu();
-				menu.AddItem(new NSMenuItem("Current"));
-
-				if (versions.Length > 0)
-				{
-					menu.AddItem(NSMenuItem.SeparatorItem);
-
-					foreach (FigmaFileVersion version in versions.Skip(1))
-					{
-						if (!string.IsNullOrEmpty(version.label))
-							menu.AddItem(new NSMenuItem(version.label));
-						else
-							menu.AddItem(new NSMenuItem(version.created_at.ToString("f")));
-					}
+			if (versions != null && versions.Length > 0) {
+				foreach (var version in versions) {
+					versionMenu.AddItem (version);
 				}
-
-				versionComboBox.Menu = menu;
-				versionComboBox.SelectItem(0);
-				menu.Update();
 			}
+
+			versionMenu.Generate(versionComboBox.Menu);
+		
 			versionComboBox.Enabled = true;
 
 			RefreshStates();
@@ -117,7 +111,10 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		private void RefreshStates()
 		{
-			
+			BundlePopUp.Enabled = BundlePopUp.ItemCount > 0;
+			versionComboBox.Enabled = versionComboBox.ItemCount > 0;
+
+			UpdateButton.Enabled = BundlePopUp.Enabled && versionComboBox.Enabled && BundlePopUp.SelectedItem != null && versionComboBox.SelectedItem != null;
 		}
 	}
 }
