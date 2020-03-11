@@ -21,6 +21,9 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		public event EventHandler NeedsUpdate;
 
+		FigmaBundle mainBundle;
+		Projects.Project project;
+
 		public FigmaFileVersion SelectedFileVersion {
 			get {
 				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1 && versions.Length > 0) {
@@ -47,24 +50,33 @@ namespace MonoDevelop.Figma.FigmaBundles
 			PerformClose(this);
 		}
 
+		void EnableViews (bool value)
+		{
+			versionComboBox.Enabled = BundlePopUp.Enabled =
+				UpdateButton.Enabled = CancelButton.Enabled = value;
+		}
+
 		private async void UpdateButton_Activated(object sender, System.EventArgs e)
 		{
-			var version = versionMenu.GetFileVersion (versionComboBox.SelectedItem);
-
-			var fileProvider = new FigmaRemoteFileProvider() { Version = version };
-			fileProvider.Load (mainBundle.FileId);
-
-			var codeRendererService = new NativeViewCodeService(fileProvider);
+			EnableViews(false);
+			ShowLoading(true);
 
 			var includeImages = true;
 
-			mainBundle.Update (version, codeRendererService, includeImages: includeImages);
+			var version = versionMenu.GetFileVersion(versionComboBox.SelectedItem);
 
+			await Task.Run(() => {
+			   var fileProvider = new FigmaRemoteFileProvider() { Version = version };
+			   fileProvider.Load(mainBundle.FileId);
+				Console.WriteLine($"[Done] Loaded Remote File provider for Version {version.id}");
+			   var codeRendererService = new NativeViewCodeService(fileProvider);
+			   mainBundle.Update(version, codeRendererService, includeImages: includeImages);
+		   });
 			await project.IncludeBundle(mainBundle, includeImages: includeImages);
+
+			ShowLoading(false);
 			PerformClose(this);
 		}
-
-		FigmaBundle mainBundle;
 
 		static IEnumerable<FigmaBundle> GetFromFigmaDirectory (string directory)
 		{
@@ -75,16 +87,24 @@ namespace MonoDevelop.Figma.FigmaBundles
 			}
 		}
 
-		Projects.Project project;
+		void ShowLoading (bool value)
+		{
+			if (value) {
+				loadingProgressIndicator.Hidden = false;
+				loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
+			} else {
+				loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
+				loadingProgressIndicator.Hidden = true;
+			}
+		}
 
 		internal async void Load (FigmaBundle bundle, Projects.Project project)
 		{
 			this.mainBundle = bundle;
 			this.project = project;
 
-			loadingProgressIndicator.Hidden = false;
-			loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
-
+			ShowLoading(true);
+		
 			BundlePopUp.RemoveAllItems();
 
 			//loads current versions
@@ -116,8 +136,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 				BundlePopUp.AddItem(figmaNode.Manifest.DocumentTitle);
 			}
 
-			loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
-			loadingProgressIndicator.Hidden = true;
+			ShowLoading(false);
 
 			if (versions != null && versions.Length > 0) {
 				foreach (var version in versions) {
