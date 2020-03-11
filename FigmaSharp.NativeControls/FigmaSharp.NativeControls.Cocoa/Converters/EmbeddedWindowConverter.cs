@@ -39,8 +39,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
-		public bool IsActionButtonVisible { get; set; } = true;
-
 		IFigmaFileProvider newWindowProvider;
 		public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
 		{
@@ -118,9 +116,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var frame = (FigmaFrameEntity)currentNode;
 
-			var nativeView = new FakeWindowView("Window");
-			nativeView.LiveButton.Hidden = !IsActionButtonVisible;
+			string title = "Window";
 
+			try { // TODO: Make this nicer later
+				title = ((frame.children[0] as FigmaFrameEntity).children[2] as FigmaText).characters;
+			} catch (Exception e) {
+				Console.WriteLine(e.StackTrace);
+			}
+
+			var nativeView = new FakeWindowView(title);
 			var view = new View(nativeView);
 
 			nativeView.Layer.CornerRadius = 5;
