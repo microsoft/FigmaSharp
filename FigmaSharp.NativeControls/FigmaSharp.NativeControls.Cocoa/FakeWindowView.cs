@@ -98,6 +98,18 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 
 		public NSButton LiveButton;
+		bool liveButtonAlwaysVisible;
+
+		public bool LiveButtonAlwaysVisible {
+			set {
+				liveButtonAlwaysVisible = value;
+
+				if (value == true)
+					LiveButton.Hidden = false;
+			}
+
+			get { return liveButtonAlwaysVisible; }
+		}
 
 		void CreateLiveButton()
 		{
@@ -239,6 +251,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override void MouseExited(NSEvent theEvent)
 		{
 			base.MouseExited(theEvent);
+
+			if (LiveButtonAlwaysVisible)
+				return;
+
 			LiveButton.Hidden = true;
 		}
 	}
