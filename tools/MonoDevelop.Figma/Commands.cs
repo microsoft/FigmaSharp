@@ -269,7 +269,16 @@ namespace MonoDevelop.Figma.Commands
 				var window = (FigmaBundles.bundleFigmaDocument)s;
 
 				var includeImages = true;
-				await GenerateBundle (window.FileId, window.SelectedFileVersion, includeImages);
+				
+				string namesSpace;
+				//set namespace
+				if (IdeApp.ProjectOperations.CurrentSelectedProject is DotNetProject dotNetProject) {
+					namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaBundles";
+				} else {
+					namesSpace = $"{GetType().Namespace}.FigmaBundles";
+				}
+
+				await GenerateBundle (window.FileId, window.SelectedFileVersion, namesSpace, includeImages);
 				window.Close ();
 			};
 
@@ -279,10 +288,9 @@ namespace MonoDevelop.Figma.Commands
 			IdeServices.DesktopService.FocusWindow (figmaBundleWindow);
 		}
 
-		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version, bool includeImages)
+		async Task GenerateBundle (string fileId, FigmaSharp.Models.FigmaFileVersion version, string namesSpace, bool includeImages)
 		{
 			//when window is closed we need to create all the stuff
-		
 			Project currentProject = null;
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is Project project) {
 				currentProject = project;
@@ -295,123 +303,19 @@ namespace MonoDevelop.Figma.Commands
 			}
 
 			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new FigmaRemoteFileProvider () { File = fileId };
+			var fileProvider = new FigmaRemoteFileProvider ();
 			fileProvider.Load (fileId);
 
 			//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
-			var projectBundle = CreateBundleFromProject (currentProject, fileId, version, fileProvider);
-
-			//set namespace
-			if (currentProject is DotNetProject dotNetProject) {
-				projectBundle.Namespace = $"{dotNetProject.DefaultNamespace}.FigmaBundles" ;
-			} else {
-				projectBundle.Namespace = $"{GetType ().Namespace}.FigmaBundles"; ;
-			}
+			var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
 
 			//to generate all layers we need a code renderer
-			var converters = NativeControlsContext.Current.GetConverters (true);
-			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-			var codeRendererService = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
-
-			projectBundle.Save ();
-			projectBundle.SaveLocalDocument (includeImages);
-			projectBundle.SaveViews (codeRendererService);
+			var codeRendererService = new NativeViewCodeService (fileProvider);
+			bundle.SaveAll (codeRendererService, includeImages);
 
 			//now we need to add to Monodevelop all the stuff
-			await IncludeBundleInProject (currentProject, projectBundle, includeImages).ConfigureAwait (true);
-		}
-
-		FigmaBundle CreateBundleFromProject (Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider)
-		{
-			var figmaFolder = Path.Combine (project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
-
-			if (!Directory.Exists (figmaFolder)) {
-				Directory.CreateDirectory (figmaFolder);
-			}
-
-			//Bundle generation - We generate an empty bundle and store in the folder
-			var fullBundlePath = Path.Combine (figmaFolder, fileId);
-
-			var bundle = FigmaBundle.Empty (fileId, version, fullBundlePath);
-
-			//generate .figma file
-			bundle.LoadLocalDocument ();
-
-			//this reads all the main layers ready and fills our Views models
-			bundle.LoadRemoteMainLayers (fileProvider);
-
-			return bundle;
-		}
-
-		async Task IncludeBundleInProject (Project currentProject, FigmaBundle bundle, bool includeImages = false)
-		{
-			var figmaFolder = Path.Combine (currentProject.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
-			if (!currentProject.PathExistsInProject (figmaFolder)) {
-				//we add figma folder in the case doesn't exists
-				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, figmaFolder));
-			}
-
-			//now we need to add the content
-			//bundle
-			var fullBundlePath = bundle.DirectoryPath;
-			if (!currentProject.PathExistsInProject (fullBundlePath)) {
-				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, fullBundlePath));
-			}
-
-			//manifest
-			var manifestFullDirectoryPath = bundle.ManifestFilePath;
-			if (!currentProject.PathExistsInProject (manifestFullDirectoryPath))
-				currentProject.AddFile (manifestFullDirectoryPath);
-
-			
-			//document
-			var documentFullDirectoryPath = bundle.DocumentFilePath;
-			if (!currentProject.PathExistsInProject (documentFullDirectoryPath))
-				currentProject.AddFile (documentFullDirectoryPath);
-
-			//TODO: images are not enabled by now
-			if (includeImages) {
-				//resources
-				var resourcesDirectoryPath = bundle.ResourcesDirectoryPath;
-				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, resourcesDirectoryPath));
-
-				//we add to the project for each resource inside the 
-				//foreach (var image in Directory.EnumerateFiles (resourcesDirectoryPath, "*.png")) {
-				//	currentProject.AddFile (image);
-				//}
-
-				var images = Directory.EnumerateFiles (resourcesDirectoryPath, $"*{FigmaBundle.ImageFormat}").Select (s => new FilePath (s));
-
-				foreach (var item in images) {
-					if (!currentProject.PathExistsInProject (item)) {
-						var projectFile = new ProjectFile (item, BuildAction.BundleResource);
-						var name = item.FileName;
-						projectFile.Metadata.SetValue ("LogicalName", name, "");
-						currentProject.AddFile (projectFile);
-					}
-				}
-			}
-
-			//files
-			var viewsDirectoryPath = bundle.ViewsDirectoryPath;
-			if (!currentProject.PathExistsInProject (viewsDirectoryPath)) {
-				currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, viewsDirectoryPath));
-			}
-
-			foreach (var view in bundle.Views)
-			{
-				if (!currentProject.PathExistsInProject(view.PublicCsClassFilePath))
-					currentProject.AddFile(view.PublicCsClassFilePath);
-
-				if (!currentProject.PathExistsInProject(view.PartialDesignerClassFilePath))
-				{
-					var partialFilePath = currentProject.AddFile(view.PartialDesignerClassFilePath);
-					partialFilePath.DependsOn = view.PublicCsClassFilePath;
-				}
-			}
-
-			await IdeApp.ProjectOperations.SaveAsync (currentProject);
-			currentProject.NeedsReload = true;
+			await currentProject.IncludeBundle (bundle, includeImages)
+				.ConfigureAwait (true);
 		}
 	}
 
@@ -422,45 +326,34 @@ namespace MonoDevelop.Figma.Commands
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 				if (currentFolder.IsDocumentDirectoryBundle ()) {
 					var manifestFullFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
-					info.Text = "Reset Bundle";
+					info.Text = "Restore Bundle";
 					info.Visible = info.Enabled = true;
 					return;
 				}
-			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFile currentFile && currentFile.IsFigmaManifest ()) {
-				info.Text = "Reset";
-				info.Visible = info.Enabled = true;
-				return;
 			}
-
 			info.Visible = info.Enabled = false;
 		}
 
 		protected async override void OnRun ()
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder && currentFolder.IsDocumentDirectoryBundle ()) {
-				await RegenerateDocument (currentFolder.Project, currentFolder.Path.FullPath);
-			} else if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFile currentFile && currentFile.IsFigmaManifest ()) {
-				await RegenerateDocument (currentFile.Project, currentFile.FilePath.ParentDirectory.FullPath);
-				return;
-			}
-		}
+				var bundle = FigmaBundle.FromDirectoryPath(currentFolder.Path.FullPath);
+				if (bundle == null) {
+					return;
+				}
 
-		async Task RegenerateDocument (Project project, string bundleDirectoryPath)
-		{
-			var manifest = FigmaBundle.FromDirectoryPath (bundleDirectoryPath);
-			if (manifest == null) {
-				return;
-			}
+				var includeImages = true;
 
-			manifest.LoadLocalDocument ();
-			manifest.SaveLocalDocument (false);
+				//we need to ask to figma server to get nodes as demmand
+				var fileProvider = new FigmaLocalFileProvider(bundle.ResourcesDirectoryPath);
+				fileProvider.Load(bundle.DocumentFilePath);
+				bundle.Reload (fileProvider);
 
-			var documentFilePath = manifest.DocumentFilePath;
-			//we need to add the file to the project in case is not added
-			if (!project.PathExistsInProject (documentFilePath)) {
-				project.AddFile (documentFilePath);
-				project.NeedsReload = true;
-				await IdeApp.ProjectOperations.SaveAsync (project);
+				var codeRendererService = new NativeViewCodeService(fileProvider);
+				bundle.SaveAll (codeRendererService, includeImages, false);
+
+				await currentFolder.Project.IncludeBundle(bundle, includeImages)
+					.ConfigureAwait (true);
 			}
 		}
 	}

@@ -66,7 +66,7 @@ namespace FigmaSharp
 			return publicPartialClass;
 		}
 
-		public void Generate (FigmaCodeRendererService codeRendererService)
+		public void Generate (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true)
 		{
 			if (!Directory.Exists (bundle.ViewsDirectoryPath))
 				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
@@ -74,8 +74,10 @@ namespace FigmaSharp
 			var partialDesignerClass = GetFigmaPartialDesignerClass (codeRendererService);
 			partialDesignerClass.Save (PartialDesignerClassFilePath);
 
-			var publicPartialClass = GetPublicPartialClass ();
-			publicPartialClass.Save (PublicCsClassFilePath);
+			if (!File.Exists (PublicCsClassFilePath) || writePublicClassIfExists) {
+				var publicPartialClass = GetPublicPartialClass();
+				publicPartialClass.Save(PublicCsClassFilePath);
+			}
 		}
 	}
 }
