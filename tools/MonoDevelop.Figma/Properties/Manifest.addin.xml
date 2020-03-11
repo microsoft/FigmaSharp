@@ -31,12 +31,12 @@
         />
         <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator" insertbefore="AddSectionEnd" />
         <CommandItem 
-            id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
-            _label="Show Remote File"
+            id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
         <CommandItem 
-            id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
+            id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
+            _label="Show Remote File"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
     </Extension>
