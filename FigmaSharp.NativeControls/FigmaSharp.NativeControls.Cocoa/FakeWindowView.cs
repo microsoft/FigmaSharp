@@ -104,7 +104,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			LiveButton = new NSButton()
 			{
 				Bordered = false,
-				Hidden = true,
 				Image = NSImage.ImageNamed("NSQuickLookTemplate"),
 				ToolTip = "Preview in a window",
 				TranslatesAutoresizingMaskIntoConstraints = false,
@@ -197,6 +196,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 			maxButton.Frame = new CGRect(posX + width + spacing + width + spacing, Frame.Height - posY - height, width, height);
 
 
+			// Live button
+			LiveButton.Hidden = true;
+
+
 			// Separator
 			separator.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 1);
 
@@ -218,7 +221,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 				trackingArea.Dispose();
 			}
 
-			var options = NSTrackingAreaOptions.MouseMoved | NSTrackingAreaOptions.ActiveInKeyWindow | NSTrackingAreaOptions.MouseEnteredAndExited;
+			var options = NSTrackingAreaOptions.MouseMoved |
+			              NSTrackingAreaOptions.ActiveInKeyWindow |
+			              NSTrackingAreaOptions.MouseEnteredAndExited;
 
 			trackingArea = new NSTrackingArea(Bounds, options, this, null);
 			AddTrackingArea(trackingArea);
