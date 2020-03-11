@@ -65,11 +65,11 @@ namespace FigmaSharp.NativeControls.Cocoa
             switch (componentType)
             {
                 case NativeControlComponentType.LabelGroup:
-                    textField.Font = NSFont.BoldSystemFontOfSize(NSFont.LabelFontSize);
+                    textField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
                     break;
 
                 case NativeControlComponentType.LinkStandard:
-                    textField.Font = NSFont.SystemFontOfSize(NSFont.LabelFontSize);
+                    textField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
                     CreateLink(textField);
                     break;
 
