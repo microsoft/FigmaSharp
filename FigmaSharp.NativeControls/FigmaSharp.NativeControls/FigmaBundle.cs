@@ -38,6 +38,8 @@ namespace FigmaSharp
 {
     public class FigmaBundle
 	{
+		internal const string DefaultNamespace = "FigmaSharp";
+
 		public FigmaFileVersion Version { get; set; }
 		public FigmaFileResponse Document { get; set; }
 		public FigmaManifest Manifest { get; set; }
@@ -54,7 +56,7 @@ namespace FigmaSharp
 		public string ResourcesDirectoryPath => Path.Combine (DirectoryPath, ResourcesDirectoryName);
 		public string ManifestFilePath => Path.Combine (DirectoryPath, ManifestFileName);
 
-		public string Namespace { get; set; } = "FigmaSharp";
+		public string Namespace { get; set; } = DefaultNamespace;
 	
 		internal const string FigmaBundleDirectoryExtension = ".figmabundle";
 		//const string FigmaBundlesDirectoryName = ".bundles";
@@ -99,6 +101,7 @@ namespace FigmaSharp
 
 			try {
 				Manifest = FigmaManifest.FromFilePath (manifestFullPath);
+				Namespace = Manifest.Namespace;
 				Version = new FigmaFileVersion() { id = Manifest.DocumentVersion };
 			}
 			catch (Exception ex) {
@@ -115,8 +118,8 @@ namespace FigmaSharp
 		public void Update (FigmaFileVersion version, FigmaCodeRendererService codeRendererService, bool includeImages = true)
 		{
 			Version = version;
-			Reload(codeRendererService.figmaProvider);
-			SaveAll(codeRendererService, includeImages, false);
+			Reload (codeRendererService.figmaProvider);
+			SaveAll (codeRendererService, includeImages, false);
 		}
 
 		public void Save ()
@@ -181,18 +184,23 @@ namespace FigmaSharp
 
 		#region Static Methods
 
-		public static FigmaBundle Empty (string fileId, FigmaFileVersion version, string directoryPath)
+		public static FigmaBundle Empty (string fileId, FigmaFileVersion version, string directoryPath, string nameSpace = null)
 		{
 			var bundle = new FigmaBundle () {
 				DirectoryPath = directoryPath,
-				Version = version
+				Version = version,
 			};
+
 			bundle.Manifest = new FigmaManifest () {
 				ApiVersion = AppContext.Current.Version,
 				RemoteApiVersion = AppContext.Api.Version.ToString (),
 				Date = DateTime.Now,
 				FileId = fileId,
 			};
+
+			if (!string.IsNullOrEmpty (nameSpace)) {
+				bundle.Manifest.Namespace = bundle.Namespace = nameSpace;
+			}
 
 			return bundle;
 		}

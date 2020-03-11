@@ -13,6 +13,20 @@ namespace MonoDevelop.Figma
 {
 	public static class Extensions
 	{
+		public static string GetDefaultFigmaNamespace (this Project currentProject)
+		{
+			string namesSpace;
+			//set namespace
+			if (currentProject is DotNetProject dotNetProject) {
+				namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaBundles";
+			}
+			else
+			{
+				namesSpace = "FigmaSharp.FigmaBundles";
+			}
+			return namesSpace;
+		}
+
 		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider, string namesSpace = null)
 		{
 			var figmaFolder = Path.Combine(project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
@@ -25,10 +39,8 @@ namespace MonoDevelop.Figma
 			//Bundle generation - We generate an empty bundle and store in the folder
 			var fullBundlePath = Path.Combine(figmaFolder, fileId);
 
-			var bundle = FigmaBundle.Empty(fileId, version, fullBundlePath);
+			var bundle = FigmaBundle.Empty(fileId, version, fullBundlePath, namesSpace);
 			bundle.Reload(fileProvider);
-			if (!string.IsNullOrEmpty(namesSpace))
-				bundle.Namespace = namesSpace;
 			return bundle;
 		}
 

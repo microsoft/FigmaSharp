@@ -31,13 +31,14 @@ namespace FigmaSharp
 			FigmaNode = figmaNode;
 		}
 
-		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (FigmaCodeRendererService codeRendererService)
+		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (FigmaCodeRendererService codeRendererService, string namesSpace = null)
 		{
 			var partialDesignerClass = new FigmaPartialDesignerClass ();
 			partialDesignerClass.Manifest = new FigmaManifest () {
 				Date = DateTime.Now,
 				FileId = bundle.FileId,
 				DocumentVersion = "0.1f",
+				Namespace = namesSpace ?? FigmaBundle.DefaultNamespace,
 				RemoteApiVersion = AppContext.Api.Version.ToString (),
 				ApiVersion = AppContext.Current.Version
 			};
@@ -66,12 +67,12 @@ namespace FigmaSharp
 			return publicPartialClass;
 		}
 
-		public void Generate (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true)
+		public void Generate (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null)
 		{
 			if (!Directory.Exists (bundle.ViewsDirectoryPath))
 				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
 
-			var partialDesignerClass = GetFigmaPartialDesignerClass (codeRendererService);
+			var partialDesignerClass = GetFigmaPartialDesignerClass (codeRendererService, namesSpace);
 			partialDesignerClass.Save (PartialDesignerClassFilePath);
 
 			if (!File.Exists (PublicCsClassFilePath) || writePublicClassIfExists) {

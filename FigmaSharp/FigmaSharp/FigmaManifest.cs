@@ -50,6 +50,9 @@ namespace FigmaSharp
 		[ManifestDescription ("File Id")]
 		public string FileId { get; set; }
 
+		[ManifestDescription("Namespace")]
+		public string Namespace { get; set; }
+
 		[ManifestDescription ("Document Title")]
 		public string DocumentTitle { get; set; }
 
@@ -81,6 +84,7 @@ namespace FigmaSharp
 			builder.AppendLine ();
 			builder.AppendLine ($"Document title:   {DocumentTitle}");
 			builder.AppendLine ($"Document version: {DocumentVersion}");
+			builder.AppendLine ($"Document Namespace:   {Namespace}");
 			builder.AppendLine ($"Document URL:     {FileId}");
 			builder.AppendLine ();
 			builder.AppendLine ($"Changes to this file may cause incorrect behavior");

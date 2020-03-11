@@ -60,14 +60,17 @@ namespace MonoDevelop.Figma.Commands
 					var manifestFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.ManifestFileName);
 
 					if (!File.Exists (manifestFilePath)) {
+						var project = currentFolder.Project;
+
 						var manifest = new FigmaManifest () {
+							Namespace = project.GetDefaultFigmaNamespace (),
 							DocumentVersion = "0",
 							ApiVersion = FigmaSharp.AppContext.Current.Version,
 							RemoteApiVersion = FigmaSharp.AppContext.Api.Version.ToString (),
 							Date = DateTime.Now
 						};
 						manifest.Save (manifestFilePath);
-						var project = currentFolder.Project;
+					
 						project.AddFile (manifestFilePath);
 						project.NeedsReload = true;
 						await IdeApp.ProjectOperations.SaveAsync (project);
@@ -278,7 +281,6 @@ namespace MonoDevelop.Figma.Commands
 			MessageService.PlaceDialog (figmaBundleWindow, MessageService.RootWindow);
 			IdeServices.DesktopService.FocusWindow (figmaBundleWindow);
 		}
-
 	}
 
 	class RegenerateFigmaDocumentCommandHandler : FigmaCommandHandler
@@ -287,7 +289,6 @@ namespace MonoDevelop.Figma.Commands
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 				if (currentFolder.IsDocumentDirectoryBundle ()) {
-					var manifestFullFilePath = Path.Combine (currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
 					info.Text = "Restore Bundle";
 					info.Visible = info.Enabled = true;
 					return;
@@ -307,14 +308,14 @@ namespace MonoDevelop.Figma.Commands
 				var includeImages = true;
 
 				//we need to ask to figma server to get nodes as demmand
-				var fileProvider = new FigmaLocalFileProvider(bundle.ResourcesDirectoryPath);
-				fileProvider.Load(bundle.DocumentFilePath);
+				var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
+				fileProvider.Load (bundle.DocumentFilePath);
 				bundle.Reload (fileProvider);
 
-				var codeRendererService = new NativeViewCodeService(fileProvider);
+				var codeRendererService = new NativeViewCodeService (fileProvider);
 				bundle.SaveAll (codeRendererService, includeImages, false);
 
-				await currentFolder.Project.IncludeBundle(bundle, includeImages)
+				await currentFolder.Project.IncludeBundle (bundle, includeImages)
 					.ConfigureAwait (true);
 			}
 		}

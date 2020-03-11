@@ -78,14 +78,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			ShowLoading(true);
 			RefreshStates(false);
 
-			string namesSpace;
-			//set namespace
-			if (currentProject is DotNetProject dotNetProject) {
-				namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaBundles";
-			} else {
-				namesSpace = $"{GetType().Namespace}.FigmaBundles";
-			}
-
+			var namesSpace = currentProject.GetDefaultFigmaNamespace ();
 			await GenerateBundle(FileId, SelectedFileVersion, namesSpace, includeImages);
 
 			RefreshStates(true);
