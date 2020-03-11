@@ -148,7 +148,7 @@ namespace FigmaSharpApp
 
 					if (response == null || version != null)
 					{
-						ToggleSpinnerState(toggle_on: true);
+						windowController.ToggleSpinnerState(toggle_on: true);
 
 						fileProvider = new FigmaRemoteFileProvider() { File = DocumentID, Version = version };
 						fileProvider.ImageLinksProcessed += (s, e) => {
