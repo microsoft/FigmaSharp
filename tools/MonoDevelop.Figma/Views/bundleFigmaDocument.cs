@@ -6,6 +6,7 @@ using System.Linq;
 using FigmaSharp.Models;
 using System.Threading.Tasks;
 using FigmaSharp;
+using FigmaSharp.Cocoa;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
@@ -17,23 +18,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 		{
 			InitializeComponent ();
 
-			Initialize ();
-		}
-
-		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
-
-		public FigmaFileVersion SelectedFileVersion {
-			get {
-				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1 && versions.Length > 0) {
-					return versions[(int)versionComboBox.IndexOfSelectedItem];
-				}
-				return null;
-			}
-		}
-
-		// Shared initialization code
-		void Initialize ()
-		{
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 			versionComboBox.Activated += ItemsRefreshState_Handler;
 
@@ -47,25 +31,33 @@ namespace MonoDevelop.Figma.FigmaBundles
 			templateNoneOptionBox.Enabled =
 			templateMarkUpOptionBox.Enabled = false;
 
-			RefreshStates ();
+			versionMenu.VersionSelected += (s, e) => {
+				SelectedFileVersion = e;
+			};
+
+			RefreshStates();
 		}
+
+		readonly FigmaVersionMenu versionMenu = new FigmaVersionMenu();
+
+		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
+
+		public FigmaFileVersion SelectedFileVersion { get; private set; }
 
 		void RefreshStates ()
 		{
 			templateCodeOptionBox.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			versionComboBox.Enabled = IsItemSelected;
+			versionComboBox.Enabled = versions.Length > 0;
 
 			RefreshBundleButtonState ();
 		}
 
-		bool IsItemSelected => (versions != null && versions.Length == 0) || SelectedFileVersion != null;
-
 		void RefreshBundleButtonState ()
 		{
 			bundleButton.Enabled =
-				IsItemSelected && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
+				versionComboBox.Enabled && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
 		}
 
 		public event EventHandler BundleCreated;
@@ -89,6 +81,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 		{
 			loadingProgressIndicator.Hidden = false;
 			loadingProgressIndicator.StartAnimation (loadingProgressIndicator);
+
+			SelectedFileVersion = null;
 
 			//loads current versions
 			versionComboBox.RemoveAllItems ();
@@ -118,24 +112,16 @@ namespace MonoDevelop.Figma.FigmaBundles
 			loadingProgressIndicator.StopAnimation (loadingProgressIndicator);
 			loadingProgressIndicator.Hidden = true;
 
+			versionMenu.Clear ();
+
 			if (versions != null) {
-				var menu = new NSMenu();
-				menu.AddItem(new NSMenuItem("Current"));
+				foreach (var item in versions)
+					versionMenu.AddItem(item);
 
-				if (versions.Length > 0) {
-					menu.AddItem(NSMenuItem.SeparatorItem);
+				versionMenu.Generate(versionComboBox.Menu);
 
-					foreach (FigmaFileVersion version in versions.Skip(1)) {
-						if (!string.IsNullOrEmpty(version.label))
-							menu.AddItem(new NSMenuItem(version.label));
-						else
-							menu.AddItem(new NSMenuItem(version.created_at.ToString("f")));
-					}
-				}
-
-				versionComboBox.Menu = menu;
-				versionComboBox.SelectItem(0);
-				menu.Update();
+				versionComboBox.SelectItem(versionMenu.CurrentMenu);
+				SelectedFileVersion = versionMenu.CurrentVersion;
 			}
 
 			RefreshStates ();

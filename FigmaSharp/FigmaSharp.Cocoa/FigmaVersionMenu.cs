@@ -37,7 +37,10 @@ namespace FigmaSharp.Cocoa
 
 		(NSMenuItem menu, FigmaFileVersion version) current_item;
 
-		List<(NSMenuItem menu, FigmaFileVersion version)> named_version_items = new List<(NSMenuItem, FigmaFileVersion)>();
+		public NSMenuItem CurrentMenu => current_item.menu;
+		public FigmaFileVersion CurrentVersion => current_item.version;
+
+		List <(NSMenuItem menu, FigmaFileVersion version)> named_version_items = new List<(NSMenuItem, FigmaFileVersion)>();
 		List<(NSMenuItem menu, FigmaFileVersion version)> other_version_items = new List<(NSMenuItem, FigmaFileVersion)>();
 
 		public FigmaVersionMenu ()
@@ -93,17 +96,22 @@ namespace FigmaSharp.Cocoa
 			menu.RemoveAllItems();
 
 			menu.AddItem(current_item.menu);
-			menu.AddItem(NSMenuItem.SeparatorItem);
-			menu.AddItem(new NSMenuItem("Labeled") { Enabled = false });
 
-			foreach (var item in named_version_items)
-				menu.AddItem(item.menu);
+			if (named_version_items.Count > 0) {
+				menu.AddItem(NSMenuItem.SeparatorItem);
+				menu.AddItem(new NSMenuItem("Labeled") { Enabled = false });
+				foreach (var item in named_version_items)
+					menu.AddItem(item.menu);
+			}
 
-			menu.AddItem(NSMenuItem.SeparatorItem);
-			menu.AddItem(new NSMenuItem("Autosaved") { Enabled = false });
+			var otherVerionItems = other_version_items.Skip(1);
+			if (otherVerionItems.Count () > 0) {
+				menu.AddItem(NSMenuItem.SeparatorItem);
+				menu.AddItem(new NSMenuItem("Autosaved") { Enabled = false });
 
-			foreach (var item in other_version_items.Skip(1)) // First item is "Current"
-				menu.AddItem(item.menu);
+				foreach (var item in other_version_items.Skip(1)) // First item is "Current"
+					menu.AddItem(item.menu);
+			} 
 
 			menu.Update();
 		}
