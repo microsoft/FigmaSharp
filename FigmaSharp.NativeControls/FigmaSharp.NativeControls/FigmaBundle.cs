@@ -108,11 +108,17 @@ namespace FigmaSharp
 			RefreshViews ();
 		}
 
-		public void Update (FigmaFileVersion version)
+		/// <summary>
+		/// Updates and Reloads a bundler to a specific version
+		/// </summary>
+		/// <param name="version"></param>
+		public void Update (FigmaFileVersion version, FigmaCodeRendererService codeRendererService, bool includeImages = true)
 		{
 			Version = version;
 			LoadLocalDocument();
-			Save();
+
+			Reload(codeRendererService.figmaProvider);
+			SaveAll(codeRendererService, includeImages, false);
 		}
 
 		public void Save ()
