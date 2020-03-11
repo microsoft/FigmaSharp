@@ -39,7 +39,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
-		IFigmaFileProvider newWindowProvider;
+		readonly IFigmaFileProvider newWindowProvider;
 		public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
 		{
 			this.newWindowProvider = newWindowProvider;
@@ -52,13 +52,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return isWindow;
 		}
 
-
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrameEntity)currentNode;
-			var view = new View(new FakeSheetView());
 
-			var nativeView = view.NativeObject as FakeSheetView;
+			var nativeView = new FakeSheetView();
+			var view = new View(nativeView);
 			nativeView.Configure(frame);
 
 			/* TODO: Create a base FakeView class with common elements
@@ -94,9 +93,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
-		public bool IsActionButtonVisible { get; set; } = true;
+		public bool LiveButtonAlwaysVisible { get; set; } = true;
+		readonly IFigmaFileProvider newWindowProvider;
 
-		IFigmaFileProvider newWindowProvider;
 		public EmbededWindowConverter(IFigmaFileProvider newWindowProvider)
 		{
 			this.newWindowProvider = newWindowProvider;
@@ -125,6 +124,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var nativeView = new FakeWindowView(title);
+			nativeView.LiveButtonAlwaysVisible = LiveButtonAlwaysVisible;
+
 			var view = new View(nativeView);
 
 			nativeView.Layer.CornerRadius = 5;

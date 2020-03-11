@@ -122,8 +122,8 @@ namespace MonoDevelop.Figma
 
                 //we generate a new file provider for embeded windows
                 var tmpRemoteProvider = new FigmaLocalFileProvider(localPath) { File = filePath.FullPath };
-                rendererService.CustomConverters.Add (new EmbededWindowConverter(tmpRemoteProvider) { IsActionButtonVisible = false });
-                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter(tmpRemoteProvider) { IsActionButtonVisible = false });
+                rendererService.CustomConverters.Add (new EmbededWindowConverter(tmpRemoteProvider) { LiveButtonAlwaysVisible = false });
+                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter(tmpRemoteProvider));
 
                 layoutManager = new StoryboardLayoutManager();
 
