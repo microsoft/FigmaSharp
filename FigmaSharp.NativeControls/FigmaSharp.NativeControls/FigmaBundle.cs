@@ -32,6 +32,7 @@ using System.IO;
 using System.Linq;
 
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
@@ -242,6 +243,7 @@ namespace FigmaSharp
 		//reads all the main layers from the remote document
 		public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
 		{
+			Views.Clear();
 			var mainNodes = figmaFileProvider.GetMainLayers();
 			foreach (var item in mainNodes) {
 				GenerateFigmaFile (item);
@@ -271,11 +273,31 @@ namespace FigmaSharp
 			return true;
 		}
 
-		internal void SaveViews (Services.FigmaCodeRendererService codeRendererService)
+		internal void SaveViews (Services.FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true)
 		{
 			foreach (var view in Views) {
-				view.Generate (codeRendererService);
+				view.Generate (codeRendererService, writePublicClassIfExists);
 			}
+		}
+
+		/// <summary>
+		/// Regenerates all bundle based in the current provider
+		/// </summary>
+		/// <param name="fileProvider"></param>
+		public void Reload (IFigmaFileProvider fileProvider)
+		{
+			//generate .figma file
+			LoadLocalDocument();
+
+			//this reads all the main layers ready and fills our Views models
+			LoadRemoteMainLayers(fileProvider);
+		}
+
+		public void SaveAll (FigmaCodeRendererService codeRendererService, bool includeImages, bool writePublicClassIfExists = true)
+		{
+			Save();
+			SaveLocalDocument(includeImages);
+			SaveViews(codeRendererService, writePublicClassIfExists);
 		}
 
 		#endregion

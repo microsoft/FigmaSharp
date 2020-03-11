@@ -1,12 +1,114 @@
 ﻿using System;
+using System.Linq;
+using System.IO;
+using System.Threading.Tasks;
 using FigmaSharp;
+using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
+using FigmaSharp.Services;
+using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma
 {
 	public static class Extensions
 	{
+		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider, string namesSpace = null)
+		{
+			var figmaFolder = Path.Combine(project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
+
+			if (!Directory.Exists(figmaFolder))
+			{
+				Directory.CreateDirectory(figmaFolder);
+			}
+
+			//Bundle generation - We generate an empty bundle and store in the folder
+			var fullBundlePath = Path.Combine(figmaFolder, fileId);
+
+			var bundle = FigmaBundle.Empty(fileId, version, fullBundlePath);
+			bundle.Reload(fileProvider);
+			if (!string.IsNullOrEmpty(namesSpace))
+				bundle.Namespace = namesSpace;
+			return bundle;
+		}
+
+		public static async Task IncludeBundle (this Project currentProject, FigmaBundle bundle, bool includeImages = false)
+		{
+			var figmaFolder = Path.Combine(currentProject.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
+			if (!currentProject.PathExistsInProject(figmaFolder))
+			{
+				//we add figma folder in the case doesn't exists
+				currentProject.AddDirectory(FileService.AbsoluteToRelativePath(currentProject.BaseDirectory, figmaFolder));
+			}
+
+			//now we need to add the content
+			//bundle
+			var fullBundlePath = bundle.DirectoryPath;
+			if (!currentProject.PathExistsInProject(fullBundlePath))
+			{
+				currentProject.AddDirectory(FileService.AbsoluteToRelativePath(currentProject.BaseDirectory, fullBundlePath));
+			}
+
+			//manifest
+			var manifestFullDirectoryPath = bundle.ManifestFilePath;
+			if (!currentProject.PathExistsInProject(manifestFullDirectoryPath))
+				currentProject.AddFile(manifestFullDirectoryPath);
+
+
+			//document
+			var documentFullDirectoryPath = bundle.DocumentFilePath;
+			if (!currentProject.PathExistsInProject(documentFullDirectoryPath))
+				currentProject.AddFile(documentFullDirectoryPath);
+
+			//TODO: images are not enabled by now
+			if (includeImages)
+			{
+				//resources
+				var resourcesDirectoryPath = bundle.ResourcesDirectoryPath;
+				currentProject.AddDirectory(FileService.AbsoluteToRelativePath(currentProject.BaseDirectory, resourcesDirectoryPath));
+
+				//we add to the project for each resource inside the 
+				//foreach (var image in Directory.EnumerateFiles (resourcesDirectoryPath, "*.png")) {
+				//	currentProject.AddFile (image);
+				//}
+
+				var images = Directory.EnumerateFiles(resourcesDirectoryPath, $"*{FigmaBundle.ImageFormat}").Select(s => new FilePath(s));
+
+				foreach (var item in images)
+				{
+					if (!currentProject.PathExistsInProject(item))
+					{
+						var projectFile = new ProjectFile(item, BuildAction.BundleResource);
+						var name = item.FileName;
+						projectFile.Metadata.SetValue("LogicalName", name, "");
+						currentProject.AddFile(projectFile);
+					}
+				}
+			}
+
+			//files
+			var viewsDirectoryPath = bundle.ViewsDirectoryPath;
+			if (!currentProject.PathExistsInProject(viewsDirectoryPath))
+			{
+				currentProject.AddDirectory(FileService.AbsoluteToRelativePath(currentProject.BaseDirectory, viewsDirectoryPath));
+			}
+
+			foreach (var view in bundle.Views)
+			{
+				if (!currentProject.PathExistsInProject(view.PublicCsClassFilePath))
+					currentProject.AddFile(view.PublicCsClassFilePath);
+
+				if (!currentProject.PathExistsInProject(view.PartialDesignerClassFilePath))
+				{
+					var partialFilePath = currentProject.AddFile(view.PartialDesignerClassFilePath);
+					partialFilePath.DependsOn = view.PublicCsClassFilePath;
+				}
+			}
+
+			await IdeApp.ProjectOperations.SaveAsync(currentProject);
+			currentProject.NeedsReload = true;
+		}
+
 		public static bool IsDocumentDirectoryBundle (this ProjectFolder pr)
 		{
 			return

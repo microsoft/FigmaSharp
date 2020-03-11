@@ -35,7 +35,8 @@ namespace FigmaSharp.Services
 {
     public class NativeViewCodeService : FigmaCodeRendererService
 	{
-		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters, FigmaCodePropertyConverterBase codePropertyConverter) : base (figmaProvider, figmaViewConverters, codePropertyConverter)
+		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? NativeControlsContext.Current.GetConverters(true),
+			codePropertyConverter ?? NativeControlsContext.Current.GetCodePropertyConverter ())
 		{
 
 		}
