@@ -36,11 +36,6 @@
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
         <CommandItem 
-            id = "MonoDevelop.Figma.Commands.OpenLocalFigmaFileCommandHandler"
-            _label="Show Local File"
-            insertafter="MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
-        />
-        <CommandItem 
             id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
@@ -54,11 +49,6 @@
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
             _label="_Figma Bundle..."
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
-        />
-        <CommandItem 
-            id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
-            _label="_Figma View..."
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
