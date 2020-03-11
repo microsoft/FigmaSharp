@@ -161,6 +161,7 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
+	[Obsolete ("No longer used")]
 	class FigmaNewFileViewCommandHandler : FigmaCommandHandler
 	{
 		protected override void OnUpdate (CommandInfo info)
