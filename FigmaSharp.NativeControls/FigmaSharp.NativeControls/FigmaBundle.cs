@@ -98,11 +98,20 @@ namespace FigmaSharp
 
 			try {
 				Manifest = FigmaManifest.FromFilePath (manifestFullPath);
-			} catch (Exception ex) {
+				Version = new FigmaFileVersion() { id = Manifest.DocumentVersion };
+			}
+			catch (Exception ex) {
 				throw new FileLoadException ("error reading manifest file", ex);
 			}
-
+		
 			RefreshViews ();
+		}
+
+		public void Update (FigmaFileVersion version)
+		{
+			Version = version;
+			LoadLocalDocument();
+			Save();
 		}
 
 		public void Save ()
@@ -128,6 +137,10 @@ namespace FigmaSharp
 			if (Manifest != null && Document != null) {
 				Manifest.DocumentTitle = Document.name;
 				Manifest.DocumentVersion = Document.version;
+			}
+
+			if (Version == null) {
+				Version = new FigmaFileVersion() { id = Manifest.DocumentVersion };
 			}
 		}
 

@@ -9,6 +9,8 @@ using AppKit;
 using FigmaSharp.Services;
 using Foundation;
 using FigmaSharp.Cocoa;
+using System.IO;
+using System.Collections.Generic;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
@@ -16,6 +18,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 	{
 		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
 		private FigmaVersionMenu versionMenu = new FigmaVersionMenu();
+
+		public event EventHandler NeedsUpdate;
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
@@ -45,11 +49,26 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		private void UpdateButton_Activated(object sender, System.EventArgs e)
 		{
+			var version = versionMenu.GetFileVersion (versionComboBox.SelectedItem);
+			mainBundle.Update(version);
 			this.Close();
+		}
+
+		FigmaBundle mainBundle;
+
+		static IEnumerable<FigmaBundle> GetFromFigmaDirectory (string directory)
+		{
+			foreach (var item in Directory.EnumerateDirectories(directory)) {
+				var bundle = FigmaBundle.FromDirectoryPath(item);
+				if (bundle != null)
+					yield return bundle;
+			}
 		}
 
 		internal async void Load (FigmaBundle bundle)
 		{
+			mainBundle = bundle;
+
 			loadingProgressIndicator.Hidden = false;
 			loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
 
@@ -60,37 +79,28 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 			RefreshStates();
 
-			var mainLayersTask = Task.Run(() => {
-				var remoteFile = new FigmaRemoteFileProvider();
-				remoteFile.Load(bundle.FileId);
-				return remoteFile.GetMainLayers();
-			});
-			
 			var versionTask = Task.Run(() => {
-				try
-				{
+				try {
 					var query = new FigmaFileVersionQuery(bundle.FileId);
-					var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query).versions;
+					var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query)
+						.versions;
 					var result = figmaFileVersions.GroupBy(x => x.created_at)
 						.Select(group => group.First())
 						.ToArray();
 					return result;
-				}
-				catch (Exception ex)
-				{
+				} catch (Exception ex) {
 					Console.WriteLine(ex);
 					return null;
 				}
 			});
 
-			await Task.WhenAll (mainLayersTask, versionTask);
+			var figmaDirectory = Path.GetDirectoryName(bundle.DirectoryPath);
+			var currentProjectBundles = GetFromFigmaDirectory(figmaDirectory);
 
-			var remoteMainViews = await mainLayersTask;
 			versions = await versionTask;
 
-			foreach (var figmaNode in remoteMainViews) {
-				figmaNode.TryGetNodeCustomName(out var name);
-				BundlePopUp.AddItem(name);
+			foreach (var figmaNode in currentProjectBundles) {
+				BundlePopUp.AddItem(figmaNode.Manifest.DocumentTitle);
 			}
 
 			loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
@@ -103,7 +113,11 @@ namespace MonoDevelop.Figma.FigmaBundles
 			}
 
 			versionMenu.Generate(versionComboBox.Menu);
-		
+
+			//select current version
+			var menu = versionMenu.GetMenuItem (bundle.Version);
+			versionComboBox.SelectItem(menu);
+
 			versionComboBox.Enabled = true;
 
 			RefreshStates();
@@ -111,10 +125,10 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		private void RefreshStates()
 		{
-			BundlePopUp.Enabled = BundlePopUp.ItemCount > 0;
-			versionComboBox.Enabled = versionComboBox.ItemCount > 0;
+			//BundlePopUp.Enabled = BundlePopUp.ItemCount > 0;
+			//versionComboBox.Enabled = versionComboBox.ItemCount > 0;
 
-			UpdateButton.Enabled = BundlePopUp.Enabled && versionComboBox.Enabled && BundlePopUp.SelectedItem != null && versionComboBox.SelectedItem != null;
+			//UpdateButton.Enabled = BundlePopUp.Enabled && versionComboBox.Enabled && BundlePopUp.SelectedItem != null && versionComboBox.SelectedItem != null;
 		}
 	}
 }
