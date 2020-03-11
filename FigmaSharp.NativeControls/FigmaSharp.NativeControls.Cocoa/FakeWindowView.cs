@@ -161,7 +161,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			else
 				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.08f);
 
-			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.8f);
+			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.7f);
 
 
 			// Separator
