@@ -68,7 +68,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			await Task.Run(() => {
 			   var fileProvider = new FigmaRemoteFileProvider() { Version = version };
 			   fileProvider.Load(mainBundle.FileId);
-				Console.WriteLine($"[Done] Loaded Remote File provider for Version {version.id}");
+				Console.WriteLine($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");
 			   var codeRendererService = new NativeViewCodeService(fileProvider);
 			   mainBundle.Update(version, codeRendererService, includeImages: includeImages);
 		   });
