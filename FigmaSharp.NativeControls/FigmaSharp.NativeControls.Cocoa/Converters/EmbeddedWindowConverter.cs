@@ -141,6 +141,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };
 				layoutManager.Run(processedNodes, window.Content, secondaryRender);
 
+				(window.NativeObject as NSWindow).Appearance = nativeView.EffectiveAppearance;
 				window.Show();
 				window.Center();
 			};
