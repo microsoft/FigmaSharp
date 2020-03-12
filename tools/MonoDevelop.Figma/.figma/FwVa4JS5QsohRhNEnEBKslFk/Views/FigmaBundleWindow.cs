@@ -52,7 +52,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		readonly FigmaVersionMenu versionMenu = new FigmaVersionMenu();
 
-		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
+		private FigmaFileVersion[] versions;
 
 		public FigmaFileVersion SelectedFileVersion { get; private set; }
 
@@ -65,7 +65,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			templateCodeOptionBox.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			versionComboBox.Enabled = enable && versions.Length > 0;
+			versionComboBox.Enabled = enable && versions != null;
 
 			RefreshBundleButtonState (enable);
 		}
