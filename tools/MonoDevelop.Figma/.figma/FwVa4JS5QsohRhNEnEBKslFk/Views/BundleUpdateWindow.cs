@@ -11,6 +11,7 @@ using Foundation;
 using FigmaSharp.Cocoa;
 using System.IO;
 using System.Collections.Generic;
+using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
@@ -58,6 +59,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 			EnableViews(false);
 			ShowLoading(true);
 
+			IdeApp.Workbench.StatusBar.BeginProgress($"Updating Bundle {mainBundle.FileId}...");
+
 			var includeImages = true;
 
 			var version = versionMenu.GetFileVersion(versionComboBox.SelectedItem);
@@ -69,9 +72,11 @@ namespace MonoDevelop.Figma.FigmaBundles
 			   var codeRendererService = new NativeViewCodeService(fileProvider);
 			   mainBundle.Update(version, codeRendererService, includeImages: includeImages);
 		   });
+
 			await project.IncludeBundle(mainBundle, includeImages: includeImages);
 
-			ShowLoading(false);
+			IdeApp.Workbench.StatusBar.EndProgress();
+
 			PerformClose(this);
 		}
 

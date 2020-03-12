@@ -9,6 +9,7 @@ using FigmaSharp;
 using FigmaSharp.Cocoa;
 using MonoDevelop.Projects;
 using FigmaSharp.Services;
+using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
@@ -90,8 +91,10 @@ namespace MonoDevelop.Figma.FigmaBundles
 			PerformClose(this);
 		}
 
-		async Task GenerateBundle(string fileId, FigmaSharp.Models.FigmaFileVersion version, string namesSpace, bool includeImages)
+		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages)
 		{
+			IdeApp.Workbench.StatusBar.BeginProgress ($"Bundling {fileId}...");
+
 			var currentBundle = await Task.Run(() =>
 			{
 				//we need to ask to figma server to get nodes as demmand
@@ -107,10 +110,12 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 				return bundle;
 			});
-
+		
 			//now we need to add to Monodevelop all the stuff
 			await currentProject.IncludeBundle(currentBundle, includeImages)
 				.ConfigureAwait(true);
+
+			IdeApp.Workbench.StatusBar.EndProgress ();
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)

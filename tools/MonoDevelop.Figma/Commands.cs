@@ -306,6 +306,8 @@ namespace MonoDevelop.Figma.Commands
 				}
 				var includeImages = true;
 
+				IdeApp.Workbench.StatusBar.BeginProgress($"Regenerating {bundle.FileId}...");
+
 				await Task.Run(() => {
 					//we need to ask to figma server to get nodes as demmand
 					var fileProvider = new FigmaLocalFileProvider(bundle.ResourcesDirectoryPath);
@@ -315,6 +317,8 @@ namespace MonoDevelop.Figma.Commands
 					var codeRendererService = new NativeViewCodeService(fileProvider);
 					bundle.SaveAll(codeRendererService, includeImages, false);
 				});
+
+				IdeApp.Workbench.StatusBar.EndProgress ();
 
 				await currentFolder.Project.IncludeBundle (bundle, includeImages)
 					.ConfigureAwait (true);
