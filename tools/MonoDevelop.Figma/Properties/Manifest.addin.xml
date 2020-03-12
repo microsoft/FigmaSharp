@@ -26,7 +26,7 @@
        <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator2" insertbefore="AddSectionEnd" />
        <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
-            _label="_Update Bundle"
+            _label="_Update Package"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator2"
         />
         <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator" insertbefore="AddSectionEnd" />
@@ -48,7 +48,7 @@
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
-            _label="_Figma Bundle..."
+            _label="_Figma Package..."
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
@@ -67,9 +67,9 @@
     <Extension path = "/MonoDevelop/Ide/Commands">
         <Category _name = "FigmaSharp" id = "FigmaSharp">
             <Command id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
-                _label = "Figma Bundle"
+                _label = "Figma Package"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
-                _description = "Generates a figma bundle based in remote id"/>
+                _description = "Generates a Figma Package based in remote id"/>
             <Command id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
                 _label = "New Figma View"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
