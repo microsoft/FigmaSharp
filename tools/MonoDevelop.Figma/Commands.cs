@@ -304,16 +304,17 @@ namespace MonoDevelop.Figma.Commands
 				if (bundle == null) {
 					return;
 				}
-
 				var includeImages = true;
 
-				//we need to ask to figma server to get nodes as demmand
-				var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
-				fileProvider.Load (bundle.DocumentFilePath);
-				bundle.Reload (fileProvider);
+				await Task.Run(() => {
+					//we need to ask to figma server to get nodes as demmand
+					var fileProvider = new FigmaLocalFileProvider(bundle.ResourcesDirectoryPath);
+					fileProvider.Load(bundle.DocumentFilePath);
+					bundle.Reload(fileProvider);
 
-				var codeRendererService = new NativeViewCodeService (fileProvider);
-				bundle.SaveAll (codeRendererService, includeImages, false);
+					var codeRendererService = new NativeViewCodeService(fileProvider);
+					bundle.SaveAll(codeRendererService, includeImages, false);
+				});
 
 				await currentFolder.Project.IncludeBundle (bundle, includeImages)
 					.ConfigureAwait (true);
