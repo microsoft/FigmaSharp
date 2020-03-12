@@ -118,12 +118,18 @@ namespace FigmaSharp.Cocoa
 
 		internal NSMenuItem GetMenuItem (FigmaFileVersion fileVersion)
 		{
-			if (fileVersion == other_version_items.FirstOrDefault ().version)
+			if (fileVersion.id == current_item.version?.id || fileVersion == other_version_items.FirstOrDefault().version) {
 				return current_item.menu;
-			var version = named_version_items.FirstOrDefault(s => s.version.id == fileVersion.id).menu;
+			}
+			var version = named_version_items
+				.FirstOrDefault(s => s.version.id == fileVersion.id)
+				.menu;
 			if (version != null)
 				return version;
-			version = other_version_items.FirstOrDefault(s => s.version.id == fileVersion.id).menu;
+			version = other_version_items
+				.Skip(1)
+				.FirstOrDefault(s => s.version.id == fileVersion.id)
+				.menu;
 			return version;
 		}
 
@@ -131,10 +137,14 @@ namespace FigmaSharp.Cocoa
 		{
 			if (current_item.menu == menu)
 				return current_item.version;
-			var version = named_version_items.FirstOrDefault(s => s.menu == menu).version;
+			var version = named_version_items
+				.FirstOrDefault(s => s.menu == menu)
+				.version;
 			if (version != null)
 				return version;
-			version = other_version_items.FirstOrDefault(s => s.menu == menu).version;
+			version = other_version_items
+				.FirstOrDefault(s => s.menu == menu)
+				.version;
 			return version;
 		}
 	}
