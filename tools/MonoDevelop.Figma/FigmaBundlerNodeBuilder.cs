@@ -12,7 +12,7 @@ namespace MonoDevelop.Figma
 	public class CustomFigmaBundlerNodeBuilder : NodeBuilderExtension
 	{
 		//const string BundlesFolderLabel = "Bundles";
-		const string FigmaFolderLabel = "Figma";
+		const string FigmaFolderLabel = "Figma Packages";
 
 		public override bool CanBuildNode (Type dataType)
 		{
