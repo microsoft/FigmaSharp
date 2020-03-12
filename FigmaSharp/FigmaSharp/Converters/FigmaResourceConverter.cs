@@ -36,6 +36,11 @@ namespace FigmaSharp
         {
             customName = node.name;
             var index = customName.IndexOf ('\"');
+
+            if (index > 2 && (customName[index - 1] == ':' || customName[index - 1] == '=')) {
+                return false;
+            }
+
             if (index > -1 && index < customName.Length - 1) {
                 customName = customName.Substring (index + 1);
 
