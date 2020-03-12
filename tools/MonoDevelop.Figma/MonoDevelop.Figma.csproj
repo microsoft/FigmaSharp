@@ -22,6 +22,7 @@
         <Folder Include="Views\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
+        <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Resources\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
@@ -89,7 +90,13 @@
         <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\document.figma" />
       </ItemGroup>
       <ItemGroup>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\bundleFigmaDocument.designer.cs" />
         <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\BundleUpdateWindow.designer.cs" />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaBundleWindow.designer.cs">
+        </Compile>
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\BundleUpdateWindow.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaBundleWindow.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+      </ItemGroup>
+      <ItemGroup>
+        <BundleResource Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Resources\motivation.png" />
       </ItemGroup>
 </Project>

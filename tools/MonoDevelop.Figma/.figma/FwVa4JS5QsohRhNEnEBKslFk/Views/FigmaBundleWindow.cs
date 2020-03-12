@@ -14,17 +14,19 @@ using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
-	public partial class bundleFigmaDocument : AppKit.NSWindow
+	public partial class FigmaBundleWindow : AppKit.NSWindow
 	{
 		public string FileId => figmaUrlTextField.StringValue;
 
 		Project currentProject;
 
-		public bundleFigmaDocument (Project currentProject)
+		public FigmaBundleWindow (Project currentProject)
 		{
 			InitializeComponent ();
 
 			this.currentProject = currentProject;
+
+			this.namespacePopUp.StringValue = currentProject.GetDefaultFigmaNamespace();
 
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 
@@ -46,6 +48,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 			};
 
 			RefreshStates();
+
+			this.InitialFirstResponder = figmaUrlTextField;
 		}
 
 		readonly FigmaVersionMenu versionMenu = new FigmaVersionMenu();
@@ -58,6 +62,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 		{
 			figmaUrlTextField.Enabled = enable;
 
+			namespacePopUp.Enabled =
+			includeOriginalCheckbox.Enabled =
 			templateCodeOptionBox.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
@@ -78,8 +84,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			ShowLoading(true);
 			RefreshStates(false);
 
-			var namesSpace = currentProject.GetDefaultFigmaNamespace ();
-			await GenerateBundle(FileId, SelectedFileVersion, namesSpace, includeImages);
+			await GenerateBundle(FileId, SelectedFileVersion, this.namespacePopUp.StringValue, includeImages);
 
 			RefreshStates(true);
 			ShowLoading(false);

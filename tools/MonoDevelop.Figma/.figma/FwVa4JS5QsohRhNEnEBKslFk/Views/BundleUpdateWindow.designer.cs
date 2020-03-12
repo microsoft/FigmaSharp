@@ -1,9 +1,10 @@
 /*
 This file was auto-generated using
-FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-03-08 at 21:20
+FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-03-12 at 03:52
 
 Document title:   
 Document version: 0.1f
+Document Namespace:   FigmaSharp
 Document URL:     FwVa4JS5QsohRhNEnEBKslFk
 
 Changes to this file may cause incorrect behavior
@@ -15,154 +16,138 @@ namespace MonoDevelop.Figma.FigmaBundles
 {
 	partial class BundleUpdateWindow
 	{
-		NSButton UpdateButton, CancelButton;
-		NSProgressIndicator loadingProgressIndicator;
-		NSPopUpButton versionComboBox, BundlePopUp;
+		NSButton updateButton, cancelButton;
+		NSProgressIndicator versionSpinner;
+		NSPopUpButton versionComboBox, bundlePopUp;
 
-		private void InitializeComponent()
+		private void InitializeComponent ()
 		{
 			this.StyleMask |= NSWindowStyle.Closable;
 			this.StyleMask |= NSWindowStyle.Resizable;
 			this.Title = "Update Figma Bundle";
-
 			var frame = Frame;
-			frame.Size = new CoreGraphics.CGSize(455f, 171f);
-			this.SetFrame(frame, true);
-
+			frame.Size = new CoreGraphics.CGSize (455f,171f);
+			this.SetFrame (frame,true);
+			
 			// View:     updateButton
 			// NodeName: "updateButton"
 			// NodeType: INSTANCE
-			// NodeId:   539:207
-
-			UpdateButton = new AppKit.NSButton();
-			UpdateButton.WantsLayer = true;
-			UpdateButton.BezelStyle = NSBezelStyle.Rounded;
-			UpdateButton.ControlSize = NSControlSize.Regular;
-			UpdateButton.Title = "Update";
-			UpdateButton.KeyEquivalent = "\r";
-
-			this.ContentView.AddSubview(UpdateButton);
-			UpdateButton.Frame = UpdateButton.GetFrameForAlignmentRect(new CoreGraphics.CGRect(353f, 21f, 82f, 19f)); ;
-
-
+			// NodeId:   775:30
+			
+			updateButton = new AppKit.NSButton();
+			updateButton.WantsLayer = true;
+			updateButton.BezelStyle = NSBezelStyle.Rounded;
+			updateButton.ControlSize = NSControlSize.Regular;
+			updateButton.Title = "Update";
+			updateButton.KeyEquivalent = "\r";
+			updateButton.AccessibilityTitle = "Bundle";
+			updateButton.AccessibilityHelp = "Starts bundling the document";
+			
+			
+			this.ContentView.AddSubview (updateButton);
+			updateButton.Frame = updateButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (352f,20f,84f,21f));;
+			
+			
 			// View:     cancelButton
 			// NodeName: "cancelButton"
 			// NodeType: INSTANCE
-			// NodeId:   539:208
-
-			CancelButton = new AppKit.NSButton();
-			CancelButton.WantsLayer = true;
-			CancelButton.BezelStyle = NSBezelStyle.Rounded;
-			CancelButton.ControlSize = NSControlSize.Regular;
-			CancelButton.Title = "Cancel";
-
-			this.ContentView.AddSubview(CancelButton);
-			CancelButton.Frame = CancelButton.GetFrameForAlignmentRect(new CoreGraphics.CGRect(258f, 21f, 82f, 19f));
-
-
+			// NodeId:   775:45
+			
+			cancelButton = new AppKit.NSButton();
+			cancelButton.WantsLayer = true;
+			cancelButton.BezelStyle = NSBezelStyle.Rounded;
+			cancelButton.ControlSize = NSControlSize.Regular;
+			cancelButton.Title = "Cancel";
+			cancelButton.AccessibilityTitle = "Cancel";
+			cancelButton.AccessibilityHelp = "Cancel bundling";
+			
+			
+			this.ContentView.AddSubview (cancelButton);
+			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (257f,20f,84f,21f));;
+			
+			
 			// View:     versionSpinner
 			// NodeName: "versionSpinner"
 			// NodeType: INSTANCE
-			// NodeId:   539:217
-
-			loadingProgressIndicator = new AppKit.NSProgressIndicator();
-			loadingProgressIndicator.WantsLayer = true;
-			loadingProgressIndicator.Style = NSProgressIndicatorStyle.Spinning;
-			loadingProgressIndicator.Hidden = true;
-			loadingProgressIndicator.ControlSize = NSControlSize.Small;
-
-			this.ContentView.AddSubview(loadingProgressIndicator);
-			loadingProgressIndicator.Frame = loadingProgressIndicator.GetFrameForAlignmentRect(new CoreGraphics.CGRect(383f, 72f, 18f, 18f));
-
+			// NodeId:   772:40
+			
+			versionSpinner = new AppKit.NSProgressIndicator();
+			versionSpinner.WantsLayer = true;
+			versionSpinner.Style = NSProgressIndicatorStyle.Spinning;
+			versionSpinner.Hidden = true;
+			versionSpinner.ControlSize = NSControlSize.Small;
+			
+			this.ContentView.AddSubview (versionSpinner);
+			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (383f,72f,18f,18f));;
+			
+			
+			// View:     nativeViewCodeServiceView
+			// NodeName: Generate:
+			// NodeType: INSTANCE
+			// NodeId:   772:120
+			
+			var nativeViewCodeServiceView = new AppKit.NSTextField() {    StringValue = "Figma Bundle:",
+			Editable = false,
+			Bordered = false,
+			Bezeled = false,
+			DrawsBackground = false,
+			Alignment = NSTextAlignment.Left,
+			};
+			nativeViewCodeServiceView.WantsLayer = true;
+			nativeViewCodeServiceView.Alignment = NSTextAlignment.Right;
+			
+			this.ContentView.AddSubview (nativeViewCodeServiceView);
+			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f,104f,142f,20f));;
+			
+			
+			// View:     nativeViewCodeServiceView1
+			// NodeName: Generate:
+			// NodeType: INSTANCE
+			// NodeId:   772:124
+			
+			var nativeViewCodeServiceView1 = new AppKit.NSTextField() {    StringValue = "Update to:",
+			Editable = false,
+			Bordered = false,
+			Bezeled = false,
+			DrawsBackground = false,
+			Alignment = NSTextAlignment.Left,
+			};
+			nativeViewCodeServiceView1.WantsLayer = true;
+			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
+			
+			this.ContentView.AddSubview (nativeViewCodeServiceView1);
+			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f,71f,142f,20f));;
+			
+			
+			// View:     bundlePopUp
+			// NodeName: "bundlePopUp"
+			// NodeType: INSTANCE
+			// NodeId:   765:0
+			
+			bundlePopUp = new AppKit.NSPopUpButton();
+			bundlePopUp.WantsLayer = true;
+			bundlePopUp.BezelStyle = NSBezelStyle.Rounded;
+			bundlePopUp.ControlSize = NSControlSize.Regular;
+			bundlePopUp.AddItem ("Breakpoints Dialog");
+			
+			this.ContentView.AddSubview (bundlePopUp);
+			bundlePopUp.Frame = bundlePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f,103f,223f,21f));;
+			
+			
 			// View:     versionPopUp
 			// NodeName: "versionPopUp"
 			// NodeType: INSTANCE
-			// NodeId:   539:219
-
+			// NodeId:   765:58
+			
 			versionComboBox = new AppKit.NSPopUpButton();
 			versionComboBox.WantsLayer = true;
 			versionComboBox.BezelStyle = NSBezelStyle.Rounded;
 			versionComboBox.ControlSize = NSControlSize.Regular;
-			versionComboBox.AddItem("Current – 8.6");
-
-			this.ContentView.AddSubview(versionComboBox);
-			versionComboBox.Frame = versionComboBox.GetFrameForAlignmentRect(new CoreGraphics.CGRect(155f, 71f, 220f, 19f)); ;
-
-			// View:     nativeViewCodeServiceView
-			// NodeName: Update to:
-			// NodeType: INSTANCE
-			// NodeId:   539:226
-
-			var nativeViewCodeServiceView = new NSView();
-			nativeViewCodeServiceView.WantsLayer = true;
-
-			this.ContentView.AddSubview(nativeViewCodeServiceView);
-			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect(new CoreGraphics.CGRect(8f, 74f, 142f, 16f));
-
-			// View:     nativeViewCodeServiceView1
-			// NodeName: lbl
-			// NodeType: TEXT
-			// NodeId:   I539:226;527:57
-
-			var nativeViewCodeServiceView1 = new AppKit.NSTextField()
-			{
-				StringValue = "Update to:",
-				Editable = false,
-				Bordered = false,
-				Bezeled = false,
-				DrawsBackground = false,
-				Alignment = NSTextAlignment.Left,
-			};
-			nativeViewCodeServiceView1.WantsLayer = true;
-			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
-
-			nativeViewCodeServiceView.AddSubview(nativeViewCodeServiceView1);
-			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect(new CoreGraphics.CGRect(0f, 0f, 142f, 16f));
-
-			// View:     bundlePopUp
-			// NodeName: "bundlePopUp"
-			// NodeType: INSTANCE
-			// NodeId:   539:345
-
-			BundlePopUp = new AppKit.NSPopUpButton();
-			BundlePopUp.WantsLayer = true;
-			BundlePopUp.BezelStyle = NSBezelStyle.Rounded;
-			BundlePopUp.ControlSize = NSControlSize.Regular;
-			BundlePopUp.AddItem("Breakpoints Dialog");
-
-			this.ContentView.AddSubview(BundlePopUp);
-			BundlePopUp.Frame = BundlePopUp.GetFrameForAlignmentRect(new CoreGraphics.CGRect(155f, 104f, 220f, 19f)); ;
-
-			// View:     nativeViewCodeServiceView2
-			// NodeName: Figma Bundle:
-			// NodeType: INSTANCE
-			// NodeId:   539:225
-
-			var nativeViewCodeServiceView2 = new NSView();
-			nativeViewCodeServiceView2.WantsLayer = true;
-
-			this.ContentView.AddSubview(nativeViewCodeServiceView2);
-			nativeViewCodeServiceView2.Frame = nativeViewCodeServiceView2.GetFrameForAlignmentRect(new CoreGraphics.CGRect(8f, 105f, 142f, 16f));
-
-			// View:     nativeViewCodeServiceView3
-			// NodeName: lbl
-			// NodeType: TEXT
-			// NodeId:   I539:225;527:57
-
-			var nativeViewCodeServiceView3 = new AppKit.NSTextField()
-			{
-				StringValue = "Figma Bundle:",
-				Editable = false,
-				Bordered = false,
-				Bezeled = false,
-				DrawsBackground = false,
-				Alignment = NSTextAlignment.Left,
-			};
-			nativeViewCodeServiceView3.WantsLayer = true;
-			nativeViewCodeServiceView3.Alignment = NSTextAlignment.Right;
-
-			nativeViewCodeServiceView2.AddSubview(nativeViewCodeServiceView3);
-			nativeViewCodeServiceView3.Frame = nativeViewCodeServiceView3.GetFrameForAlignmentRect(new CoreGraphics.CGRect(0f, 0f, 142f, 16f));
+			versionComboBox.AddItem ("Current – 8.6");
+			
+			this.ContentView.AddSubview (versionComboBox);
+			versionComboBox.Frame = versionComboBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f,70f,223f,21f));;
+			
 		}
 	}
 }

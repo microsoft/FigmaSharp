@@ -37,9 +37,9 @@ namespace MonoDevelop.Figma.FigmaBundles
 		{
 			InitializeComponent ();
 			versionComboBox.AutoEnablesItems = false;
-			loadingProgressIndicator.Hidden = true;
-			UpdateButton.Activated += UpdateButton_Activated;
-			CancelButton.Activated += CancelButton_Activated;
+			versionSpinner.Hidden = true;
+			updateButton.Activated += UpdateButton_Activated;
+			cancelButton.Activated += CancelButton_Activated;
 		}
 
 		private void CancelButton_Activated(object sender, System.EventArgs e)
@@ -49,8 +49,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		void EnableViews (bool value)
 		{
-			versionComboBox.Enabled = BundlePopUp.Enabled =
-				UpdateButton.Enabled = value;
+			versionComboBox.Enabled = bundlePopUp.Enabled =
+				updateButton.Enabled = value;
 		}
 
 		private async void UpdateButton_Activated(object sender, System.EventArgs e)
@@ -87,11 +87,11 @@ namespace MonoDevelop.Figma.FigmaBundles
 		void ShowLoading (bool value)
 		{
 			if (value) {
-				loadingProgressIndicator.Hidden = false;
-				loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
+				versionSpinner.Hidden = false;
+				versionSpinner.StartAnimation(versionSpinner);
 			} else {
-				loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
-				loadingProgressIndicator.Hidden = true;
+				versionSpinner.StopAnimation(versionSpinner);
+				versionSpinner.Hidden = true;
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 			EnableViews(false);
 
-			BundlePopUp.RemoveAllItems();
+			bundlePopUp.RemoveAllItems();
 
 			//loads current versions
 			versionComboBox.RemoveAllItems();
@@ -130,7 +130,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			versions = await versionTask;
 
 			foreach (var figmaNode in currentProjectBundles) {
-				BundlePopUp.AddItem(figmaNode.Manifest.DocumentTitle);
+				bundlePopUp.AddItem(figmaNode.Manifest.DocumentTitle);
 			}
 
 			ShowLoading(false);

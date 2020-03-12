@@ -274,7 +274,7 @@ namespace MonoDevelop.Figma.Commands
 				return;
 			}
 
-			var figmaBundleWindow = new FigmaBundles.bundleFigmaDocument (currentProject);
+			var figmaBundleWindow = new FigmaBundles.FigmaBundleWindow (currentProject);
 		
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
 			currentIdeWindow.AddChildWindow (figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
