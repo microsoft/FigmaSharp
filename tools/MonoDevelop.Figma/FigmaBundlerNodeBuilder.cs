@@ -61,9 +61,9 @@ namespace MonoDevelop.Figma
 					Task.Run(() => {
 						var query = new FigmaFileVersionQuery(bundle.FileId);
 						var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query).versions;
-						return figmaFileVersions.GroupBy(x => x.created_at)
-							.Select(group => group.First())
-							.FirstOrDefault (s => string.IsNullOrEmpty (s.label));
+						return figmaFileVersions
+							.GroupByCreatedAt()
+							.FirstOrDefault (s =>  !s.IsNamed);
 					}).ContinueWith (s => {
 						if (s.Result != null && s.Result.id != bundle.Version.id) {
 							Runtime.RunInMainThread(() => {

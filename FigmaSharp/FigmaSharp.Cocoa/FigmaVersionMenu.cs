@@ -62,10 +62,10 @@ namespace FigmaSharp.Cocoa
 
 		public void AddItem (FigmaFileVersion version)
 		{
-			if (!string.IsNullOrEmpty(version.label)) {
-				named_version_items.Add((CreateMenuItem (version.label, version), version));
+			if (version.IsNamed) {
+				named_version_items.Add((CreateMenuItem (version.CurrentName, version), version));
 			} else {
-				other_version_items.Add((CreateMenuItem(version.created_at.ToString("g"), version), version));
+				other_version_items.Add((CreateMenuItem(version.CurrentName, version), version));
 			}
 		}
 

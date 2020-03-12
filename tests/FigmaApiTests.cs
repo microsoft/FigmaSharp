@@ -54,7 +54,7 @@ namespace FigmaSharp.Tests
 		{
 			var fileId = "QzEgq2772k2eeMF2sVNc3kEY";
 			var firstVersion = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery (fileId))
-				.versions.OrderBy (s => s.created_at)
+				.versions.GroupByCreatedAt()
 				.FirstOrDefault ();
 
 			var file = AppContext.Api.GetFile (new FigmaFileQuery (fileId, firstVersion));

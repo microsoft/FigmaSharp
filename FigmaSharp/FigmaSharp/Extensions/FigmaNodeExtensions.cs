@@ -37,8 +37,14 @@ namespace FigmaSharp
 {
 	public static class FigmaServiceExtensions
 	{
-		public static Rectangle GetCurrentBounds (this FigmaCanvas canvas)
-		{
+        public static IEnumerable<FigmaFileVersion> GroupByCreatedAt (this IEnumerable<FigmaFileVersion> sender)
+        {
+            return sender.GroupBy(x => x.created_at)
+                        .Select(group => group.First());
+        }
+
+        public static Rectangle GetCurrentBounds (this FigmaCanvas canvas)
+        {
             Rectangle contentRect = Rectangle.Zero;
             for (int i = 0; i < canvas.children.Length; i++) {
                 if (canvas.children[i] is IAbsoluteBoundingBox box) {

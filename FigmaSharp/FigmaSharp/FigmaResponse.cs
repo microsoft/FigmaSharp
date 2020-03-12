@@ -49,6 +49,9 @@ namespace FigmaSharp.Models
         public string description { get; set; }
         public FigmaUser user { get; set; }
         public string thumbnail_url { get; set; }
+
+        public string CurrentName => !string.IsNullOrEmpty(label) ? label : created_at.ToString("g");
+        public bool IsNamed => !string.IsNullOrEmpty(label);
     }
 
 	public class FigmaFileVersionResponse

@@ -114,8 +114,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 					var query = new FigmaFileVersionQuery(bundle.FileId);
 					var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query)
 						.versions;
-					var result = figmaFileVersions.GroupBy(x => x.created_at)
-						.Select(group => group.First())
+					var result = figmaFileVersions
+						.GroupByCreatedAt ()
 						.ToArray();
 					return result;
 				} catch (Exception ex) {
