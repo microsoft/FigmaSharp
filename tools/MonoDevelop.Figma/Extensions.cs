@@ -18,11 +18,11 @@ namespace MonoDevelop.Figma
 			string namesSpace;
 			//set namespace
 			if (currentProject is DotNetProject dotNetProject) {
-				namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaBundles";
+				namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaPackages";
 			}
 			else
 			{
-				namesSpace = "FigmaSharp.FigmaBundles";
+				namesSpace = "FigmaSharp.FigmaPackages";
 			}
 			return namesSpace;
 		}

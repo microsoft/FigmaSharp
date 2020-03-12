@@ -58,7 +58,7 @@ namespace FigmaSharp
 
 		public string Namespace { get; set; } = DefaultNamespace;
 	
-		internal const string FigmaBundleDirectoryExtension = ".figmabundle";
+		internal const string FigmaBundleDirectoryExtension = ".figmapackage";
 		//const string FigmaBundlesDirectoryName = ".bundles";
 		internal const string FigmaDirectoryName = ".figma";
 		internal const string ManifestFileName = "manifest.json";
@@ -150,7 +150,7 @@ namespace FigmaSharp
 			if (Version == null) {
 				Version = new FigmaFileVersion() { id = Manifest.DocumentVersion };
 			}
-			Console.WriteLine($"[Done] Refreshed Bundle from remote Figma API");
+			Console.WriteLine($"[Done] Refreshed Figma Package from remote Figma API");
 		}
 
 		//Generates the .figmafile
@@ -312,7 +312,7 @@ namespace FigmaSharp
 			Save();
 			SaveLocalDocument(includeImages);
 			SaveViews(codeRendererService, writePublicClassIfExists);
-			Console.WriteLine($"[Done] Saved all the files from Bundle");
+			Console.WriteLine($"[Done] Saved all the files from Figma Package");
 		}
 
 		#endregion
