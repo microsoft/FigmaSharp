@@ -28,9 +28,7 @@
 
 using System;
 using System.Linq;
-
 using AppKit;
-
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls;
@@ -46,6 +44,11 @@ namespace FigmaSharp
 
 		const string frameEntity = "frame";
 
+		bool IsChildrenVisible (IFigmaNodeContainer optionsNode, string layerName)
+		{
+			return optionsNode.children.FirstOrDefault(s => s.name == layerName)?.visible ?? false;
+		}
+
 		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService)
 		{
 			if (FigmaNode == null)
@@ -57,33 +60,41 @@ namespace FigmaSharp
 			var builder = new System.Text.StringBuilder ();
 			//builder.AppendLine ("//HACK: Temporal Window Frame Size");
 
-			if (FigmaNode is IFigmaNodeContainer container) {
-				var properties = container.children
-					.FirstOrDefault (s => s.name == "Properties" && s.visible == false);
-				if (properties != null) {
+			bool centers = false;
 
-				}
-			}
-
-			//default configuration status bar
-			builder.AppendLine (string.Format ("{0}.{1} |= {2};",
-				CodeGenerationHelpers.This,
-				nameof (AppKit.NSWindow.StyleMask),
-				AppKit.NSWindowStyle.Closable.GetFullName ()
-			));
-
-			builder.AppendLine(string.Format("{0}.{1} |= {2};",
-				CodeGenerationHelpers.This,
-				nameof(AppKit.NSWindow.StyleMask),
-				AppKit.NSWindowStyle.Resizable.GetFullName()
-			));
-
-			var windowComponent = FigmaNode.GetDialogInstanceFromParentContainer () as FigmaInstance;
+			var windowComponent = FigmaNode.GetDialogInstanceFromParentContainer ();
 			if (windowComponent != null) {
+
+				var optionsNode = windowComponent.children.FirstOrDefault(s => s.name == "!options");
+				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
+				{
+
+					if (IsChildrenVisible(figmaNodeContainer, "close"))
+					{
+						//default configuration status bar
+						builder.AppendLine(string.Format("{0}.{1} |= {2};",
+							CodeGenerationHelpers.This,
+							nameof(AppKit.NSWindow.StyleMask),
+							AppKit.NSWindowStyle.Closable.GetFullName()
+						));
+					}
+
+					if (IsChildrenVisible(figmaNodeContainer, "resize"))
+					{
+						builder.AppendLine(string.Format("{0}.{1} |= {2};",
+							CodeGenerationHelpers.This,
+							nameof(AppKit.NSWindow.StyleMask),
+							AppKit.NSWindowStyle.Resizable.GetFullName()
+						));
+					}
+
+					if (IsChildrenVisible(figmaNodeContainer, "center")) {
+						centers = true;
+					}
+				}
 
 				if (windowComponent.TryGetNativeControlComponentType (out var nativeControlComponentType)) {
 					windowComponent.TryGetNativeControlType (out var nativeControlType);
-
 
 					if (nativeControlType == NativeControlType.WindowStandard) {
 						var title = windowComponent.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "window title");
@@ -113,6 +124,13 @@ namespace FigmaSharp
 
 			codeRendererService.GetCode (builder, new FigmaCodeNode(FigmaNode, null), null);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
+
+			if (centers) {
+				builder.AppendLine(string.Format("{0}.{1}();",
+				CodeGenerationHelpers.This,
+				nameof(AppKit.NSWindow.Center)
+				));
+			}
 		}
 
 		protected override void OnGetPublicDesignerClass (FigmaPublicPartialClass publicPartialClass)
