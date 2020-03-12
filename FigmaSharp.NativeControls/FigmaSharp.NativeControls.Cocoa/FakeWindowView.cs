@@ -241,6 +241,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override void MouseEntered(NSEvent theEvent)
 		{
 			base.MouseEntered(theEvent);
+
+			if (LiveButtonAlwaysVisible)
+				return;
+
 			LiveButton.Hidden = false;
 		}
 
