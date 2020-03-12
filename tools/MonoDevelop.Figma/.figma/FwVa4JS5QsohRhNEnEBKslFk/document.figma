@@ -23428,7 +23428,7 @@
                         "type": "TEXT"
                       },
                       {
-                        "characters": "Update Figma Bundle",
+                        "characters": "Update Figma Package",
                         "style": {
                           "fontFamily": "SF Pro Text",
                           "fontPostScriptName": "SFProText-Medium",
@@ -27785,7 +27785,7 @@
                     "isMask": false,
                     "children": [
                       {
-                        "characters": "Figma Bundle:",
+                        "characters": "Figma Package:",
                         "style": {
                           "fontFamily": "SF Pro Text",
                           "fontPostScriptName": "SFProText-Medium",
@@ -31948,7 +31948,7 @@
             "verticalPadding": 0.0,
             "Parent": null,
             "id": "539:204",
-            "name": "2. \"BundleUpdateWindow\"",
+            "name": "2. \"PackageUpdateWindow\"",
             "type": "FRAME"
           },
           {
@@ -33123,7 +33123,7 @@
                     "visible": false
                   },
                   {
-                    "characters": "Bundle Figma Document",
+                    "characters": "Package Figma Document",
                     "style": {
                       "fontFamily": "SF Pro Text",
                       "fontPostScriptName": "SFProText-Medium",
@@ -34582,7 +34582,7 @@
                             "type": "VECTOR"
                           },
                           {
-                            "characters": "Bundle",
+                            "characters": "Package",
                             "style": {
                               "fontFamily": "SF Pro Text",
                               "fontPostScriptName": "SFProText-Medium",
@@ -44947,7 +44947,7 @@
             "verticalPadding": 0.0,
             "Parent": null,
             "id": "25:0",
-            "name": "1. \"FigmaBundleWindow\"",
+            "name": "1. \"FigmaPackageWindow\"",
             "type": "FRAME"
           }
         ],
@@ -45601,8 +45601,8 @@
     }
   },
   "name": "VS Mac Extension",
-  "lastModified": "2020-03-11T23:57:34.261226Z",
-  "version": "269829614",
+  "lastModified": "2020-03-12T17:58:43.931076Z",
+  "version": "270579596",
   "thumbnailUrl": "https://s3-alpha-sig.figma.com/thumbnails/92d063b7-b0e1-4d43-ad8e-9ca19378c3f9?Expires=1584921600&Signature=UiVSb3y9E~Apz-nRU5~g1Z4SQtm46spi0NJb6NAI4bbpCdrr1Y19G3Cn~KLziiNIFPc3LpSQSX2ePy~y9R97H9-jiCORG3nmbwwB97ufCBK2PkP0k~fXXRO326BEs89~M~TjAT8NsYZVNYBjnqVPJndKXZWvtEkchXV3GIDSZU8VCeOr2OwN~~qTOOvq2bBE2oSb7oG2YKMUlID6vP3bDvW56ziZLmwPm6xGvJs-RefzudTWr2p5mU9WGOYqjvRY0wEo2ypabf-Ng5tFeG~~IKklyaS3W6sghAweXzoDFBBgBAPMn~Zuu3qui1tHlXMAvkTsD-VyIEzh1klVXiUZEg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
   "schemaVersion": 0
 }

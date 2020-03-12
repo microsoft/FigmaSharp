@@ -13,9 +13,9 @@ using System.IO;
 using System.Collections.Generic;
 using MonoDevelop.Ide;
 
-namespace MonoDevelop.Figma.FigmaBundles
+namespace MonoDevelop.Figma.Packages
 {
-	public partial class BundleUpdateWindow : AppKit.NSWindow
+	public partial class PackageUpdateWindow : AppKit.NSWindow
 	{
 		private FigmaFileVersion[] versions = new FigmaFileVersion[0];
 		private FigmaVersionMenu versionMenu = new FigmaVersionMenu();
@@ -27,17 +27,17 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		public FigmaFileVersion SelectedFileVersion {
 			get {
-				if (versionComboBox.ItemCount > 0 && versionComboBox.ItemCount == versions.Length + 1 && versionComboBox.IndexOfSelectedItem > -1 && versions.Length > 0) {
-					return versions[(int)versionComboBox.IndexOfSelectedItem];
+				if (versionPopUp.ItemCount > 0 && versionPopUp.ItemCount == versions.Length + 1 && versionPopUp.IndexOfSelectedItem > -1 && versions.Length > 0) {
+					return versions[(int)versionPopUp.IndexOfSelectedItem];
 				}
 				return null;
 			}
 		}
 
-		public BundleUpdateWindow ()
+		public PackageUpdateWindow ()
 		{
 			InitializeComponent ();
-			versionComboBox.AutoEnablesItems = false;
+			versionPopUp.AutoEnablesItems = false;
 			versionSpinner.Hidden = true;
 			updateButton.Activated += UpdateButton_Activated;
 			cancelButton.Activated += CancelButton_Activated;
@@ -50,7 +50,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 		void EnableViews (bool value)
 		{
-			versionComboBox.Enabled = bundlePopUp.Enabled =
+			versionPopUp.Enabled = bundlePopUp.Enabled =
 				updateButton.Enabled = value;
 		}
 
@@ -59,11 +59,11 @@ namespace MonoDevelop.Figma.FigmaBundles
 			EnableViews(false);
 			ShowLoading(true);
 
-			IdeApp.Workbench.StatusBar.BeginProgress($"Updating Bundle {mainBundle.FileId}...");
+			IdeApp.Workbench.StatusBar.BeginProgress($"Updating Package {mainBundle.FileId}...");
 
 			var includeImages = true;
 
-			var version = versionMenu.GetFileVersion(versionComboBox.SelectedItem);
+			var version = versionMenu.GetFileVersion(versionPopUp.SelectedItem);
 
 			await Task.Run(() => {
 			   var fileProvider = new FigmaRemoteFileProvider() { Version = version };
@@ -112,7 +112,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			bundlePopUp.RemoveAllItems();
 
 			//loads current versions
-			versionComboBox.RemoveAllItems();
+			versionPopUp.RemoveAllItems();
 
 			var versionTask = Task.Run(() => {
 				try {
@@ -147,11 +147,11 @@ namespace MonoDevelop.Figma.FigmaBundles
 				}
 			}
 
-			versionMenu.Generate(versionComboBox.Menu);
+			versionMenu.Generate(versionPopUp.Menu);
 
 			//select current version
 			var menu = versionMenu.GetMenuItem (bundle.Version);
-			versionComboBox.SelectItem(menu);
+			versionPopUp.SelectItem(menu);
 		}
 	}
 }

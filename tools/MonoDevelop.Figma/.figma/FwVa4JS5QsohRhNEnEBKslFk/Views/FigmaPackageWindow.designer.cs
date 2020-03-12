@@ -1,6 +1,6 @@
 /*
 This file was auto-generated using
-FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-03-12 at 03:52
+FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-03-12 at 19:18
 
 Document title:   
 Document version: 0.1f
@@ -12,23 +12,24 @@ and will be lost if the code is regenerated.
 * 
 */
 using AppKit;
-namespace MonoDevelop.Figma.FigmaBundles
+namespace MonoDevelop.Figma.Packages
 {
-	partial class FigmaBundleWindow
+	partial class FigmaPackageWindow
 	{
 		NSTextField figmaUrlTextField;
-		NSPopUpButton versionComboBox;
-		NSButton templateNoneOptionBox, templateMarkUpOptionBox, templateCodeOptionBox;
-		NSProgressIndicator loadingProgressIndicator;
+		NSPopUpButton versionPopUp;
+		NSButton nothingRadio, templateRadio, codeRadio;
+		NSProgressIndicator versionSpinner;
 		NSButton includeOriginalCheckbox;
 		NSButton bundleButton, cancelButton;
-		
+
 		NSComboBox namespacePopUp;
 
 		private void InitializeComponent ()
 		{
 			this.StyleMask |= NSWindowStyle.Closable;
-			this.Title = "Bundle Figma Document";
+			this.StyleMask |= NSWindowStyle.Resizable;
+			this.Title = "Package Figma Document";
 			var frame = Frame;
 			frame.Size = new CoreGraphics.CGSize (481f,362f);
 			this.SetFrame (frame,true);
@@ -42,7 +43,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			bundleButton.WantsLayer = true;
 			bundleButton.BezelStyle = NSBezelStyle.Rounded;
 			bundleButton.ControlSize = NSControlSize.Regular;
-			bundleButton.Title = "Bundle";
+			bundleButton.Title = "Package";
 			bundleButton.KeyEquivalent = "\r";
 			bundleButton.AccessibilityTitle = "Bundle";
 			bundleButton.AccessibilityHelp = "Starts bundling the document";
@@ -64,10 +65,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 			cancelButton.AccessibilityTitle = "Cancel";
 			cancelButton.AccessibilityHelp = "Cancel bundling";
 			
-			
 			this.ContentView.AddSubview (cancelButton);
 			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (19f,20f,84f,21f));;
-			
 			
 			// View:     nativeViewCodeServiceView
 			// NodeName: sep
@@ -98,7 +97,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			this.ContentView.AddSubview (includeOriginalCheckbox);
 			includeOriginalCheckbox.Frame = includeOriginalCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f,86f,238f,14f));;
 			
-			
 			// View:     generateRadios
 			// NodeName: "generateRadios"
 			// NodeType: FRAME
@@ -116,15 +114,15 @@ namespace MonoDevelop.Figma.FigmaBundles
 			// NodeType: INSTANCE
 			// NodeId:   576:0
 			
-			templateNoneOptionBox = new AppKit.NSButton();
-			templateNoneOptionBox.WantsLayer = true;
-			templateNoneOptionBox.BezelStyle = NSBezelStyle.Rounded;
-			templateNoneOptionBox.SetButtonType (NSButtonType.Radio);
-			templateNoneOptionBox.ControlSize = NSControlSize.Regular;
-			templateNoneOptionBox.Title = "Nothing";
+			nothingRadio = new AppKit.NSButton();
+			nothingRadio.WantsLayer = true;
+			nothingRadio.BezelStyle = NSBezelStyle.Rounded;
+			nothingRadio.SetButtonType (NSButtonType.Radio);
+			nothingRadio.ControlSize = NSControlSize.Regular;
+			nothingRadio.Title = "Nothing";
 			
-			generateRadios.AddSubview (templateNoneOptionBox);
-			templateNoneOptionBox.Frame = templateNoneOptionBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f,0f,89f,16f));;
+			generateRadios.AddSubview (nothingRadio);
+			nothingRadio.Frame = nothingRadio.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f,0f,89f,16f));;
 			
 			
 			// View:     templateRadio
@@ -132,15 +130,15 @@ namespace MonoDevelop.Figma.FigmaBundles
 			// NodeType: INSTANCE
 			// NodeId:   557:20
 			
-			templateMarkUpOptionBox = new AppKit.NSButton();
-			templateMarkUpOptionBox.WantsLayer = true;
-			templateMarkUpOptionBox.BezelStyle = NSBezelStyle.Rounded;
-			templateMarkUpOptionBox.SetButtonType (NSButtonType.Radio);
-			templateMarkUpOptionBox.ControlSize = NSControlSize.Regular;
-			templateMarkUpOptionBox.Title = "Template";
+			templateRadio = new AppKit.NSButton();
+			templateRadio.WantsLayer = true;
+			templateRadio.BezelStyle = NSBezelStyle.Rounded;
+			templateRadio.SetButtonType (NSButtonType.Radio);
+			templateRadio.ControlSize = NSControlSize.Regular;
+			templateRadio.Title = "Template";
 			
-			generateRadios.AddSubview (templateMarkUpOptionBox);
-			templateMarkUpOptionBox.Frame = templateMarkUpOptionBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f,22f,89f,16f));;
+			generateRadios.AddSubview (templateRadio);
+			templateRadio.Frame = templateRadio.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f,22f,89f,16f));;
 			
 			
 			// View:     codeRadio
@@ -148,16 +146,16 @@ namespace MonoDevelop.Figma.FigmaBundles
 			// NodeType: INSTANCE
 			// NodeId:   557:11
 			
-			templateCodeOptionBox = new AppKit.NSButton();
-			templateCodeOptionBox.WantsLayer = true;
-			templateCodeOptionBox.BezelStyle = NSBezelStyle.Rounded;
-			templateCodeOptionBox.SetButtonType (NSButtonType.Radio);
-			templateCodeOptionBox.ControlSize = NSControlSize.Regular;
-			templateCodeOptionBox.Title = "Code";
-			templateCodeOptionBox.State = NSCellStateValue.On;
+			codeRadio = new AppKit.NSButton();
+			codeRadio.WantsLayer = true;
+			codeRadio.BezelStyle = NSBezelStyle.Rounded;
+			codeRadio.SetButtonType (NSButtonType.Radio);
+			codeRadio.ControlSize = NSControlSize.Regular;
+			codeRadio.Title = "Code";
+			codeRadio.State = NSCellStateValue.On;
 			
-			generateRadios.AddSubview (templateCodeOptionBox);
-			templateCodeOptionBox.Frame = templateCodeOptionBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f,44f,54f,16f));;
+			generateRadios.AddSubview (codeRadio);
+			codeRadio.Frame = codeRadio.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f,44f,54f,16f));;
 			
 			
 			// View:     nativeViewCodeServiceView1
@@ -177,7 +175,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			
 			this.ContentView.AddSubview (nativeViewCodeServiceView1);
 			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f,159f,142f,20f));;
-			
 			
 			// View:     namespacePopUp
 			// NodeName: "namespacePopUp"
@@ -228,14 +225,14 @@ namespace MonoDevelop.Figma.FigmaBundles
 			// NodeType: INSTANCE
 			// NodeId:   772:27
 			
-			loadingProgressIndicator = new AppKit.NSProgressIndicator();
-			loadingProgressIndicator.WantsLayer = true;
-			loadingProgressIndicator.Style = NSProgressIndicatorStyle.Spinning;
-			loadingProgressIndicator.Hidden = true;
-			loadingProgressIndicator.ControlSize = NSControlSize.Small;
+			versionSpinner = new AppKit.NSProgressIndicator();
+			versionSpinner.WantsLayer = true;
+			versionSpinner.Style = NSProgressIndicatorStyle.Spinning;
+			versionSpinner.Hidden = true;
+			versionSpinner.ControlSize = NSControlSize.Small;
 			
-			this.ContentView.AddSubview (loadingProgressIndicator);
-			loadingProgressIndicator.Frame = loadingProgressIndicator.GetFrameForAlignmentRect (new CoreGraphics.CGRect (396f,263f,18f,18f));;
+			this.ContentView.AddSubview (versionSpinner);
+			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (396f,263f,18f,18f));;
 			
 			
 			// View:     versionPopUp
@@ -243,14 +240,14 @@ namespace MonoDevelop.Figma.FigmaBundles
 			// NodeType: INSTANCE
 			// NodeId:   754:103
 			
-			versionComboBox = new AppKit.NSPopUpButton();
-			versionComboBox.WantsLayer = true;
-			versionComboBox.BezelStyle = NSBezelStyle.Rounded;
-			versionComboBox.ControlSize = NSControlSize.Regular;
-			versionComboBox.AddItem ("Current");
+			versionPopUp = new AppKit.NSPopUpButton();
+			versionPopUp.WantsLayer = true;
+			versionPopUp.BezelStyle = NSBezelStyle.Rounded;
+			versionPopUp.ControlSize = NSControlSize.Regular;
+			versionPopUp.AddItem ("Current");
 			
-			this.ContentView.AddSubview (versionComboBox);
-			versionComboBox.Frame = versionComboBox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (167f,261f,223f,21f));;
+			this.ContentView.AddSubview (versionPopUp);
+			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (167f,261f,223f,21f));;
 			
 			
 			// View:     nativeViewCodeServiceView4

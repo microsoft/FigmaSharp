@@ -11,15 +11,15 @@ using MonoDevelop.Projects;
 using FigmaSharp.Services;
 using MonoDevelop.Ide;
 
-namespace MonoDevelop.Figma.FigmaBundles
+namespace MonoDevelop.Figma.Packages
 {
-	public partial class FigmaBundleWindow : AppKit.NSWindow
+	public partial class FigmaPackageWindow : AppKit.NSWindow
 	{
 		public string FileId => figmaUrlTextField.StringValue;
 
 		Project currentProject;
 
-		public FigmaBundleWindow (Project currentProject)
+		public FigmaPackageWindow (Project currentProject)
 		{
 			InitializeComponent ();
 
@@ -29,18 +29,18 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 
-			versionComboBox.AutoEnablesItems = false;
-			versionComboBox.Activated += ItemsRefreshState_Handler;
+			versionPopUp.AutoEnablesItems = false;
+			versionPopUp.Activated += ItemsRefreshState_Handler;
 
-			templateCodeOptionBox.Activated += ItemsRefreshState_Handler;
-			templateMarkUpOptionBox.Activated += ItemsRefreshState_Handler;
-			templateNoneOptionBox.Activated += ItemsRefreshState_Handler;
+			codeRadio.Activated += ItemsRefreshState_Handler;
+			templateRadio.Activated += ItemsRefreshState_Handler;
+			nothingRadio.Activated += ItemsRefreshState_Handler;
 
 			cancelButton.Activated += CancelButton_Activated;
 			bundleButton.Activated += BundleButton_Activated;
 
-			templateNoneOptionBox.Enabled =
-			templateMarkUpOptionBox.Enabled = false;
+			nothingRadio.Enabled =
+			templateRadio.Enabled = false;
 
 			versionMenu.VersionSelected += (s, e) => {
 				SelectedFileVersion = e;
@@ -63,10 +63,10 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 			namespacePopUp.Enabled =
 			includeOriginalCheckbox.Enabled =
-			templateCodeOptionBox.Enabled =
+			codeRadio.Enabled =
 			//TemplateNoneOptionBox.Enabled =
 			//TemplateMarkUpOptionBox.Enabled =
-			versionComboBox.Enabled = enable && versions != null;
+			versionPopUp.Enabled = enable && versions != null;
 
 			RefreshBundleButtonState (enable);
 		}
@@ -74,7 +74,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 		void RefreshBundleButtonState (bool enable = true)
 		{
 			bundleButton.Enabled = enable &&
-				versionComboBox.Enabled && (templateCodeOptionBox.State == NSCellStateValue.On || templateMarkUpOptionBox.State == NSCellStateValue.On || templateNoneOptionBox.State == NSCellStateValue.On);
+				versionPopUp.Enabled && (codeRadio.State == NSCellStateValue.On || templateRadio.State == NSCellStateValue.On || nothingRadio.State == NSCellStateValue.On);
 		}
 
 		private async void BundleButton_Activated (object sender, EventArgs e)
@@ -132,12 +132,12 @@ namespace MonoDevelop.Figma.FigmaBundles
 		{
 			if (value)
 			{
-				loadingProgressIndicator.Hidden = false;
-				loadingProgressIndicator.StartAnimation(loadingProgressIndicator);
+				versionSpinner.Hidden = false;
+				versionSpinner.StartAnimation(versionSpinner);
 			} else
 			{
-				loadingProgressIndicator.StopAnimation(loadingProgressIndicator);
-				loadingProgressIndicator.Hidden = true;
+				versionSpinner.StopAnimation(versionSpinner);
+				versionSpinner.Hidden = true;
 			}
 		}
 
@@ -148,7 +148,7 @@ namespace MonoDevelop.Figma.FigmaBundles
 			SelectedFileVersion = null;
 
 			//loads current versions
-			versionComboBox.RemoveAllItems ();
+			versionPopUp.RemoveAllItems ();
 
 			RefreshStates ();
 
@@ -178,9 +178,9 @@ namespace MonoDevelop.Figma.FigmaBundles
 				foreach (var item in versions)
 					versionMenu.AddItem(item);
 
-				versionMenu.Generate(versionComboBox.Menu);
+				versionMenu.Generate(versionPopUp.Menu);
 
-				versionComboBox.SelectItem(versionMenu.CurrentMenu);
+				versionPopUp.SelectItem(versionMenu.CurrentMenu);
 				SelectedFileVersion = versionMenu.CurrentVersion;
 			}
 

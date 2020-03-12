@@ -126,11 +126,10 @@
         <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\document.figma" />
       </ItemGroup>
       <ItemGroup>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\BundleUpdateWindow.designer.cs" />
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaBundleWindow.designer.cs">
-        </Compile>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\BundleUpdateWindow.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaBundleWindow.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\PackageUpdateWindow.cs" />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\PackageUpdateWindow.designer.cs" />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaPackageWindow.designer.cs" />
+        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaPackageWindow.cs" />
       </ItemGroup>
       <ItemGroup>
         <BundleResource Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Resources\motivation.png" />
