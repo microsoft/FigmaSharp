@@ -23,7 +23,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 		private void InitializeComponent ()
 		{
 			this.StyleMask |= NSWindowStyle.Closable;
-			this.StyleMask |= NSWindowStyle.Resizable;
 			this.Title = "Update Figma Bundle";
 			var frame = Frame;
 			frame.Size = new CoreGraphics.CGSize (455f,171f);
@@ -43,10 +42,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 			updateButton.AccessibilityTitle = "Bundle";
 			updateButton.AccessibilityHelp = "Starts bundling the document";
 			
-			
 			this.ContentView.AddSubview (updateButton);
 			updateButton.Frame = updateButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (352f,20f,84f,21f));;
-			
 			
 			// View:     cancelButton
 			// NodeName: "cancelButton"
@@ -61,10 +58,8 @@ namespace MonoDevelop.Figma.FigmaBundles
 			cancelButton.AccessibilityTitle = "Cancel";
 			cancelButton.AccessibilityHelp = "Cancel bundling";
 			
-			
 			this.ContentView.AddSubview (cancelButton);
 			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (257f,20f,84f,21f));;
-			
 			
 			// View:     versionSpinner
 			// NodeName: "versionSpinner"
@@ -79,7 +74,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			
 			this.ContentView.AddSubview (versionSpinner);
 			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (383f,72f,18f,18f));;
-			
 			
 			// View:     nativeViewCodeServiceView
 			// NodeName: Generate:
@@ -99,7 +93,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			this.ContentView.AddSubview (nativeViewCodeServiceView);
 			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f,104f,142f,20f));;
 			
-			
 			// View:     nativeViewCodeServiceView1
 			// NodeName: Generate:
 			// NodeType: INSTANCE
@@ -118,7 +111,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			this.ContentView.AddSubview (nativeViewCodeServiceView1);
 			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f,71f,142f,20f));;
 			
-			
 			// View:     bundlePopUp
 			// NodeName: "bundlePopUp"
 			// NodeType: INSTANCE
@@ -132,7 +124,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			
 			this.ContentView.AddSubview (bundlePopUp);
 			bundlePopUp.Frame = bundlePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f,103f,223f,21f));;
-			
 			
 			// View:     versionPopUp
 			// NodeName: "versionPopUp"

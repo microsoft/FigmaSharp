@@ -7,10 +7,8 @@ using FigmaSharp.Models;
 using System.Threading.Tasks;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 using FigmaSharp.Services;
-using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 
 namespace MonoDevelop.Figma.FigmaBundles
 {
@@ -146,7 +144,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 
 			//loads current versions
 			versionComboBox.RemoveAllItems ();
-			versionComboBox.Enabled = false;
 
 			RefreshStates ();
 

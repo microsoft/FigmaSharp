@@ -28,7 +28,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 		private void InitializeComponent ()
 		{
 			this.StyleMask |= NSWindowStyle.Closable;
-			this.StyleMask |= NSWindowStyle.Resizable;
 			this.Title = "Bundle Figma Document";
 			var frame = Frame;
 			frame.Size = new CoreGraphics.CGSize (481f,362f);
@@ -47,7 +46,6 @@ namespace MonoDevelop.Figma.FigmaBundles
 			bundleButton.KeyEquivalent = "\r";
 			bundleButton.AccessibilityTitle = "Bundle";
 			bundleButton.AccessibilityHelp = "Starts bundling the document";
-			
 			
 			this.ContentView.AddSubview (bundleButton);
 			bundleButton.Frame = bundleButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (378f,20f,84f,21f));;
