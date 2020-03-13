@@ -236,9 +236,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="WDB-6L-jbH">
                                     <items>
-                                        <menuItem title="Minimize" keyEquivalent="m" id="DAk-gD-COq">
+                                        <menuItem title="Close" keyEquivalent="w" id="DAk-gD-COq">
                                             <connections>
-                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="W1z-4n-9hd"/>
+                                                <action selector="CloseClicked:" target="Voe-Tx-rLC" id="DLR-ol-NBm"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Minimize" keyEquivalent="m" id="Og2-6U-zE2">
+                                            <connections>
+                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="0by-z7-IEP"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Zoom" id="021-Lo-9Km">
