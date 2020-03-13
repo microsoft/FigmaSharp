@@ -82,6 +82,13 @@ namespace FigmaSharpApp
 		}
 
 
+		// Window menu
+		partial void CloseClicked(NSObject sender)
+		{
+			NSApplication.SharedApplication.MainWindow.PerformClose(this);
+		}
+
+
 		// Help menu
 		string wiki_address = "https://github.com/netonjm/FigmaSharp/wiki";
 		string api_documentation_address = "https://netonjm.github.io/FigmaSharp/api/";

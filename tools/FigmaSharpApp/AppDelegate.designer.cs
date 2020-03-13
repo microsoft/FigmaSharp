@@ -14,6 +14,9 @@ namespace FigmaSharpApp
 		[Action ("APIDocumentationClicked:")]
 		partial void APIDocumentationClicked (Foundation.NSObject sender);
 
+		[Action ("CloseClicked:")]
+		partial void CloseClicked (Foundation.NSObject sender);
+
 		[Action ("DarkModeClicked:")]
 		partial void DarkModeClicked (Foundation.NSObject sender);
 
