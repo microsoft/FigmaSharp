@@ -176,7 +176,7 @@ namespace FigmaSharpApp
 			RefreshRequested?.Invoke (this, EventArgs.Empty);
 		}
 
-		public void ToggleSpinnerState (bool toggle_on)
+		public void ToggleToolbarSpinner (bool toggle_on)
 		{
 			if (toggle_on)
 				ToolbarSpinner.StartAnimation(this);

@@ -13,9 +13,6 @@ namespace FigmaSharpApp
 	partial class DocumentViewController
 	{
 		[Outlet]
-		AppKit.NSScrollView MainScrollView { get; set; }
-
-		[Outlet]
 		AppKit.NSProgressIndicator Spinner { get; set; }
 
 		[Action ("DarkModeClicked:")]

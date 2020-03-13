@@ -104,7 +104,7 @@ namespace FigmaSharpApp
 			Token = token;
 			DocumentID = documentId;
 
-			ToggleSpinnerState(toggle_on: true);
+			ToggleSpinner(toggle_on: true);
 			Load(version: version, pageIndex: CurrentPageIndex);
 		}
 
@@ -120,18 +120,23 @@ namespace FigmaSharpApp
 			if (pageIndex == CurrentPageIndex)
 				return;
 
+			windowController.ToggleToolbarSpinner(toggle_on: true);
+
 			CurrentPageIndex = pageIndex;
 			Reload(pageIndex: pageIndex);
 		}
 
 		void WindowController_VersionSelected(object sender, FigmaFileVersion version)
 		{
+			windowController.ToggleToolbarSpinner(toggle_on: true);
+
 			CurrentPageIndex = 0;
 			Reload(version: version);
 		}
 
 		void WindowController_RefreshRequested(object sender, EventArgs e)
 		{
+			windowController.ToggleToolbarSpinner(toggle_on: true);
 			Reload();
 		}
 
@@ -149,8 +154,6 @@ namespace FigmaSharpApp
 
 			if (response == null)
 				windowController.Title = string.Format ("Opening “{0}”…", DocumentID);
-			else
-				windowController.ToggleSpinnerState(toggle_on: true);
 
 			FigmaSharp.AppContext.Current.SetAccessToken(Token);
 
@@ -158,7 +161,7 @@ namespace FigmaSharpApp
 				fileProvider = new FigmaRemoteFileProvider() { File = DocumentID, Version = version };
 				fileProvider.ImageLinksProcessed += (sender, e) => {
 					InvokeOnMainThread(() => {
-						windowController.ToggleSpinnerState(toggle_on: false);
+						windowController.ToggleToolbarSpinner(toggle_on: false);
 					});
 				};
 
@@ -169,6 +172,8 @@ namespace FigmaSharpApp
 
 			var scrollView = CreateScrollView();
 			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
+
+			windowController.ToggleToolbarSpinner(toggle_on: true);
 
 			new StoryboardLayoutManager().Run(scrollView.ContentView, rendererService);
 			response = fileProvider.Response;
@@ -186,7 +191,7 @@ namespace FigmaSharpApp
 			await windowController.UpdateVersionMenu(DocumentID);
 			windowController.EnableButtons(true);
 
-			ToggleSpinnerState(toggle_on: false);
+			ToggleSpinner(toggle_on: false);
 		}
 
 		public void ZoomIn()  { NativeScrollView.Magnification *= 2; }
@@ -195,7 +200,7 @@ namespace FigmaSharpApp
 
 
 
-		public void ToggleSpinnerState (bool toggle_on)
+		public void ToggleSpinner (bool toggle_on)
 		{
 			if (toggle_on) {
 				View.AddSubview(Spinner);
