@@ -76,6 +76,8 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="1zt-ah-a9W"/>
+                                        <menuItem title="Export Live Prototype" keyEquivalent="e" id="dcZ-fp-hva"/>
                                     </items>
                                 </menu>
                             </menuItem>
