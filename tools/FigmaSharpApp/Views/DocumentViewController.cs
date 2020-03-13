@@ -75,6 +75,9 @@ namespace FigmaSharpApp
 			{
 				scrollview = new ScrollView();
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
+
+				nativeScrollView.ContentView = new CenteringClipView();
+
 				View.AddSubview(nativeScrollView);
 
 				nativeScrollView.Frame = View.Bounds;

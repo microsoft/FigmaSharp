@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,6 +36,25 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Views.Cocoa
 {
+	public class CenteringClipView : NSClipView
+	{
+		public override CGRect ConstrainBoundsRect(CGRect proposedBounds)
+		{
+			var rect = base.ConstrainBoundsRect(proposedBounds);
+			if (DocumentView == null)
+				return rect;
+
+			var viewFrame = DocumentView.Frame;
+			if (rect.Width > viewFrame.Width ) {
+				rect.X = (viewFrame.Width - rect.Width) / 2.0f;
+			}
+			if ( rect.Height > viewFrame.Height) {
+				rect.Y = (viewFrame.Height - rect.Height) / 2.0f;
+			}
+			return rect;
+		}
+	}
+
 	public class ScrollView : View, IScrollView
 	{
 		readonly FNSScrollview scrollView;
@@ -66,13 +86,12 @@ namespace FigmaSharp.Views.Cocoa
 		public ScrollView (FNSScrollview scrollView) : base (scrollView)
 		{
 			this.scrollView = scrollView;
-			var content = scrollView.DocumentView as NSView;
-            if (content == null)
-            {
-				content = new FNSView();
-			}
 
-			ContentView = new View(content);
+			var content = scrollView.DocumentView as NSView;
+			if (content == null) {
+				content = new FNSView ();
+			}
+			ContentView = new View (content);
 
 			this.scrollView.HasVerticalScroller = true;
 			this.scrollView.HasHorizontalScroller = true;
@@ -83,7 +102,9 @@ namespace FigmaSharp.Views.Cocoa
 			this.scrollView.AllowsMagnification = true;
 			this.scrollView.UsesPredominantAxisScrolling = false;
 
-			this.scrollView.ScrollerInsets = new NSEdgeInsets() { Top = 2, Bottom = 2, Left = 2, Right = 2 };
+			this.scrollView.ScrollerInsets = new NSEdgeInsets() {
+				Top = 2, Bottom = 2, Left = 2, Right = 2
+			};
 		}
 
 		public override IReadOnlyList<IView> Children => contentScrollView.Children;
@@ -123,8 +144,7 @@ namespace FigmaSharp.Views.Cocoa
 
 		public void SetContentSize (float width, float height)
 		{
-            if (ContentView != null)
-            {
+			if (ContentView != null) {
 				ContentView.Size = new Size(width, height);
 			}
 		}
