@@ -28,7 +28,9 @@
 
 using System;
 using System.Linq;
+
 using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -146,7 +148,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };
 				layoutManager.Run(processedNodes, window.Content, secondaryRender);
 
-				(window.NativeObject as NSWindow).Appearance = nativeView.EffectiveAppearance;
+				var nativeWindow = (NSWindow)window.NativeObject;
+
+				nativeWindow.Appearance = nativeView.EffectiveAppearance;
+				nativeWindow.ContentMinSize = nativeWindow.ContentView.Bounds.Size;
+
 				window.Show();
 				window.Center();
 			};
