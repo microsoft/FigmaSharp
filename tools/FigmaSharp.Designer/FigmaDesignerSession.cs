@@ -35,6 +35,7 @@ using FigmaSharp.Converters;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
+using System.Threading.Tasks;
 
 namespace FigmaSharp.Designer
 {
@@ -68,6 +69,25 @@ namespace FigmaSharp.Designer
             try
             {
                 rendererService.Start(file, contentView, options);
+                distributionService.Run(contentView, rendererService);
+
+                ReloadFinished?.Invoke(this, EventArgs.Empty);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Console.WriteLine("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        public async Task ReloadAsync (IView contentView, string file, FigmaViewRendererServiceOptions options)
+        {
+            try
+            {
+                await rendererService.StartAsync (file, contentView, options);
                 distributionService.Run(contentView, rendererService);
 
                 ReloadFinished?.Invoke(this, EventArgs.Empty);
