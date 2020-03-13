@@ -86,6 +86,7 @@ namespace FigmaSharp.Views.Cocoa
 		public ScrollView (FNSScrollview scrollView) : base (scrollView)
 		{
 			this.scrollView = scrollView;
+			this.scrollView.ContentView = new CenteringClipView();
 
 			var content = scrollView.DocumentView as NSView;
 			if (content == null) {

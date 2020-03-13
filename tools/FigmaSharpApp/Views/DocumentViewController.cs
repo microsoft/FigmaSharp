@@ -74,9 +74,6 @@ namespace FigmaSharpApp
 				scrollview = new ScrollView();
 
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
-
-				nativeScrollView.ContentView = new CenteringClipView();
-
 				nativeScrollView.AllowsMagnification = true;
 				nativeScrollView.MaxMagnification = 16f;
 				nativeScrollView.MinMagnification = 0.25f;
