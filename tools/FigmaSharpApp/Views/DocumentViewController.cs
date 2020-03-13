@@ -137,8 +137,8 @@ namespace FigmaSharpApp
 
 			if (response == null)
 				windowController.Title = string.Format ("Opening “{0}”…", DocumentID);
-
-			windowController.ToggleSpinnerState(toggle_on: true);
+			else
+				windowController.ToggleSpinnerState(toggle_on: true);
 
 			FigmaSharp.AppContext.Current.SetAccessToken(Token);
 
