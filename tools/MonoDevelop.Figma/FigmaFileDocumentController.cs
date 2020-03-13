@@ -84,15 +84,18 @@ namespace MonoDevelop.Figma
         public FigmaFileDocumentController()
         {
             scrollview = new ScrollView ();
+
             var nativeScrollview = (FigmaSharp.Views.Native.Cocoa.FNSScrollview)scrollview.NativeObject;
-            _content = new GtkNSViewHost (nativeScrollview);
             nativeScrollview.TranslatesAutoresizingMaskIntoConstraints = true;
+
+            _content = new GtkNSViewHost (nativeScrollview);
+           
             _content.ShowAll();
         }
 
-        void PropertyPad_Changed(object sender, EventArgs e)
+        async void PropertyPad_Changed(object sender, EventArgs e)
         {
-            session.Reload(scrollview.ContentView, filePath.FileName, fileOptions);
+            await session.ReloadAsync (scrollview.ContentView, filePath.FileName, fileOptions);
         }
 
         protected override Task OnSave()
@@ -126,7 +129,6 @@ namespace MonoDevelop.Figma
                 rendererService.CustomConverters.Add (new EmbededSheetDialogConverter(tmpRemoteProvider));
 
                 layoutManager = new StoryboardLayoutManager();
-
                 session = new FigmaDesignerSession(fileProvider, rendererService, layoutManager);
                 //session.ModifiedChanged += HandleModifiedChanged;
                 session.ReloadFinished += Session_ReloadFinished;
@@ -144,7 +146,7 @@ namespace MonoDevelop.Figma
                 //IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
                 IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
             }
-            RefreshAll();
+            await RefreshAll();
             await base.OnInitialize(modelDescriptor, status);
         }
 
@@ -162,35 +164,6 @@ namespace MonoDevelop.Figma
 			
             DesignerSupport.DesignerSupport.Service.PropertyPad?.SetCurrentObject (model, new object[] { model });
             //PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
-        }
-
-        FigmaNodeWrapper GetWrapper(FigmaNode node)
-        {
-            if (node is FigmaFrameEntity figmaFrameEntity)
-            {
-                return new FigmaFrameEntityWrapper(figmaFrameEntity);
-            }
-
-            if (node is FigmaText figmaText)
-            {
-                return new FigmaTextWrapper(figmaText);
-            }
-
-            if (node is RectangleVector figmaRectangleVector)
-            {
-                return new FigmaRectangleVectorWrapper(figmaRectangleVector);
-            }
-
-            if (node is FigmaCanvas canvas)
-            {
-                return new FigmaCanvasWrapper(canvas);
-            }
-            if (node is FigmaVectorEntity vectorEntity)
-            {
-                return new FigmaVectorEntityWrapper(vectorEntity);
-            }
-
-            return new FigmaNodeWrapper(node);
         }
 
         void Session_ReloadFinished(object sender, EventArgs e)
@@ -243,20 +216,19 @@ namespace MonoDevelop.Figma
             return outlinePad;
         }
 
-        void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
+        async void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
         {
             HasUnsavedChanges = true;
             session.DeleteView(e);
-            RefreshAll();
+            await RefreshAll();
         }
 
         FigmaViewRendererServiceOptions fileOptions = new FigmaViewRendererServiceOptions();
 
-        void RefreshAll()
+        async Task RefreshAll()
         {
-            session.Reload(scrollview.ContentView, filePath, fileOptions);
-            if (outlinePad != null)
-            {
+            await session.ReloadAsync (scrollview.ContentView, filePath, fileOptions);
+            if (outlinePad != null) {
                 outlinePad.GenerateTree(session.Response.document, figmaDelegate);
                 outlinePad.Focus(GetCurrentSelectedNode ());
             }
@@ -335,6 +307,5 @@ namespace MonoDevelop.Figma
 		{
 			
 		}
-
 	}
 }
