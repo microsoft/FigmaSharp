@@ -501,6 +501,42 @@ namespace FigmaSharp.Services
             return (currentNode != null && firstNode == currentNode) || base.IsFirstNode (currentNode);
         }
 
+        public async Task StartAsync (string figmaName, IView container, FigmaViewRendererServiceOptions options = null)
+		{
+            if (options == null) {
+                options = new FigmaViewRendererServiceOptions();
+            }
+
+            Console.WriteLine("[FigmaViewRenderer] Starting process..");
+            Console.WriteLine($"Reading {figmaName} from resources..");
+
+            this.container = container;
+
+            try
+            {
+                if (options.LoadFileProvider) {
+                    await Task.Run(() => {
+                        fileProvider.Load(figmaName ?? fileProvider.File);
+                    });
+                }
+
+                //we generate all the processed nodes
+                Refresh(options);
+
+                //we render only if there is a canvas and GenerateViews is enabled
+                var canvas = NodesProcessed.FirstOrDefault(s => s.FigmaNode is FigmaCanvas);
+                if (canvas != null && options.ConfigureViews)
+                {
+                    RecursivelyConfigureViews(canvas, options);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading resource");
+                Console.WriteLine(ex);
+            }
+        }
+
         public void Start(string figmaName, IView container, FigmaViewRendererServiceOptions options = null)
         {
             if (options == null) {
