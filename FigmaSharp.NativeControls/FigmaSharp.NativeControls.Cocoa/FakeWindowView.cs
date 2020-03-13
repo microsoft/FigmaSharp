@@ -25,15 +25,20 @@
  */
 
 using AppKit;
+using Foundation;
+using CoreAnimation;
 using CoreGraphics;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
 	class FakeWindowView : NSView
 	{
+		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
+
 		public FakeWindowView (string title)
 		{
 			WantsLayer = true;
+
 			Layer.BorderWidth = 0.5f;
 			Layer.CornerRadius = 7;
 
@@ -43,16 +48,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 			CreateHighlight();
 		}
 
-		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
 
 		NSBox titleBar = new NSBox();
-		NSBox separator = new NSBox();
+		CAGradientLayer titleBarGradient;
 		NSTextField titleField = new NSTextField();
+		NSBox separator = new NSBox();
 
 		void CreateTitleBar(string title)
 		{
-			titleBar.BorderWidth = 0;
 			titleBar.BoxType = NSBoxType.NSBoxCustom;
+			titleBar.WantsLayer = true;
+			titleBar.BorderWidth = 0;
+
+			titleBarGradient = new CAGradientLayer();
+			titleBarGradient.Locations = new NSNumber[] { 0.0, 1.0 };
+			titleBar.Layer = titleBarGradient;
 
 			titleField.StringValue = title;
 			titleField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
@@ -107,6 +117,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			get { return liveButtonAlwaysVisible; }
 		}
 
+
 		void CreateLiveButton()
 		{
 			LiveButton = new NSButton()
@@ -123,6 +134,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, -7).Active = true;
 		}
 
+
 		// Dark mode has a light border inside the window
 		NSBox highlight = new NSBox();
 
@@ -135,6 +147,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			AddSubview(highlight);
 		}
+
 
 		public override void UpdateLayer()
 		{
@@ -162,10 +175,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 
 			// Title bar
+			CATransaction.Begin(); // Disable the implicit animation
+			CATransaction.DisableActions = true;
+
 			if (DarkMode)
-				titleBar.FillColor = NSColor.White.ColorWithAlphaComponent(0.1f);
+				titleBarGradient.Colors = new CGColor[] {
+					NSColor.FromRgb(54, 54, 54).CGColor,
+					NSColor.FromRgb(65 ,65 ,65).CGColor
+				};
 			else
-				titleBar.FillColor = NSColor.Black.ColorWithAlphaComponent(0.08f);
+				titleBarGradient.Colors = new CGColor[] {
+					NSColor.FromRgb(208, 208, 208).CGColor,
+					NSColor.FromRgb(230, 230, 230).CGColor
+				};
+
+			CATransaction.Commit();
 
 			titleField.TextColor = NSColor.Text.ColorWithAlphaComponent(0.7f);
 
