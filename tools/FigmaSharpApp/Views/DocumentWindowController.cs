@@ -118,7 +118,7 @@ namespace FigmaSharpApp
 				};
 			}
 
-			PagePopUpButton.SelectItem((ContentViewController as DocumentViewController).PageIndex);
+			PagePopUpButton.SelectItem((ContentViewController as DocumentViewController).CurrentPageIndex);
 		}
 
 		public void EnableButtons (bool enable)

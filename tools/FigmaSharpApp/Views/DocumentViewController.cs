@@ -45,7 +45,7 @@ namespace FigmaSharpApp
 
 		public string DocumentID;
 		public string VersionID;
-		public int PageIndex = 0;
+		public int CurrentPageIndex = 0;
 
 		ScrollView scrollview;
 		NSScrollView nativeScrollView;
@@ -96,7 +96,7 @@ namespace FigmaSharpApp
 			DocumentID = documentId;
 
 			ToggleSpinnerState(toggle_on: true);
-			Load(version: version, pageIndex: PageIndex);
+			Load(version: version, pageIndex: CurrentPageIndex);
 		}
 
 		public void Reload(FigmaFileVersion version = null, int pageIndex = 0)
@@ -106,16 +106,16 @@ namespace FigmaSharpApp
 
 		void WindowController_PageChanged(object sender, int pageIndex)
 		{
-			if (pageIndex == PageIndex)
+			if (pageIndex == CurrentPageIndex)
 				return;
 
-			PageIndex = pageIndex;
+			CurrentPageIndex = pageIndex;
 			Reload(pageIndex: pageIndex);
 		}
 
 		void WindowController_VersionSelected(object sender, FigmaFileVersion version)
 		{
-			PageIndex = 0;
+			CurrentPageIndex = 0;
 			Reload(version: version);
 		}
 
