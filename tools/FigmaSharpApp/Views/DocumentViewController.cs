@@ -25,7 +25,6 @@
  */
 
 using System;
-using System.Threading.Tasks;
 
 using AppKit;
 using Foundation;
@@ -35,7 +34,6 @@ using FigmaSharp.Models;
 using FigmaSharp.NativeControls.Cocoa;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharpApp
 {
@@ -47,17 +45,25 @@ namespace FigmaSharpApp
 		public string VersionID;
 		public int CurrentPageIndex = 0;
 
-		ScrollView scrollview;
-		NSScrollView nativeScrollView;
-
 		DocumentWindowController windowController;
+
+		ScrollView MainScrollView;
+		NSScrollView NativeScrollView;
+
 
 		public DocumentViewController(IntPtr handle) : base(handle)
 		{
 		}
 
+
 		public void OnInitialize()
 		{
+			MainScrollView = CreateScrollView();
+			NativeScrollView = (NSScrollView)MainScrollView.NativeObject;
+
+			View.AddSubview(NativeScrollView);
+
+
 			var windowDelegate = new WindowDelegate();
 
 			windowDelegate.GotFocus += async (s, e) => {
@@ -69,26 +75,29 @@ namespace FigmaSharpApp
 
 			View.Window.WeakDelegate = windowDelegate;
 
-			if (scrollview == null)
-			{
-				scrollview = new ScrollView();
 
-				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
-				nativeScrollView.AllowsMagnification = true;
-				nativeScrollView.MaxMagnification = 16f;
-				nativeScrollView.MinMagnification = 0.25f;
-
-				View.AddSubview(nativeScrollView);
-
-				nativeScrollView.Frame = View.Bounds;
-				nativeScrollView.TranslatesAutoresizingMaskIntoConstraints = true;
-
-				windowController = (DocumentWindowController)this.View.Window.WindowController;
-				windowController.VersionSelected += WindowController_VersionSelected;
-				windowController.RefreshRequested += WindowController_RefreshRequested;
-				windowController.PageChanged += WindowController_PageChanged;
-			}
+			windowController = (DocumentWindowController)View.Window.WindowController;
+			windowController.VersionSelected += WindowController_VersionSelected;
+			windowController.RefreshRequested += WindowController_RefreshRequested;
+			windowController.PageChanged += WindowController_PageChanged;
 		}
+
+
+		ScrollView CreateScrollView()
+		{
+			var scrollView = new ScrollView();
+			var nativeScrollView = (NSScrollView)scrollView.NativeObject;
+
+			nativeScrollView.AllowsMagnification = true;
+			nativeScrollView.MaxMagnification = 16f;
+			nativeScrollView.MinMagnification = 0.25f;
+
+			nativeScrollView.Frame = View.Bounds;
+			nativeScrollView.TranslatesAutoresizingMaskIntoConstraints = true;
+
+			return scrollView;
+		}
+
 
 		public void LoadDocument(string token, string documentId, FigmaFileVersion version = null)
 		{
@@ -99,10 +108,12 @@ namespace FigmaSharpApp
 			Load(version: version, pageIndex: CurrentPageIndex);
 		}
 
+
 		public void Reload(FigmaFileVersion version = null, int pageIndex = 0)
 		{
 			Load(version: version, pageIndex: pageIndex);
 		}
+
 
 		void WindowController_PageChanged(object sender, int pageIndex)
 		{
@@ -124,6 +135,7 @@ namespace FigmaSharpApp
 			Reload();
 		}
 
+
 		FigmaFileResponse response;
 		FigmaRemoteFileProvider fileProvider;
 		NativeViewRenderingService rendererService;
@@ -144,7 +156,7 @@ namespace FigmaSharpApp
 
 			if (response == null || version != null) {
 				fileProvider = new FigmaRemoteFileProvider() { File = DocumentID, Version = version };
-				fileProvider.ImageLinksProcessed += (s, e) => {
+				fileProvider.ImageLinksProcessed += (sender, e) => {
 					InvokeOnMainThread(() => {
 						windowController.ToggleSpinnerState(toggle_on: false);
 					});
@@ -155,28 +167,33 @@ namespace FigmaSharpApp
 				rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
 			}
 
-			scrollview.ClearSubviews();
+			var scrollView = CreateScrollView();
+			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
 
-			await rendererService.StartAsync (DocumentID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
-
-			new StoryboardLayoutManager().Run(scrollview.ContentView, rendererService);
+			new StoryboardLayoutManager().Run(scrollView.ContentView, rendererService);
 			response = fileProvider.Response;
 
+			NativeScrollView.RemoveFromSuperview();
+			MainScrollView = scrollView;
+
+			NativeScrollView = (NSScrollView)scrollView.NativeObject;
+			View.AddSubview(NativeScrollView);
+
 			windowController.Window.Title = windowController.Title = response.name;
-			windowController.Window.BackgroundColor = nativeScrollView.BackgroundColor;
+			windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
 
 			windowController.UpdatePagesPopupButton(response.document);
-			windowController.UpdateVersionMenu(DocumentID);
+			await windowController.UpdateVersionMenu(DocumentID);
 			windowController.EnableButtons(true);
 
 			ToggleSpinnerState(toggle_on: false);
 		}
 
-		public void ZoomIn()  { nativeScrollView.Magnification *= 2; }
-		public void ZoomOut() { nativeScrollView.Magnification *= 0.5f; }
-		public void Zoom100() { nativeScrollView.Magnification = 1; }
+		public void ZoomIn()  { NativeScrollView.Magnification *= 2; }
+		public void ZoomOut() { NativeScrollView.Magnification *= 0.5f; }
+		public void Zoom100() { NativeScrollView.Magnification = 1; }
 
-		#region Spinner
+
 
 		public void ToggleSpinnerState (bool toggle_on)
 		{
@@ -191,7 +208,6 @@ namespace FigmaSharpApp
 			}
 		}
 
-		#endregion
 
 		class WindowDelegate : NSWindowDelegate
 		{
@@ -207,6 +223,7 @@ namespace FigmaSharpApp
 				LostFocus?.Invoke(this, EventArgs.Empty);
 			}
 		}
+
 
 		public override NSObject RepresentedObject {
 			get {
