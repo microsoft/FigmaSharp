@@ -52,11 +52,9 @@ namespace FigmaSharpApp
 
 		DocumentWindowController windowController;
 
-
 		public DocumentViewController(IntPtr handle) : base(handle)
 		{
 		}
-
 
 		public void OnInitialize()
 		{
@@ -74,9 +72,14 @@ namespace FigmaSharpApp
 			if (scrollview == null)
 			{
 				scrollview = new ScrollView();
+
 				nativeScrollView = (FNSScrollview)scrollview.NativeObject;
 
 				nativeScrollView.ContentView = new CenteringClipView();
+
+				nativeScrollView.AllowsMagnification = true;
+				nativeScrollView.MaxMagnification = 16f;
+				nativeScrollView.MinMagnification = 0.25f;
 
 				View.AddSubview(nativeScrollView);
 
@@ -89,7 +92,6 @@ namespace FigmaSharpApp
 				windowController.PageChanged += WindowController_PageChanged;
 			}
 		}
-
 
 		public void LoadDocument(string token, string documentId, FigmaFileVersion version = null)
 		{
@@ -104,7 +106,6 @@ namespace FigmaSharpApp
 		{
 			Load(version: version, pageIndex: pageIndex);
 		}
-
 
 		void WindowController_PageChanged(object sender, int pageIndex)
 		{
@@ -130,7 +131,7 @@ namespace FigmaSharpApp
 		FigmaRemoteFileProvider fileProvider;
 		NativeViewRenderingService rendererService;
 
-		void Load (FigmaFileVersion version = null, int pageIndex = 0)
+		async void Load (FigmaFileVersion version = null, int pageIndex = 0)
 		{
 			if (string.IsNullOrEmpty (DocumentID))
 				return;
@@ -139,64 +140,44 @@ namespace FigmaSharpApp
 
 			if (response == null)
 				windowController.Title = string.Format ("Opening “{0}”…", DocumentID);
-			else
-				windowController.ToggleSpinnerState(toggle_on: true);
 
+			windowController.ToggleSpinnerState(toggle_on: true);
 
-			Task.Run(() =>
-			{
-				InvokeOnMainThread (() =>
-				{
-					FigmaSharp.AppContext.Current.SetAccessToken (Token);
+			FigmaSharp.AppContext.Current.SetAccessToken(Token);
 
-					if (response == null || version != null)
-					{
-						windowController.ToggleSpinnerState(toggle_on: true);
+			if (response == null || version != null) {
+				fileProvider = new FigmaRemoteFileProvider() { File = DocumentID, Version = version };
+				fileProvider.ImageLinksProcessed += (s, e) => {
+					InvokeOnMainThread(() => {
+						windowController.ToggleSpinnerState(toggle_on: false);
+					});
+				};
 
-						fileProvider = new FigmaRemoteFileProvider() { File = DocumentID, Version = version };
-						fileProvider.ImageLinksProcessed += (s, e) => {
-							InvokeOnMainThread(() =>
-							{
-								windowController.ToggleSpinnerState(toggle_on: false);
-							});
-						};
+				rendererService = new NativeViewRenderingService(fileProvider);
+				rendererService.CustomConverters.Add(new EmbededSheetDialogConverter(fileProvider));
+				rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
+			}
 
-						rendererService = new NativeViewRenderingService(fileProvider);
-						rendererService.CustomConverters.Add(new EmbededSheetDialogConverter (fileProvider));
-						rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
-					}
+			scrollview.ClearSubviews();
 
-					scrollview.ClearSubviews();
-					rendererService.Start(DocumentID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
-					new StoryboardLayoutManager().Run (scrollview.ContentView, rendererService);
+			await rendererService.StartAsync (DocumentID, scrollview.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
 
-					response = fileProvider.Response;
-					windowController.Window.Title = windowController.Title = response.name;
+			new StoryboardLayoutManager().Run(scrollview.ContentView, rendererService);
+			response = fileProvider.Response;
 
-					nativeScrollView = scrollview.NativeObject as NSScrollView;
+			windowController.Window.Title = windowController.Title = response.name;
+			windowController.Window.BackgroundColor = nativeScrollView.BackgroundColor;
 
-					NSColor backgroundColor = response.document.children[pageIndex].backgroundColor.ToNSColor();
-					windowController.Window.BackgroundColor = backgroundColor;
-					nativeScrollView.BackgroundColor = backgroundColor;
-					(nativeScrollView.DocumentView as NSView).Layer.BackgroundColor = backgroundColor.CGColor;
+			windowController.UpdatePagesPopupButton(response.document);
+			windowController.UpdateVersionMenu(DocumentID);
+			windowController.EnableButtons(true);
 
-					nativeScrollView.AllowsMagnification = true;
-					nativeScrollView.MaxMagnification = 16f;
-					nativeScrollView.MinMagnification = 0.25f;
-
-					windowController.UpdatePagesPopupButton (response.document);
-					windowController.UpdateVersionMenu (DocumentID);
-					windowController.EnableButtons (true);
-
-					ToggleSpinnerState (toggle_on: false);
-				});
-			});
+			ToggleSpinnerState(toggle_on: false);
 		}
 
 		public void ZoomIn()  { nativeScrollView.Magnification *= 2; }
 		public void ZoomOut() { nativeScrollView.Magnification *= 0.5f; }
 		public void Zoom100() { nativeScrollView.Magnification = 1; }
-
 
 		#region Spinner
 
@@ -207,7 +188,6 @@ namespace FigmaSharpApp
 
 				Spinner.Hidden = false;
 				Spinner.StartAnimation (this);
-
 			} else {
 				Spinner.Hidden = true;
 				Spinner.StopAnimation (this);
