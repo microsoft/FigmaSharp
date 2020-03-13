@@ -439,13 +439,13 @@ Gw
                         <value key="minSize" type="size" width="320" height="320"/>
                         <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="z7L-HX-hhV">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" toolTip="Refresh" image="NSRefreshTemplate" id="NHv-Gm-Lms">
+                                <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" toolTip="Refresh" id="NHv-Gm-Lms">
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" id="iXD-EU-bKJ">
                                         <rect key="frame" x="0.0" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
+                                        <buttonCell key="cell" type="push" title="↻" bezelStyle="rounded" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent">r</string>
@@ -462,7 +462,7 @@ Gw
                                     <button key="view" verticalHuggingPriority="750" id="du5-wr-dXP">
                                         <rect key="frame" x="5" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="⽉" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
+                                        <buttonCell key="cell" type="push" title="☾" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -574,7 +574,4 @@ Gw
             <point key="canvasLocation" x="1388" y="1005"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="NSRefreshTemplate" width="11" height="15"/>
-    </resources>
 </document>
