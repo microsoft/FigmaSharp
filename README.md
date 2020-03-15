@@ -2,9 +2,9 @@
 
 > Here at Microsoft we ❤️ [Figma](https://www.figma.com/). We use it for everything and anything. So much so, we thought why not use it to actually implement our user interfaces? Sounds crazy enough to work. Let's give this a go.
 
-![Banner for FigmaSharp](.github/banner-light.png)
+![A macOS app window created with FigmaSharp](.github/screenshot.png)
 
-FigmaSharp converts Figma documents into .NET objects or code to turn them into working native UI. Free and Open Source software under the [MIT LICENSE]().
+FigmaSharp turns your Figma design into .NET objects or can generate code and layout files to create native apps. Free and Open Source software under the [MIT LICENSE]().
 
 [![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
 
