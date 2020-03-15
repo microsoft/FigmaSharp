@@ -1,7 +1,7 @@
 os: osx
 osx_image: xcode11.3
 language: csharp
-mono: beta
+mono: weekly
 
 env:
   # NUGET_API_KEY
