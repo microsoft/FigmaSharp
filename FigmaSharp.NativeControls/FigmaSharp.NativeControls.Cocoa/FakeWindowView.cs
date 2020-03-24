@@ -80,6 +80,22 @@ namespace FigmaSharp.NativeControls.Cocoa
 			AddSubview(separator);
 		}
 
+		public bool IsClosable {
+			get => !closeButton.Hidden;
+			set => closeButton.Hidden = !value;
+		}
+
+		public bool ShowMiniaturizeButton
+		{
+			get => !minButton.Hidden;
+			set => minButton.Hidden = !value;
+		}
+
+		public bool ShowZoomButton
+		{
+			get => !maxButton.Hidden;
+			set => maxButton.Hidden = !value;
+		}
 
 		NSBox closeButton = new NSBox();
 		NSBox minButton = new NSBox();

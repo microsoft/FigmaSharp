@@ -44,11 +44,6 @@ namespace FigmaSharp
 
 		const string frameEntity = "frame";
 
-		bool IsChildrenVisible (IFigmaNodeContainer optionsNode, string layerName)
-		{
-			return optionsNode.children.FirstOrDefault(s => s.name == layerName)?.visible ?? false;
-		}
-
 		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService)
 		{
 			if (FigmaNode == null)
@@ -69,7 +64,7 @@ namespace FigmaSharp
 				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
 				{
 
-					if (IsChildrenVisible(figmaNodeContainer, "close"))
+					if (figmaNodeContainer.HasChildrenVisible ("close"))
 					{
 						//default configuration status bar
 						builder.AppendLine(string.Format("{0}.{1} |= {2};",
@@ -79,17 +74,13 @@ namespace FigmaSharp
 						));
 					}
 
-					if (IsChildrenVisible(figmaNodeContainer, "resize"))
+					if (figmaNodeContainer.HasChildrenVisible ("resize"))
 					{
 						builder.AppendLine(string.Format("{0}.{1} |= {2};",
 							CodeGenerationHelpers.This,
 							nameof(AppKit.NSWindow.StyleMask),
 							AppKit.NSWindowStyle.Resizable.GetFullName()
 						));
-					}
-
-					if (IsChildrenVisible(figmaNodeContainer, "center")) {
-						centers = true;
 					}
 				}
 

@@ -149,7 +149,7 @@ namespace FigmaSharp.Views.Cocoa
 			}
 		}
 
-		public Window (Rectangle rectangle) : this (new FNWindow (rectangle.ToCGRect (), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false))
+		public Window (Rectangle rectangle) : this (new FNWindow (rectangle.ToCGRect (), NSWindowStyle.Titled | NSWindowStyle.Resizable | NSWindowStyle.Miniaturizable | NSWindowStyle.Closable, NSBackingStore.Buffered, false))
 		{
 
 		}

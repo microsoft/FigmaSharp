@@ -37,6 +37,12 @@ namespace FigmaSharp
 {
 	public static class FigmaServiceExtensions
 	{
+        public static bool HasChildrenVisible (this IFigmaNodeContainer optionsNode, string layerName)
+        {
+            return optionsNode.children.FirstOrDefault(s => s.name == layerName)
+                ?.visible ?? false;
+        }
+
         public static IEnumerable<FigmaFileVersion> GroupByCreatedAt (this IEnumerable<FigmaFileVersion> sender)
         {
             return sender.GroupBy(x => x.created_at)

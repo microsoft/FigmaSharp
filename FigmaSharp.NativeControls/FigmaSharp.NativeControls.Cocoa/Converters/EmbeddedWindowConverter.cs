@@ -133,6 +133,20 @@ namespace FigmaSharp.NativeControls.Cocoa
 			nativeView.Layer.CornerRadius = 5;
 			nativeView.Configure (currentNode);
 
+			var windowComponent = currentNode.GetDialogInstanceFromParentContainer();
+			if (windowComponent != null) {
+				var optionsNode = windowComponent
+					.children
+					.FirstOrDefault(s => s.name == "!options");
+
+				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
+				{
+					nativeView.IsClosable = figmaNodeContainer.HasChildrenVisible("close");
+					nativeView.ShowMiniaturizeButton = figmaNodeContainer.HasChildrenVisible("min");
+					nativeView.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
+				}
+			}
+
 			nativeView.LiveButton.Activated += (s, e) => {
 				var window = new Window(view.Allocation);
 				newWindowProvider.Load(rendererService.FileProvider.File);

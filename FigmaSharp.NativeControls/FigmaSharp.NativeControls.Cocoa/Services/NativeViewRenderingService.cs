@@ -60,18 +60,30 @@ namespace FigmaSharp.Services
  			return node.IsImageNode () || node.IsFigmaImageViewNode ();
 		}
 
-		public override void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
-		{
-			base.RenderInWindow(mainWindow, node, options);
+        public override void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
+        {
+            base.RenderInWindow(mainWindow, node, options);
 
-            var windowInstance = node.GetDialogInstanceFromParentContainer();
-            if (windowInstance != null) {
+            var windowComponent = node.GetDialogInstanceFromParentContainer();
+            if (windowComponent != null) {
                 //windowInstance.TryGetNativeControlComponentType(out var controlType);
-                var title = windowInstance.children
+                var title = windowComponent.children
                     .OfType<FigmaText>()
                     .FirstOrDefault();
+
                 if (title != null) {
                     mainWindow.Title = title.characters;
+                }
+
+                var optionsNode = windowComponent
+                    .children
+                    .FirstOrDefault(s => s.name == "!options");
+
+                if (optionsNode is IFigmaNodeContainer figmaNodeContainer) {
+                        mainWindow.IsClosable = figmaNodeContainer.HasChildrenVisible("close");
+                        mainWindow.Resizable = figmaNodeContainer.HasChildrenVisible("resize");
+                        mainWindow.ShowMiniaturizeButton = figmaNodeContainer.HasChildrenVisible("min");
+                        mainWindow.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
                 }
             }
         }
