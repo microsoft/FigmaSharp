@@ -289,7 +289,7 @@ namespace MonoDevelop.Figma.Commands
 		{
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder) {
 				if (currentFolder.IsDocumentDirectoryBundle ()) {
-					info.Text = "Restore Package";
+					info.Text = "Regenerate Code";
 					info.Visible = info.Enabled = true;
 					return;
 				}
