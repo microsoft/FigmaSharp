@@ -268,8 +268,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var options = NSTrackingAreaOptions.MouseMoved |
-			              NSTrackingAreaOptions.ActiveInKeyWindow |
-			              NSTrackingAreaOptions.MouseEnteredAndExited;
+			              NSTrackingAreaOptions.MouseEnteredAndExited |
+			              NSTrackingAreaOptions.ActiveInActiveApp;
 
 			trackingArea = new NSTrackingArea(Bounds, options, this, null);
 			AddTrackingArea(trackingArea);
