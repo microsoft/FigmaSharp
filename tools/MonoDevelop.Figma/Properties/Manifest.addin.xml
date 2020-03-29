@@ -48,7 +48,7 @@
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
-            _label="_Figma Package…
+            _label="_Figma Package…"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
