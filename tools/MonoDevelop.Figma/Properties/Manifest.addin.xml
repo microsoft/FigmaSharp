@@ -10,9 +10,9 @@
             <File pattern="*.figma"/>
         </MimeType>
     </Extension>
-   <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Projects">
+    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog/Projects">
         <Section id="FigmaSettings" _label="Figma" class = "MonoDevelop.Figma.FigmaOptionsPanel" icon="vs-prefs-figma" />
-  </Extension>
+    </Extension>
     
     <Extension path = "/MonoDevelop/Ide/Pads/ProjectPad">
         <NodeBuilder class = "MonoDevelop.Figma.CustomFigmaBundlerNodeBuilder"/>
@@ -26,8 +26,8 @@
        <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator2" insertbefore="AddSectionEnd" />
        <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
-            _label="_Update Package"
-            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator2"
+            _label="_Update…"
+            insertbefore="AddSectionStart"
         />
         <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator" insertbefore="AddSectionEnd" />
         <CommandItem 
@@ -36,7 +36,7 @@
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
-            _label="Show Remote File"
+            _label="Open on Figma Website"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
     </Extension>
@@ -48,12 +48,12 @@
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
-            _label="_Figma Package..."
+            _label="_Figma Package…
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
             id = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
-            _label="Empty Figma Manifest..."
+            _label="Empty Figma Manifest…"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
     </Extension>
@@ -69,15 +69,15 @@
             <Command id = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
                 _label = "Figma Package"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
-                _description = "Generates a Figma Package based in remote id"/>
+                _description = "Generates a Figma Package based on the remote file"/>
             <Command id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
                 _label = "New Figma View"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
                 _description = "Generates a new figma view in the current bundle"/>
             <Command id = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
-                _label = "Show Remote File"
+                _label = "Show on Figma Website"
                 defaultHandler = "MonoDevelop.Figma.Commands.OpenRemoteFigmaFileCommandHandler"
-                _description = "Opens a web browser with the current remote Figma file"/>
+                _description = "Opens a web browser with the file on figma.com"/>
             <Command id = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
                 _label = "Update Figma View"
                 defaultHandler = "MonoDevelop.Figma.Commands.FigmaUpdateViewCommandHandler"
@@ -91,9 +91,9 @@
                 defaultHandler = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
                 _description = "Creates an empty manifest file"/>
             <Command id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
-                _label = "Regenerate Document"
+                _label = "Regenerate Code"
                 defaultHandler = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
-                _description = "Regenerate Document"/>            
+                _description = "Regenerates code from the local Figma file"/>
         </Category>    
     </Extension>
     
