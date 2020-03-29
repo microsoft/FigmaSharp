@@ -67,8 +67,12 @@ namespace MonoDevelop.Figma
 					}).ContinueWith (s => {
 						if (s.Result != null && s.Result.id != bundle.Version.id) {
 							Runtime.RunInMainThread(() => {
-							   nodeInfo.StatusIcon = Context.GetIcon(packageUpdateIcon);
-							   nodeInfo.StatusMessage = $"Update available: {s.Result.id} Current: {bundle.Version.id}";
+								nodeInfo.StatusIcon = Context.GetIcon(packageUpdateIcon);
+
+								if (s.Result.IsNamed)
+									nodeInfo.StatusMessage = $"Update available: {s.Result.label}";
+								else
+									nodeInfo.StatusMessage = $"Update available: {s.Result.created_at.ToString("g")}";
 							});
 						}
 					});
