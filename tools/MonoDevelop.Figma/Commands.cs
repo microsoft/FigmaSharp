@@ -306,7 +306,7 @@ namespace MonoDevelop.Figma.Commands
 				}
 				var includeImages = true;
 
-				IdeApp.Workbench.StatusBar.BeginProgress($"Regenerating {bundle.FileId}...");
+				IdeApp.Workbench.StatusBar.BeginProgress($"Regenerating {bundle.FileId}…");
 
 				await Task.Run(() => {
 					//we need to ask to figma server to get nodes as demmand
