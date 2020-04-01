@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ExtensionModel>
     <Runtime>
+        <Import assembly="FigmaSharp.dll" />
+        <Import assembly="FigmaSharp.Cocoa.dll" />
+        <Import assembly="FigmaSharp.NativeControls.dll" />
+        <Import assembly="FigmaSharp.NativeControls.Cocoa.dll" />
     </Runtime>
-       <Extension path="/MonoDevelop/Ide/StartupHandlers">
+    <Extension path="/MonoDevelop/Ide/StartupHandlers">
         <Class class="MonoDevelop.Figma.Commands.FigmaInitCommand"/>
     </Extension>
     <Extension path="/MonoDevelop/Core/MimeTypes">
