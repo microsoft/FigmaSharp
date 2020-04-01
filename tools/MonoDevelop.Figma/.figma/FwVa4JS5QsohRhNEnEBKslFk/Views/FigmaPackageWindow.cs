@@ -80,15 +80,12 @@ namespace MonoDevelop.Figma.Packages
 		private async void BundleButton_Activated (object sender, EventArgs e)
 		{
 			var includeImages = true;
-			ShowLoading(true);
 			RefreshStates(false);
 
+			PerformClose(this);
 			await GenerateBundle(FileId, SelectedFileVersion, this.namespacePopUp.StringValue, includeImages);
 
 			RefreshStates(true);
-			ShowLoading(false);
-
-			PerformClose(this);
 		}
 
 		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages)
