@@ -8,6 +8,8 @@ FigmaSharp turns your Figma design into .NET objects or can generate code and la
 
 [![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
 
+<br/>
+
 
 # Getting started
 
@@ -19,15 +21,25 @@ This will be your only chance to copy the token, so make sure you keep a copy in
 
 Try out automatic builds of the FigmaSharp app and Visual Studio extension from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
 
+Do you have questions, need support, or want to contribute? Join the chat room:
+
+[![Gitter](https://badges.gitter.im/Microsoft/FigmaSharp.svg)](https://gitter.im/Microsoft/FigmaSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+<br/>
+
 
 ## Visual Studio extension
 
 The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and bundle them into your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page.
 
+<br/>
+
 
 ## FigmaSharp app
 
 The app previews Figma documents without having to install Visual Studio. Download the .app from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
+
+<br/>
 
 
 ## Building from source
