@@ -100,6 +100,9 @@ namespace FigmaSharp
         public static string GetNodeTypeName (this FigmaNode node)
 		{
             var name = node.name;
+            if (name.Length > 0 && name[0] == '!') {
+                name = name.Substring(1);
+            }
             var index = name.IndexOf (' ');
             if (index > -1 && index < name.Length - 1) {
                 name = name.Substring (0,index);
