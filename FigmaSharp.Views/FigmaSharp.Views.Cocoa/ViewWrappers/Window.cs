@@ -119,18 +119,18 @@ namespace FigmaSharp.Views.Cocoa
 		}
 
 		public bool ShowCloseButton {
-			get => !window.StandardWindowButton (NSWindowButton.CloseButton).Hidden;
-			set => window.StandardWindowButton (NSWindowButton.CloseButton).Hidden = !value;
+			get => window.StandardWindowButton (NSWindowButton.CloseButton).Enabled;
+			set => window.StandardWindowButton (NSWindowButton.CloseButton).Enabled = value;
 		}
 
 		public bool ShowZoomButton {
-			get => !window.StandardWindowButton (NSWindowButton.ZoomButton).Hidden;
-			set => window.StandardWindowButton (NSWindowButton.ZoomButton).Hidden = !value;
+			get => window.StandardWindowButton (NSWindowButton.ZoomButton).Enabled;
+			set => window.StandardWindowButton (NSWindowButton.ZoomButton).Enabled = value;
 		}
 
 		public bool ShowMiniaturizeButton {
-			get => !window.StandardWindowButton (NSWindowButton.MiniaturizeButton).Hidden;
-			set => window.StandardWindowButton (NSWindowButton.MiniaturizeButton).Hidden = !value;
+			get => window.StandardWindowButton (NSWindowButton.MiniaturizeButton).Enabled;
+			set => window.StandardWindowButton (NSWindowButton.MiniaturizeButton).Enabled = value;
 		}
 
 		public bool ShowTitle {

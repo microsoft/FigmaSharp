@@ -80,10 +80,10 @@ namespace FigmaSharp.Services
                     .FirstOrDefault(s => s.name == "!options");
 
                 if (optionsNode is IFigmaNodeContainer figmaNodeContainer) {
-                        mainWindow.IsClosable = figmaNodeContainer.HasChildrenVisible("close");
-                        mainWindow.Resizable = figmaNodeContainer.HasChildrenVisible("resize");
-                        mainWindow.ShowMiniaturizeButton = figmaNodeContainer.HasChildrenVisible("min");
-                        mainWindow.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
+                    mainWindow.IsClosable = figmaNodeContainer.HasChildrenVisible("close");
+                    mainWindow.Resizable = figmaNodeContainer.HasChildrenVisible("resize");
+                    mainWindow.ShowMiniaturizeButton = figmaNodeContainer.HasChildrenVisible("min");
+                    mainWindow.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
                 }
             }
         }
