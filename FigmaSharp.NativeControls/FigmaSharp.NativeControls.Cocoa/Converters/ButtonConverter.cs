@@ -159,6 +159,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
+            builder.WriteEquality(name, "Font", "NSFont.SystemFontOfSize(NSFont.SystemFontSize)");
+
             //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup> ()
