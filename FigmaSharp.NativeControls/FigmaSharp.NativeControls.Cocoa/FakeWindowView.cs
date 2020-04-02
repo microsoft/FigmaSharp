@@ -40,7 +40,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			WantsLayer = true;
 
 			Layer.BorderWidth = 0.5f;
-			Layer.CornerRadius = 7;
+			Layer.CornerRadius = 5;
 
 			CreateTitleBar(title);
 			CreateTrafficLights();
@@ -80,44 +80,67 @@ namespace FigmaSharp.NativeControls.Cocoa
 			AddSubview(separator);
 		}
 
-		public bool IsClosable {
-			get => !closeButton.Hidden;
-			set => closeButton.Hidden = !value;
-		}
-
-		public bool ShowMiniaturizeButton
-		{
-			get => !minButton.Hidden;
-			set => minButton.Hidden = !value;
-		}
-
-		public bool ShowZoomButton
-		{
-			get => !maxButton.Hidden;
-			set => maxButton.Hidden = !value;
-		}
 
 		NSBox closeButton = new NSBox();
 		NSBox minButton = new NSBox();
 		NSBox maxButton = new NSBox();
 
+		NSBox closeButtonBg = new InactiveWindowButton();
+		NSBox minButtonBg = new InactiveWindowButton();
+		NSBox maxButtonBg = new InactiveWindowButton();
+
 		void CreateTrafficLights()
 		{
 			closeButton.BoxType = NSBoxType.NSBoxCustom;
 			closeButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.1f);
+			closeButton.BorderWidth = 0.5f;
 			closeButton.CornerRadius = 6;
 
 			minButton.BoxType = NSBoxType.NSBoxCustom;
 			minButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.1f);
+			minButton.BorderWidth = 0.5f;
 			minButton.CornerRadius = 6;
 
 			maxButton.BoxType = NSBoxType.NSBoxCustom;
 			maxButton.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.1f);
+			maxButton.BorderWidth = 0.5f;
 			maxButton.CornerRadius = 6;
+
+			AddSubview(closeButtonBg);
+			AddSubview(minButtonBg);
+			AddSubview(maxButtonBg);
 
 			AddSubview(closeButton);
 			AddSubview(minButton);
 			AddSubview(maxButton);
+		}
+
+		class InactiveWindowButton : NSBox
+		{
+			public InactiveWindowButton ()
+			{
+				BoxType = NSBoxType.NSBoxCustom;
+				CornerRadius = 6;
+				BorderWidth = 0.5f;
+			}
+		}
+
+		public bool CloseButtonHidden
+		{
+			get => closeButton.Hidden;
+			set => closeButton.Hidden = value;
+		}
+
+		public bool MinButtonHidden
+		{
+			get => minButton.Hidden;
+			set => minButton.Hidden = value;
+		}
+
+		public bool MaxButtonHidden
+		{
+			get => maxButton.Hidden;
+			set => maxButton.Hidden = value;
 		}
 
 
@@ -183,11 +206,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 				closeButton.FillColor = NSColor.FromRgb(255, 90,  82); // #FF5A52
 				minButton.FillColor   = NSColor.FromRgb(230, 192, 41); // #E6C029
 				maxButton.FillColor   = NSColor.FromRgb(83,  194, 43); // #53C22B
+
+				closeButtonBg.BorderColor = NSColor.Black.ColorWithAlphaComponent(0);
+				closeButtonBg.FillColor = NSColor.White.ColorWithAlphaComponent(0.2f);
+
 			} else {
 				closeButton.FillColor = NSColor.FromRgb(255, 95,  87); // #FF5F57
 				minButton.FillColor   = NSColor.FromRgb(255, 189, 46); // #FFBD2E
 				maxButton.FillColor   = NSColor.FromRgb(40,  201, 64); // #28C940
+
+				closeButtonBg.BorderColor = NSColor.Black.ColorWithAlphaComponent(0.15f);
+				closeButtonBg.FillColor = NSColor.FromRgb(207, 207, 207); // #CFCFCF
 			}
+
+			minButtonBg.BorderColor = maxButtonBg.BorderColor = closeButtonBg.BorderColor;
+			minButtonBg.FillColor = maxButtonBg.FillColor = closeButtonBg.FillColor;
 
 
 			// Title bar
@@ -240,6 +273,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 			closeButton.Frame = new CGRect(posX, Frame.Height - posY - height, width, height);
 			minButton.Frame = new CGRect(posX + width + spacing, Frame.Height - posY - height, width, height);
 			maxButton.Frame = new CGRect(posX + width + spacing + width + spacing, Frame.Height - posY - height, width, height);
+
+			closeButtonBg.Frame = closeButton.Frame;
+			minButtonBg.Frame = minButton.Frame;
+			maxButtonBg.Frame = maxButton.Frame;
 
 
 			// Live button
