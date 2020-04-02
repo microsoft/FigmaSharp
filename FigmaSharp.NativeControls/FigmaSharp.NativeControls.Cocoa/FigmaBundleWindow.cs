@@ -109,6 +109,7 @@ namespace FigmaSharp
 				string parameters = $"{frameEntity},{true.ToDesignerString ()}";
 
 				builder.WriteMethod (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.SetFrame), parameters);
+				builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Bounds.Size");
 
 				builder.AppendLine ();
 			}
