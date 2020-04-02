@@ -110,6 +110,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             //builder.Configure(figmaText, currentNode.Name);
             builder.Configure(currentNode.Node, currentNode.Name);
+            builder.WriteEquality(currentNode.Name, "Font", "NSFont.SystemFontOfSize(NSFont.SystemFontSize)");
 
             var alignment = FigmaExtensions.ToNSTextAlignment(figmaText.style.textAlignHorizontal);
             if (alignment != default)
