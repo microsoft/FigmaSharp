@@ -36,25 +36,27 @@ using AppKit;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class EmbededSheetDialogConverter : FigmaViewConverter
+	public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
-		readonly IFigmaFileProvider newWindowProvider;
 		public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
 		{
-			this.newWindowProvider = newWindowProvider;
+
 		}
+
 
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowSheet)
-				|| currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
+			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowSheet) ||
+			               currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
+
 			return isWindow;
 		}
+
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
@@ -89,21 +91,32 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return view;
 		}
 
+
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
 		}
 	}
 
+
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
 		public bool LiveButtonAlwaysVisible { get; set; } = true;
+
+		public delegate void LivePreviewLoadingEvent();
+		public LivePreviewLoadingEvent LivePreviewLoading;
+
+		public delegate void LivePreviewLoadedEvent();
+		public LivePreviewLoadedEvent LivePreviewLoaded;
+
 		readonly IFigmaFileProvider newWindowProvider;
+
 
 		public EmbededWindowConverter(IFigmaFileProvider newWindowProvider)
 		{
 			this.newWindowProvider = newWindowProvider;
 		}
+
 
 		public override bool CanConvert (FigmaNode currentNode)
 		{
@@ -115,11 +128,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return isWindow;
 		}
 
+
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode;
-
 			string title = "Window";
+			var frame = (FigmaFrameEntity)currentNode;
 
 			try { // TODO: Make this nicer later
 				title = ((frame.children[0] as FigmaFrameEntity).children[2] as FigmaText).characters;
@@ -177,13 +190,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			return view;
 		}
-
-
-		public delegate void LivePreviewLoadingEvent();
-		public LivePreviewLoadingEvent LivePreviewLoading;
-
-		public delegate void LivePreviewLoadedEvent();
-		public LivePreviewLoadedEvent LivePreviewLoaded;
 
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
