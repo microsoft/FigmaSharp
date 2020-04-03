@@ -35,6 +35,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
 
+
 		public FakeWindowView (string title)
 		{
 			WantsLayer = true;
@@ -48,6 +49,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 			CreateHighlight();
 		}
 
+
+		public string Title
+		{
+			get { return titleField.StringValue; }
+			set { titleField.StringValue = value; }
+		}
 
 		NSBox titleBar = new NSBox();
 		CAGradientLayer titleBarGradient;
