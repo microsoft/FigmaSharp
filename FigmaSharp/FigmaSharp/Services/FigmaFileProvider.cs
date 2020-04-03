@@ -47,6 +47,8 @@ namespace FigmaSharp.Services
 		List<FigmaNode> Nodes { get; }
 		FigmaFileResponse Response { get; }
 		void Load (string file);
+		Task LoadAsync(string file);
+
 		void Save (string filePath);
 		string GetContentTemplate (string file);
 		void OnStartImageLinkProcessing (List<ProcessedNode> imageVectors);
@@ -280,6 +282,8 @@ namespace FigmaSharp.Services
 		}
 
 		public string File { get; set; }
+
+		public Task LoadAsync(string file) => Task.Run(() => Load(file));
 
 		public void Load (string file)
 		{

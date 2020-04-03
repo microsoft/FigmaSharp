@@ -140,7 +140,6 @@ namespace FigmaSharpApp
 			Reload();
 		}
 
-
 		FigmaFileResponse response;
 		FigmaRemoteFileProvider fileProvider;
 		NativeViewRenderingService rendererService;
@@ -172,13 +171,8 @@ namespace FigmaSharpApp
 				rendererService.CustomConverters.Add(embeddedSheetConverter);
 				rendererService.CustomConverters.Add(embeddedWindowConverter);
 
-				embeddedWindowConverter.LivePreviewLoading += delegate {
-					InvokeOnMainThread(() => windowController.ToggleToolbarSpinner(true));
-				};
-
-				embeddedWindowConverter.LivePreviewLoaded += delegate {
-					InvokeOnMainThread(() => windowController.ToggleToolbarSpinner(false));
-				};
+				embeddedWindowConverter.LivePreviewLoading += (s, e) => windowController.ToggleToolbarSpinner(true);
+				embeddedWindowConverter.LivePreviewLoaded += (s, e) => windowController.ToggleToolbarSpinner(false);
 			}
 
 			var scrollView = CreateScrollView();
