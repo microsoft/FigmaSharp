@@ -63,18 +63,15 @@ namespace FigmaSharp
 				var optionsNode = windowComponent.children.FirstOrDefault(s => s.name == "!options");
 				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
 				{
-
-					if (figmaNodeContainer.HasChildrenVisible ("close"))
+					if (figmaNodeContainer.HasChildrenVisible("title"))
 					{
-						//default configuration status bar
-						builder.AppendLine(string.Format("{0}.{1} |= {2};",
-							CodeGenerationHelpers.This,
-							nameof(AppKit.NSWindow.StyleMask),
-							AppKit.NSWindowStyle.Closable.GetFullName()
-						));
+						var title = (FigmaText)figmaNodeContainer.children.FirstOrDefault(s => s.name == "title");
+
+						if (title != null)
+							builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
 					}
 
-					if (figmaNodeContainer.HasChildrenVisible ("resize"))
+					if (figmaNodeContainer.HasChildrenVisible("resize"))
 					{
 						builder.AppendLine(string.Format("{0}.{1} |= {2};",
 							CodeGenerationHelpers.This,
@@ -82,17 +79,37 @@ namespace FigmaSharp
 							AppKit.NSWindowStyle.Resizable.GetFullName()
 						));
 					}
-				}
 
-				if (windowComponent.TryGetNativeControlComponentType (out var nativeControlComponentType)) {
-					windowComponent.TryGetNativeControlType (out var nativeControlType);
-
-					if (nativeControlType == NativeControlType.WindowStandard) {
-						var title = windowComponent.children.OfType<FigmaText> ().FirstOrDefault (s => s.name == "window title");
-						if (title != null) {
-							builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
-						}
+					if (figmaNodeContainer.HasChildrenVisible ("close"))
+					{
+						builder.AppendLine(string.Format("{0}.{1} |= {2};",
+							CodeGenerationHelpers.This,
+							nameof(AppKit.NSWindow.StyleMask),
+							AppKit.NSWindowStyle.Closable.GetFullName()
+						));
 					}
+
+					if (figmaNodeContainer.HasChildrenVisible("min"))
+					{
+						builder.AppendLine(string.Format("{0}.{1} |= {2};",
+							CodeGenerationHelpers.This,
+							nameof(AppKit.NSWindow.StyleMask),
+							AppKit.NSWindowStyle.Miniaturizable.GetFullName()
+						));
+					}
+
+					if (figmaNodeContainer.HasChildrenVisible("max") == false)
+					{
+						builder.AppendLine(string.Format("{0}.{1}({2}).{3} = {4};",
+							CodeGenerationHelpers.This,
+							nameof(AppKit.NSWindow.StandardWindowButton),
+							NSWindowButton.ZoomButton.GetFullName(),
+							nameof(NSControl.Enabled),
+							bool.FalseString.ToLower()
+						));
+					}
+
+					builder.AppendLine();
 				}
 			}
 
