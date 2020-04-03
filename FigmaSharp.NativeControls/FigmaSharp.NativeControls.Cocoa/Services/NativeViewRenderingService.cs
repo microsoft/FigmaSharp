@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls;
 using FigmaSharp.Views;
@@ -66,15 +67,6 @@ namespace FigmaSharp.Services
 
             var windowComponent = node.GetDialogInstanceFromParentContainer();
             if (windowComponent != null) {
-                //windowInstance.TryGetNativeControlComponentType(out var controlType);
-                var title = windowComponent.children
-                    .OfType<FigmaText>()
-                    .FirstOrDefault();
-
-                if (title != null) {
-                    mainWindow.Title = title.characters;
-                }
-
                 var optionsNode = windowComponent
                     .children
                     .FirstOrDefault(s => s.name == "!options");
@@ -85,6 +77,11 @@ namespace FigmaSharp.Services
                     mainWindow.ShowMiniaturizeButton = figmaNodeContainer.HasChildrenVisible("min");
                     mainWindow.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
                 }
+
+                FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title");
+
+                if (titleText != null)
+                    mainWindow.Title = titleText.characters;
             }
         }
 

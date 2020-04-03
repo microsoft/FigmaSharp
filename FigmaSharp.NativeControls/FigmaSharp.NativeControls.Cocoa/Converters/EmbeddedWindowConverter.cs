@@ -128,18 +128,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string title = "Window";
 			var frame = (FigmaFrameEntity)currentNode;
 
-			try { // TODO: Make this nicer later
-				title = ((frame.children[0] as FigmaFrameEntity).children[2] as FigmaText).characters;
-			} catch (Exception e) {
-				Console.WriteLine(e.StackTrace);
-			}
-
 			var nativeView = new FakeWindowView(title);
 			nativeView.LiveButtonAlwaysVisible = LiveButtonAlwaysVisible;
+			nativeView.Configure (currentNode);
 
 			var view = new View(nativeView);
-
-			nativeView.Configure (currentNode);
 
 			var windowComponent = currentNode.GetDialogInstanceFromParentContainer();
 			if (windowComponent != null) {
@@ -152,6 +145,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 					nativeView.CloseButtonHidden = (figmaNodeContainer.HasChildrenVisible("close") == false);
 					nativeView.MinButtonHidden   = (figmaNodeContainer.HasChildrenVisible("min")   == false);
 					nativeView.MaxButtonHidden   = (figmaNodeContainer.HasChildrenVisible("max")   == false);
+
+					FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title");
+
+					if (titleText != null)
+						nativeView.Title = titleText.characters;
 				}
 			}
 
