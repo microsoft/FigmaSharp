@@ -64,9 +64,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 					nativeView.ControlSize = NSControlSize.Regular;
 					break;
 			}
-
-			(nativeView as NSProgressIndicator).UsesThreadedAnimation = true;
-
 			return view;
 		}
 

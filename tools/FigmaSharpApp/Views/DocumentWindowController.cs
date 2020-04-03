@@ -178,8 +178,6 @@ namespace FigmaSharpApp
 
 		public void ToggleToolbarSpinner (bool toggle_on)
 		{
-			ToolbarSpinner.UsesThreadedAnimation = true;
-
 			if (toggle_on)
 				ToolbarSpinner.StartAnimation(this);
 			else
