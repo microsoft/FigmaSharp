@@ -130,8 +130,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Mini);
 					break;
 			}
-
-			builder.WriteEquality(currentNode.Name, "Font", "NSFont.SystemFontOfSize(NSFont.SystemFontSize)");
+		
+			builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 
 			var label = figmaInstance.children.OfType<FigmaText> ()
 				.FirstOrDefault (s => s.name == "lbl" && s.visible);
