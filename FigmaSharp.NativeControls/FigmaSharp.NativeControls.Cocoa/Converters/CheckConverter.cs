@@ -121,7 +121,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            builder.WriteEquality(currentNode.Name, "Font", "NSFont.SystemFontOfSize(NSFont.SystemFontSize)");
+            builder.WriteEquality(currentNode.Name, nameof (NSButton.Font),
+CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFontSize));
 
             var label = figmaInstance.children
 				.OfType<FigmaText> ()

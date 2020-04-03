@@ -5,12 +5,29 @@ namespace FigmaSharp.Cocoa
 {
 	public static class CodeGenerationHelpers
 	{
+		//we need to move this into a better place than a Helper
+		//we also work in a better approach in a more dynamic way
+
+		#region Static Resources
+
 		public const string This = "this";
 
-		public static string StringEmpty { get; } = $"{typeof (string).FullName}.{nameof (string.Empty)}";
+		public static class Font
+		{
+			public static string SystemFontOfSize(string font) {
+				return GetMethod(typeof(AppKit.NSFont).FullName, nameof(AppKit.NSFont.SystemFontOfSize), font);
+			}
+
+			public static string SystemFontSize { get; } = $"{typeof(AppKit.NSFont).FullName}.{nameof(AppKit.NSFont.SystemFontSize)}";
+		}
+
+		public static string StringEmpty { get; } = $"{typeof(string).FullName}.{nameof(string.Empty)}";
+
+		#endregion
 
 		public static string GetConstructor (string viewName, Type type)
 		{
+
 			return GetConstructor (viewName, type.FullName);
 		}
 
