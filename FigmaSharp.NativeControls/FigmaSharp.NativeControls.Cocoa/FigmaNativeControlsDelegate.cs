@@ -26,11 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Cocoa;
-using FigmaSharp.Models;
-using FigmaSharp.NativeControls.Cocoa.Converters;
 using System.Linq;
 
+using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls.Cocoa.Converters;
 
