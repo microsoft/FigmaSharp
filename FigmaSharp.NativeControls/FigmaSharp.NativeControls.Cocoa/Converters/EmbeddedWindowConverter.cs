@@ -28,6 +28,8 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 using AppKit;
 
@@ -146,7 +148,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 
-			nativeView.LiveButton.Activated += (s, e) => {
+			nativeView.LiveButton.Activated += async (s, e) => {
+				LivePreviewLoading();
+				await Task.Run(() => Thread.Sleep(50)); // Ugly but stops racing
+
 				var window = new Window(view.Allocation);
 				newWindowProvider.Load(rendererService.FileProvider.File);
 				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
@@ -164,12 +169,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 				nativeWindow.Appearance = nativeView.EffectiveAppearance;
 				nativeWindow.ContentMinSize = nativeWindow.ContentView.Frame.Size;
 
-				window.Show();
-				window.Center();
+				nativeWindow.Center();
+				nativeWindow.MakeKeyAndOrderFront(null);
+
+				LivePreviewLoaded();
 			};
 
 			return view;
 		}
+
+
+		public delegate void LivePreviewLoadingEvent();
+		public LivePreviewLoadingEvent LivePreviewLoading;
+
+		public delegate void LivePreviewLoadedEvent();
+		public LivePreviewLoadedEvent LivePreviewLoaded;
 
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

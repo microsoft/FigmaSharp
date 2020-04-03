@@ -165,9 +165,20 @@ namespace FigmaSharpApp
 					});
 				};
 
+				var embeddedSheetConverter = new EmbededSheetDialogConverter(fileProvider);
+				var embeddedWindowConverter = new EmbededWindowConverter(fileProvider);
+
 				rendererService = new NativeViewRenderingService(fileProvider);
-				rendererService.CustomConverters.Add(new EmbededSheetDialogConverter(fileProvider));
-				rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
+				rendererService.CustomConverters.Add(embeddedSheetConverter);
+				rendererService.CustomConverters.Add(embeddedWindowConverter);
+
+				embeddedWindowConverter.LivePreviewLoading += delegate {
+					InvokeOnMainThread(() => windowController.ToggleToolbarSpinner(true));
+				};
+
+				embeddedWindowConverter.LivePreviewLoaded += delegate {
+					InvokeOnMainThread(() => windowController.ToggleToolbarSpinner(false));
+				};
 			}
 
 			var scrollView = CreateScrollView();
@@ -202,9 +213,10 @@ namespace FigmaSharpApp
 
 		public void ToggleSpinner (bool toggle_on)
 		{
+			View.AddSubview(Spinner);
+			Spinner.UsesThreadedAnimation = true;
+
 			if (toggle_on) {
-				View.AddSubview(Spinner);
-				Spinner.UsesThreadedAnimation = true;
 				Spinner.StartAnimation (this);
 			} else {
 				Spinner.StopAnimation (this);
