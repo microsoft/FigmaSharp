@@ -65,6 +65,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 					break;
 			}
 
+			(nativeView as NSProgressIndicator).UsesThreadedAnimation = true;
+
 			return view;
 		}
 

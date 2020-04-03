@@ -204,11 +204,9 @@ namespace FigmaSharpApp
 		{
 			if (toggle_on) {
 				View.AddSubview(Spinner);
-
-				Spinner.Hidden = false;
+				Spinner.UsesThreadedAnimation = true;
 				Spinner.StartAnimation (this);
 			} else {
-				Spinner.Hidden = true;
 				Spinner.StopAnimation (this);
 			}
 		}
