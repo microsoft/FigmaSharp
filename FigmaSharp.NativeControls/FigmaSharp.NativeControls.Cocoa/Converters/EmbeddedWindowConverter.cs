@@ -103,20 +103,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public bool LiveButtonAlwaysVisible { get; set; } = true;
 
-		public delegate void LivePreviewLoadingEvent();
-		public LivePreviewLoadingEvent LivePreviewLoading;
-
-		public delegate void LivePreviewLoadedEvent();
-		public LivePreviewLoadedEvent LivePreviewLoaded;
+		public event EventHandler LivePreviewLoading;
+		public event EventHandler LivePreviewLoaded;
 
 		readonly IFigmaFileProvider newWindowProvider;
-
 
 		public EmbededWindowConverter(IFigmaFileProvider newWindowProvider)
 		{
 			this.newWindowProvider = newWindowProvider;
 		}
-
 
 		public override bool CanConvert (FigmaNode currentNode)
 		{
@@ -127,7 +122,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowStandard);
 			return isWindow;
 		}
-
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
@@ -162,11 +156,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			nativeView.LiveButton.Activated += async (s, e) => {
-				LivePreviewLoading();
-				await Task.Run(() => Thread.Sleep(50)); // Ugly but stops racing
-
 				var window = new Window(view.Allocation);
-				newWindowProvider.Load(rendererService.FileProvider.File);
+
+				LivePreviewLoading?.Invoke(this, EventArgs.Empty);
+
+				await newWindowProvider.LoadAsync (rendererService.FileProvider.File);
+
 				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
 
 				var options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
@@ -185,7 +180,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				nativeWindow.Center();
 				nativeWindow.MakeKeyAndOrderFront(null);
 
-				LivePreviewLoaded();
+				LivePreviewLoaded?.Invoke(this, EventArgs.Empty);
 			};
 
 			return view;
