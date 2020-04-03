@@ -154,17 +154,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
 				secondaryRender.RenderInWindow(window, currentNode, options);
 
-				var mainNodes = currentNode.GetChildren()
-					.ToArray();
-
+				var mainNodes = currentNode.GetChildren().ToArray();
 				ProcessedNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
+
 				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };
 				layoutManager.Run(processedNodes, window.Content, secondaryRender);
 
 				var nativeWindow = (NSWindow)window.NativeObject;
-
 				nativeWindow.Appearance = nativeView.EffectiveAppearance;
-				nativeWindow.ContentMinSize = nativeWindow.ContentView.Bounds.Size;
+				nativeWindow.ContentMinSize = nativeWindow.ContentView.Frame.Size;
 
 				window.Show();
 				window.Center();
