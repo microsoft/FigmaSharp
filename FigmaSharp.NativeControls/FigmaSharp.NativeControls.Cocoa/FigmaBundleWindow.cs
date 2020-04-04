@@ -108,12 +108,11 @@ namespace FigmaSharp
 							bool.FalseString.ToLower()
 						));
 					}
-
-					builder.AppendLine();
 				}
 			}
 
 			if (FigmaNode is IAbsoluteBoundingBox box) {
+				builder.AppendLine();
 				builder.WriteEquality (frameEntity, null, nameof (AppKit.NSWindow.Frame), instanciate: true);
 
 				string instance = typeof (CoreGraphics.CGSize).
@@ -127,8 +126,6 @@ namespace FigmaSharp
 
 				builder.WriteMethod (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.SetFrame), parameters);
 				builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
-
-				builder.AppendLine ();
 			}
 
 			codeRendererService.GetCode (builder, new FigmaCodeNode(FigmaNode, null), null);

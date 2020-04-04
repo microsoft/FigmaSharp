@@ -112,7 +112,6 @@ namespace FigmaSharp.Services
 					builder.AppendLine ($"// NodeName: {node.Node.name}");
 					builder.AppendLine ($"// NodeType: {node.Node.type}");
 					builder.AppendLine ($"// NodeId:   {node.Node.id}");
-					builder.AppendLine ();
 
 					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
 					//we generate our code and replace node name

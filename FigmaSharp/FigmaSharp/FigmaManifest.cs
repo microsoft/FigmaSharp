@@ -89,7 +89,6 @@ namespace FigmaSharp
 			builder.AppendLine ($"//");
 			builder.AppendLine ($"// Changes to this file may cause incorrect behavior");
 			builder.AppendLine ($"// and will be lost if the code is regenerated.");
-			builder.AppendLine();
 		}
 
 		public static FigmaManifest FromFilePath (string filePath)

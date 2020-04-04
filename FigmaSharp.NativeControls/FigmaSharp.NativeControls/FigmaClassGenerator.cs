@@ -126,10 +126,10 @@ namespace FigmaSharp
 
 		protected void GenerateUsings (StringBuilder builder)
 		{
-			foreach (var current in Usings) {
+			builder.AppendLine();
+
+			foreach (var current in Usings)
 				builder.AppendLine($"using {current};");
-				builder.AppendLine();
-			}
 		}
 
 		protected void GeneratePrivateMethod (StringBuilder sb, string methodName)
@@ -141,6 +141,7 @@ namespace FigmaSharp
 
 		protected void GenerateNamespace (StringBuilder sb, string fullNamespace)
 		{
+			sb.AppendLine();
 			AppendLine(sb, $"namespace {fullNamespace}");
 			OpenBracket (sb);
 		}
