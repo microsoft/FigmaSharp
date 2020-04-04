@@ -79,16 +79,17 @@ namespace FigmaSharp
 			string date = Date.ToString("yyyy-MM-dd");
 			string time = Date.ToString("HH:mm");
 
-			builder.AppendLine ($"This file was auto-generated using");
-			builder.AppendLine ($"FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}");
-			builder.AppendLine ();
-			builder.AppendLine ($"Document title:   {DocumentTitle}");
-			builder.AppendLine ($"Document version: {DocumentVersion}");
-			builder.AppendLine ($"Document Namespace:   {Namespace}");
-			builder.AppendLine ($"Document URL:     {FileId}");
-			builder.AppendLine ();
-			builder.AppendLine ($"Changes to this file may cause incorrect behavior");
-			builder.AppendLine ($"and will be lost if the code is regenerated.");
+			builder.AppendLine ($"// This file was auto-generated using");
+			builder.AppendLine ($"// FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}");
+			builder.AppendLine ($"//");
+			builder.AppendLine ($"// Document title:   {DocumentTitle}");
+			builder.AppendLine ($"// Document version: {DocumentVersion}");
+			builder.AppendLine ($"// Document URL:     {FileId}");
+			builder.AppendLine ($"// Namespace:        {Namespace}");
+			builder.AppendLine ($"//");
+			builder.AppendLine ($"// Changes to this file may cause incorrect behavior");
+			builder.AppendLine ($"// and will be lost if the code is regenerated.");
+			builder.AppendLine();
 		}
 
 		public static FigmaManifest FromFilePath (string filePath)
