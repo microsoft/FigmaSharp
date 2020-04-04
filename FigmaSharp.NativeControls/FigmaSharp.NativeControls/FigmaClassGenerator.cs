@@ -89,7 +89,7 @@ namespace FigmaSharp
 
 	public abstract class FigmaClassBase
 	{
-		 protected const string InitializeComponentMethodName = "Initialize";
+		 protected const string InitializeComponentMethodName = "InitializeComponent";
 
 		public List<string> Usings { get; } = new List<string> ();
 		public List<string> Comments { get; } = new List<string> ();
