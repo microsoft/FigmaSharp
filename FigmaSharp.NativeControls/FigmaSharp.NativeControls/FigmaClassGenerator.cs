@@ -127,7 +127,8 @@ namespace FigmaSharp
 		protected void GenerateUsings (StringBuilder builder)
 		{
 			foreach (var current in Usings) {
-				builder.AppendLine ($"using {current};");
+				builder.AppendLine($"using {current};");
+				builder.AppendLine();
 			}
 		}
 
