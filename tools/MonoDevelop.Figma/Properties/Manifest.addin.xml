@@ -95,7 +95,7 @@
                 defaultHandler = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
                 _description = "Creates an empty manifest file"/>
             <Command id = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
-                _label = "Regenerate Code"
+                _label = "Regenerate from Figma Document"
                 defaultHandler = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
                 _description = "Regenerates code from the local Figma file"/>
         </Category>    
