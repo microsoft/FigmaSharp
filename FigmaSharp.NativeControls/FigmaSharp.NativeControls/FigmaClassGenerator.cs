@@ -165,8 +165,14 @@ namespace FigmaSharp
 			CurrentTabIndex++;
 		}
 
-		protected void AppendLine (StringBuilder sb, string line) =>
-			sb.AppendLine ($"{new string ('\t', CurrentTabIndex)}{line}");
+		protected void AppendLine(StringBuilder sb, string line) {
+			if (string.IsNullOrWhiteSpace(line)) {
+				sb.AppendLine();
+				return;
+			}
+
+			sb.AppendLine($"{new string('\t', CurrentTabIndex)}{line}");
+		}
 
 		public string Generate ()
 		{
