@@ -100,7 +100,7 @@ namespace FigmaSharp
 
 					if (figmaNodeContainer.HasChildrenVisible("max") == false)
 					{
-						builder.AppendLine(string.Format("{0}.{1}({2}).{3} = {4};",
+						builder.AppendLine(string.Format("{0}.{1} ({2}).{3} = {4};",
 							CodeGenerationHelpers.This,
 							nameof(AppKit.NSWindow.StandardWindowButton),
 							NSWindowButton.ZoomButton.GetFullName(),
@@ -123,7 +123,7 @@ namespace FigmaSharp
 					});
 				builder.WriteEquality (frameEntity, nameof (AppKit.NSWindow.Frame.Size), instance, instanciate: false);
 
-				string parameters = $"{frameEntity},{true.ToDesignerString ()}";
+				string parameters = $"{frameEntity}, {true.ToDesignerString ()}";
 
 				builder.WriteMethod (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.SetFrame), parameters);
 				builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
