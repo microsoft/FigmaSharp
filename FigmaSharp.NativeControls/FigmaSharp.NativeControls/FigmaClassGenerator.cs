@@ -104,15 +104,12 @@ namespace FigmaSharp
 
 		protected void GenerateComments (StringBuilder builder)
 		{
-			builder.AppendLine ("/*");
 			if (ShowManifestComments) {
 				Manifest.ToComment (builder);
-				builder.AppendLine ("* ");
 			}
 			foreach (var current in Comments) {
-				builder.AppendLine ($"* {current}");
+				builder.AppendLine ($"// {current}");
 			}
-			builder.AppendLine ("*/");
 		}
 
 		public void Save (string filePath)
