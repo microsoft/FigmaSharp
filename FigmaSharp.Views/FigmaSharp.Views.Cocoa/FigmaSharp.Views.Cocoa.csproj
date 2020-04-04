@@ -73,6 +73,7 @@
     <Compile Include="ViewWrappers\Spinner.cs" />
     <Compile Include="ViewWrappers\SearchBox.cs" />
     <Compile Include="ViewWrappers\HorizontalBar.cs" />
+    <Compile Include="ViewWrappers\TextView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />

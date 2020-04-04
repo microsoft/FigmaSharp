@@ -80,6 +80,7 @@
     <Compile Include="FakeWindowView.cs" />
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="FakeSheetView.cs" />
+    <Compile Include="Converters\TextViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
