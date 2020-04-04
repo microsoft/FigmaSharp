@@ -10,7 +10,7 @@ namespace FigmaSharp.Cocoa
 		{
 			string args;
 			if (parameters.Length > 0) {
-				args = string.Join (",", parameters);
+				args = string.Join (", ", parameters);
 			} else {
 				args = string.Empty;
 			}
