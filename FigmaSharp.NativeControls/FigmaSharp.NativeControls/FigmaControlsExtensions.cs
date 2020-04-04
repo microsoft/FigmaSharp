@@ -39,6 +39,7 @@ namespace FigmaSharp.NativeControls
         NotDefined = 0,
 		Button = 1,
 		TextField = 2,
+		TextView = 20,
 		Filter = 3,
 		RadioButton = 4,
 		CheckBox = 5,
@@ -72,10 +73,10 @@ namespace FigmaSharp.NativeControls
         TextFieldStandardDark = 22,
         TextFieldSmallDark = 23,
 
-        MultilineTextFieldStandard = 25,
-        MultilineTextFieldStandardDark = 26,
-        MultilineTextFieldSmall = 27,
-        MultilineTextFieldSmallDark = 28,
+        TextViewStandard = 25,
+        TextViewStandardDark = 26,
+        TextViewSmall = 27,
+        TextViewSmallDark = 28,
 
         FilterSmallDark = 30,
         FilterStandardDark =31,
@@ -129,7 +130,7 @@ namespace FigmaSharp.NativeControls
         StepperSmall = 92,
         StepperStandard = 93,
 
-        //Windows
+        // Windows
         WindowSheet = 100,
         WindowSheetDark = 102,
         WindowPanel = 110,
@@ -154,15 +155,15 @@ namespace FigmaSharp.NativeControls
             ( "Button/Help", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
             ( "Button/Help Dark", NativeControlComponentType.ButtonHelpDark,  NativeControlType.Button),
 
-            ( "TextField/Standard", NativeControlComponentType.TextFieldStandard, NativeControlType.TextField),
-            ( "TextField/Small", NativeControlComponentType.TextFieldSmall, NativeControlType.TextField),
-            ( "TextField/Standard Dark", NativeControlComponentType.TextFieldStandardDark, NativeControlType.TextField),
-            ( "TextField/Small Dark", NativeControlComponentType.TextFieldSmallDark, NativeControlType.TextField),
+            ( "TextField/Standard", NativeControlComponentType.TextViewStandard, NativeControlType.TextView),
+            ( "TextField/Small", NativeControlComponentType.TextViewSmall, NativeControlType.TextView),
+            ( "TextField/Standard Dark", NativeControlComponentType.TextViewStandardDark, NativeControlType.TextView),
+            ( "TextField/Small Dark", NativeControlComponentType.TextViewSmallDark, NativeControlType.TextView),
 
-            ( "TextView/Standard", NativeControlComponentType.MultilineTextFieldStandard, NativeControlType.TextField),
-            ( "TextView/Small", NativeControlComponentType.MultilineTextFieldSmall, NativeControlType.TextField),
-            ( "TextView/Standard Dark", NativeControlComponentType.MultilineTextFieldStandardDark, NativeControlType.TextField),
-            ( "TextView/Small Dark", NativeControlComponentType.MultilineTextFieldSmallDark, NativeControlType.TextField),
+            ( "TextView/Standard", NativeControlComponentType.TextViewStandard, NativeControlType.TextView),
+            ( "TextView/Small", NativeControlComponentType.TextViewSmall, NativeControlType.TextView),
+            ( "TextView/Standard Dark", NativeControlComponentType.TextViewStandardDark, NativeControlType.TextView),
+            ( "TextView/Small Dark", NativeControlComponentType.TextViewSmallDark, NativeControlType.TextView),
 
             ( "Search/Small Dark", NativeControlComponentType.FilterSmallDark, NativeControlType.Filter),
             ( "Search/Standard Dark", NativeControlComponentType.FilterStandardDark, NativeControlType.Filter),

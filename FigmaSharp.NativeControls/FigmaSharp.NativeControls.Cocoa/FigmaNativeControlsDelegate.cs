@@ -60,6 +60,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					new RadioConverter (),
 					new ButtonConverter (),
 					new TextFieldConverter (),
+					new TextViewConverter (),
 					new LabelConverter ()
 				};
 			}

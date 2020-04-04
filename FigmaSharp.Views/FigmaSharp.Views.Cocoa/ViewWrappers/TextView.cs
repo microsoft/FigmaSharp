@@ -26,31 +26,53 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.Views
+using System;
+using FigmaSharp.Views.Native.Cocoa;
+
+namespace FigmaSharp.Views.Cocoa
 {
-	public enum TextAlignment
+	public class TextView : View, ITextView
 	{
-		/// <summary>Indicates that text will be aligned to the left or top of horizontally or vertically aligned text, respectively.</summary>
-		Start,
-		/// <summary>Indicates that text will be aligned in the middle of either horizontally or vertically aligned text.</summary>
-		Center,
-		/// <summary>Indicates that text will be aligned to the right or bottom of horizontally or vertically aligned text, respectively.</summary>
-		End
+		FNSTextView textView;
+		public event EventHandler Changed;
+
+		public TextView () : this (new FNSTextView ())
+		{
+
+		}
+
+		public TextView (FNSTextView textView) : base (textView)
+		{
+			this.textView = textView;
+            this.textView.TranslatesAutoresizingMaskIntoConstraints = false;
+			this.textView.Changed += TextView_Changed;
+		}
+
+		private void TextView_Changed (object sender, EventArgs e)
+		{
+			Changed?.Invoke (this, EventArgs.Empty);
+		}
+
+		public string Text {
+			get => textView.StringValue;
+			set {
+				textView.StringValue = value ?? "";
+			}
+		}
+
+		public string PlaceHolderString {
+			get => textView.PlaceholderString;
+			set {
+				textView.PlaceholderString = value ?? "";
+			}
+		}
+
+		public Color ForegroundColor { get => textView.TextColor.ToColor (); set => textView.TextColor = value.ToNSColor (); }
+
+		public override void Dispose ()
+		{
+			textField.Changed -= TextField_Changed;
+			base.Dispose ();
+		}
 	}
-
-	public interface ITextBox : IView
-	{
-		string Text { get; set; }
-		string PlaceHolderString { get; set; }
-
-		Color ForegroundColor { get; set; }
-	}
-
-    public interface ITextView : IView
-    {
-        string Text { get; set; }
-        string PlaceHolderString { get; set; }
-
-        Color ForegroundColor { get; set; }
-    }
 }
