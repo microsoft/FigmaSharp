@@ -91,7 +91,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode.Node;
-			var name = currentNode.Name;
+
+			string textViewName = currentNode.Name;
+
+			var name = currentNode.Name + "ScrollView";
+			currentNode.Name = name;
+
 
 			var builder = new StringBuilder();
 
@@ -99,10 +104,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 				builder.WriteConstructor (name, typeof (NSScrollView));
 
 			builder.Configure (instance, name);
+			builder.WriteEquality(name, nameof(NSScrollView.BorderType), NSBorderType.LineBorder.GetFullName());
+			builder.WriteEquality(name, nameof(NSScrollView.HasHorizontalRuler), false);
+			builder.WriteEquality(name, nameof(NSScrollView.HasVerticalScroller), true);
 
-			// TODO: textView.TextContainer.Size = new CoreGraphics.CGSize(scrollView.ContentSize.Width, float.MaxValue);
 
-			string textViewName = name + "TextView";
+			builder.AppendLine();
 			builder.WriteConstructor(textViewName, typeof(NSTextView));
 
 			builder.WriteEquality(textViewName,
@@ -111,7 +118,18 @@ namespace FigmaSharp.NativeControls.Cocoa
 			                          typeof(CoreGraphics.CGRect), 0, 0, name + ".ContentSize.Width", name + ".ContentSize.Height"));
 
 			builder.WriteEquality(textViewName, nameof(NSTextView.AutoresizingMask), NSViewResizingMask.WidthSizable.GetFullName());
-			// TODO: builder.WriteEquality(textViewName, nameof(NSTextView.Font), string.Format("{0} ({1})", NSFont.SystemFontOfSize.GetType(), typeof(NSFont.SystemFontSize)));
+
+			instance.TryGetNativeControlComponentType(out var controlComponentType);
+			switch (controlComponentType)
+			{
+				default:
+					builder.WriteEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+					break;
+				case NativeControlComponentType.TextViewSmall:
+				case NativeControlComponentType.TextViewSmallDark:
+					builder.WriteEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+					break;
+			}
 
 			var texts = instance.children.OfType<FigmaText> ();
 			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
@@ -122,19 +140,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 				//builder.Configure (figmaTextNode, name);
 			}
 
-			builder.WriteEquality(name, nameof(NSScrollView.BorderType), NSBorderType.LineBorder.GetFullName());
-			builder.WriteEquality(name, nameof(NSScrollView.HasHorizontalRuler), false);
-			builder.WriteEquality(name, nameof(NSScrollView.HasVerticalScroller), false);
+			builder.AppendLine();
 			builder.WriteEquality(name, nameof(NSScrollView.DocumentView), textViewName);
-
-			instance.TryGetNativeControlComponentType(out var controlComponentType);
-			switch (controlComponentType)
-			{
-				case NativeControlComponentType.TextViewSmall:
-				case NativeControlComponentType.TextViewSmallDark:
-					// TODO: textView.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
-					break;
-			}
 
 			return builder;
 		}
