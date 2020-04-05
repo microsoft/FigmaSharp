@@ -37,11 +37,14 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
     public class CheckConverter : FigmaNativeControlConverter
     {
+        public override Type ControlType => typeof(NSButton);
+
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
@@ -51,11 +54,12 @@ namespace FigmaSharp.NativeControls.Cocoa
         {
             var figmaInstance = (FigmaFrameEntity)currentNode;
 
-			var button = new CheckBox() { Text = "" };
+			var button = new CheckBox() { Text = string.Empty };
 			var view = (NSButton)button.NativeObject;
             view.Configure (figmaInstance);
 
             figmaInstance.TryGetNativeControlComponentType (out var controlType);
+
             switch (controlType)
             {
                 case NativeControlComponentType.CheckboxSmall:
@@ -79,12 +83,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             //check with labels needs check in child
             var checkButtonFigmaNode = figmaInstance.children
-                .FirstOrDefault (s => s.TryGetNativeControlType (out var value) && value == NativeControlType.CheckBox)
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox)
 				as FigmaFrameEntity;
 
             button.IsChecked = figmaInstance.children
-            .OfType<FigmaGroup> ()
-            .Any (s => s.name == "On" && s.visible);
+                .OfType<FigmaGroup> ()
+                .Any (s => s.name == "On" && s.visible);
 
             button.Enabled = !figmaInstance.children
                 .OfType<FigmaGroup> ()
@@ -98,10 +102,10 @@ namespace FigmaSharp.NativeControls.Cocoa
             var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
             var builder = new StringBuilder ();
-            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+            var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (name, typeof (NSButton));
+                builder.WriteConstructor (name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
             builder.Configure (currentNode.Node, name);
 
@@ -133,8 +137,8 @@ CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFo
             //check with labels needs check in child
 
             var checkButtonFigmaNode = figmaInstance.children
-             .FirstOrDefault (s => s.TryGetNativeControlType (out var value) && value == NativeControlType.CheckBox)
-             as FigmaFrameEntity;
+			 .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.CheckBox)
+			 as FigmaFrameEntity;
 
             if (checkButtonFigmaNode != null) {
                 figmaInstance = checkButtonFigmaNode;

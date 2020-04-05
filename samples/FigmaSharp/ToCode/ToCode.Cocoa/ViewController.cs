@@ -103,6 +103,7 @@ namespace ToCode.Cocoa
 
 		void OutlinePanel_RaiseFirstResponder (object sender, FigmaNode e)
 		{
+			codeRenderer.Clear();
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
 			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null);

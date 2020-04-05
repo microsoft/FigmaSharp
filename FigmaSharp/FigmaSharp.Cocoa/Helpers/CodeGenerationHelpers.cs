@@ -25,15 +25,14 @@ namespace FigmaSharp.Cocoa
 
 		#endregion
 
-		public static string GetConstructor (string viewName, Type type)
+		public static string GetConstructor (string viewName, Type type, bool includesVar = true)
 		{
-
-			return GetConstructor (viewName, type.FullName);
+			return GetConstructor (viewName, type.FullName, includesVar);
 		}
 
-		public static string GetConstructor (string viewName, string typeFullName)
+		public static string GetConstructor (string viewName, string typeFullName, bool includesVar = true)
 		{
-			return $"var {viewName} = new {typeFullName}();";
+			return $"{(includesVar ? "var " : string.Empty)}{viewName} = new {typeFullName}();";
 		}
 
 		public static string GetEquality (string viewName, string propertyName, Enum value)

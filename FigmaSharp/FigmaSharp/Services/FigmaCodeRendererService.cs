@@ -48,7 +48,7 @@ namespace FigmaSharp.Services
 
 		public bool IsMainNode (FigmaNode figmaNode) => MainNode != null && figmaNode == MainNode?.Node;
 
-		public void Clear ()
+		public virtual void Clear ()
 		{
 			CurrentRendererOptions = null;
 			ParentMainNode = null;
@@ -61,6 +61,7 @@ namespace FigmaSharp.Services
 			if (parent == null) {
 				if (MainNode == null) {
 					identifiers.Clear ();
+					OnStartGetCode ();
 
 					//we initialize
 					CurrentRendererOptions = currentRendererOptions ?? new FigmaCodeRendererServiceOptions ();
@@ -107,7 +108,6 @@ namespace FigmaSharp.Services
 					}
 
 					builder.AppendLine();
-					builder.AppendLine();
 					builder.AppendLine ($"// View:     {node.Name}");
 					builder.AppendLine ($"// NodeName: {node.Node.name}");
 					builder.AppendLine ($"// NodeType: {node.Node.type}");
@@ -143,6 +143,11 @@ namespace FigmaSharp.Services
 				//first loop
 				Clear ();
 			}
+		}
+
+		protected virtual void OnStartGetCode ()
+		{
+
 		}
 
 		protected virtual void OnPreConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)

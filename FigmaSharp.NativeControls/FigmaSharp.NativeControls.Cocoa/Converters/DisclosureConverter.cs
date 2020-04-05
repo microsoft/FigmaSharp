@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Text;
 
 using AppKit;
@@ -41,6 +42,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class DisclossureConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSButton);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.DisclosureTriange;
@@ -72,7 +75,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSButton));
+				builder.WriteConstructor (name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.Configure (figmaInstance, name);
 

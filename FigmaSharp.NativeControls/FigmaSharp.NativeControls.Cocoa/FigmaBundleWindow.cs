@@ -131,6 +131,11 @@ namespace FigmaSharp
 			codeRendererService.GetCode (builder, new FigmaCodeNode(FigmaNode, null), null);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 
+			if (codeRendererService is NativeViewCodeService nativeViewCodeService) {
+				partialDesignerClass.PrivateMembers.Clear();
+				partialDesignerClass.PrivateMembers.AddRange(nativeViewCodeService.PrivateMembers);
+			}
+
 			if (centers) {
 				builder.AppendLine(string.Format("{0}.{1}();",
 				CodeGenerationHelpers.This,

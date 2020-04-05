@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Text;
 
 using AppKit;
@@ -41,6 +42,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class SpinnerConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof (NSProgressIndicator);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ProgressSpinner;
@@ -75,7 +78,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSProgressIndicator));
+				builder.WriteConstructor (name,  ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.Configure (figmaInstance, name);
 

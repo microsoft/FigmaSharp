@@ -28,8 +28,6 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 using AppKit;
 
@@ -48,15 +46,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		}
 
-
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowSheet) ||
 			               currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
-
 			return isWindow;
 		}
-
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
@@ -91,13 +86,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return view;
 		}
 
-
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return string.Empty;
 		}
 	}
-
 
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
@@ -183,7 +176,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			return view;
 		}
-
 
 		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{

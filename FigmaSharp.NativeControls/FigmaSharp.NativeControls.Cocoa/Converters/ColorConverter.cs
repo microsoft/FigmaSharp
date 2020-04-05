@@ -33,17 +33,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class ColorConverter
 	{
-
 		public ColorConverter()
 		{
 		}
-
 
 		const string LIGHT_THEME_NAME    = "Light";
 		const string LIGHT_HC_THEME_NAME = "Light HC";
 		const string DARK_THEME_NAME     = "Dark;";
 		const string DARK_HC_THEME_NAME  = "Dark HC";
-
 
 		public NSColor GetThemeColor(string colorStyleName)
 		{
@@ -52,7 +49,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			return ThemeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColor;
 		}
-
 
 		public static IReadOnlyList<(string styleName, NSColor themeColor)> ThemeColors = new List<(string styleName, NSColor themeColor)>
 		{

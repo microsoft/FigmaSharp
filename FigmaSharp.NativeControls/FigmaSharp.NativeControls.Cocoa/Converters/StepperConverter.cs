@@ -37,11 +37,14 @@ using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.NativeControls;
+using System;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
     public class StepperConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSStepper);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Stepper;
@@ -72,12 +75,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
-
-			StringBuilder builder = new StringBuilder ();
+			var builder = new StringBuilder ();
 			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (AppKit.NSStepper));
+				builder.WriteConstructor (name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.Configure (figmaInstance, name);
 

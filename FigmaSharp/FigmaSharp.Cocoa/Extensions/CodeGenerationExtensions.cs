@@ -22,14 +22,14 @@ namespace FigmaSharp.Cocoa
 			return string.Format ("{0}.{1}", myEnum.GetType ().Name, myEnum.ToString ());
 		}
 
-		public static string GetConstructor (this Services.FigmaCodeNode sender, Type type)
+		public static string GetConstructor (this Services.FigmaCodeNode sender, Type type, bool includesVar = true)
 		{
-			return GetConstructor (sender, type.FullName);
+			return GetConstructor (sender, type.FullName, includesVar);
 		}
 
-		public static string GetConstructor (this Services.FigmaCodeNode sender, string typeFullName)
+		public static string GetConstructor (this Services.FigmaCodeNode sender, string typeFullName, bool includesVar = true)
 		{
-			return CodeGenerationHelpers.GetConstructor (sender.Name, typeFullName);
+			return CodeGenerationHelpers.GetConstructor (sender.Name, typeFullName, includesVar);
 		}
 
 		public static string GetEquality (this Services.FigmaCodeNode sender, string propertyName, Enum value)
@@ -64,14 +64,14 @@ namespace FigmaSharp.Cocoa
 
 		#region StringBuilder Code Generation
 
-		public static void WriteConstructor (this StringBuilder builder, string viewName, Type type)
+		public static void WriteConstructor (this StringBuilder builder, string viewName, Type type, bool includesVar = true)
 		{
-			WriteConstructor (builder, viewName, type.FullName);
+			WriteConstructor (builder, viewName, type.FullName, includesVar);
 		}
 
-		public static void WriteConstructor (this StringBuilder builder, string viewName, string typeFullName)
+		public static void WriteConstructor (this StringBuilder builder, string viewName, string typeFullName, bool includesVar = true)
 		{
-			builder.AppendLine (CodeGenerationHelpers.GetConstructor (viewName, typeFullName));
+			builder.AppendLine (CodeGenerationHelpers.GetConstructor (viewName, typeFullName, includesVar));
 		}
 
 		public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, Enum value)
