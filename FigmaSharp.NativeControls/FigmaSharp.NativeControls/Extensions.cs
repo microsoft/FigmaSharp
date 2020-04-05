@@ -33,6 +33,8 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
+using FigmaSharp.NativeControls;
+
 namespace FigmaSharp
 {
     public static class Extensions
