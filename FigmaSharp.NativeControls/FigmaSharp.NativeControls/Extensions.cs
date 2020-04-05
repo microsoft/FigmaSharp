@@ -26,12 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Linq;
+using System;
+
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using System.Linq;
-using FigmaSharp.NativeControls;
-using System;
 
 namespace FigmaSharp
 {

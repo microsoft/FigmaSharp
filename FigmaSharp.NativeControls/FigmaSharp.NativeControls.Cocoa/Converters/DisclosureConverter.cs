@@ -40,7 +40,7 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class DisclossureConverter : FigmaNativeControlConverter
+    public class DisclosureConverter : FigmaNativeControlConverter
 	{
 		public override Type ControlType => typeof(NSButton);
 
