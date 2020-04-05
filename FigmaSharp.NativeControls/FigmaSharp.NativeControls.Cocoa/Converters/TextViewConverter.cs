@@ -118,7 +118,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (figmaTextNode != null) {
 				var text = figmaTextNode.characters ?? string.Empty;
-				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
+				builder.WriteEquality (textViewName, nameof (NSTextView.Value), text, true);
 				//builder.Configure (figmaTextNode, name);
 			}
 
