@@ -34,7 +34,6 @@ namespace FigmaSharp.Views.Cocoa
 	public class TextView : View, ITextView
 	{
 		FNSTextView textView;
-		public event EventHandler Changed;
 
 		public TextView () : this (new FNSTextView ())
 		{
@@ -45,33 +44,11 @@ namespace FigmaSharp.Views.Cocoa
 		{
 			this.textView = textView;
             this.textView.TranslatesAutoresizingMaskIntoConstraints = false;
-			this.textView.Changed += TextView_Changed;
 		}
 
-		private void TextView_Changed (object sender, EventArgs e)
-		{
-			Changed?.Invoke (this, EventArgs.Empty);
-		}
-
-		public string Text {
-			get => textView.StringValue;
-			set {
-				textView.StringValue = value ?? "";
-			}
-		}
-
-		public string PlaceHolderString {
-			get => textView.PlaceholderString;
-			set {
-				textView.PlaceholderString = value ?? "";
-			}
-		}
-
-		public Color ForegroundColor { get => textView.TextColor.ToColor (); set => textView.TextColor = value.ToNSColor (); }
 
 		public override void Dispose ()
 		{
-			textField.Changed -= TextField_Changed;
 			base.Dispose ();
 		}
 	}

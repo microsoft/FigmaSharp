@@ -48,9 +48,7 @@ namespace FigmaSharp.Views
 
     public interface ITextView : IView
     {
-        string Text { get; set; }
-        string PlaceHolderString { get; set; }
-
-        Color ForegroundColor { get; set; }
+        //string Text { get; set; }
+        //Color ForegroundColor { get; set; }
     }
 }

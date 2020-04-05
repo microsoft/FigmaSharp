@@ -98,7 +98,7 @@ namespace FigmaSharp.Views.Native.Cocoa
 		public override bool IsFlipped => true;
 	}
 
-	public class FNSTextView : NSTextView, IFlippedView
+	public class FNSTextView : NSScrollView, IFlippedView
 	{
 		public bool MouseDownMovesWindow { get; set; }
 		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;

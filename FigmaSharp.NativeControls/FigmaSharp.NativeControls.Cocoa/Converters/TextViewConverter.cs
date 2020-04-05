@@ -51,32 +51,41 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var figmaInstance = (FigmaFrameEntity)currentNode;
 
 			figmaInstance.TryGetNativeControlType(out var controlType);
-			ITextBox textBox = new TextBox();
-			var view = (NSTextView)textBox.NativeObject;
+			ITextView view = new TextView();
+			var scrollView = (NSScrollView)view.NativeObject;
 
-			view.Configure(currentNode);
-			view.AlphaValue = figmaInstance.opacity;
+			scrollView.Configure(currentNode);
+
+			var textView = new NSTextView(new CoreGraphics.CGRect(0,0,scrollView.ContentSize.Width, scrollView.ContentSize.Height));
+			textView.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+			textView.AutoresizingMask = NSViewResizingMask.WidthSizable;
+			textView.TextContainer.Size = new CoreGraphics.CGSize( scrollView.ContentSize.Width, float.MaxValue);
+
+			var texts = figmaInstance.children.OfType<FigmaText>();
+			var text = texts.FirstOrDefault(s => s.name == "lbl" && s.visible);
+
+			if (text != null) {
+				textView.Value = text.characters;
+
+				// TODO: text styling
+				// tv.TextStorage.Append(new Foundation.NSAttributedString(""), null);
+			}
+
+			scrollView.BorderType = NSBorderType.LineBorder;
+			scrollView.HasHorizontalScroller = false;
+			scrollView.HasVerticalScroller = true;
+			scrollView.DocumentView = textView;
 
 			figmaInstance.TryGetNativeControlComponentType(out var controlComponentType);
 			switch (controlComponentType)
 			{
 				case NativeControlComponentType.TextViewSmall:
 				case NativeControlComponentType.TextViewSmallDark:
-					//view.ControlSize = NSControlSize.Small;
+					textView.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
 					break;
 			}
 
-			var texts = figmaInstance.children
-				.OfType<FigmaText>();
-
-			var text = texts.FirstOrDefault(s => s.name == "lbl" && s.visible);
-			if (text != null)
-			{
-				textBox.Text = text.characters;
-				//view.Configure (text);
-			}
-
-			return textBox;
+			return view;
 		}
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
@@ -85,14 +94,26 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = currentNode.Name;
 
 			var builder = new StringBuilder();
-			/*
+
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSTextField));
+				builder.WriteConstructor (name, typeof (NSScrollView));
 
 			builder.Configure (instance, name);
 
-			var texts = instance.children.OfType<FigmaText> ();
+			// TODO: textView.TextContainer.Size = new CoreGraphics.CGSize(scrollView.ContentSize.Width, float.MaxValue);
 
+			string textViewName = name + "TextView";
+			builder.WriteConstructor(textViewName, typeof(NSTextView));
+
+			builder.WriteEquality(textViewName,
+			                      nameof(NSTextView.Frame),
+			                      string.Format("new {0} ({1}, {2}, {3}, {4})",
+			                          typeof(CoreGraphics.CGRect), 0, 0, name + ".ContentSize.Width", name + ".ContentSize.Height"));
+
+			builder.WriteEquality(textViewName, nameof(NSTextView.AutoresizingMask), NSViewResizingMask.WidthSizable.GetFullName());
+			// TODO: builder.WriteEquality(textViewName, nameof(NSTextView.Font), string.Format("{0} ({1})", NSFont.SystemFontOfSize.GetType(), typeof(NSFont.SystemFontSize)));
+
+			var texts = instance.children.OfType<FigmaText> ();
 			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
 
 			if (figmaTextNode != null) {
@@ -101,10 +122,20 @@ namespace FigmaSharp.NativeControls.Cocoa
 				//builder.Configure (figmaTextNode, name);
 			}
 
-			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholderTextNode != null && !placeholderTextNode.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
-				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), placeholderTextNode.characters, true);
-				*/
+			builder.WriteEquality(name, nameof(NSScrollView.BorderType), NSBorderType.LineBorder.GetFullName());
+			builder.WriteEquality(name, nameof(NSScrollView.HasHorizontalRuler), false);
+			builder.WriteEquality(name, nameof(NSScrollView.HasVerticalScroller), false);
+			builder.WriteEquality(name, nameof(NSScrollView.DocumentView), textViewName);
+
+			instance.TryGetNativeControlComponentType(out var controlComponentType);
+			switch (controlComponentType)
+			{
+				case NativeControlComponentType.TextViewSmall:
+				case NativeControlComponentType.TextViewSmallDark:
+					// TODO: textView.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+					break;
+			}
+
 			return builder;
 		}
 	}
