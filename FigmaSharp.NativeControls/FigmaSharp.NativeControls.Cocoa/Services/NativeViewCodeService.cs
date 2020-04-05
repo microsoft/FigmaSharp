@@ -27,18 +27,31 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls;
+using FigmaSharp.NativeControls.Cocoa;
 
 namespace FigmaSharp.Services
 {
     public class NativeViewCodeService : FigmaCodeRendererService
 	{
+		public List<(Type memberType, string name)> PrivateMembers = new List<(Type memberType, string name)>();
+
 		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? NativeControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? NativeControlsContext.Current.GetCodePropertyConverter ())
 		{
 
+		}
+
+		internal override bool NeedsRenderConstructor(FigmaCodeNode node, FigmaCodeNode parent)
+		{
+			if (parent != null && IsMainNode(parent.Node) && (CurrentRendererOptions?.RendersConstructorFirstElement ?? false))
+				return false;
+			else
+				return true;
 		}
 
 		#region Rendering
@@ -94,6 +107,26 @@ namespace FigmaSharp.Services
 				return true;
 			}
 			return base.TryGetCodeViewName (node, parent, out identifier);
+		}
+
+		protected override void OnStartGetCode()
+		{
+			PrivateMembers.Clear();
+		}
+
+		public override void Clear()
+		{
+			base.Clear();
+		}
+
+		protected override void OnPostConvertToCode(StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		{
+			if (converter is FigmaNativeControlConverter nativeControlConverter) {
+				if (nativeControlConverter.ControlType != null && node.Node.TryGetNodeCustomName (out string name)) {
+					PrivateMembers.Add((nativeControlConverter.ControlType, name));
+				}
+			}
+			base.OnPostConvertToCode(builder, node, parent, converter, codePropertyConverter);
 		}
 
 		#endregion

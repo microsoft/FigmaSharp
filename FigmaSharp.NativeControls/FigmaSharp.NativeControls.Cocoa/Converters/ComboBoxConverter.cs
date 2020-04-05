@@ -25,12 +25,10 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+using AppKit;
 using System;
 using System.Linq;
 using System.Text;
-
-using AppKit;
 
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -42,6 +40,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class ComboBoxConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSComboBox);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ComboBox;
@@ -81,10 +81,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
 			var builder = new StringBuilder ();
-			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+			var name = Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSComboBox).FullName);
+				builder.WriteConstructor (name, ControlType, !currentNode.Node.TryGetNodeCustomName (out var _));
 
 			builder.Configure (currentNode.Node, name);
 

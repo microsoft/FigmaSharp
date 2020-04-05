@@ -37,86 +37,92 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public abstract class FigmaNativeControlConverter : FigmaViewConverter
 	{
-        public override bool ScanChildren(FigmaNode currentNode)
+		public virtual Type ControlType { get; }
+
+		public override bool ScanChildren(FigmaNode currentNode)
 		{
 			return false;
 		}
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-            var converted = OnConvertToView(currentNode, parent, rendererService);
-            if (converted != null) {
-                var nativeView = converted.NativeObject as AppKit.NSView;
-                if (currentNode.IsA11Group ())
-                    nativeView.AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
+			var converted = OnConvertToView(currentNode, parent, rendererService);
+			if (converted != null)
+			{
+				var nativeView = converted.NativeObject as AppKit.NSView;
+				if (currentNode.IsA11Group())
+					nativeView.AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
 
-                //label
-                if (currentNode.TrySearchA11Label (out var label))
+				//label
+				if (currentNode.TrySearchA11Label(out var label))
 				{
-					try {
-                        nativeView.AccessibilityTitle = label;
-                    } catch (Exception) {
-                        nativeView.AccessibilityLabel = label;
-                    }
+					try
+					{
+						nativeView.AccessibilityTitle = label;
+					}
+					catch (Exception)
+					{
+						nativeView.AccessibilityLabel = label;
+					}
 				}
-                //help
-                if (currentNode.TrySearchA11Help(out var help))
-                    nativeView.AccessibilityHelp = help;
-            }
-            return converted;
-        }
+				//help
+				if (currentNode.TrySearchA11Help(out var help))
+					nativeView.AccessibilityHelp = help;
+			}
+			return converted;
+		}
 
-        protected abstract IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService);
+		protected abstract IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService);
 
-        string GetAccessibilityTitle (NativeControlType nativeControlType)
-        {
-            switch (nativeControlType)
-              {
-                case NativeControlType.Button:
-                case NativeControlType.CheckBox:
-                case NativeControlType.RadioButton:
-                    return nameof(AppKit.NSView.AccessibilityTitle);
-                default:
-                break;
-            }
-            return nameof(AppKit.NSView.AccessibilityLabel);
-        }
+		string GetAccessibilityTitle(NativeControlType nativeControlType)
+		{
+			switch (nativeControlType)
+			{
+				case NativeControls.NativeControlType.Button:
+				case NativeControls.NativeControlType.CheckBox:
+				case NativeControls.NativeControlType.RadioButton:
+					return nameof(AppKit.NSView.AccessibilityTitle);
+				default:
+					break;
+			}
+			return nameof(AppKit.NSView.AccessibilityLabel);
+		}
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
-        {
-            var builder = OnConvertToCode (currentNode, parentNode, rendererService);
-            if (builder != null)
-            {
-                currentNode.Node.TryGetNativeControlType(out var nativeControlType);
+		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		{
+			var builder = OnConvertToCode(currentNode, parentNode, rendererService);
+			if (builder != null)
+			{
+				currentNode.Node.TryGetNativeControlType(out var nativeControlType);
 
-                bool hasAccessibility = false;
-                if (currentNode.Node.IsA11Group())
-                {
-                    var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
+				bool hasAccessibility = false;
+				if (currentNode.Node.IsA11Group())
+				{
+					var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
 
-                    builder.WriteEquality (currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
-                    hasAccessibility = true;
-                }
-                if (currentNode.Node.TrySearchA11Label(out var label))
-                {
-                    builder.WriteEquality(currentNode.Name, GetAccessibilityTitle (nativeControlType), label, inQuotes: true);
-                    hasAccessibility = true;
-                }
-                if (currentNode.Node.TrySearchA11Help(out var help))
-                {
-                    builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
-                    hasAccessibility = true;
-                }
+					builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
+					hasAccessibility = true;
+				}
+				if (currentNode.Node.TrySearchA11Label(out var label))
+				{
+					builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: true);
+					hasAccessibility = true;
+				}
+				if (currentNode.Node.TrySearchA11Help(out var help))
+				{
+					builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
+					hasAccessibility = true;
+				}
 
-                if (hasAccessibility)
-                    builder.AppendLine();
+				if (hasAccessibility)
+					builder.AppendLine();
 
-                return builder.ToString ();
-            }
-            return string.Empty;
-        }
+				return builder.ToString();
+			}
+			return string.Empty;
+		}
 
-        protected abstract StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
+		protected abstract StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
 
-    }
+	}
 }

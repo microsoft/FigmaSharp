@@ -42,6 +42,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class TextFieldConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSTextField);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && (value == NativeControlType.TextField || value == NativeControlType.Filter);
@@ -52,7 +54,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var figmaInstance = (FigmaFrameEntity) currentNode;
 
 			figmaInstance.TryGetNativeControlType (out var controlType);
-			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox () : new TextBox ();
+			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox() : new TextBox();
 			var view = (NSTextField)textBox.NativeObject;
 
 			view.Configure (currentNode);
@@ -90,9 +92,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = currentNode.Name;
 
 			var builder = new StringBuilder ();
-
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSTextField));
+				builder.WriteConstructor (name,  ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.Configure (instance, name);
 

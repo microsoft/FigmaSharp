@@ -40,14 +40,16 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class RadioConverter : FigmaNativeControlConverter
+	public class RadioConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSButton);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton;
 		}
 
-		public override bool ScanChildren (FigmaNode currentNode)
+		public override bool ScanChildren(FigmaNode currentNode)
 		{
 			return false;
 		}
@@ -56,12 +58,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode;
 
-			var button = new RadioBox () { Text = "" };
+			var button = new RadioBox() { Text = "" };
 			var view = (NSButton)button.NativeObject;
-			view.Configure (figmaInstance);
+			view.Configure(figmaInstance);
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+			switch (controlType)
+			{
 				case NativeControlComponentType.RadioSingleStandard:
 				case NativeControlComponentType.RadioStandard:
 				case NativeControlComponentType.RadioStandardDark:
@@ -74,17 +77,18 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var label = figmaInstance.children
-				  .OfType<FigmaText> ()
-				  .FirstOrDefault ();
-			if (label != null) {
+				  .OfType<FigmaText>()
+				  .FirstOrDefault();
+			if (label != null)
+			{
 				button.Text = label.characters;
-				view.Font = label.style.ToNSFont ();
+				view.Font = label.style.ToNSFont();
 			}
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-		 .FirstOrDefault (s => s.TryGetNativeControlType (out var value) && value == NativeControlType.RadioButton)
-		 as FigmaFrameEntity;
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton)
+				as FigmaFrameEntity;
 
 			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;
@@ -92,74 +96,79 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			//first figma 
 			button.IsChecked = figmaInstance.children
-				.OfType<FigmaGroup> ()
-				.Any (s => s.name == "On" && s.visible);
+				.OfType<FigmaGroup>()
+				.Any(s => s.name == "On" && s.visible);
 
 			button.Enabled = !figmaInstance.children
-				.OfType<FigmaGroup> ()
-				.Any (s => s.name == "Disabled" && s.visible);
+				.OfType<FigmaGroup>()
+				.Any(s => s.name == "Disabled" && s.visible);
 
-			return new View (view);
+			return new View(view);
 		}
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
-			var builder = new StringBuilder ();
+			var builder = new StringBuilder();
 			var name = currentNode.Name;
 
-			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSButton));
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				builder.WriteConstructor(name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
-			builder.Configure (figmaInstance, name);
+			builder.Configure(figmaInstance, name);
 
-			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
-			builder.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Radio);
+			builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+			builder.WriteMethod(name, nameof(NSButton.SetButtonType), NSButtonType.Radio);
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
 
-			switch (controlType) {
+			switch (controlType)
+			{
 				case NativeControlComponentType.RadioSingleStandard:
 				case NativeControlComponentType.RadioStandard:
 				case NativeControlComponentType.RadioStandardDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
 					break;
 				case NativeControlComponentType.RadioSmall:
 				case NativeControlComponentType.RadioSmallDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Mini);
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Mini);
 					break;
 			}
-		
+
 			builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
 CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 
-			var label = figmaInstance.children.OfType<FigmaText> ()
-				.FirstOrDefault (s => s.name == "lbl" && s.visible);
+			var label = figmaInstance.children.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == "lbl" && s.visible);
 			if (label != null)
-				builder.WriteEquality (name, nameof (NSButton.Title), label?.characters ?? "", true);
+				builder.WriteEquality(name, nameof(NSButton.Title), label?.characters ?? "", true);
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-			 .FirstOrDefault (s => s.TryGetNativeControlType (out var value) && value == NativeControlType.RadioButton)
+			 .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.RadioButton)
 			 as FigmaFrameEntity;
-		
-			if (radioButtonFigmaNode != null) {
+
+			if (radioButtonFigmaNode != null)
+			{
 				figmaInstance = radioButtonFigmaNode;
 			}
 
 			//first figma 
 			var group = figmaInstance.children
-				.OfType<FigmaGroup> ()
-				.FirstOrDefault (s => s.visible);
+				.OfType<FigmaGroup>()
+				.FirstOrDefault(s => s.visible);
 
-			if (group != null) {
-				if (group.name == "On") {
-					builder.WriteEquality (name, nameof (NSButton.State), NSCellStateValue.On);
+			if (group != null)
+			{
+				if (group.name == "On")
+				{
+					builder.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.On);
 				}
 
-				if (group.name == "Disabled") {
-					builder.WriteEquality (name, nameof (NSButton.Enabled), false);
+				if (group.name == "Disabled")
+				{
+					builder.WriteEquality(name, nameof(NSButton.Enabled), false);
 				}
 			}
 

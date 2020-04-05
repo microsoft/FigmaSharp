@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace FigmaSharp
 {
 	public class FigmaPartialDesignerClass : FigmaClassBase
 	{
+		public List<(Type memberType, string name)> PrivateMembers = new List<(Type memberType, string name)>();
 		public string Namespace { get; set; }
 		public string ClassName { get; set; }
 
@@ -35,6 +37,26 @@ namespace FigmaSharp
 			CloseBracket (sb);
 		}
 
+		protected void GenerateMembers(StringBuilder sb)
+		{
+			//private members
+			var groupedMembers = PrivateMembers
+				.Select(s => s.memberType)
+				.Distinct ();
+
+			foreach (var member in groupedMembers)
+			{
+				var items = PrivateMembers
+					.Where(s => s.memberType == member)
+					.Select (s => s.name)
+					.ToArray ();
+
+				var separatedValues = string.Join(", ", items);
+				AppendLine(sb, $"private {member.FullName} {separatedValues};");
+			}
+			AppendLine (sb);
+		}
+
 		protected void CloseInitializeComponentMethod (StringBuilder sb) => CloseBracket (sb);
 
 		protected override string OnGenerate ()
@@ -44,6 +66,7 @@ namespace FigmaSharp
 			GenerateUsings (sb);
 			GenerateNamespace (sb, Namespace);
 			GeneratePartialDesignerClass (sb, ClassName);
+			GenerateMembers (sb);
 			GenerateInitializeComponentMethod (sb);
 			ClosePartialDesignerClass (sb);
 			CloseNamespace (sb);
@@ -89,10 +112,10 @@ namespace FigmaSharp
 
 	public abstract class FigmaClassBase
 	{
-		 protected const string InitializeComponentMethodName = "InitializeComponent";
+		protected const string InitializeComponentMethodName = "InitializeComponent";
 
-		public List<string> Usings { get; } = new List<string> ();
-		public List<string> Comments { get; } = new List<string> ();
+		public List<string> Usings { get; } = new List<string>();
+		public List<string> Comments { get; } = new List<string>();
 
 		public FigmaManifest Manifest { get; set; }
 
@@ -100,9 +123,9 @@ namespace FigmaSharp
 
 		int CurrentTabIndex = 0;
 
-		protected void RemoveTabLevel () => CurrentTabIndex--;
+		protected void RemoveTabLevel() => CurrentTabIndex--;
 
-		protected void GenerateComments (StringBuilder builder)
+		protected void GenerateComments(StringBuilder builder)
 		{
 			if (ShowManifestComments) {
 				Manifest.ToComment (builder);
@@ -174,6 +197,8 @@ namespace FigmaSharp
 
 			sb.AppendLine($"{new string('\t', CurrentTabIndex)}{line}");
 		}
+
+		protected void AppendLine(StringBuilder sb) => sb.AppendLine();
 
 		public string Generate ()
 		{

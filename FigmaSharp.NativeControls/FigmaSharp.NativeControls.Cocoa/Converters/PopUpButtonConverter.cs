@@ -40,23 +40,26 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class PopUpButtonConverter : FigmaNativeControlConverter
+	public class PopUpButtonConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSPopUpButton);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.PopupButton;
 		}
 
-		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode;
 
-			var button = new ComboBox ();
+			var button = new ComboBox();
 			var view = (NSPopUpButton)button.NativeObject;
-			view.Configure (figmaInstance);
+			view.Configure(figmaInstance);
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+			switch (controlType)
+			{
 				case NativeControlComponentType.PopUpButtonSmall:
 				case NativeControlComponentType.PopUpButtonSmallDark:
 					view.ControlSize = NSControlSize.Small;
@@ -68,49 +71,53 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var label = figmaInstance.children
-				   .OfType<FigmaText> ()
-				   .FirstOrDefault (s => s.name == "lbl");
+				   .OfType<FigmaText>()
+				   .FirstOrDefault(s => s.name == "lbl");
 
-			if (label != null) {
-				button.AddItem (label.characters);
+			if (label != null)
+			{
+				button.AddItem(label.characters);
 				//view.Font = label.style.ToNSFont ();
 			}
 
 			return button;
 		}
 
-		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
-			var builder = new StringBuilder ();
-			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+			var builder = new StringBuilder();
+			var name = Resources.Ids.Conversion.NameIdentifier;
 
-			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSPopUpButton));
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				builder.WriteConstructor(name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
-			builder.Configure (currentNode.Node, name);
+			builder.Configure(currentNode.Node, name);
 
-			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
+			builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+
+			switch (controlType)
+			{
 				case NativeControlComponentType.PopUpButtonSmall:
 				case NativeControlComponentType.PopUpButtonSmallDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
 					break;
 				case NativeControlComponentType.PopUpButtonStandard:
 				case NativeControlComponentType.PopUpButtonStandardDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 
 			var label = figmaInstance.children
-			   .OfType<FigmaText> ()
-			   .FirstOrDefault (s => s.name == "lbl");
+			   .OfType<FigmaText>()
+			   .FirstOrDefault(s => s.name == "lbl");
 
-			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				builder.WriteMethod (name, nameof (NSPopUpButton.AddItem), label.characters, inQuotes:true);
+			if (label != null && !string.IsNullOrEmpty(label.characters))
+			{
+				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), label.characters, inQuotes: true);
 			}
 
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {

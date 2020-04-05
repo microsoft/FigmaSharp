@@ -44,8 +44,13 @@ namespace FigmaSharp
 
 			partialDesignerClass.Usings.Add (nameof (AppKit));
 
-			//restore this state
-			var builder = new System.Text.StringBuilder ();
+            if (codeRendererService is NativeViewCodeService nativeViewCodeService) {
+                partialDesignerClass.PrivateMembers.Clear ();
+                partialDesignerClass.PrivateMembers.AddRange(nativeViewCodeService.PrivateMembers);
+            }
+
+            //restore this state
+            var builder = new System.Text.StringBuilder ();
 			codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 		}
