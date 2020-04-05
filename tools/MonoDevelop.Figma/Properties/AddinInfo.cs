@@ -30,7 +30,7 @@ using Mono.Addins.Description;
 [assembly: Addin (
 	"MonoDevelop.Figma",
 	Namespace = "Xamarin",
-	Version = "1.3.5"
+	Version = "1.3.7"
 )]
 
 [assembly: AddinName ("FigmaSharp")]
