@@ -131,11 +131,13 @@ CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFo
                 .OfType<FigmaText> ()
                 .FirstOrDefault ();
 
-            if (label != null)
-                builder.WriteEquality (name, nameof (NSButton.Title),
-                    NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels),
-                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+            if (label != null) {
+                var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 
+                builder.WriteEquality(name, nameof(NSButton.Title),
+                    labelTranslated,
+                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+            }
             //check with labels needs check in child
 
             var checkButtonFigmaNode = figmaInstance.children

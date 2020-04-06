@@ -106,9 +106,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             StringBuilder builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode)) {
-                builder.WriteEquality(currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString(figmaText.characters, tranlationHandler:
-                    data => (NativeControlHelper.GetTranslatableString(data, rendererService.CurrentRendererOptions.TranslateLabels), rendererService.CurrentRendererOptions.TranslateLabels)
-                ), inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels, instanciate: true);
+
+                builder.WriteConstructor(currentNode.Name, ControlType.FullName, !currentNode.Node.TryGetNodeCustomName(out var _));
+
+                builder.WriteEquality(currentNode.Name, nameof(NSTextField.Editable), false);
+                builder.WriteEquality(currentNode.Name, nameof(NSTextField.Bordered), false);
+                builder.WriteEquality(currentNode.Name, nameof(NSTextField.Bezeled), false);
+                builder.WriteEquality(currentNode.Name, nameof(NSTextField.DrawsBackground), false);
+
+                var labelComponent = NativeControlHelper.GetTranslatableString(figmaText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                builder.WriteEquality(currentNode.Name, nameof(NSTextField.StringValue), labelComponent, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
             }
 
             //builder.Configure(figmaText, currentNode.Name);
