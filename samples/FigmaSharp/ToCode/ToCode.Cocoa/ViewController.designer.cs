@@ -13,6 +13,9 @@ namespace ToCode.Cocoa
 	partial class ViewController
 	{
 		[Outlet]
+		AppKit.NSButton translateButton { get; set; }
+
+		[Outlet]
 		AppKit.NSButton copyDesignerCSButton { get; set; }
 
 		[Outlet]
@@ -29,6 +32,12 @@ namespace ToCode.Cocoa
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (translateButton != null)
+			{
+				translateButton.Dispose();
+				translateButton = null;
+			}
+
 			if (openUrlButton != null) {
 				openUrlButton.Dispose ();
 				openUrlButton = null;
