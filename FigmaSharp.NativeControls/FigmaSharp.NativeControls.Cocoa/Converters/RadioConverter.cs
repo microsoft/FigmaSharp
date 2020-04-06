@@ -26,12 +26,10 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using AppKit;
 using System;
 using System.Linq;
 using System.Text;
-
-using AppKit;
-
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -147,8 +145,7 @@ CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFon
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton)
-				as FigmaFrameEntity;
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton) as FigmaFrameEntity;
 
 			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;
