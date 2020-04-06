@@ -135,7 +135,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (figmaTextNode != null) {
 				var stringLabel = NativeControlHelper.GetTranslatableString(figmaTextNode.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				builder.WriteEquality (textViewName, nameof (NSTextView.Value), stringLabel, true);
+				builder.WriteEquality (textViewName, nameof (NSTextView.Value), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 				//builder.Configure (figmaTextNode, name);
 			}
 

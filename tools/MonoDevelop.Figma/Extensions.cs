@@ -31,8 +31,7 @@ namespace MonoDevelop.Figma
 		{
 			var figmaFolder = Path.Combine(project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
 
-			if (!Directory.Exists(figmaFolder))
-			{
+			if (!Directory.Exists(figmaFolder)) {
 				Directory.CreateDirectory(figmaFolder);
 			}
 
@@ -119,7 +118,7 @@ namespace MonoDevelop.Figma
 				}
 			}
 
-			await IdeApp.ProjectOperations.SaveAsync(currentProject);
+			await IdeApp.ProjectOperations.SaveAsync (currentProject);
 			currentProject.NeedsReload = true;
 		}
 

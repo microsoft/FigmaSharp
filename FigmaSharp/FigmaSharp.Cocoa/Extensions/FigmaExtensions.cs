@@ -120,16 +120,29 @@ namespace FigmaSharp.Cocoa
             //return string.Format("{0}.{1}", nameof(NSFontTraitMask), mask.ToString());
         }
 
-		public static string CreateLabelToDesignerString(string text, NSTextAlignment alignment = NSTextAlignment.Left)
+		public static string CreateLabelToDesignerString(string text, NSTextAlignment alignment = NSTextAlignment.Left, Func<string, (string data,bool translated)> tranlationHandler = null)
 		{
 			StringBuilder builder = new StringBuilder();
 
             text = text ?? string.Empty;
-            var isMultiline = text.Contains ('\n');
+
+            var isMultiline = text.Contains('\n');
+            if (isMultiline) {
+                text = string.Format("@\"{0}\"", text.Replace("\"", "\"\""));
+            }
+
+            bool translated = false;
+            if (tranlationHandler != default) {
+                var result = tranlationHandler.Invoke(text);
+                translated = result.translated;
+                text = result.data;
+            }
+
+            if (!translated && !isMultiline)
+                text = $"\"{text}\"";
 
             builder.Append(string.Format("new {0}() {{", typeof(NSTextField).FullName));
-			builder.AppendLine(string.Format("    StringValue = {0}\"{1}\",", isMultiline ? "@" : "",
-                 isMultiline ? text.Replace ("\"", "\"\"") : text));
+			builder.AppendLine(string.Format("StringValue = {0},", text));
 			builder.AppendLine("Editable = false,");
 			builder.AppendLine("Bordered = false,");
 			builder.AppendLine("Bezeled = false,");

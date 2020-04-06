@@ -37,7 +37,7 @@ namespace FigmaSharp
 		{
 		}
 
-		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService)
+		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService, bool translateLabels)
 		{
 			if (FigmaNode == null)
 				return;
@@ -51,7 +51,8 @@ namespace FigmaSharp
 
             //restore this state
             var builder = new System.Text.StringBuilder ();
-			codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null);
+            var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = translateLabels };
+			codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null, options);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 		}
 

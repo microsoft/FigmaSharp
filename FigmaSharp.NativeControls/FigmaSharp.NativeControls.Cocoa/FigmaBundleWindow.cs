@@ -38,13 +38,13 @@ namespace FigmaSharp
 {
     public class FigmaBundleWindow : FigmaBundleViewBase
 	{
+		const string frameEntity = "frame";
+
 		public FigmaBundleWindow (FigmaBundle figmaBundle, string viewName, FigmaNode figmaNode) : base (figmaBundle, viewName, figmaNode)
 		{
 		}
 
-		const string frameEntity = "frame";
-
-		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService)
+		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService, bool translateLabels)
 		{
 			if (FigmaNode == null)
 				return;
@@ -102,7 +102,7 @@ namespace FigmaSharp
 					{
 						builder.AppendLine(string.Format("{0}.{1} ({2}).{3} = {4};",
 							CodeGenerationHelpers.This,
-							nameof(AppKit.NSWindow.StandardWindowButton),
+							nameof(NSWindow.StandardWindowButton),
 							NSWindowButton.ZoomButton.GetFullName(),
 							nameof(NSControl.Enabled),
 							bool.FalseString.ToLower()
@@ -128,7 +128,8 @@ namespace FigmaSharp
 				builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
 			}
 
-			codeRendererService.GetCode (builder, new FigmaCodeNode(FigmaNode, null), null);
+			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = translateLabels };
+			codeRendererService.GetCode (builder, new FigmaCodeNode(FigmaNode, null), null, options);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 
 			if (codeRendererService is NativeViewCodeService nativeViewCodeService) {

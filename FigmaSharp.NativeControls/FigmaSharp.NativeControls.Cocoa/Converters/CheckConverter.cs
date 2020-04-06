@@ -128,16 +128,19 @@ namespace FigmaSharp.NativeControls.Cocoa
 CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFontSize));
 
             var label = figmaInstance.children
-				.OfType<FigmaText> ()
-				.FirstOrDefault ();
+                .OfType<FigmaText> ()
+                .FirstOrDefault ();
+
             if (label != null)
-                builder.WriteEquality (name, nameof (NSButton.Title), NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels), true);
+                builder.WriteEquality (name, nameof (NSButton.Title),
+                    NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels),
+                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
             //check with labels needs check in child
 
             var checkButtonFigmaNode = figmaInstance.children
-			 .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.CheckBox)
-			 as FigmaFrameEntity;
+                .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.CheckBox)
+                as FigmaFrameEntity;
 
             if (checkButtonFigmaNode != null) {
                 figmaInstance = checkButtonFigmaNode;

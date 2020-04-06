@@ -31,7 +31,7 @@ namespace FigmaSharp
 			FigmaNode = figmaNode;
 		}
 
-		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (FigmaCodeRendererService codeRendererService, string namesSpace = null)
+		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (FigmaCodeRendererService codeRendererService, string namesSpace = null, bool translateStrings = false)
 		{
 			var partialDesignerClass = new FigmaPartialDesignerClass ();
 			partialDesignerClass.Manifest = new FigmaManifest () {
@@ -46,12 +46,12 @@ namespace FigmaSharp
 			partialDesignerClass.ClassName = Name;
 			partialDesignerClass.Namespace = bundle.Namespace;
 
-			OnGetPartialDesignerClass (partialDesignerClass, codeRendererService);
+			OnGetPartialDesignerClass (partialDesignerClass, codeRendererService, translateStrings);
 
 			return partialDesignerClass;
 		}
 
-		protected abstract void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService);
+		protected abstract void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService, bool translateStrings);
 
 		protected abstract void OnGetPublicDesignerClass (FigmaPublicPartialClass publicPartialClass);
 
@@ -67,12 +67,12 @@ namespace FigmaSharp
 			return publicPartialClass;
 		}
 
-		public void Generate (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null)
+		public void Generate (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
 		{
 			if (!Directory.Exists (bundle.ViewsDirectoryPath))
 				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
 
-			var partialDesignerClass = GetFigmaPartialDesignerClass (codeRendererService, namesSpace);
+			var partialDesignerClass = GetFigmaPartialDesignerClass (codeRendererService, namesSpace, translateStrings);
 			partialDesignerClass.Save (PartialDesignerClassFilePath);
 
 			if (!File.Exists (PublicCsClassFilePath) || writePublicClassIfExists) {
