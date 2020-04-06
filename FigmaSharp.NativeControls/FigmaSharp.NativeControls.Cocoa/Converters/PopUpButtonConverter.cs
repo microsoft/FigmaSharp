@@ -74,8 +74,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				   .OfType<FigmaText>()
 				   .FirstOrDefault(s => s.name == "lbl");
 
-			if (label != null)
-			{
+			if (label != null) {
 				button.AddItem(label.characters);
 				//view.Font = label.style.ToNSFont ();
 			}
@@ -115,10 +114,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 			   .OfType<FigmaText>()
 			   .FirstOrDefault(s => s.name == "lbl");
 
-			if (label != null && !string.IsNullOrEmpty(label.characters))
-			{
+			if (label != null && !string.IsNullOrEmpty(label.characters)) {
 				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel, inQuotes: true);
+				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
+					inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {

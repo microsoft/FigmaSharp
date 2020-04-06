@@ -95,7 +95,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             return label;
         }
 
-
         protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var figmaInstance = (FigmaInstance)currentNode.Node;
@@ -106,10 +105,10 @@ namespace FigmaSharp.NativeControls.Cocoa
                 return null;
 
             StringBuilder builder = new StringBuilder();
-            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-			{
-                var label = NativeControlHelper.GetTranslatableString(figmaText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-                builder.WriteEquality(currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString(label), instanciate: true);
+            if (rendererService.NeedsRenderConstructor(currentNode, parentNode)) {
+                builder.WriteEquality(currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString(figmaText.characters, tranlationHandler:
+                    data => (NativeControlHelper.GetTranslatableString(data, rendererService.CurrentRendererOptions.TranslateLabels), rendererService.CurrentRendererOptions.TranslateLabels)
+                ), inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels, instanciate: true);
             }
 
             //builder.Configure(figmaText, currentNode.Name);
@@ -119,13 +118,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 
             var alignment = FigmaExtensions.ToNSTextAlignment(figmaText.style.textAlignHorizontal);
-            if (alignment != default)
-            {
+            if (alignment != default) {
                 builder.WriteEquality(currentNode.Name, nameof(AppKit.NSTextField.Alignment), alignment);
             }
             return builder;
         }
-
 
         void CreateLink(NSTextField textField)
         {

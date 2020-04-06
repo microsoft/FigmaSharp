@@ -101,12 +101,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			var label = figmaInstance.children
-		   .OfType<FigmaText> ()
-		   .FirstOrDefault (s => s.name == "lbl");
+				.OfType<FigmaText> ()
+				.FirstOrDefault (s => s.name == "lbl");
 
 			if (label != null && !string.IsNullOrEmpty (label.characters)) {
 				var textLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { $"\"{textLabel}\"" });
+				if (!rendererService.CurrentRendererOptions.TranslateLabels) {
+					textLabel = $"\"{textLabel}\"";
+				}
+				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
 				builder.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
 			}
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {

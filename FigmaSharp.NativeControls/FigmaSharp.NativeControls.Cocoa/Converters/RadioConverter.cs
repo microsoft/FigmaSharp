@@ -142,7 +142,7 @@ CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFon
 				.FirstOrDefault(s => s.name == "lbl" && s.visible);
 			if (label != null) {
 				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				builder.WriteEquality(name, nameof(NSButton.Title), stringLabel, true);
+				builder.WriteEquality(name, nameof(NSButton.Title), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 
 			//radio buttons with label needs another

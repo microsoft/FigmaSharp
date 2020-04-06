@@ -287,10 +287,10 @@ namespace FigmaSharp
 			return true;
 		}
 
-		internal void SaveViews (Services.FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true)
+		internal void SaveViews (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, bool translateLabels = false)
 		{
 			foreach (var view in Views) {
-				view.Generate (codeRendererService, writePublicClassIfExists);
+				view.Generate (codeRendererService, writePublicClassIfExists, translateStrings: translateLabels);
 			}
 		}
 
@@ -301,18 +301,18 @@ namespace FigmaSharp
 		public void Reload (IFigmaFileProvider fileProvider)
 		{
 			//generate .figma file
-			LoadLocalDocument();
+			LoadLocalDocument ();
 
 			//this reads all the main layers ready and fills our Views models
-			LoadRemoteMainLayers(fileProvider);
+			LoadRemoteMainLayers (fileProvider);
 		}
 
-		public void SaveAll (FigmaCodeRendererService codeRendererService, bool includeImages, bool writePublicClassIfExists = true)
+		public void SaveAll (FigmaCodeRendererService codeRendererService, bool includeImages, bool writePublicClassIfExists = true, bool translateLabels = false)
 		{
-			Save();
-			SaveLocalDocument(includeImages);
-			SaveViews(codeRendererService, writePublicClassIfExists);
-			Console.WriteLine($"[Done] Saved all the files from Figma Package");
+			Save ();
+			SaveLocalDocument (includeImages);
+			SaveViews (codeRendererService, writePublicClassIfExists, translateLabels: translateLabels);
+			Console.WriteLine ($"[Done] Saved all the files from Figma Package");
 		}
 
 		#endregion

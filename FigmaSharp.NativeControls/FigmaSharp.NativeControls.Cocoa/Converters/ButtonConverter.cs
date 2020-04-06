@@ -174,10 +174,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .FirstOrDefault ();
 
                 if (label != null) {
-
-                    builder.WriteEquality (name, nameof (NSButton.Title),
-                         NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels), true);
-                    //view.Font = label.style.ToNSFont ();
+                    var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                    builder.WriteEquality (name, nameof (NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                 }
 
                 if (group.name == "Disabled") {
@@ -191,7 +189,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                    .FirstOrDefault ();
 
                 if (label != null) {
-                    builder.WriteEquality (name, nameof (NSButton.Title), label.characters ?? string.Empty, true);
+                    var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                    builder.WriteEquality (name, nameof (NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                     //view.Font = label.style.ToNSFont ();
                 }
             }

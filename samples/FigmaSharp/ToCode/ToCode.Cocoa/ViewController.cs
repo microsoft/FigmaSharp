@@ -94,7 +94,7 @@ namespace ToCode.Cocoa
 			var className = currentSelectedNode.GetClassName ();
 			var bundle = FigmaBundle.Empty ("1234", null, string.Empty);
 			var figmaBundleView = NativeControlsContext.Current.GetBundleView (bundle, className, currentSelectedNode);
-			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer);
+			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer, translateStrings: openUrlButton.State == NSCellStateValue.On);
 			var code = publicPartialClass.Generate ();
 			CopyToLogView (code);
 		}
@@ -106,7 +106,8 @@ namespace ToCode.Cocoa
 			codeRenderer.Clear();
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
-			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null);
+			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
+			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null, options);
 			CopyToLogView (builder.ToString ());
 		}
 
