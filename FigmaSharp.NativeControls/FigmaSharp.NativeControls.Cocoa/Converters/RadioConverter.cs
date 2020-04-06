@@ -79,8 +79,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var label = figmaInstance.children
 				  .OfType<FigmaText>()
 				  .FirstOrDefault();
-			if (label != null)
-			{
+			if (label != null) {
 				button.Text = label.characters;
 				view.Font = label.style.ToNSFont();
 			}
@@ -141,16 +140,17 @@ CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFon
 
 			var label = figmaInstance.children.OfType<FigmaText>()
 				.FirstOrDefault(s => s.name == "lbl" && s.visible);
-			if (label != null)
-				builder.WriteEquality(name, nameof(NSButton.Title), label?.characters ?? "", true);
+			if (label != null) {
+				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteEquality(name, nameof(NSButton.Title), stringLabel, true);
+			}
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-			 .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.RadioButton)
-			 as FigmaFrameEntity;
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton)
+				as FigmaFrameEntity;
 
-			if (radioButtonFigmaNode != null)
-			{
+			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;
 			}
 
@@ -159,15 +159,12 @@ CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFon
 				.OfType<FigmaGroup>()
 				.FirstOrDefault(s => s.visible);
 
-			if (group != null)
-			{
-				if (group.name == "On")
-				{
+			if (group != null) {
+				if (group.name == "On") {
 					builder.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.On);
 				}
 
-				if (group.name == "Disabled")
-				{
+				if (group.name == "Disabled") {
 					builder.WriteEquality(name, nameof(NSButton.Enabled), false);
 				}
 			}

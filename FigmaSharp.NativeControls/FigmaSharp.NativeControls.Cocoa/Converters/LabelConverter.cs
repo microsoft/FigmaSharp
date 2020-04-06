@@ -107,7 +107,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             StringBuilder builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                builder.WriteEquality(currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString(figmaText.characters), instanciate: true);
+			{
+                var label = NativeControlHelper.GetTranslatableString(figmaText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                builder.WriteEquality(currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString(label), instanciate: true);
+            }
 
             //builder.Configure(figmaText, currentNode.Name);
             builder.Configure(currentNode.Node, currentNode.Name);

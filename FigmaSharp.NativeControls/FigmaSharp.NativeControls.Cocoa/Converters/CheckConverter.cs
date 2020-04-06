@@ -112,7 +112,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
             builder.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
 
-
             figmaInstance.TryGetNativeControlComponentType (out var controlType);
             switch (controlType) {
                 case NativeControlComponentType.CheckboxSmall:
@@ -132,7 +131,7 @@ CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFo
 				.OfType<FigmaText> ()
 				.FirstOrDefault ();
             if (label != null)
-                builder.WriteEquality (name, nameof (NSButton.Title), label?.characters ?? "", true);
+                builder.WriteEquality (name, nameof (NSButton.Title), NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels), true);
 
             //check with labels needs check in child
 

@@ -10,6 +10,7 @@ namespace FigmaSharp.Services
 	public class FigmaCodeRendererServiceOptions
 	{
 		public bool RendersConstructorFirstElement { get; set; }
+		public bool TranslateLabels { get; set; }
 	}
 
 	public class FigmaCodeRendererService

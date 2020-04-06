@@ -117,7 +117,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (label != null && !string.IsNullOrEmpty(label.characters))
 			{
-				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), label.characters, inQuotes: true);
+				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel, inQuotes: true);
 			}
 
 			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
