@@ -105,12 +105,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 				if (currentNode.Node.TrySearchA11Label(out var label))
 				{
-					builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: true);
+					label = NativeControlHelper.GetTranslatableString(label, rendererService.CurrentRendererOptions.TranslateLabels);
+
+					builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 					hasAccessibility = true;
 				}
 				if (currentNode.Node.TrySearchA11Help(out var help))
 				{
-					builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: true);
+					help = NativeControlHelper.GetTranslatableString(help, rendererService.CurrentRendererOptions.TranslateLabels);
+
+					builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 					hasAccessibility = true;
 				}
 
