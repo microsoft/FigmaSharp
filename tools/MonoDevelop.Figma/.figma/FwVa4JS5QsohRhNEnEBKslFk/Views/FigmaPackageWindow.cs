@@ -39,9 +39,6 @@ namespace MonoDevelop.Figma.Packages
 			cancelButton.Activated += CancelButton_Activated;
 			bundleButton.Activated += BundleButton_Activated;
 
-			nothingRadio.Enabled =
-			templateRadio.Enabled = false;
-
 			versionMenu.VersionSelected += (s, e) => {
 				SelectedFileVersion = e;
 			};
@@ -60,13 +57,6 @@ namespace MonoDevelop.Figma.Packages
 		void RefreshStates (bool enable = true)
 		{
 			figmaUrlTextField.Enabled = enable;
-
-			namespacePopUp.Enabled =
-			translationsCheckbox.Enabled =
-			includeOriginalCheckbox.Enabled =
-			codeRadio.Enabled =
-			//TemplateNoneOptionBox.Enabled =
-			//TemplateMarkUpOptionBox.Enabled =
 			versionPopUp.Enabled = enable && versions != null;
 
 			RefreshBundleButtonState (enable);
@@ -81,13 +71,9 @@ namespace MonoDevelop.Figma.Packages
 		private async void BundleButton_Activated (object sender, EventArgs e)
 		{
 			var includeImages = true;
-			RefreshStates(false);
 
 			PerformClose(this);
-
 			await GenerateBundle(FileId, SelectedFileVersion, this.namespacePopUp.StringValue, includeImages, translationsCheckbox.State == NSCellStateValue.On);
-
-			RefreshStates(true);
 		}
 
 		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
