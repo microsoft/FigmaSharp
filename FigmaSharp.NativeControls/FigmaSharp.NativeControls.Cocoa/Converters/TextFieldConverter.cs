@@ -102,14 +102,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
 
 			if (figmaTextNode != null) {
-				var text = figmaTextNode.characters ?? string.Empty;
-				builder.WriteEquality (name, nameof (NSTextField.StringValue), text, true);
+				var stringLabel = NativeControlHelper.GetTranslatableString(figmaTextNode.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteEquality (name, nameof (NSTextField.StringValue), stringLabel, true);
 				//builder.Configure (figmaTextNode, name);
 			}
 
 			var placeholderTextNode = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholderTextNode != null && !placeholderTextNode.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
-				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), placeholderTextNode.characters, true);
+			if (placeholderTextNode != null && !placeholderTextNode.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase)) {
+				var stringLabel = NativeControlHelper.GetTranslatableString(placeholderTextNode.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
+			}
 
 			return builder;
 		}

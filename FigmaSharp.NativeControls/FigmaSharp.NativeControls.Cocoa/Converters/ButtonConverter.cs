@@ -174,7 +174,9 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .FirstOrDefault ();
 
                 if (label != null) {
-                    builder.WriteEquality (name, nameof (NSButton.Title), label.characters ?? string.Empty, true);
+
+                    builder.WriteEquality (name, nameof (NSButton.Title),
+                         NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels), true);
                     //view.Font = label.style.ToNSFont ();
                 }
 

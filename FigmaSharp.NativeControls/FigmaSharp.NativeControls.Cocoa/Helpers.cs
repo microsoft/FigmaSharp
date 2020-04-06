@@ -34,6 +34,16 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
+	public class NativeControlHelper
+	{
+		public static string GetTranslatableString(string text, bool needsTranslation = false)
+		{
+			if (needsTranslation)
+				return $"TranslationCatalog.GetString (\"{text}\")";
+			return text;
+		}
+	}
+
     public class TransitionHelper
 	{
 		public static IButton CreateButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)

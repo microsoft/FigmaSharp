@@ -108,7 +108,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.WriteEquality(name, nameof(NSScrollView.HasHorizontalRuler), false);
 			builder.WriteEquality(name, nameof(NSScrollView.HasVerticalScroller), true);
 
-
 			builder.AppendLine();
 			builder.WriteConstructor(textViewName, typeof(NSTextView));
 
@@ -135,8 +134,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var figmaTextNode = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
 
 			if (figmaTextNode != null) {
-				var text = figmaTextNode.characters ?? string.Empty;
-				builder.WriteEquality (textViewName, nameof (NSTextView.Value), text, true);
+				var stringLabel = NativeControlHelper.GetTranslatableString(figmaTextNode.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteEquality (textViewName, nameof (NSTextView.Value), stringLabel, true);
 				//builder.Configure (figmaTextNode, name);
 			}
 
