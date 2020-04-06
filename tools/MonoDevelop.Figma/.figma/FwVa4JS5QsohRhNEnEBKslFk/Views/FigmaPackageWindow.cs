@@ -1,15 +1,18 @@
 /*
 */
 using System;
-using AppKit;
 using System.Linq;
-using FigmaSharp.Models;
 using System.Threading.Tasks;
+
+using AppKit;
+
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using MonoDevelop.Projects;
+using FigmaSharp.Models;
 using FigmaSharp.Services;
+
 using MonoDevelop.Ide;
+using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma.Packages
 {
