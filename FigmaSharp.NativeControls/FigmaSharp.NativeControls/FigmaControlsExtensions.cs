@@ -154,10 +154,10 @@ namespace FigmaSharp.NativeControls
             ( "Button/Help", NativeControlComponentType.ButtonHelp,  NativeControlType.Button),
             ( "Button/Help Dark", NativeControlComponentType.ButtonHelpDark,  NativeControlType.Button),
 
-            ( "TextField/Standard", NativeControlComponentType.TextViewStandard, NativeControlType.TextView),
-            ( "TextField/Small", NativeControlComponentType.TextViewSmall, NativeControlType.TextView),
-            ( "TextField/Standard Dark", NativeControlComponentType.TextViewStandardDark, NativeControlType.TextView),
-            ( "TextField/Small Dark", NativeControlComponentType.TextViewSmallDark, NativeControlType.TextView),
+            ( "TextField/Standard", NativeControlComponentType.TextViewStandard, NativeControlType.TextField),
+            ( "TextField/Small", NativeControlComponentType.TextViewSmall, NativeControlType.TextField),
+            ( "TextField/Standard Dark", NativeControlComponentType.TextViewStandardDark, NativeControlType.TextField),
+            ( "TextField/Small Dark", NativeControlComponentType.TextViewSmallDark, NativeControlType.TextField),
 
             ( "TextView/Standard", NativeControlComponentType.TextViewStandard, NativeControlType.TextView),
             ( "TextView/Small", NativeControlComponentType.TextViewSmall, NativeControlType.TextView),
