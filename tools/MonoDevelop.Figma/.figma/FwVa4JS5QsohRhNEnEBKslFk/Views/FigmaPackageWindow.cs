@@ -62,6 +62,7 @@ namespace MonoDevelop.Figma.Packages
 			figmaUrlTextField.Enabled = enable;
 
 			namespacePopUp.Enabled =
+			translationsCheckbox.Enabled =
 			includeOriginalCheckbox.Enabled =
 			codeRadio.Enabled =
 			//TemplateNoneOptionBox.Enabled =
@@ -83,34 +84,35 @@ namespace MonoDevelop.Figma.Packages
 			RefreshStates(false);
 
 			PerformClose(this);
-			await GenerateBundle(FileId, SelectedFileVersion, this.namespacePopUp.StringValue, includeImages);
+
+			await GenerateBundle(FileId, SelectedFileVersion, this.namespacePopUp.StringValue, includeImages, translationsCheckbox.State == NSCellStateValue.On);
 
 			RefreshStates(true);
 		}
 
-		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages)
+		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
 			IdeApp.Workbench.StatusBar.BeginProgress ($"Bundling {fileId}…");
 
-			var currentBundle = await Task.Run(() =>
+			var currentBundle = await Task.Run (() =>
 			{
 				//we need to ask to figma server to get nodes as demmand
-				var fileProvider = new FigmaRemoteFileProvider();
-				fileProvider.Load(fileId);
+				var fileProvider = new FigmaRemoteFileProvider ();
+				fileProvider.Load (fileId);
 
 				//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
-				var bundle = currentProject.CreateBundle(fileId, version, fileProvider, namesSpace);
+				var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
 
 				//to generate all layers we need a code renderer
-				var codeRendererService = new NativeViewCodeService(fileProvider);
-				bundle.SaveAll(codeRendererService, includeImages);
+				var codeRendererService = new NativeViewCodeService (fileProvider);
+				bundle.SaveAll (codeRendererService, includeImages, translateLabels: translateLabels);
 
 				return bundle;
 			});
 		
 			//now we need to add to Monodevelop all the stuff
-			await currentProject.IncludeBundle(currentBundle, includeImages)
-				.ConfigureAwait(true);
+			await currentProject.IncludeBundle (currentBundle, includeImages)
+				.ConfigureAwait (true);
 
 			IdeApp.Workbench.StatusBar.EndProgress ();
 		}
@@ -127,12 +129,10 @@ namespace MonoDevelop.Figma.Packages
 
 		void ShowLoading (bool value)
 		{
-			if (value)
-			{
+			if (value) {
 				versionSpinner.Hidden = false;
 				versionSpinner.StartAnimation(versionSpinner);
-			} else
-			{
+			} else {
 				versionSpinner.StopAnimation(versionSpinner);
 				versionSpinner.Hidden = true;
 			}
