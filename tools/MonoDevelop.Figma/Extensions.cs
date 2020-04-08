@@ -92,8 +92,7 @@ namespace MonoDevelop.Figma
 					if (!currentProject.PathExistsInProject(item))
 					{
 						var projectFile = new ProjectFile(item, BuildAction.BundleResource);
-						var name = item.FileName;
-						projectFile.Metadata.SetValue("LogicalName", name, "");
+						projectFile.Metadata.SetValue("LogicalName", projectFile.ResourceId, "");
 						currentProject.AddFile(projectFile);
 					}
 				}
