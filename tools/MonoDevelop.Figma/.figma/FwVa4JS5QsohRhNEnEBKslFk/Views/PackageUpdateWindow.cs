@@ -59,7 +59,8 @@ namespace MonoDevelop.Figma.Packages
 			EnableViews(false);
 			ShowLoading(true);
 
-			IdeApp.Workbench.StatusBar.BeginProgress($"Updating Package {mainBundle.FileId}…");
+			IdeApp.Workbench.StatusBar.BeginProgress($"Updating package {mainBundle.FileId}…");
+			IdeApp.Workbench.StatusBar.AutoPulse = true;
 
 			var includeImages = true;
 
