@@ -151,16 +151,22 @@ CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFo
             //first figma 
             var group = figmaInstance.children
                 .OfType<FigmaGroup> ()
-                .FirstOrDefault (s => s.visible);
+                .FirstOrDefault (s => (s.name == "On" || s.name == "Off") && s.visible);
 
             if (group != null) {
                 if (group.name == "On") {
                     builder.WriteEquality (name, nameof (NSButton.State), NSCellStateValue.On);
                 }
 
-                if (group.name == "Disabled") {
-                    builder.WriteEquality (name, nameof (NSButton.Enabled), false);
+                if (group.name == "Off")
+                {
+                    builder.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.Off);
                 }
+
+                // TODO: Fix this in the component first
+                // if (group.name == "Disabled") {
+                //    builder.WriteEquality (name, nameof (NSButton.Enabled), false);
+                // }
             }
 
             //if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
