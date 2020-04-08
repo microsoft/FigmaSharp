@@ -56,8 +56,7 @@ namespace MonoDevelop.Figma.Packages
 
 		private async void UpdateButton_Activated(object sender, System.EventArgs e)
 		{
-			EnableViews(false);
-			ShowLoading(true);
+			PerformClose(this);
 
 			IdeApp.Workbench.StatusBar.BeginProgress($"Updating package {mainBundle.FileId}…");
 			IdeApp.Workbench.StatusBar.AutoPulse = true;
@@ -77,8 +76,6 @@ namespace MonoDevelop.Figma.Packages
 			await project.IncludeBundle(mainBundle, includeImages: includeImages);
 
 			IdeApp.Workbench.StatusBar.EndProgress();
-
-			PerformClose(this);
 		}
 
 		static IEnumerable<FigmaBundle> GetFromFigmaDirectory (string directory)

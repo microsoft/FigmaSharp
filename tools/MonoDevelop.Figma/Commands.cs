@@ -218,8 +218,7 @@ namespace MonoDevelop.Figma.Commands
 		{
 			
 			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder &&
-				currentFolder.IsDocumentDirectoryBundle()
-				)
+				currentFolder.IsDocumentDirectoryBundle())
 			{
 				var manifestFilePath = Path.Combine(currentFolder.Path.FullPath, FigmaBundle.DocumentFileName);
 				if (File.Exists(manifestFilePath)) {
