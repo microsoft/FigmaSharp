@@ -19,6 +19,11 @@ namespace FigmaSharp.Cocoa
 				return GetMethod(typeof(AppKit.NSFont).FullName, nameof(AppKit.NSFont.SystemFontOfSize), font);
 			}
 
+			public static string BoldSystemFontOfSize(string font)
+			{
+				return GetMethod(typeof(AppKit.NSFont).FullName, nameof(AppKit.NSFont.BoldSystemFontOfSize), font);
+			}
+
 			public static string SystemFontSize { get; } = $"{typeof(AppKit.NSFont).FullName}.{nameof(AppKit.NSFont.SystemFontSize)}";
 			public static string SmallSystemFontSize { get; } = $"{typeof(AppKit.NSFont).FullName}.{nameof(AppKit.NSFont.SmallSystemFontSize)}";
 		}

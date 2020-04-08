@@ -118,11 +118,23 @@ namespace FigmaSharp.NativeControls.Cocoa
                 builder.WriteEquality(currentNode.Name, nameof(NSTextField.StringValue), labelComponent, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
             }
 
+            currentNode.Node.TryGetNativeControlComponentType(out NativeControlComponentType componentType);
+
+            switch (componentType)
+            {
+                default:
+                    builder.WriteEquality(currentNode.Name, nameof(NSTextField.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+                    break;
+                case NativeControlComponentType.LabelGroup:
+                    builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+                        CodeGenerationHelpers.Font.BoldSystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+                    break;
+            }
+
             //builder.Configure(figmaText, currentNode.Name);
             builder.Configure(currentNode.Node, currentNode.Name);
 
-            builder.WriteEquality(currentNode.Name, nameof(NSTextField.Font),
-CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 
             var alignment = FigmaExtensions.ToNSTextAlignment(figmaText.style.textAlignHorizontal);
             if (alignment != default) {
