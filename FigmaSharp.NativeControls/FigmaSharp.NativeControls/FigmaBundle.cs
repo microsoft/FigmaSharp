@@ -62,7 +62,7 @@ namespace FigmaSharp
 		//const string FigmaBundlesDirectoryName = ".bundles";
 		internal const string FigmaDirectoryName = ".figma";
 		internal const string ManifestFileName = "manifest.json";
-		internal const string DocumentFileName = "document.figma";
+		internal const string DocumentFileName = "document.fig.json";
 		internal const string ResourcesDirectoryName = "Resources";
 		internal const string ViewsDirectoryName = "Views";
 		internal const string ImageFormat = ".png";
