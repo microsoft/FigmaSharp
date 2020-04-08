@@ -50,7 +50,7 @@ namespace MonoDevelop.Figma.Packages
 
 		void EnableViews (bool value)
 		{
-			versionPopUp.Enabled = bundlePopUp.Enabled =
+			versionPopUp.Enabled =
 				updateButton.Enabled = value;
 		}
 
@@ -104,14 +104,15 @@ namespace MonoDevelop.Figma.Packages
 			this.mainBundle = bundle;
 			this.project = project;
 
-			ShowLoading(true);
-
-			EnableViews(false);
-
 			bundlePopUp.RemoveAllItems();
+			bundlePopUp.AddItem(bundle.Manifest.DocumentTitle);
 
 			//loads current versions
 			versionPopUp.RemoveAllItems();
+			versionPopUp.AddItem("Current");
+
+			ShowLoading(true);
+			EnableViews(false);
 
 			var versionTask = Task.Run(() => {
 				try {
@@ -133,6 +134,7 @@ namespace MonoDevelop.Figma.Packages
 
 			versions = await versionTask;
 
+			bundlePopUp.RemoveAllItems();
 			foreach (var figmaNode in currentProjectBundles) {
 				bundlePopUp.AddItem(figmaNode.Manifest.DocumentTitle);
 			}
