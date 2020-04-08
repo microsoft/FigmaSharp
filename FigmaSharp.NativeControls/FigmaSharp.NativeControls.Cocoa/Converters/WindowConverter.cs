@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Text;
 
 using AppKit;
@@ -39,6 +40,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class ImageRenderConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSImageView);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.name.StartsWith("!image");
@@ -56,7 +59,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var builder = new StringBuilder();
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(currentNode.Name, typeof(NSImageView), !currentNode.Node.TryGetNodeCustomName(out var _));
+				builder.WriteConstructor(currentNode.Name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
 			currentNode.Node.TryGetNodeCustomName(out string nodeName);
