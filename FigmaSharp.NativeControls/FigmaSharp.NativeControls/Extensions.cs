@@ -93,6 +93,11 @@ namespace FigmaSharp
             return false;
         }
 
+        public static bool IsA11Enabled (this FigmaNode node)
+        {
+            return GetA11Node (node)?.visible ?? false;
+        }
+
         public static FigmaNode GetA11Node (this FigmaNode node)
         {
             return (node as IFigmaNodeContainer)?.children.FirstOrDefault (s => s.name == a11yNodeName);

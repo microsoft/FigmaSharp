@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Linq;
 using System.Text;
 
@@ -41,6 +42,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class TextViewConverter : FigmaNativeControlConverter
 	{
+		public override Type ControlType => typeof(NSTextView);
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && (value == NativeControlType.TextView);
@@ -97,11 +100,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = currentNode.Name + "ScrollView";
 			currentNode.Name = name;
 
-
 			var builder = new StringBuilder();
 
-			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, typeof (NSScrollView));
+			builder.WriteConstructor (name, typeof (NSScrollView));
 
 			builder.Configure (instance, name);
 			builder.WriteEquality(name, nameof(NSScrollView.BorderType), NSBorderType.LineBorder.GetFullName());
@@ -109,7 +110,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.WriteEquality(name, nameof(NSScrollView.HasVerticalScroller), true);
 
 			builder.AppendLine();
-			builder.WriteConstructor(textViewName, typeof(NSTextView));
+
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				builder.WriteConstructor(textViewName, typeof(NSTextView), !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.WriteEquality(textViewName,
 			                      nameof(NSTextView.Frame),
