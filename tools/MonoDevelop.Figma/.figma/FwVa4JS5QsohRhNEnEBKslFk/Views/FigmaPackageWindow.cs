@@ -81,6 +81,7 @@ namespace MonoDevelop.Figma.Packages
 
 		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
+			IdeApp.Workbench.StatusBar.AutoPulse = true;
 			IdeApp.Workbench.StatusBar.BeginProgress ($"Bundling {fileId}…");
 
 			var currentBundle = await Task.Run (() =>
@@ -104,6 +105,7 @@ namespace MonoDevelop.Figma.Packages
 				.ConfigureAwait (true);
 
 			IdeApp.Workbench.StatusBar.EndProgress ();
+			IdeApp.Workbench.StatusBar.AutoPulse = false;
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)
