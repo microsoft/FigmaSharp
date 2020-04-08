@@ -1,5 +1,5 @@
 // This file was auto-generated using
-// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-08 at 15:17
+// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-08 at 15:28
 //
 // Document title:   
 // Document version: 0.1f
@@ -44,6 +44,9 @@ namespace MonoDevelop.Figma.Packages
 			bundleButton.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			bundleButton.Title = "Add Package";
 			bundleButton.KeyEquivalent = "\r";
+			bundleButton.AccessibilityTitle = "Bundle";
+			bundleButton.AccessibilityHelp = "Starts bundling the document";
+
 
 			this.ContentView.AddSubview (bundleButton);
 			bundleButton.Frame = bundleButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (354f, 20f, 108f, 21f));;
@@ -58,6 +61,9 @@ namespace MonoDevelop.Figma.Packages
 			cancelButton.ControlSize = NSControlSize.Regular;
 			cancelButton.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			cancelButton.Title = "Cancel";
+			cancelButton.AccessibilityTitle = "Cancel";
+			cancelButton.AccessibilityHelp = "Cancel bundling";
+
 
 			this.ContentView.AddSubview (cancelButton);
 			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (19f, 20f, 84f, 21f));;
@@ -126,6 +132,9 @@ namespace MonoDevelop.Figma.Packages
 			nothingRadio.ControlSize = NSControlSize.Regular;
 			nothingRadio.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			nothingRadio.Title = "Nothing";
+			nothingRadio.AccessibilityTitle = "Nothing";
+			nothingRadio.AccessibilityHelp = "Select to not output anything";
+
 
 			generateRadios.AddSubview (nothingRadio);
 			nothingRadio.Frame = nothingRadio.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 0f, 89f, 16f));;
@@ -141,6 +150,9 @@ namespace MonoDevelop.Figma.Packages
 			templateRadio.ControlSize = NSControlSize.Regular;
 			templateRadio.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			templateRadio.Title = "Template";
+			templateRadio.AccessibilityTitle = "Template";
+			templateRadio.AccessibilityHelp = "Select to output a template";
+
 
 			generateRadios.AddSubview (templateRadio);
 			templateRadio.Frame = templateRadio.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 22f, 89f, 16f));;
@@ -185,6 +197,9 @@ namespace MonoDevelop.Figma.Packages
 			namespacePopUp = new AppKit.NSComboBox();
 			namespacePopUp.WantsLayer = true;
 			namespacePopUp.Add (new Foundation.NSString ("MyApp"));
+			namespacePopUp.AccessibilityTitle = "Namespace";
+			namespacePopUp.AccessibilityHelp = "The namespace to generate code in";
+
 
 			this.ContentView.AddSubview (namespacePopUp);
 			namespacePopUp.Frame = namespacePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 210f, 220f, 20f));;

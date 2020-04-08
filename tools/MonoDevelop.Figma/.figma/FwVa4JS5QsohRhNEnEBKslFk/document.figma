@@ -35814,7 +35814,7 @@
                             "opacity": 0.0,
                             "absoluteBoundingBox": {
                               "Size": {
-                                "Width": 82.0,
+                                "Width": 108.0,
                                 "Height": 21.0
                               },
                               "Origin": {
@@ -35823,14 +35823,14 @@
                               },
                               "X": -709.0,
                               "Y": 3.0,
-                              "Width": 82.0,
+                              "Width": 108.0,
                               "Height": 21.0,
                               "Left": -709.0,
-                              "Right": -627.0,
+                              "Right": -601.0,
                               "Top": 3.0,
                               "Bottom": 24.0,
                               "Center": {
-                                "X": 41.0,
+                                "X": 54.0,
                                 "Y": 10.5
                               }
                             },
@@ -35902,7 +35902,7 @@
                             "opacity": 0.0,
                             "absoluteBoundingBox": {
                               "Size": {
-                                "Width": 82.0,
+                                "Width": 108.0,
                                 "Height": 21.0
                               },
                               "Origin": {
@@ -35911,14 +35911,14 @@
                               },
                               "X": -709.0,
                               "Y": 3.0,
-                              "Width": 82.0,
+                              "Width": 108.0,
                               "Height": 21.0,
                               "Left": -709.0,
-                              "Right": -627.0,
+                              "Right": -601.0,
                               "Top": 3.0,
                               "Bottom": 24.0,
                               "Center": {
-                                "X": 41.0,
+                                "X": 54.0,
                                 "Y": 10.5
                               }
                             },
@@ -35969,8 +35969,7 @@
                         "Parent": null,
                         "id": "I680:549;680:529",
                         "name": "!a11y",
-                        "type": "FRAME",
-                        "visible": false
+                        "type": "FRAME"
                       }
                     ],
                     "fills": [],
@@ -37161,7 +37160,7 @@
                             "opacity": 0.0,
                             "absoluteBoundingBox": {
                               "Size": {
-                                "Width": 82.0,
+                                "Width": 84.0,
                                 "Height": 21.0
                               },
                               "Origin": {
@@ -37170,14 +37169,14 @@
                               },
                               "X": -1044.0,
                               "Y": 3.0,
-                              "Width": 82.0,
+                              "Width": 84.0,
                               "Height": 21.0,
                               "Left": -1044.0,
-                              "Right": -962.0,
+                              "Right": -960.0,
                               "Top": 3.0,
                               "Bottom": 24.0,
                               "Center": {
-                                "X": 41.0,
+                                "X": 42.0,
                                 "Y": 10.5
                               }
                             },
@@ -37249,7 +37248,7 @@
                             "opacity": 0.0,
                             "absoluteBoundingBox": {
                               "Size": {
-                                "Width": 82.0,
+                                "Width": 84.0,
                                 "Height": 21.0
                               },
                               "Origin": {
@@ -37258,14 +37257,14 @@
                               },
                               "X": -1044.0,
                               "Y": 3.0,
-                              "Width": 82.0,
+                              "Width": 84.0,
                               "Height": 21.0,
                               "Left": -1044.0,
-                              "Right": -962.0,
+                              "Right": -960.0,
                               "Top": 3.0,
                               "Bottom": 24.0,
                               "Center": {
-                                "X": 41.0,
+                                "X": 42.0,
                                 "Y": 10.5
                               }
                             },
@@ -37316,8 +37315,7 @@
                         "Parent": null,
                         "id": "I680:564;680:529",
                         "name": "!a11y",
-                        "type": "FRAME",
-                        "visible": false
+                        "type": "FRAME"
                       }
                     ],
                     "fills": [],
@@ -39691,7 +39689,7 @@
                                 "opacity": 0.0,
                                 "absoluteBoundingBox": {
                                   "Size": {
-                                    "Width": 54.0,
+                                    "Width": 89.0,
                                     "Height": 16.0
                                   },
                                   "Origin": {
@@ -39700,14 +39698,14 @@
                                   },
                                   "X": -894.0,
                                   "Y": -107.0,
-                                  "Width": 54.0,
+                                  "Width": 89.0,
                                   "Height": 16.0,
                                   "Left": -894.0,
-                                  "Right": -840.0,
+                                  "Right": -805.0,
                                   "Top": -107.0,
                                   "Bottom": -91.0,
                                   "Center": {
-                                    "X": 27.0,
+                                    "X": 44.5,
                                     "Y": 8.0
                                   }
                                 },
@@ -39744,7 +39742,7 @@
                                 "HasFills": true,
                                 "Parent": null,
                                 "id": "I576:0;1017:3",
-                                "name": "help:\"Checks a single item\"",
+                                "name": "help:\"Select to not output anything\"",
                                 "type": "TEXT"
                               },
                               {
@@ -39779,7 +39777,7 @@
                                 "opacity": 0.0,
                                 "absoluteBoundingBox": {
                                   "Size": {
-                                    "Width": 13.0,
+                                    "Width": 48.0,
                                     "Height": 16.0
                                   },
                                   "Origin": {
@@ -39788,14 +39786,14 @@
                                   },
                                   "X": -907.0,
                                   "Y": -107.0,
-                                  "Width": 13.0,
+                                  "Width": 48.0,
                                   "Height": 16.0,
                                   "Left": -907.0,
-                                  "Right": -894.0,
+                                  "Right": -859.0,
                                   "Top": -107.0,
                                   "Bottom": -91.0,
                                   "Center": {
-                                    "X": 6.5,
+                                    "X": 24.0,
                                     "Y": 8.0
                                   }
                                 },
@@ -39832,7 +39830,7 @@
                                 "HasFills": true,
                                 "Parent": null,
                                 "id": "I576:0;1017:4",
-                                "name": "label:\"Radio\"",
+                                "name": "label:\"Nothing\"",
                                 "type": "TEXT"
                               }
                             ],
@@ -39846,8 +39844,7 @@
                             "Parent": null,
                             "id": "I576:0;1017:2",
                             "name": "!a11y",
-                            "type": "FRAME",
-                            "visible": false
+                            "type": "FRAME"
                           }
                         ],
                         "fills": [],
@@ -40638,7 +40635,7 @@
                                 "opacity": 0.0,
                                 "absoluteBoundingBox": {
                                   "Size": {
-                                    "Width": 54.0,
+                                    "Width": 89.0,
                                     "Height": 16.0
                                   },
                                   "Origin": {
@@ -40647,14 +40644,14 @@
                                   },
                                   "X": -894.0,
                                   "Y": -129.0,
-                                  "Width": 54.0,
+                                  "Width": 89.0,
                                   "Height": 16.0,
                                   "Left": -894.0,
-                                  "Right": -840.0,
+                                  "Right": -805.0,
                                   "Top": -129.0,
                                   "Bottom": -113.0,
                                   "Center": {
-                                    "X": 27.0,
+                                    "X": 44.5,
                                     "Y": 8.0
                                   }
                                 },
@@ -40691,7 +40688,7 @@
                                 "HasFills": true,
                                 "Parent": null,
                                 "id": "I557:20;1017:3",
-                                "name": "help:\"Checks a single item\"",
+                                "name": "help:\"Select to output a template\"",
                                 "type": "TEXT"
                               },
                               {
@@ -40726,7 +40723,7 @@
                                 "opacity": 0.0,
                                 "absoluteBoundingBox": {
                                   "Size": {
-                                    "Width": 13.0,
+                                    "Width": 48.0,
                                     "Height": 16.0
                                   },
                                   "Origin": {
@@ -40735,14 +40732,14 @@
                                   },
                                   "X": -907.0,
                                   "Y": -129.0,
-                                  "Width": 13.0,
+                                  "Width": 48.0,
                                   "Height": 16.0,
                                   "Left": -907.0,
-                                  "Right": -894.0,
+                                  "Right": -859.0,
                                   "Top": -129.0,
                                   "Bottom": -113.0,
                                   "Center": {
-                                    "X": 6.5,
+                                    "X": 24.0,
                                     "Y": 8.0
                                   }
                                 },
@@ -40779,7 +40776,7 @@
                                 "HasFills": true,
                                 "Parent": null,
                                 "id": "I557:20;1017:4",
-                                "name": "label:\"Radio\"",
+                                "name": "label:\"Template\"",
                                 "type": "TEXT"
                               }
                             ],
@@ -40793,8 +40790,7 @@
                             "Parent": null,
                             "id": "I557:20;1017:2",
                             "name": "!a11y",
-                            "type": "FRAME",
-                            "visible": false
+                            "type": "FRAME"
                           }
                         ],
                         "fills": [],
@@ -41638,7 +41634,7 @@
                                 "HasFills": true,
                                 "Parent": null,
                                 "id": "I557:11;1017:3",
-                                "name": "help:\"Checks a single item\"",
+                                "name": "help:\"Select to output code\"",
                                 "type": "TEXT"
                               },
                               {
@@ -41726,7 +41722,7 @@
                                 "HasFills": true,
                                 "Parent": null,
                                 "id": "I557:11;1017:4",
-                                "name": "label:\"Radio\"",
+                                "name": "label:\"Code\"",
                                 "type": "TEXT"
                               }
                             ],
@@ -42850,7 +42846,7 @@
                             "opacity": 0.0,
                             "absoluteBoundingBox": {
                               "Size": {
-                                "Width": 148.0,
+                                "Width": 220.0,
                                 "Height": 20.0
                               },
                               "Origin": {
@@ -42859,14 +42855,14 @@
                               },
                               "X": -894.0,
                               "Y": -186.0,
-                              "Width": 148.0,
+                              "Width": 220.0,
                               "Height": 20.0,
                               "Left": -894.0,
-                              "Right": -746.0,
+                              "Right": -674.0,
                               "Top": -186.0,
                               "Bottom": -166.0,
                               "Center": {
-                                "X": 74.0,
+                                "X": 110.0,
                                 "Y": 10.0
                               }
                             },
@@ -42903,7 +42899,7 @@
                             "HasFills": true,
                             "Parent": null,
                             "id": "I576:78;1017:48",
-                            "name": "help:\"Selects an item or accepts text\"",
+                            "name": "help:\"The namespace to generate code in\"",
                             "type": "TEXT"
                           },
                           {
@@ -42938,7 +42934,7 @@
                             "opacity": 0.0,
                             "absoluteBoundingBox": {
                               "Size": {
-                                "Width": 148.0,
+                                "Width": 220.0,
                                 "Height": 20.0
                               },
                               "Origin": {
@@ -42947,14 +42943,14 @@
                               },
                               "X": -894.0,
                               "Y": -186.0,
-                              "Width": 148.0,
+                              "Width": 220.0,
                               "Height": 20.0,
                               "Left": -894.0,
-                              "Right": -746.0,
+                              "Right": -674.0,
                               "Top": -186.0,
                               "Bottom": -166.0,
                               "Center": {
-                                "X": 74.0,
+                                "X": 110.0,
                                 "Y": 10.0
                               }
                             },
@@ -42991,7 +42987,7 @@
                             "HasFills": true,
                             "Parent": null,
                             "id": "I576:78;1017:47",
-                            "name": "label:\"Combo Box\"",
+                            "name": "label:\"Namespace\"",
                             "type": "TEXT"
                           }
                         ],
@@ -43005,8 +43001,7 @@
                         "Parent": null,
                         "id": "I576:78;1017:46",
                         "name": "!a11y",
-                        "type": "FRAME",
-                        "visible": false
+                        "type": "FRAME"
                       }
                     ],
                     "fills": [],
@@ -61869,7 +61864,7 @@
     }
   },
   "name": "VS Mac Extension",
-  "lastModified": "2020-04-08T13:13:02.473068Z",
+  "lastModified": "2020-04-08T13:27:16.257108Z",
   "version": "292388877",
   "thumbnailUrl": "https://s3-alpha-sig.figma.com/thumbnails/d5e06877-5e39-4f5d-83a9-7daa21a316b2?Expires=1587340800&Signature=JeWNcxDIsmHpqNh48GeZVTpXv8VDVxLWmp7nLiTFZiJC-OIBHBETEgbLafQ2eiqW5LQOoaHO8HywoCNBy5b0rmX43ysfhZcULbUnuxRCw3ds~B~IvCyO8mhgxZkcgctSQ5FoWlYp1POhB-hBt1lwhkukHSbNTT0IkDiXP-C3Inbss0OJKJmWt2uq0ZzSPqz~b2wcTViWcHhd0YNfJVwtBlNSCpFt71PjQd6Nwd77bHrSSZCju4MenoK4f5mQlNUinWIR36BhUihGeS3aT3utswQ9~eGHxl6dMW8lz2slTOx7SvO9yjIukrH0wg5IVuLUUxm14fxUtU3T2M0YPyOeWQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
   "schemaVersion": 0
