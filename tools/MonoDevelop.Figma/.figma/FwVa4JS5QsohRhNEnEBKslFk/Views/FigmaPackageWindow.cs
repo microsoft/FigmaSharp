@@ -82,7 +82,7 @@ namespace MonoDevelop.Figma.Packages
 		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
 			IdeApp.Workbench.StatusBar.AutoPulse = true;
-			IdeApp.Workbench.StatusBar.BeginProgress ($"Bundling {fileId}…");
+			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
 
 			var currentBundle = await Task.Run (() =>
 			{
