@@ -1,5 +1,5 @@
 // This file was auto-generated using
-// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-06 at 02:59
+// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-08 at 15:17
 //
 // Document title:   
 // Document version: 0.1f
@@ -29,7 +29,7 @@ namespace MonoDevelop.Figma.Packages
 			this.StandardWindowButton (NSWindowButton.ZoomButton).Enabled = false;
 
 			var frame = Frame;
-			frame.Size = new CoreGraphics.CGSize (481f, 379f);
+			frame.Size = new CoreGraphics.CGSize (481f, 380f);
 			this.SetFrame (frame, true);
 			this.ContentMinSize = this.ContentView.Frame.Size;
 
@@ -44,9 +44,6 @@ namespace MonoDevelop.Figma.Packages
 			bundleButton.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			bundleButton.Title = "Add Package";
 			bundleButton.KeyEquivalent = "\r";
-			bundleButton.AccessibilityTitle = "Bundle";
-			bundleButton.AccessibilityHelp = "Starts bundling the document";
-
 
 			this.ContentView.AddSubview (bundleButton);
 			bundleButton.Frame = bundleButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (354f, 20f, 108f, 21f));;
@@ -61,9 +58,6 @@ namespace MonoDevelop.Figma.Packages
 			cancelButton.ControlSize = NSControlSize.Regular;
 			cancelButton.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			cancelButton.Title = "Cancel";
-			cancelButton.AccessibilityTitle = "Cancel";
-			cancelButton.AccessibilityHelp = "Cancel bundling";
-
 
 			this.ContentView.AddSubview (cancelButton);
 			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (19f, 20f, 84f, 21f));;
@@ -90,10 +84,10 @@ namespace MonoDevelop.Figma.Packages
 			translationsCheckbox.ControlSize = NSControlSize.Regular;
 			translationsCheckbox.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			translationsCheckbox.Title = "Make strings translatable";
-			translationsCheckbox.State = NSCellStateValue.On;
+			translationsCheckbox.State = NSCellStateValue.Off;
 
 			this.ContentView.AddSubview (translationsCheckbox);
-			translationsCheckbox.Frame = translationsCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 103f, 238f, 14f));;
+			translationsCheckbox.Frame = translationsCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 104f, 238f, 14f));;
 
 			// View:     includeOriginalCheckbox
 			// NodeName: "includeOriginalCheckbox"
@@ -109,7 +103,7 @@ namespace MonoDevelop.Figma.Packages
 			includeOriginalCheckbox.State = NSCellStateValue.On;
 
 			this.ContentView.AddSubview (includeOriginalCheckbox);
-			includeOriginalCheckbox.Frame = includeOriginalCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 81f, 238f, 14f));;
+			includeOriginalCheckbox.Frame = includeOriginalCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 82f, 238f, 14f));;
 
 			// View:     generateRadios
 			// NodeName: "generateRadios"
@@ -119,7 +113,7 @@ namespace MonoDevelop.Figma.Packages
 			generateRadios.WantsLayer = true;
 
 			this.ContentView.AddSubview (generateRadios);
-			generateRadios.Frame = generateRadios.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 134f, 220f, 60f));;
+			generateRadios.Frame = generateRadios.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 135f, 220f, 60f));;
 
 			// View:     nothingRadio
 			// NodeName: radio "nothingRadio"
@@ -171,19 +165,18 @@ namespace MonoDevelop.Figma.Packages
 			// NodeName: Generate:
 			// NodeType: INSTANCE
 			// NodeId:   754:19
-			var nativeViewCodeServiceView1 = new AppKit.NSTextField() {    StringValue = "Generate:",
-			Editable = false,
-			Bordered = false,
-			Bezeled = false,
-			DrawsBackground = false,
-			Alignment = NSTextAlignment.Left,
-			};
+			var nativeViewCodeServiceView1 = new AppKit.NSTextField();
+			nativeViewCodeServiceView1.Editable = false;
+			nativeViewCodeServiceView1.Bordered = false;
+			nativeViewCodeServiceView1.Bezeled = false;
+			nativeViewCodeServiceView1.DrawsBackground = false;
+			nativeViewCodeServiceView1.StringValue = "Generate:";
 			nativeViewCodeServiceView1.WantsLayer = true;
 			nativeViewCodeServiceView1.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView1);
-			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 176f, 142f, 20f));;
+			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 177f, 142f, 20f));;
 
 			// View:     namespacePopUp
 			// NodeName: "namespacePopUp"
@@ -194,25 +187,24 @@ namespace MonoDevelop.Figma.Packages
 			namespacePopUp.Add (new Foundation.NSString ("MyApp"));
 
 			this.ContentView.AddSubview (namespacePopUp);
-			namespacePopUp.Frame = namespacePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 209f, 220f, 20f));;
+			namespacePopUp.Frame = namespacePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 210f, 220f, 20f));;
 
 			// View:     nativeViewCodeServiceView2
 			// NodeName: Namespace:
 			// NodeType: INSTANCE
 			// NodeId:   754:17
-			var nativeViewCodeServiceView2 = new AppKit.NSTextField() {    StringValue = "Namespace:",
-			Editable = false,
-			Bordered = false,
-			Bezeled = false,
-			DrawsBackground = false,
-			Alignment = NSTextAlignment.Left,
-			};
+			var nativeViewCodeServiceView2 = new AppKit.NSTextField();
+			nativeViewCodeServiceView2.Editable = false;
+			nativeViewCodeServiceView2.Bordered = false;
+			nativeViewCodeServiceView2.Bezeled = false;
+			nativeViewCodeServiceView2.DrawsBackground = false;
+			nativeViewCodeServiceView2.StringValue = "Namespace:";
 			nativeViewCodeServiceView2.WantsLayer = true;
 			nativeViewCodeServiceView2.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			nativeViewCodeServiceView2.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView2);
-			nativeViewCodeServiceView2.Frame = nativeViewCodeServiceView2.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 210f, 142f, 20f));;
+			nativeViewCodeServiceView2.Frame = nativeViewCodeServiceView2.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 211f, 142f, 20f));;
 
 			// View:     nativeViewCodeServiceView3
 			// NodeName: sep
@@ -223,7 +215,7 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView3.BoxType = NSBoxType.NSBoxSeparator;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView3);
-			nativeViewCodeServiceView3.Frame = nativeViewCodeServiceView3.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 254.5f, 481f, 0f));;
+			nativeViewCodeServiceView3.Frame = nativeViewCodeServiceView3.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 255.5f, 481f, 0f));;
 
 			// View:     versionSpinner
 			// NodeName: "versionSpinner"
@@ -236,7 +228,7 @@ namespace MonoDevelop.Figma.Packages
 			versionSpinner.ControlSize = NSControlSize.Small;
 
 			this.ContentView.AddSubview (versionSpinner);
-			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (396f, 280f, 18f, 18f));;
+			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (396f, 281f, 18f, 18f));;
 
 			// View:     versionPopUp
 			// NodeName: "versionPopUp"
@@ -249,25 +241,24 @@ namespace MonoDevelop.Figma.Packages
 			versionPopUp.AddItem ("Current");
 
 			this.ContentView.AddSubview (versionPopUp);
-			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (167f, 278f, 223f, 21f));;
+			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (167f, 279f, 223f, 21f));;
 
 			// View:     nativeViewCodeServiceView4
 			// NodeName: Version:
 			// NodeType: INSTANCE
 			// NodeId:   754:15
-			var nativeViewCodeServiceView4 = new AppKit.NSTextField() {    StringValue = "Version:",
-			Editable = false,
-			Bordered = false,
-			Bezeled = false,
-			DrawsBackground = false,
-			Alignment = NSTextAlignment.Left,
-			};
+			var nativeViewCodeServiceView4 = new AppKit.NSTextField();
+			nativeViewCodeServiceView4.Editable = false;
+			nativeViewCodeServiceView4.Bordered = false;
+			nativeViewCodeServiceView4.Bezeled = false;
+			nativeViewCodeServiceView4.DrawsBackground = false;
+			nativeViewCodeServiceView4.StringValue = "Version:";
 			nativeViewCodeServiceView4.WantsLayer = true;
 			nativeViewCodeServiceView4.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			nativeViewCodeServiceView4.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView4);
-			nativeViewCodeServiceView4.Frame = nativeViewCodeServiceView4.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 279f, 142f, 20f));;
+			nativeViewCodeServiceView4.Frame = nativeViewCodeServiceView4.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 280f, 142f, 20f));;
 
 			// View:     figmaUrlTextField
 			// NodeName: "figmaUrlTextField"
@@ -278,25 +269,24 @@ namespace MonoDevelop.Figma.Packages
 			figmaUrlTextField.PlaceholderString = "https://www.figma.com/file/";
 
 			this.ContentView.AddSubview (figmaUrlTextField);
-			figmaUrlTextField.Frame = figmaUrlTextField.GetFrameForAlignmentRect (new CoreGraphics.CGRect (168f, 310f, 221f, 21f));;
+			figmaUrlTextField.Frame = figmaUrlTextField.GetFrameForAlignmentRect (new CoreGraphics.CGRect (168f, 311f, 221f, 21f));;
 
 			// View:     nativeViewCodeServiceView5
 			// NodeName: Figma URL:
 			// NodeType: INSTANCE
 			// NodeId:   754:13
-			var nativeViewCodeServiceView5 = new AppKit.NSTextField() {    StringValue = "Figma URL:",
-			Editable = false,
-			Bordered = false,
-			Bezeled = false,
-			DrawsBackground = false,
-			Alignment = NSTextAlignment.Left,
-			};
+			var nativeViewCodeServiceView5 = new AppKit.NSTextField();
+			nativeViewCodeServiceView5.Editable = false;
+			nativeViewCodeServiceView5.Bordered = false;
+			nativeViewCodeServiceView5.Bezeled = false;
+			nativeViewCodeServiceView5.DrawsBackground = false;
+			nativeViewCodeServiceView5.StringValue = "Figma URL:";
 			nativeViewCodeServiceView5.WantsLayer = true;
 			nativeViewCodeServiceView5.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			nativeViewCodeServiceView5.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView5);
-			nativeViewCodeServiceView5.Frame = nativeViewCodeServiceView5.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 310f, 142f, 20f));;
+			nativeViewCodeServiceView5.Frame = nativeViewCodeServiceView5.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 311f, 142f, 20f));;
 
 		}
 	}
