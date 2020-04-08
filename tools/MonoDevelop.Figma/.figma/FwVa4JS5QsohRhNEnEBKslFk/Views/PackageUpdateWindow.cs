@@ -58,7 +58,7 @@ namespace MonoDevelop.Figma.Packages
 		{
 			PerformClose(this);
 
-			IdeApp.Workbench.StatusBar.BeginProgress($"Updating package {mainBundle.FileId}…");
+			IdeApp.Workbench.StatusBar.BeginProgress($"Updating ‘{mainBundle.Manifest.DocumentTitle}’…");
 			IdeApp.Workbench.StatusBar.AutoPulse = true;
 
 			var includeImages = true;
@@ -75,6 +75,7 @@ namespace MonoDevelop.Figma.Packages
 
 			await project.IncludeBundle(mainBundle, includeImages: includeImages);
 
+			IdeApp.Workbench.StatusBar.AutoPulse = false;
 			IdeApp.Workbench.StatusBar.EndProgress();
 		}
 
