@@ -1,16 +1,17 @@
 /*
 */
+
 using System;
-using System.Threading.Tasks;
-using FigmaSharp.Models;
-using System.Linq;
-using FigmaSharp;
-using AppKit;
-using FigmaSharp.Services;
-using Foundation;
-using FigmaSharp.Cocoa;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+using FigmaSharp;
+using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+
 using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma.Packages
