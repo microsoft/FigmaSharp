@@ -40,8 +40,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class ImageRenderConverter : FigmaNativeControlConverter
 	{
-		public override Type ControlType => typeof(NSImageView);
-
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return typeof(NSImageView);
+		}
+		
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.name.StartsWith("!image");
@@ -59,7 +62,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var builder = new StringBuilder();
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(currentNode.Name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor(currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
 			currentNode.Node.TryGetNodeCustomName(out string nodeName);
@@ -87,10 +90,20 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			return new StringBuilder();
 		}
+
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return null;
+		}
 	}
 
 	public class WindowSheetConverter : FigmaNativeControlConverter
 	{
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return null;
+		}
+
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.WindowSheet;
@@ -122,6 +135,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return new StringBuilder();
+		}
+
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return null;
 		}
 	}
 }

@@ -43,7 +43,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class SpinnerConverter : FigmaNativeControlConverter
 	{
-		public override Type ControlType => typeof (NSProgressIndicator);
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return typeof(NSProgressIndicator);
+		}
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
@@ -79,7 +82,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name,  ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor (name,  GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure (figmaInstance, name);
 

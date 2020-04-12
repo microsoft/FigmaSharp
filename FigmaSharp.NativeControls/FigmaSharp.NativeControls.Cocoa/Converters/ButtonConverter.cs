@@ -42,8 +42,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class ButtonConverter : FigmaNativeControlConverter
     {
-        public override Type ControlType => typeof(NSButton);
-
 		public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Button;
@@ -138,7 +136,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (name, ControlType.FullName, rendererService.NodeRendersVar (currentNode, parentNode));
+                builder.WriteConstructor (name, GetControlType(currentNode.Node).FullName, rendererService.NodeRendersVar (currentNode, parentNode));
 
             builder.Configure (currentNode.Node, name);
 
@@ -199,5 +197,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             return builder;
         }
 
+        public override Type GetControlType(FigmaNode currentNode)
+        {
+            return typeof(NSButton);
+        }
 	}
 }

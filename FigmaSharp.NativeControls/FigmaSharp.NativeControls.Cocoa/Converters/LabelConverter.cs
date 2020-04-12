@@ -44,7 +44,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class LabelConverter : FigmaNativeControlConverter
     {
-        public override Type ControlType => typeof(NSTextField);
+        public override Type GetControlType(FigmaNode currentNode)
+        {
+            return typeof(NSTextField);
+        }
 
         public override bool CanConvert(FigmaNode currentNode)
         {
@@ -102,8 +105,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             StringBuilder builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode)) {
-
-                builder.WriteConstructor(currentNode.Name, ControlType.FullName, rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
                 builder.WriteEquality(currentNode.Name, nameof(NSTextField.Editable), false);
                 builder.WriteEquality(currentNode.Name, nameof(NSTextField.Bordered), false);

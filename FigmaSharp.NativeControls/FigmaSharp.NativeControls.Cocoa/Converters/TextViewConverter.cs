@@ -42,7 +42,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class TextViewConverter : FigmaNativeControlConverter
 	{
-		public override Type ControlType => typeof(NSTextView);
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return typeof(NSTextView);
+		}
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
