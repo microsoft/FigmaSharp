@@ -33,11 +33,32 @@ using System.Linq;
 using AppKit;
 using CoreGraphics;
 using FigmaSharp.Views.Native.Cocoa;
+using Foundation;
 
 namespace FigmaSharp.Views.Cocoa
 {
 	public class CenteringClipView : NSClipView
 	{
+		public CenteringClipView()
+		{
+		}
+
+		public CenteringClipView(NSCoder coder) : base(coder)
+		{
+		}
+
+		public CenteringClipView(CGRect frameRect) : base(frameRect)
+		{
+		}
+
+		protected CenteringClipView(NSObjectFlag t) : base(t)
+		{
+		}
+
+		protected internal CenteringClipView(IntPtr handle) : base(handle)
+		{
+		}
+
 		public override CGRect ConstrainBoundsRect(CGRect proposedBounds)
 		{
 			var rect = base.ConstrainBoundsRect(proposedBounds);
