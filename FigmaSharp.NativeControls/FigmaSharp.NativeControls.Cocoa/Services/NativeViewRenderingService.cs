@@ -74,6 +74,7 @@ namespace FigmaSharp.Services
             var content = node.GetWindowContent() ?? node;
             ProcessFromNode(content, mainWindow.Content, options);
             var processedNode = FindProcessedNodeById(content.id);
+
             RecursivelyConfigureViews(processedNode, options);
 
             var windowComponent = node.GetDialogInstanceFromParentContainer();
