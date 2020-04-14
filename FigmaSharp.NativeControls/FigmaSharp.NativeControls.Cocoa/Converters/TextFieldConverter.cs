@@ -58,10 +58,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var view = (NSTextField)textBox.NativeObject;
 
 			view.Configure (currentNode);
-			view.AlphaValue = figmaInstance.opacity;
 
 			figmaInstance.TryGetNativeControlComponentType (out var controlComponentType);
 			switch (controlComponentType) {
+				default:
+					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+					break;
 				case NativeControlComponentType.TextFieldSmall:
 				case NativeControlComponentType.TextFieldSmallDark:
 				case NativeControlComponentType.FilterSmall:
@@ -96,6 +98,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 				builder.WriteConstructor (name,  ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
 			builder.Configure (instance, name);
+
+			instance.TryGetNativeControlComponentType(out var controlType);
+			switch (controlType)
+			{
+				case NativeControlComponentType.TextFieldStandard:
+				case NativeControlComponentType.TextFieldStandardDark:
+					builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+						CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+					break;
+			}
 
 			var texts = instance.children.OfType<FigmaText> ();
 
