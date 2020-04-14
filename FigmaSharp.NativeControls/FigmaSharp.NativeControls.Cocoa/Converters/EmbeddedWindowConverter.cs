@@ -118,7 +118,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			string title = "Window";
+			string title = "";
 			var frame = (FigmaFrameEntity)currentNode;
 
 			var nativeView = new FakeWindowView(title);
@@ -139,7 +139,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					nativeView.MinButtonHidden   = (figmaNodeContainer.HasChildrenVisible("min")   == false);
 					nativeView.MaxButtonHidden   = (figmaNodeContainer.HasChildrenVisible("max")   == false);
 
-					FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title");
+					FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title" && s.visible);
 
 					if (titleText != null)
 						nativeView.Title = titleText.characters;

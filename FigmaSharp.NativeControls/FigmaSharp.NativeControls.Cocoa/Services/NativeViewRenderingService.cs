@@ -90,7 +90,7 @@ namespace FigmaSharp.Services
                     mainWindow.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
                 }
 
-                FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title");
+                FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title" && s.visible);
 
                 if (titleText != null)
                     mainWindow.Title = titleText.characters;
