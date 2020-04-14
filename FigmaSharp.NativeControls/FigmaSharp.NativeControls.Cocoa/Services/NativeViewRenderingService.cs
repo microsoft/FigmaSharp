@@ -63,7 +63,20 @@ namespace FigmaSharp.Services
 
         public override void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
         {
-            base.RenderInWindow(mainWindow, node, options);
+            if (node is IAbsoluteBoundingBox bounNode) {
+                mainWindow.Size = new Size(bounNode.absoluteBoundingBox.Width, bounNode.absoluteBoundingBox.Height);
+            }
+
+            if (options == null) {
+                options = new FigmaViewRendererServiceOptions();
+            }
+
+            node = node.GetWindowContent() ?? node;
+
+            ProcessFromNode(node, mainWindow.Content, options);
+
+            var processedNode = FindProcessedNodeById(node.id);
+            RecursivelyConfigureViews(processedNode, options);
 
             var windowComponent = node.GetDialogInstanceFromParentContainer();
             if (windowComponent != null) {
