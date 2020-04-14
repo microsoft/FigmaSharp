@@ -442,7 +442,7 @@ Gw
                                 <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" toolTip="Refresh" id="NHv-Gm-Lms">
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" id="iXD-EU-bKJ">
+                                    <button key="view" toolTip="Refresh – ⌘R" verticalHuggingPriority="750" id="iXD-EU-bKJ">
                                         <rect key="frame" x="0.0" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="↻" bezelStyle="rounded" imagePosition="overlaps" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ybZ-rq-L46">
@@ -459,7 +459,7 @@ Gw
                                 <toolbarItem implicitItemIdentifier="1D5468D2-8E08-45EB-9DDF-5D18A54E00E6" label="Dark Mode" paletteLabel="Dark Mode" toolTip="Dark Mode" id="ipb-hp-J6A">
                                     <size key="minSize" width="56" height="32"/>
                                     <size key="maxSize" width="56" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" id="du5-wr-dXP">
+                                    <button key="view" toolTip="Dark Mode – ⌘D" verticalHuggingPriority="750" id="du5-wr-dXP">
                                         <rect key="frame" x="5" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="☾" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
