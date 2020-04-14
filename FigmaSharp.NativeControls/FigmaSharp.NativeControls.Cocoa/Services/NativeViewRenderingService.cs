@@ -71,11 +71,9 @@ namespace FigmaSharp.Services
                 options = new FigmaViewRendererServiceOptions();
             }
 
-            node = node.GetWindowContent() ?? node;
-
-            ProcessFromNode(node, mainWindow.Content, options);
-
-            var processedNode = FindProcessedNodeById(node.id);
+            var content = node.GetWindowContent() ?? node;
+            ProcessFromNode(content, mainWindow.Content, options);
+            var processedNode = FindProcessedNodeById(content.id);
             RecursivelyConfigureViews(processedNode, options);
 
             var windowComponent = node.GetDialogInstanceFromParentContainer();
