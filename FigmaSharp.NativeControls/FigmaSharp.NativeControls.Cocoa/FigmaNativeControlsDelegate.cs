@@ -61,6 +61,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					new ButtonConverter (),
 					new TextFieldConverter (),
 					new TextViewConverter (),
+					new TabViewConverter (),
 					new LabelConverter ()
 				};
 			}

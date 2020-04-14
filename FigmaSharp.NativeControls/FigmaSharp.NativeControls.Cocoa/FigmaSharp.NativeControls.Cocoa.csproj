@@ -81,6 +81,7 @@
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="FakeSheetView.cs" />
     <Compile Include="Converters\TextViewConverter.cs" />
+    <Compile Include="Converters\TabViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
