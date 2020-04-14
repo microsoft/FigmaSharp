@@ -35,23 +35,24 @@ using FigmaSharp.Models;
 namespace FigmaSharp.NativeControls
 {
     public enum NativeControlType
-	{
+    {
         NotDefined,
-		Button,
-		TextField,
-		TextView,
-		Filter,
-		RadioButton,
-		CheckBox,
-		PopupButton,
-		ComboBox,
-		ProgressSpinner,
+        Button,
+        TextField,
+        TextView,
+        Filter,
+        RadioButton,
+        CheckBox,
+        PopupButton,
+        ComboBox,
+        ProgressSpinner,
         DisclosureTriange,
         Stepper,
-		Label,
+        Label,
+        TabView,
         WindowStandard,
-		WindowSheet,
-		WindowPanel
+        WindowSheet,
+        WindowPanel
     }
 
     public enum NativeControlComponentType
@@ -130,6 +131,9 @@ namespace FigmaSharp.NativeControls
         StepperSmall,
         StepperStandard,
 
+        TabViewStandard,
+        TabViewStandardDark,
+
         // Windows
         WindowSheet,
         WindowSheetDark,
@@ -179,19 +183,19 @@ namespace FigmaSharp.NativeControls
             ( "Checkbox/Small", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
             ( "Checkbox/Small Dark", NativeControlComponentType.CheckboxSmallDark, NativeControlType.CheckBox),
           
-			//Pop Up Button
+            //Pop Up Button
             ( "PopUp Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
             ( "PopUp Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
             ( "PopUp Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
             ( "PopUp Button/Small Dark", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
 
-			//Pull Down Button
-			( "PullDown Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            //Pull Down Button
+            ( "PullDown Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
             ( "PullDown Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
             ( "PullDown Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
             ( "PullDown Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
 
-			//General
+            //General
             ( "ComboBox/Standard", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
             ( "ComboBox/Small", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
             ( "ComboBox/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
@@ -223,6 +227,9 @@ namespace FigmaSharp.NativeControls
 
             ( "Link/Standard", NativeControlComponentType.LinkStandard, NativeControlType.Label),
             ( "Link/Small", NativeControlComponentType.LinkSmall, NativeControlType.Label),
+
+            ( "TabView/Standard", NativeControlComponentType.TabViewStandard, NativeControlType.TabView),
+            ( "TabView/Standard Dark", NativeControlComponentType.TabViewStandardDark, NativeControlType.TabView),
 
             ( "Window/Standard", NativeControlComponentType.WindowStandard, NativeControlType.WindowStandard),
             ( "Window/Standard Dark", NativeControlComponentType.WindowStandardDark, NativeControlType.WindowStandard),
@@ -256,7 +263,7 @@ namespace FigmaSharp.NativeControls
         }
 
         public static bool IsNodeWindowContent (this FigmaNode node)
-		{
+        {
             return node.GetNodeTypeName () == "content";
         }
 
@@ -300,7 +307,7 @@ namespace FigmaSharp.NativeControls
         public static bool IsDialog (this FigmaNode figmaNode)
         {
             if (TryGetNativeControlType (figmaNode, out var value) &&
-				(value == NativeControlType.WindowPanel || value == NativeControlType.WindowSheet || value == NativeControlType.WindowStandard)) {
+                (value == NativeControlType.WindowPanel || value == NativeControlType.WindowSheet || value == NativeControlType.WindowStandard)) {
                 return true;
             }
             return false;
@@ -308,9 +315,9 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)
         {
-			if (figmaNode.TryGetNativeControlType (out var value) && value == controlType) {
+            if (figmaNode.TryGetNativeControlType (out var value) && value == controlType) {
                 return true;
-			}
+            }
             return false;
         }
 
@@ -333,7 +340,7 @@ namespace FigmaSharp.NativeControls
         public static bool TryGetNativeControlType (this FigmaNode node, out NativeControlType nativeControlType)
         {
             nativeControlType = NativeControlType.NotDefined;
-			if (node is FigmaComponentEntity) {
+            if (node is FigmaComponentEntity) {
                 nativeControlType = GetNativeControlType (node.name);
                 return nativeControlType != NativeControlType.NotDefined;
             }
@@ -358,8 +365,8 @@ namespace FigmaSharp.NativeControls
             return type;
         }
 
-		static NativeControlType GetNativeControlType (string name)
-		{
+        static NativeControlType GetNativeControlType (string name)
+        {
             var found = data.FirstOrDefault (s => s.name == name);
             if (found.Equals (default)) {
                 Console.WriteLine ("Component Key not found: {0}", name);
