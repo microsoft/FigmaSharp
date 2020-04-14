@@ -62,6 +62,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				case NativeControlComponentType.ComboBoxStandard:
 				case NativeControlComponentType.ComboBoxStandardDark:
 					view.ControlSize = NSControlSize.Regular;
+					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
 			}
 
@@ -90,13 +91,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
-				case NativeControlComponentType.PopUpButtonSmall:
-				case NativeControlComponentType.PopUpButtonSmallDark:
+				case NativeControlComponentType.ComboBoxSmall:
+				case NativeControlComponentType.ComboBoxSmallDark:
 					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
 					break;
-				case NativeControlComponentType.PopUpButtonStandard:
-				case NativeControlComponentType.PopUpButtonStandardDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+				case NativeControlComponentType.ComboBoxStandard:
+				case NativeControlComponentType.ComboBoxStandardDark:
+					builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+					    CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 					break;
 			}
 
