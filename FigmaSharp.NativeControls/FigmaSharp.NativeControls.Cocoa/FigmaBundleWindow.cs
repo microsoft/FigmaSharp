@@ -63,13 +63,10 @@ namespace FigmaSharp
 				var optionsNode = windowComponent.children.FirstOrDefault(s => s.name == "!options");
 				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
 				{
-					if (figmaNodeContainer.HasChildrenVisible("title"))
-					{
-						var title = (FigmaText)figmaNodeContainer.children.FirstOrDefault(s => s.name == "title");
+					var title = (FigmaText)figmaNodeContainer.children.FirstOrDefault(s => s.name == "title" && s.visible);
 
-						if (title != null)
-							builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
-					}
+					if (title != null)
+						builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
 
 					if (figmaNodeContainer.HasChildrenVisible("resize"))
 					{
