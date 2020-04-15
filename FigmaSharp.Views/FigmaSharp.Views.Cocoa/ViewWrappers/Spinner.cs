@@ -94,4 +94,21 @@ namespace FigmaSharp.Views.Cocoa
 			base.Dispose ();
 		}
 	}
+
+
+	public class ProgressBar : View, IProgressBar
+	{
+		FNSProgressIndicator progressIndicator;
+
+		public ProgressBar() : this(new FNSProgressIndicator())
+		{
+
+		}
+
+		public ProgressBar(FNSProgressIndicator progressIndicator) : base(progressIndicator)
+		{
+			this.progressIndicator = progressIndicator;
+			progressIndicator.Style = NSProgressIndicatorStyle.Bar;
+		}
+	}
 }

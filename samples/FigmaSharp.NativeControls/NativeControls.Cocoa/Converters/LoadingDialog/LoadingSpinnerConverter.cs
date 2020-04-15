@@ -48,7 +48,7 @@ namespace LocalFile.Cocoa
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var spinner = new Spinner();
+			var spinner = new ProgressBar();
 			//var nativeView = (FNSProgressIndicator)spinner.NativeObject;
 			//nativeView.WidthAnchor.ConstraintEqualToConstant(36).Active = true;
 			//nativeView.HeightAnchor.ConstraintEqualToConstant(36).Active = true;

@@ -45,6 +45,7 @@ namespace FigmaSharp.NativeControls
         CheckBox,
         PopupButton,
         ComboBox,
+        ProgressBar,
         ProgressSpinner,
         DisclosureTriange,
         Stepper,
@@ -118,10 +119,15 @@ namespace FigmaSharp.NativeControls
         ComboBoxStandardDark,
         ComboBoxSmallDark,
 
-        ProgressSpinnerSmallDark,
-        ProgressSpinnerStandardDark,
+        ProgressSpinner,
+        ProgressSpinnerDark,
         ProgressSpinnerSmall,
-        ProgressSpinnerStandard,
+        ProgressSpinnerSmallDark,
+
+        ProgressBar,
+        ProgressBarDark,
+        ProgressBarSmall,
+        ProgressBarSmallDark,
 
         DisclosureTriangleStandard,
         DisclosureTriangleStandardDark,
@@ -201,10 +207,17 @@ namespace FigmaSharp.NativeControls
             ( "ComboBox/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
             ( "ComboBox/Small Dark", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
 
-            ("ProgressIndicator/Circular", NativeControlComponentType.ProgressSpinnerStandard, NativeControlType.ProgressSpinner),
-            ("ProgressIndicator/Circular/Dark", NativeControlComponentType.ProgressSpinnerStandardDark, NativeControlType.ProgressSpinner),
-            ("ProgressIndicator/Circular/Small", NativeControlComponentType.ProgressSpinnerSmall, NativeControlType.ProgressSpinner),
-            ("ProgressIndicator/Circular/Small/Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
+            // Progress indicators
+
+            ("ProgressIndicator/Circular",            NativeControlComponentType.ProgressSpinner,     NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Dark",       NativeControlComponentType.ProgressSpinner, NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Small",      NativeControlComponentType.ProgressSpinnerSmall,        NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Small/Dark", NativeControlComponentType.ProgressSpinnerSmallDark,    NativeControlType.ProgressSpinner),
+
+            ("ProgressIndicator/Bar",            NativeControlComponentType.ProgressBar,          NativeControlType.ProgressBar),
+            ("ProgressIndicator/Bar/Dark",       NativeControlComponentType.ProgressBarDark,      NativeControlType.ProgressBar),
+            ("ProgressIndicator/Bar/Small",      NativeControlComponentType.ProgressBarSmall,     NativeControlType.ProgressBar),
+            ("ProgressIndicator/Bar/Small/Dark", NativeControlComponentType.ProgressBarSmallDark, NativeControlType.ProgressBar),
 
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.ProgressSpinner),
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
