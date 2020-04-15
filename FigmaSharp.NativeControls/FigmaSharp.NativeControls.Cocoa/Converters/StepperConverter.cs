@@ -41,7 +41,7 @@ using System;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class StepperConverter : FigmaNativeControlConverter
+	public class StepperConverter : FigmaNativeControlConverter
 	{
 		public override Type ControlType => typeof(NSStepper);
 
@@ -85,12 +85,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
-				case NativeControlComponentType.ProgressSpinnerSmall:
-				case NativeControlComponentType.ProgressSpinnerSmallDark:
+				case NativeControlComponentType.StepperSmall:
+				case NativeControlComponentType.StepperSmallDark:
 					builder.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Small);
 					break;
-				case NativeControlComponentType.ProgressSpinnerStandard:
-				case NativeControlComponentType.ProgressSpinnerStandardDark:
+				case NativeControlComponentType.StepperStandard:
+				case NativeControlComponentType.StepperStandardDark:
 					builder.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Regular);
 					break;
 			}

@@ -36,6 +36,10 @@ namespace FigmaSharp.Views
     {
     }
 
+    public interface IProgressBar : IView
+    {
+    }
+
     public interface ISpinner : IView
 	{
 		void Start ();
