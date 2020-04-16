@@ -1,5 +1,5 @@
 // This file was auto-generated using
-// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-08 at 15:28
+// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-16 at 18:21
 //
 // Document title:   
 // Document version: 0.1f
@@ -26,7 +26,7 @@ namespace MonoDevelop.Figma.Packages
 			this.StandardWindowButton (NSWindowButton.ZoomButton).Enabled = false;
 
 			var frame = Frame;
-			frame.Size = new CoreGraphics.CGSize (455f, 194f);
+			frame.Size = new CoreGraphics.CGSize (455f, 206f);
 			this.SetFrame (frame, true);
 			this.ContentMinSize = this.ContentView.Frame.Size;
 
@@ -70,7 +70,7 @@ namespace MonoDevelop.Figma.Packages
 			versionSpinner.ControlSize = NSControlSize.Small;
 
 			this.ContentView.AddSubview (versionSpinner);
-			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (383f, 87f, 18f, 18f));;
+			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (383f, 99f, 18f, 18f));;
 
 			// View:     nativeViewCodeServiceView
 			// NodeName: Generate:
@@ -82,12 +82,12 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView.Bezeled = false;
 			nativeViewCodeServiceView.DrawsBackground = false;
 			nativeViewCodeServiceView.StringValue = "Figma Package:";
-			nativeViewCodeServiceView.WantsLayer = true;
 			nativeViewCodeServiceView.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			nativeViewCodeServiceView.WantsLayer = true;
 			nativeViewCodeServiceView.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView);
-			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f, 119f, 142f, 20f));;
+			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f, 131f, 142f, 20f));;
 
 			// View:     nativeViewCodeServiceView1
 			// NodeName: Generate:
@@ -99,12 +99,12 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView1.Bezeled = false;
 			nativeViewCodeServiceView1.DrawsBackground = false;
 			nativeViewCodeServiceView1.StringValue = "Update to:";
-			nativeViewCodeServiceView1.WantsLayer = true;
 			nativeViewCodeServiceView1.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			nativeViewCodeServiceView1.WantsLayer = true;
 			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView1);
-			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f, 86f, 142f, 20f));;
+			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f, 98f, 142f, 20f));;
 
 			// View:     bundlePopUp
 			// NodeName: "bundlePopUp"
@@ -117,7 +117,7 @@ namespace MonoDevelop.Figma.Packages
 			bundlePopUp.AddItem ("Breakpoints Dialog");
 
 			this.ContentView.AddSubview (bundlePopUp);
-			bundlePopUp.Frame = bundlePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 118f, 223f, 21f));;
+			bundlePopUp.Frame = bundlePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 130f, 223f, 21f));;
 
 			// View:     versionPopUp
 			// NodeName: "versionPopUp"
@@ -130,7 +130,7 @@ namespace MonoDevelop.Figma.Packages
 			versionPopUp.AddItem ("Current – 8.6");
 
 			this.ContentView.AddSubview (versionPopUp);
-			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 85f, 223f, 21f));;
+			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 97f, 223f, 21f));;
 
 			// View:     translationsCheckbox
 			// NodeName: "translationsCheckbox"
@@ -146,7 +146,7 @@ namespace MonoDevelop.Figma.Packages
 			translationsCheckbox.State = NSCellStateValue.Off;
 
 			this.ContentView.AddSubview (translationsCheckbox);
-			translationsCheckbox.Frame = translationsCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 53f, 223f, 14f));;
+			translationsCheckbox.Frame = translationsCheckbox.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 65f, 223f, 14f));;
 
 		}
 	}

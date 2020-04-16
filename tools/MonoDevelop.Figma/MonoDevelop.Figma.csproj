@@ -19,7 +19,6 @@
       <ItemGroup>
         <Folder Include="Resources\" />
         <Folder Include=".figma\" />
-        <Folder Include="Views\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
         <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Resources\" />

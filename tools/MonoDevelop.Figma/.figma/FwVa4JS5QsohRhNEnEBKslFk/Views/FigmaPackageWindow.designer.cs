@@ -1,5 +1,5 @@
 // This file was auto-generated using
-// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-08 at 15:28
+// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-16 at 18:21
 //
 // Document title:   
 // Document version: 0.1f
@@ -183,8 +183,8 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView1.Bezeled = false;
 			nativeViewCodeServiceView1.DrawsBackground = false;
 			nativeViewCodeServiceView1.StringValue = "Generate:";
-			nativeViewCodeServiceView1.WantsLayer = true;
 			nativeViewCodeServiceView1.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			nativeViewCodeServiceView1.WantsLayer = true;
 			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView1);
@@ -196,6 +196,7 @@ namespace MonoDevelop.Figma.Packages
 			// NodeId:   576:78
 			namespacePopUp = new AppKit.NSComboBox();
 			namespacePopUp.WantsLayer = true;
+			namespacePopUp.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			namespacePopUp.Add (new Foundation.NSString ("MyApp"));
 			namespacePopUp.AccessibilityTitle = "Namespace";
 			namespacePopUp.AccessibilityHelp = "The namespace to generate code in";
@@ -214,8 +215,8 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView2.Bezeled = false;
 			nativeViewCodeServiceView2.DrawsBackground = false;
 			nativeViewCodeServiceView2.StringValue = "Namespace:";
-			nativeViewCodeServiceView2.WantsLayer = true;
 			nativeViewCodeServiceView2.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			nativeViewCodeServiceView2.WantsLayer = true;
 			nativeViewCodeServiceView2.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView2);
@@ -268,8 +269,8 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView4.Bezeled = false;
 			nativeViewCodeServiceView4.DrawsBackground = false;
 			nativeViewCodeServiceView4.StringValue = "Version:";
-			nativeViewCodeServiceView4.WantsLayer = true;
 			nativeViewCodeServiceView4.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			nativeViewCodeServiceView4.WantsLayer = true;
 			nativeViewCodeServiceView4.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView4);
@@ -296,8 +297,8 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView5.Bezeled = false;
 			nativeViewCodeServiceView5.DrawsBackground = false;
 			nativeViewCodeServiceView5.StringValue = "Figma URL:";
-			nativeViewCodeServiceView5.WantsLayer = true;
 			nativeViewCodeServiceView5.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			nativeViewCodeServiceView5.WantsLayer = true;
 			nativeViewCodeServiceView5.Alignment = NSTextAlignment.Right;
 
 			this.ContentView.AddSubview (nativeViewCodeServiceView5);
