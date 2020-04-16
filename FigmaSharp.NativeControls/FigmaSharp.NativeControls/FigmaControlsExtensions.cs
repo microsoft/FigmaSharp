@@ -197,10 +197,10 @@ namespace FigmaSharp.NativeControls
             ( "ComboBox/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
             ( "ComboBox/Small Dark", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
 
-            ( "Progress Spinner/Small", NativeControlComponentType.ProgressSpinnerSmall, NativeControlType.ProgressSpinner),
-            ( "Progress Spinner/Small Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
-            ( "Progress Spinner/Standard", NativeControlComponentType.ProgressSpinnerStandard, NativeControlType.ProgressSpinner),
-            ( "Progress Spinner/Standard Dark", NativeControlComponentType.ProgressSpinnerStandardDark, NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular", NativeControlComponentType.ProgressSpinnerStandard, NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Dark", NativeControlComponentType.ProgressSpinnerStandardDark, NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Small", NativeControlComponentType.ProgressSpinnerSmall, NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Small/Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
 
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.ProgressSpinner),
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
@@ -211,7 +211,6 @@ namespace FigmaSharp.NativeControls
             ( "Stepper/Standard Dark", NativeControlComponentType.StepperStandardDark, NativeControlType.Stepper),
             ( "Stepper/Small", NativeControlComponentType.StepperSmall, NativeControlType.Stepper),
             ( "Stepper/Small Dark", NativeControlComponentType.StepperSmallDark, NativeControlType.Stepper),
-
 
             ( "Label/Standard", NativeControlComponentType.LabelStandard, NativeControlType.Label),
             ( "Label/Standard Dark", NativeControlComponentType.LabelStandardDark, NativeControlType.Label),
