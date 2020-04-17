@@ -132,7 +132,7 @@ namespace MonoDevelop.Figma.Packages
             var designerProjectFile = currentProject.AddFile(partialDesignerClassFilePath);
 			var csProjectFile = currentProject.AddFile(publicCsClassFilePath);
 			designerProjectFile.DependsOn = csProjectFile.FilePath;
-            designerProjectFile.Metadata.SetValue("FigmaPackageId", bundle.FileId);
+            designerProjectFile.Metadata.SetValue(FigmaFile.FigmaPackageId, bundle.FileId);
             return csProjectFile;
         }
 
