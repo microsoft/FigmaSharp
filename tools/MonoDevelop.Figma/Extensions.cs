@@ -13,6 +13,27 @@ namespace MonoDevelop.Figma
 {
 	public static class Extensions
 	{
+		public static bool HasAnyFigmaPackage (this Project sender)
+		{
+			var figmaFolder = sender.GetFigmaFolder();
+			if (!System.IO.Directory.Exists(figmaFolder))
+				return false;
+			return Directory.EnumerateDirectories (figmaFolder).Any ();
+		}
+
+		public static bool TryGetProject (this object sender, out Project project)
+		{
+			if (sender is Project project1) {
+				project = project1;
+			}
+			else if (sender is ProjectFolder projectItem) {
+				project = projectItem.Project;
+			}
+			else
+				project = null;
+			return project != null;
+		}
+
 		public static string GetDefaultFigmaNamespace (this Project currentProject)
 		{
 			string namesSpace;

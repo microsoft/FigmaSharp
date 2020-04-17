@@ -28,6 +28,7 @@ namespace MonoDevelop.Figma.Packages
 
 		public bool Value { get; set; }
         public string Description => System.IO.Path.GetFileNameWithoutExtension(View.PublicCsClassFilePath);
+        public string PackageName => View.Bundle.Manifest.DocumentTitle;
     }
 
     class OutlineViewDataSource : NSTableViewDataSource
@@ -49,6 +50,7 @@ namespace MonoDevelop.Figma.Packages
     {
         readonly List<ValueData> data;
         public const string Col1 = "col1";
+        public const string Col2 = "col2";
 
         public OutlineViewDelegate(List<ValueData> data)
         {
@@ -64,16 +66,25 @@ namespace MonoDevelop.Figma.Packages
             var dataItem = data[(int)row];
 
             if (tableColumn.Identifier == Col1) {
-                CurrentView currentView = view as CurrentView;
+                var currentView = view as NSButton;
 
                 if (currentView == null) {
-                    currentView = new CurrentView();
-                    currentView.ViewButton.Activated += (s, e) => {
-                        dataItem.Value = currentView.ViewButton.State == NSCellStateValue.On;
+                    currentView = new NSButton();
+                    currentView.SetButtonType(NSButtonType.Switch);
+                    currentView.Activated += (s, e) => {
+                        dataItem.Value = currentView.State == NSCellStateValue.On;
                     };
                 }
-                currentView.ViewButton.State = dataItem.Value ? NSCellStateValue.On : NSCellStateValue.Off;
-                currentView.ViewButton.Title = dataItem.Description;
+                currentView.State = dataItem.Value ? NSCellStateValue.On : NSCellStateValue.Off;
+                currentView.Title = dataItem.Description;
+                return currentView;
+            }
+            if (tableColumn.Identifier == Col2)
+            {
+                var currentView = view as NSTextField;
+                if (currentView == null) {
+                    currentView = ViewHelpers.CreateLabel(dataItem.PackageName);
+                }
                 return currentView;
             }
             return null;
@@ -103,11 +114,11 @@ namespace MonoDevelop.Figma.Packages
             return test;
         }
 
-        void CreateBundleView (FigmaBundleViewBase figmaBundleView, Project currentProject, IFigmaFileProvider fileProvider)
+        async Task<ProjectFile> CreateBundleView (FigmaBundleViewBase figmaBundleView, Project currentProject, IFigmaFileProvider fileProvider)
 		{
             var bundle = figmaBundleView.Bundle;
 		
-			fileProvider.Load(bundle.DocumentFilePath);
+			await fileProvider.LoadAsync (bundle.DocumentFilePath);
 
 			var converters = NativeControlsContext.Current.GetConverters();
 			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter();
@@ -121,7 +132,8 @@ namespace MonoDevelop.Figma.Packages
             var designerProjectFile = currentProject.AddFile(partialDesignerClassFilePath);
 			var csProjectFile = currentProject.AddFile(publicCsClassFilePath);
 			designerProjectFile.DependsOn = csProjectFile.FilePath;
-		
+            designerProjectFile.Metadata.SetValue("FigmaPackageId", bundle.FileId);
+            return csProjectFile;
         }
 
         readonly string outputDirectory;
@@ -133,10 +145,17 @@ namespace MonoDevelop.Figma.Packages
             this.project = project;
             this.outputDirectory = outputDirectory;
 
+            const int packageWidth = 200;
+            var tablePackageColumn = new NSTableColumn(OutlineViewDelegate.Col2);
+            tablePackageColumn.Title = "Package";
+            tablePackageColumn.Width = packageWidth;
+
             var tableColumn = new NSTableColumn(OutlineViewDelegate.Col1);
             tableColumn.Title = "Available Views";
-            tableColumn.Width = MyTable.Frame.Width;
-            MyTable.AddColumn(tableColumn);
+            tableColumn.Width = fileTableView.Frame.Width - packageWidth;
+            fileTableView.AddColumn(tableColumn);
+          
+            fileTableView.AddColumn(tablePackageColumn);
 
             createButton.Activated += CreateButton_Activated;
 			cancelButton.Activated += CancelButton_Activated;
@@ -146,8 +165,8 @@ namespace MonoDevelop.Figma.Packages
 		{
             var data = await FetchDataAsync();
             Data.AddRange(data);
-            MyTable.DataSource = new OutlineViewDataSource(data);
-            MyTable.Delegate = new OutlineViewDelegate(data);
+            fileTableView.DataSource = new OutlineViewDataSource(data);
+            fileTableView.Delegate = new OutlineViewDelegate(data);
         }
 
 		private void CancelButton_Activated(object sender, EventArgs e)
@@ -157,13 +176,22 @@ namespace MonoDevelop.Figma.Packages
 
 		private async void CreateButton_Activated(object sender, EventArgs e)
         {
+            IdeApp.Workbench.StatusBar.AutoPulse = true;
+            IdeApp.Workbench.StatusBar.BeginProgress($"Generating views…");
+
             var selectedData = Data.Where(s => s.Value);
 			foreach (var item in selectedData) {
-                CreateBundleView(item.View, project, item.fileProvider);
+                IdeApp.Workbench.StatusBar.ShowMessage($"Generating {item.Description}…");
+                await CreateBundleView(item.View, project, item.fileProvider);
             }
 
             await IdeApp.ProjectOperations.SaveAsync(project);
             project.NeedsReload = true;
+
+            IdeApp.Workbench.StatusBar.EndProgress();
+            IdeApp.Workbench.StatusBar.AutoPulse = false;
+
+            this.Close();
         }
 	}
 }
