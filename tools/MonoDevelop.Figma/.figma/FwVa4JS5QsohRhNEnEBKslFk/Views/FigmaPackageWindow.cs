@@ -32,6 +32,8 @@ namespace MonoDevelop.Figma.Packages
 
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 
+			templateRadio.Enabled = nothingRadio.Enabled = false;
+
 			versionPopUp.AutoEnablesItems = false;
 			versionPopUp.Activated += ItemsRefreshState_Handler;
 
