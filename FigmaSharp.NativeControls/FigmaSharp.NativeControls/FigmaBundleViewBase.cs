@@ -23,6 +23,7 @@ namespace FigmaSharp
 		public string RemoteFileUrl => $"https://www.figma.com/file/{bundle.FileId}/";
 
 		private readonly FigmaBundle bundle;
+		public FigmaBundle Bundle => bundle;
 
 		public FigmaBundleViewBase (FigmaBundle figmaBundle, string viewName, Models.FigmaNode figmaNode)
 		{
@@ -57,10 +58,10 @@ namespace FigmaSharp
 
 		public FigmaPublicPartialClass GetPublicPartialClass ()
 		{
-			var publicPartialClass = new FigmaPublicPartialClass ();
-		
-			publicPartialClass.ClassName = Name;
-			publicPartialClass.Namespace = bundle.Namespace;
+			var publicPartialClass = new FigmaPublicPartialClass {
+				ClassName = Name,
+				Namespace = bundle.Namespace
+			};
 
 			OnGetPublicDesignerClass (publicPartialClass);
 
@@ -69,15 +70,24 @@ namespace FigmaSharp
 
 		public void Generate (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
 		{
-			if (!Directory.Exists (bundle.ViewsDirectoryPath))
-				Directory.CreateDirectory (bundle.ViewsDirectoryPath);
+			Generate(bundle.ViewsDirectoryPath, codeRendererService, writePublicClassIfExists, namesSpace, translateStrings);
+		}
 
-			var partialDesignerClass = GetFigmaPartialDesignerClass (codeRendererService, namesSpace, translateStrings);
-			partialDesignerClass.Save (PartialDesignerClassFilePath);
+		public void Generate (string directoryPath, FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
+		{
+			if (!Directory.Exists(directoryPath))
+				Directory.CreateDirectory(directoryPath);
 
-			if (!File.Exists (PublicCsClassFilePath) || writePublicClassIfExists) {
+			var partialDesignerClass = GetFigmaPartialDesignerClass(codeRendererService, namesSpace, translateStrings);
+
+			var partialDesignerClassFilePath = Path.Combine(directoryPath, PartialDesignerClassName);
+			partialDesignerClass.Save(partialDesignerClassFilePath);
+
+			var publicCsClassFilePath = Path.Combine(directoryPath, PublicCsClassName);
+			if (!File.Exists(publicCsClassFilePath) || writePublicClassIfExists)
+			{
 				var publicPartialClass = GetPublicPartialClass();
-				publicPartialClass.Save(PublicCsClassFilePath);
+				publicPartialClass.Save(publicCsClassFilePath);
 			}
 		}
 	}

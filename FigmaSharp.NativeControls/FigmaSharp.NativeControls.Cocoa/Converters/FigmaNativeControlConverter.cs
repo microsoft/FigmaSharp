@@ -47,21 +47,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var converted = OnConvertToView(currentNode, parent, rendererService);
-			if (converted != null)
-			{
+			if (converted != null) {
 				var nativeView = converted.NativeObject as AppKit.NSView;
 				if (currentNode.IsA11Group())
 					nativeView.AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
 
 				//label
-				if (currentNode.TrySearchA11Label(out var label))
-				{
-					try
-					{
+				if (currentNode.TrySearchA11Label(out var label)) {
+					try {
 						nativeView.AccessibilityTitle = label;
-					}
-					catch (Exception)
-					{
+					} catch (Exception) {
 						nativeView.AccessibilityLabel = label;
 					}
 				}
@@ -78,11 +73,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			switch (nativeControlType)
 			{
-				case NativeControls.NativeControlType.Button:
-				case NativeControls.NativeControlType.CheckBox:
-				case NativeControls.NativeControlType.RadioButton:
-				case NativeControls.NativeControlType.PopupButton:
-				case NativeControls.NativeControlType.ComboBox:
+				case NativeControlType.Button:
+				case NativeControlType.CheckBox:
+				case NativeControlType.RadioButton:
+				case NativeControlType.PopupButton:
+				case NativeControlType.ComboBox:
 					return nameof(AppKit.NSView.AccessibilityTitle);
 				default:
 					break;
@@ -96,35 +91,27 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (builder != null)
 			{
 				currentNode.Node.TryGetNativeControlType(out var nativeControlType);
-
-				if (currentNode.Node.IsA11Enabled ())
-				{
+				if (currentNode.Node.IsA11Enabled ()) {
 					bool hasAccessibility = false;
-					if (currentNode.Node.IsA11Group())
-					{
+					if (currentNode.Node.IsA11Group()) {
 						var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
-
 						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
 						hasAccessibility = true;
 					}
-					if (currentNode.Node.TrySearchA11Label(out var label))
-					{
+					if (currentNode.Node.TrySearchA11Label(out var label)) {
 						label = NativeControlHelper.GetTranslatableString(label, rendererService.CurrentRendererOptions.TranslateLabels);
-
 						builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 						hasAccessibility = true;
 					}
 					if (currentNode.Node.TrySearchA11Help(out var help))
 					{
 						help = NativeControlHelper.GetTranslatableString(help, rendererService.CurrentRendererOptions.TranslateLabels);
-
 						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 						hasAccessibility = true;
 					}
 					if (hasAccessibility)
 						builder.AppendLine();
 				}
-
 				return builder.ToString();
 			}
 			return string.Empty;

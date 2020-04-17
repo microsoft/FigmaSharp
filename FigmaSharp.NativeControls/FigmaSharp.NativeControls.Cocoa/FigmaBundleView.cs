@@ -42,7 +42,7 @@ namespace FigmaSharp
 			if (FigmaNode == null)
 				return;
 
-			partialDesignerClass.Usings.Add (nameof (AppKit));
+            partialDesignerClass.Usings.Add (nameof (AppKit));
 
             if (codeRendererService is NativeViewCodeService nativeViewCodeService) {
                 partialDesignerClass.PrivateMembers.Clear ();
@@ -51,9 +51,12 @@ namespace FigmaSharp
 
             //restore this state
             var builder = new System.Text.StringBuilder ();
-            var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = translateLabels };
-			codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null, options);
-			partialDesignerClass.InitializeComponentContent = builder.ToString ();
+            var options = new FigmaCodeRendererServiceOptions() {
+                TranslateLabels = translateLabels
+            };
+
+            codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null, options);
+            partialDesignerClass.InitializeComponentContent = builder.ToString ();
 		}
 
 		protected override void OnGetPublicDesignerClass (FigmaPublicPartialClass publicPartialClass)
