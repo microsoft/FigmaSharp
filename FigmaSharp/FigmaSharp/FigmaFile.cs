@@ -40,6 +40,8 @@ namespace FigmaSharp
     /// </summary>
     public class FigmaFile : IFigmaFile
     {
+        public const string FigmaPackageId = "FigmaPackageId";
+
         /// <summary>
         /// Gets the figma images.
         /// </summary>

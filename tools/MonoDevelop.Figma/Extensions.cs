@@ -140,6 +140,8 @@ namespace MonoDevelop.Figma
 				{
 					var partialFilePath = currentProject.AddFile(view.PartialDesignerClassFilePath);
 					partialFilePath.DependsOn = view.PublicCsClassFilePath;
+					
+					partialFilePath.Metadata.SetValue(FigmaFile.FigmaPackageId, bundle.FileId);
 				}
 			}
 
