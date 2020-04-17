@@ -16,47 +16,11 @@ using Foundation;
 
 namespace MonoDevelop.Figma.Packages
 {
-	class CurrentView : NSView
-	{
-		public override void SetFrameSize(CGSize newSize)
-		{
-			base.SetFrameSize(newSize);
-			viewButton.Frame = new CGRect(0, 0, newSize.Width, newSize.Height);
-		}
-
-		public NSButton ViewButton => viewButton;
-		NSButton viewButton;
-
-		public CurrentView()
-		{
-			viewButton = new NSButton();
-			viewButton.SetButtonType(NSButtonType.Switch);
-			this.AddSubview(viewButton);
-		}
-
-		public CurrentView(NSCoder coder) : base(coder)
-		{
-		}
-
-		public CurrentView(CGRect frameRect) : base(frameRect)
-		{
-		}
-
-		protected CurrentView(NSObjectFlag t) : base(t)
-		{
-		}
-
-		protected internal CurrentView(IntPtr handle) : base(handle)
-		{
-		}
-	}
-
 	partial class GenerateViewsWindow
 	{
 		private AppKit.NSButton createButton, cancelButton, translationsCheckbox;
-		private AppKit.NSTableView MyTable;
+		private AppKit.NSTableView fileTableView;
 		private AppKit.NSProgressIndicator versionSpinner;
-		private AppKit.NSPopUpButton bundlePopUp, versionPopUp;
 
 		private void InitializeComponent ()
 		{
@@ -66,7 +30,7 @@ namespace MonoDevelop.Figma.Packages
 			this.StandardWindowButton (NSWindowButton.ZoomButton).Enabled = false;
 
 			var frame = Frame;
-			frame.Size = new CoreGraphics.CGSize (481f, 379f);
+			frame.Size = new CoreGraphics.CGSize (481f, 345f);
 			this.SetFrame (frame, true);
 			this.ContentMinSize = this.ContentView.Frame.Size;
 
@@ -97,23 +61,19 @@ namespace MonoDevelop.Figma.Packages
 			cancelButton.Title = "Cancel";
 
 			this.ContentView.AddSubview (cancelButton);
-			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (19f, 20f, 84f, 21f));;
+			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (19f, 20f, 84f, 21f));
 
 			// View:     MyTable
 			// NodeName: customview "MyTable" type:"AppKit.NSTableView"
 			// NodeType: FRAME
 			// NodeId:   0:699
-			var MyTableScrollView = new NSScrollView();
-		
-			MyTable = new NSTableView ();
-			MyTable.UsesAlternatingRowBackgroundColors = true;
-		
-			MyTableScrollView.DocumentView = MyTable;
-		
-			this.ContentView.AddSubview (MyTableScrollView);
-
-			MyTableScrollView.Frame = MyTableScrollView.GetFrameForAlignmentRect(new CoreGraphics.CGRect(20f, 60f, 441f, 172)); ;
-			MyTable.Frame = MyTable.GetFrameForAlignmentRect(new CoreGraphics.CGRect(0, 0, 400f, 172)); ; ;
+			var fileTableScrollView = new NSScrollView();
+			fileTableView = new NSTableView ();
+			fileTableView.UsesAlternatingRowBackgroundColors = true;
+			fileTableScrollView.DocumentView = fileTableView;
+			this.ContentView.AddSubview (fileTableScrollView);
+			fileTableScrollView.Frame = fileTableScrollView.GetFrameForAlignmentRect(new CoreGraphics.CGRect(20f, 60f, 441f, 172));
+			fileTableView.Frame = fileTableView.GetFrameForAlignmentRect(new CoreGraphics.CGRect(0, 0, 400f, 172));
 
 			// View:     versionSpinner
 			// NodeName: "versionSpinner"
@@ -128,23 +88,6 @@ namespace MonoDevelop.Figma.Packages
 			this.ContentView.AddSubview (versionSpinner);
 			versionSpinner.Frame = versionSpinner.GetFrameForAlignmentRect (new CoreGraphics.CGRect (383f, 284f, 18f, 18f));
 
-			// View:     nativeViewCodeServiceView
-			// NodeName: Generate:
-			// NodeType: INSTANCE
-			// NodeId:   0:705
-			var nativeViewCodeServiceView = new AppKit.NSTextField();
-			nativeViewCodeServiceView.Editable = false;
-			nativeViewCodeServiceView.Bordered = false;
-			nativeViewCodeServiceView.Bezeled = false;
-			nativeViewCodeServiceView.DrawsBackground = false;
-			nativeViewCodeServiceView.StringValue = "Figma Package:";
-			nativeViewCodeServiceView.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
-			nativeViewCodeServiceView.WantsLayer = true;
-			nativeViewCodeServiceView.Alignment = NSTextAlignment.Right;
-
-			this.ContentView.AddSubview (nativeViewCodeServiceView);
-			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f, 316f, 142f, 20f));;
-
 			// View:     nativeViewCodeServiceView1
 			// NodeName: Generate:
 			// NodeType: INSTANCE
@@ -154,7 +97,7 @@ namespace MonoDevelop.Figma.Packages
 			nativeViewCodeServiceView1.Bordered = false;
 			nativeViewCodeServiceView1.Bezeled = false;
 			nativeViewCodeServiceView1.DrawsBackground = false;
-			nativeViewCodeServiceView1.StringValue = "Update to:";
+			nativeViewCodeServiceView1.StringValue = "Version:";
 			nativeViewCodeServiceView1.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
 			nativeViewCodeServiceView1.WantsLayer = true;
 			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
@@ -162,31 +105,21 @@ namespace MonoDevelop.Figma.Packages
 			this.ContentView.AddSubview (nativeViewCodeServiceView1);
 			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (8f, 283f, 142f, 20f));;
 
-			// View:     bundlePopUp
-			// NodeName: "bundlePopUp"
-			// NodeType: INSTANCE
-			// NodeId:   0:707
-			bundlePopUp = new AppKit.NSPopUpButton();
-			bundlePopUp.WantsLayer = true;
-			bundlePopUp.BezelStyle = NSBezelStyle.Rounded;
-			bundlePopUp.ControlSize = NSControlSize.Regular;
-			bundlePopUp.AddItem ("Breakpoints Dialog");
-
-			this.ContentView.AddSubview (bundlePopUp);
-			bundlePopUp.Frame = bundlePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 315f, 223f, 21f));;
-
-			// View:     versionPopUp
+			// View:     versionTextField
 			// NodeName: "versionPopUp"
 			// NodeType: INSTANCE
 			// NodeId:   0:708
-			versionPopUp = new AppKit.NSPopUpButton();
-			versionPopUp.WantsLayer = true;
-			versionPopUp.BezelStyle = NSBezelStyle.Rounded;
-			versionPopUp.ControlSize = NSControlSize.Regular;
-			versionPopUp.AddItem ("Current – 8.6");
+			var versionTextField = new AppKit.NSTextField();
+			versionTextField.Editable = false;
+			versionTextField.Bordered = false;
+			versionTextField.Bezeled = false;
+			versionTextField.DrawsBackground = false;
+			versionTextField.StringValue = "Current – 8.6";
+			versionTextField.Font = AppKit.NSFont.SystemFontOfSize(AppKit.NSFont.SystemFontSize);
+			versionTextField.WantsLayer = true;
 
-			this.ContentView.AddSubview (versionPopUp);
-			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (154f, 282f, 223f, 21f));;
+			this.ContentView.AddSubview (versionTextField);
+			versionTextField.Frame = versionTextField.GetFrameForAlignmentRect(new CoreGraphics.CGRect(154f, 282f, 223f, 21f));
 
 			// View:     translationsCheckbox
 			// NodeName: "translationsCheckbox"

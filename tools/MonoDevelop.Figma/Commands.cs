@@ -167,7 +167,8 @@ namespace MonoDevelop.Figma.Commands
 		protected override void OnUpdate (CommandInfo info)
 		{
 			var selectedItem = IdeApp.ProjectOperations.CurrentSelectedItem;
-			info.Visible = info.Enabled = selectedItem is ProjectFolder || selectedItem is Project;
+
+			info.Visible = info.Enabled = selectedItem.TryGetProject(out var project) && project.HasAnyFigmaPackage () && (selectedItem is ProjectFolder || selectedItem is Project);
 		}
 
 		protected async override void OnRun ()
