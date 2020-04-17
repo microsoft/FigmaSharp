@@ -162,51 +162,35 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
-	[Obsolete ("No longer used")]
 	class FigmaNewFileViewCommandHandler : FigmaCommandHandler
 	{
 		protected override void OnUpdate (CommandInfo info)
 		{
-			info.Visible = info.Enabled = false;
-			//info.Visible = info.Enabled =IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder folder
-			//	&& folder.IsDocumentDirectoryBundle ();
+			var selectedItem = IdeApp.ProjectOperations.CurrentSelectedItem;
+			info.Visible = info.Enabled = selectedItem is ProjectFolder || selectedItem is Project;
 		}
-
-		const string figmaNodeName = "bundleFigmaDocument";
 
 		protected async override void OnRun ()
 		{
-			if (IdeApp.ProjectOperations.CurrentSelectedItem is ProjectFolder currentFolder && currentFolder.IsDocumentDirectoryBundle ()) {
+			var selectedItem = IdeApp.ProjectOperations.CurrentSelectedItem;
+			string filePath = null;
+			Project project = null;
+			if (selectedItem is Project project1) {
+				project = project1;
+				filePath = project1.FileName.ParentDirectory;
+			} else if (selectedItem is ProjectFolder projectItem) {
+				project = projectItem.Project;
+				filePath = projectItem.Path.FullPath;
+			} else
+				return;
 
-				var bundle = FigmaBundle.FromDirectoryPath (currentFolder.Path.FullPath);
-				if (bundle != null) {
+			var figmaBundleWindow = new Packages.GenerateViewsWindow (filePath, project);
+			await figmaBundleWindow.LoadAsync();
 
-					var currentProject = currentFolder.Project;
-
-					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
-					fileProvider.Load (bundle.DocumentFilePath);
-
-					var converters = NativeControlsContext.Current.GetConverters ();
-					var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-					var codeRendererService = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
-
-					var fignaNode = fileProvider.FindByName (figmaNodeName);
-					var figmaBundleView = new FigmaBundleView (bundle, "test", fignaNode);
-
-					figmaBundleView.Generate (codeRendererService);
-
-					if (!currentProject.PathExistsInProject (bundle.ViewsDirectoryPath)) {
-						currentProject.AddDirectory (FileService.AbsoluteToRelativePath (currentProject.BaseDirectory, bundle.ViewsDirectoryPath));
-					}
-
-					var designerProjectFile = currentProject.AddFile (figmaBundleView.PartialDesignerClassFilePath);
-					var csProjectFile = currentProject.AddFile (figmaBundleView.PublicCsClassFilePath);
-					designerProjectFile.DependsOn = csProjectFile.FilePath;
-
-					currentProject.NeedsReload = true;
-					await IdeApp.ProjectOperations.SaveAsync (currentProject);
-				}
-			}
+			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
+			currentIdeWindow.AddChildWindow(figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
+			MessageService.PlaceDialog(figmaBundleWindow, MessageService.RootWindow);
+			IdeServices.DesktopService.FocusWindow(figmaBundleWindow);
 		}
 	}
 
@@ -272,8 +256,8 @@ namespace MonoDevelop.Figma.Commands
 			}
 
 			var figmaBundleWindow = new Packages.FigmaPackageWindow(currentProject);
-		
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
+
 			currentIdeWindow.AddChildWindow (figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
 			MessageService.PlaceDialog (figmaBundleWindow, MessageService.RootWindow);
 			IdeServices.DesktopService.FocusWindow (figmaBundleWindow);
@@ -308,12 +292,12 @@ namespace MonoDevelop.Figma.Commands
 
 				await Task.Run(() => {
 					//we need to ask to figma server to get nodes as demmand
-					var fileProvider = new FigmaLocalFileProvider(bundle.ResourcesDirectoryPath);
-					fileProvider.Load(bundle.DocumentFilePath);
-					bundle.Reload(fileProvider);
+					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
+					fileProvider.Load (bundle.DocumentFilePath);
+					bundle.Reload (fileProvider);
 
 					var codeRendererService = new NativeViewCodeService(fileProvider);
-					bundle.SaveAll(codeRendererService, includeImages, false);
+					bundle.SaveAll (codeRendererService, includeImages, false);
 				});
 
 				IdeApp.Workbench.StatusBar.EndProgress ();

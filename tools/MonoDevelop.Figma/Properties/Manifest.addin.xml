@@ -56,6 +56,11 @@
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"
         />
         <CommandItem 
+            id = "MonoDevelop.Figma.Commands.FigmaNewFileViewCommandHandler"
+            _label="_Figma File…"
+            insertafter="MonoDevelop.Figma.Commands.FigmaNewBundlerCommandHandler"
+        />
+        <CommandItem 
             id = "MonoDevelop.Figma.Commands.CreateEmptyManifesCommandHandler"
             _label="Empty Figma Manifest…"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.AddSeparator3"

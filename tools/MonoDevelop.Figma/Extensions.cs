@@ -27,19 +27,24 @@ namespace MonoDevelop.Figma
 			return namesSpace;
 		}
 
+		public static string GetFigmaFolder (this Project currentProject)
+		{
+			return Path.Combine(currentProject.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
+		}
+
 		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider, string namesSpace = null)
 		{
-			var figmaFolder = Path.Combine(project.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
+			var figmaFolder = project.GetFigmaFolder();
 
-			if (!Directory.Exists(figmaFolder)) {
-				Directory.CreateDirectory(figmaFolder);
+			if (!Directory.Exists (figmaFolder)) {
+				Directory.CreateDirectory (figmaFolder);
 			}
 
 			//Bundle generation - We generate an empty bundle and store in the folder
-			var fullBundlePath = Path.Combine(figmaFolder, fileId);
+			var fullBundlePath = Path.Combine (figmaFolder, fileId);
 
-			var bundle = FigmaBundle.Empty(fileId, version, fullBundlePath, namesSpace);
-			bundle.Reload(fileProvider);
+			var bundle = FigmaBundle.Empty (fileId, version, fullBundlePath, namesSpace);
+			bundle.Reload (fileProvider);
 			return bundle;
 		}
 

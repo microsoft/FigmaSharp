@@ -113,10 +113,8 @@ namespace FigmaSharp.Services
 
 		public IView FindViewByName(string name)
         {
-            foreach (var node in NodesProcessed)
-            {
-                if (node.FigmaNode.name == name)
-                {
+            foreach (var node in NodesProcessed) {
+                if (node.FigmaNode.name == name) {
                     return node.View;
                 }
             }
@@ -145,13 +143,11 @@ namespace FigmaSharp.Services
 
 		FigmaNode GetRecursively (string name, FigmaNode figmaNode)
         {
-            if (figmaNode.name == name)
-            {
+            if (figmaNode.name == name) {
                 return figmaNode;
             }
 
-            if (figmaNode is IFigmaNodeContainer container)
-            {
+            if (figmaNode is IFigmaNodeContainer container) {
                 foreach (var item in container.children)
                 {
                     var node = GetRecursively(name, item);
@@ -242,10 +238,8 @@ namespace FigmaSharp.Services
 
         protected CustomViewConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters)
         {
-            foreach (var customViewConverter in customViewConverters)
-            {
-                if (customViewConverter.CanConvert(currentNode))
-                {
+            foreach (var customViewConverter in customViewConverters) {
+                if (customViewConverter.CanConvert(currentNode)) {
                     return customViewConverter;
                 }
             }
@@ -273,26 +267,20 @@ namespace FigmaSharp.Services
                 return;
 
             var converter = GetProcessedConverter(currentNode, CustomConverters);
-
-            if (converter == null)
-            {
+            if (converter == null) {
                 converter = GetProcessedConverter(currentNode, DefaultConverters);
             }
 
             ProcessedNode currentProcessedNode = null;
-            if (converter != null)
-            {
+            if (converter != null) {
                 var currentView = options.IsToViewProcessed ? converter.ConvertTo(currentNode, parent, this) : null;
                 currentProcessedNode = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
                 NodesProcessed.Add(currentProcessedNode);
-            }
-            else
-            {
+            } else {
                 Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
-            if (NodeScansChildren (currentNode, converter, options))
-            {
+            if (NodeScansChildren (currentNode, converter, options)) {
                 foreach (var item in GetCurrentChildren (currentNode, parent?.FigmaNode, converter, options)) {
                     GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
                 }
