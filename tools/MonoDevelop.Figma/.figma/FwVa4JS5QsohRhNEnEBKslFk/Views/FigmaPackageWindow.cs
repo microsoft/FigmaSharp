@@ -28,7 +28,11 @@ namespace MonoDevelop.Figma.Packages
 
 			this.currentProject = currentProject;
 
-			this.namespacePopUp.StringValue = currentProject.GetDefaultFigmaNamespace();
+			var nameSpace = currentProject.GetDefaultFigmaNamespace();
+
+			this.namespacePopUp.RemoveAll();
+			this.namespacePopUp.StringValue = nameSpace;
+			this.namespacePopUp.Add(new Foundation.NSString(nameSpace));
 
 			figmaUrlTextField.Changed += FigmaUrlTextField_Changed;
 
