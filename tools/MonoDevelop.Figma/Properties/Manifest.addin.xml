@@ -43,6 +43,11 @@
             _label="Open on Figma Website"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
+        <CommandItem 
+            id = "MonoDevelop.Figma.Commands.MergeFigmaFile"
+            _label="Nest Figma Document"
+            insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
+        />
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">
@@ -103,6 +108,10 @@
                 _label = "Regenerate from Figma Document"
                 defaultHandler = "MonoDevelop.Figma.Commands.RegenerateFigmaDocumentCommandHandler"
                 _description = "Regenerates code from the local Figma file"/>
+            <Command id = "MonoDevelop.Figma.Commands.MergeFigmaFile"
+                _label = "Nest Figma Document"
+                defaultHandler = "MonoDevelop.Figma.Commands.MergeFigmaFile"
+                _description = "Nest a designer.cs file under its .cs"/>
         </Category>    
     </Extension>
     

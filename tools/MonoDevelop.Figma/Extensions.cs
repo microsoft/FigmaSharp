@@ -13,6 +13,13 @@ namespace MonoDevelop.Figma
 {
 	public static class Extensions
 	{
+		public static bool IsDesignerFile (this ProjectFile sender)
+		{
+			return sender.Metadata.HasProperty(FigmaFile.FigmaPackageId) &&
+				sender.FilePath.FullPath.ToString()
+				.EndsWith(FigmaBundleViewBase.PartialDesignerExtension);
+		}
+
 		public static bool HasAnyFigmaPackage (this Project sender)
 		{
 			var figmaFolder = sender.GetFigmaFolder();
