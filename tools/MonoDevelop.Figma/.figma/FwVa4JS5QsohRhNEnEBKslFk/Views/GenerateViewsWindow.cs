@@ -99,16 +99,18 @@ namespace MonoDevelop.Figma.Packages
         async Task<List<ValueData>> FetchDataAsync ()
         { 
             var test = new List<ValueData>();
-  
-            var figmaFolder = project.GetFigmaFolder();
-            foreach (var figmaProject in System.IO.Directory.GetDirectories(figmaFolder)) {
-                var figmaBundle = FigmaBundle.FromDirectoryPath(figmaProject);
+            //we iterate over all the bundles
+
+            foreach (var figmaBundle in project.GetFigmaPackages ())
+            {
                 var fileProvider = new FigmaLocalFileProvider(figmaBundle.ResourcesDirectoryPath);
                 await fileProvider.LoadAsync(figmaBundle.DocumentFilePath);
-                figmaBundle.LoadRemoteMainLayers(fileProvider);
 
-                foreach (var view in figmaBundle.Views) {
-                    test.Add (new ValueData(view, fileProvider));
+                var mainFigmaNodes = fileProvider.GetMainLayers();
+                foreach (var figmaNode in mainFigmaNodes)
+                {
+                    var document = figmaBundle.GetFigmaFileView(figmaNode);
+                    test.Add(new ValueData(document, fileProvider));
                 }
             }
             return test;
@@ -133,6 +135,7 @@ namespace MonoDevelop.Figma.Packages
 			var csProjectFile = currentProject.AddFile(publicCsClassFilePath);
 			designerProjectFile.DependsOn = csProjectFile.FilePath;
             designerProjectFile.Metadata.SetValue(FigmaFile.FigmaPackageId, bundle.FileId);
+            designerProjectFile.Metadata.SetValue(FigmaFile.FigmaNodeId, figmaBundleView.FigmaNode.id);
             return csProjectFile;
         }
 

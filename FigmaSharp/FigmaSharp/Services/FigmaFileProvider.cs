@@ -350,6 +350,11 @@ namespace FigmaSharp.Services
 			return figmaNode;
 		}
 
+		public FigmaNode FindById(string id)
+		{
+			return Nodes.FirstOrDefault(s => s.id == id);
+		}
+
 		public FigmaNode FindByName (string name)
 		{
 			var quotedName = string.Format ("\"{0}\"", name);

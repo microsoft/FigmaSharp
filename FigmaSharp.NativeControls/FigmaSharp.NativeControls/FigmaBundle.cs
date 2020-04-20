@@ -44,7 +44,7 @@ namespace FigmaSharp
 		public FigmaFileResponse Document { get; set; }
 		public FigmaManifest Manifest { get; set; }
 
-		public List<FigmaBundleViewBase> Views { get; } = new List<FigmaBundleViewBase> ();
+		//public List<FigmaBundleViewBase> Views { get; } = new List<FigmaBundleViewBase> ();
 
 		public string DirectoryPath { get; private set; }
 
@@ -68,22 +68,22 @@ namespace FigmaSharp
 		internal const string ImageFormat = ".png";
 
 		//reads all the views from the current views directory with empty FigmaBundleViews (not implemented the read)
-		public void RefreshViews ()
-		{
-			Views.Clear ();
+		//public void RefreshViews ()
+		//{
+		//	Views.Clear ();
 
-			if (!Directory.Exists (ViewsDirectoryPath)) {
-				return;
-			}
+		//	if (!Directory.Exists (ViewsDirectoryPath)) {
+		//		return;
+		//	}
 
-			foreach (var viewFullPath in Directory.EnumerateFiles (ViewsDirectoryPath, $"*{FigmaBundleViewBase.PartialDesignerExtension}")) {
-				var name = viewFullPath.Substring (0, viewFullPath.Length - FigmaBundleViewBase.PartialDesignerExtension.Length);
-				//TODO: right not it's not possible to read the content of the current .cs file then we create a fake file
+		//	foreach (var viewFullPath in Directory.EnumerateFiles (ViewsDirectoryPath, $"*{FigmaBundleViewBase.PartialDesignerExtension}")) {
+		//		var name = viewFullPath.Substring (0, viewFullPath.Length - FigmaBundleViewBase.PartialDesignerExtension.Length);
+		//		//TODO: right not it's not possible to read the content of the current .cs file then we create a fake file
 
-				var bundleView = NativeControlsContext.Current.GetBundleView (this, name, new FigmaNode ());
-				Views.Add (bundleView);
-			}
-		}
+		//		var bundleView = NativeControlsContext.Current.GetBundleView (this, name, new FigmaNode ());
+		//		Views.Add (bundleView);
+		//	}
+		//}
 
 		//this happens when we call to FigmaBundle.FromDirectoryPath
 		public void Load (string bundleDirectoryPath)
@@ -108,18 +108,18 @@ namespace FigmaSharp
 				throw new FileLoadException ("error reading manifest file", ex);
 			}
 		
-			RefreshViews ();
+			//RefreshViews ();
 		}
 
 		/// <summary>
 		/// Updates and Reloads a bundler to a specific version
 		/// </summary>
 		/// <param name="version"></param>
-		public void Update (FigmaFileVersion version, FigmaCodeRendererService codeRendererService, bool includeImages = true)
+		public void Update (FigmaFileVersion version, bool includeImages = true)
 		{
 			Version = version;
-			Reload (codeRendererService.figmaProvider);
-			SaveAll (codeRendererService, includeImages, false);
+			Reload ();
+			SaveAll (includeImages);
 		}
 
 		public void Save ()
@@ -175,11 +175,6 @@ namespace FigmaSharp
 
 			var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
 			GenerateOutputResourceFiles (FileId, Document, resourcesDirectoryPath);
-		}
-
-		public void GenerateDocuments ()
-		{
-
 		}
 
 		#region Static Methods
@@ -253,29 +248,40 @@ namespace FigmaSharp
 			}
 		}
 
-		//reads all the main layers from the remote document
-		public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
-		{
-			Views.Clear();
-			var mainNodes = figmaFileProvider.GetMainLayers();
-			foreach (var item in mainNodes) {
-				GenerateFigmaFile (item);
-				Console.WriteLine($"[Done] Generated '{item.name}' file");
-			}
-		}
+        //public void LoadRemoteMainLayers(Services.IFigmaFileProvider figmaFileProvider)
+        //{
+        //    Views.Clear();
+        //    var mainNodes = figmaFileProvider.GetMainLayers();
+        //    foreach (var item in mainNodes)
+        //    {
+        //        GenerateFigmaFile(item);
+        //        Console.WriteLine($"[Done] Generated '{item.name}' file");
+        //    }
+        //}
 
-		void GenerateFigmaFile (FigmaNode figmaNode)
-		{
-			var name = figmaNode.GetClassName ();
-			if (HasCorrectClassName (name)) {
-				var figmaBundleView = NativeControlsContext.Current.GetBundleView (this, name, figmaNode);
-				Views.Add (figmaBundleView);
-			} else {
-				Console.WriteLine ("Cannot generate a file for '{0}': Invalid ClassName. Skipping...", name);
-			}
-		}
 
-		bool HasCorrectClassName (string name)
+        //reads all the main layers from the remote document
+        //public void LoadRemoteMainLayers (Services.IFigmaFileProvider figmaFileProvider)
+        //{
+        //	Views.Clear();
+        //	var mainNodes = figmaFileProvider.GetMainLayers();
+        //	foreach (var item in mainNodes) {
+        //		GenerateFigmaFile (item);
+        //		Console.WriteLine($"[Done] Generated '{item.name}' file");
+        //	}
+        //}
+
+        //void GenerateFigmaFile (FigmaNode figmaNode)
+        //{
+        //	var figmaFileView = GetFigmaFileView (figmaNode);
+        //	if (figmaFileView != null) {
+        //		Views.Add(figmaFileView);
+        //	} else {
+        //		Console.WriteLine("Cannot generate a file for '{0}': Invalid ClassName. Skipping...", figmaNode.name);
+        //	}
+        //}
+
+        static bool HasCorrectClassName (string name)
 		{
 			if (name?.Length == 0)
 				return false;
@@ -287,31 +293,46 @@ namespace FigmaSharp
 			return true;
 		}
 
-		internal void SaveViews (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, bool translateLabels = false)
+		public FigmaBundleViewBase GetFigmaFileView (FigmaNode figmaNode)
 		{
-			foreach (var view in Views) {
-				view.Generate (codeRendererService, writePublicClassIfExists, translateStrings: translateLabels);
+			var name = figmaNode.GetClassName();
+			if (HasCorrectClassName(name)) {
+				var figmaBundleView = NativeControlsContext.Current.GetBundleView(this, name, figmaNode);
+				return figmaBundleView;
+			}
+			return null;
+		}
+
+		//internal void SaveViews (FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, bool translateLabels = false)
+		//{
+		//	SaveViews(codeRendererService, writePublicClassIfExists, translateLabels, Views.ToArray ());
+		//}
+
+		public void SaveViews(FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists, bool translateLabels, params FigmaBundleViewBase[] Views)
+		{
+			foreach (var view in Views)
+			{
+				view.Generate(codeRendererService, writePublicClassIfExists, translateStrings: translateLabels);
 			}
 		}
+
 
 		/// <summary>
 		/// Regenerates all bundle based in the current provider
 		/// </summary>
 		/// <param name="fileProvider"></param>
-		public void Reload (IFigmaFileProvider fileProvider)
+		public void Reload ()
 		{
 			//generate .figma file
 			LoadLocalDocument ();
-
-			//this reads all the main layers ready and fills our Views models
-			LoadRemoteMainLayers (fileProvider);
 		}
 
-		public void SaveAll (FigmaCodeRendererService codeRendererService, bool includeImages, bool writePublicClassIfExists = true, bool translateLabels = false)
+		public void SaveAll (bool includeImages)
 		{
 			Save ();
 			SaveLocalDocument (includeImages);
-			SaveViews (codeRendererService, writePublicClassIfExists, translateLabels: translateLabels);
+			//if (createViews)
+			//	SaveViews (codeRendererService, writePublicClassIfExists, translateLabels: translateLabels);
 			Console.WriteLine ($"[Done] Saved all the files from Figma Package");
 		}
 
