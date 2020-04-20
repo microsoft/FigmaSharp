@@ -51,7 +51,14 @@ namespace MonoDevelop.Figma
 				//}
 
 				if (pr.IsDocumentDirectoryBundle ()) {
-					var bundle = FigmaBundle.FromDirectoryPath (pr.Path.FullPath);
+					FigmaBundle bundle = null;
+					try {
+						bundle = FigmaBundle.FromDirectoryPath(pr.Path.FullPath);
+					} catch (Exception ex) {
+						//if the bundle is removed by any reason whyle updating
+						Console.WriteLine(ex);
+					}
+
 					if (bundle != null && bundle.Manifest != null && !string.IsNullOrEmpty (bundle.Manifest.DocumentTitle)) {
 						nodeInfo.Label = bundle.Manifest.DocumentTitle;
 					} else {
