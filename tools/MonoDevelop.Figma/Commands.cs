@@ -366,7 +366,7 @@ namespace MonoDevelop.Figma.Commands
 				IdeApp.Workbench.StatusBar.EndProgress ();
 				IdeApp.Workbench.StatusBar.AutoPulse = false;
 
-				await currentFolder.Project.IncludeBundle (bundle, includeImages)
+				await currentFolder.Project.IncludeBundleAsync (bundle, includeImages)
 					.ConfigureAwait (true);
 			}
 		}
