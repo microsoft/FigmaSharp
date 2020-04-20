@@ -86,37 +86,37 @@
         <EmbeddedResource Include="Resources\folder-figmasharp-16~dark.png">
           <LogicalName>folder-figmasharp-16~dark.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast.png">
           <LogicalName>folder-figmasharp-16~contrast.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~dark~sel%402x.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~dark~sel%402x.png">
           <LogicalName>folder-figmasharp-16~dark~sel%402x.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16.png">
           <LogicalName>folder-figmasharp-16.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~sel%402x.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~sel%402x.png">
           <LogicalName>folder-figmasharp-16~sel%402x.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~dark%402x.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~dark%402x.png">
           <LogicalName>folder-figmasharp-16~dark%402x.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast%402x.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast%402x.png">
           <LogicalName>folder-figmasharp-16~contrast%402x.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~sel.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~sel.png">
           <LogicalName>folder-figmasharp-16~sel.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~dark~sel.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~dark~sel.png">
           <LogicalName>folder-figmasharp-16~dark~sel.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast~dark.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast~dark.png">
           <LogicalName>folder-figmasharp-16~contrast~dark.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast~dark%402x.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16~contrast~dark%402x.png">
           <LogicalName>folder-figmasharp-16~contrast~dark%402x.png</LogicalName>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\folder-figmasharp-16%402x.png" >
+        <EmbeddedResource Include="Resources\folder-figmasharp-16%402x.png">
           <LogicalName>folder-figmasharp-16%402x.png</LogicalName>
         </EmbeddedResource>
       </ItemGroup>
