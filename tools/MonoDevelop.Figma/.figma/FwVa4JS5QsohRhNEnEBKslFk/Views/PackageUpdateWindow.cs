@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using FigmaSharp.Services;
-
 using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma.Packages
@@ -62,19 +60,12 @@ namespace MonoDevelop.Figma.Packages
 			IdeApp.Workbench.StatusBar.BeginProgress($"Updating ‘{mainBundle.Manifest.DocumentTitle}’…");
 			IdeApp.Workbench.StatusBar.AutoPulse = true;
 
-			var includeImages = true;
+			//we need search current added views and regenerate them
+			var files = project.GetAllFigmaDesignerFiles()
+				.Where(s => s.TryGetFigmaPackageId(out var packageId) && packageId == mainBundle.FileId);
 
 			var version = versionMenu.GetFileVersion(versionPopUp.SelectedItem);
-
-			await Task.Run(() => {
-			   var fileProvider = new FigmaRemoteFileProvider() { Version = version };
-			   fileProvider.Load(mainBundle.FileId);
-				Console.WriteLine($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");
-			   var codeRendererService = new NativeViewCodeService(fileProvider);
-			   mainBundle.Update(version, codeRendererService, includeImages: includeImages);
-		   });
-
-			await project.IncludeBundle(mainBundle, includeImages: includeImages);
+			await project.UpdateFigmaFilesAsync (files, mainBundle, version, false);
 
 			IdeApp.Workbench.StatusBar.AutoPulse = false;
 			IdeApp.Workbench.StatusBar.EndProgress();

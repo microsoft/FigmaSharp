@@ -97,8 +97,7 @@ namespace MonoDevelop.Figma.Packages
 
 				//to generate all layers we need a code renderer
 				var codeRendererService = new NativeViewCodeService (fileProvider);
-				bundle.SaveAll (codeRendererService, includeImages, translateLabels: translateLabels);
-
+				bundle.SaveAll (includeImages);
 				return bundle;
 			});
 		

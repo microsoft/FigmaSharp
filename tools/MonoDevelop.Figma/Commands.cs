@@ -186,7 +186,7 @@ namespace MonoDevelop.Figma.Commands
 			var directoryPath = item.FilePath.ParentDirectory.FullPath;
 
 			//we detect what file is
-			if (item.IsDesignerFile ())
+			if (item.IsFigmaDesignerFile ())
 			{
 				//hackname
 				fileName = Path.GetFileNameWithoutExtension(fileName);
@@ -357,10 +357,10 @@ namespace MonoDevelop.Figma.Commands
 					//we need to ask to figma server to get nodes as demmand
 					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
 					fileProvider.Load (bundle.DocumentFilePath);
-					bundle.Reload (fileProvider);
+					bundle.Reload ();
 
 					var codeRendererService = new NativeViewCodeService(fileProvider);
-					bundle.SaveAll (codeRendererService, includeImages, false);
+					bundle.SaveAll (includeImages);
 				});
 
 				IdeApp.Workbench.StatusBar.EndProgress ();

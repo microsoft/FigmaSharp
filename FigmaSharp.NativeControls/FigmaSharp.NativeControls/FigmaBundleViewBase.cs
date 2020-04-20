@@ -73,22 +73,31 @@ namespace FigmaSharp
 			Generate(bundle.ViewsDirectoryPath, codeRendererService, writePublicClassIfExists, namesSpace, translateStrings);
 		}
 
-		public void Generate (string directoryPath, FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
+		public void GeneratePublicPartialClass (string directoryPath, bool writePublicClassIfExists = true)
 		{
-			if (!Directory.Exists(directoryPath))
-				Directory.CreateDirectory(directoryPath);
-
-			var partialDesignerClass = GetFigmaPartialDesignerClass(codeRendererService, namesSpace, translateStrings);
-
-			var partialDesignerClassFilePath = Path.Combine(directoryPath, PartialDesignerClassName);
-			partialDesignerClass.Save(partialDesignerClassFilePath);
-
 			var publicCsClassFilePath = Path.Combine(directoryPath, PublicCsClassName);
 			if (!File.Exists(publicCsClassFilePath) || writePublicClassIfExists)
 			{
 				var publicPartialClass = GetPublicPartialClass();
-				publicPartialClass.Save(publicCsClassFilePath);
+				publicPartialClass.Save (publicCsClassFilePath);
 			}
+		}
+
+		public void GeneratePartialDesignerClass(FigmaCodeRendererService codeRendererService, string directoryPath, string namesSpace = null, bool translateStrings = false)
+		{
+			var partialDesignerClass = GetFigmaPartialDesignerClass(codeRendererService, namesSpace, translateStrings);
+
+			var partialDesignerClassFilePath = Path.Combine(directoryPath, PartialDesignerClassName);
+			partialDesignerClass.Save(partialDesignerClassFilePath);
+		}
+
+			public void Generate (string directoryPath, FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
+		{
+			if (!Directory.Exists(directoryPath))
+				Directory.CreateDirectory(directoryPath);
+
+			GeneratePartialDesignerClass(codeRendererService, directoryPath, namesSpace, translateStrings);
+			GeneratePublicPartialClass(directoryPath, writePublicClassIfExists);
 		}
 	}
 }
