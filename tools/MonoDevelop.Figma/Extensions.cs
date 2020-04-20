@@ -126,7 +126,7 @@ namespace MonoDevelop.Figma
 			string namesSpace;
 			//set namespace
 			if (currentProject is DotNetProject dotNetProject) {
-				namesSpace = $"{dotNetProject.DefaultNamespace}.FigmaPackages";
+				namesSpace = dotNetProject.DefaultNamespace;
 			}
 			else
 			{
