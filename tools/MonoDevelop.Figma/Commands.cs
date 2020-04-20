@@ -162,6 +162,68 @@ namespace MonoDevelop.Figma.Commands
 		}
 	}
 
+	class MergeFigmaFile : FigmaCommandHandler
+	{
+		protected async override void OnRun()
+		{
+			var selectedItem = IdeApp.ProjectOperations.CurrentSelectedItem;
+			if (selectedItem is ProjectFile item)
+			{
+				if (TryGetProjectFiles(item, out var designerCs, out var publicCs))
+				{
+					designerCs.DependsOn = publicCs.FilePath;
+					await IdeApp.ProjectOperations.SaveAsync(designerCs.Project);
+				}
+			}
+		}
+
+		bool TryGetProjectFiles (ProjectFile item, out ProjectFile designerCs, out ProjectFile publicCs)
+        {
+			designerCs = null;
+			publicCs = null;
+
+			var fileName = item.FilePath.FileNameWithoutExtension;
+			var directoryPath = item.FilePath.ParentDirectory.FullPath;
+
+			//we detect what file is
+			if (item.IsDesignerFile ())
+			{
+				//hackname
+				fileName = Path.GetFileNameWithoutExtension(fileName);
+				designerCs = item;
+				var publicCS = Path.Combine(directoryPath, $"{fileName}{FigmaBundleViewBase.PublicCsExtension}");
+				publicCs = item.Project.GetProjectFile(publicCS);
+			}
+			else if (item.FilePath.Extension == ".cs")
+			{
+				publicCs = item;
+				var designerCSPath = Path.Combine(directoryPath, $"{fileName}{FigmaBundleViewBase.PartialDesignerExtension}");
+				designerCs = item.Project.GetProjectFile(designerCSPath);
+			}
+
+			if (designerCs != null && publicCs != null)
+			{
+				return true;
+			}
+			return false;
+        }
+
+		protected override void OnUpdate(CommandInfo info)
+		{
+			var selectedItem = IdeApp.ProjectOperations.CurrentSelectedItem;
+			if (selectedItem is ProjectFile item)
+			{
+				if (TryGetProjectFiles (item, out var designerCs, out var publicCs) && designerCs.DependsOn != publicCs.FilePath.FullPath)
+                {
+					info.Visible = info.Enabled = true;
+					return;
+				}
+			}
+
+			info.Visible = info.Enabled = false;
+		}
+	}
+
 	class FigmaNewFileViewCommandHandler : FigmaCommandHandler
 	{
 		protected override void OnUpdate (CommandInfo info)
