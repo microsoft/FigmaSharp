@@ -81,29 +81,39 @@ namespace MonoDevelop.Figma.Packages
 			await GenerateBundle(FileId, SelectedFileVersion, this.namespacePopUp.StringValue, includeImages, translationsCheckbox.State == NSCellStateValue.On);
 		}
 
-		async Task GenerateBundle(string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
+		async Task GenerateBundle (string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
 			IdeApp.Workbench.StatusBar.AutoPulse = true;
 			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
 
+			//we need to ask to figma server to get nodes as demmand
+			var fileProvider = new FigmaRemoteFileProvider();
+			await fileProvider.LoadAsync (fileId);
+
+			//bundle generation
 			var currentBundle = await Task.Run (() =>
 			{
-				//we need to ask to figma server to get nodes as demmand
-				var fileProvider = new FigmaRemoteFileProvider ();
-				fileProvider.Load (fileId);
-
-				//var bundleName = $"MyTestCreated{FigmaBundle.FigmaBundleDirectoryExtension}";
 				var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
-
-				//to generate all layers we need a code renderer
-				var codeRendererService = new NativeViewCodeService (fileProvider);
 				bundle.SaveAll (includeImages);
 				return bundle;
 			});
-		
+
 			//now we need to add to Monodevelop all the stuff
-			await currentProject.IncludeBundle (currentBundle, includeImages)
-				.ConfigureAwait (true);
+			await currentProject.IncludeBundleAsync (currentBundle, includeImages, savesInProject: false);
+
+			//to generate all layers we need a code renderer
+			var codeRendererService = new NativeViewCodeService (fileProvider);
+
+			var mainFigmaNodes = fileProvider.GetMainLayers();
+			foreach (var figmaNode in mainFigmaNodes)
+			{
+				var figmaBundleView = currentBundle.GetFigmaFileView(figmaNode);
+				figmaBundleView.Generate(codeRendererService, writePublicClassIfExists: false, namesSpace: currentBundle.Namespace, translateLabels);
+
+				await currentProject.AddFigmaBundleViewAsync (figmaBundleView, savesInProject: false);
+			}
+
+			await IdeApp.ProjectOperations.SaveAsync(currentProject);
 
 			IdeApp.Workbench.StatusBar.EndProgress ();
 			IdeApp.Workbench.StatusBar.AutoPulse = false;

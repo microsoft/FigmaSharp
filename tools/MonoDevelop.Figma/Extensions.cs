@@ -30,7 +30,7 @@ namespace MonoDevelop.Figma
 			await Task.Run(() => {
 				figmaBundle.Update(version, includeImages: includeImages);
 			});
-			await sender.IncludeBundle(figmaBundle, includeImages: includeImages);
+			await sender.IncludeBundleAsync(figmaBundle, includeImages: includeImages);
 
 			foreach (var designerFile in projectFiles) {
 				if (designerFile.TryGetFigmaNode(fileProvider, out var figmaNode)) {
@@ -78,6 +78,24 @@ namespace MonoDevelop.Figma
 			if (!System.IO.Directory.Exists(figmaFolder))
 				return false;
 			return Directory.EnumerateDirectories (figmaFolder).Any ();
+		}
+
+		public static async Task AddFigmaBundleViewAsync (this Project sender, FigmaBundleViewBase figmaBundleView, bool savesInProject = true)
+		{
+            if (!sender.PathExistsInProject(figmaBundleView.PublicCsClassFilePath))
+				sender.AddFile(figmaBundleView.PublicCsClassFilePath);
+
+            if (!sender.PathExistsInProject(figmaBundleView.PartialDesignerClassFilePath))
+            {
+                var partialFilePath = sender.AddFile(figmaBundleView.PartialDesignerClassFilePath);
+                partialFilePath.DependsOn = figmaBundleView.PublicCsClassFilePath;
+
+                partialFilePath.Metadata.SetValue(FigmaFile.FigmaPackageId, figmaBundleView.Bundle.FileId);
+				partialFilePath.Metadata.SetValue(FigmaFile.FigmaNodeId, figmaBundleView.FigmaNode.id);
+			}
+
+            if (savesInProject)
+				await IdeApp.ProjectOperations.SaveAsync(sender);
 		}
 
 		//TODO: Convert to Async
@@ -143,7 +161,7 @@ namespace MonoDevelop.Figma
 			return bundle;
 		}
 
-		public static async Task IncludeBundle (this Project currentProject, FigmaBundle bundle, bool includeImages = false)
+		public static async Task IncludeBundleAsync (this Project currentProject, FigmaBundle bundle, bool includeImages = false, bool savesInProject = true)
 		{
 			Ide.IdeApp.Workbench.StatusBar.ShowMessage("Including files into current project…");
 
@@ -197,33 +215,8 @@ namespace MonoDevelop.Figma
 					}
 				}
 			}
-
-			//if (includeViews)
-   //         {
-			//	//files
-			//	var viewsDirectoryPath = bundle.ViewsDirectoryPath;
-			//	if (!currentProject.PathExistsInProject(viewsDirectoryPath))
-			//	{
-			//		currentProject.AddDirectory(FileService.AbsoluteToRelativePath(currentProject.BaseDirectory, viewsDirectoryPath));
-			//	}
-
-			//	foreach (var view in bundle.Views)
-			//	{
-			//		if (!currentProject.PathExistsInProject(view.PublicCsClassFilePath))
-			//			currentProject.AddFile(view.PublicCsClassFilePath);
-
-			//		if (!currentProject.PathExistsInProject(view.PartialDesignerClassFilePath))
-			//		{
-			//			var partialFilePath = currentProject.AddFile(view.PartialDesignerClassFilePath);
-			//			partialFilePath.DependsOn = view.PublicCsClassFilePath;
-
-			//			partialFilePath.Metadata.SetValue(FigmaFile.FigmaPackageId, bundle.FileId);
-			//		}
-			//	}
-			//}
-
-			await IdeApp.ProjectOperations.SaveAsync (currentProject);
-			currentProject.NeedsReload = true;
+			if (savesInProject)
+				await IdeApp.ProjectOperations.SaveAsync(currentProject);
 		}
 
 		public static bool IsDocumentDirectoryBundle (this ProjectFolder pr)
