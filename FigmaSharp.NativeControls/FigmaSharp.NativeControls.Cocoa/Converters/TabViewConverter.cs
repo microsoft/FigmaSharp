@@ -55,14 +55,30 @@ namespace FigmaSharp.NativeControls.Cocoa
             var figmaInstance = (FigmaFrameEntity)currentNode;
 
             var container = new TabView();
-
             var view = (NSTabView)container.NativeObject;
 
-            view.SetItems(new NSTabViewItem[] {
-                new NSTabViewItem() { Label = "Tab 1" },
-                new NSTabViewItem() { Label = "Tab 2" },
-                new NSTabViewItem() { Label = "Tab 3" }
-            });
+
+
+
+			List<NSTabViewItem> tabs = new List<NSTabViewItem>();
+
+            var tabNodes = figmaInstance.children.FirstOrDefault(s => s.name == "tabs");
+
+
+            foreach (FigmaNode tabNode in tabNodes.GetChildren().Reverse())
+            {
+                if (!tabNode.visible)
+                    continue;
+
+                var figmaText = (FigmaText)tabNode.GetChildren()
+                    .FirstOrDefault(s => (s.name == "Basic" && s.visible) || (s.name == "Default" && s.visible))
+					.FindNode(s => s.name == "lbl")
+					.FirstOrDefault();
+
+                tabs.Add(new NSTabViewItem() { Label = figmaText.characters });
+			}
+
+            view.SetItems(tabs.ToArray());
 
             return container;
         }
