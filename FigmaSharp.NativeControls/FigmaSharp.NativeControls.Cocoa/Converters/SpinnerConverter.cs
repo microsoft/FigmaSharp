@@ -27,6 +27,7 @@
  */
 
 using System;
+using System.Linq;
 using System.Text;
 
 using AppKit;
@@ -120,21 +121,22 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var view = new ProgressBar();
 
 			var nativeView = (NSProgressIndicator)view.NativeObject;
-
 			nativeView.Style = NSProgressIndicatorStyle.Bar;
-			nativeView.Indeterminate = false;
 
-		// TODO	var indeterminate = currentNode.get(s => s.name == "Indeterminate" && s.visible);
+			var indeterminateNode = currentNode
+				.GetChildren()
+				.FirstOrDefault(s => (s.name == "Indeterminate" && s.visible));
 
-		//	if (indeterminate != null) {
-		//		nativeView.Indeterminate = true;
+			if (indeterminateNode != null)
+			{
+				nativeView.Indeterminate = true;
 
-		//	} else {
+			} else {
+				nativeView.Indeterminate = false;
 				nativeView.MinValue = 0;
-				nativeView.MaxValue = 100;
-
-				nativeView.DoubleValue = 62;
-		//	}
+				nativeView.MaxValue = 1;
+				nativeView.DoubleValue = 0.6180339;
+			}
 
 			instance.TryGetNativeControlComponentType(out var controlType);
 			switch (controlType)
@@ -165,8 +167,18 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.Configure(figmaInstance, name);
 			builder.WriteEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);
 
-			//hidden by default
-			builder.WriteEquality(name, nameof(NSProgressIndicator.Hidden), true);
+			var indeterminateNode = currentNode.Node.GetChildren()
+				.FirstOrDefault(s => (s.name == "Indeterminate" && s.visible));
+
+			if (indeterminateNode != null)
+			{
+				builder.WriteEquality(name, nameof(NSProgressIndicator.Indeterminate), true);
+			} else {
+				builder.WriteEquality(name, nameof(NSProgressIndicator.Indeterminate), false);
+				builder.WriteEquality(name, nameof(NSProgressIndicator.MinValue), "0");
+				builder.WriteEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
+				builder.WriteEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.6180339");
+			}
 
 			figmaInstance.TryGetNativeControlComponentType(out var controlType);
 
