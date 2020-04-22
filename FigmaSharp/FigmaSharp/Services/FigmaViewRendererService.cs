@@ -485,7 +485,7 @@ namespace FigmaSharp.Services
 
         protected virtual bool RendersConstraints (ProcessedNode currentNode,ProcessedNode parent, FigmaRendererService rendererService)
         {
-            return (currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas);
+            return !((currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas));
         }
 
         protected virtual bool RendersSize (ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)

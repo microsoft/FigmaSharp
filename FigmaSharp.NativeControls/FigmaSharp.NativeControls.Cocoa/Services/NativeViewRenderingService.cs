@@ -103,16 +103,16 @@ namespace FigmaSharp.Services
                 return false;
             if (currentNode.FigmaNode.IsNodeWindowContent())
                 return false;
-            return true;
+            return base.RendersConstraints (currentNode, parent, rendererService);
         }
 
         protected override bool RendersSize(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            if (currentNode.FigmaNode.IsDialogParentContainer())
-                return false;
+            //if (currentNode.FigmaNode.IsDialogParentContainer())
+            //    return false;
 
-            if (currentNode.FigmaNode.IsNodeWindowContent())
-                return false;
+            //if (currentNode.FigmaNode.IsNodeWindowContent())
+            //    return false;
             return true;
         }
 
