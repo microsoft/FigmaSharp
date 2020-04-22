@@ -90,6 +90,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             }
 
             textField.Configure(figmaText, configureColor: false);
+            textField.PreferredMaxLayoutWidth = 1;
 
             Console.WriteLine("Component: '{0}' with characters '{1}'…", componentType, figmaText.characters);
             return label;

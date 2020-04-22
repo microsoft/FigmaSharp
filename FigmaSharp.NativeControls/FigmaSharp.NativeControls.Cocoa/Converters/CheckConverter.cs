@@ -69,16 +69,17 @@ namespace FigmaSharp.NativeControls.Cocoa
                 case NativeControlComponentType.CheckboxStandard:
                 case NativeControlComponentType.CheckboxStandardDark:
                     view.ControlSize = NSControlSize.Regular;
+                    view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
                     break;
             }
 
             var label = figmaInstance.children
                   .OfType<FigmaText>()
-                  .FirstOrDefault();
+                  .FirstOrDefault(s => s.visible);
 
             if (label != null) {
 				button.Text = label.characters;
-                view.Font = label.style.ToNSFont();
+                //view.Font = label.style.ToNSFont();
             }
 
             //check with labels needs check in child
@@ -121,11 +122,10 @@ namespace FigmaSharp.NativeControls.Cocoa
                 case NativeControlComponentType.CheckboxStandard:
                 case NativeControlComponentType.CheckboxStandardDark:
                     builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+                    builder.WriteEquality (currentNode.Name, nameof (NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFontSize));
                     break;
             }
-
-            builder.WriteEquality(currentNode.Name, nameof (NSButton.Font),
-CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFontSize));
 
             var label = figmaInstance.children
                 .OfType<FigmaText> ()
