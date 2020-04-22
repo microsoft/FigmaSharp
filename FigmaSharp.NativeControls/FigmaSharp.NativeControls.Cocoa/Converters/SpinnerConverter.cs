@@ -127,11 +127,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				.GetChildren()
 				.FirstOrDefault(s => (s.name == "Indeterminate" && s.visible));
 
-			if (indeterminateNode != null)
-			{
-				nativeView.Indeterminate = true;
-
-			} else {
+			if (indeterminateNode == null) {
 				nativeView.Indeterminate = false;
 				nativeView.MinValue = 0;
 				nativeView.MaxValue = 1;
