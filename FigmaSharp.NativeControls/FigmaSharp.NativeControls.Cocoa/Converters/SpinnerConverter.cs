@@ -53,7 +53,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			var instance = (FigmaFrameEntity)currentNode;
-			var view = new ProgressBar ();
+			var view = new Spinner ();
 			var nativeView = (FNSProgressIndicator)view.NativeObject;
 			nativeView.Configure (instance);
 
