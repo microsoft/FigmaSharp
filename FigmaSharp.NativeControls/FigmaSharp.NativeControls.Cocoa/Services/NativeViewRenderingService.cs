@@ -68,7 +68,7 @@ namespace FigmaSharp.Services
             }
 
             if (options == null) {
-                options = new FigmaViewRendererServiceOptions();
+                options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
             }
 
             var content = node.GetWindowContent() ?? node;
