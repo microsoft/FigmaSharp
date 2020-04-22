@@ -503,9 +503,7 @@ namespace FigmaSharp.Services
             try
             {
                 if (options.LoadFileProvider) {
-                    await Task.Run(() => {
-                        fileProvider.Load(figmaName ?? fileProvider.File);
-                    });
+                    await fileProvider.LoadAsync(figmaName ?? fileProvider.File);
                 }
 
                 //we generate all the processed nodes
