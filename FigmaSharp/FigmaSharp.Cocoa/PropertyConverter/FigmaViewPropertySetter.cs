@@ -9,15 +9,6 @@ namespace FigmaSharp.Cocoa
 {
     public class FigmaViewPropertySetter : FigmaViewPropertySetterBase
     {
-        protected virtual nfloat GetRealHeight (IView view, float height)
-        {
-            //this tweaks the control height
-            if (view is IProgressBar)
-                return 10;
-
-            return Math.Max(height,1);
-        }
-
         public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService)
         {
             if (propertyName == CodeProperties.AddChild)
@@ -101,7 +92,7 @@ namespace FigmaSharp.Cocoa
                     if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal) 
                         widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
 
-                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(GetRealHeight(view, absoluteBounding.absoluteBoundingBox.Height));
+                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
                         heightConstraint.Active = true;
 
                         if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
