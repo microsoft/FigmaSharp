@@ -188,6 +188,8 @@ namespace FigmaSharp.Views.Cocoa
 				if (content.NativeObject is NSView view)
 				{
 					view.TranslatesAutoresizingMaskIntoConstraints = true;
+
+					if (this.window.ContentView != view)
 					this.window.ContentView = view;
 				}
 			}
