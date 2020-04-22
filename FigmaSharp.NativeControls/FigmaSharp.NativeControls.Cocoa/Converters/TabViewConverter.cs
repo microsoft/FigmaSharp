@@ -57,13 +57,9 @@ namespace FigmaSharp.NativeControls.Cocoa
             var container = new TabView();
             var view = (NSTabView)container.NativeObject;
 
-
-
-
 			List<NSTabViewItem> tabs = new List<NSTabViewItem>();
 
             var tabNodes = figmaInstance.children.FirstOrDefault(s => s.name == "tabs");
-
 
             foreach (FigmaNode tabNode in tabNodes.GetChildren().Reverse())
             {
