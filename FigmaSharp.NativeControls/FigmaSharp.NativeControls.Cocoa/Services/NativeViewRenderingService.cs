@@ -95,9 +95,33 @@ namespace FigmaSharp.Services
                 if (titleText != null)
                     mainWindow.Title = titleText.characters;
             }
+         }
+
+        protected override bool RendersConstraints(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            if (currentNode.FigmaNode.IsDialogParentContainer())
+                return false;
+            if (currentNode.FigmaNode.IsNodeWindowContent())
+                return false;
+            return true;
         }
 
-		protected override bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected override bool RendersSize(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            if (currentNode.FigmaNode.IsDialogParentContainer())
+                return false;
+
+            if (currentNode.FigmaNode.IsNodeWindowContent())
+                return false;
+            return true;
+        }
+
+        protected override bool RendersAddChild(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            return true;
+        }
+
+        protected override bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
 			if (currentNode.IsFigmaImageViewNode ())
 				return false;
@@ -113,7 +137,7 @@ namespace FigmaSharp.Services
 			return false;
 		}
 
-		internal ProcessedNode[] GetProcessedNodes(FigmaNode[] mainNodes)
+        internal ProcessedNode[] GetProcessedNodes(FigmaNode[] mainNodes)
 		{
             ProcessedNode[] resultNodes = new ProcessedNode[mainNodes.Length];
 			for (int i = 0; i < mainNodes.Length; i++)
