@@ -80,6 +80,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 case NativeControlComponentType.ButtonStandardDark:
 
                     view.ControlSize = NSControlSize.Regular;
+                    view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
                     break;
                 case NativeControlComponentType.ButtonSmall:
                 case NativeControlComponentType.ButtonSmallDark:
@@ -87,7 +88,6 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 
             var group = figmaInstance.children
                 .OfType<FigmaGroup>()
