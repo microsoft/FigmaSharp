@@ -196,6 +196,7 @@ namespace FigmaSharpApp
 			await windowController.UpdateVersionMenu(DocumentID);
 			windowController.EnableButtons(true);
 
+			RecentStore.SharedRecentStore.AddRecent(DocumentID, windowController.Window.Title);
 			ToggleSpinner(toggle_on: false);
 		}
 
