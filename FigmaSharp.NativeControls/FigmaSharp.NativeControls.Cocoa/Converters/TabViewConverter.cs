@@ -41,11 +41,11 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class TabViewConverter : FigmaNativeControlConverter
+    public class TabViewConverter : FigmaNativeControlConverter
     {
         public override Type ControlType => typeof(NSTabView);
 
-		public override bool CanConvert(FigmaNode currentNode)
+        public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.TabView;
         }
@@ -54,11 +54,10 @@ namespace FigmaSharp.NativeControls.Cocoa
         {
             var figmaInstance = (FigmaFrameEntity)currentNode;
 
-            var container = new TabView();
-            var view = (NSTabView)container.NativeObject;
+            var view = new TabView();
+            var tabView = (NSTabView)view.NativeObject;
 
-			List<NSTabViewItem> tabs = new List<NSTabViewItem>();
-
+            List<NSTabViewItem> tabs = new List<NSTabViewItem>();
             var tabNodes = figmaInstance.children.FirstOrDefault(s => s.name == "tabs");
 
             foreach (FigmaNode tabNode in tabNodes.GetChildren().Reverse())
@@ -68,25 +67,33 @@ namespace FigmaSharp.NativeControls.Cocoa
 
                 var figmaText = (FigmaText)tabNode.GetChildren()
                     .FirstOrDefault(s => (s.name == "Basic" && s.visible) || (s.name == "Default" && s.visible))
-					.FindNode(s => s.name == "lbl")
-					.FirstOrDefault();
+                    .FindNode(s => (s.name == "lbl"))
+                    .FirstOrDefault();
 
-                tabs.Add(new NSTabViewItem() { Label = figmaText.characters });
-			}
+                var item = new NSTabViewItem();
+                item.Label = figmaText.characters;
+                tabs.Add(item);
+            }
 
-            view.SetItems(tabs.ToArray());
+            tabView.SetItems(tabs.ToArray());
 
-            return container;
+			return view;
         }
 
-        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var builder = new StringBuilder();
 
-			// TODO
+            // TODO output:
+
+            // var tabView = new NSTabView();
+            // tabView.SetItems(new NSTabViewItem[] {
+            //     new NSTabViewItem() { Label = "label1" },
+            //     new NSTabViewItem() { Label = "label2" },
+            //     new NSTabViewItem() { Label = "label3" }
+            // });
 
             return builder;
         }
-
-	}
+    }
 }
