@@ -39,7 +39,6 @@ namespace FigmaSharpApp
 		string token_message;
 		string token_message_unsaved = "This token will be saved in your keychain.";
 
-		const string recentDocumentString = "RecentDocument";
 
 		public OpenLocationViewController (IntPtr handle) : base (handle)
 		{
@@ -49,10 +48,18 @@ namespace FigmaSharpApp
 		{
 			base.ViewDidLoad ();
 
-			string recentDocument = NSUserDefaults.StandardUserDefaults.StringForKey(recentDocumentString);
+			string mostRecentDocument = RecentStore.SharedRecentStore.GetMostRecent();
+			var recentDocuments = RecentStore.SharedRecentStore.GetRecents();
 
-			if (!string.IsNullOrEmpty(recentDocument))
-				LinkComboBox.StringValue = recentDocument;
+			if (!string.IsNullOrEmpty(mostRecentDocument))
+				LinkComboBox.StringValue = mostRecentDocument;
+
+			if (recentDocuments != null)
+			{
+				LinkComboBox.Completes = true;
+				LinkComboBox.MaximumNumberOfLines = 12;
+				LinkComboBox.Add(recentDocuments.Keys);
+			}
 
 			token_message = TokenStatusTextField.StringValue;
 
@@ -111,9 +118,6 @@ namespace FigmaSharpApp
 			TokenStore.SharedTokenStore.SetToken (token);
 
 			string link_id = LinkComboBox.StringValue.Trim ();
-
-			NSUserDefaults.StandardUserDefaults.SetString(link_id, recentDocumentString);
-			NSUserDefaults.StandardUserDefaults.Synchronize();
 
 			var windowController = (DocumentWindowController)segue.DestinationController;
 			var contentController = (DocumentViewController)windowController.ContentViewController;
