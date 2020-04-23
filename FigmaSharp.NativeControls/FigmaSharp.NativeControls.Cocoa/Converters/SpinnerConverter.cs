@@ -120,18 +120,18 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var instance = (FigmaFrameEntity)currentNode;
 			var view = new ProgressBar();
 
-			var nativeView = (NSProgressIndicator)view.NativeObject;
-			nativeView.Style = NSProgressIndicatorStyle.Bar;
+			var progressBar = (NSProgressIndicator)view.NativeObject;
+			progressBar.Style = NSProgressIndicatorStyle.Bar;
 
-			var indeterminateNode = currentNode
-				.GetChildren()
-				.FirstOrDefault(s => (s.name == "Indeterminate" && s.visible));
+			var indeterminateOption = currentNode.GetChildren()
+				.FirstOrDefault(s => (s.name == "!options")).GetChildren()
+				.FirstOrDefault(s => (s.name == "indeterminate" && s.visible));
 
-			if (indeterminateNode == null) {
-				nativeView.Indeterminate = false;
-				nativeView.MinValue = 0;
-				nativeView.MaxValue = 1;
-				nativeView.DoubleValue = 0.6180339;
+			if (indeterminateOption == null) {
+				progressBar.Indeterminate = false;
+				progressBar.MinValue = 0;
+				progressBar.MaxValue = 1;
+				progressBar.DoubleValue = 0.6180339;
 			}
 
 			instance.TryGetNativeControlComponentType(out var controlType);
@@ -139,11 +139,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 			{
 				case NativeControlComponentType.ProgressBarSmall:
 				case NativeControlComponentType.ProgressBarSmallDark:
-					nativeView.ControlSize = NSControlSize.Small;
+					progressBar.ControlSize = NSControlSize.Small;
 					break;
 				case NativeControlComponentType.ProgressBar:
 				case NativeControlComponentType.ProgressBarDark:
-					nativeView.ControlSize = NSControlSize.Regular;
+					progressBar.ControlSize = NSControlSize.Regular;
 					break;
 			}
 
@@ -155,38 +155,36 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
 			StringBuilder builder = new StringBuilder();
-			string name = currentNode.Name;
+			string progressBarName = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
+				builder.WriteConstructor(progressBarName, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
 
-			builder.Configure(figmaInstance, name);
-			builder.WriteEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);
+			builder.Configure(figmaInstance, progressBarName);
+			builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);
 
-			var indeterminateNode = currentNode.Node.GetChildren()
-				.FirstOrDefault(s => (s.name == "Indeterminate" && s.visible));
+			var indeterminateOption = currentNode.Node.GetChildren()
+				.FirstOrDefault(s => (s.name == "!options")).GetChildren()
+				.FirstOrDefault(s => (s.name == "indeterminate" && s.visible));
 
-			if (indeterminateNode != null)
+			if (indeterminateOption == null)
 			{
-				builder.WriteEquality(name, nameof(NSProgressIndicator.Indeterminate), true);
-			} else {
-				builder.WriteEquality(name, nameof(NSProgressIndicator.Indeterminate), false);
-				builder.WriteEquality(name, nameof(NSProgressIndicator.MinValue), "0");
-				builder.WriteEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
-				builder.WriteEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.6180339");
+				builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.Indeterminate), false);
+				builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.MinValue), "0");
+				builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.MaxValue), "1");
+				builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.DoubleValue), "0.6180339");
 			}
 
 			figmaInstance.TryGetNativeControlComponentType(out var controlType);
-
 			switch (controlType)
 			{
 				case NativeControlComponentType.ProgressBarSmall:
 				case NativeControlComponentType.ProgressBarSmallDark:
-					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
+					builder.WriteEquality(progressBarName, nameof(NSButton.ControlSize), NSControlSize.Small);
 					break;
 				case NativeControlComponentType.ProgressBar:
 				case NativeControlComponentType.ProgressBarDark:
-					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+					builder.WriteEquality(progressBarName, nameof(NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 
