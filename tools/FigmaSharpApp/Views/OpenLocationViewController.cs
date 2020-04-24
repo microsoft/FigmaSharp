@@ -47,20 +47,6 @@ namespace FigmaSharpApp
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
-			string mostRecentDocument = RecentStore.SharedRecentStore.GetMostRecent();
-			var recentDocuments = RecentStore.SharedRecentStore.GetRecents();
-
-			if (!string.IsNullOrEmpty(mostRecentDocument))
-				LinkComboBox.StringValue = mostRecentDocument;
-
-			if (recentDocuments != null)
-			{
-				LinkComboBox.Completes = true;
-				LinkComboBox.MaximumNumberOfLines = 12;
-				LinkComboBox.Add(recentDocuments.Keys);
-			}
-
 			token_message = TokenStatusTextField.StringValue;
 
 			try {
@@ -80,9 +66,37 @@ namespace FigmaSharpApp
 			OpenButton.Enabled = CheckFormIsFilled ();
 		}
 
+		void UpdateComboBox ()
+		{
+			LinkComboBox?.RemoveAll();
+
+			string mostRecentDocument = RecentStore.SharedRecentStore.GetMostRecent();
+			var recentDocuments = RecentStore.SharedRecentStore.GetRecents();
+
+			if (!string.IsNullOrEmpty(mostRecentDocument))
+				LinkComboBox.StringValue = mostRecentDocument;
+
+			if (recentDocuments != null)
+			{
+				LinkComboBox.Completes = true;
+				LinkComboBox.MaximumNumberOfLines = 12;
+
+				foreach (NSString link_id in recentDocuments.Keys)
+				{
+					var title = (NSString)recentDocuments.ValueForKey(link_id);
+
+					if (!string.IsNullOrWhiteSpace(title.ToString()))
+						LinkComboBox.Add(title);
+					else
+						LinkComboBox.Add(link_id);
+				}
+			}
+		}
+
 		public override void ViewDidAppear()
 		{
 			base.ViewDidAppear();
+			UpdateComboBox();
 
 			if (OpenLocationWindow.Window != null)
 				OpenLocationWindow.Window.Center();
@@ -118,6 +132,20 @@ namespace FigmaSharpApp
 			TokenStore.SharedTokenStore.SetToken (token);
 
 			string link_id = LinkComboBox.StringValue.Trim ();
+
+
+			// Check if the Link ID is actually a title from the recent list
+			nint selectedComboBoxIndex = Array.IndexOf(LinkComboBox.Values, new NSString(link_id));
+
+			if (selectedComboBoxIndex < 0)
+				selectedComboBoxIndex = LinkComboBox.SelectedIndex;
+
+			if (selectedComboBoxIndex > -1)
+			{
+				NSDictionary recents = RecentStore.SharedRecentStore.GetRecents();
+				link_id = (NSString)recents?.Keys[selectedComboBoxIndex];
+			}
+
 
 			var windowController = (DocumentWindowController)segue.DestinationController;
 			var contentController = (DocumentViewController)windowController.ContentViewController;

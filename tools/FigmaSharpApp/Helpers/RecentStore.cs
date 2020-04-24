@@ -47,8 +47,12 @@ namespace FigmaSharpApp
 
             dict.Add(new NSString(link_id), new NSString(title));
 
+            if (!string.IsNullOrWhiteSpace(title))
+                NSUserDefaults.StandardUserDefaults.SetString(title, mostRecentDocumentString);
+            else
+                NSUserDefaults.StandardUserDefaults.SetString(link_id, mostRecentDocumentString);
+
             NSUserDefaults.StandardUserDefaults.SetValueForKey(dict, new NSString(recentDocumentsString));
-            NSUserDefaults.StandardUserDefaults.SetString(link_id, mostRecentDocumentString);
             NSUserDefaults.StandardUserDefaults.Synchronize();
         }
 
