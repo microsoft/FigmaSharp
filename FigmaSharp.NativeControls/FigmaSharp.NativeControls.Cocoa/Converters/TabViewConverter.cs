@@ -70,9 +70,12 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .FindNode(s => (s.name == "lbl"))
                     .FirstOrDefault();
 
-                var item = new NSTabViewItem();
-                item.Label = figmaText.characters;
-                tabs.Add(item);
+                if (figmaText != null)
+                {
+                    var item = new NSTabViewItem();
+                    item.Label = figmaText.characters;
+                    tabs.Add(item);
+                }
             }
 
             tabView.SetItems(tabs.ToArray());
