@@ -63,19 +63,6 @@
                                                 <segue destination="WaF-y5-496" kind="show" id="3Db-uC-Tfc"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open Recent" id="YD0-ex-AWB">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="AVo-yW-pAF">
-                                                <items>
-                                                    <menuItem title="Clear Menu" id="7b3-jo-UV1">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="clearRecentDocuments:" target="Ady-hI-5gd" id="aEg-oh-8at"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1zt-ah-a9W"/>
                                         <menuItem title="Export Live Prototype" keyEquivalent="e" id="dcZ-fp-hva"/>
                                     </items>
