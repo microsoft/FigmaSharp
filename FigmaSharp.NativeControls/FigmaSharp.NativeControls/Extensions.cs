@@ -128,7 +128,22 @@ namespace FigmaSharp
             return false;
         }
 
-		public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, string windowLayerName, FigmaViewRendererServiceOptions options = null)
+
+        public static FigmaInstance GetBaseComponentNode(this FigmaFileProvider fileProvider, FigmaNode node)
+        {
+            var figmaInstance = node.GetDialogInstanceFromParentContainer();
+            if (figmaInstance != null) {
+                foreach (var item in fileProvider.GetMainLayers ())
+                {
+                    var instance = item.GetDialogInstanceFromParentContainer();
+                    if (instance != null && instance.id == figmaInstance.id)
+                        return instance;
+                }
+            }
+            return null;
+        }
+
+        public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, string windowLayerName, FigmaViewRendererServiceOptions options = null)
         {
             var windowFigmaNode = sender.FileProvider.FindByName (windowLayerName);
 

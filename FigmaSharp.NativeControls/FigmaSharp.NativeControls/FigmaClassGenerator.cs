@@ -5,6 +5,21 @@ using System.Linq;
 
 namespace FigmaSharp
 {
+	public class ClassMethod
+	{
+		public string Content { get; set; }
+
+		public ClassMethod()
+		{
+
+		}
+
+		internal virtual void Write (FigmaClassBase figmaClassBase, StringBuilder sb)
+		{
+			
+		}
+	}
+
 	public class FigmaPartialDesignerClass : FigmaClassBase
 	{
 		public List<(Type memberType, string name)> PrivateMembers = new List<(Type memberType, string name)>();
@@ -26,7 +41,7 @@ namespace FigmaSharp
 
 		protected void GenerateInitializeComponentMethod (StringBuilder sb)
 		{
-			GeneratePrivateMethod (sb, InitializeComponentMethodName);
+			GenerateMethod (sb, InitializeComponentMethodName);
 
 			if (InitializeComponentContent != null) {
 				foreach (var line in InitializeComponentContent.Split ('\n')) {
@@ -34,8 +49,21 @@ namespace FigmaSharp
 				}
 			}
 			RemoveTabLevel ();
-			CloseBracket (sb);
+			CloseMethod (sb);
 		}
+
+
+		protected virtual void GenerateMethods (StringBuilder sb)
+		{
+			foreach (var method in this.Methods)
+			{
+				GenerateMethod(sb, InitializeComponentMethodName);
+				method.Write(this, sb);
+				RemoveTabLevel();
+				CloseMethod(sb);
+			}
+		}
+
 
 		protected void GenerateMembers(StringBuilder sb)
 		{
@@ -68,6 +96,7 @@ namespace FigmaSharp
 			GeneratePartialDesignerClass (sb, ClassName);
 			GenerateMembers (sb);
 			GenerateInitializeComponentMethod (sb);
+			GenerateMethods (sb);
 			ClosePartialDesignerClass (sb);
 			CloseNamespace (sb);
 			return sb.ToString ();
@@ -110,9 +139,18 @@ namespace FigmaSharp
 		}
 	}
 
+	public enum MethodModifier
+	{
+		Private,
+		Public,
+		Protected
+	}
+
 	public abstract class FigmaClassBase
 	{
 		protected const string InitializeComponentMethodName = "InitializeComponent";
+
+		public List<ClassMethod> Methods = new List<ClassMethod>();
 
 		public List<string> Usings { get; } = new List<string>();
 		public List<string> Comments { get; } = new List<string>();
@@ -121,33 +159,33 @@ namespace FigmaSharp
 
 		public bool ShowManifestComments => Manifest != null;
 
-		int CurrentTabIndex = 0;
+		protected int CurrentTabIndex = 0;
 
 		protected void RemoveTabLevel() => CurrentTabIndex--;
 
 		protected void GenerateComments(StringBuilder builder)
 		{
 			if (ShowManifestComments) {
-				Manifest.ToComment (builder);
+				Manifest.ToComment(builder);
 			}
 			foreach (var current in Comments) {
-				builder.AppendLine ($"// {current}");
+				builder.AppendLine($"// {current}");
 			}
 		}
 
-		public void Save (string filePath)
+		public void Save(string filePath)
 		{
-			var code = Generate ();
+			var code = Generate();
 			try {
-				if (System.IO.File.Exists (filePath))
-					System.IO.File.Delete (filePath);
-				System.IO.File.WriteAllText (filePath, code);
+				if (System.IO.File.Exists(filePath))
+					System.IO.File.Delete(filePath);
+				System.IO.File.WriteAllText(filePath, code);
 			} catch (Exception ex) {
-				System.Diagnostics.Debug.Fail (ex.ToString ());
+				System.Diagnostics.Debug.Fail(ex.ToString());
 			}
 		}
 
-		protected void GenerateUsings (StringBuilder builder)
+		protected void GenerateUsings(StringBuilder builder)
 		{
 			builder.AppendLine();
 
@@ -155,12 +193,13 @@ namespace FigmaSharp
 				builder.AppendLine($"using {current};");
 		}
 
-		protected void GeneratePrivateMethod (StringBuilder sb, string methodName)
+		protected void GenerateMethod (StringBuilder sb, string methodName, MethodModifier modifier = MethodModifier.Private)
 		{
-			AppendLine (sb, $"private void {methodName} ()");
-			OpenBracket (sb);
+			AppendLine(sb, $"{modifier.ToString ().ToLower ()} void {methodName} ()");
+			OpenBracket(sb);
 		}
-		protected void ClosePrivateMethod (StringBuilder sb) => CloseBracket (sb);
+
+		protected void CloseMethod (StringBuilder sb) => CloseBracket (sb);
 
 		protected void GenerateNamespace (StringBuilder sb, string fullNamespace)
 		{
@@ -189,12 +228,11 @@ namespace FigmaSharp
 			CurrentTabIndex++;
 		}
 
-		protected void AppendLine(StringBuilder sb, string line) {
+		public void AppendLine(StringBuilder sb, string line) {
 			if (string.IsNullOrWhiteSpace(line)) {
 				sb.AppendLine();
 				return;
 			}
-
 			sb.AppendLine($"{new string('\t', CurrentTabIndex)}{line}");
 		}
 

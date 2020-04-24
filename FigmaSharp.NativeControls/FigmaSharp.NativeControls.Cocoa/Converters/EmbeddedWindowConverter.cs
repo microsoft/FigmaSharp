@@ -36,6 +36,7 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.NativeControls;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
@@ -129,17 +130,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var windowComponent = currentNode.GetDialogInstanceFromParentContainer();
 			if (windowComponent != null) {
-				var optionsNode = windowComponent
-					.children
-					.FirstOrDefault(s => s.name == "!options");
 
+				var optionsNode = windowComponent.Options ();
 				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
 				{
 					nativeView.CloseButtonHidden = (figmaNodeContainer.HasChildrenVisible("close") == false);
 					nativeView.MinButtonHidden   = (figmaNodeContainer.HasChildrenVisible("min")   == false);
 					nativeView.MaxButtonHidden   = (figmaNodeContainer.HasChildrenVisible("max")   == false);
 
-					FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title" && s.visible);
+					FigmaText titleText = optionsNode.FindNode(s => s.name == "title" && s.visible) as FigmaText;
 
 					if (titleText != null)
 						nativeView.Title = titleText.characters;

@@ -62,6 +62,11 @@ namespace FigmaSharp.Services
 				return true;
 			if (node.Node.IsWindowContent ())
 				return true;
+
+			FigmaNode componentNode = figmaProvider.GetBaseComponentNode (node.Node);
+			if (componentNode != null) {
+				return true;
+			}
 			return false;
 		}
 
@@ -80,6 +85,9 @@ namespace FigmaSharp.Services
 				if (node.Node is IFigmaNodeContainer nodeContainer) {
 					var item = nodeContainer.children.FirstOrDefault (s => s.IsNodeWindowContent ());
 					if (item != null && item is IFigmaNodeContainer children) {
+						//instance of a component is not code rendered
+						if (node.Node is FigmaInstance)
+							return new FigmaNode[0];
 						return children.children;
 					} else {
 						var instance = node.Node.GetDialogInstanceFromParentContainer ();

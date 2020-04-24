@@ -44,11 +44,6 @@ namespace FigmaSharp
 
             partialDesignerClass.Usings.Add (nameof (AppKit));
 
-            if (codeRendererService is NativeViewCodeService nativeViewCodeService) {
-                partialDesignerClass.PrivateMembers.Clear ();
-                partialDesignerClass.PrivateMembers.AddRange(nativeViewCodeService.PrivateMembers);
-            }
-
             //restore this state
             var builder = new System.Text.StringBuilder ();
             var options = new FigmaCodeRendererServiceOptions() {
@@ -56,6 +51,13 @@ namespace FigmaSharp
             };
 
             codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null, options);
+
+            if (codeRendererService is NativeViewCodeService nativeViewCodeService)
+            {
+                partialDesignerClass.PrivateMembers.Clear();
+                partialDesignerClass.PrivateMembers.AddRange(nativeViewCodeService.PrivateMembers);
+            }
+
             partialDesignerClass.InitializeComponentContent = builder.ToString ();
 		}
 

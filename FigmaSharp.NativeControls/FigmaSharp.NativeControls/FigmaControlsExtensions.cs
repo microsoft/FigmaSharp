@@ -287,7 +287,8 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode)
         {
-            return figmaNode is IFigmaNodeContainer container && container.children.Any (s => s.IsDialog ());
+            return figmaNode is IFigmaNodeContainer container
+				&& container.children.Any (s => s.IsDialog ());
         }
 
         public static IEnumerable<FigmaNode> GetChildren(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null, bool reverseChildren = false)
@@ -344,6 +345,11 @@ namespace FigmaSharp.NativeControls
                 return true;
             }
             return false;
+        }
+
+        public static bool IsComponentContainer (this FigmaNode node)
+        {
+            return (node is FigmaInstance || node is FigmaComponentEntity) && node.name.Contains("!container");
         }
 
         public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)

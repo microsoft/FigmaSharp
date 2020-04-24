@@ -43,6 +43,11 @@ namespace FigmaSharp
                 ?.visible ?? false;
         }
 
+        public static bool HasChildrenVisible(this FigmaNode figmaNode, string layerName)
+        {
+            return figmaNode is IFigmaNodeContainer nodeContainer && nodeContainer.HasChildrenVisible(layerName);
+        }
+
         public static IEnumerable<FigmaFileVersion> GroupByCreatedAt (this IEnumerable<FigmaFileVersion> sender)
         {
             return sender.GroupBy(x => x.created_at)

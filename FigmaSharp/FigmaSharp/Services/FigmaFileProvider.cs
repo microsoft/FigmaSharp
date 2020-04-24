@@ -46,14 +46,15 @@ namespace FigmaSharp.Services
 		event EventHandler ImageLinksProcessed;
 		List<FigmaNode> Nodes { get; }
 		FigmaFileResponse Response { get; }
-		void Load (string file);
-		Task LoadAsync(string file);
 
+		string GetContentTemplate(string file);
+
+		Task LoadAsync(string file);
+		void Load(string file);
 		void Save (string filePath);
-		string GetContentTemplate (string file);
 		void OnStartImageLinkProcessing (List<ProcessedNode> imageVectors);
 
-		FigmaNode[] GetMainLayers ();
+		FigmaNode[] GetMainGeneratedLayers ();
 
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
@@ -314,11 +315,14 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		public FigmaNode[] GetMainLayers()
+		public FigmaNode[] GetMainGeneratedLayers ()
 		{
-			return Nodes
-				.Where(s => s.Parent is FigmaCanvas && !s.name.StartsWith("#") && !s.name.StartsWith("//") && s.GetType() == typeof(FigmaFrameEntity))
-				.ToArray();
+			return GetMainLayers (s => !s.name.StartsWith("#") && !s.name.StartsWith("//")).ToArray();
+		}
+
+		public IEnumerable<FigmaNode> GetMainLayers (Func<FigmaNode, bool> action = null)
+		{
+			return Nodes.Where(s => s.Parent is FigmaCanvas && (action?.Invoke (s) ?? true));
 		}
 
 		public FigmaNode FindByFullPath (string fullPath)

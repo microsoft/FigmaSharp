@@ -108,7 +108,7 @@ namespace MonoDevelop.Figma.Packages
 			//to generate all layers we need a code renderer
 			var codeRendererService = new NativeViewCodeService (fileProvider);
 
-			var mainFigmaNodes = fileProvider.GetMainLayers();
+			var mainFigmaNodes = fileProvider.GetMainGeneratedLayers();
 			foreach (var figmaNode in mainFigmaNodes)
 			{
 				var figmaBundleView = currentBundle.GetFigmaFileView(figmaNode);
