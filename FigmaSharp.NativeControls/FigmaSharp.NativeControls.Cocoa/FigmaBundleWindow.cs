@@ -60,8 +60,7 @@ namespace FigmaSharp
 			var windowComponent = FigmaNode.GetDialogInstanceFromParentContainer ();
 			if (windowComponent != null) {
 
-				var optionsNode = windowComponent.children.FirstOrDefault(s => s.name == "!options");
-				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
+				if (windowComponent.Options() is IFigmaNodeContainer figmaNodeContainer)
 				{
 					var title = (FigmaText)figmaNodeContainer.children.FirstOrDefault(s => s.name == "title" && s.visible);
 
