@@ -123,8 +123,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var progressBar = (NSProgressIndicator)view.NativeObject;
 			progressBar.Style = NSProgressIndicatorStyle.Bar;
 
-			var indeterminateOption = currentNode.GetChildren()
-				.FirstOrDefault(s => (s.name == "!options")).GetChildren()
+			var indeterminateOption = currentNode?.GetChildren()
+				.FirstOrDefault(s => (s.name == "!options"))?.GetChildren()
 				.FirstOrDefault(s => (s.name == "indeterminate" && s.visible));
 
 			if (indeterminateOption == null) {
@@ -163,8 +163,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.Configure(figmaInstance, progressBarName);
 			builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);
 
-			var indeterminateOption = currentNode.Node.GetChildren()
-				.FirstOrDefault(s => (s.name == "!options")).GetChildren()
+			var indeterminateOption = currentNode?.Node?.GetChildren()
+				.FirstOrDefault(s => (s.name == "!options"))?.GetChildren()
 				.FirstOrDefault(s => (s.name == "indeterminate" && s.visible));
 
 			if (indeterminateOption == null)
