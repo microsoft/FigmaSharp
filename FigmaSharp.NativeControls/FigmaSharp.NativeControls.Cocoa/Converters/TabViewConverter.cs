@@ -53,31 +53,30 @@ namespace FigmaSharp.NativeControls.Cocoa
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaInstance = (FigmaFrameEntity)currentNode;
-
             var view = new TabView();
-            var tabView = (NSTabView)view.NativeObject;
-
+           
             List<NSTabViewItem> tabs = new List<NSTabViewItem>();
-            var tabNodes = figmaInstance?.children.FirstOrDefault(s => s.name == "tabs");
 
-            foreach (FigmaNode tabNode in tabNodes?.GetChildren().Reverse())
+            var tabNodes = figmaInstance.FirstChild (s => s.name == "tabs");
+            if (tabNodes == null)
+                return view;
+
+            foreach (FigmaNode tabNode in tabNodes.GetChildren (t => t.visible, reverseChildren: true))
             {
-                if (!tabNode.visible)
-                    continue;
-
-                var figmaText = (FigmaText)tabNode.GetChildren()
-                    .FirstOrDefault(s => (s.name == "Basic" && s.visible) || (s.name == "Default" && s.visible))
-                    .FindNode(s => (s.name == "lbl"))
-                    .FirstOrDefault();
-
-                if (figmaText != null)
-                {
-                    var item = new NSTabViewItem();
-                    item.Label = figmaText.characters;
-                    tabs.Add(item);
+                var firstChild = tabNode.FirstChild(s => s.name.In("Basic", "Default") && s.visible);
+                if (firstChild != null) {
+                    var figmaText = firstChild.FirstChild (s => s.name == "lbl") as FigmaText;
+                    if (figmaText != null)
+                    {
+                        var item = new NSTabViewItem() {
+                            Label = figmaText.characters
+                        };
+                        tabs.Add(item);
+                    }
                 }
             }
 
+            var tabView = (NSTabView)view.NativeObject;
             tabView.SetItems(tabs.ToArray());
 
 			return view;

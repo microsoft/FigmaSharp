@@ -290,18 +290,38 @@ namespace FigmaSharp.NativeControls
             return figmaNode is IFigmaNodeContainer container && container.children.Any (s => s.IsDialog ());
         }
 
-        public static IEnumerable<FigmaNode> GetChildren (this FigmaNode figmaNode)
+        public static IEnumerable<FigmaNode> GetChildren(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null, bool reverseChildren = false)
         {
-            var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
-            var contentNode = figmaNode.GetWindowContent() ?? figmaNode;
+            if ((figmaNode.GetWindowContent() ?? figmaNode) is IFigmaNodeContainer container) {
 
-            if (contentNode is IFigmaNodeContainer container) {
-                foreach (var item in container.children) {
+                var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
+                IEnumerable<FigmaNode> children = container.children;
+                if (reverseChildren)
+                    children = children.Reverse();
+
+                foreach (var item in children)
+                {
                     if (item == figmaInstance)
                         continue;
-                    yield return item;
+
+                    if (func == null || (func != null && func.Invoke(item)))
+                        yield return item;
                 }
             }
+        }
+
+        public static FigmaNode FirstChild (this FigmaNode figmaNode, Func<FigmaNode, bool> func = null)
+        {
+            var item = figmaNode.GetChildren(s => func?.Invoke(s) ?? true);
+            return item.FirstOrDefault();
+        }
+
+        public static FigmaNode Options (this FigmaNode figmaNode)
+        {
+            if (figmaNode == null)
+                return null;
+
+            return figmaNode.FirstChild(s => s.name == "!options");
         }
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)

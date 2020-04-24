@@ -79,10 +79,7 @@ namespace FigmaSharp.Services
 
             var windowComponent = node.GetDialogInstanceFromParentContainer();
             if (windowComponent != null) {
-                var optionsNode = windowComponent
-                    .children
-                    .FirstOrDefault(s => s.name == "!options");
-
+                var optionsNode = windowComponent.Options();
                 if (optionsNode is IFigmaNodeContainer figmaNodeContainer) {
                     mainWindow.IsClosable = figmaNodeContainer.HasChildrenVisible("close");
                     mainWindow.Resizable = figmaNodeContainer.HasChildrenVisible("resize");
@@ -90,8 +87,7 @@ namespace FigmaSharp.Services
                     mainWindow.ShowZoomButton = figmaNodeContainer.HasChildrenVisible("max");
                 }
 
-                FigmaText titleText = (FigmaText)optionsNode.GetChildren().FirstOrDefault(s => s.name == "title" && s.visible);
-
+                var titleText = optionsNode.FirstChild (s => s.name == "title" && s.visible) as FigmaText;
                 if (titleText != null)
                     mainWindow.Title = titleText.characters;
             }
