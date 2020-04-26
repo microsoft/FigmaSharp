@@ -29,12 +29,13 @@
 using FigmaSharp.Converters;
 using System.Windows.Controls;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaText = ((FigmaText)currentNode);
             //var font = figmaText.style.ToFont();
@@ -43,7 +44,7 @@ namespace FigmaSharp.Wpf.Converters
             //textField.Font = font;
             textField.Content = figmaText.characters;
             textField.Configure(figmaText);
-            var wrapper = new ViewWrapper(textField);
+            var wrapper = new View(textField);
             return wrapper;
         }
 

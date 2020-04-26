@@ -2,23 +2,24 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 using FigmaSharp.Wpf.Converters;
 
 namespace FigmaSharp.Wpf
 {
-    public class ImageViewWrapper : ViewWrapper, IImageViewWrapper
+    public class ImageView : View, IImageView
     {
-        public ImageViewWrapper(CanvasImage pictureBox) : base(pictureBox)
+        public ImageView(CanvasImage pictureBox) : base(pictureBox)
         {
         }
 
-        public ImageViewWrapper() : this(new CanvasImage ())
+        public ImageView() : this(new CanvasImage ())
         {
         }
 
-        public void SetImage(IImageWrapper image)
+        public void SetImage(IImageView image)
         {
             ((CanvasImage)nativeView).SetImage (image.NativeObject as ImageSource);
-        }
+        } 
     }
 }

@@ -29,22 +29,25 @@
 using FigmaSharp.Converters;
 using System.Windows.Controls;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Services;
+
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
-    {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+    { 
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageViewWrapper();
+            var figmaImageView = new ImageView();
             image.Configure(figmaFrameEntity);
 
             return figmaImageView;
         }
-
-        public override string ConvertToCode(FigmaNode currentNode)
+         
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
         }

@@ -45,28 +45,28 @@ namespace FigmaSharp.Wpf
     {
         #region View Extensions
 
-        public static Brush ToColor(this FigmaColor color)
+        public static Brush ToColor(this Color color)
         {
-            return new SolidColorBrush(Color.FromArgb((byte)(color.a * 255), (byte)(color.r * 255), (byte)(color.g * 255), (byte)(color.b * 255)));
+            return new SolidColorBrush(System.Windows.Media.Color.FromArgb((byte)(color.A * 255), (byte)(color.R * 255), (byte)(color.G * 255), (byte)(color.B * 255)));
         }
 
-        public static FigmaColor ToFigmaColor(this Brush color)
+        public static Color ToFigmaColor(this Brush color)
         {
             if (color is SolidColorBrush solidColor)
             {
-                return new FigmaColor() {
-                    a = (float)solidColor.Color.A,
-                    r = (float)solidColor.Color.R,
-                    g = (float)solidColor.Color.G,
-                    b = (float)solidColor.Color.B
+                return new Color() {
+                    A = (float)solidColor.Color.A,
+                    R = (float)solidColor.Color.R,
+                    G = (float)solidColor.Color.G,
+                    B = (float)solidColor.Color.B
                 };
             }
-            return new FigmaColor();
+            return new Color();
         }
 
-        public static FigmaColor ToFigmaColor(this Color color)
+        public static Color ToFigmaColor(this Color color)
         {
-            return new FigmaColor() { a = (float)color.A, r = (float)color.R, g = (float)color.G, b = (float)color.B };
+            return new Color() { A = (float)color.A, R = (float)color.R, G = (float)color.G, B = (float)color.B };
         }
 
         public static void ConfigureStyle (this Label label, FigmaTypeStyle style)

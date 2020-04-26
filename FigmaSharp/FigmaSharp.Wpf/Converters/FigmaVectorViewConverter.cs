@@ -38,7 +38,7 @@ namespace FigmaSharp.Wpf.Converters
             var vector = ((FigmaRectangleVector)currentNode);
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageViewWrapper();
+            var figmaImageView = new ImageView();
             image.Configure(vector);
             return figmaImageView;
         }

@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Wpf
 {
@@ -54,25 +55,25 @@ namespace FigmaSharp.Wpf
             return null;
         }
 
-        public IImageWrapper GetImage(string url)
+        public IImage GetImage(string url)
         {
             ImageSource image = null;
             Application.Current.Dispatcher.Invoke(() => { image = GetFromUrl(url); });
-            return new ImageWrapper (image);
+            return new Image (image);
         }
 
-        public IImageWrapper GetImageFromFilePath(string filePath)
+        public IImage GetImageFromFilePath(string filePath)
         {
             BitmapImage source = null;
             Application.Current.Dispatcher.Invoke(() => { source = new BitmapImage(new Uri(filePath)); });
-            return new ImageWrapper (source);
+            return new Image (source);
         }
 
-        public IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef)
+        public IImage GetImageFromManifest(Assembly assembly, string imageRef)
         {
             ImageSource assemblyImage = null;
             Application.Current.Dispatcher.Invoke(() => { assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef)); });
-            return new ImageWrapper (assemblyImage);
+            return new Image (assemblyImage);
         }
 
         public string GetFigmaFileContent(string file, string token) =>
@@ -84,14 +85,14 @@ namespace FigmaSharp.Wpf
         public FigmaResponse GetFigmaResponseFromContent(string template) =>
             FigmaApiHelper.GetFigmaResponseFromContent (template);
 
-        public IViewWrapper CreateEmptyView() => new ViewWrapper (new Canvas ());
+        public IView CreateEmptyView() => new View (new Canvas ());
 
-        public IImageViewWrapper GetImageView(IImageWrapper image)
+        public IImageView GetImageView(IImage image)
         {
-            ImageViewWrapper imageView = null;
+            ImageView imageView = null;
             Application.Current.Dispatcher.Invoke(() => {
                 var picture = new CanvasImage();
-                imageView = new ImageViewWrapper(picture);
+                imageView = new ImageView(picture);
                 imageView.SetImage(image);
             });
           
