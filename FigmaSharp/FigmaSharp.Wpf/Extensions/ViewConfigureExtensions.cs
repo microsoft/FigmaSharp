@@ -25,8 +25,8 @@ namespace FigmaSharp.Wpf
 
             if (child is IAbsoluteBoundingBox container)
             {
-                view.Width = (int) container.absoluteBoundingBox.width;
-                view.Height = (int) container.absoluteBoundingBox.height;
+                view.Width = (int) container.absoluteBoundingBox.Width;
+                view.Height = (int) container.absoluteBoundingBox.Height;
             }
         }
 
@@ -45,11 +45,11 @@ namespace FigmaSharp.Wpf
             }
 
             var absolute = figmaLine.absoluteBoundingBox;
-            var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
+            var lineWidth = absolute.Width == 0 ? figmaLine.strokeWeight : absolute.Width;
 
             figmaLineView.Width = (int)lineWidth;
 
-            var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
+            var lineHeight = absolute.Height == 0 ? figmaLine.strokeWeight : absolute.Height;
 
             figmaLineView.Height = (int)lineHeight;
         }
@@ -67,7 +67,7 @@ namespace FigmaSharp.Wpf
             }
         }
 
-        public static void Configure(this FrameworkElement view, FigmaRectangleVector child)
+        public static void Configure(this FrameworkElement view, RectangleVector child)
         {
             Configure(view, (FigmaVectorEntity)child);
 

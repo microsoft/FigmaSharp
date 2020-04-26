@@ -33,12 +33,12 @@ namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
         {
             var figmaEntity = (FigmaVectorEntity)currentNode;
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageViewWrapper();
+            var figmaImageView = new ImageView();
             image.Configure(figmaEntity);
             return figmaImageView;
         }

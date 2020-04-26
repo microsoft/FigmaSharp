@@ -34,14 +34,14 @@ namespace FigmaSharp.Wpf
 {
     public class CanvasImage : Canvas, IDisposable
     {
-        public Image ImageView {
+        public System.Windows.Controls.Image ImageView {
             get;
             private set;
         }
 
         public CanvasImage ()
         {
-            ImageView = new Image();
+            ImageView = new System.Windows.Controls.Image();
             ImageView.ClipToBounds = true;
             this.SizeChanged += CanvasImage_SizeChanged;
         }
