@@ -28,22 +28,24 @@
 using System;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
-    {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+    { 
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var vector = ((FigmaRectangleVector)currentNode);
+            var vector = (RectangleVector)currentNode;
 
             var image = new CanvasImage();
             var figmaImageView = new ImageView();
             image.Configure(vector);
             return figmaImageView;
         }
-
-        public override string ConvertToCode(FigmaNode currentNode)
+         
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
         }

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
+using FigmaSharp.Wpf.PropertyConverter;
 
 namespace FigmaSharp.Wpf
 {
@@ -75,16 +76,10 @@ namespace FigmaSharp.Wpf
             Application.Current.Dispatcher.Invoke(() => { assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef)); });
             return new Image (assemblyImage);
         }
-
-        public string GetFigmaFileContent(string file, string token) =>
-             FigmaApiHelper.GetFigmaFileContent (file, token);
-
+         
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource (assembly, file);
-
-        public FigmaResponse GetFigmaResponseFromContent(string template) =>
-            FigmaApiHelper.GetFigmaResponseFromContent (template);
-
+         
         public IView CreateEmptyView() => new View (new Canvas ());
 
         public IImageView GetImageView(IImage image)
@@ -101,11 +96,16 @@ namespace FigmaSharp.Wpf
 
         public void BeginInvoke(Action handler) => Application.Current.Dispatcher.Invoke(handler);
 
-        static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
-        static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
+        static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaCodePropertyConverter();
+        static readonly FigmaViewPropertySetterBase propertySetter = new FigmaViewPropertySetter();
 
-        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
+        public FigmaCodePropertyConverterBase GetCodePropertyConverter() => codePropertyConverter;
 
-        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
+        public string GetSvgData(string url)
+        {
+            return "";
+        }
+
+        public FigmaViewPropertySetterBase GetPropertySetter() => propertySetter;
     }
 }

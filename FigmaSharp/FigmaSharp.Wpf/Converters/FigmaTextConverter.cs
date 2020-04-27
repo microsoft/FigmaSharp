@@ -30,25 +30,26 @@ using FigmaSharp.Converters;
 using System.Windows.Controls;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
             //var font = figmaText.style.ToFont();
             //var textField = new Label ();
-            var textField = new Label ();
+            var textField = new Label();
             //textField.Font = font;
             textField.Content = figmaText.characters;
             textField.Configure(figmaText);
             var wrapper = new View(textField);
             return wrapper;
         }
-
-        public override string ConvertToCode(FigmaNode currentNode)
+         
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
         }

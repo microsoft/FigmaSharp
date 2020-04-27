@@ -28,12 +28,14 @@
 using FigmaSharp.Converters;
 using System.Windows.Controls;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
-    {
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+    { 
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaEntity = (FigmaVectorEntity)currentNode;
 
@@ -42,8 +44,8 @@ namespace FigmaSharp.Wpf.Converters
             image.Configure(figmaEntity);
             return figmaImageView;
         }
-
-        public override string ConvertToCode(FigmaNode currentNode)
+         
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
         }
