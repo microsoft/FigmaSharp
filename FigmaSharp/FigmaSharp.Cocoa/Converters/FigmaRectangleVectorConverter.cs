@@ -80,7 +80,7 @@ namespace FigmaSharp.Cocoa.Converters
             StringBuilder builder = new StringBuilder();
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (currentNode.Name, typeof (NSImageView));
+                builder.WriteConstructor (currentNode.Name, typeof (NSImageView), rendererService.NodeRendersVar(currentNode, parentNode));
 
             builder.Configure((RectangleVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();

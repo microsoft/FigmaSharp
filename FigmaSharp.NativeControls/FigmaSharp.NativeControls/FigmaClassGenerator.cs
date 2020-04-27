@@ -5,18 +5,31 @@ using System.Linq;
 
 namespace FigmaSharp
 {
+	public enum MethodModifier
+	{
+		Private,
+		Public,
+		Protected
+	}
+
 	public class ClassMethod
 	{
-		public string Content { get; set; }
+		public MethodModifier MethodModifier { get; set; } = MethodModifier.Private;
+
+		public List<(string, string)> Args = new List<(string, string)>();
+
+		public string MethodName { get; protected set; }
 
 		public ClassMethod()
 		{
-
+		
 		}
 
-		internal virtual void Write (FigmaClassBase figmaClassBase, StringBuilder sb)
+		public virtual void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
 		{
-			
+			figmaClassBase.GenerateMethod(sb, MethodName, MethodModifier.Public);
+			Write (figmaClassBase, sb);
+			figmaClassBase.CloseBracket(sb);
 		}
 	}
 
@@ -57,13 +70,11 @@ namespace FigmaSharp
 		{
 			foreach (var method in this.Methods)
 			{
-				GenerateMethod(sb, InitializeComponentMethodName);
-				method.Write(this, sb);
-				RemoveTabLevel();
-				CloseMethod(sb);
-			}
-		}
 
+				sb.AppendLine();
+				method.Write(this, sb);
+            }
+		}
 
 		protected void GenerateMembers(StringBuilder sb)
 		{
@@ -139,13 +150,6 @@ namespace FigmaSharp
 		}
 	}
 
-	public enum MethodModifier
-	{
-		Private,
-		Public,
-		Protected
-	}
-
 	public abstract class FigmaClassBase
 	{
 		protected const string InitializeComponentMethodName = "InitializeComponent";
@@ -161,7 +165,8 @@ namespace FigmaSharp
 
 		protected int CurrentTabIndex = 0;
 
-		protected void RemoveTabLevel() => CurrentTabIndex--;
+		public void RemoveTabLevel() => CurrentTabIndex--;
+		public void AddTabLevel() => CurrentTabIndex++;
 
 		protected void GenerateComments(StringBuilder builder)
 		{
@@ -193,13 +198,29 @@ namespace FigmaSharp
 				builder.AppendLine($"using {current};");
 		}
 
-		protected void GenerateMethod (StringBuilder sb, string methodName, MethodModifier modifier = MethodModifier.Private)
+		internal void GenerateMethod (StringBuilder sb, string methodName,
+			MethodModifier modifier = MethodModifier.Private, List<(string, string)> arguments = null)
 		{
-			AppendLine(sb, $"{modifier.ToString ().ToLower ()} void {methodName} ()");
+			string args = string.Empty;
+
+			if (arguments != null)
+			{
+				for (int i = 0; i < arguments.Count; i++)
+				{
+					var argument = arguments[i];
+
+					if (i > 0)
+						args += ", ";
+
+					args += $"{argument.Item1} {argument.Item2}";
+				}
+			}
+
+			AppendLine(sb, $"{modifier.ToString ().ToLower ()} void {methodName} ({args})");
 			OpenBracket(sb);
 		}
 
-		protected void CloseMethod (StringBuilder sb) => CloseBracket (sb);
+		internal void CloseMethod (StringBuilder sb) => CloseBracket (sb);
 
 		protected void GenerateNamespace (StringBuilder sb, string fullNamespace)
 		{
@@ -216,13 +237,13 @@ namespace FigmaSharp
 		}
 		protected void CloseConstructor (StringBuilder sb) => CloseBracket (sb);
 
-		protected void CloseBracket (StringBuilder sb)
+		internal void CloseBracket (StringBuilder sb)
 		{
 			AppendLine (sb, "}");
 			CurrentTabIndex--;
 		}
 
-		protected void OpenBracket (StringBuilder sb)
+		internal void OpenBracket (StringBuilder sb)
 		{
 			AppendLine (sb, "{");
 			CurrentTabIndex++;

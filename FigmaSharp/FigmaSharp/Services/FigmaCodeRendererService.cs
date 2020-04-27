@@ -156,7 +156,17 @@ namespace FigmaSharp.Services
 			
 		}
 
-		protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		public bool NodeRendersVar (FigmaCodeNode currentNode, FigmaCodeNode parentNode)
+        {
+			if (currentNode.Node.GetNodeTypeName () == "mastercontent") {
+				return false;
+            }
+
+			return !currentNode.Node.TryGetNodeCustomName(out var _);
+
+		}
+
+        protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 
 		}

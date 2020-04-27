@@ -108,7 +108,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             StringBuilder builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode)) {
 
-                builder.WriteConstructor(currentNode.Name, ControlType.FullName, !currentNode.Node.TryGetNodeCustomName(out var _));
+                builder.WriteConstructor(currentNode.Name, ControlType.FullName, rendererService.NodeRendersVar(currentNode, parentNode));
 
                 builder.WriteEquality(currentNode.Name, nameof(NSTextField.Editable), false);
                 builder.WriteEquality(currentNode.Name, nameof(NSTextField.Bordered), false);

@@ -112,7 +112,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			builder.AppendLine();
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(textViewName, typeof(NSTextView), !currentNode.Node.TryGetNodeCustomName(out var _));
+				builder.WriteConstructor(textViewName, typeof(NSTextView), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.WriteEquality(textViewName,
 			                      nameof(NSTextView.Frame),

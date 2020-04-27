@@ -50,24 +50,28 @@ namespace FigmaSharp.Services
 		{
 			if (parent != null && IsMainNode(parent.Node) && (CurrentRendererOptions?.RendersConstructorFirstElement ?? false))
 				return false;
-			else
-				return true;
+			return true;
 		}
 
 		#region Rendering
 
 		internal override bool IsNodeSkipped (FigmaCodeNode node)
 		{
-			if (node.Node.IsDialogParentContainer ())
-				return true;
+			if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity)
+            {
+				//if (node.Node.IsDialogParentContainer())
+					return true;
+			}
+		
 			if (node.Node.IsWindowContent ())
 				return true;
 
-			FigmaNode componentNode = figmaProvider.GetBaseComponentNode (node.Node);
-			if (componentNode != null) {
-				return true;
-			}
-			return false;
+            var componentNode = figmaProvider.GetMainGeneratedLayers();
+            //if (componentNode != null)
+            //{
+            //    return true;
+            //}
+            return false;
 		}
 
 		internal override bool IsMainViewContainer (FigmaCodeNode node)
@@ -85,7 +89,7 @@ namespace FigmaSharp.Services
 				if (node.Node is IFigmaNodeContainer nodeContainer) {
 					var item = nodeContainer.children.FirstOrDefault (s => s.IsNodeWindowContent ());
 					if (item != null && item is IFigmaNodeContainer children) {
-						//instance of a component is not code rendered
+						//instance of a component is not code rendered (we create an additional class)
 						if (node.Node is FigmaInstance)
 							return new FigmaNode[0];
 						return children.children;

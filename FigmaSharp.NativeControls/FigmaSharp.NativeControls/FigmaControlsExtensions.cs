@@ -291,6 +291,13 @@ namespace FigmaSharp.NativeControls
 				&& container.children.Any (s => s.IsDialog ());
         }
 
+        /// <summary>
+		/// Gets current FigmaNode children WITHOUT the FigmaInstance
+		/// </summary>
+		/// <param name="figmaNode"></param>
+		/// <param name="func"></param>
+		/// <param name="reverseChildren"></param>
+		/// <returns></returns>
         public static IEnumerable<FigmaNode> GetChildren(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null, bool reverseChildren = false)
         {
             if ((figmaNode.GetWindowContent() ?? figmaNode) is IFigmaNodeContainer container) {

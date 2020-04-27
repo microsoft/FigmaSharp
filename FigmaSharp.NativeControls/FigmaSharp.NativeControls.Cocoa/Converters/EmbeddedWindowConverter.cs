@@ -157,7 +157,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
 				secondaryRender.RenderInWindow(window, currentNode, options);
 
-				var mainNodes = currentNode.GetChildren().ToArray();
+				var mainNodes = currentNode.GetChildren()
+					.ToArray();
+
 				ProcessedNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
 
 				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };

@@ -28,6 +28,8 @@
 
 using System;
 using System.Text;
+using System.Linq;
+
 using System.Collections.Generic;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -37,19 +39,54 @@ namespace FigmaSharp
 {
 	public class ShowContentClassMethod : ClassMethod
 	{
-        public IEnumerable<FigmaFrameEntity> figmaFrameEntities;
+		public string MasterContentViewName { get; private set; }
+		public string ContentViewName { get; private set; }
+		public string ArgumentName { get; private set; } = "content";
 
-        public ShowContentClassMethod(IEnumerable<FigmaFrameEntity> figmaFrames)
-		{
-            this.figmaFrameEntities = figmaFrames;
+		public IEnumerable<FigmaNode> figmaFrameEntities;
+
+        public ShowContentClassMethod(IEnumerable<FigmaNode> figmaFrames, string masterContentViewName, string contentViewName)
+        {
+            MethodModifier = MethodModifier.Public;
+			MethodName = "ShowContent";
+			ArgumentName = "content";
+
+			figmaFrameEntities = figmaFrames;
+
+			MasterContentViewName = masterContentViewName;
+            ContentViewName = contentViewName;
         }
 
-		internal override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
+		public override void Write (FigmaClassBase figmaClassBase, StringBuilder sb)
 		{
-			foreach (var frameEntity in figmaFrameEntities)
+			figmaClassBase.AddTabLevel ();
+
+			figmaClassBase.GenerateMethod (sb, MethodName, MethodModifier.Protected,
+				arguments: new List<(string, string)>() {(typeof (string).FullName, ArgumentName) });
+
+			figmaClassBase.AppendLine (sb, $"{ContentViewName}?.{nameof(AppKit.NSView.RemoveFromSuperview)}();");
+
+			for (int i = 0; i < figmaFrameEntities.Count(); i++)
 			{
-                figmaClassBase.AppendLine(sb, frameEntity.id);
+				var frameEntity = figmaFrameEntities.ElementAt(i);
+				var className = frameEntity.GetClassName();
+
+				string ifCase = i == 0 ? "if" : "else if";
+				ifCase = $"{ifCase} ({ArgumentName} == \"{className}\")";
+				figmaClassBase.AppendLine(sb, ifCase);
+				figmaClassBase.AppendLine(sb, $"{ContentViewName} = new {className}();");
 			}
+
+			figmaClassBase.AppendLine(sb, $"if ({ArgumentName} != null)");
+			figmaClassBase.OpenBracket(sb);
+			figmaClassBase.AppendLine(sb, $"{MasterContentViewName}.{nameof(AppKit.NSView.AddSubview)}({ContentViewName});");
+			figmaClassBase.AppendLine(sb, $"{ContentViewName}.{nameof (AppKit.NSView.Frame)} = {MasterContentViewName}.{nameof(AppKit.NSView.Bounds)};");
+
+			figmaClassBase.RemoveTabLevel();
+
+			figmaClassBase.CloseBracket(sb);
+
+			figmaClassBase.CloseBracket(sb);
 		}
 	}
 
@@ -68,11 +105,12 @@ namespace FigmaSharp
 
 			var fileProvider = codeRendererService.figmaProvider;
 			var windows = GetReferencedWindows (fileProvider, FigmaNode);
-            var contentClassMethod = new ShowContentClassMethod (windows);
+
+            var contentClassMethod = new ShowContentClassMethod (windows, "masterContent", "currentContent");
             partialDesignerClass.Methods.Add (contentClassMethod);
         }
 
-		static IEnumerable<FigmaFrameEntity> GetReferencedWindows (IFigmaFileProvider fileProvider, FigmaNode node)
+		static IEnumerable<FigmaNode> GetReferencedWindows (IFigmaFileProvider fileProvider, FigmaNode node)
 		{
             foreach (var mainLayer in fileProvider.GetMainGeneratedLayers())
             {
@@ -84,7 +122,7 @@ namespace FigmaSharp
                     {
                         if (item is FigmaInstance entity && entity.componentId == node.id)
                         {
-                            yield return entity;
+                            yield return mainLayer;
                             break;
                         }
                     }
