@@ -59,7 +59,8 @@ namespace FigmaSharp.Services
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
-	}
+        bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
+    }
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
 	{
@@ -393,5 +394,24 @@ namespace FigmaSharp.Services
 		{
 			Response.Save (filePath);
 		}
-	}
+
+        public bool TryGetMainComponent(FigmaInstance nodeInstance, out FigmaInstance result)
+        {
+			//Get the instance
+			var componentNode = GetMainGeneratedLayers();
+			foreach (var item in componentNode)
+			{
+				foreach (var instance in item.GetChildren<FigmaInstance>())
+				{
+					if (instance != null && instance.componentId == nodeInstance.componentId)
+					{
+						result = nodeInstance;
+						return true;
+					}
+				}
+			}
+			result = null;
+			return false;
+		}
+    }
 }

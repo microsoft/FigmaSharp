@@ -43,6 +43,13 @@ namespace FigmaSharp
                 ?.visible ?? false;
         }
 
+        public static IEnumerable<T> GetChildren<T>(this FigmaNode node)
+        {
+            if (node is IFigmaNodeContainer container)
+                return container.children.OfType<T>();
+            return Enumerable.Empty<T>();
+        }
+
         public static bool HasChildrenVisible(this FigmaNode figmaNode, string layerName)
         {
             return figmaNode is IFigmaNodeContainer nodeContainer && nodeContainer.HasChildrenVisible(layerName);

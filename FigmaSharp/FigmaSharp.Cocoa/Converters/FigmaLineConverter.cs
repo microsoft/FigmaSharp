@@ -34,11 +34,14 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.Views.Cocoa;
+using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {
+        public override Type ControlType => typeof(NSBox);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaLineView = new HorizontalBar ();
@@ -53,7 +56,7 @@ namespace FigmaSharp.Cocoa.Converters
             StringBuilder builder = new StringBuilder();
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (currentNode.Name, typeof (NSBox), rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor (currentNode.Name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
 
             builder.Configure (currentNode.Node, currentNode.Name);
 

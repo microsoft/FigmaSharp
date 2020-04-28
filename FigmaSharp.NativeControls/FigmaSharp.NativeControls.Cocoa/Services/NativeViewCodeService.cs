@@ -66,12 +66,12 @@ namespace FigmaSharp.Services
 			if (node.Node.IsWindowContent ())
 				return true;
 
-            var componentNode = figmaProvider.GetMainGeneratedLayers();
-            //if (componentNode != null)
-            //{
-            //    return true;
-            //}
-            return false;
+			if (node.Node is FigmaInstance nodeInstance)
+			{
+				if (figmaProvider.TryGetMainComponent (nodeInstance, out _))
+					return true;
+			}
+			return false;
 		}
 
 		internal override bool IsMainViewContainer (FigmaCodeNode node)
@@ -131,14 +131,14 @@ namespace FigmaSharp.Services
 			base.Clear();
 		}
 
-		protected override void OnPostConvertToCode(StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
-			if (converter is FigmaNativeControlConverter nativeControlConverter) {
-				if (nativeControlConverter.ControlType != null && node.Node.TryGetNodeCustomName (out string name)) {
-					PrivateMembers.Add((nativeControlConverter.ControlType, name));
+			if (!NodeRendersVar (node, parent)) {
+				if (converter.ControlType != null && node.Node.TryGetNodeCustomName (out string name)) {
+					PrivateMembers.Add ((converter.ControlType, name));
 				}
 			}
-			base.OnPostConvertToCode(builder, node, parent, converter, codePropertyConverter);
+			base.OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 		}
 
 		#endregion
