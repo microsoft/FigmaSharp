@@ -69,7 +69,7 @@ namespace FigmaSharp.Services
 				return true;
 			}
 
-			if (node.Node.IsWindowContent() || node.Node.IsInstanceContent (figmaProvider))
+			if (node.Node.IsWindowContent() || node.Node.IsInstanceContent (figmaProvider, out _))
 				return true;
 
 			return false;

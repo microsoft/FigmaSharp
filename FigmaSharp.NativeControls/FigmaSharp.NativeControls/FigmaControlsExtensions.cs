@@ -257,19 +257,30 @@ namespace FigmaSharp.NativeControls
             return (node.Parent?.IsDialogParentContainer() ?? false) && node.IsNodeWindowContent ();
         }
 
-        public static bool IsInstanceDialogParentContainer (this FigmaNode figmaNode, Services.IFigmaFileProvider provider)
+        public static bool TryGetInstanceDialogParentContainer (this FigmaNode figmaNode, Services.IFigmaFileProvider provider, out FigmaInstance instanceDialog)
         {
-            return figmaNode is IFigmaNodeContainer container && container.children
-                .OfType<FigmaInstance>()
-                .Any(s => provider.TryGetMainComponent(s, out _));
+            if (figmaNode is IFigmaNodeContainer container)
+            {
+                foreach (var item in container.children)
+                {
+                    if (item is FigmaInstance figmaInstance && provider.TryGetMainComponent(figmaInstance, out instanceDialog))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            instanceDialog = null;
+            return false;
         }
 
-        public static bool IsInstanceContent(this FigmaNode node, Services.IFigmaFileProvider provider)
+        public static bool IsInstanceContent(this FigmaNode node, Services.IFigmaFileProvider provider, out FigmaInstance instanceDialog)
         {
-            if (node.Parent != null && IsInstanceDialogParentContainer (node.Parent, provider) && node.IsNodeWindowContent())
+            if (node.Parent != null && TryGetInstanceDialogParentContainer(node.Parent, provider, out instanceDialog) && node.IsNodeWindowContent())
             {
                 return true;
             }
+            instanceDialog = null;
             return false;
         }
 
@@ -294,6 +305,11 @@ namespace FigmaSharp.NativeControls
         public static bool IsNodeWindowContent (this FigmaNode node)
         {
             return node.GetNodeTypeName () == "content";
+        }
+
+        public static bool IsNodeWindowMasterContent(this FigmaNode node)
+        {
+            return node.GetNodeTypeName() == "mastercontent";
         }
 
         public static bool HasChildren (this FigmaNode node)
