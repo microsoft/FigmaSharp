@@ -257,6 +257,22 @@ namespace FigmaSharp.NativeControls
             return (node.Parent?.IsDialogParentContainer() ?? false) && node.IsNodeWindowContent ();
         }
 
+        public static bool IsInstanceDialogParentContainer (this FigmaNode figmaNode, Services.IFigmaFileProvider provider)
+        {
+            return figmaNode is IFigmaNodeContainer container && container.children
+                .OfType<FigmaInstance>()
+                .Any(s => provider.TryGetMainComponent(s, out _));
+        }
+
+        public static bool IsInstanceContent(this FigmaNode node, Services.IFigmaFileProvider provider)
+        {
+            if (node.Parent != null && IsInstanceDialogParentContainer (node.Parent, provider) && node.IsNodeWindowContent())
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static FigmaNode GetWindowContent (this FigmaNode node)
         {
             if (node is IFigmaNodeContainer nodeContainer)
@@ -334,7 +350,9 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
         {
-            return figmaNode is IFigmaNodeContainer container && container.children.OfType<FigmaInstance> ().Any (s => s.IsWindowOfType (controlType));
+            return figmaNode is IFigmaNodeContainer container && container.children
+                .OfType<FigmaInstance> ()
+                .Any (s => s.IsWindowOfType (controlType));
         }
 
         public static FigmaInstance GetDialogInstanceFromParentContainer (this FigmaNode figmaNode)

@@ -57,20 +57,21 @@ namespace FigmaSharp.Services
 
 		internal override bool IsNodeSkipped (FigmaCodeNode node)
 		{
-			if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity)
-            {
-				//if (node.Node.IsDialogParentContainer())
-					return true;
-			}
 		
-			if (node.Node.IsWindowContent ())
-				return true;
-
 			if (node.Node is FigmaInstance nodeInstance)
 			{
 				if (figmaProvider.TryGetMainComponent (nodeInstance, out _))
 					return true;
 			}
+
+			if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity)
+			{
+				return true;
+			}
+
+			if (node.Node.IsWindowContent() || node.Node.IsInstanceContent (figmaProvider))
+				return true;
+
 			return false;
 		}
 
@@ -107,6 +108,12 @@ namespace FigmaSharp.Services
 
 		internal override bool HasChildrenToRender (FigmaCodeNode node)
 		{
+			if (node.Node is FigmaInstance nodeInstance)
+			{
+				if (figmaProvider.TryGetMainComponent(nodeInstance, out _))
+					return true;
+			}
+
 			if (node.Node.IsDialogParentContainer ()) {
 				return true;
 			}
