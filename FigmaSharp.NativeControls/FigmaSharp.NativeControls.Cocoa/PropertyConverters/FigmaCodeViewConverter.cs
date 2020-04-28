@@ -39,13 +39,11 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
         {
 			if (currentNode.Node.Parent != null && propertyName == CodeProperties.AddChild) {
                 //component instance window case
-                if (currentNode.Node.Parent.IsInstanceContent (rendererService.figmaProvider, out var figmaInstance))
-                {
-                    //from about window we get master content
-                    if (currentNode.Node.Parent.TryGetNodeCustomName (out var name))
-                    {
-                        return CodeGenerationHelpers.GetMethod(name, nameof(NSView.AddSubview), currentNode.Name);
-                    }
+                if (currentNode.Node.Parent.IsInstanceContent (rendererService.figmaProvider, out var figmaInstance)) {
+
+                    var viewName = figmaInstance.IsDialog() ? $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}" :
+                        CodeGenerationHelpers.This;
+                    return CodeGenerationHelpers.GetMethod(viewName, nameof(NSView.AddSubview), currentNode.Name);
                 }
 
 				//window case

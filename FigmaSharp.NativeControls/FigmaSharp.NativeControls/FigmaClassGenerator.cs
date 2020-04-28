@@ -70,10 +70,9 @@ namespace FigmaSharp
 		{
 			foreach (var method in this.Methods)
 			{
-
 				sb.AppendLine();
 				method.Write(this, sb);
-            }
+			}
 		}
 
 		protected void GenerateMembers(StringBuilder sb)
