@@ -75,19 +75,19 @@ namespace FigmaSharp.NativeControls.Cocoa
                 case NativeControlComponentType.ButtonLarge:
                 case NativeControlComponentType.ButtonLargeDark:
                     view.ControlSize = NSControlSize.Regular;
+                    view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
                     break;
                 case NativeControlComponentType.ButtonStandard:
                 case NativeControlComponentType.ButtonStandardDark:
-
                     view.ControlSize = NSControlSize.Regular;
                     view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
                     break;
                 case NativeControlComponentType.ButtonSmall:
                 case NativeControlComponentType.ButtonSmallDark:
                     view.ControlSize = NSControlSize.Small;
+                    view.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
                     break;
             }
-
 
             var group = figmaInstance.children
                 .OfType<FigmaGroup>()
@@ -150,18 +150,20 @@ namespace FigmaSharp.NativeControls.Cocoa
                 case NativeControlComponentType.ButtonLarge:
                 case NativeControlComponentType.ButtonLargeDark:
                     builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+                    builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
                     break;
                 case NativeControlComponentType.ButtonStandard:
                 case NativeControlComponentType.ButtonStandardDark:
                     builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+                    builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
                     break;
                 case NativeControlComponentType.ButtonSmall:
                 case NativeControlComponentType.ButtonSmallDark:
                     builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+                    builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
                     break;
             }
 
-            builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 
             //first figma 
             var group = figmaInstance.children

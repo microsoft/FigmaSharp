@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="FigmaSharpApp.icns" />
+    <BundleResource Include="FigmaSharpApp_dark.icns" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">

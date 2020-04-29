@@ -38,7 +38,7 @@
 				<string>figma-sharp:</string>
 			</array>
 			<key>CFBundleURLIconFile</key>
-			<string>FigmaSharpApp</string>
+			<string>FigmaSharpApp_dark</string>
 		</dict>
 	</array>
 	<key></key>
@@ -46,6 +46,6 @@
 	<key>Icon</key>
 	<string></string>
 	<key>CFBundleIconFile</key>
-	<string>FigmaSharpApp.icns</string>
+	<string>FigmaSharpApp_dark.icns</string>
 </dict>
 </plist>
