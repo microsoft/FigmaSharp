@@ -10,8 +10,9 @@
     <AssemblyName>FigmaSharpApp</AssemblyName>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <ReleaseVersion>0.1.1</ReleaseVersion>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
+    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="FigmaSharpApp.icns" />
+    <BundleResource Include="FigmaSharpApp_dark.icns" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
