@@ -57,20 +57,21 @@
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
-    <Compile Include="Converters\FigmaCodePropertyConverter.cs" />
     <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
     <Compile Include="Views\FigmaTransitionButton.cs" />
     <Compile Include="Extensions\CodeGenerationExtensions.cs" />
     <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
-    <Compile Include="FigmaViewPropertySetter.cs" />
     <Compile Include="FigmaVersionMenu.cs" />
+    <Compile Include="PropertyConverter\FigmaCodePropertyConverter.cs" />
+    <Compile Include="PropertyConverter\FigmaViewPropertySetter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
     <Folder Include="Views\" />
     <Folder Include="Helpers\" />
+    <Folder Include="PropertyConverter\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

@@ -54,6 +54,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					new StepperConverter (),
 					new DisclosureConverter (),
 					new SpinnerConverter (),
+					new ProgressBarConverter (),
 					new CheckConverter (),
 					new ComboBoxConverter (),
 					new PopUpButtonConverter (),
@@ -61,6 +62,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					new ButtonConverter (),
 					new TextFieldConverter (),
 					new TextViewConverter (),
+					new TabViewConverter (),
 					new LabelConverter ()
 				};
 			}

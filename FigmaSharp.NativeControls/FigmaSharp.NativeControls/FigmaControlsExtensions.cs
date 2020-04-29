@@ -35,23 +35,25 @@ using FigmaSharp.Models;
 namespace FigmaSharp.NativeControls
 {
     public enum NativeControlType
-	{
+    {
         NotDefined,
-		Button,
-		TextField,
-		TextView,
-		Filter,
-		RadioButton,
-		CheckBox,
-		PopupButton,
-		ComboBox,
-		ProgressSpinner,
+        Button,
+        TextField,
+        TextView,
+        Filter,
+        RadioButton,
+        CheckBox,
+        PopupButton,
+        ComboBox,
+        ProgressBar,
+        ProgressSpinner,
         DisclosureTriange,
         Stepper,
-		Label,
+        Label,
+        TabView,
         WindowStandard,
-		WindowSheet,
-		WindowPanel
+        WindowSheet,
+        WindowPanel
     }
 
     public enum NativeControlComponentType
@@ -117,10 +119,15 @@ namespace FigmaSharp.NativeControls
         ComboBoxStandardDark,
         ComboBoxSmallDark,
 
-        ProgressSpinnerSmallDark,
-        ProgressSpinnerStandardDark,
+        ProgressSpinner,
+        ProgressSpinnerDark,
         ProgressSpinnerSmall,
-        ProgressSpinnerStandard,
+        ProgressSpinnerSmallDark,
+
+        ProgressBar,
+        ProgressBarDark,
+        ProgressBarSmall,
+        ProgressBarSmallDark,
 
         DisclosureTriangleStandard,
         DisclosureTriangleStandardDark,
@@ -129,6 +136,9 @@ namespace FigmaSharp.NativeControls
         StepperStandardDark,
         StepperSmall,
         StepperStandard,
+
+        TabViewStandard,
+        TabViewStandardDark,
 
         // Windows
         WindowSheet,
@@ -179,28 +189,35 @@ namespace FigmaSharp.NativeControls
             ( "Checkbox/Small", NativeControlComponentType.CheckboxSmall, NativeControlType.CheckBox),
             ( "Checkbox/Small Dark", NativeControlComponentType.CheckboxSmallDark, NativeControlType.CheckBox),
           
-			//Pop Up Button
+            //Pop Up Button
             ( "PopUp Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
             ( "PopUp Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
             ( "PopUp Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
             ( "PopUp Button/Small Dark", NativeControlComponentType.PopUpButtonSmallDark, NativeControlType.PopupButton),
 
-			//Pull Down Button
-			( "PullDown Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
+            //Pull Down Button
+            ( "PullDown Button/Standard", NativeControlComponentType.PopUpButtonStandard, NativeControlType.PopupButton),
             ( "PullDown Button/Standard Dark", NativeControlComponentType.PopUpButtonStandardDark , NativeControlType.PopupButton),
             ( "PullDown Button/Small", NativeControlComponentType.PopUpButtonSmall, NativeControlType.PopupButton),
             ( "PullDown Button/Small Dark", NativeControlComponentType.PopUpButtonStandardDark, NativeControlType.PopupButton),
 
-			//General
+            //General
             ( "ComboBox/Standard", NativeControlComponentType.ComboBoxStandard, NativeControlType.ComboBox),
             ( "ComboBox/Small", NativeControlComponentType.ComboBoxSmall, NativeControlType.ComboBox),
             ( "ComboBox/Standard Dark", NativeControlComponentType.ComboBoxStandardDark, NativeControlType.ComboBox),
             ( "ComboBox/Small Dark", NativeControlComponentType.ComboBoxSmallDark, NativeControlType.ComboBox),
 
-            ("ProgressIndicator/Circular", NativeControlComponentType.ProgressSpinnerStandard, NativeControlType.ProgressSpinner),
-            ("ProgressIndicator/Circular/Dark", NativeControlComponentType.ProgressSpinnerStandardDark, NativeControlType.ProgressSpinner),
-            ("ProgressIndicator/Circular/Small", NativeControlComponentType.ProgressSpinnerSmall, NativeControlType.ProgressSpinner),
-            ("ProgressIndicator/Circular/Small/Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
+            // Progress indicators
+
+            ("ProgressIndicator/Circular",            NativeControlComponentType.ProgressSpinner,     NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Dark",       NativeControlComponentType.ProgressSpinner, NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Small",      NativeControlComponentType.ProgressSpinnerSmall,        NativeControlType.ProgressSpinner),
+            ("ProgressIndicator/Circular/Small/Dark", NativeControlComponentType.ProgressSpinnerSmallDark,    NativeControlType.ProgressSpinner),
+
+            ("ProgressIndicator/Bar",            NativeControlComponentType.ProgressBar,          NativeControlType.ProgressBar),
+            ("ProgressIndicator/Bar/Dark",       NativeControlComponentType.ProgressBarDark,      NativeControlType.ProgressBar),
+            ("ProgressIndicator/Bar/Small",      NativeControlComponentType.ProgressBarSmall,     NativeControlType.ProgressBar),
+            ("ProgressIndicator/Bar/Small/Dark", NativeControlComponentType.ProgressBarSmallDark, NativeControlType.ProgressBar),
 
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.DisclosureTriangleStandardDark, NativeControlType.ProgressSpinner),
             //( "Disclosure Triangle/Standard Dark", NativeControlComponentType.ProgressSpinnerSmallDark, NativeControlType.ProgressSpinner),
@@ -223,6 +240,9 @@ namespace FigmaSharp.NativeControls
 
             ( "Link/Standard", NativeControlComponentType.LinkStandard, NativeControlType.Label),
             ( "Link/Small", NativeControlComponentType.LinkSmall, NativeControlType.Label),
+
+            ( "TabView/Standard", NativeControlComponentType.TabViewStandard, NativeControlType.TabView),
+            ( "TabView/Standard Dark", NativeControlComponentType.TabViewStandardDark, NativeControlType.TabView),
 
             ( "Window/Standard", NativeControlComponentType.WindowStandard, NativeControlType.WindowStandard),
             ( "Window/Standard Dark", NativeControlComponentType.WindowStandardDark, NativeControlType.WindowStandard),
@@ -256,7 +276,7 @@ namespace FigmaSharp.NativeControls
         }
 
         public static bool IsNodeWindowContent (this FigmaNode node)
-		{
+        {
             return node.GetNodeTypeName () == "content";
         }
 
@@ -270,18 +290,38 @@ namespace FigmaSharp.NativeControls
             return figmaNode is IFigmaNodeContainer container && container.children.Any (s => s.IsDialog ());
         }
 
-        public static IEnumerable<FigmaNode> GetChildren (this FigmaNode figmaNode)
+        public static IEnumerable<FigmaNode> GetChildren(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null, bool reverseChildren = false)
         {
-            var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
-            var contentNode = figmaNode.GetWindowContent() ?? figmaNode;
+            if ((figmaNode.GetWindowContent() ?? figmaNode) is IFigmaNodeContainer container) {
 
-            if (contentNode is IFigmaNodeContainer container) {
-                foreach (var item in container.children) {
+                var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
+                IEnumerable<FigmaNode> children = container.children;
+                if (reverseChildren)
+                    children = children.Reverse();
+
+                foreach (var item in children)
+                {
                     if (item == figmaInstance)
                         continue;
-                    yield return item;
+
+                    if (func == null || (func != null && func.Invoke(item)))
+                        yield return item;
                 }
             }
+        }
+
+        public static FigmaNode FirstChild (this FigmaNode figmaNode, Func<FigmaNode, bool> func = null)
+        {
+            var item = figmaNode.GetChildren(s => func?.Invoke(s) ?? true);
+            return item.FirstOrDefault();
+        }
+
+        public static FigmaNode Options (this FigmaNode figmaNode)
+        {
+            if (figmaNode == null)
+                return null;
+
+            return figmaNode.FirstChild(s => s.name == "!options");
         }
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
@@ -300,7 +340,7 @@ namespace FigmaSharp.NativeControls
         public static bool IsDialog (this FigmaNode figmaNode)
         {
             if (TryGetNativeControlType (figmaNode, out var value) &&
-				(value == NativeControlType.WindowPanel || value == NativeControlType.WindowSheet || value == NativeControlType.WindowStandard)) {
+                (value == NativeControlType.WindowPanel || value == NativeControlType.WindowSheet || value == NativeControlType.WindowStandard)) {
                 return true;
             }
             return false;
@@ -308,9 +348,9 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)
         {
-			if (figmaNode.TryGetNativeControlType (out var value) && value == controlType) {
+            if (figmaNode.TryGetNativeControlType (out var value) && value == controlType) {
                 return true;
-			}
+            }
             return false;
         }
 
@@ -333,7 +373,7 @@ namespace FigmaSharp.NativeControls
         public static bool TryGetNativeControlType (this FigmaNode node, out NativeControlType nativeControlType)
         {
             nativeControlType = NativeControlType.NotDefined;
-			if (node is FigmaComponentEntity) {
+            if (node is FigmaComponentEntity) {
                 nativeControlType = GetNativeControlType (node.name);
                 return nativeControlType != NativeControlType.NotDefined;
             }
@@ -358,8 +398,8 @@ namespace FigmaSharp.NativeControls
             return type;
         }
 
-		static NativeControlType GetNativeControlType (string name)
-		{
+        static NativeControlType GetNativeControlType (string name)
+        {
             var found = data.FirstOrDefault (s => s.name == name);
             if (found.Equals (default)) {
                 Console.WriteLine ("Component Key not found: {0}", name);

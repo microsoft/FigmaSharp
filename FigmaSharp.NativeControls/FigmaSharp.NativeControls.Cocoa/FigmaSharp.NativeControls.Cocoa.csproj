@@ -69,7 +69,6 @@
     <Compile Include="FigmaBundleWindow.cs" />
     <Compile Include="NativeControlsApplication.cs" />
     <Compile Include="FigmaNativeControlsDelegate.cs" />
-    <Compile Include="Converters\FigmaCodeViewConverter.cs" />
     <Compile Include="Services\NativeViewCodeService.cs" />
     <Compile Include="Services\NativeViewRenderingService.cs" />
     <Compile Include="Converters\StepperConverter.cs" />
@@ -81,6 +80,8 @@
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="FakeSheetView.cs" />
     <Compile Include="Converters\TextViewConverter.cs" />
+    <Compile Include="Converters\TabViewConverter.cs" />
+    <Compile Include="PropertyConverters\FigmaCodeViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -91,6 +92,7 @@
     <Folder Include="Converters\" />
     <Folder Include="Views\" />
     <Folder Include="Services\" />
+    <Folder Include="PropertyConverters\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">

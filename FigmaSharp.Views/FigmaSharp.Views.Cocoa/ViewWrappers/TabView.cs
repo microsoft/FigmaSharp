@@ -26,23 +26,30 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.Views
+using System;
+using FigmaSharp.Views.Native.Cocoa;
+
+namespace FigmaSharp.Views.Cocoa
 {
-    public interface IDisclosureTriangle : IButton
+    public class TabView : View, IView
     {
-    }
+        FNSTabView container;
 
-    public interface IStepper : IView
-    {
-    }
+        public TabView() : this(new FNSTabView())
+        {
 
-    public interface IProgressBar : IView
-    {
-    }
+        }
 
-    public interface ISpinner : IView
-	{
-		void Start ();
-		void Stop ();
-	}
+        public TabView(FNSTabView container) : base(container)
+        {
+            this.container = container;
+            this.container.TranslatesAutoresizingMaskIntoConstraints = false;
+        }
+
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
+    }
 }

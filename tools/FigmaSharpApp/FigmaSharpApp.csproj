@@ -92,6 +92,7 @@
     <Compile Include="Views\FileContainerView.designer.cs">
       <DependentUpon>FileContainerView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RecentStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard">

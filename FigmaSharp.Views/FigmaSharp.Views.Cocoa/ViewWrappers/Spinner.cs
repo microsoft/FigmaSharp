@@ -56,6 +56,7 @@ namespace FigmaSharp.Views.Cocoa
 
 		public DisclosureTriangle (FNSButton disclosureButton) : base (disclosureButton)
 		{
+			disclosureButton.TranslatesAutoresizingMaskIntoConstraints = false;
 			disclosureButton.SetButtonType (NSButtonType.PushOnPushOff);
 			disclosureButton.BezelStyle = NSBezelStyle.Disclosure;
 			disclosureButton.Title = string.Empty;
@@ -75,7 +76,8 @@ namespace FigmaSharp.Views.Cocoa
 		public Spinner (FNSProgressIndicator progressIndicator) : base (progressIndicator)
 		{
 			this.progressIndicator = progressIndicator;
-			progressIndicator.Style = NSProgressIndicatorStyle.Spinning;
+			this.progressIndicator.TranslatesAutoresizingMaskIntoConstraints = false;
+			this.progressIndicator.Style = NSProgressIndicatorStyle.Spinning;
 		}
 
 		public void Start ()
@@ -92,6 +94,24 @@ namespace FigmaSharp.Views.Cocoa
 		{
 			Stop ();
 			base.Dispose ();
+		}
+	}
+
+
+	public class ProgressBar : View, IProgressBar
+	{
+		FNSProgressIndicator progressIndicator;
+
+		public ProgressBar() : this(new FNSProgressIndicator())
+		{
+
+		}
+
+		public ProgressBar(FNSProgressIndicator progressIndicator) : base(progressIndicator)
+		{
+			this.progressIndicator = progressIndicator;
+			this.progressIndicator.TranslatesAutoresizingMaskIntoConstraints = false;
+			progressIndicator.Style = NSProgressIndicatorStyle.Bar;
 		}
 	}
 }

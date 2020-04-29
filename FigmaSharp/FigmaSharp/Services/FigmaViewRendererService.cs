@@ -72,11 +72,6 @@ namespace FigmaSharp.Services
             return default(T);
         }
 
-        virtual internal bool IsFirstNode(FigmaNode currentNode)
-        {
-            return currentNode is FigmaCanvas || currentNode.Parent is FigmaCanvas;
-        }
-
         public T FindViewByPath<T>(params string[] path) where T : IView
 		{
 			var node = fileProvider.FindByPath(path);
@@ -426,7 +421,7 @@ namespace FigmaSharp.Services
             return (T)RenderByNode (node, parent, options);
         }
 
-        FigmaNode firstNode;
+        protected FigmaNode firstNode;
 
         public IView RenderByNode(FigmaNode node, IView parent, FigmaViewRendererServiceOptions options = null)
         {
@@ -470,23 +465,32 @@ namespace FigmaSharp.Services
                     continue;
                 }
 
-                PropertySetter.Configure(CodeProperties.AddChild, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                if (RendersAddChild(child, parentNode, this))
+                    PropertySetter.Configure(CodeProperties.AddChild, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
 
-                PropertySetter.Configure(CodeProperties.Frame, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                if (RendersSize (child, parentNode, this))
+                    PropertySetter.Configure(CodeProperties.Frame, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
 
-                if (!IsFirstNode (child.FigmaNode))
-                {
+                if (RendersConstraints(child, parentNode, this))
                     PropertySetter.Configure(CodeProperties.Constraints, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
-                }
-            
 
                 RecursivelyConfigureViews (child, options);
             }
         }
-        
-        internal override bool IsFirstNode (FigmaNode currentNode)
+
+        protected virtual bool RendersAddChild (ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            return (currentNode != null && firstNode == currentNode) || base.IsFirstNode (currentNode);
+            return true;
+        }
+
+        protected virtual bool RendersConstraints (ProcessedNode currentNode,ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            return !((currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas));
+        }
+
+        protected virtual bool RendersSize (ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            return true;
         }
 
         public async Task StartAsync (string figmaName, IView container, FigmaViewRendererServiceOptions options = null)
@@ -503,9 +507,7 @@ namespace FigmaSharp.Services
             try
             {
                 if (options.LoadFileProvider) {
-                    await Task.Run(() => {
-                        fileProvider.Load(figmaName ?? fileProvider.File);
-                    });
+                    await fileProvider.LoadAsync(figmaName ?? fileProvider.File);
                 }
 
                 //we generate all the processed nodes

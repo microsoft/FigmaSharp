@@ -84,45 +84,21 @@ namespace FigmaSharp.Cocoa
                 {
                     var nativeView = view.NativeObject as AppKit.NSView;
 
-                    //float y, x;
-                    //if (parentNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
-                    //{
-                    //    x = Math.Max(absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X, 0);
-
-                    //    if (AppContext.Current.IsVerticalAxisFlipped)
-                    //    {
-                    //        var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.Y + parentAbsoluteBoundingBox.absoluteBoundingBox.Height;
-                    //        var actualY = absoluteBounding.absoluteBoundingBox.Y + absoluteBounding.absoluteBoundingBox.Height;
-                    //        y = parentY - actualY;
-                    //    }
-                    //    else
-                    //    {
-                    //        y = absoluteBounding.absoluteBoundingBox.Y - parentAbsoluteBoundingBox.absoluteBoundingBox.Y;
-                    //    }
-
-                    //    ((View)view).SetPosition(x, y);
-                    //}
-
                     //var parentNativeView = parent.NativeObject as AppKit.NSView;
                     var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
                     widthConstraint.Active = true;
-                    var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
-                    heightConstraint.Active = true;
-                    //nativeView.AddConstraints(new NSLayoutConstraint[] { widthConstraint , heightConstraint });
 
-                    if (currentNode is IConstraints constrainedNode)
-                    {
-                        if (constrainedNode.constraints.IsFlexibleHorizontal)
-                        {
-                            widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
-                        }
-                        if (constrainedNode.constraints.IsFlexibleVertical)
-                        {
+                    var constrainedNode = currentNode as IConstraints;
+                    if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal) 
+                        widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
+
+                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
+                        heightConstraint.Active = true;
+
+                        if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
                             heightConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
-                        }
-                    }
-                }
 
+                }
                 return;
             }
         }

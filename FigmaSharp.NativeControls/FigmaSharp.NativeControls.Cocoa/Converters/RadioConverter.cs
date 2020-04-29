@@ -67,6 +67,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				case NativeControlComponentType.RadioStandard:
 				case NativeControlComponentType.RadioStandardDark:
 					view.ControlSize = NSControlSize.Regular;
+					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
 				case NativeControlComponentType.RadioSmall:
 				case NativeControlComponentType.RadioSmallDark:
