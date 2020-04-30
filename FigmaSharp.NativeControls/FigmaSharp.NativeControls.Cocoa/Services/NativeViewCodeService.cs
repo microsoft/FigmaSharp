@@ -120,12 +120,12 @@ namespace FigmaSharp.Services
 			return base.HasChildrenToRender (node);
 		}
 
-		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, out string identifier)
+		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, out string identifier)
 		{
 			if (node.Node.TryGetCodeViewName (out identifier)) {
 				return true;
 			}
-			return base.TryGetCodeViewName (node, parent, out identifier);
+			return base.TryGetCodeViewName (node, parent, converter, out identifier);
 		}
 
 		protected override void OnStartGetCode()
