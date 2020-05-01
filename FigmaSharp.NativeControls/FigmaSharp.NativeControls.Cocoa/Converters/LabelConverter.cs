@@ -65,24 +65,19 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             switch (componentType)
             {
+                default:
+                    textField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+                    break;
                 case NativeControlComponentType.LabelGroup:
                     textField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
                     break;
-
-                case NativeControlComponentType.LinkStandard:
-                    textField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
-                    CreateLink(textField);
-                    break;
-
                 case NativeControlComponentType.LabelSecondary:
                     textField.TextColor = NSColor.SecondaryLabelColor;
                     textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
                     break;
-
                 case NativeControlComponentType.LabelSmall:
                     textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
                     break;
-
                 case NativeControlComponentType.LinkSmall:
                     CreateLink(textField);
                     textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
@@ -130,6 +125,15 @@ namespace FigmaSharp.NativeControls.Cocoa
                 case NativeControlComponentType.LabelGroup:
                     builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
                         CodeGenerationHelpers.Font.BoldSystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+                    break;
+                case NativeControlComponentType.LabelSmall:
+                    builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+                    break;
+                case NativeControlComponentType.LabelSecondary:
+                    builder.WriteEquality(currentNode.Name, nameof(NSTextField.TextColor), string.Format("{0}.{1}", typeof(NSColor), nameof(NSColor.SecondaryLabelColor)));
+                    builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
                     break;
             }
 
