@@ -377,7 +377,7 @@ namespace FigmaSharp.NativeControls
                 return null;
             var dialog = cont.children.OfType<FigmaInstance> ()
                 .FirstOrDefault (s => s.IsDialog ());
-            return null;
+            return dialog;
         }
 
         public static bool IsDialog (this FigmaNode figmaNode)
