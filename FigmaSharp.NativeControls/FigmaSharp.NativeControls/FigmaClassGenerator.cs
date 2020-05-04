@@ -5,29 +5,63 @@ using System.Linq;
 
 namespace FigmaSharp
 {
-	public enum MethodModifier
+	public enum CodeObjectModifier
 	{
 		Private,
 		Public,
 		Protected
 	}
 
-	public class ClassMethod
-	{
-		public MethodModifier MethodModifier { get; set; } = MethodModifier.Private;
+    public abstract class CodeObject
+    {
+		public string Name { get; private set; }
 
+		public CodeObject (string name)
+        {
+			Name = name;
+
+		}
+
+		public CodeObjectModifier MethodModifier { get; set; } = CodeObjectModifier.Private;
+
+		abstract public void Write(FigmaClassBase figmaClassBase, StringBuilder sb);
+	}
+
+	public class EnumCodeObject : CodeObject
+	{
+		public List<(string, Rectangle)> Values;
+
+		public EnumCodeObject(string name, List<(string, Rectangle)> values) : base(name)
+		{
+			Values = values;
+		}
+
+		public override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
+		{
+			figmaClassBase.AddTabLevel();
+			figmaClassBase.GenerateEnum(sb, Name, CodeObjectModifier.Public);
+			for (int i = 0; i < Values.Count; i++)
+			{
+				var comma = (i < Values.Count - 1) ? "," : "";
+				figmaClassBase.AppendLine(sb, $"{Values[i].Item1}{comma}");
+			}
+			figmaClassBase.RemoveTabLevel();
+			figmaClassBase.CloseBracket(sb);
+		}
+	}
+	
+    public class ClassMethodCodeObject : CodeObject
+	{
 		public List<(string, string)> Args = new List<(string, string)>();
 
-		public string MethodName { get; protected set; }
-
-		public ClassMethod()
+		public ClassMethodCodeObject (string name) : base(name)
 		{
 		
 		}
 
-		public virtual void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
+		public override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
 		{
-			figmaClassBase.GenerateMethod(sb, MethodName, MethodModifier.Public);
+			figmaClassBase.GenerateMethod(sb, Name, CodeObjectModifier.Public);
 			Write (figmaClassBase, sb);
 			figmaClassBase.CloseBracket(sb);
 		}
@@ -35,7 +69,7 @@ namespace FigmaSharp
 
 	public class FigmaPartialDesignerClass : FigmaClassBase
 	{
-		public List<(Type memberType, string name)> PrivateMembers = new List<(Type memberType, string name)>();
+		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 		public string Namespace { get; set; }
 		public string ClassName { get; set; }
 
@@ -65,12 +99,11 @@ namespace FigmaSharp
 			CloseMethod (sb);
 		}
 
-
 		protected virtual void GenerateMethods (StringBuilder sb)
 		{
 			foreach (var method in this.Methods)
 			{
-				sb.AppendLine();
+				AppendLine(sb);
 				method.Write(this, sb);
 			}
 		}
@@ -90,7 +123,7 @@ namespace FigmaSharp
 					.ToArray ();
 
 				var separatedValues = string.Join(", ", items);
-				AppendLine(sb, $"private {member.FullName} {separatedValues};");
+				AppendLine(sb, $"private {member} {separatedValues};");
 			}
 			AppendLine (sb);
 		}
@@ -153,7 +186,7 @@ namespace FigmaSharp
 	{
 		protected const string InitializeComponentMethodName = "InitializeComponent";
 
-		public List<ClassMethod> Methods = new List<ClassMethod>();
+		public List<CodeObject> Methods = new List<CodeObject>();
 
 		public List<string> Usings { get; } = new List<string>();
 		public List<string> Comments { get; } = new List<string>();
@@ -197,8 +230,14 @@ namespace FigmaSharp
 				builder.AppendLine($"using {current};");
 		}
 
+		internal void GenerateEnum(StringBuilder sb, string name, CodeObjectModifier objectModifier)
+		{
+			AppendLine(sb, $"{objectModifier.ToString().ToLower()} enum {name}");
+			OpenBracket(sb);
+		}
+
 		internal void GenerateMethod (StringBuilder sb, string methodName,
-			MethodModifier modifier = MethodModifier.Private, List<(string, string)> arguments = null)
+			CodeObjectModifier modifier = CodeObjectModifier.Private, List<(string, string)> arguments = null)
 		{
 			string args = string.Empty;
 
@@ -214,7 +253,6 @@ namespace FigmaSharp
 					args += $"{argument.Item1} {argument.Item2}";
 				}
 			}
-
 			AppendLine(sb, $"{modifier.ToString ().ToLower ()} void {methodName} ({args})");
 			OpenBracket(sb);
 		}
@@ -265,5 +303,6 @@ namespace FigmaSharp
 		}
 
 		protected abstract string OnGenerate ();
-	}
+
+    }
 }

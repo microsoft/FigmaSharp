@@ -79,6 +79,17 @@ namespace FigmaSharp.Cocoa
 
         #region View Extensions
 
+
+        public static string ToDesignerString(this Rectangle node)
+        {
+            return $"new {typeof (Rectangle).FullName} ({node.Origin.X}, {node.Origin.Y}, {node.Width}, {node.Height})";
+        }
+
+        public static string ToDesignerString(this CGRect node)
+        {
+            return $"new {typeof(CGRect).FullName} ({node.X}, {node.Y}, {node.Width}, {node.Height})";
+        }
+
         public static string ToDesignerString(this float value)
         {
             return string.Concat (value.ToString(),"f");

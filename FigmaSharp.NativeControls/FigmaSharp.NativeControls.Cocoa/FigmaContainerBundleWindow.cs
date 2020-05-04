@@ -31,56 +31,79 @@ using System.Text;
 using System.Linq;
 
 using System.Collections.Generic;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.NativeControls;
 
 namespace FigmaSharp
 {
-	public class ShowContentClassMethod : ClassMethod
-	{
-		readonly string masterContentViewName;
+    public class ShowContentMethodCodeObject : ClassMethodCodeObject
+    {
 		readonly string contentViewName;
+		readonly string selectedContentName;
+		public string SelectedContentName => selectedContentName;
+
 		readonly string argumentName;
+		readonly string enumTypeName;
+		public List<(string, Rectangle)> figmaFrameEntities;
 
-		public IEnumerable<FigmaNode> figmaFrameEntities;
-
-        public ShowContentClassMethod(IEnumerable<FigmaNode> figmaFrames, string masterContentViewName, string contentViewName)
+        public ShowContentMethodCodeObject(List<(string, Rectangle)> figmaFrames, string name, string contentViewName, string enumTypeName) : base (name)
         {
-            MethodModifier = MethodModifier.Public;
-			MethodName = "ShowContent";
+			MethodModifier = CodeObjectModifier.Public;
 			argumentName = "content";
-
+			selectedContentName = "SelectedContent";
 			figmaFrameEntities = figmaFrames;
 
-			this.masterContentViewName = masterContentViewName;
-            this.contentViewName = contentViewName;
-        }
+			this.contentViewName = contentViewName;
+			this.enumTypeName = enumTypeName;
+		}
 
 		public override void Write (FigmaClassBase figmaClassBase, StringBuilder sb)
 		{
 			figmaClassBase.AddTabLevel ();
 
-			figmaClassBase.GenerateMethod (sb, MethodName, MethodModifier.Protected,
-				arguments: new List<(string, string)>() {(typeof (string).FullName, argumentName) });
+			figmaClassBase.GenerateMethod (sb, Name, CodeObjectModifier.Protected,
+				arguments: new List<(string, string)>() {(enumTypeName, argumentName) });
 
 			figmaClassBase.AppendLine (sb, $"{contentViewName}?.{nameof(AppKit.NSView.RemoveFromSuperview)}();");
 
-			for (int i = 0; i < figmaFrameEntities.Count(); i++)
-			{
-				var frameEntity = figmaFrameEntities.ElementAt(i);
-				var className = frameEntity.GetClassName();
+			figmaClassBase.AppendLine(sb, $"{selectedContentName} = {argumentName};");
 
-				string ifCase = i == 0 ? "if" : "else if";
-				ifCase = $"{ifCase} ({argumentName} == \"{className}\")";
-				figmaClassBase.AppendLine(sb, ifCase);
+			var frameName = "frame";
+			figmaClassBase.AppendLine(sb, $"var {frameName} = {typeof (CoreGraphics.CGRect).FullName}.{nameof (CoreGraphics.CGRect.Empty)};");
+
+			//switch
+			figmaClassBase.AppendLine(sb, $"switch ({argumentName})");
+			figmaClassBase.OpenBracket(sb);
+
+			for (int i = 0; i < figmaFrameEntities.Count; i++)
+			{
+				var className = figmaFrameEntities[i].Item1;
+				if (i > 0)
+					figmaClassBase.RemoveTabLevel();
+
+				figmaClassBase.AppendLine(sb, $"case {enumTypeName}.{className}:");
+				figmaClassBase.AddTabLevel();
 				figmaClassBase.AppendLine(sb, $"{contentViewName} = new {className}();");
+
+				var rect = figmaFrameEntities[i].Item2.ToCGRect().ToDesignerString();
+				figmaClassBase.AppendLine(sb, $"{frameName} = {contentViewName}.{nameof(AppKit.NSView.GetFrameForAlignmentRect)} ({rect});");
+				figmaClassBase.AppendLine(sb, "break;");
 			}
 
-			figmaClassBase.AppendLine(sb, $"if ({argumentName} != null)");
+			figmaClassBase.RemoveTabLevel();
+			figmaClassBase.CloseBracket (sb);
+
+			//if case
+			figmaClassBase.AppendLine(sb, string.Empty);
+
+			figmaClassBase.AddTabLevel();
+			figmaClassBase.AppendLine(sb, $"if ({contentViewName} != null)");
 			figmaClassBase.OpenBracket(sb);
-			figmaClassBase.AppendLine(sb, $"{masterContentViewName}.{nameof(AppKit.NSView.AddSubview)}({contentViewName});");
-			figmaClassBase.AppendLine(sb, $"{contentViewName}.{nameof (AppKit.NSView.Frame)} = {masterContentViewName}.{nameof(AppKit.NSView.Bounds)};");
+			figmaClassBase.AppendLine(sb, $"{nameof(AppKit.NSWindow.ContentView)}.{nameof(AppKit.NSView.AddSubview)}({contentViewName});");
+
+			figmaClassBase.AppendLine(sb, $"{contentViewName}.{nameof(AppKit.NSView.Frame)} = {frameName};");
 
 			figmaClassBase.RemoveTabLevel();
 
@@ -99,18 +122,47 @@ namespace FigmaSharp
 
 		}
 
+		Rectangle GetRectangle (FigmaFrameEntity currentNode)
+        {
+			var content = currentNode.FirstChild(s => s.IsNodeWindowContent());
+			if (content is IAbsoluteBoundingBox absoluteBounding && currentNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
+			{
+				var x = absoluteBounding.absoluteBoundingBox.X - parentAbsoluteBoundingBox.absoluteBoundingBox.X;
+
+				var parentY = parentAbsoluteBoundingBox.absoluteBoundingBox.Y + parentAbsoluteBoundingBox.absoluteBoundingBox.Height;
+				var actualY = absoluteBounding.absoluteBoundingBox.Y + absoluteBounding.absoluteBoundingBox.Height;
+				var y = parentY - actualY;
+
+				return new Rectangle(x, y, absoluteBounding.absoluteBoundingBox.Width, absoluteBounding.absoluteBoundingBox.Height);
+			}
+			return default;
+		}
+
 		protected override void OnGetPartialDesignerClass(FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService, bool translateLabels)
 		{
 			base.OnGetPartialDesignerClass(partialDesignerClass, codeRendererService, translateLabels);
 
 			var fileProvider = codeRendererService.figmaProvider;
+
 			var windows = GetReferencedWindows (fileProvider, FigmaNode);
 
-			var currentContent = "currentContent";
+			var converter = codeRendererService.codePropertyConverter;
 
-			var contentClassMethod = new ShowContentClassMethod (windows, "masterContent", currentContent);
+			var names = windows.OfType <FigmaFrameEntity> ()
+				.Select(s =>  (s.GetClassName(), GetRectangle(s)))
+				.ToList ();
+
+			var enumName = "Content";
+			var enumCodeObject = new EnumCodeObject(enumName, names);
+			partialDesignerClass.Methods.Add(enumCodeObject);
+
+			var currentContent = "currentContent";
+			var contentName = "ShowContent";
+
+			var contentClassMethod = new ShowContentMethodCodeObject (names, contentName, currentContent, enumName);
             partialDesignerClass.Methods.Add (contentClassMethod);
-			partialDesignerClass.PrivateMembers.Add((typeof(AppKit.NSView), currentContent));
+			partialDesignerClass.PrivateMembers.Add ((typeof(AppKit.NSView).FullName, currentContent));
+			partialDesignerClass.PrivateMembers.Add ((enumName, contentClassMethod.SelectedContentName));
 		}
 
 		static IEnumerable<FigmaNode> GetReferencedWindows (IFigmaFileProvider fileProvider, FigmaNode node)
