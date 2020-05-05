@@ -70,7 +70,8 @@ namespace MonoDevelop.Figma
 						var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query).versions;
 						return figmaFileVersions
 							.GroupByCreatedAt()
-							.FirstOrDefault (s =>  !s.IsNamed);
+							.OrderByDescending (s => s.created_at)
+							.FirstOrDefault ();
 					}).ContinueWith (s => {
 						if (s.Result != null && s.Result.id != bundle.Version.id) {
 							Runtime.RunInMainThread(() => {
