@@ -39,7 +39,7 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
 		{
 			var customType = GetIdentifierValue(currentNode.name, "type", true);
 			if (customType != null) {
-				return GetAssemblyType(customType);
+				return GetAssemblyType(customType, currentNode);
 			}
 			return null;
 		}
@@ -50,19 +50,18 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.name.StartsWith("customview");
+			return currentNode.GetNodeTypeName() == "customview";
 		}
 
-		public Type GetAssemblyType (string fullname)
+		public Type GetAssemblyType (string fullname, FigmaNode currentNode)
 		{
 			foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{
-				var type = assembly.GetType(fullname);
+				var type = assembly.GetTypes().FirstOrDefault(s => s.FullName == fullname);
 				if (type != null)
-				{
 					return type;
-				}
 			}
+			System.Diagnostics.Debug.Fail($"{this.GetType ().Name} > Node:{currentNode.name} > Type '{fullname}' was not found in the current AppDomain");
 			return null;
 		}
 
