@@ -111,7 +111,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 	public class ProgressBarConverter : FigmaNativeControlConverter
 	{
-		public override Type ControlType => typeof(NSProgressIndicator);
+		public override Type GetControlType(FigmaNode currentNode)
+		=> typeof(NSProgressIndicator);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
@@ -160,7 +161,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string progressBarName = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(progressBarName, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor(progressBarName, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure(figmaInstance, progressBarName);
 			builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);

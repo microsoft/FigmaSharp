@@ -40,7 +40,8 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
-        public override Type ControlType => typeof(NSImageView);
+        public override Type GetControlType(FigmaNode currentNode)
+            => typeof(NSImageView);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
@@ -82,7 +83,7 @@ namespace FigmaSharp.Cocoa.Converters
             StringBuilder builder = new StringBuilder();
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (currentNode.Name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor (currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
             builder.Configure((RectangleVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();

@@ -41,7 +41,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaElipseConverter : FigmaElipseConverterBase
     {
-        public override Type ControlType => typeof(NSView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
@@ -56,7 +56,7 @@ namespace FigmaSharp.Cocoa.Converters
             StringBuilder builder = new StringBuilder();
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (currentNode.Name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor (currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
             builder.Configure(currentNode.Node, currentNode.Name);
 

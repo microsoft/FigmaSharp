@@ -38,6 +38,9 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
     {
+        public override Type GetControlType(FigmaNode currentNode)
+        => typeof(AppKit.NSView);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
 			var vector = new ImageView();

@@ -39,7 +39,8 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaRegularPolygonConverter : FigmaRegularPolygonConverterBase
     {
-        public override Type ControlType => typeof(NSView);
+        public override Type GetControlType(FigmaNode currentNode)
+         => typeof(NSView);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {

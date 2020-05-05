@@ -41,7 +41,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
     {
-        public override Type ControlType => typeof(NSView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
         public override bool ScanChildren (FigmaNode currentNode)
             => true;
@@ -86,7 +86,7 @@ namespace FigmaSharp.Cocoa.Converters
             var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                builder.WriteConstructor(name, ControlType.FullName, rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
             builder.Configure(figmaFrameEntity, currentNode.Name);
             return builder.ToString();

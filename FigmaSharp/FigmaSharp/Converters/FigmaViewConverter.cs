@@ -42,7 +42,8 @@ namespace FigmaSharp
 
     public abstract class CustomViewConverter
     {
-		public virtual Type ControlType { get; }
+		public abstract Type GetControlType (FigmaNode currentNode);
+
 		public virtual bool IsLayer { get; }
 
         public virtual string Name { get; } = FigmaCodeRendererService.DefaultViewName;

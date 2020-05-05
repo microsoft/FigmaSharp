@@ -43,7 +43,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class TabViewConverter : FigmaNativeControlConverter
     {
-        public override Type ControlType => typeof(NSTabView);
+        public override Type GetControlType(FigmaNode currentNode)
+        => typeof(NSTabView);
 
         public override bool CanConvert(FigmaNode currentNode)
         {

@@ -42,7 +42,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
-		public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
+		public override Type GetControlType(FigmaNode currentNode)
+		=> typeof(AppKit.NSView);
+
+        public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
 		{
 
 		}
@@ -95,7 +98,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 	public class EmbededWindowConverter : FigmaViewConverter
 	{
-		public bool LiveButtonAlwaysVisible { get; set; } = true;
+        public override Type GetControlType(FigmaNode currentNode)
+        => typeof(AppKit.NSView);
+
+        public bool LiveButtonAlwaysVisible { get; set; } = true;
 
 		public event EventHandler LivePreviewLoading;
 		public event EventHandler LivePreviewLoaded;
