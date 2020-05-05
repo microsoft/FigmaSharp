@@ -14,7 +14,7 @@ using FigmaSharp.Services;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 
-namespace MonoDevelop.Figma.Packages
+namespace MonoDevelop.Figma
 {
 	public partial class FigmaPackageWindow : AppKit.NSWindow
 	{

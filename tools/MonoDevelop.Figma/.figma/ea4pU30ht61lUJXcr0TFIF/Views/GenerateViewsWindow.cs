@@ -13,7 +13,7 @@ using MonoDevelop.Core;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace MonoDevelop.Figma.Packages
+namespace MonoDevelop.Figma
 {
 	class ValueData
 	{
@@ -87,7 +87,7 @@ namespace MonoDevelop.Figma.Packages
 				var currentView = view as NSTextField;
 				if (currentView == null)
 				{
-					currentView = ViewHelpers.CreateLabel(dataItem.PackageName);
+					currentView = ViewHelpers.CreateLabel(dataItem.PackageName, NSFont.SystemFontOfSize (13));
 				}
 				return currentView;
 			}
@@ -144,6 +144,8 @@ namespace MonoDevelop.Figma.Packages
 		}
 
 		readonly string outputDirectory;
+		readonly AppKit.NSTableView fileTableView;
+
 
 		public GenerateViewsWindow(string outputDirectory, Project project)
 		{
@@ -151,6 +153,9 @@ namespace MonoDevelop.Figma.Packages
 
 			this.project = project;
 			this.outputDirectory = outputDirectory;
+
+			fileTableView = new NSTableView();
+			tableScrollView.DocumentView = fileTableView;
 
 			const int packageWidth = 200;
 			var tablePackageColumn = new NSTableColumn(OutlineViewDelegate.Col2);
@@ -164,7 +169,7 @@ namespace MonoDevelop.Figma.Packages
 
 			fileTableView.AddColumn(tablePackageColumn);
 
-			createButton.Activated += CreateButton_Activated;
+			bundleButton.Activated += CreateButton_Activated;
 			cancelButton.Activated += CancelButton_Activated;
 		}
 

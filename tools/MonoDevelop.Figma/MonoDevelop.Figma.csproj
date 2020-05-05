@@ -19,9 +19,8 @@
       <ItemGroup>
         <Folder Include="Resources\" />
         <Folder Include=".figma\" />
-        <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\" />
-        <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\" />
-        <Folder Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Resources\" />
+        <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\" />
+        <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
@@ -121,27 +120,30 @@
         </EmbeddedResource>
       </ItemGroup>
       <ItemGroup>
-        <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\manifest.json" />
-        <None Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\document.figma" />
+        <None Include=".figma\ea4pU30ht61lUJXcr0TFIF\manifest.json" />
+        <None Include=".figma\ea4pU30ht61lUJXcr0TFIF\document.figma" />
       </ItemGroup>
       <ItemGroup>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\PackageUpdateWindow.cs" />
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\PackageUpdateWindow.designer.cs">
-            <DependentUpon>PackageUpdateWindow.cs</DependentUpon>
-            <PackageId>FwVa4JS5QsohRhNEnEBKslFk</PackageId>
-        </Compile>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaPackageWindow.designer.cs">
-            <DependentUpon>FigmaPackageWindow.cs</DependentUpon>
-            <PackageId>FwVa4JS5QsohRhNEnEBKslFk</PackageId>
-        </Compile>
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\FigmaPackageWindow.cs" />
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\GenerateViewsWindow.cs" />
-        <Compile Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Views\GenerateViewsWindow.designer.cs" >
-            <DependentUpon>GenerateViewsWindow.cs</DependentUpon>
-            <PackageId>FwVa4JS5QsohRhNEnEBKslFk</PackageId>
-        </Compile>
+        <BundleResource Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\motivation.png" />
       </ItemGroup>
       <ItemGroup>
-        <BundleResource Include=".figma\FwVa4JS5QsohRhNEnEBKslFk\Resources\motivation.png" />
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.cs" />
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.designer.cs">
+          <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
+          <FigmaNodeId>38:682</FigmaNodeId>
+          <DependentUpon>PackageUpdateWindow.cs</DependentUpon>
+        </Compile>
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.cs" />
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.designer.cs">
+          <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
+          <FigmaNodeId>38:693</FigmaNodeId>
+          <DependentUpon>FigmaPackageWindow.cs</DependentUpon>
+        </Compile>
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.cs" />
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.designer.cs">
+          <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
+          <FigmaNodeId>38:714</FigmaNodeId>
+          <DependentUpon>GenerateViewsWindow.cs</DependentUpon>
+        </Compile>
       </ItemGroup>
 </Project>

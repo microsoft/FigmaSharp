@@ -1,21 +1,22 @@
 // This file was auto-generated using
-// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-04-16 at 18:21
+// FigmaSharp 1.0.0.0 and Figma API 1.0.1 on 2020-05-05 at 18:13
 //
 // Document title:   
 // Document version: 0.1f
-// Document URL:     FwVa4JS5QsohRhNEnEBKslFk
-// Namespace:        FigmaSharp
+// Document URL:     ea4pU30ht61lUJXcr0TFIF
+// Namespace:        MonoDevelop.Figma
 //
 // Changes to this file may cause incorrect behavior
 // and will be lost if the code is regenerated.
 
 using AppKit;
 
-namespace MonoDevelop.Figma.Packages
+namespace MonoDevelop.Figma
 {
 	partial class FigmaPackageWindow
 	{
 		private AppKit.NSButton bundleButton, cancelButton, translationsCheckbox, includeOriginalCheckbox, nothingRadio, templateRadio, codeRadio;
+		private AppKit.NSView generateRadios;
 		private AppKit.NSComboBox namespacePopUp;
 		private AppKit.NSProgressIndicator versionSpinner;
 		private AppKit.NSPopUpButton versionPopUp;
@@ -36,7 +37,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     bundleButton
 			// NodeName: "bundleButton"
 			// NodeType: INSTANCE
-			// NodeId:   680:549
+			// NodeId:   38:696
 			bundleButton = new AppKit.NSButton();
 			bundleButton.WantsLayer = true;
 			bundleButton.BezelStyle = NSBezelStyle.Rounded;
@@ -54,7 +55,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     cancelButton
 			// NodeName: "cancelButton"
 			// NodeType: INSTANCE
-			// NodeId:   680:564
+			// NodeId:   38:697
 			cancelButton = new AppKit.NSButton();
 			cancelButton.WantsLayer = true;
 			cancelButton.BezelStyle = NSBezelStyle.Rounded;
@@ -68,21 +69,21 @@ namespace MonoDevelop.Figma.Packages
 			this.ContentView.AddSubview (cancelButton);
 			cancelButton.Frame = cancelButton.GetFrameForAlignmentRect (new CoreGraphics.CGRect (19f, 20f, 84f, 21f));;
 
-			// View:     nativeViewCodeServiceView
+			// View:     lineView
 			// NodeName: sep
 			// NodeType: VECTOR
-			// NodeId:   622:0
-			var nativeViewCodeServiceView = new AppKit.NSBox();
-			nativeViewCodeServiceView.WantsLayer = true;
-			nativeViewCodeServiceView.BoxType = NSBoxType.NSBoxSeparator;
+			// NodeId:   38:698
+			var lineView = new AppKit.NSBox();
+			lineView.WantsLayer = true;
+			lineView.BoxType = NSBoxType.NSBoxSeparator;
 
-			this.ContentView.AddSubview (nativeViewCodeServiceView);
-			nativeViewCodeServiceView.Frame = nativeViewCodeServiceView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 59.5f, 481f, 0f));;
+			this.ContentView.AddSubview (lineView);
+			lineView.Frame = lineView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 59.5f, 481f, 0f));;
 
 			// View:     translationsCheckbox
 			// NodeName: "translationsCheckbox"
 			// NodeType: INSTANCE
-			// NodeId:   974:0
+			// NodeId:   38:699
 			translationsCheckbox = new AppKit.NSButton();
 			translationsCheckbox.WantsLayer = true;
 			translationsCheckbox.BezelStyle = NSBezelStyle.Rounded;
@@ -98,7 +99,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     includeOriginalCheckbox
 			// NodeName: "includeOriginalCheckbox"
 			// NodeType: INSTANCE
-			// NodeId:   527:46
+			// NodeId:   38:700
 			includeOriginalCheckbox = new AppKit.NSButton();
 			includeOriginalCheckbox.WantsLayer = true;
 			includeOriginalCheckbox.BezelStyle = NSBezelStyle.Rounded;
@@ -114,8 +115,8 @@ namespace MonoDevelop.Figma.Packages
 			// View:     generateRadios
 			// NodeName: "generateRadios"
 			// NodeType: FRAME
-			// NodeId:   577:0
-			var generateRadios = new NSView();
+			// NodeId:   38:701
+			generateRadios = new AppKit.NSView();
 			generateRadios.WantsLayer = true;
 
 			this.ContentView.AddSubview (generateRadios);
@@ -124,7 +125,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     nothingRadio
 			// NodeName: radio "nothingRadio"
 			// NodeType: INSTANCE
-			// NodeId:   576:0
+			// NodeId:   38:702
 			nothingRadio = new AppKit.NSButton();
 			nothingRadio.WantsLayer = true;
 			nothingRadio.BezelStyle = NSBezelStyle.Rounded;
@@ -142,7 +143,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     templateRadio
 			// NodeName: radio "templateRadio"
 			// NodeType: INSTANCE
-			// NodeId:   557:20
+			// NodeId:   38:703
 			templateRadio = new AppKit.NSButton();
 			templateRadio.WantsLayer = true;
 			templateRadio.BezelStyle = NSBezelStyle.Rounded;
@@ -160,7 +161,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     codeRadio
 			// NodeName: radio "codeRadio"
 			// NodeType: INSTANCE
-			// NodeId:   557:11
+			// NodeId:   38:704
 			codeRadio = new AppKit.NSButton();
 			codeRadio.WantsLayer = true;
 			codeRadio.BezelStyle = NSBezelStyle.Rounded;
@@ -173,27 +174,27 @@ namespace MonoDevelop.Figma.Packages
 			generateRadios.AddSubview (codeRadio);
 			codeRadio.Frame = codeRadio.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 44f, 54f, 16f));;
 
-			// View:     nativeViewCodeServiceView1
+			// View:     labelView
 			// NodeName: Generate:
 			// NodeType: INSTANCE
-			// NodeId:   754:19
-			var nativeViewCodeServiceView1 = new AppKit.NSTextField();
-			nativeViewCodeServiceView1.Editable = false;
-			nativeViewCodeServiceView1.Bordered = false;
-			nativeViewCodeServiceView1.Bezeled = false;
-			nativeViewCodeServiceView1.DrawsBackground = false;
-			nativeViewCodeServiceView1.StringValue = "Generate:";
-			nativeViewCodeServiceView1.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
-			nativeViewCodeServiceView1.WantsLayer = true;
-			nativeViewCodeServiceView1.Alignment = NSTextAlignment.Right;
+			// NodeId:   38:705
+			var labelView = new AppKit.NSTextField();
+			labelView.Editable = false;
+			labelView.Bordered = false;
+			labelView.Bezeled = false;
+			labelView.DrawsBackground = false;
+			labelView.StringValue = "Generate:";
+			labelView.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			labelView.WantsLayer = true;
+			labelView.Alignment = NSTextAlignment.Right;
 
-			this.ContentView.AddSubview (nativeViewCodeServiceView1);
-			nativeViewCodeServiceView1.Frame = nativeViewCodeServiceView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 177f, 142f, 20f));;
+			this.ContentView.AddSubview (labelView);
+			labelView.Frame = labelView.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 177f, 142f, 20f));;
 
 			// View:     namespacePopUp
 			// NodeName: "namespacePopUp"
 			// NodeType: INSTANCE
-			// NodeId:   576:78
+			// NodeId:   38:706
 			namespacePopUp = new AppKit.NSComboBox();
 			namespacePopUp.WantsLayer = true;
 			namespacePopUp.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
@@ -205,38 +206,38 @@ namespace MonoDevelop.Figma.Packages
 			this.ContentView.AddSubview (namespacePopUp);
 			namespacePopUp.Frame = namespacePopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (169f, 210f, 220f, 20f));;
 
-			// View:     nativeViewCodeServiceView2
+			// View:     labelView1
 			// NodeName: Namespace:
 			// NodeType: INSTANCE
-			// NodeId:   754:17
-			var nativeViewCodeServiceView2 = new AppKit.NSTextField();
-			nativeViewCodeServiceView2.Editable = false;
-			nativeViewCodeServiceView2.Bordered = false;
-			nativeViewCodeServiceView2.Bezeled = false;
-			nativeViewCodeServiceView2.DrawsBackground = false;
-			nativeViewCodeServiceView2.StringValue = "Namespace:";
-			nativeViewCodeServiceView2.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
-			nativeViewCodeServiceView2.WantsLayer = true;
-			nativeViewCodeServiceView2.Alignment = NSTextAlignment.Right;
+			// NodeId:   38:707
+			var labelView1 = new AppKit.NSTextField();
+			labelView1.Editable = false;
+			labelView1.Bordered = false;
+			labelView1.Bezeled = false;
+			labelView1.DrawsBackground = false;
+			labelView1.StringValue = "Namespace:";
+			labelView1.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			labelView1.WantsLayer = true;
+			labelView1.Alignment = NSTextAlignment.Right;
 
-			this.ContentView.AddSubview (nativeViewCodeServiceView2);
-			nativeViewCodeServiceView2.Frame = nativeViewCodeServiceView2.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 211f, 142f, 20f));;
+			this.ContentView.AddSubview (labelView1);
+			labelView1.Frame = labelView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 211f, 142f, 20f));;
 
-			// View:     nativeViewCodeServiceView3
+			// View:     lineView1
 			// NodeName: sep
 			// NodeType: VECTOR
-			// NodeId:   209:132
-			var nativeViewCodeServiceView3 = new AppKit.NSBox();
-			nativeViewCodeServiceView3.WantsLayer = true;
-			nativeViewCodeServiceView3.BoxType = NSBoxType.NSBoxSeparator;
+			// NodeId:   38:708
+			var lineView1 = new AppKit.NSBox();
+			lineView1.WantsLayer = true;
+			lineView1.BoxType = NSBoxType.NSBoxSeparator;
 
-			this.ContentView.AddSubview (nativeViewCodeServiceView3);
-			nativeViewCodeServiceView3.Frame = nativeViewCodeServiceView3.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 255.5f, 481f, 0f));;
+			this.ContentView.AddSubview (lineView1);
+			lineView1.Frame = lineView1.GetFrameForAlignmentRect (new CoreGraphics.CGRect (0f, 255.5f, 481f, 0f));;
 
 			// View:     versionSpinner
 			// NodeName: "versionSpinner"
 			// NodeType: INSTANCE
-			// NodeId:   772:27
+			// NodeId:   38:709
 			versionSpinner = new AppKit.NSProgressIndicator();
 			versionSpinner.WantsLayer = true;
 			versionSpinner.Style = NSProgressIndicatorStyle.Spinning;
@@ -249,7 +250,7 @@ namespace MonoDevelop.Figma.Packages
 			// View:     versionPopUp
 			// NodeName: "versionPopUp"
 			// NodeType: INSTANCE
-			// NodeId:   754:103
+			// NodeId:   38:710
 			versionPopUp = new AppKit.NSPopUpButton();
 			versionPopUp.WantsLayer = true;
 			versionPopUp.BezelStyle = NSBezelStyle.Rounded;
@@ -259,27 +260,27 @@ namespace MonoDevelop.Figma.Packages
 			this.ContentView.AddSubview (versionPopUp);
 			versionPopUp.Frame = versionPopUp.GetFrameForAlignmentRect (new CoreGraphics.CGRect (167f, 279f, 223f, 21f));;
 
-			// View:     nativeViewCodeServiceView4
+			// View:     labelView2
 			// NodeName: Version:
 			// NodeType: INSTANCE
-			// NodeId:   754:15
-			var nativeViewCodeServiceView4 = new AppKit.NSTextField();
-			nativeViewCodeServiceView4.Editable = false;
-			nativeViewCodeServiceView4.Bordered = false;
-			nativeViewCodeServiceView4.Bezeled = false;
-			nativeViewCodeServiceView4.DrawsBackground = false;
-			nativeViewCodeServiceView4.StringValue = "Version:";
-			nativeViewCodeServiceView4.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
-			nativeViewCodeServiceView4.WantsLayer = true;
-			nativeViewCodeServiceView4.Alignment = NSTextAlignment.Right;
+			// NodeId:   38:711
+			var labelView2 = new AppKit.NSTextField();
+			labelView2.Editable = false;
+			labelView2.Bordered = false;
+			labelView2.Bezeled = false;
+			labelView2.DrawsBackground = false;
+			labelView2.StringValue = "Version:";
+			labelView2.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			labelView2.WantsLayer = true;
+			labelView2.Alignment = NSTextAlignment.Right;
 
-			this.ContentView.AddSubview (nativeViewCodeServiceView4);
-			nativeViewCodeServiceView4.Frame = nativeViewCodeServiceView4.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 280f, 142f, 20f));;
+			this.ContentView.AddSubview (labelView2);
+			labelView2.Frame = labelView2.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 280f, 142f, 20f));;
 
 			// View:     figmaUrlTextField
 			// NodeName: "figmaUrlTextField"
 			// NodeType: INSTANCE
-			// NodeId:   754:192
+			// NodeId:   38:712
 			figmaUrlTextField = new AppKit.NSTextField();
 			figmaUrlTextField.WantsLayer = true;
 			figmaUrlTextField.PlaceholderString = "https://www.figma.com/file/";
@@ -287,22 +288,22 @@ namespace MonoDevelop.Figma.Packages
 			this.ContentView.AddSubview (figmaUrlTextField);
 			figmaUrlTextField.Frame = figmaUrlTextField.GetFrameForAlignmentRect (new CoreGraphics.CGRect (168f, 311f, 221f, 21f));;
 
-			// View:     nativeViewCodeServiceView5
+			// View:     labelView3
 			// NodeName: Figma URL:
 			// NodeType: INSTANCE
-			// NodeId:   754:13
-			var nativeViewCodeServiceView5 = new AppKit.NSTextField();
-			nativeViewCodeServiceView5.Editable = false;
-			nativeViewCodeServiceView5.Bordered = false;
-			nativeViewCodeServiceView5.Bezeled = false;
-			nativeViewCodeServiceView5.DrawsBackground = false;
-			nativeViewCodeServiceView5.StringValue = "Figma URL:";
-			nativeViewCodeServiceView5.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
-			nativeViewCodeServiceView5.WantsLayer = true;
-			nativeViewCodeServiceView5.Alignment = NSTextAlignment.Right;
+			// NodeId:   38:713
+			var labelView3 = new AppKit.NSTextField();
+			labelView3.Editable = false;
+			labelView3.Bordered = false;
+			labelView3.Bezeled = false;
+			labelView3.DrawsBackground = false;
+			labelView3.StringValue = "Figma URL:";
+			labelView3.Font = AppKit.NSFont.SystemFontOfSize (AppKit.NSFont.SystemFontSize);;
+			labelView3.WantsLayer = true;
+			labelView3.Alignment = NSTextAlignment.Right;
 
-			this.ContentView.AddSubview (nativeViewCodeServiceView5);
-			nativeViewCodeServiceView5.Frame = nativeViewCodeServiceView5.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 311f, 142f, 20f));;
+			this.ContentView.AddSubview (labelView3);
+			labelView3.Frame = labelView3.GetFrameForAlignmentRect (new CoreGraphics.CGRect (21f, 311f, 142f, 20f));;
 
 		}
 	}

@@ -12,7 +12,7 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using MonoDevelop.Ide;
 
-namespace MonoDevelop.Figma.Packages
+namespace MonoDevelop.Figma
 {
 	public partial class PackageUpdateWindow : AppKit.NSWindow
 	{

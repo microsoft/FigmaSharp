@@ -247,7 +247,7 @@ namespace MonoDevelop.Figma.Commands
 			} else
 				return;
 
-			var figmaBundleWindow = new Packages.GenerateViewsWindow (filePath, project);
+			var figmaBundleWindow = new GenerateViewsWindow (filePath, project);
 			await figmaBundleWindow.LoadAsync();
 
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
@@ -282,7 +282,7 @@ namespace MonoDevelop.Figma.Commands
 				return;
 
 			var bundle = FigmaBundle.FromDirectoryPath(currentFolder.Path.FullPath);
-			var figmaBundleWindow = new Packages.PackageUpdateWindow();
+			var figmaBundleWindow = new PackageUpdateWindow();
 			figmaBundleWindow.Load (bundle, currentFolder.Project);
 
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
@@ -318,7 +318,7 @@ namespace MonoDevelop.Figma.Commands
 				return;
 			}
 
-			var figmaBundleWindow = new Packages.FigmaPackageWindow(currentProject);
+			var figmaBundleWindow = new FigmaPackageWindow(currentProject);
 			var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow (IdeApp.Workbench.RootWindow);
 
 			currentIdeWindow.AddChildWindow (figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
