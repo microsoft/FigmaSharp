@@ -37,7 +37,7 @@ using FigmaSharp.NativeControls.Cocoa;
 namespace FigmaSharp.Services
 {
     public class NativeViewCodeService : FigmaCodeRendererService
-	{
+    {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
 		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? NativeControlsContext.Current.GetConverters(true),
@@ -150,6 +150,26 @@ namespace FigmaSharp.Services
 			base.OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 		}
 
-		#endregion
-	}
+
+        protected override bool RendersAddChild(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        {
+			return true;
+		}
+
+        protected override bool RendersSize(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        {
+			return true;
+		}
+
+        protected override bool RendersConstraints(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService rendererService)
+        {
+			if (node.Node.IsDialogParentContainer())
+				return false;
+			if (node.Node.IsNodeWindowContent())
+				return false;
+			return base.RendersConstraints(node, parent, rendererService);
+		}
+
+        #endregion
+    }
 }

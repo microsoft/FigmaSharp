@@ -35,26 +35,39 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
 {
     public class NativeControlsPropertyConverter : FigmaSharp.Cocoa.Converters.FigmaCodePropertyConverter
 	{
+        protected override string GetDefaultParentName (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        {
+            //component instance window case
+            if (currentNode.Node.Parent.IsInstanceContent(rendererService.figmaProvider, out var figmaInstance))
+            {
+                var viewName = figmaInstance.IsDialog() ? $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}" :
+                    CodeGenerationHelpers.This;
+                return viewName;
+            }
+
+            //window case
+            if (currentNode.Node.Parent.IsWindowContent() || currentNode.Node.Parent.IsDialogParentContainer())
+            {
+                var contentView = $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
+                return contentView;
+            }
+
+            if (currentNode.Node.Parent.IsMainDocumentView())
+            {
+                return CodeGenerationHelpers.This;
+            }
+
+            return null;
+        }
+
+
         public override string ConvertToCode (string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
 			if (currentNode.Node.Parent != null && propertyName == CodeProperties.AddChild) {
-                //component instance window case
-                if (currentNode.Node.Parent.IsInstanceContent (rendererService.figmaProvider, out var figmaInstance)) {
 
-                    var viewName = figmaInstance.IsDialog() ? $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}" :
-                        CodeGenerationHelpers.This;
-                    return CodeGenerationHelpers.GetMethod(viewName, nameof(NSView.AddSubview), currentNode.Name);
-                }
-
-				//window case
-				if (currentNode.Node.Parent.IsWindowContent () || currentNode.Node.Parent.IsDialogParentContainer ()) {
-                    var contentView = $"{CodeGenerationHelpers.This}.{nameof (NSWindow.ContentView)}";
-                    return CodeGenerationHelpers.GetMethod (contentView, nameof (NSView.AddSubview), currentNode.Name);
-                }
-
-				if (currentNode.Node.Parent.IsMainDocumentView ()) {
-                    return CodeGenerationHelpers.GetMethod (CodeGenerationHelpers.This, nameof (NSView.AddSubview), currentNode.Name);
-                }
+                var defaultParentName = GetDefaultParentName(currentNode, parentNode, rendererService);
+                if (!string.IsNullOrEmpty (defaultParentName))
+                    return CodeGenerationHelpers.GetMethod(defaultParentName, nameof(NSView.AddSubview), currentNode.Name);
             }
             return base.ConvertToCode (propertyName, currentNode, parentNode, rendererService);
         }
