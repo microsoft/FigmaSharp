@@ -28,12 +28,10 @@
 
 using System;
 using System.Text;
-
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 
@@ -71,5 +69,8 @@ namespace FigmaSharp.Cocoa.Converters
             }
             return builder.ToString();
         }
+
+        public override Type GetControlType(FigmaNode currentNode)
+            => typeof (AppKit.NSTextField);
     }
 }

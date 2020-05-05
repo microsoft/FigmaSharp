@@ -42,7 +42,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class TextFieldConverter : FigmaNativeControlConverter
 	{
-		public override Type ControlType => typeof(NSTextField);
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return typeof(NSTextField);
+		}
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
@@ -95,7 +98,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			var builder = new StringBuilder ();
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name,  ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor (name,  GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure (instance, name);
 

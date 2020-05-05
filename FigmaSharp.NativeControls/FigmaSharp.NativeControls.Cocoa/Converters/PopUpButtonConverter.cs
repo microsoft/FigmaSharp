@@ -42,7 +42,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class PopUpButtonConverter : FigmaNativeControlConverter
 	{
-		public override Type ControlType => typeof(NSPopUpButton);
+		public override Type GetControlType(FigmaNode currentNode)
+		{
+			return typeof(NSPopUpButton);
+		}
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
@@ -90,7 +93,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor(name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure(currentNode.Node, name);
 

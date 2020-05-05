@@ -39,7 +39,8 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
-        public override Type ControlType => typeof(NSImageView);
+        public override Type GetControlType(FigmaNode currentNode)
+            => typeof(NSImageView);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
@@ -70,7 +71,7 @@ namespace FigmaSharp.Cocoa.Converters
         {
             var builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (currentNode.Name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor (currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
             builder.Configure((FigmaVectorEntity)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();
         }

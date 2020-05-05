@@ -42,7 +42,8 @@ namespace FigmaSharp
 
     public abstract class CustomViewConverter
     {
-		public virtual Type ControlType { get; }
+		public abstract Type GetControlType (FigmaNode currentNode);
+
 		public virtual bool IsLayer { get; }
 
         public virtual string Name { get; } = FigmaCodeRendererService.DefaultViewName;
@@ -87,8 +88,15 @@ namespace FigmaSharp
 			}
 			return ids;
         }
-     
-        string GetIdentifierValue (string data, string parameter)
+
+		string RemoveQuotes(string data, bool enable = false)
+		{
+            if (enable)
+            return data.Replace("\"", "");
+            return data;
+        }
+
+        protected string GetIdentifierValue (string data, string parameter, bool removeQuotes = false)
         {
             var index = data.IndexOf($"{parameter}:", System.StringComparison.InvariantCultureIgnoreCase);
             if (index > -1)
@@ -97,8 +105,8 @@ namespace FigmaSharp
                 var endIndex = delta.IndexOf(" ", System.StringComparison.InvariantCultureIgnoreCase);
 
                 if (endIndex == -1)
-                    return delta;
-                return delta.Substring(0, endIndex);
+                    return RemoveQuotes (delta, removeQuotes);
+                return RemoveQuotes (delta.Substring(0, endIndex), removeQuotes);
             }
 			return null;
         }

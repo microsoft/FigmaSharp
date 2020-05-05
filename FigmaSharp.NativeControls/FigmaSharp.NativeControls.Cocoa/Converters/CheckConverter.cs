@@ -43,7 +43,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
     public class CheckConverter : FigmaNativeControlConverter
     {
-        public override Type ControlType => typeof(NSButton);
+        public override Type GetControlType(FigmaNode currentNode)
+        {
+            return typeof(NSButton);
+        }
 
         public override bool CanConvert(FigmaNode currentNode)
         {
@@ -106,7 +109,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (name, ControlType, rendererService.NodeRendersVar (currentNode, parentNode));
+                builder.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar (currentNode, parentNode));
 
             builder.Configure (currentNode.Node, name);
 
@@ -141,7 +144,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             //check with labels needs check in child
 
             var checkButtonFigmaNode = figmaInstance.children
-                .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.CheckBox)
+                .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox)
                 as FigmaFrameEntity;
 
             if (checkButtonFigmaNode != null) {

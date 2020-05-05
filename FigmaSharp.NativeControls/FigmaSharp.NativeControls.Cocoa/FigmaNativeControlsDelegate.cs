@@ -50,6 +50,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			if (converters == null) {
 				converters = new FigmaViewConverter[] {
+					new CustomViewCodeConverter (),
 					new ImageRenderConverter (),
 					new StepperConverter (),
 					new DisclosureConverter (),
