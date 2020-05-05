@@ -47,6 +47,8 @@ namespace LocalFile.Cocoa
 
 		public override bool ScanChildren(FigmaNode currentNode) => false;
 		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService) => string.Empty;
+
+		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}
 }
 

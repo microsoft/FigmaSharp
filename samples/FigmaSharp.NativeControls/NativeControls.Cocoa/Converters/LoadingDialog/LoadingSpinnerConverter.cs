@@ -60,6 +60,8 @@ namespace LocalFile.Cocoa
 		{
 			return string.Empty;
 		}
+
+		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}
 }
 

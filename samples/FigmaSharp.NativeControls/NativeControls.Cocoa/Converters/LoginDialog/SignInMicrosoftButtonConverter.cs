@@ -31,6 +31,7 @@ using FigmaSharp.Views;
 using System.Linq;
 using FigmaSharp.Services;
 using FigmaSharp.NativeControls.Cocoa;
+using System;
 
 namespace LocalFile.Cocoa
 {
@@ -73,6 +74,11 @@ namespace LocalFile.Cocoa
 		{
 			return string.Empty;
 		}
-	}
+
+        public override Type GetControlType(FigmaNode currentNode)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 
