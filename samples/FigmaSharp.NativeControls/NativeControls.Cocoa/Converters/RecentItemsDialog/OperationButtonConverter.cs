@@ -24,6 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using FigmaSharp;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -58,6 +59,8 @@ namespace LocalFile.Cocoa
 		{
 			return string.Empty;
 		}
-	}
+
+		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSProgressIndicator);
+    }
 }
 
