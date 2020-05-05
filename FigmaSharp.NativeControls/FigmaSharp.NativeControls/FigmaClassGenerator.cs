@@ -5,9 +5,71 @@ using System.Linq;
 
 namespace FigmaSharp
 {
+	public enum CodeObjectModifier
+	{
+		Private,
+		Public,
+		Protected
+	}
+
+    public abstract class CodeObject
+    {
+		public string Name { get; private set; }
+
+		public CodeObject (string name)
+        {
+			Name = name;
+
+		}
+
+		public CodeObjectModifier MethodModifier { get; set; } = CodeObjectModifier.Private;
+
+		abstract public void Write(FigmaClassBase figmaClassBase, StringBuilder sb);
+	}
+
+	public class EnumCodeObject : CodeObject
+	{
+		public List<(string, Rectangle)> Values;
+
+		public EnumCodeObject(string name, List<(string, Rectangle)> values) : base(name)
+		{
+			Values = values;
+		}
+
+		public override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
+		{
+			figmaClassBase.AddTabLevel();
+			figmaClassBase.GenerateEnum(sb, Name, CodeObjectModifier.Public);
+			for (int i = 0; i < Values.Count; i++)
+			{
+				var comma = (i < Values.Count - 1) ? "," : "";
+				figmaClassBase.AppendLine(sb, $"{Values[i].Item1}{comma}");
+			}
+			figmaClassBase.RemoveTabLevel();
+			figmaClassBase.CloseBracket(sb);
+		}
+	}
+	
+    public class ClassMethodCodeObject : CodeObject
+	{
+		public List<(string, string)> Args = new List<(string, string)>();
+
+		public ClassMethodCodeObject (string name) : base(name)
+		{
+		
+		}
+
+		public override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
+		{
+			figmaClassBase.GenerateMethod(sb, Name, CodeObjectModifier.Public);
+			Write (figmaClassBase, sb);
+			figmaClassBase.CloseBracket(sb);
+		}
+	}
+
 	public class FigmaPartialDesignerClass : FigmaClassBase
 	{
-		public List<(Type memberType, string name)> PrivateMembers = new List<(Type memberType, string name)>();
+		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 		public string Namespace { get; set; }
 		public string ClassName { get; set; }
 
@@ -26,7 +88,7 @@ namespace FigmaSharp
 
 		protected void GenerateInitializeComponentMethod (StringBuilder sb)
 		{
-			GeneratePrivateMethod (sb, InitializeComponentMethodName);
+			GenerateMethod (sb, InitializeComponentMethodName);
 
 			if (InitializeComponentContent != null) {
 				foreach (var line in InitializeComponentContent.Split ('\n')) {
@@ -34,7 +96,16 @@ namespace FigmaSharp
 				}
 			}
 			RemoveTabLevel ();
-			CloseBracket (sb);
+			CloseMethod (sb);
+		}
+
+		protected virtual void GenerateMethods (StringBuilder sb)
+		{
+			foreach (var method in this.Methods)
+			{
+				AppendLine(sb);
+				method.Write(this, sb);
+			}
 		}
 
 		protected void GenerateMembers(StringBuilder sb)
@@ -52,7 +123,7 @@ namespace FigmaSharp
 					.ToArray ();
 
 				var separatedValues = string.Join(", ", items);
-				AppendLine(sb, $"private {member.FullName} {separatedValues};");
+				AppendLine(sb, $"private {member} {separatedValues};");
 			}
 			AppendLine (sb);
 		}
@@ -68,6 +139,7 @@ namespace FigmaSharp
 			GeneratePartialDesignerClass (sb, ClassName);
 			GenerateMembers (sb);
 			GenerateInitializeComponentMethod (sb);
+			GenerateMethods (sb);
 			ClosePartialDesignerClass (sb);
 			CloseNamespace (sb);
 			return sb.ToString ();
@@ -114,6 +186,8 @@ namespace FigmaSharp
 	{
 		protected const string InitializeComponentMethodName = "InitializeComponent";
 
+		public List<CodeObject> Methods = new List<CodeObject>();
+
 		public List<string> Usings { get; } = new List<string>();
 		public List<string> Comments { get; } = new List<string>();
 
@@ -121,33 +195,34 @@ namespace FigmaSharp
 
 		public bool ShowManifestComments => Manifest != null;
 
-		int CurrentTabIndex = 0;
+		protected int CurrentTabIndex = 0;
 
-		protected void RemoveTabLevel() => CurrentTabIndex--;
+		public void RemoveTabLevel() => CurrentTabIndex--;
+		public void AddTabLevel() => CurrentTabIndex++;
 
 		protected void GenerateComments(StringBuilder builder)
 		{
 			if (ShowManifestComments) {
-				Manifest.ToComment (builder);
+				Manifest.ToComment(builder);
 			}
 			foreach (var current in Comments) {
-				builder.AppendLine ($"// {current}");
+				builder.AppendLine($"// {current}");
 			}
 		}
 
-		public void Save (string filePath)
+		public void Save(string filePath)
 		{
-			var code = Generate ();
+			var code = Generate();
 			try {
-				if (System.IO.File.Exists (filePath))
-					System.IO.File.Delete (filePath);
-				System.IO.File.WriteAllText (filePath, code);
+				if (System.IO.File.Exists(filePath))
+					System.IO.File.Delete(filePath);
+				System.IO.File.WriteAllText(filePath, code);
 			} catch (Exception ex) {
-				System.Diagnostics.Debug.Fail (ex.ToString ());
+				System.Diagnostics.Debug.Fail(ex.ToString());
 			}
 		}
 
-		protected void GenerateUsings (StringBuilder builder)
+		protected void GenerateUsings(StringBuilder builder)
 		{
 			builder.AppendLine();
 
@@ -155,12 +230,34 @@ namespace FigmaSharp
 				builder.AppendLine($"using {current};");
 		}
 
-		protected void GeneratePrivateMethod (StringBuilder sb, string methodName)
+		internal void GenerateEnum(StringBuilder sb, string name, CodeObjectModifier objectModifier)
 		{
-			AppendLine (sb, $"private void {methodName} ()");
-			OpenBracket (sb);
+			AppendLine(sb, $"{objectModifier.ToString().ToLower()} enum {name}");
+			OpenBracket(sb);
 		}
-		protected void ClosePrivateMethod (StringBuilder sb) => CloseBracket (sb);
+
+		internal void GenerateMethod (StringBuilder sb, string methodName,
+			CodeObjectModifier modifier = CodeObjectModifier.Private, List<(string, string)> arguments = null)
+		{
+			string args = string.Empty;
+
+			if (arguments != null)
+			{
+				for (int i = 0; i < arguments.Count; i++)
+				{
+					var argument = arguments[i];
+
+					if (i > 0)
+						args += ", ";
+
+					args += $"{argument.Item1} {argument.Item2}";
+				}
+			}
+			AppendLine(sb, $"{modifier.ToString ().ToLower ()} void {methodName} ({args})");
+			OpenBracket(sb);
+		}
+
+		internal void CloseMethod (StringBuilder sb) => CloseBracket (sb);
 
 		protected void GenerateNamespace (StringBuilder sb, string fullNamespace)
 		{
@@ -177,24 +274,23 @@ namespace FigmaSharp
 		}
 		protected void CloseConstructor (StringBuilder sb) => CloseBracket (sb);
 
-		protected void CloseBracket (StringBuilder sb)
+		internal void CloseBracket (StringBuilder sb)
 		{
 			AppendLine (sb, "}");
 			CurrentTabIndex--;
 		}
 
-		protected void OpenBracket (StringBuilder sb)
+		internal void OpenBracket (StringBuilder sb)
 		{
 			AppendLine (sb, "{");
 			CurrentTabIndex++;
 		}
 
-		protected void AppendLine(StringBuilder sb, string line) {
+		public void AppendLine(StringBuilder sb, string line) {
 			if (string.IsNullOrWhiteSpace(line)) {
 				sb.AppendLine();
 				return;
 			}
-
 			sb.AppendLine($"{new string('\t', CurrentTabIndex)}{line}");
 		}
 
@@ -207,5 +303,6 @@ namespace FigmaSharp
 		}
 
 		protected abstract string OnGenerate ();
-	}
+
+    }
 }

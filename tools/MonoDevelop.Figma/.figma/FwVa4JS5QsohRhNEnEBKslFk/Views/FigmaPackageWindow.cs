@@ -108,9 +108,11 @@ namespace MonoDevelop.Figma.Packages
 			//to generate all layers we need a code renderer
 			var codeRendererService = new NativeViewCodeService (fileProvider);
 
-			var mainFigmaNodes = fileProvider.GetMainLayers();
+			var mainFigmaNodes = fileProvider.GetMainGeneratedLayers();
 			foreach (var figmaNode in mainFigmaNodes)
 			{
+				if (!(figmaNode is FigmaFrameEntity) || (figmaNode is FigmaGroup))
+					continue;
 				var figmaBundleView = currentBundle.GetFigmaFileView(figmaNode);
 				figmaBundleView.Generate(codeRendererService, writePublicClassIfExists: false, namesSpace: currentBundle.Namespace, translateLabels);
 

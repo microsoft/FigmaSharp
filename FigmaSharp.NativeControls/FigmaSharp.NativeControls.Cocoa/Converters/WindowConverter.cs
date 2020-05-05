@@ -59,7 +59,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			var builder = new StringBuilder();
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(currentNode.Name, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
+				builder.WriteConstructor(currentNode.Name, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
 			currentNode.Node.TryGetNodeCustomName(out string nodeName);

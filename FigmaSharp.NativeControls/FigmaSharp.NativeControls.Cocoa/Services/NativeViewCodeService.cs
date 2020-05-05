@@ -38,7 +38,7 @@ namespace FigmaSharp.Services
 {
     public class NativeViewCodeService : FigmaCodeRendererService
 	{
-		public List<(Type memberType, string name)> PrivateMembers = new List<(Type memberType, string name)>();
+		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
 		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? NativeControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? NativeControlsContext.Current.GetCodePropertyConverter ())
@@ -50,18 +50,29 @@ namespace FigmaSharp.Services
 		{
 			if (parent != null && IsMainNode(parent.Node) && (CurrentRendererOptions?.RendersConstructorFirstElement ?? false))
 				return false;
-			else
-				return true;
+			return true;
 		}
 
 		#region Rendering
 
 		internal override bool IsNodeSkipped (FigmaCodeNode node)
 		{
-			if (node.Node.IsDialogParentContainer ())
+            if (node.Node is FigmaInstance nodeInstance && nodeInstance.Parent is FigmaFrameEntity figmaFrameEntity && figmaFrameEntity.Parent is FigmaCanvas)
+            {
+                if (figmaProvider.TryGetMainComponent(nodeInstance, out _))
+                    return true;
+            }
+
+            if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity) {
+                return true;
+            }
+
+            if (node.Node.IsDialogParentContainer())
 				return true;
-			if (node.Node.IsWindowContent ())
+
+			if (node.Node.IsWindowContent())
 				return true;
+
 			return false;
 		}
 
@@ -80,6 +91,9 @@ namespace FigmaSharp.Services
 				if (node.Node is IFigmaNodeContainer nodeContainer) {
 					var item = nodeContainer.children.FirstOrDefault (s => s.IsNodeWindowContent ());
 					if (item != null && item is IFigmaNodeContainer children) {
+						//instance of a component is not code rendered (we create an additional class)
+						if (node.Node is FigmaInstance)
+							return new FigmaNode[0];
 						return children.children;
 					} else {
 						var instance = node.Node.GetDialogInstanceFromParentContainer ();
@@ -95,18 +109,24 @@ namespace FigmaSharp.Services
 
 		internal override bool HasChildrenToRender (FigmaCodeNode node)
 		{
+			if (node.Node is FigmaInstance nodeInstance)
+			{
+				if (figmaProvider.TryGetMainComponent(nodeInstance, out _))
+					return true;
+			}
+
 			if (node.Node.IsDialogParentContainer ()) {
 				return true;
 			}
 			return base.HasChildrenToRender (node);
 		}
 
-		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, out string identifier)
+		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, out string identifier)
 		{
 			if (node.Node.TryGetCodeViewName (out identifier)) {
 				return true;
 			}
-			return base.TryGetCodeViewName (node, parent, out identifier);
+			return base.TryGetCodeViewName (node, parent, converter, out identifier);
 		}
 
 		protected override void OnStartGetCode()
@@ -119,14 +139,14 @@ namespace FigmaSharp.Services
 			base.Clear();
 		}
 
-		protected override void OnPostConvertToCode(StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
-			if (converter is FigmaNativeControlConverter nativeControlConverter) {
-				if (nativeControlConverter.ControlType != null && node.Node.TryGetNodeCustomName (out string name)) {
-					PrivateMembers.Add((nativeControlConverter.ControlType, name));
+			if (!NodeRendersVar (node, parent)) {
+				if (converter.ControlType != null && node.Node.TryGetNodeCustomName (out string name)) {
+					PrivateMembers.Add ((converter.ControlType.FullName, name));
 				}
 			}
-			base.OnPostConvertToCode(builder, node, parent, converter, codePropertyConverter);
+			base.OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 		}
 
 		#endregion

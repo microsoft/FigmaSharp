@@ -37,8 +37,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public abstract class FigmaNativeControlConverter : FigmaViewConverter
 	{
-		public virtual Type ControlType { get; }
-
 		public override bool ScanChildren(FigmaNode currentNode)
 		{
 			return false;

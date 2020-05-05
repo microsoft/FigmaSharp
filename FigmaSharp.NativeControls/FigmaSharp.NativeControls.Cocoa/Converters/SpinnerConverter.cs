@@ -79,7 +79,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name,  ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
+				builder.WriteConstructor (name,  ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure (figmaInstance, name);
 
@@ -157,7 +157,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			string progressBarName = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(progressBarName, ControlType, !currentNode.Node.TryGetNodeCustomName(out var _));
+				builder.WriteConstructor(progressBarName, ControlType, rendererService.NodeRendersVar(currentNode, parentNode));
 
 			builder.Configure(figmaInstance, progressBarName);
 			builder.WriteEquality(progressBarName, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);

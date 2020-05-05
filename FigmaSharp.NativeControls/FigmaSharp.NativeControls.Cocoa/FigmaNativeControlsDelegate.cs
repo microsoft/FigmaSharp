@@ -79,9 +79,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode)
 		{
+			if (figmaNode.IsComponentContainer ())  {
+				return new FigmaContainerBundleWindow(bundle, name, figmaNode);
+			}
+
 			if (figmaNode is IFigmaNodeContainer nodeContainer) {
 				foreach (var figmaInstance in nodeContainer.children) {
-
 					if (figmaInstance.IsWindowOfType (NativeControlType.WindowStandard)) 
 						return new FigmaBundleWindow (bundle, name, figmaNode);
 					if (figmaInstance.IsWindowOfType (NativeControlType.WindowSheet))

@@ -19,7 +19,7 @@ namespace FigmaSharp.Services
 
 		internal IFigmaFileProvider figmaProvider;
 
-		FigmaCodePropertyConverterBase codePropertyConverter;
+		internal FigmaCodePropertyConverterBase codePropertyConverter;
 
 		FigmaViewConverter[] figmaConverters;
 		FigmaViewConverter[] customConverters;
@@ -49,6 +49,9 @@ namespace FigmaSharp.Services
 
 		public bool IsMainNode (FigmaNode figmaNode) => MainNode != null && figmaNode == MainNode?.Node;
 
+
+		readonly internal List<FigmaCodeNode> Nodes = new List<FigmaCodeNode>();
+
 		public virtual void Clear ()
 		{
 			CurrentRendererOptions = null;
@@ -61,9 +64,13 @@ namespace FigmaSharp.Services
 			//in first level we clear all identifiers
 			if (parent == null) {
 				if (MainNode == null) {
+
+					//clear all nodes
+					Nodes.Clear();
+
 					identifiers.Clear ();
 					OnStartGetCode ();
-
+					
 					//we initialize
 					CurrentRendererOptions = currentRendererOptions ?? new FigmaCodeRendererServiceOptions ();
 
@@ -72,6 +79,9 @@ namespace FigmaSharp.Services
 					ParentMainNode = parent;
 				}
 			}
+
+			if (node != null)
+				Nodes.Add(node);
 
 			FigmaCodeNode calculatedParentNode = null;
 			FigmaViewConverter converter = null;
@@ -90,7 +100,7 @@ namespace FigmaSharp.Services
 				if (converter != null) {
 					if (!node.HasName) {
 
-						if (!TryGetCodeViewName (node, parent, out string identifier)) {
+						if (!TryGetCodeViewName (node, parent, converter, out string identifier)) {
 							identifier = DefaultViewName;
 						}
 
@@ -136,7 +146,8 @@ namespace FigmaSharp.Services
 			var navigateChild = converter?.ScanChildren (node.Node) ?? true; 
 			if (navigateChild && HasChildrenToRender (node)) {
 				foreach (var item in GetChildrenToRender (node)) {
-					GetCode (builder, new FigmaCodeNode (item, null), calculatedParentNode);
+					var figmaNode = new FigmaCodeNode(item, parent: node);
+					GetCode (builder, figmaNode, calculatedParentNode);
 				}
 			}
 
@@ -156,7 +167,17 @@ namespace FigmaSharp.Services
 			
 		}
 
-		protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		public bool NodeRendersVar (FigmaCodeNode currentNode, FigmaCodeNode parentNode)
+        {
+			if (currentNode.Node.GetNodeTypeName () == "mastercontent") {
+				return false;
+            }
+
+			return !currentNode.Node.TryGetNodeCustomName(out var _);
+
+		}
+
+        protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 
 		}
@@ -175,10 +196,10 @@ namespace FigmaSharp.Services
 		const string end = "Converter";
 		const string ViewIdentifier = "View";
 
-		protected virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, out string identifier)
+		protected virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, out string identifier)
 		{
 			try {
-				identifier = GetType ().Name;
+				identifier = converter.GetType().Name;
 				if (identifier.StartsWith (init)) {
 					identifier = identifier.Substring (init.Length);
 				}

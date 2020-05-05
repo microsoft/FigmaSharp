@@ -46,19 +46,21 @@ namespace FigmaSharp.Services
 		event EventHandler ImageLinksProcessed;
 		List<FigmaNode> Nodes { get; }
 		FigmaFileResponse Response { get; }
-		void Load (string file);
-		Task LoadAsync(string file);
 
+		string GetContentTemplate(string file);
+
+		Task LoadAsync(string file);
+		void Load(string file);
 		void Save (string filePath);
-		string GetContentTemplate (string file);
 		void OnStartImageLinkProcessing (List<ProcessedNode> imageVectors);
 
-		FigmaNode[] GetMainLayers ();
+		FigmaNode[] GetMainGeneratedLayers ();
 
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
-	}
+        bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
+    }
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
 	{
@@ -314,11 +316,14 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		public FigmaNode[] GetMainLayers()
+		public FigmaNode[] GetMainGeneratedLayers ()
 		{
-			return Nodes
-				.Where(s => s.Parent is FigmaCanvas && !s.name.StartsWith("#") && !s.name.StartsWith("//") && s.GetType() == typeof(FigmaFrameEntity))
-				.ToArray();
+			return GetMainLayers (s => !s.name.StartsWith("#") && !s.name.StartsWith("//")).ToArray();
+		}
+
+		public IEnumerable<FigmaNode> GetMainLayers (Func<FigmaNode, bool> action = null)
+		{
+			return Nodes.Where(s => s.Parent is FigmaCanvas && (action?.Invoke (s) ?? true));
 		}
 
 		public FigmaNode FindByFullPath (string fullPath)
@@ -389,5 +394,24 @@ namespace FigmaSharp.Services
 		{
 			Response.Save (filePath);
 		}
-	}
+
+        public bool TryGetMainComponent(FigmaInstance nodeInstance, out FigmaInstance result)
+        {
+			//Get the instance
+			var componentNode = GetMainGeneratedLayers();
+			foreach (var item in componentNode)
+			{
+				foreach (var instance in item.GetChildren<FigmaInstance>())
+				{
+					if (instance != null && instance.componentId == nodeInstance.componentId)
+					{
+						result = nodeInstance;
+						return true;
+					}
+				}
+			}
+			result = null;
+			return false;
+		}
+    }
 }

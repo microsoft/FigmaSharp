@@ -257,6 +257,33 @@ namespace FigmaSharp.NativeControls
             return (node.Parent?.IsDialogParentContainer() ?? false) && node.IsNodeWindowContent ();
         }
 
+        public static bool TryGetInstanceDialogParentContainer (this FigmaNode figmaNode, Services.IFigmaFileProvider provider, out FigmaInstance instanceDialog)
+        {
+            if (figmaNode is IFigmaNodeContainer container)
+            {
+                foreach (var item in container.children)
+                {
+                    if (item is FigmaInstance figmaInstance && provider.TryGetMainComponent(figmaInstance, out instanceDialog))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            instanceDialog = null;
+            return false;
+        }
+
+        public static bool IsInstanceContent(this FigmaNode node, Services.IFigmaFileProvider provider, out FigmaInstance instanceDialog)
+        {
+            if (node.Parent != null && TryGetInstanceDialogParentContainer(node.Parent, provider, out instanceDialog) && node.IsNodeWindowContent())
+            {
+                return true;
+            }
+            instanceDialog = null;
+            return false;
+        }
+
         public static FigmaNode GetWindowContent (this FigmaNode node)
         {
             if (node is IFigmaNodeContainer nodeContainer)
@@ -280,6 +307,11 @@ namespace FigmaSharp.NativeControls
             return node.GetNodeTypeName () == "content";
         }
 
+        public static bool IsNodeWindowMasterContent(this FigmaNode node)
+        {
+            return node.GetNodeTypeName() == "mastercontent";
+        }
+
         public static bool HasChildren (this FigmaNode node)
         {
             return node is IFigmaNodeContainer;
@@ -287,9 +319,17 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode)
         {
-            return figmaNode is IFigmaNodeContainer container && container.children.Any (s => s.IsDialog ());
+            return figmaNode is IFigmaNodeContainer container
+				&& container.children.Any (s => s.IsDialog ());
         }
 
+        /// <summary>
+		/// Gets current FigmaNode children WITHOUT the FigmaInstance
+		/// </summary>
+		/// <param name="figmaNode"></param>
+		/// <param name="func"></param>
+		/// <param name="reverseChildren"></param>
+		/// <returns></returns>
         public static IEnumerable<FigmaNode> GetChildren(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null, bool reverseChildren = false)
         {
             if ((figmaNode.GetWindowContent() ?? figmaNode) is IFigmaNodeContainer container) {
@@ -326,15 +366,18 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
         {
-            return figmaNode is IFigmaNodeContainer container && container.children.OfType<FigmaInstance> ().Any (s => s.IsWindowOfType (controlType));
+            return figmaNode is IFigmaNodeContainer container && container.children
+                .OfType<FigmaInstance> ()
+                .Any (s => s.IsWindowOfType (controlType));
         }
 
         public static FigmaInstance GetDialogInstanceFromParentContainer (this FigmaNode figmaNode)
         {
             if (!(figmaNode is IFigmaNodeContainer cont))
                 return null;
-            return cont.children.OfType<FigmaInstance> ()
+            var dialog = cont.children.OfType<FigmaInstance> ()
                 .FirstOrDefault (s => s.IsDialog ());
+            return dialog;
         }
 
         public static bool IsDialog (this FigmaNode figmaNode)
@@ -344,6 +387,11 @@ namespace FigmaSharp.NativeControls
                 return true;
             }
             return false;
+        }
+
+        public static bool IsComponentContainer (this FigmaNode node)
+        {
+            return (node is FigmaInstance || node is FigmaComponentEntity) && node.name.Contains("!container");
         }
 
         public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)

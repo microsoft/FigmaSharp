@@ -38,6 +38,14 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
         public override string ConvertToCode (string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
 			if (currentNode.Node.Parent != null && propertyName == CodeProperties.AddChild) {
+                //component instance window case
+                if (currentNode.Node.Parent.IsInstanceContent (rendererService.figmaProvider, out var figmaInstance)) {
+
+                    var viewName = figmaInstance.IsDialog() ? $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}" :
+                        CodeGenerationHelpers.This;
+                    return CodeGenerationHelpers.GetMethod(viewName, nameof(NSView.AddSubview), currentNode.Name);
+                }
+
 				//window case
 				if (currentNode.Node.Parent.IsWindowContent () || currentNode.Node.Parent.IsDialogParentContainer ()) {
                     var contentView = $"{CodeGenerationHelpers.This}.{nameof (NSWindow.ContentView)}";
@@ -47,7 +55,6 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
 				if (currentNode.Node.Parent.IsMainDocumentView ()) {
                     return CodeGenerationHelpers.GetMethod (CodeGenerationHelpers.This, nameof (NSView.AddSubview), currentNode.Name);
                 }
-
             }
             return base.ConvertToCode (propertyName, currentNode, parentNode, rendererService);
         }

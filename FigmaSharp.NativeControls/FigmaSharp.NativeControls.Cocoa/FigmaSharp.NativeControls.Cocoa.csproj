@@ -82,6 +82,7 @@
     <Compile Include="Converters\TextViewConverter.cs" />
     <Compile Include="Converters\TabViewConverter.cs" />
     <Compile Include="PropertyConverters\FigmaCodeViewConverter.cs" />
+    <Compile Include="FigmaContainerBundleWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
