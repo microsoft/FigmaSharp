@@ -44,10 +44,6 @@ namespace FigmaSharp.Cocoa.Converters
 		{
 			if (propertyName == CodeProperties.Frame)
 			{
-
-				if (currentNode.Node.Parent is FigmaCanvas)
-					return string.Empty;
-
 				System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
 				if (currentNode.Node is IAbsoluteBoundingBox absoluteBounding)
@@ -94,7 +90,6 @@ namespace FigmaSharp.Cocoa.Converters
 			{
 				if (currentNode.Node is IAbsoluteBoundingBox container)
 				{
-
 					if (currentNode.Node is FigmaLine line)
 					{
 						var width = container.absoluteBoundingBox.Width == 0 ? 1 : container.absoluteBoundingBox.Width;

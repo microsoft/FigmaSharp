@@ -28,6 +28,7 @@
 
 using FigmaSharp.Services;
 using FigmaSharp.Models;
+using FigmaSharp.Cocoa;
 
 namespace FigmaSharp
 {
@@ -46,7 +47,10 @@ namespace FigmaSharp
 
             //restore this state
             var builder = new System.Text.StringBuilder ();
-            var options = new FigmaCodeRendererServiceOptions() {
+
+			builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSView.TranslatesAutoresizingMaskIntoConstraints), false);
+
+			var options = new FigmaCodeRendererServiceOptions() {
                 TranslateLabels = translateLabels
             };
 

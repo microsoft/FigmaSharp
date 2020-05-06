@@ -29,9 +29,9 @@ namespace FigmaSharp
 
 	public class EnumCodeObject : CodeObject
 	{
-		public List<(string, Rectangle)> Values;
+		public List<Models.FigmaFrameEntity> Values;
 
-		public EnumCodeObject(string name, List<(string, Rectangle)> values) : base(name)
+		public EnumCodeObject(string name, List<Models.FigmaFrameEntity> values) : base(name)
 		{
 			Values = values;
 		}
@@ -43,7 +43,7 @@ namespace FigmaSharp
 			for (int i = 0; i < Values.Count; i++)
 			{
 				var comma = (i < Values.Count - 1) ? "," : "";
-				figmaClassBase.AppendLine(sb, $"{Values[i].Item1}{comma}");
+				figmaClassBase.AppendLine(sb, $"{Values[i].GetClassName ()}{comma}");
 			}
 			figmaClassBase.RemoveTabLevel();
 			figmaClassBase.CloseBracket(sb);
@@ -274,15 +274,17 @@ namespace FigmaSharp
 		}
 		protected void CloseConstructor (StringBuilder sb) => CloseBracket (sb);
 
-		internal void CloseBracket (StringBuilder sb)
+		internal void CloseBracket (StringBuilder sb, bool removeTabIndex = true)
 		{
 			AppendLine (sb, "}");
+			if (removeTabIndex)
 			CurrentTabIndex--;
 		}
 
-		internal void OpenBracket (StringBuilder sb)
+		internal void OpenBracket (StringBuilder sb, bool addTabIndex = true)
 		{
 			AppendLine (sb, "{");
+			if (addTabIndex)
 			CurrentTabIndex++;
 		}
 
