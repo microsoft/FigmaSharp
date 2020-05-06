@@ -257,6 +257,19 @@ namespace FigmaSharp.NativeControls
             return (node.Parent?.IsDialogParentContainer() ?? false) && node.IsNodeWindowContent ();
         }
 
+        public static bool IsParentMainContainer (this FigmaNode node)
+        {
+            if (node is FigmaFrameEntity figmaFrameEntity && figmaFrameEntity.Parent is FigmaCanvas) {
+                return true;
+            };
+            return false;
+        }
+
+        public static bool IsParentMainContainerContent(this FigmaNode node)
+        {
+            return (node.Parent?.IsParentMainContainer() ?? false) && node.IsNodeWindowContent();
+        }
+
         public static bool TryGetInstanceDialogParentContainer (this FigmaNode figmaNode, Services.IFigmaFileProvider provider, out FigmaInstance instanceDialog)
         {
             if (figmaNode is IFigmaNodeContainer container)
