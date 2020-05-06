@@ -51,6 +51,8 @@ namespace FigmaSharp
 		FigmaCodeNode parentNode;
 		FigmaCodeRendererService rendererService;
 
+		const int DefaultWindowBarHeight = 22;
+
 		public ShowContentMethodCodeObject(List<FigmaFrameEntity> figmaFrames, string name, string contentViewName, string enumTypeName, FigmaCodeNode parentNode, FigmaCodeRendererService figmaRendererService) : base (name)
         {
 			MethodModifier = CodeObjectModifier.Public;
@@ -102,6 +104,10 @@ namespace FigmaSharp
 				var parentNode = new FigmaCodeNode(figmaFrameEntities[i], nameof(AppKit.NSWindow.ContentView));
 				var nodeContent = figmaFrameEntities[i].children.FirstOrDefault(s => s.IsNodeWindowContent());
 
+				//hack:
+				var oldboundingBox = figmaFrameEntities[i].absoluteBoundingBox;
+				figmaFrameEntities[i].absoluteBoundingBox = new Rectangle(oldboundingBox.X, oldboundingBox.Y + DefaultWindowBarHeight, oldboundingBox.Width, oldboundingBox.Height - DefaultWindowBarHeight);
+
 				var codeNode = new FigmaCodeNode(nodeContent, contentViewName, parent: parentNode);
 				var frameCode = rendererService.codePropertyConverter.ConvertToCode(CodeProperties.Frame, codeNode, parentNode, rendererService);
 
@@ -112,11 +118,15 @@ namespace FigmaSharp
                 foreach (var line in contraintsCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
 					figmaClassBase.AppendLine(sb, line);
 
+				figmaFrameEntities[i].absoluteBoundingBox = oldboundingBox;
+
 				figmaClassBase.RemoveTabLevel();
 
 				figmaClassBase.CloseBracket(sb,removeTabIndex: false);
 			}
 			figmaClassBase.RemoveTabLevel();
+
+			figmaClassBase.CloseBracket(sb);
 		}
 	}
 
