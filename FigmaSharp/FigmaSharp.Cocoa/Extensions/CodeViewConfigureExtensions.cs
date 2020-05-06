@@ -17,6 +17,8 @@ namespace FigmaSharp.Cocoa
 				builder.WriteEquality (name, nameof (NSView.Hidden), !figmaNode.visible);
 			}
 
+			builder.WriteEquality(name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
+
 			//if (drawFrameSize && figmaNode is IAbsoluteBoundingBox container) {
 			//	var sizeConstructor = typeof (CGSize).GetConstructor (
 			//		container.absoluteBoundingBox.Width.ToDesignerString (),
