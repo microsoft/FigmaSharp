@@ -120,7 +120,7 @@ namespace MonoDevelop.Figma
 			return test;
 		}
 
-		async Task<ProjectFile> CreateBundleView(FigmaBundleViewBase figmaBundleView, Project currentProject, IFigmaFileProvider fileProvider)
+		async Task<ProjectFile> CreateBundleView(FigmaBundleViewBase figmaBundleView, Project currentProject, IFigmaFileProvider fileProvider, bool translateStrings)
 		{
 			var bundle = figmaBundleView.Bundle;
 
@@ -130,7 +130,7 @@ namespace MonoDevelop.Figma
 			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter();
 			var codeRendererService = new NativeViewCodeService(fileProvider, converters, codePropertyConverter);
 
-			figmaBundleView.Generate(outputDirectory, codeRendererService);
+			figmaBundleView.Generate(outputDirectory, codeRendererService, namesSpace: bundle.Namespace, translateStrings: translateStrings);
 
 			var partialDesignerClassFilePath = Path.Combine(outputDirectory, figmaBundleView.PartialDesignerClassName);
 			var publicCsClassFilePath = Path.Combine(outputDirectory, figmaBundleView.PublicCsClassName);
@@ -195,7 +195,7 @@ namespace MonoDevelop.Figma
 			foreach (var item in selectedData)
 			{
 				IdeApp.Workbench.StatusBar.ShowMessage($"Generating {item.Description}…");
-				await CreateBundleView(item.View, project, item.fileProvider);
+				await CreateBundleView(item.View, project, item.fileProvider, translationsCheckbox.State == NSCellStateValue.On);
 			}
 
 			await IdeApp.ProjectOperations.SaveAsync(project);
