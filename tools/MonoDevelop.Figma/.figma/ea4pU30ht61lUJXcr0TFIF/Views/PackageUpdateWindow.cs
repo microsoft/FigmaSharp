@@ -65,7 +65,7 @@ namespace MonoDevelop.Figma
 				.Where(s => s.TryGetFigmaPackageId(out var packageId) && packageId == mainBundle.FileId);
 
 			var version = versionMenu.GetFileVersion(versionPopUp.SelectedItem);
-			await project.UpdateFigmaFilesAsync (files, mainBundle, version, false);
+			await project.UpdateFigmaFilesAsync (files, mainBundle, version, translationsCheckbox.State == AppKit.NSCellStateValue.On);
 
 			IdeApp.Workbench.StatusBar.AutoPulse = false;
 			IdeApp.Workbench.StatusBar.EndProgress();
