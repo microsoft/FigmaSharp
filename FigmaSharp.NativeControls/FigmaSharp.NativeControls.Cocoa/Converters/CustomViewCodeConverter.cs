@@ -74,6 +74,9 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
 				if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 					builder.WriteConstructor(currentNode.Name, type, !currentNode.Node.TryGetNodeCustomName(out var _));
 			}
+
+			builder.Configure(currentNode.Node, currentNode.Name);
+
 			return builder;
 		}
 

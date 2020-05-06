@@ -126,14 +126,28 @@ namespace FigmaSharp.Services
 
 					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
 					//we generate our code and replace node name
+
 					var code = converter.ConvertToCode (node, parent, this);
 					builder.AppendLineIfValue (code.Replace (Resources.Ids.Conversion.NameIdentifier, node.Name));
 					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 
-					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.AddChild, node, parent, this));
-					OnChildAdded (builder, node, parent, converter, codePropertyConverter);
-					builder.AppendLineIfValue (codePropertyConverter.ConvertToCode (CodeProperties.Frame, node, parent, this));
-					OnFrameSet (builder, node, parent, converter, codePropertyConverter);
+
+					if (RendersAddChild(node, parent, this))
+					{
+						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(CodeProperties.AddChild, node, parent, this));
+						OnChildAdded(builder, node, parent, converter, codePropertyConverter);
+					}
+
+					if (RendersSize(node, parent, this))
+                    {
+						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(CodeProperties.Frame, node, parent, this));
+						OnFrameSet(builder, node, parent, converter, codePropertyConverter);
+					}
+
+					if (RendersConstraints(node, parent, this))
+					{
+						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(CodeProperties.Constraints, node, parent, this));
+					}
 
 					calculatedParentNode = node;
 				} else {
@@ -157,7 +171,22 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		protected virtual void OnStartGetCode ()
+        protected virtual bool RendersConstraints(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        {
+			return !((node != null && node == MainNode) || node.Node is FigmaCanvas || node.Node.Parent is FigmaCanvas);
+		}
+
+		protected virtual bool RendersSize(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        {
+			return true;
+		}
+
+		protected virtual bool RendersAddChild(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        {
+			return true;
+        }
+
+        protected virtual void OnStartGetCode ()
 		{
 
 		}

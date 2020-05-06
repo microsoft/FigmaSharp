@@ -12,6 +12,14 @@ namespace FigmaSharp.Cocoa
 
 		public const string This = "this";
 
+        public static class Math
+        {
+			public static string Max (float min, float max)
+            {
+				return $"{typeof(Math).FullName}.{nameof(Math.Max)}({min.ToDesignerString()}, {max.ToDesignerString ()})";
+			}
+        }
+
 		public static class Font
 		{
 			public static string SystemFontOfSize(string font)
@@ -85,6 +93,43 @@ namespace FigmaSharp.Cocoa
 			parameters = inQuotes ? $"\"{parameters}\"" : parameters;
 			var semicolon = includesSemicolon ? ";" : "";
 			return $"{viewName}.{methodName} ({parameters}){semicolon}";
+		}
+
+
+		public static string GetWidthConstraintEqualToConstant(string viewName, string value)
+		{
+			return $"{viewName}.{nameof(AppKit.NSView.WidthAnchor)}.{nameof(AppKit.NSView.WidthAnchor.ConstraintEqualToConstant)} ({value})";
+		}
+
+		public static string GetHeightConstraintEqualToConstant(string viewName, string value)
+		{
+			return $"{viewName}.{nameof(AppKit.NSView.HeightAnchor)}.{nameof(AppKit.NSView.HeightAnchor.ConstraintEqualToConstant)} ({value})";
+		}
+
+		public static string GetLeftConstraintEqualToAnchor(string firstViewName, float firstViewValue, string secondViewName)
+		{
+			return GetConstraintEqualToAnchor(firstViewName, nameof(AppKit.NSView.LeftAnchor), firstViewValue, secondViewName, nameof(AppKit.NSView.LeftAnchor));
+		}
+
+		public static string GetTopConstraintEqualToAnchor(string firstViewName, float firstViewValue, string secondViewName)
+		{
+			return GetConstraintEqualToAnchor(firstViewName, nameof(AppKit.NSView.TopAnchor), firstViewValue, secondViewName, nameof(AppKit.NSView.TopAnchor));
+		}
+
+		public static string GetBottomConstraintEqualToAnchor(string firstViewName, float firstViewValue, string secondViewName)
+		{
+			return GetConstraintEqualToAnchor(firstViewName, nameof(AppKit.NSView.BottomAnchor), firstViewValue, secondViewName, nameof(AppKit.NSView.BottomAnchor));
+		}
+
+		public static string GetRightConstraintEqualToAnchor(string firstViewName, float firstViewValue, string secondViewName)
+		{
+			return GetConstraintEqualToAnchor(firstViewName, nameof(AppKit.NSView.RightAnchor), firstViewValue, secondViewName, nameof(AppKit.NSView.RightAnchor));
+		}
+
+
+		public static string GetConstraintEqualToAnchor(string firstViewName, string firstAnchorPropertyName, float firstViewValue, string secondViewName, string secondAnchorPropertyName)
+		{
+			return $"{firstViewName}.{firstAnchorPropertyName}.{nameof(AppKit.NSView.TopAnchor.ConstraintEqualToAnchor)} ({secondViewName}.{secondAnchorPropertyName}, {firstViewValue}f)";
 		}
 	}
 }

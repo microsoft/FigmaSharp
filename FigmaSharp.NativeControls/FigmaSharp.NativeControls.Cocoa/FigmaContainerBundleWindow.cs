@@ -46,15 +46,22 @@ namespace FigmaSharp
 
 		readonly string argumentName;
 		readonly string enumTypeName;
-		public List<(string, Rectangle)> figmaFrameEntities;
+		public List<FigmaFrameEntity> figmaFrameEntities;
 
-        public ShowContentMethodCodeObject(List<(string, Rectangle)> figmaFrames, string name, string contentViewName, string enumTypeName) : base (name)
+		FigmaCodeNode parentNode;
+		FigmaCodeRendererService rendererService;
+
+		const int DefaultWindowBarHeight = 22;
+
+		public ShowContentMethodCodeObject(List<FigmaFrameEntity> figmaFrames, string name, string contentViewName, string enumTypeName, FigmaCodeNode parentNode, FigmaCodeRendererService figmaRendererService) : base (name)
         {
 			MethodModifier = CodeObjectModifier.Public;
 			argumentName = "content";
 			selectedContentName = "SelectedContent";
 			figmaFrameEntities = figmaFrames;
 
+			this.rendererService = figmaRendererService;
+			this.parentNode = parentNode;
 			this.contentViewName = contentViewName;
 			this.enumTypeName = enumTypeName;
 		}
@@ -73,41 +80,51 @@ namespace FigmaSharp
 			var frameName = "frame";
 			figmaClassBase.AppendLine(sb, $"var {frameName} = {typeof (CoreGraphics.CGRect).FullName}.{nameof (CoreGraphics.CGRect.Empty)};");
 
-			//switch
-			figmaClassBase.AppendLine(sb, $"switch ({argumentName})");
-			figmaClassBase.OpenBracket(sb);
-
 			for (int i = 0; i < figmaFrameEntities.Count; i++)
 			{
-				var className = figmaFrameEntities[i].Item1;
+				string ifcase = "if";
 				if (i > 0)
-					figmaClassBase.RemoveTabLevel();
+					ifcase = "else " + ifcase;
 
-				figmaClassBase.AppendLine(sb, $"case {enumTypeName}.{className}:");
+				var className = figmaFrameEntities[i].GetClassName();
+
+				figmaClassBase.AppendLine(sb, $"{ifcase} ({argumentName} == {enumTypeName}.{className}) {{");
 				figmaClassBase.AddTabLevel();
 				figmaClassBase.AppendLine(sb, $"{contentViewName} = new {className}();");
+				figmaClassBase.AppendLine(sb, $"{nameof(AppKit.NSWindow.ContentView)}.{nameof(AppKit.NSView.AddSubview)}({contentViewName});");
 
-				var rect = figmaFrameEntities[i].Item2.ToCGRect().ToDesignerString();
-				figmaClassBase.AppendLine(sb, $"{frameName} = {contentViewName}.{nameof(AppKit.NSView.GetFrameForAlignmentRect)} ({rect});");
-				figmaClassBase.AppendLine(sb, "break;");
+				//var leftConstraintStringValue = CodeGenerationHelpers.GetLeftConstraintEqualToAnchor(
+				//	contentViewName, figmaFrameEntities[i].Item2.Left, nameof(AppKit.NSWindow.ContentView));
+				//figmaClassBase.AppendLine(sb, $"{figmaFrameEntities[i].Item2}.{nameof (AppKit.NSLayoutConstraint.Active)} = {true.ToDesignerString ()};");
+
+				//var topConstraintStringValue = CodeGenerationHelpers.GetLeftConstraintEqualToAnchor(
+				//	contentViewName, figmaFrameEntities[i].Item2.Left, nameof(AppKit.NSWindow.ContentView));
+				//figmaClassBase.AppendLine(sb, $"{figmaFrameEntities[i].Item2}.{nameof(AppKit.NSLayoutConstraint.Active)} = {true.ToDesignerString()};");
+
+				var parentNode = new FigmaCodeNode(figmaFrameEntities[i], nameof(AppKit.NSWindow.ContentView));
+				var nodeContent = figmaFrameEntities[i].children.FirstOrDefault(s => s.IsNodeWindowContent());
+
+				//hack:
+				var oldboundingBox = figmaFrameEntities[i].absoluteBoundingBox;
+				figmaFrameEntities[i].absoluteBoundingBox = new Rectangle(oldboundingBox.X, oldboundingBox.Y + DefaultWindowBarHeight, oldboundingBox.Width, oldboundingBox.Height - DefaultWindowBarHeight);
+
+				var codeNode = new FigmaCodeNode(nodeContent, contentViewName, parent: parentNode);
+				var frameCode = rendererService.codePropertyConverter.ConvertToCode(CodeProperties.Frame, codeNode, parentNode, rendererService);
+
+				foreach (var line in frameCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+					figmaClassBase.AppendLine(sb, line);
+
+				var contraintsCode = rendererService.codePropertyConverter.ConvertToCode(CodeProperties.Constraints, codeNode, parentNode, rendererService);
+                foreach (var line in contraintsCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+					figmaClassBase.AppendLine(sb, line);
+
+				figmaFrameEntities[i].absoluteBoundingBox = oldboundingBox;
+
+				figmaClassBase.RemoveTabLevel();
+
+				figmaClassBase.CloseBracket(sb,removeTabIndex: false);
 			}
-
 			figmaClassBase.RemoveTabLevel();
-			figmaClassBase.CloseBracket (sb);
-
-			//if case
-			figmaClassBase.AppendLine(sb, string.Empty);
-
-			figmaClassBase.AddTabLevel();
-			figmaClassBase.AppendLine(sb, $"if ({contentViewName} != null)");
-			figmaClassBase.OpenBracket(sb);
-			figmaClassBase.AppendLine(sb, $"{nameof(AppKit.NSWindow.ContentView)}.{nameof(AppKit.NSView.AddSubview)}({contentViewName});");
-
-			figmaClassBase.AppendLine(sb, $"{contentViewName}.{nameof(AppKit.NSView.Frame)} = {frameName};");
-
-			figmaClassBase.RemoveTabLevel();
-
-			figmaClassBase.CloseBracket(sb);
 
 			figmaClassBase.CloseBracket(sb);
 		}
@@ -149,7 +166,6 @@ namespace FigmaSharp
 			var converter = codeRendererService.codePropertyConverter;
 
 			var names = windows.OfType <FigmaFrameEntity> ()
-				.Select(s =>  (s.GetClassName(), GetRectangle(s)))
 				.ToList ();
 
 			var enumName = "Content";
@@ -159,7 +175,8 @@ namespace FigmaSharp
 			var currentContent = "currentContent";
 			var contentName = "ShowContent";
 
-			var contentClassMethod = new ShowContentMethodCodeObject (names, contentName, currentContent, enumName);
+			var figmaCode = new FigmaCodeNode(FigmaNode);
+			var contentClassMethod = new ShowContentMethodCodeObject (names, contentName, currentContent, enumName, figmaCode, codeRendererService);
             partialDesignerClass.Methods.Add (contentClassMethod);
 			partialDesignerClass.PrivateMembers.Add ((typeof(AppKit.NSView).FullName, currentContent));
 			partialDesignerClass.PrivateMembers.Add ((enumName, contentClassMethod.SelectedContentName));
