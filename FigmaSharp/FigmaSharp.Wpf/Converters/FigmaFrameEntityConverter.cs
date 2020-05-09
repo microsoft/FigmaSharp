@@ -31,6 +31,8 @@ using System.Windows.Controls;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
+using System.Windows;
+using System;
 
 namespace FigmaSharp.Wpf.Converters
 {
@@ -38,13 +40,43 @@ namespace FigmaSharp.Wpf.Converters
     { 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
+            IView view;
+            if (rendererService.ProcessesImageFromNode(currentNode))
+                view = new FigmaSharp.Wpf.ImageView();
+            else
+                view = new FigmaSharp.Wpf.View();
+
+            var currengroupView = view.NativeObject as FrameworkElement;
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            currengroupView.Configure(currentNode);
+            
+            // TODO: Resolve alpha, background color
+            //currengroupView.AlphaValue = figmaFrameEntity.opacity;
 
-            var image = new CanvasImage();
-            var figmaImageView = new ImageView();
-            image.Configure(figmaFrameEntity);
+            if (figmaFrameEntity.HasFills)
+            {
+                foreach (var fill in figmaFrameEntity.fills)
+                {
+                    if (fill.type == "IMAGE")
+                    {
+                        //we need to add this to our service
+                    }
+                    else if (fill.type == "SOLID")
+                    {
+                        if (fill.visible)
+                        {
+                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"NOT IMPLEMENTED FILL : {fill.type}");
+                    }
+                    //currengroupView.Layer.Hidden = !fill.visible;
+                }
+            }
 
-            return figmaImageView;
+            return view; 
         }
          
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

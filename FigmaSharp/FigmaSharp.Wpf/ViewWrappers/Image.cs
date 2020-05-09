@@ -15,8 +15,9 @@ namespace FigmaSharp.Wpf
 			get => new Size((int)image.Width, (int)image.Height);
 			set
 			{ 
-				image.Width = value.Width;
-				image.Height = value.Height;
+				// not possible :(
+				//image.Width = value.Width;
+				//image.Height = value.Height;
 			}
 		}
 

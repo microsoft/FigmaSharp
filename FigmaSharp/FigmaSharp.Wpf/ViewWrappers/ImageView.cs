@@ -9,17 +9,26 @@ namespace FigmaSharp.Wpf
 {
     public class ImageView : View, IImageView
     {
-        public ImageView(CanvasImage pictureBox) : base(pictureBox)
+        readonly System.Windows.Controls.Image imageView;
+         
+        public ImageView(System.Windows.Controls.Image imageView) : base(imageView)
         {
         }
 
-        public ImageView() : this(new CanvasImage ())
+        public ImageView() : this(new System.Windows.Controls.Image())
         {
         }
 
-        public void SetImage(IImageView image)
+        IImage image;
+        public IImage Image 
         {
-            ((CanvasImage)nativeView).SetImage (image.NativeObject as ImageSource);
-        } 
+            get => image;
+            set
+            {
+                image = value;
+                var nativeImage = (ImageSource)Image.NativeObject;
+                imageView.Source = nativeImage;
+            }
+        }
     }
 }

@@ -86,9 +86,9 @@ namespace FigmaSharp.Wpf
         {
             ImageView imageView = null;
             Application.Current.Dispatcher.Invoke(() => {
-                var picture = new CanvasImage();
-                imageView = new ImageView(picture);
-                imageView.SetImage(image);
+            //var picture = new CanvasImage();
+            imageView = new ImageView();// picture);
+                imageView.Image = image;
             });
           
             return imageView;

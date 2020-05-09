@@ -13,11 +13,11 @@ namespace FigmaSharp.Wpf.PropertyConverter
     {
         public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService)
         {
-            //if (propertyName == CodeProperties.AddChild)
-            //{
-            //    parent?.AddChild(view);
-            //    return;
-            //}
+            if (propertyName == CodeProperties.AddChild)
+            {
+                parent?.AddChild(view);
+                return;
+            }
             //if (propertyName == CodeProperties.Constraints)
             //{
             //    if (currentNode is IConstraints constrainedNode && view.NativeObject is AppKit.NSView nativeView && parent.NativeObject is AppKit.NSView parentNativeView)

@@ -34,12 +34,13 @@ namespace FigmaSharp.Wpf
 {
     public class CanvasImage : Canvas, IDisposable
     {
-        public System.Windows.Controls.Image ImageView {
+        public System.Windows.Controls.Image ImageView
+        {
             get;
             private set;
         }
 
-        public CanvasImage ()
+        public CanvasImage()
         {
             ImageView = new System.Windows.Controls.Image();
             ImageView.ClipToBounds = true;
@@ -68,7 +69,7 @@ namespace FigmaSharp.Wpf
             }
         }
 
-        void Refresh ()
+        void Refresh()
         {
             if (!Children.Contains(ImageView))
                 return;
