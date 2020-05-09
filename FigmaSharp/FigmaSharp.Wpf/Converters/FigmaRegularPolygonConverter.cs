@@ -16,7 +16,7 @@ namespace FigmaSharp.Wpf.Converters
         {
             var currengroupView = new CanvasImage();
             currengroupView.Configure((FigmaRegularPolygon)currentNode);
-            return new ImageView(currengroupView);
+            return new ImageView();// currengroupView);
         }
          
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

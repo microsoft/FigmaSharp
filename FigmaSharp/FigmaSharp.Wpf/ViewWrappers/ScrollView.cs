@@ -40,9 +40,9 @@ namespace FigmaSharp.Wpf
         readonly ScrollViewer scrollView;
 
         Canvas canvasContainer;
-        IView canvasContainerWrapper;
+        IView canvasContainerWrapper; 
 
-        public Color BackgroundColor
+        public new Color BackgroundColor
         {
             get => scrollView.Background.ToFigmaColor();
             set => scrollView.Background = value.ToColor();
@@ -51,7 +51,7 @@ namespace FigmaSharp.Wpf
         public override IReadOnlyList<IView> Children => canvasContainerWrapper.Children;
 
         public IView ContentView {
-            get => new View(canvasContainer);
+            get => canvasContainerWrapper;
             set {
                 if (value!= null && value.NativeObject is Canvas canvas)
                 {

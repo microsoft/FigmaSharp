@@ -12,6 +12,10 @@ namespace FigmaSharp.Wpf
     {
         protected FrameworkElement nativeView;
 
+        public View() :this(new FrameworkElement())
+        { 
+        }
+
         public View(FrameworkElement nativeView)
         {
             this.nativeView = nativeView;
@@ -191,7 +195,14 @@ namespace FigmaSharp.Wpf
 
         public Size IntrinsicContentSize => throw new NotImplementedException();
 
-        public Color BackgroundColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Color BackgroundColor {
+            get { 
+                return Color.White;
+            } 
+            set
+            { 
+            }
+        }
 
         public void SetAlignmentRect(float x, float y, float width, float height)
         {

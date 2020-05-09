@@ -40,10 +40,10 @@ namespace FigmaSharp.Wpf.Converters
             var figmaEntity = (RectangleVector)currentNode;
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageView();
+            var rectangleView = new View(image); 
             image.Configure(figmaEntity);
 
-            return figmaImageView;
+            return rectangleView;
         } 
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
