@@ -55,10 +55,13 @@ namespace FigmaSharp.NativeControls.Cocoa
             var view = (NSButton)button.NativeObject;
             view.Title = "";
 
+            bool writesTitle = true;
+
             figmaInstance.TryGetNativeControlComponentType(out var controlType);
 
             if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark)
             {
+                writesTitle = false;
                 view.BezelStyle = NSBezelStyle.HelpButton;
             }
             else
@@ -97,10 +100,11 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .OfType<FigmaText>()
                     .FirstOrDefault();
 
-                if (label != null)
-                {
+                if (writesTitle && label != null) {
                     button.Text = label.characters;
                     //view.Font = label.style.ToNSFont();
+                } else {
+                    button.Text = string.Empty;
                 }
 
                 if (group.name == "Disabled")
@@ -118,10 +122,14 @@ namespace FigmaSharp.NativeControls.Cocoa
                    .OfType<FigmaText>()
                    .FirstOrDefault();
 
-                if (label != null)
+                if (writesTitle && label != null)
                 {
                     button.Text = label.characters;
                     //view.Font = label.style.ToNSFont();
+                }
+                else
+                {
+                    button.Text = string.Empty;
                 }
             }
 
@@ -140,10 +148,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             builder.Configure (currentNode.Node, name);
 
-            builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Rounded);
+            figmaInstance.TryGetNativeControlComponentType(out var controlType);
 
-            figmaInstance.TryGetNativeControlComponentType (out var controlType);
-
+            bool writesTitle = true;
+            if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark)
+            {
+                writesTitle = false;
+                builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
+            }
+            else
+                builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+           
             switch (controlType) {
                 case NativeControlComponentType.ButtonLarge:
                 case NativeControlComponentType.ButtonLargeDark:
@@ -173,9 +188,11 @@ namespace FigmaSharp.NativeControls.Cocoa
                     .OfType<FigmaText> ()
                     .FirstOrDefault ();
 
-                if (label != null) {
+                if (writesTitle && label != null) {
                     var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
                     builder.WriteEquality (name, nameof (NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+                } else {
+                    builder.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
                 }
 
                 if (group.name == "Disabled") {
@@ -188,10 +205,12 @@ namespace FigmaSharp.NativeControls.Cocoa
                    .OfType<FigmaText> ()
                    .FirstOrDefault ();
 
-                if (label != null) {
+                if (writesTitle && label != null) {
                     var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
                     builder.WriteEquality (name, nameof (NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                     //view.Font = label.style.ToNSFont ();
+                } else {
+                    builder.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
                 }
             }
             return builder;
