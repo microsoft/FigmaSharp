@@ -231,19 +231,21 @@ namespace FigmaSharp
 		//Generates all the resources from the current .figmafile
 		internal static void GenerateOutputResourceFiles (string fileId, FigmaFileResponse figmaResponse, string resourcesDirectoryPath)
 		{
-			var mainNode = figmaResponse.document.children.FirstOrDefault ();
+			var figmaImageIds = new List<string>();
 
-			var figmaImageIds = OfTypeImage (mainNode)
-				.Select (s => s.id)
-				.ToArray ();
+			foreach (var mainNode in figmaResponse.document.children)
+			{
+				figmaImageIds.AddRange(OfTypeImage(mainNode).Select(s => s.id));
+			}
 
-			if (figmaImageIds.Length > 0) {
+			//var mainNode = figmaResponse.document.children.FirstOrDefault ();
+			if (figmaImageIds.Count > 0) {
 
 				if (!Directory.Exists (resourcesDirectoryPath)) {
 					Directory.CreateDirectory (resourcesDirectoryPath);
 				}
 
-				var figmaImageResponse = AppContext.Api.GetImages (fileId, figmaImageIds);
+				var figmaImageResponse = AppContext.Api.GetImages (fileId, figmaImageIds.ToArray ());
 				FileHelper.SaveFiles (figmaResponse, resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
 			}
 		}

@@ -318,7 +318,7 @@ namespace FigmaSharp.Services
 
 		public FigmaNode[] GetMainGeneratedLayers ()
 		{
-			return GetMainLayers (s => !s.name.StartsWith("#") && !s.name.StartsWith("//")).ToArray();
+			return GetMainLayers (s => s.TryGetNodeCustomName (out var customName) && !s.name.StartsWith("#") && !s.name.StartsWith("//")).ToArray();
 		}
 
 		public IEnumerable<FigmaNode> GetMainLayers (Func<FigmaNode, bool> action = null)
