@@ -25,6 +25,7 @@
  */
 
 
+using System;
 using Foundation;
 
 namespace FigmaSharpApp
@@ -39,23 +40,29 @@ namespace FigmaSharpApp
 
         public void AddRecent(string link_id, string title)
         {
-            NSDictionary readonlyDict = NSUserDefaults.StandardUserDefaults.DictionaryForKey(recentDocumentsString);
-            NSMutableDictionary dict = new NSMutableDictionary(readonlyDict);
+            try
+            {
+                NSDictionary readonlyDict = NSUserDefaults.StandardUserDefaults.DictionaryForKey(recentDocumentsString);
+                NSMutableDictionary dict = new NSMutableDictionary(readonlyDict);
 
-            if (dict == null)
-                dict = new NSMutableDictionary();
+                if (dict == null)
+                    dict = new NSMutableDictionary();
 
-            dict.Add(new NSString(link_id), new NSString(title));
+                dict.Add(new NSString(link_id), new NSString(title));
 
-            if (!string.IsNullOrWhiteSpace(title))
-                NSUserDefaults.StandardUserDefaults.SetString(title, mostRecentDocumentString);
-            else
-                NSUserDefaults.StandardUserDefaults.SetString(link_id, mostRecentDocumentString);
+                if (!string.IsNullOrWhiteSpace(title))
+                    NSUserDefaults.StandardUserDefaults.SetString(title, mostRecentDocumentString);
+                else
+                    NSUserDefaults.StandardUserDefaults.SetString(link_id, mostRecentDocumentString);
 
-            NSUserDefaults.StandardUserDefaults.SetValueForKey(dict, new NSString(recentDocumentsString));
-            NSUserDefaults.StandardUserDefaults.Synchronize();
+                NSUserDefaults.StandardUserDefaults.SetValueForKey(dict, new NSString(recentDocumentsString));
+                NSUserDefaults.StandardUserDefaults.Synchronize();
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
-
 
         public NSDictionary GetRecents()
         {
