@@ -63,7 +63,6 @@ namespace FigmaSharpApp
 			CancelButton.Activated += delegate { View.Window.Close (); };
 
 			OpenButton.Activated += OpenButtonActivated;
-			OpenButton.Enabled = CheckFormIsFilled ();
 		}
 
 		void UpdateComboBox ()
@@ -97,6 +96,7 @@ namespace FigmaSharpApp
 		{
 			base.ViewDidAppear();
 			UpdateComboBox();
+			OpenButton.Enabled = CheckFormIsFilled();
 
 			if (OpenLocationWindow.Window != null)
 				OpenLocationWindow.Window.Center();
