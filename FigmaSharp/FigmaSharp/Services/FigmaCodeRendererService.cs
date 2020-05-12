@@ -9,7 +9,6 @@ namespace FigmaSharp.Services
 {
 	public class FigmaCodeRendererServiceOptions
 	{
-		public IColorConverter ColorConverter { get; set; }
 		public bool RendersConstructorFirstElement { get; set; }
 		public bool TranslateLabels { get; set; }
 	}
@@ -22,15 +21,18 @@ namespace FigmaSharp.Services
 
 		internal FigmaCodePropertyConverterBase codePropertyConverter;
 
+		internal IColorConverter colorConverter;
+
 		FigmaViewConverter[] figmaConverters;
 		FigmaViewConverter[] customConverters;
 
 		public FigmaCodeRendererService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters,
-			FigmaCodePropertyConverterBase codePropertyConverter)
+			FigmaCodePropertyConverterBase codePropertyConverter, IColorConverter colorConverter = null)
 		{
 			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
 			this.figmaConverters = figmaViewConverters.Where (s => s.IsLayer).ToArray (); ;
 			this.figmaProvider = figmaProvider;
+			this.colorConverter = colorConverter;
 			this.codePropertyConverter = codePropertyConverter;
 		}
 

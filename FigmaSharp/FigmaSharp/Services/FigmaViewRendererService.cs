@@ -346,14 +346,16 @@ namespace FigmaSharp.Services
 
     public class FigmaViewRendererService : FigmaRendererService
     {
+        internal IColorConverter colorConverter;
+
         public FigmaViewPropertySetterBase PropertySetter { get; }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
+        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, IColorConverter colorConverter = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
-          
+            this.colorConverter = colorConverter;
         }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters, FigmaViewPropertySetterBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters, FigmaViewPropertySetterBase propertySetter, IColorConverter colorConverter = null) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }

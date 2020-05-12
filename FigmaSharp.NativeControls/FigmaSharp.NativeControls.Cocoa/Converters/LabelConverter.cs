@@ -75,7 +75,6 @@ namespace FigmaSharp.NativeControls.Cocoa
                     textField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
                     break;
                 case NativeControlComponentType.LabelSecondary:
-                    textField.TextColor = NSColor.SecondaryLabelColor;
                     textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
                     break;
                 case NativeControlComponentType.LabelSmall:
@@ -86,6 +85,9 @@ namespace FigmaSharp.NativeControls.Cocoa
                     textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
                     break;
             }
+
+			if (rendererService is FigmaViewRendererService rnd && figmaText.TryGetNSColorByStyleKey (rnd.FileProvider, rnd.colorConverter, FigmaStyle.Keys.Fill, out NSColor textColor))
+                textField.TextColor = textColor;
 
             textField.Configure(figmaText, configureColor: false);
             textField.PreferredMaxLayoutWidth = 1;
@@ -100,8 +102,11 @@ namespace FigmaSharp.NativeControls.Cocoa
             var figmaText = (FigmaText)figmaInstance.children
                 .FirstOrDefault(s => s.name == "lbl");
 
-            if (figmaText == null)
+            //TODO: Not sure about this check 
+            if (figmaText == null) {
+                Console.WriteLine("{1}:{2} No figma node in {0}", GetType ().FullName, currentNode.Node.id, currentNode.Node.name);
                 return null;
+            }
 
             StringBuilder builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode)) {
@@ -133,15 +138,16 @@ namespace FigmaSharp.NativeControls.Cocoa
                         CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
                     break;
                 case NativeControlComponentType.LabelSecondary:
-                    builder.WriteEquality(currentNode.Name, nameof(NSTextField.TextColor), string.Format("{0}.{1}", typeof(NSColor), nameof(NSColor.SecondaryLabelColor)));
                     builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
                         CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
                     break;
             }
 
-            //builder.Configure(figmaText, currentNode.Name);
             builder.Configure(currentNode.Node, currentNode.Name);
 
+            var colorConverter = rendererService.colorConverter;
+            if (colorConverter != null && figmaText.TryGetStringColorByStyleKey(rendererService.figmaProvider, rendererService.colorConverter, FigmaStyle.Keys.Fill, out string textColor))
+                builder.WriteEquality(currentNode.Name, nameof(NSTextField.TextColor), textColor);
 
             var alignment = FigmaExtensions.ToNSTextAlignment(figmaText.style.textAlignHorizontal);
             if (alignment != default) {

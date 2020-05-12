@@ -38,14 +38,16 @@ namespace FigmaSharp.Services
 {
     public class NativeViewRenderingService : FigmaViewRendererService
 	{
-		public NativeViewRenderingService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaViewPropertySetterBase propertySetter = null)
+        public NativeViewRenderingService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null,
+			FigmaViewPropertySetterBase propertySetter = null,
+			IColorConverter colorConverter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? NativeControlsContext.Current.GetConverters (),
-                  propertySetter ?? NativeControlsContext.Current.GetViewPropertySetter()
-                  )
+                  propertySetter ?? NativeControlsContext.Current.GetViewPropertySetter(),
+                  colorConverter)
 		{
 
-		}
+        }
 
 		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
 		{

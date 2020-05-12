@@ -68,6 +68,11 @@ namespace FigmaSharp.Models
 
     public class FigmaStyle
     {
+		public class Keys
+		{
+            public const string Fill = "fill";
+		}
+
         public string key { get; set; }
         public string name { get; set; }
         public string styleType { get; set; }

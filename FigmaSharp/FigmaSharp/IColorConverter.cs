@@ -30,8 +30,9 @@ namespace FigmaSharp
 {
 	public interface IColorConverter
 	{
-		object FromStyle(object color);
-		object FromColor(object color);
-		object ToStringColor(object color);
-	}
+        string FromColorToStyle(object color);
+        string FromStyleToStringColor(string style);
+        object FromStyleToColor(string colorStyleName);
+        object FromStringColorToStyle(object color);
+    }
 }

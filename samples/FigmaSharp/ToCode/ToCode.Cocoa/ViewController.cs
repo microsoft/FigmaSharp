@@ -61,7 +61,9 @@ namespace ToCode.Cocoa
 			fileProvider.Load (fileId);
 
 			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-			codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
+			var colorConverter = new ColorConverter();
+
+			codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter, colorConverter: colorConverter);
 
 			data = new FigmaNodeView (fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes (fileProvider.Response.document, data);
@@ -106,7 +108,10 @@ namespace ToCode.Cocoa
 			codeRenderer.Clear();
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
-			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
+			var color = new ColorConverter();
+			var options = new FigmaCodeRendererServiceOptions() {
+				TranslateLabels = openUrlButton.State == NSCellStateValue.On,
+			};
 			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null, options);
 			CopyToLogView (builder.ToString ());
 		}
