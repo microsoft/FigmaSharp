@@ -60,6 +60,8 @@ namespace FigmaSharp.Services
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
         bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
+
+        bool TryGetStyle(string fillStyleValue, out FigmaStyle style);
     }
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
@@ -413,5 +415,11 @@ namespace FigmaSharp.Services
 			result = null;
 			return false;
 		}
-    }
+
+        public bool TryGetStyle (string fillStyleValue, out FigmaStyle style)
+        {
+			return Response.styles.TryGetValue(fillStyleValue, out style);
+			// string.Format("{0}.{1}", typeof(NSColor), nameof(NSColor.SecondaryLabelColor)
+		}
+	}
 }

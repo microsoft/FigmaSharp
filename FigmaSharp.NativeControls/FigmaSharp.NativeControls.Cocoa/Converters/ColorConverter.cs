@@ -24,6 +24,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +32,7 @@ using AppKit;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class ColorConverter
+	class ColorConverter : IColorConverter
 	{
 		public ColorConverter()
 		{
@@ -42,15 +43,35 @@ namespace FigmaSharp.NativeControls.Cocoa
 		const string DARK_THEME_NAME     = "Dark;";
 		const string DARK_HC_THEME_NAME  = "Dark HC";
 
-		public NSColor GetThemeColor(string colorStyleName)
+		public object FromStyle (object colorStyleName)
 		{
-			foreach (string themeName in new[] { LIGHT_THEME_NAME, LIGHT_HC_THEME_NAME, DARK_THEME_NAME, DARK_HC_THEME_NAME })
-				colorStyleName = colorStyleName.Replace(string.Format("{0}/", themeName), string.Empty);
+			if (colorStyleName is string value)
+            {
+				foreach (string themeName in new[] { LIGHT_THEME_NAME, LIGHT_HC_THEME_NAME, DARK_THEME_NAME, DARK_HC_THEME_NAME })
+					value = value.Replace(string.Format("{0}/", themeName), string.Empty);
 
-			return ThemeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColor;
+				return ThemeColors.FirstOrDefault(c => c.styleName == value).themeColor;
+			}
+			Console.WriteLine($"{nameof (ColorConverter)}.{nameof (FromStyle)} (): Cannot convert {colorStyleName?.GetType ()} into {typeof (string).FullName}");
+			return null;
 		}
 
-		public static IReadOnlyList<(string styleName, NSColor themeColor)> ThemeColors = new List<(string styleName, NSColor themeColor)>
+		public object FromColor (object color)
+		{
+			if (color is NSColor nsColor)
+				return ThemeColors.FirstOrDefault(c => c.themeColor == nsColor).styleName;
+
+			Console.WriteLine($"{nameof(ColorConverter)}.{nameof(FromColor)} (): Cannot convert {color?.GetType()} into {typeof(NSColor).FullName}");
+			return null;
+		}
+
+        public object ToStringColor (object color)
+        {
+
+
+        }
+
+        static IReadOnlyList<(string styleName, NSColor themeColor)> ThemeColors = new List<(string styleName, NSColor themeColor)>
 		{
 			// System color palette
 			("System/Red", NSColor.SystemRedColor),
@@ -104,4 +125,5 @@ namespace FigmaSharp.NativeControls.Cocoa
 			("Misc/Keyboard Focus Indicator", NSColor.KeyboardFocusIndicator),
 		};
 	}
+
 }

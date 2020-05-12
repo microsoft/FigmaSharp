@@ -9,6 +9,7 @@ namespace FigmaSharp.Services
 {
 	public class FigmaCodeRendererServiceOptions
 	{
+		public IColorConverter ColorConverter { get; set; }
 		public bool RendersConstructorFirstElement { get; set; }
 		public bool TranslateLabels { get; set; }
 	}
