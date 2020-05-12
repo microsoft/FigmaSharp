@@ -703,6 +703,10 @@ namespace FigmaSharp.Models
         [DisplayName ("Style")]
         public FigmaTypeStyle style { get; set; }
 
+        [Category("Text Data")]
+        [DisplayName("Styles")]
+        public Dictionary<string, string> styles { get; set; }
+
         [Category ("Text Data")]
         [DisplayName ("Character Style Overrides")]
         public int[] characterStyleOverrides { get; set; }
