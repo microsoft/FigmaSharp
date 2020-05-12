@@ -45,7 +45,7 @@ namespace FigmaSharp.Cocoa
 
 		public FigmaVersionMenu ()
 		{
-			current_item = (CreateMenuItem("Current"), null);
+			current_item = (CreateMenuItem("Latest"), null);
 		}
 
 		public void Clear (NSMenu submenu = null)

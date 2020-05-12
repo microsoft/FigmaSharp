@@ -101,7 +101,7 @@ namespace MonoDevelop.Figma
 
 			//loads current versions
 			versionPopUp.RemoveAllItems();
-			versionPopUp.AddItem("Current");
+			versionPopUp.AddItem("Latest");
 
 			ShowLoading(true);
 			EnableViews(false);
