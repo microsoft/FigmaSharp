@@ -106,8 +106,8 @@ namespace FigmaSharp.NativeControls
 
 
             // TextFields
-            ( "TextField",       NativeControlType.TextView, NativeControlVariant.Regular),
-            ( "TextField Small", NativeControlType.TextView, NativeControlVariant.Small),
+            ( "TextField",       NativeControlType.TextField, NativeControlVariant.Regular),
+            ( "TextField Small", NativeControlType.TextField, NativeControlVariant.Small),
 
             ( "Stepper",       NativeControlType.Stepper, NativeControlVariant.Regular),
             ( "Stepper Small", NativeControlType.Stepper, NativeControlVariant.Small),

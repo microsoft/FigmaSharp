@@ -44,52 +44,64 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
+			currentNode.TryGetNativeControlType(out var controlType);
+
+			if (controlType == NativeControlType.SearchField)
+				return typeof(NSSearchField);
+
 			return typeof(NSTextField);
 		}
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && (value == NativeControlType.TextField || value == NativeControlType.Filter);
+			currentNode.TryGetNativeControlType(out var controlType);
+
+			return controlType == NativeControlType.TextField ||
+				   controlType == NativeControlType.SearchField;
 		}
+
 
 		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity) currentNode;
+			var textField = new NSTextField();
 
-			figmaInstance.TryGetNativeControlType (out var controlType);
-			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox() : new TextBox();
-			var view = (NSTextField)textBox.NativeObject;
+			var frame = (FigmaFrameEntity) currentNode;
+			frame.TryGetNativeControlType(out var controlType);
+			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			view.Configure (currentNode);
+			if (controlType == NativeControlType.SearchField)
+				textField = new NSSearchField();
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlComponentType);
-			switch (controlComponentType) {
-				default:
-					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+			textField.Configure (currentNode);
+
+            switch (controlVariant) {
+				case NativeControlVariant.Regular:
+					textField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
-				case NativeControlComponentType.TextFieldSmall:
-				case NativeControlComponentType.TextFieldSmallDark:
-				case NativeControlComponentType.FilterSmall:
-				case NativeControlComponentType.FilterSmallDark:
-					view.ControlSize = NSControlSize.Small;
+				case NativeControlVariant.Small:
+					textField.ControlSize = NSControlSize.Small;
 					break;
 			}
 	
-			var texts = figmaInstance.children
-				.OfType<FigmaText> ();
+			FigmaText text = frame.children
+				.OfType<FigmaText> ()
+                .FirstOrDefault (s => s.name == "lbl" && s.visible);
 
-			var text = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
-			if (text != null) {
-				textBox.Text = text.characters;
-				//view.Configure (text);
-			}
+            if (text != null)
+				textField.StringValue = text.characters;
 
-			var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholder != null && !placeholder.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
-				view.PlaceholderString = placeholder.characters;
+			FigmaNode optionsGroup = frame.children.FirstOrDefault(s => s.name == "!options" && s.visible);
 
-			return textBox;
+			FigmaText placeholderText = optionsGroup?.GetChildren()
+				.OfType<FigmaText>()
+                .FirstOrDefault(s => s.name == "placeholder" && s.visible);
+
+			if (placeholderText != null && !placeholderText.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
+				textField.PlaceholderString = placeholderText.characters;
+
+			return new View(textField);
 		}
+
 
 		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
@@ -97,6 +109,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var name = currentNode.Name;
 
 			var builder = new StringBuilder ();
+            /*
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
 				builder.WriteConstructor (name,  GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
@@ -106,7 +119,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			switch (controlType)
 			{
 				case NativeControlComponentType.TextFieldStandard:
-				case NativeControlComponentType.TextFieldStandardDark:
 					builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
 						CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 					break;
@@ -127,7 +139,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var stringLabel = NativeControlHelper.GetTranslatableString(placeholderTextNode.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
 			}
-
+            */
 			return builder;
 		}
 	}
