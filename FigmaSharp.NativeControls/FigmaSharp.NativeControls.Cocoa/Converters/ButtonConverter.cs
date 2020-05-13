@@ -3,8 +3,9 @@
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
+ *   Hylke Bons <hylbo@microsoft.com>
  *
- * Copyright (C) 2018 Microsoft, Corp
+ * Copyright (C) 2020 Microsoft, Corp
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -59,11 +60,11 @@ namespace FigmaSharp.NativeControls.Cocoa
         {
             var button = new NSButton();
 
-            var figmaInstance = (FigmaFrameEntity)currentNode;
-            figmaInstance.TryGetNativeControlType(out var controlType);
-            figmaInstance.TryGetNativeControlVariant(out var controlVariant);
+            var frame = (FigmaFrameEntity)currentNode;
+            frame.TryGetNativeControlType(out var controlType);
+            frame.TryGetNativeControlVariant(out var controlVariant);
 
-            button.Configure(figmaInstance);
+            button.Configure(frame);
 
             switch (controlType)
             {
@@ -76,7 +77,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            switch(controlVariant)
+            switch (controlVariant)
             {
                 case NativeControlVariant.Regular:
                     button.ControlSize = NSControlSize.Regular;
@@ -88,13 +89,13 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            var group = figmaInstance.children
+            FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
                 .FirstOrDefault(s => s.visible);
 
             if (group != null)
             {
-                var label = group.children
+                FigmaText label = group.children
                     .OfType<FigmaText>()
                     .FirstOrDefault();
 
@@ -102,10 +103,14 @@ namespace FigmaSharp.NativeControls.Cocoa
                     button.Title = label.characters;
 
                 if (group.name == "Disabled")
+                {
                     button.Enabled = false;
+                }
 
                 if (group.name == "Default")
+                {
                     button.KeyEquivalent = "\r";
+                }
             }
 
             return new View(button);
@@ -114,82 +119,69 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var builder = new StringBuilder();
-            /*
-            var figmaInstance = (FigmaFrameEntity)currentNode.Node;
-            var name = Resources.Ids.Conversion.NameIdentifier;
+            var code = new StringBuilder();
+            var frame = (FigmaFrameEntity) currentNode.Node;
 
-            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (name, GetControlType(currentNode.Node).FullName, rendererService.NodeRendersVar (currentNode, parentNode));
+            frame.TryGetNativeControlType(out var controlType);
+            frame.TryGetNativeControlVariant(out var controlVariant);
 
-            builder.Configure (currentNode.Node, name);
+            string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-            figmaInstance.TryGetNativeControlComponentType(out var controlType);
+            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+                code.WriteConstructor (name, GetControlType(currentNode.Node).FullName, rendererService.NodeRendersVar (currentNode, parentNode));
 
-            bool writesTitle = true;
-            if (controlType == NativeControlComponentType.ButtonHelp || controlType == NativeControlComponentType.ButtonHelpDark)
+            code.Configure (currentNode.Node, name);
+
+            switch (controlType)
             {
-                writesTitle = false;
-                builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
-            }
-            else
-                builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
-           
-            switch (controlType) {
-                case NativeControlComponentType.ButtonLarge:
-                case NativeControlComponentType.ButtonLargeDark:
-                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
-                    builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+                case NativeControlType.Button:
+                    code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
                     break;
-                case NativeControlComponentType.ButtonStandard:
-                case NativeControlComponentType.ButtonStandardDark:
-                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
-                    builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
-                    break;
-                case NativeControlComponentType.ButtonSmall:
-                case NativeControlComponentType.ButtonSmallDark:
-                    builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
-                    builder.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+                case NativeControlType.ButtonHelp:
+                    code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
+                    code.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
                     break;
             }
 
+            switch (controlVariant)
+            {
+                case NativeControlVariant.Regular:
+                    code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+                    code.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+                    break;
+                case NativeControlVariant.Small:
+                    code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
+                    code.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+                    break;
+            }
 
-            //first figma 
-            var group = figmaInstance.children
+            FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()
                 .FirstOrDefault (s => s.visible);
 
             if (group != null) {
-                var label = group.children
+                FigmaText text = group.children
                     .OfType<FigmaText> ()
                     .FirstOrDefault ();
 
-                if (writesTitle && label != null) {
-                    var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-                    builder.WriteEquality (name, nameof (NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
-                } else {
-                    builder.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
+                if (text != null && controlType != NativeControlType.ButtonHelp)
+                {
+                    string labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                    code.WriteEquality(name, nameof(NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                 }
 
-                if (group.name == "Disabled") {
-                    builder.WriteEquality (name, nameof (NSButton.Enabled), false);
-                } else if (group.name == "Default") {
-                    builder.WriteEquality (name, nameof (NSButton.KeyEquivalent), "\\r", true);
+                if (group.name == "Disabled")
+                {
+                    code.WriteEquality(name, nameof(NSButton.Enabled), false);
                 }
-            } else {
-                var label = figmaInstance.children
-                   .OfType<FigmaText> ()
-                   .FirstOrDefault ();
 
-                if (writesTitle && label != null) {
-                    var labelTranslated = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-                    builder.WriteEquality (name, nameof (NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
-                    //view.Font = label.style.ToNSFont ();
-                } else {
-                    builder.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
+                if (group.name == "Default")
+                {
+                    code.WriteEquality (name, nameof(NSButton.KeyEquivalent), "\\r", true);
                 }
-            }*/
-            return builder;
+            }
+
+            return code;
         }
     }
 }
