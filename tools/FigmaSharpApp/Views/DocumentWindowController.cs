@@ -106,7 +106,7 @@ namespace FigmaSharpApp
 
 		partial void DarkModeClicked(NSObject sender) => ToggleDarkMode();
 
-		public void UpdatePagesPopupButton (FigmaDocument document)
+		public void UpdatePagesPopupButton (FigmaDocument document, int pageIndex)
 		{
 			PagePopUpButton.RemoveAllItems();
 
@@ -118,7 +118,10 @@ namespace FigmaSharpApp
 				};
 			}
 
-			PagePopUpButton.SelectItem((ContentViewController as DocumentViewController).CurrentPageIndex);
+			if (pageIndex + 1 > document.children.Length)
+				PagePopUpButton.SelectItem(0);
+			else
+				PagePopUpButton.SelectItem(pageIndex);
 		}
 
 		public void EnableButtons (bool enable)

@@ -137,7 +137,7 @@ namespace FigmaSharpApp
 		void WindowController_RefreshRequested(object sender, EventArgs e)
 		{
 			windowController.ToggleToolbarSpinner(toggle_on: true);
-			Reload();
+			Reload(pageIndex: CurrentPageIndex);
 		}
 
 		FigmaFileResponse response;
@@ -192,7 +192,7 @@ namespace FigmaSharpApp
 			windowController.Window.Title = windowController.Title = response.name;
 			windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
 
-			windowController.UpdatePagesPopupButton(response.document);
+			windowController.UpdatePagesPopupButton(response.document, pageIndex);
 			await windowController.UpdateVersionMenu(DocumentID);
 			windowController.EnableButtons(true);
 
