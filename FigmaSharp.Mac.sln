@@ -269,6 +269,7 @@ Global
 		$0.TextStylePolicy = $3
 		$3.FileWidth = 80
 		$3.scope = text/x-csharp
+		$3.TabsToSpaces = True
 		$0.CSharpFormattingPolicy = $4
 		$4.scope = text/x-csharp
 		version = 0.1.1

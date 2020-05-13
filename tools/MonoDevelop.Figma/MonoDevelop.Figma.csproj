@@ -127,6 +127,9 @@
         <BundleResource Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\motivation.png" />
       </ItemGroup>
       <ItemGroup>
+        <Compile Remove=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.designer.cs" />
+      </ItemGroup>
+      <ItemGroup>
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
@@ -134,11 +137,6 @@
           <DependentUpon>PackageUpdateWindow.cs</DependentUpon>
         </Compile>
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.cs" />
-        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.designer.cs">
-          <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
-          <FigmaNodeId>38:693</FigmaNodeId>
-          <DependentUpon>FigmaPackageWindow.cs</DependentUpon>
-        </Compile>
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
