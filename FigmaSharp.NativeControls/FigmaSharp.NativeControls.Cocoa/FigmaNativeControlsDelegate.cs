@@ -50,21 +50,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			if (converters == null) {
 				converters = new FigmaViewConverter[] {
-					new CustomViewCodeConverter (),
-					new ImageRenderConverter (),
-					new StepperConverter (),
-					new DisclosureConverter (),
-					new SpinnerConverter (),
-					new ProgressBarConverter (),
-					new CheckConverter (),
-					new ComboBoxConverter (),
-					new PopUpButtonConverter (),
-					new RadioConverter (),
+					//new CustomViewCodeConverter (),
+					//new ImageRenderConverter (),
+					//new StepperConverter (),
+					//new DisclosureConverter (),
+					//new SpinnerConverter (),
+					//new ProgressBarConverter (),
+					//new CheckConverter (),
+					//new ComboBoxConverter (),
+					//new PopUpButtonConverter (),
+					//new RadioConverter (),
 					new ButtonConverter (),
-					new TextFieldConverter (),
-					new TextViewConverter (),
-					new TabViewConverter (),
-					new LabelConverter ()
+					//new TextFieldConverter (),
+					//new TextViewConverter (),
+					//new TabViewConverter (),
+					//new LabelConverter ()
 				};
 			}
 
@@ -86,7 +86,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (figmaNode is IFigmaNodeContainer nodeContainer) {
 				foreach (var figmaInstance in nodeContainer.children) {
-					if (figmaInstance.IsWindowOfType (NativeControlType.WindowStandard)) 
+					if (figmaInstance.IsWindowOfType (NativeControlType.Window)) 
 						return new FigmaBundleWindow (bundle, name, figmaNode);
 					if (figmaInstance.IsWindowOfType (NativeControlType.WindowSheet))
 						return new FigmaBundleWindow (bundle, name, figmaNode);

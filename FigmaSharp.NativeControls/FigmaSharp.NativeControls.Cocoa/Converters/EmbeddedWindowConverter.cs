@@ -116,10 +116,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			if (currentNode.IsWindowContent ()) {
-				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.WindowStandard);
+				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.Window);
 			}
 
-			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowStandard);
+			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.Window);
 			return isWindow;
 		}
 

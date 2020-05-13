@@ -74,8 +74,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			{
 				case NativeControlType.Button:
 				case NativeControlType.CheckBox:
-				case NativeControlType.RadioButton:
-				case NativeControlType.PopupButton:
+				case NativeControlType.Radio:
+				case NativeControlType.PopUp:
 				case NativeControlType.ComboBox:
 					return nameof(AppKit.NSView.AccessibilityTitle);
 				default:
