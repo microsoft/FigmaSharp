@@ -28,7 +28,7 @@
 
 namespace FigmaSharp.Views
 {
-    public interface IDisclosureTriangle : IButton
+    public interface IDisclosureTriangle : IView
     {
     }
 

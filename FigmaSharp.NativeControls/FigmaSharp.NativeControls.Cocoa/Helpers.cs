@@ -46,9 +46,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 
     public class TransitionHelper
 	{
-		public static IButton CreateButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
+		public static IView CreateButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
 		{
-			IButton btn = null;
+			IView btn = null;
 			if (currentNode is FigmaFrameEntity figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
@@ -62,13 +62,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 			if (btn == null)
-				btn = new Button(button);
+				btn = new View(button);
 			return btn;
 		}
 
-		public static IButton CreateButtonFromFigmaNode(FigmaNode currentNode)
+		public static IView CreateButtonFromFigmaNode(FigmaNode currentNode)
 		{
-			IButton btn = null;
+			IView btn = null;
 			if (currentNode is FigmaFrameEntity figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
@@ -82,13 +82,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 			if (btn == null)
-				btn = new Button();
+				btn = new View();
 			return btn;
 		}
 
-		public static IImageButton CreateImageButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
+		public static IView CreateImageButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
 		{
-			IImageButton btn = null;
+			IView btn = null;
 			if (currentNode is FigmaFrameEntity figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
@@ -102,13 +102,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 			if (btn == null)
-				btn = new ImageButton(button);
+				btn = new View(button);
 			return btn;
 		}
 
-		public static IImageButton CreateImageButtonFromFigmaNode(FigmaNode currentNode)
+		public static IView CreateImageButtonFromFigmaNode(FigmaNode currentNode)
 		{
-			IImageButton btn = null;
+			IView btn = null;
 			if (currentNode is FigmaFrameEntity figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
@@ -122,7 +122,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				}
 			}
 			if (btn == null)
-				btn = new ImageButton();
+				btn = new View();
 			return btn;
 		}
 
