@@ -70,6 +70,8 @@
     <Compile Include="FigmaContainerBundleWindow.cs" />
     <Compile Include="Converters\FigmaNativeControlConverter.cs" />
     <Compile Include="Converters\EmbeddedWindowConverter.cs" />
+    <Compile Include="Converters\TextFieldConverter.cs" />
+    <Compile Include="Converters\StepperConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -79,10 +81,8 @@
     <None Include="Converters\ComboBoxConverter.cs" />
     <None Include="Converters\PopUpButtonConverter.cs" />
     <None Include="Converters\RadioConverter.cs" />
-    <None Include="Converters\TextFieldConverter.cs" />
     <None Include="Converters\WindowConverter.cs" />
     <None Include="Converters\SpinnerConverter.cs" />
-    <None Include="Converters\StepperConverter.cs" />
     <None Include="Converters\DisclosureConverter.cs" />
     <None Include="Converters\LabelConverter.cs" />
     <None Include="Converters\ColorConverter.cs" />
