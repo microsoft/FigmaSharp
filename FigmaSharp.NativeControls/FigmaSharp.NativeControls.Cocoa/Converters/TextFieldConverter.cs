@@ -74,7 +74,26 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			textField.Configure (currentNode);
 
-            switch (controlVariant) {
+
+			FigmaNode optionsGroup = frame.children.FirstOrDefault(s => s.name == "!options" && s.visible);
+
+			FigmaNode passwordNode = optionsGroup?.GetChildren()
+	            .OfType<FigmaNode>()
+	            .FirstOrDefault(s => s.name == "password" && s.visible);
+
+			if (passwordNode != null)
+				textField = new NSSecureTextField();
+
+
+			FigmaText placeholderText = optionsGroup?.GetChildren()
+				.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == "placeholder" && s.visible);
+
+			if (placeholderText != null && !placeholderText.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
+				textField.PlaceholderString = placeholderText.characters;
+
+
+			switch (controlVariant) {
 				case NativeControlVariant.Regular:
 					textField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
@@ -82,7 +101,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 					textField.ControlSize = NSControlSize.Small;
 					break;
 			}
-	
+
+
 			FigmaText text = frame.children
 				.OfType<FigmaText> ()
                 .FirstOrDefault (s => s.name == "lbl" && s.visible);
@@ -90,14 +110,6 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (text != null)
 				textField.StringValue = text.characters;
 
-			FigmaNode optionsGroup = frame.children.FirstOrDefault(s => s.name == "!options" && s.visible);
-
-			FigmaText placeholderText = optionsGroup?.GetChildren()
-				.OfType<FigmaText>()
-                .FirstOrDefault(s => s.name == "placeholder" && s.visible);
-
-			if (placeholderText != null && !placeholderText.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
-				textField.PlaceholderString = placeholderText.characters;
 
 			return new View(textField);
 		}
