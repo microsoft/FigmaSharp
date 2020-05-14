@@ -49,7 +49,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
+            return currentNode.TryGetNativeControlType(out var value) &&
+                value == NativeControlType.CheckBox;
         }
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
@@ -71,6 +72,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
                 case NativeControlVariant.Small:
                     checkBox.ControlSize = NSControlSize.Small;
+                    checkBox.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
                     break;
             }
 
@@ -121,6 +123,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
                 case NativeControlVariant.Small:
                     code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+                    code.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
                     break;
             }
 
