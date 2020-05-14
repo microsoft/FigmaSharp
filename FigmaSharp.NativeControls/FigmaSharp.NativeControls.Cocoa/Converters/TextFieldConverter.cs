@@ -3,8 +3,9 @@
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
+ *   Hylke Bons <hylbo@microsoft.com>
  *
- * Copyright (C) 2018 Microsoft, Corp
+ * Copyright (C) 2020 Microsoft, Corp
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -44,6 +45,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
+			FigmaNode optionsGroup = currentNode.GetChildren()
+                .FirstOrDefault(s => s.name == "!options" && s.visible);
+
+			FigmaNode passwordNode = optionsGroup?.GetChildren()
+				.OfType<FigmaNode>()
+				.FirstOrDefault(s => s.name == "password" && s.visible);
+
+			if (passwordNode != null)
+				return typeof(NSSecureTextField);
+
+
 			currentNode.TryGetNativeControlType(out var controlType);
 
 			if (controlType == NativeControlType.SearchField)
