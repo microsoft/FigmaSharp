@@ -58,13 +58,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 					//new ProgressBarConverter (),
 					//new CheckConverter (),
 					//new ComboBoxConverter (),
-					//new PopUpButtonConverter (),
+					new PopUpButtonConverter (),
 					//new RadioConverter (),
 					new ButtonConverter (),
 					new TextFieldConverter (),
 					//new TextViewConverter (),
 					//new TabViewConverter (),
-					//new LabelConverter ()
+					//new LabelConverter (),
+                    new ColorWellConverter()
 				};
 			}
 

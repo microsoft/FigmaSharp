@@ -57,6 +57,7 @@ namespace FigmaSharp.NativeControls
         ComboBox,
         CheckBox,
         Radio,
+        ColorWell,
 
         // Status
         ProgressIndicatorBar,
@@ -134,6 +135,8 @@ namespace FigmaSharp.NativeControls
 
             ("ComboBox",       NativeControlType.ComboBox, NativeControlVariant.Regular),
             ("ComboBox Small", NativeControlType.ComboBox, NativeControlVariant.Small),
+
+            ("ColorWell", NativeControlType.ColorWell, NativeControlVariant.Regular),
 
 
             // Status

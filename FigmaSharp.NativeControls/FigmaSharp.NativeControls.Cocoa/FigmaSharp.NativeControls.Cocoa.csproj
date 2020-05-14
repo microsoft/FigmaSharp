@@ -72,6 +72,8 @@
     <Compile Include="Converters\EmbeddedWindowConverter.cs" />
     <Compile Include="Converters\TextFieldConverter.cs" />
     <Compile Include="Converters\StepperConverter.cs" />
+    <Compile Include="Converters\ColorWellConverter.cs" />
+    <Compile Include="Converters\PopUpButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -79,7 +81,6 @@
     </None>
     <None Include="Converters\CheckConverter.cs" />
     <None Include="Converters\ComboBoxConverter.cs" />
-    <None Include="Converters\PopUpButtonConverter.cs" />
     <None Include="Converters\RadioConverter.cs" />
     <None Include="Converters\WindowConverter.cs" />
     <None Include="Converters\SpinnerConverter.cs" />
