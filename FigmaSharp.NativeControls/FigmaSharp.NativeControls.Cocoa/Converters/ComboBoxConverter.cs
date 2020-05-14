@@ -25,10 +25,13 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using AppKit;
+
 using System;
 using System.Linq;
 using System.Text;
+
+using AppKit;
+using Foundation;
 
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -38,7 +41,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class ComboBoxConverter : FigmaNativeControlConverter
+    public class ComboBoxConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
@@ -50,78 +53,79 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ComboBox;
 		}
 
+
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var view = new NSComboBox ();
-			var figmaInstance = (FigmaFrameEntity)currentNode;
-			view.Configure (currentNode);
+			var combobox = new NSComboBox ();
+			combobox.Configure (currentNode);
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
-				case NativeControlComponentType.ComboBoxSmall:
-				case NativeControlComponentType.ComboBoxSmallDark:
-					view.ControlSize = NSControlSize.Small;
+			var frame = (FigmaFrameEntity)currentNode;
+			frame.TryGetNativeControlVariant (out var controlVariant);
+
+			switch (controlVariant) {
+				case NativeControlVariant.Regular:
+					combobox.ControlSize = NSControlSize.Regular;
+					combobox.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
-				case NativeControlComponentType.ComboBoxStandard:
-				case NativeControlComponentType.ComboBoxStandardDark:
-					view.ControlSize = NSControlSize.Regular;
-					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+				case NativeControlVariant.Small:
+					combobox.ControlSize = NSControlSize.Small;
+					combobox.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
 					break;
 			}
 
-			var label = figmaInstance.children
+			FigmaText text = frame.children
 			   .OfType<FigmaText> ()
 			   .FirstOrDefault (s => s.name == "lbl");
 
-			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				view.StringValue = label.characters;
-			}
+			if (text != null && !string.IsNullOrEmpty(text.characters))
+				combobox.StringValue = text.characters;
 
-			return new View (view);
+			return new View(combobox);
 		}
+
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
-
-			var builder = new StringBuilder ();
-			var name = Resources.Ids.Conversion.NameIdentifier;
+			var code = new StringBuilder ();
+			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor (name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			builder.Configure (currentNode.Node, name);
+			code.Configure (currentNode.Node, name);
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
-				case NativeControlComponentType.ComboBoxSmall:
-				case NativeControlComponentType.ComboBoxSmallDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
-					break;
-				case NativeControlComponentType.ComboBoxStandard:
-				case NativeControlComponentType.ComboBoxStandardDark:
-					builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+			var frame = (FigmaFrameEntity) currentNode.Node;
+			frame.TryGetNativeControlVariant (out var controlVariant);
+
+			switch (controlVariant) {
+				case NativeControlVariant.Small:
+					code.WriteEquality(name, nameof(NSButton.Font),
 					    CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+					break;
+				case NativeControlVariant.Regular:
+					code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+					code.WriteEquality(name, nameof(NSButton.Font),
+	                    CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
 					break;
 			}
 
-			var label = figmaInstance.children
+			FigmaText text = frame.children
 				.OfType<FigmaText> ()
 				.FirstOrDefault (s => s.name == "lbl");
 
-			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				var textLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				if (!rendererService.CurrentRendererOptions.TranslateLabels) {
-					textLabel = $"\"{textLabel}\"";
-				}
-				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
-				builder.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
-			}
-			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-			//}
+			if (text != null && !string.IsNullOrEmpty (text.characters)) {
+				code.WriteEquality(name, nameof(NSButton.StringValue), text.characters);
 
-			return builder;
+				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+
+				//if (!rendererService.CurrentRendererOptions.TranslateLabels)
+				//	textLabel = $"\"{textLabel}\"";
+
+				//string nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
+				//code.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
+			}
+
+			return code;
 		}
 	}
 }
