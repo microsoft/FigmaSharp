@@ -26,12 +26,10 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using AppKit;
 using System;
 using System.Linq;
 using System.Text;
-
-using AppKit;
-
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -40,7 +38,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class RadioConverter : CocoaConverter
+	public class RadioConverter : FigmaNativeControlConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
@@ -49,8 +47,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) &&
-                value == NativeControlType.Radio;
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton;
 		}
 
 		public override bool ScanChildren(FigmaNode currentNode)
@@ -58,108 +55,134 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return false;
 		}
 
-
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode;
+			var figmaInstance = (FigmaFrameEntity)currentNode;
 
-			var radio = new NSButton();
-			radio.SetButtonType(NSButtonType.Radio);
+			var button = new RadioBox() { Text = "" };
+			var view = (NSButton)button.NativeObject;
+			view.Configure(figmaInstance);
 
-			radio.Configure(frame);
-
-			frame.TryGetNativeControlVariant(out var controlVariant);
-
-			switch (controlVariant)
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+			switch (controlType)
 			{
-				case NativeControlVariant.Regular:
-					radio.ControlSize = NSControlSize.Regular;
-					radio.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+				case NativeControlComponentType.RadioSingleStandard:
+				case NativeControlComponentType.RadioStandard:
+				case NativeControlComponentType.RadioStandardDark:
+					view.ControlSize = NSControlSize.Regular;
+					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
-				case NativeControlVariant.Small:
-					radio.ControlSize = NSControlSize.Small;
-					radio.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+				case NativeControlComponentType.RadioSmall:
+				case NativeControlComponentType.RadioSmallDark:
+					view.ControlSize = NSControlSize.Mini;
 					break;
 			}
 
-			FigmaText text = frame.children
-				.OfType<FigmaText>()
-				.FirstOrDefault();
+			var label = figmaInstance.children
+				  .OfType<FigmaText>()
+				  .FirstOrDefault();
+			if (label != null) {
+				button.Text = label.characters;
+				view.Font = label.style.ToNSFont();
+			}
 
-			if (text != null)
-				radio.Title = text.characters;
+			//radio buttons with label needs another
+			var radioButtonFigmaNode = figmaInstance.children
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton)
+				as FigmaFrameEntity;
 
-			FigmaGroup group = frame.children
+			if (radioButtonFigmaNode != null) {
+				figmaInstance = radioButtonFigmaNode;
+			}
+
+			//first figma 
+			button.IsChecked = figmaInstance.children
 				.OfType<FigmaGroup>()
-				.FirstOrDefault(s => (s.name == "On" || s.name == "Off") && s.visible);
+				.Any(s => s.name == "On" && s.visible);
 
-			if (group != null)
-			{
-				if (group.name == "On")
-					radio.State = NSCellStateValue.On;
+			button.Enabled = !figmaInstance.children
+				.OfType<FigmaGroup>()
+				.Any(s => s.name == "Disabled" && s.visible);
 
-				if (group.name == "Off")
-					radio.State = NSCellStateValue.Off;
-			}
-
-			return new View(radio);
+			return new View(view);
 		}
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-            var frame = (FigmaFrameEntity)currentNode.Node;
+			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
-            var code = new StringBuilder();
-            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+			var builder = new StringBuilder();
+			var name = currentNode.Name;
 
-            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            code.Configure(currentNode.Node, name);
-            code.WriteMethod(name, nameof(NSButton.SetButtonType), NSButtonType.Radio);
+			builder.Configure(figmaInstance, name);
 
-            frame.TryGetNativeControlVariant(out var controlVariant);
+			builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+			builder.WriteMethod(name, nameof(NSButton.SetButtonType), NSButtonType.Radio);
 
-            switch (controlVariant)
-            {
-                case NativeControlVariant.Regular:
-                    code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
-                    code.WriteEquality(currentNode.Name, nameof(NSButton.Font),
-                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
-                    break;
-                case NativeControlVariant.Small:
-                    code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
-                    code.WriteEquality(currentNode.Name, nameof(NSButton.Font),
-                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
-                    break;
-            }
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
 
-            FigmaText text = frame.children
-                .OfType<FigmaText>()
-                .FirstOrDefault();
+			switch (controlType)
+			{
+				case NativeControlComponentType.RadioSingleStandard:
+				case NativeControlComponentType.RadioStandard:
+				case NativeControlComponentType.RadioStandardDark:
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+					break;
+				case NativeControlComponentType.RadioSmall:
+				case NativeControlComponentType.RadioSmallDark:
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Mini);
+					break;
+			}
 
-            if (text != null)
-            {
-                var labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+			builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 
-                code.WriteEquality(name, nameof(NSButton.Title), labelTranslated,
-                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
-            }
+			var label = figmaInstance.children.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == "lbl" && s.visible);
+			if (label != null) {
+				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteEquality(name, nameof(NSButton.Title), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+			}
 
-            FigmaGroup group = frame.children
-                .OfType<FigmaGroup>()
-                .FirstOrDefault(s => (s.name == "On" || s.name == "Off") && s.visible);
+			//radio buttons with label needs another
+			var radioButtonFigmaNode = figmaInstance.children
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton) as FigmaFrameEntity;
 
-            if (group != null)
-            {
-                if (group.name == "On")
-                    code.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.On);
+			if (radioButtonFigmaNode != null) {
+				figmaInstance = radioButtonFigmaNode;
+			}
 
-                if (group.name == "Off")
-                    code.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.Off);
-            }
+			//first figma 
+			var group = figmaInstance.children
+				.OfType<FigmaGroup>()
+				.FirstOrDefault(s => s.visible);
 
-            return code;
-        }
+			if (group != null) {
+				if (group.name == "On") {
+					builder.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.On);
+				}
+
+				if (group.name == "Disabled") {
+					builder.WriteEquality(name, nameof(NSButton.Enabled), false);
+				}
+			}
+
+			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+			//}
+
+			//if (currentNode is IFigmaDocumentContainer instance) {
+			//    var figmaText = instance.children.OfType<FigmaText> ().FirstOrDefault ();
+			//    if (figmaText != null) {
+			//        builder.AppendLine (string.Format ("{0}.AlphaValue = {1};", name, figmaText.opacity.ToDesignerString ()));
+			//        builder.AppendLine (string.Format ("{0}.Title = \"{1}\";", name, figmaText.characters));
+			//        //button.Font = figmaText.style.ToNSFont();
+			//    }
+			//}
+			return builder;
+		}
 	}
 }
