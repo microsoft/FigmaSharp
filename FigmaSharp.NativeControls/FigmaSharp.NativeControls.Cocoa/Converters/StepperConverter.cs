@@ -55,50 +55,51 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var stepper = new NSStepper();
+			var instance = (FigmaFrameEntity)currentNode;
+			var view = new Stepper ();
+			var nativeView = (FNSStepper)view.NativeObject;
+			nativeView.Configure (instance);
 
-			var frame = (FigmaFrameEntity)currentNode;
-			frame.TryGetNativeControlVariant(out var controlVariant);
-
-			stepper.Configure (frame);
-
-			switch (controlVariant) {
-				case NativeControlVariant.Regular:
-					stepper.ControlSize = NSControlSize.Regular;
+			instance.TryGetNativeControlComponentType (out var controlType);
+			switch (controlType) {
+				case NativeControlComponentType.StepperSmall:
+				case NativeControlComponentType.StepperSmallDark:
+					nativeView.ControlSize = NSControlSize.Small;
 					break;
-				case NativeControlVariant.Small:
-					stepper.ControlSize = NSControlSize.Small;
+				case NativeControlComponentType.StepperStandard:
+				case NativeControlComponentType.StepperStandardDark:
+					nativeView.ControlSize = NSControlSize.Regular;
 					break;
 			}
 
-			return new View(stepper);
+			return view;
 		}
-
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var code = new StringBuilder ();
-
+			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+			var builder = new StringBuilder ();
 			string name = currentNode.Name;
 
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				code.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			var frame = (FigmaFrameEntity) currentNode.Node;
-			frame.TryGetNativeControlVariant (out var controlVariant);
+			builder.Configure (figmaInstance, name);
 
-            code.Configure (frame, name);
-
-			switch (controlVariant) {
-				case NativeControlVariant.Regular:
-					code.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Regular);
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
+			switch (controlType) {
+				case NativeControlComponentType.StepperSmall:
+				case NativeControlComponentType.StepperSmallDark:
+					builder.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Small);
 					break;
-				case NativeControlVariant.Small:
-					code.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Small);
+				case NativeControlComponentType.StepperStandard:
+				case NativeControlComponentType.StepperStandardDark:
+					builder.WriteEquality (name, nameof (NSStepper.ControlSize), NSControlSize.Regular);
 					break;
 			}
 
-			return code;
+			return builder;
 		}
+
 	}
 }

@@ -56,7 +56,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 					//new DisclosureConverter (),
 					//new SpinnerConverter (),
 					//new ProgressBarConverter (),
-					//new CheckConverter (),
+					new CheckBoxConverter (),
 					//new ComboBoxConverter (),
 					new PopUpButtonConverter (),
 					//new RadioConverter (),

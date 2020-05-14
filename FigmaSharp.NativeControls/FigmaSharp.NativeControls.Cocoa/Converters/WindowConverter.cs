@@ -78,7 +78,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.Window;
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControls.NativeControlType.WindowStandard;
 		}
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)

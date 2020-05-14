@@ -47,7 +47,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.Radio;
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton;
 		}
 
 		public override bool ScanChildren(FigmaNode currentNode)

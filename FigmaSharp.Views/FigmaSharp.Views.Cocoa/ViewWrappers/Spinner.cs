@@ -47,7 +47,7 @@ namespace FigmaSharp.Views.Cocoa
 		}
 	}
 
-	public class DisclosureTriangle : View, IDisclosureTriangle
+	public class DisclosureTriangle : Button, IDisclosureTriangle
 	{
 		public DisclosureTriangle () : this (new FNSButton ())
 		{

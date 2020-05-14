@@ -1,0 +1,153 @@
+﻿/* 
+ * CustomTextFieldConverter.cs
+ * 
+ * Author:
+ *   Jose Medrano <josmed@microsoft.com>
+ *
+ * Copyright (C) 2018 Microsoft, Corp
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+using System;
+using System.Linq;
+using System.Text;
+
+using AppKit;
+
+using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
+
+namespace FigmaSharp.NativeControls.Cocoa
+{
+    public class CheckBoxConverter : CocoaConverter
+    {
+        public override Type GetControlType(FigmaNode currentNode)
+        {
+            return typeof(NSButton);
+        }
+
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox;
+        }
+
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        {
+            var frame = (FigmaFrameEntity)currentNode;
+
+            var checkBox = new NSButton();
+            checkBox.SetButtonType(NSButtonType.Switch);
+
+            checkBox.Configure (frame);
+
+            frame.TryGetNativeControlVariant (out var controlVariant);
+
+            switch (controlVariant)
+            {
+                case NativeControlVariant.Regular:
+                    checkBox.ControlSize = NSControlSize.Regular;
+                    checkBox.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+                    break;
+                case NativeControlVariant.Small:
+                    checkBox.ControlSize = NSControlSize.Small;
+                    break;
+            }
+
+            FigmaText text = frame.children
+                  .OfType<FigmaText>()
+                  .FirstOrDefault(s => s.visible);
+
+            if (text != null)
+                checkBox.Title = text.characters;
+
+            FigmaGroup group = frame.children
+                .OfType<FigmaGroup>()
+                .FirstOrDefault(s => (s.name == "On" || s.name == "Off") && s.visible);
+
+            if (group != null)
+            {
+                if (group.name == "On")
+                    checkBox.State = NSCellStateValue.On;
+
+                if (group.name == "Off")
+                    checkBox.State = NSCellStateValue.Off;
+            }
+
+            return new View(checkBox);
+        }
+
+
+        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        {
+            var frame = (FigmaFrameEntity)currentNode.Node;
+
+            var code = new StringBuilder ();
+            var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+            
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
+                code.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar (currentNode, parentNode));
+
+            code.Configure (currentNode.Node, name);
+            code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
+
+            frame.TryGetNativeControlVariant (out var controlVariant);
+
+            switch (controlVariant) {
+                case NativeControlVariant.Regular:
+                    code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+                    code.WriteEquality (currentNode.Name, nameof (NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFontSize));
+                    break;
+                case NativeControlVariant.Small:
+                    code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+                    break;
+            }
+
+            FigmaText text = frame.children
+                .OfType<FigmaText> ()
+                .FirstOrDefault ();
+
+            if (text != null) {
+                var labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+
+                code.WriteEquality(name, nameof(NSButton.Title), labelTranslated,
+                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+            }
+            
+            FigmaGroup group = frame.children
+                .OfType<FigmaGroup> ()
+                .FirstOrDefault (s => (s.name == "On" || s.name == "Off") && s.visible);
+
+            if (group != null) {
+                if (group.name == "On")
+                    code.WriteEquality (name, nameof (NSButton.State), NSCellStateValue.On);
+
+                if (group.name == "Off")
+                    code.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.Off);
+            }
+
+            return code;
+        }
+    }
+}

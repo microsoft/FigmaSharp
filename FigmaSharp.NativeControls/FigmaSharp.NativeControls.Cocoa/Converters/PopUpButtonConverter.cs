@@ -3,9 +3,8 @@
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
- *   Hylke Bons <hylbo@microsoft.com>
  *
- * Copyright (C) 2020 Microsoft, Corp
+ * Copyright (C) 2018 Microsoft, Corp
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -50,76 +49,85 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.PopUp;
+			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.PopupButton;
 		}
-
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode;
-			frame.TryGetNativeControlVariant(out var controlVariant);
+			var figmaInstance = (FigmaFrameEntity)currentNode;
 
-			var popUp = new NSPopUpButton();
-			popUp.Configure(frame);
+			var button = new ComboBox();
+			var view = (NSPopUpButton)button.NativeObject;
+			view.Configure(figmaInstance);
 
-			switch (controlVariant)
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+			switch (controlType)
 			{
-				case NativeControlVariant.Regular:
-					popUp.ControlSize = NSControlSize.Regular;
+				case NativeControlComponentType.PopUpButtonSmall:
+				case NativeControlComponentType.PopUpButtonSmallDark:
+					view.ControlSize = NSControlSize.Small;
 					break;
-				case NativeControlVariant.Small:
-					popUp.ControlSize = NSControlSize.Small;
+				case NativeControlComponentType.PopUpButtonStandard:
+				case NativeControlComponentType.PopUpButtonStandardDark:
+					view.ControlSize = NSControlSize.Regular;
 					break;
 			}
 
-			FigmaText text = frame.children
+			var label = figmaInstance.children
 				   .OfType<FigmaText>()
 				   .FirstOrDefault(s => s.name == "lbl");
 
-			if (text != null)
-				popUp.AddItem(text.characters);
+			if (label != null) {
+				button.AddItem(label.characters);
+				//view.Font = label.style.ToNSFont ();
+			}
 
-			return new View(popUp);
+			return button;
 		}
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode.Node;
+			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
 
-			var code = new StringBuilder();
-			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
-            
+			var builder = new StringBuilder();
+			var name = Resources.Ids.Conversion.NameIdentifier;
+
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				code.WriteConstructor(name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor(name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.Configure(currentNode.Node, name);
-			code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+			builder.Configure(currentNode.Node, name);
 
-			frame.TryGetNativeControlVariant(out var controlVariant);
+			builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
 
-			switch (controlVariant)
+			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+
+			switch (controlType)
 			{
-				case NativeControlVariant.Small:
-					code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
+				case NativeControlComponentType.PopUpButtonSmall:
+				case NativeControlComponentType.PopUpButtonSmallDark:
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
 					break;
-				case NativeControlVariant.Regular:
-					code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+				case NativeControlComponentType.PopUpButtonStandard:
+				case NativeControlComponentType.PopUpButtonStandardDark:
+					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 
-			FigmaText text = frame.children
+			var label = figmaInstance.children
 			   .OfType<FigmaText>()
 			   .FirstOrDefault(s => s.name == "lbl");
 
-			if (text != null && !string.IsNullOrEmpty(text.characters)) {
-				var stringLabel = NativeControlHelper.GetTranslatableString(text.characters,
-                    rendererService.CurrentRendererOptions.TranslateLabels);
-
-				code.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
+			if (label != null && !string.IsNullOrEmpty(label.characters)) {
+				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
 					inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 
-			return code;
+			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
+			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
+			//}
+
+			return builder;
 		}
 	}
 }
