@@ -1,31 +1,27 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Hylke Bons <hylbo@microsoft.com>
- *
- * Copyright (C) 2020 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System.Collections.Generic;
 
@@ -38,6 +34,8 @@ namespace FigmaSharp.NativeControls
         // Buttons
         Button,
         ButtonHelp,
+        Stepper,
+        SegmentedControl,
 
         // Labels
         Label,
@@ -47,9 +45,8 @@ namespace FigmaSharp.NativeControls
 
         // TextFields
         TextField,
-        Stepper,
-        SearchField,
         TextView,
+        SearchField,
 
         // Selections
         PopUp,
@@ -69,7 +66,10 @@ namespace FigmaSharp.NativeControls
         // Containers
         TabView,
         DisclosureView,
+
         Box,
+        BoxCustom,
+        Separator,
 
         // Windows
         Window,
@@ -97,14 +97,18 @@ namespace FigmaSharp.NativeControls
             ("Button/Help",       NativeControlType.ButtonHelp, NativeControlVariant.Regular),
             ("Button/Help Small", NativeControlType.ButtonHelp, NativeControlVariant.Small),
 
+            ("Stepper",       NativeControlType.Stepper, NativeControlVariant.Regular),
+            ("Stepper Small", NativeControlType.Stepper, NativeControlVariant.Small),
+
+            ("SegmentedControl",       NativeControlType.SegmentedControl, NativeControlVariant.Regular),
+            ("SegmentedControl Small", NativeControlType.SegmentedControl, NativeControlVariant.Small),
+
 
             // Labels
             ("Label",                 NativeControlType.Label,          NativeControlVariant.Regular),
             ("Label Small",           NativeControlType.Label,          NativeControlVariant.Small),
             ("Label/Group",           NativeControlType.LabelGroup,     NativeControlVariant.Regular),
-            ("Label/Group Small",     NativeControlType.LabelGroup,     NativeControlVariant.Small),
             ("Label/Header",          NativeControlType.LabelHeader,    NativeControlVariant.Regular),
-            ("Label/Header Small",    NativeControlType.LabelHeader,    NativeControlVariant.Small),
             ("Label/Secondary",       NativeControlType.LabelSecondary, NativeControlVariant.Regular),
             ("Label/Secondary Small", NativeControlType.LabelSecondary, NativeControlVariant.Small),
 
@@ -112,9 +116,6 @@ namespace FigmaSharp.NativeControls
             // TextFields
             ("TextField",       NativeControlType.TextField, NativeControlVariant.Regular),
             ("TextField Small", NativeControlType.TextField, NativeControlVariant.Small),
-
-            ("Stepper",       NativeControlType.Stepper, NativeControlVariant.Regular),
-            ("Stepper Small", NativeControlType.Stepper, NativeControlVariant.Small),
 
             ("TextView",       NativeControlType.TextView, NativeControlVariant.Regular),
             ("TextView Small", NativeControlType.TextView, NativeControlVariant.Small),
@@ -161,7 +162,11 @@ namespace FigmaSharp.NativeControls
             // Containers
             ("TabView",        NativeControlType.TabView,        NativeControlVariant.Regular),
             ("DisclosureView", NativeControlType.DisclosureView, NativeControlVariant.Regular),
-            ("Box",            NativeControlType.Box,            NativeControlVariant.Regular),
+
+            ("Box",                  NativeControlType.Box,       NativeControlVariant.Regular),
+            ("Box/Custom",           NativeControlType.BoxCustom, NativeControlVariant.Regular),
+            ("Separator/Vertical",   NativeControlType.Separator, NativeControlVariant.Regular),
+            ("Separator/Horizontal", NativeControlType.Separator, NativeControlVariant.Regular),
 
 
             // Windows

@@ -180,37 +180,36 @@ namespace FigmaSharp.Cocoa
         {
             if (style.fontPostScriptName != null)
             {
-                if (style.fontPostScriptName.EndsWith("-Bold"))
-                {
-                    return NSFontWeight.Regular;
-                }
-                if (style.fontPostScriptName.EndsWith("-Light"))
-                {
-                    return NSFontWeight.Light;
-                }
-                if (style.fontPostScriptName.EndsWith("-Thin"))
-                {
-                    return NSFontWeight.Thin;
-                }
-                if (style.fontPostScriptName.EndsWith("-SemiBold"))
-                {
+                if (style.fontPostScriptName.EndsWith("-Black"))
+                    return NSFontWeight.Black;
+
+                if (style.fontPostScriptName.EndsWith("-Heavy"))
+                    return NSFontWeight.Heavy;
+                
+                if (style.fontPostScriptName.EndsWith("-Semibold"))
                     return NSFontWeight.Semibold;
-                }
+
+                if (style.fontPostScriptName.EndsWith("-Medium"))
+                    return NSFontWeight.Medium;
+
+                if (style.fontPostScriptName.EndsWith("-Light"))
+                    return NSFontWeight.Light;
+
+                if (style.fontPostScriptName.EndsWith("-Thin"))
+                    return NSFontWeight.Thin;
+
+                if (style.fontPostScriptName.EndsWith("-Ultralight"))
+                    return NSFontWeight.UltraLight;
             }
 
             return NSFontWeight.Regular;
         }
 
-        static Dictionary<string, string> FontConversion = new Dictionary<string, string>()
-        {
-            { "SF UI Text", ".SF NS Text" },
-            { "SF Mono", ".SF NS Display" }
-        };
-
         public static NSFont ToNSFont(this FigmaTypeStyle style)
         {
             string family = style.fontFamily;
             NSFont font;
+
 
             try {
                 font = NSFont.FromFontName (style.fontFamily, style.fontSize);

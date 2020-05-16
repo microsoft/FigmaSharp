@@ -1,30 +1,27 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Linq;
@@ -40,94 +37,94 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class PopUpButtonConverter : FigmaNativeControlConverter
+	public class PopUpButtonConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode)
-		{
-			return typeof(NSPopUpButton);
-		}
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSPopUpButton);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.PopupButton;
+			currentNode.TryGetNativeControlType(out var value);
+
+            return (value == NativeControlType.PopUp ||
+                    value == NativeControlType.PullDown);
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode;
+			var frame = (FigmaFrame)currentNode;
+			frame.TryGetNativeControlVariant(out var controlVariant);
+			frame.TryGetNativeControlType(out var controlType);
 
-			var button = new ComboBox();
-			var view = (NSPopUpButton)button.NativeObject;
-			view.Configure(figmaInstance);
+			var popUp = new NSPopUpButton();
 
-			figmaInstance.TryGetNativeControlComponentType(out var controlType);
-			switch (controlType)
+			if (controlType == NativeControlType.PullDown)
+				popUp.PullsDown = true;
+
+			switch (controlVariant)
 			{
-				case NativeControlComponentType.PopUpButtonSmall:
-				case NativeControlComponentType.PopUpButtonSmallDark:
-					view.ControlSize = NSControlSize.Small;
+				case NativeControlVariant.Regular:
+					popUp.ControlSize = NSControlSize.Regular;
 					break;
-				case NativeControlComponentType.PopUpButtonStandard:
-				case NativeControlComponentType.PopUpButtonStandardDark:
-					view.ControlSize = NSControlSize.Regular;
+				case NativeControlVariant.Small:
+					popUp.ControlSize = NSControlSize.Small;
+					popUp.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
 					break;
 			}
 
-			var label = figmaInstance.children
+			FigmaText text = frame.children
 				   .OfType<FigmaText>()
 				   .FirstOrDefault(s => s.name == "lbl");
 
-			if (label != null) {
-				button.AddItem(label.characters);
-				//view.Font = label.style.ToNSFont ();
-			}
+			if (text != null)
+				popUp.AddItem(text.characters);
 
-			return button;
+			return new View(popUp);
 		}
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+			var frame = (FigmaFrame)currentNode.Node;
 
-			var builder = new StringBuilder();
-			var name = Resources.Ids.Conversion.NameIdentifier;
-
+			var code = new StringBuilder();
+			var name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
+            
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor(name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			builder.Configure(currentNode.Node, name);
+			code.Configure(currentNode.Node, name);
+			code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
 
-			builder.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+			frame.TryGetNativeControlType(out var controlType);
+			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			figmaInstance.TryGetNativeControlComponentType(out var controlType);
+			if (controlType == NativeControlType.PullDown)
+				code.WriteEquality(name, nameof(NSPopUpButton.PullsDown), true);
 
-			switch (controlType)
+			switch (controlVariant)
 			{
-				case NativeControlComponentType.PopUpButtonSmall:
-				case NativeControlComponentType.PopUpButtonSmallDark:
-					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
+				case NativeControlVariant.Small:
+					code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Small);
+					code.WriteEquality(name, nameof(NSButton.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
 					break;
-				case NativeControlComponentType.PopUpButtonStandard:
-				case NativeControlComponentType.PopUpButtonStandardDark:
-					builder.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+				case NativeControlVariant.Regular:
+					code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
 
-			var label = figmaInstance.children
+			FigmaText text = frame.children
 			   .OfType<FigmaText>()
 			   .FirstOrDefault(s => s.name == "lbl");
 
-			if (label != null && !string.IsNullOrEmpty(label.characters)) {
-				var stringLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				builder.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
+			if (text != null && !string.IsNullOrEmpty(text.characters)) {
+				var stringLabel = NativeControlHelper.GetTranslatableString(text.characters,
+                    rendererService.CurrentRendererOptions.TranslateLabels);
+
+				code.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
 					inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 
-			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-			//}
-
-			return builder;
+			return code;
 		}
 	}
 }

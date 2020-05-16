@@ -1,30 +1,27 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Linq;
@@ -42,8 +39,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public class EmbededSheetDialogConverter : FigmaViewConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode)
-		=> typeof(AppKit.NSView);
+		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
         public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
 		{
@@ -52,14 +48,16 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowSheet) ||
+			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.Window) ||
+						   currentNode.IsDialogParentContainer (NativeControlType.WindowSheet) ||
 			               currentNode.IsDialogParentContainer (NativeControlType.WindowPanel);
+
 			return isWindow;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode;
+			var frame = (FigmaFrame)currentNode;
 
 			var nativeView = new FakeSheetView();
 			var view = new View(nativeView);
@@ -116,17 +114,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			if (currentNode.IsWindowContent ()) {
-				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.WindowStandard);
+				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.Window);
 			}
 
-			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.WindowStandard);
+			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.Window);
 			return isWindow;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
 			string title = "";
-			var frame = (FigmaFrameEntity)currentNode;
+			var frame = (FigmaFrame)currentNode;
 
 			var nativeView = new FakeWindowView(title);
 			nativeView.LiveButtonAlwaysVisible = LiveButtonAlwaysVisible;

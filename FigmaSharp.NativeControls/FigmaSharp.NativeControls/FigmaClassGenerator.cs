@@ -29,9 +29,9 @@ namespace FigmaSharp
 
 	public class EnumCodeObject : CodeObject
 	{
-		public List<Models.FigmaFrameEntity> Values;
+		public List<Models.FigmaFrame> Values;
 
-		public EnumCodeObject(string name, List<Models.FigmaFrameEntity> values) : base(name)
+		public EnumCodeObject(string name, List<Models.FigmaFrame> values) : base(name)
 		{
 			Values = values;
 		}

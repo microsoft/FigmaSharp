@@ -164,10 +164,10 @@ namespace LocalFile.Cocoa
 		//	//we wait for 5 seconds and we show next screen
 		//	await Task.Run(() =>
 		//	{
-		//		if (loadingDialogFigmaNode is FigmaFrameEntity figmaFrameEntity)
+		//		if (loadingDialogFigmaNode is FigmaFrame FigmaFrame)
 		//		{
-		//			Thread.Sleep((int)figmaFrameEntity.transitionDuration);
-		//			FigmaSharp.AppContext.Current.BeginInvoke(() => ProcessTransitionNodeID(figmaFrameEntity.transitionNodeID, rendererService, options));
+		//			Thread.Sleep((int)FigmaFrame.transitionDuration);
+		//			FigmaSharp.AppContext.Current.BeginInvoke(() => ProcessTransitionNodeID(FigmaFrame.transitionNodeID, rendererService, options));
 		//		}
 		//	});
 		//}

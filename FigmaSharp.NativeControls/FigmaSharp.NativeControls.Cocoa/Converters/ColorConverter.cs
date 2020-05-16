@@ -1,6 +1,6 @@
-﻿// 
-// Author:
-//  Hylke Bons <hylbo@microsoft.com>
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -22,7 +22,6 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
 
 using System.Collections.Generic;
 using System.Linq;

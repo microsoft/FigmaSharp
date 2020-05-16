@@ -1,30 +1,27 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Linq;
@@ -45,9 +42,9 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode;
+			var frame = (FigmaFrame)currentNode;
 
 			var progressIndicator = new NSProgressIndicator();
 			progressIndicator.Configure(frame);
@@ -87,7 +84,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode.Node;
+			var frame = (FigmaFrame)currentNode.Node;
 
 			StringBuilder code = new StringBuilder();
 			string name = currentNode.Name;
@@ -96,7 +93,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			code.Configure(frame, name);
-			code.WriteEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Spinning);
 			code.WriteEquality(name, nameof(NSProgressIndicator.Hidden), true);
 
 			frame.TryGetNativeControlVariant(out var controlVariant);
@@ -138,14 +134,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) &&
-				value == NativeControlType.ProgressIndicatorCircular;
+			return currentNode.TryGetNativeControlType(out var controlType) &&
+				controlType == NativeControlType.ProgressIndicatorCircular;
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			IView view = base.OnConvertToView(currentNode, parent, rendererService);
+			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSProgressIndicator).Style = NSProgressIndicatorStyle.Spinning;
 
 			return view;
@@ -165,14 +161,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) &&
-				value == NativeControlType.ProgressIndicatorBar;
+			return currentNode.TryGetNativeControlType(out var controlType) &&
+				controlType == NativeControlType.ProgressIndicatorBar;
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			IView view = base.OnConvertToView(currentNode, parent, rendererService);
+			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSProgressIndicator).Style = NSProgressIndicatorStyle.Bar;
 
 			return view;

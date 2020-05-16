@@ -46,83 +46,83 @@ namespace FigmaSharp.NativeControls.Cocoa
 
     public class TransitionHelper
 	{
-		public static IButton CreateButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
+		public static IView CreateButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
 		{
-			IButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			IView btn = null;
+			if (currentNode is FigmaFrame FigmaFrame)
 			{
-				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
+				if (!string.IsNullOrEmpty(FigmaFrame.transitionNodeID))
 				{
 					btn = new FigmaTransitionButton(button)
 					{
-						TransitionDuration = figmaFrameEntity.transitionDuration,
-						TransitionEasing = figmaFrameEntity.transitionEasing,
-						TransitionNodeID = figmaFrameEntity.transitionNodeID,
+						TransitionDuration = FigmaFrame.transitionDuration,
+						TransitionEasing = FigmaFrame.transitionEasing,
+						TransitionNodeID = FigmaFrame.transitionNodeID,
 					};
 				}
 			}
 			if (btn == null)
-				btn = new Button(button);
+				btn = new View(button);
 			return btn;
 		}
 
-		public static IButton CreateButtonFromFigmaNode(FigmaNode currentNode)
+		public static IView CreateButtonFromFigmaNode(FigmaNode currentNode)
 		{
-			IButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			IView btn = null;
+			if (currentNode is FigmaFrame FigmaFrame)
 			{
-				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
+				if (!string.IsNullOrEmpty(FigmaFrame.transitionNodeID))
 				{
 					btn = new FigmaTransitionButton()
 					{
-						TransitionDuration = figmaFrameEntity.transitionDuration,
-						TransitionEasing = figmaFrameEntity.transitionEasing,
-						TransitionNodeID = figmaFrameEntity.transitionNodeID,
+						TransitionDuration = FigmaFrame.transitionDuration,
+						TransitionEasing = FigmaFrame.transitionEasing,
+						TransitionNodeID = FigmaFrame.transitionNodeID,
 					};
 				}
 			}
 			if (btn == null)
-				btn = new Button();
+				btn = new View();
 			return btn;
 		}
 
-		public static IImageButton CreateImageButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
+		public static IView CreateImageButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
 		{
-			IImageButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			IView btn = null;
+			if (currentNode is FigmaFrame FigmaFrame)
 			{
-				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
+				if (!string.IsNullOrEmpty(FigmaFrame.transitionNodeID))
 				{
 					btn = new FigmaTransitionImageButton(button)
 					{
-						TransitionDuration = figmaFrameEntity.transitionDuration,
-						TransitionEasing = figmaFrameEntity.transitionEasing,
-						TransitionNodeID = figmaFrameEntity.transitionNodeID,
+						TransitionDuration = FigmaFrame.transitionDuration,
+						TransitionEasing = FigmaFrame.transitionEasing,
+						TransitionNodeID = FigmaFrame.transitionNodeID,
 					};
 				}
 			}
 			if (btn == null)
-				btn = new ImageButton(button);
+				btn = new View(button);
 			return btn;
 		}
 
-		public static IImageButton CreateImageButtonFromFigmaNode(FigmaNode currentNode)
+		public static IView CreateImageButtonFromFigmaNode(FigmaNode currentNode)
 		{
-			IImageButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			IView btn = null;
+			if (currentNode is FigmaFrame FigmaFrame)
 			{
-				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
+				if (!string.IsNullOrEmpty(FigmaFrame.transitionNodeID))
 				{
 					btn = new FigmaTransitionImageButton()
 					{
-						TransitionDuration = figmaFrameEntity.transitionDuration,
-						TransitionEasing = figmaFrameEntity.transitionEasing,
-						TransitionNodeID = figmaFrameEntity.transitionNodeID,
+						TransitionDuration = FigmaFrame.transitionDuration,
+						TransitionEasing = FigmaFrame.transitionEasing,
+						TransitionNodeID = FigmaFrame.transitionNodeID,
 					};
 				}
 			}
 			if (btn == null)
-				btn = new ImageButton();
+				btn = new View();
 			return btn;
 		}
 

@@ -24,12 +24,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Cocoa
 {
-	public class FigmaTransitionImageButton : ImageButton, ITransitableButton
+	public class FigmaTransitionImageButton : View, IView
 	{
 		public string TransitionNodeID { get; set; }
 		public float TransitionDuration { get; set; }
@@ -44,7 +45,7 @@ namespace FigmaSharp.Cocoa
 		}
 	}
 
-	public class FigmaTransitionButton : Button, IViewTransitable, ITransitableButton
+	public class FigmaTransitionButton : View, IViewTransitable, IView
 	{
 		public string TransitionNodeID { get; set; }
 		public float TransitionDuration { get; set; }

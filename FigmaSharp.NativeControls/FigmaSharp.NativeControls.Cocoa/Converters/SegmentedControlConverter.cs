@@ -36,50 +36,53 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class TabViewConverter : CocoaConverter
+    public class SegmentedControlConverter : CocoaConverter
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSTabView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSSegmentedControl);
 
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.TabView;
+                controlType == NativeControlType.SegmentedControl;
         }
 
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
         {
             var frame = (FigmaFrame)currentNode;
-            var tabView = new NSTabView();
-           
-            List<NSTabViewItem> tabs = new List<NSTabViewItem>();
-            var tabNodes = frame.FirstChild (s => s.name == "Buttons");
+            FigmaNode buttons = frame.FirstChild(s => s.name == "Cells");
 
-            if (tabNodes == null)
-                return new View(tabView);
+            if (buttons == null)
+                return null;
 
-            foreach (FigmaNode tabNode in tabNodes.GetChildren (t => t.visible, reverseChildren: true))
+            var labels = new List<string>();
+
+            foreach (FigmaNode button in buttons.GetChildren(t => t.visible))
             {
-                var firstChild = tabNode.FirstChild(s => s.name.In("Basic", "Default") && s.visible);
+                FigmaNode state = button.FirstChild(s => s.name.In("Basic", "Default") && s.visible);
 
-                if (firstChild != null)
+                if (state != null)
                 {
-                    FigmaText text = firstChild.FirstChild (s => s.name == "lbl") as FigmaText;
-
-                    if (text != null)
-                    {
-                        var item = new NSTabViewItem() {
-                            Label = text.characters
-                        };
-
-                        tabs.Add(item);
-                    }
+                    var text = (FigmaText)state.FirstChild(s => s.name == "lbl");
+                    labels.Add(text.characters);
                 }
             }
 
-            tabView.SetItems(tabs.ToArray());
+            var segmentedControl = NSSegmentedControl.FromLabels(
+                labels.ToArray(),
+                NSSegmentSwitchTracking.SelectOne,
+                () => Console.WriteLine("SegmentedControl activated"));
 
-			return new View(tabView);
+            currentNode.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
+
+            segmentedControl.ControlSize = GetNSControlSize(controlVariant);
+            segmentedControl.SegmentStyle = NSSegmentStyle.Rounded;
+            segmentedControl.SelectedSegment = 0;
+
+
+            segmentedControl.Font = GetNSFont(controlVariant);
+
+            return new View(segmentedControl);
         }
 
         protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

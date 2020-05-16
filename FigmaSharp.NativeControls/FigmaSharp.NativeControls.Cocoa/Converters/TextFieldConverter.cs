@@ -1,30 +1,27 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Linq;
@@ -40,63 +37,102 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class TextFieldConverter : FigmaNativeControlConverter
+    public class TextFieldConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
+			FigmaNode optionsGroup = currentNode.GetChildren()
+                .FirstOrDefault(s => s.name == "!options" && s.visible);
+
+			FigmaNode passwordNode = optionsGroup?.GetChildren()
+				.OfType<FigmaNode>()
+				.FirstOrDefault(s => s.name == "password" && s.visible);
+
+			if (passwordNode != null)
+				return typeof(NSSecureTextField);
+
+
+			currentNode.TryGetNativeControlType(out var controlType);
+
+			if (controlType == NativeControlType.SearchField)
+				return typeof(NSSearchField);
+
 			return typeof(NSTextField);
 		}
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && (value == NativeControlType.TextField || value == NativeControlType.Filter);
+			currentNode.TryGetNativeControlType(out var controlType);
+
+			return controlType == NativeControlType.TextField ||
+				   controlType == NativeControlType.SearchField;
 		}
 
-		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+
+		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity) currentNode;
+			var textField = new NSTextField();
 
-			figmaInstance.TryGetNativeControlType (out var controlType);
-			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox() : new TextBox();
-			var view = (NSTextField)textBox.NativeObject;
+			var frame = (FigmaFrame) currentNode;
+			frame.TryGetNativeControlType(out var controlType);
+			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			view.Configure (currentNode);
+			if (controlType == NativeControlType.SearchField)
+				textField = new NSSearchField();
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlComponentType);
-			switch (controlComponentType) {
-				default:
-					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+
+			FigmaNode optionsGroup = frame.children.FirstOrDefault(s => s.name == "!options" && s.visible);
+
+			FigmaNode passwordNode = optionsGroup?.GetChildren()
+	            .OfType<FigmaNode>()
+	            .FirstOrDefault(s => s.name == "password" && s.visible);
+
+			if (passwordNode != null)
+				textField = new NSSecureTextField();
+
+
+			FigmaText placeholderText = optionsGroup?.GetChildren()
+				.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == "placeholder" && s.visible);
+
+			if (placeholderText != null && !placeholderText.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
+				textField.PlaceholderString = placeholderText.characters;
+
+
+			switch (controlVariant) {
+				case NativeControlVariant.Regular:
+					textField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 					break;
-				case NativeControlComponentType.TextFieldSmall:
-				case NativeControlComponentType.TextFieldSmallDark:
-				case NativeControlComponentType.FilterSmall:
-				case NativeControlComponentType.FilterSmallDark:
-					view.ControlSize = NSControlSize.Small;
+				case NativeControlVariant.Small:
+					textField.ControlSize = NSControlSize.Small;
+					textField.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+
 					break;
 			}
-	
-			var texts = figmaInstance.children
-				.OfType<FigmaText> ();
 
-			var text = texts.FirstOrDefault (s => s.name == "lbl" && s.visible);
-			if (text != null) {
-				textBox.Text = text.characters;
-				//view.Configure (text);
+
+			FigmaText text = frame.children
+				.OfType<FigmaText> ()
+                .FirstOrDefault (s => s.name == "lbl" && s.visible);
+
+			if (text != null)
+			{
+				textField.StringValue = text.characters;
+                textField.Alignment = FigmaExtensions.ToNSTextAlignment(text.style.textAlignHorizontal);
 			}
 
-			var placeholder = texts.FirstOrDefault (s => s.name == "placeholder");
-			if (placeholder != null && !placeholder.characters.Equals("Placeholder", StringComparison.InvariantCultureIgnoreCase))
-				view.PlaceholderString = placeholder.characters;
 
-			return textBox;
+			return new View(textField);
 		}
+
 
 		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var instance = (FigmaFrameEntity)currentNode.Node;
+			var instance = (FigmaFrame)currentNode.Node;
 			var name = currentNode.Name;
 
 			var builder = new StringBuilder ();
+            /*
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
 				builder.WriteConstructor (name,  GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
@@ -106,7 +142,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			switch (controlType)
 			{
 				case NativeControlComponentType.TextFieldStandard:
-				case NativeControlComponentType.TextFieldStandardDark:
 					builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
 						CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 					break;
@@ -127,7 +162,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				var stringLabel = NativeControlHelper.GetTranslatableString(placeholderTextNode.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 				builder.WriteEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
 			}
-
+            */
 			return builder;
 		}
 	}

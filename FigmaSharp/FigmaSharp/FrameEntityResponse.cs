@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameEntityResponse.cs - Response model from FigmaQuery
+ * FigmaFrameResponse.cs - Response model from FigmaQuery
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,9 +30,9 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
-    public class FigmaFrameEntityResponse
+    public class FigmaFrameResponse
     {
-        public FigmaFrameEntityResponse(FigmaFileResponse figmaResponse, int page)
+        public FigmaFrameResponse(FigmaFileResponse figmaResponse, int page)
         {
             Page = page;
             FigmaResponse = figmaResponse;

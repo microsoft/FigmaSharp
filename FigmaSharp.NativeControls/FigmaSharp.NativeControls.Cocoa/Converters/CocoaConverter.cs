@@ -1,0 +1,213 @@
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+using System;
+using System.Text;
+
+using AppKit;
+
+using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Views;
+
+namespace FigmaSharp.NativeControls.Cocoa
+{
+	public abstract class CocoaConverter : FigmaViewConverter
+	{
+		public override bool ScanChildren(FigmaNode currentNode)
+		{
+			return false;
+		}
+
+
+		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		{
+			var converted = OnConvertToView(currentNode, parentNode, rendererService);
+			if (converted != null) {
+				var nativeView = converted.NativeObject as AppKit.NSView;
+				if (currentNode.IsA11Group())
+					nativeView.AccessibilityRole = AppKit.NSAccessibilityRoles.GroupRole;
+
+				//label
+				if (currentNode.TrySearchA11Label(out var label)) {
+					try {
+						nativeView.AccessibilityTitle = label;
+					} catch (Exception) {
+						nativeView.AccessibilityLabel = label;
+					}
+				}
+				//help
+				if (currentNode.TrySearchA11Help(out var help))
+					nativeView.AccessibilityHelp = help;
+			}
+			return converted;
+		}
+
+		protected abstract IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService);
+		protected abstract StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
+
+
+		string GetAccessibilityTitle(NativeControlType nativeControlType)
+		{
+			switch (nativeControlType)
+			{
+				case NativeControlType.Button:
+				case NativeControlType.CheckBox:
+				case NativeControlType.Radio:
+				case NativeControlType.PopUp:
+				case NativeControlType.ComboBox:
+					return nameof(AppKit.NSView.AccessibilityTitle);
+				default:
+					break;
+			}
+			return nameof(AppKit.NSView.AccessibilityLabel);
+		}
+
+		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		{
+			var builder = OnConvertToCode(currentNode, parentNode, rendererService);
+			if (builder != null)
+			{
+				currentNode.Node.TryGetNativeControlType(out var nativeControlType);
+				if (currentNode.Node.IsA11Enabled ()) {
+					bool hasAccessibility = false;
+					if (currentNode.Node.IsA11Group()) {
+						var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
+						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
+						hasAccessibility = true;
+					}
+					if (currentNode.Node.TrySearchA11Label(out var label)) {
+						label = NativeControlHelper.GetTranslatableString(label, rendererService.CurrentRendererOptions.TranslateLabels);
+						builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+						hasAccessibility = true;
+					}
+					if (currentNode.Node.TrySearchA11Help(out var help))
+					{
+						help = NativeControlHelper.GetTranslatableString(help, rendererService.CurrentRendererOptions.TranslateLabels);
+						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+						hasAccessibility = true;
+					}
+					if (hasAccessibility)
+						builder.AppendLine();
+				}
+				return builder.ToString();
+			}
+			return string.Empty;
+		}
+
+
+        protected NSControlSize GetNSControlSize(NativeControlVariant controlVariant)
+        {
+			if (controlVariant == NativeControlVariant.Small)
+				return NSControlSize.Small;
+
+			return NSControlSize.Regular;
+        }
+
+
+		protected NSFont GetNSFont(NativeControlVariant controlVariant)
+		{
+			if (controlVariant == NativeControlVariant.Small)
+				return NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+
+			return NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+		}
+
+
+		protected NSFont GetNSFont(NativeControlVariant controlVariant, FigmaText text)
+        {
+			var fontWeight = GetNSFontWeight(text);
+
+			if (controlVariant == NativeControlVariant.Regular)
+			{
+			    // The system default Medium is slightly different, so let Cocoa handle that
+				if (fontWeight == NSFontWeight.Medium)
+					return NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+			}
+
+            if (controlVariant == NativeControlVariant.Small)
+			{
+				// The system default Medium is slightly different, so let Cocoa handle that
+				if (fontWeight == NSFontWeight.Medium)
+					return NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+				else
+					return NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize, fontWeight);
+			}
+
+            return NSFont.SystemFontOfSize(NSFont.SystemFontSize, fontWeight);
+		}
+
+
+		protected nfloat GetNSFontWeight(FigmaText text)
+		{
+			string weight = text?.style?.fontPostScriptName;
+
+			if (weight != null)
+			{
+				if (weight.EndsWith("-Black"))
+					return NSFontWeight.Black;
+
+				if (weight.EndsWith("-Heavy"))
+					return NSFontWeight.Heavy;
+
+				if (weight.EndsWith("-Bold"))
+					return NSFontWeight.Bold;
+
+				if (weight.EndsWith("-Semibold"))
+					return NSFontWeight.Semibold;
+
+				if (weight.EndsWith("-Regular"))
+					return NSFontWeight.Regular;
+
+				if (weight.EndsWith("-Light"))
+					return NSFontWeight.Light;
+
+				if (weight.EndsWith("-Thin"))
+					return NSFontWeight.Thin;
+
+				if (weight.EndsWith("-Ultralight"))
+					return NSFontWeight.UltraLight;
+			}
+
+            // The default macOS font is of medium weight
+			return NSFontWeight.Medium;
+		}
+
+
+		protected NSTextAlignment GetNSTextAlignment(FigmaText text)
+		{
+			FigmaTypeStyle style = text.style;
+
+			if (style.textAlignHorizontal == "RIGHT")
+				return NSTextAlignment.Right;
+
+			if (style.textAlignHorizontal == "CENTER")
+				return NSTextAlignment.Center;
+
+			return NSTextAlignment.Left;
+		}
+	}
+}

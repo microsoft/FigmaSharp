@@ -37,24 +37,36 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class SwitchConverter : CocoaConverter
+    public class CheckBoxConverter : CocoaConverter
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSSwitch);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.Switch;
+                controlType == NativeControlType.CheckBox;
         }
 
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
         {
             var frame = (FigmaFrame)currentNode;
-            var switchControl = new NSSwitch();
 
-            frame.TryGetNativeControlVariant (out var controlVariant);
-            switchControl.ControlSize = NSControlSize.Regular;
+            var checkBox = new NSButton();
+            checkBox.SetButtonType(NSButtonType.Switch);
+
+            FigmaText text = frame.children
+                  .OfType<FigmaText>()
+                  .FirstOrDefault(s => s.visible);
+
+            if (text != null)
+                checkBox.Title = text.characters;
+
+            frame.TryGetNativeControlType(out var controlType);
+            frame.TryGetNativeControlVariant(out var controlVariant);
+
+            checkBox.ControlSize = GetNSControlSize(controlVariant);
+            checkBox.Font = GetNSFont(controlVariant, text);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
@@ -63,13 +75,13 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (group != null)
             {
                 if (group.name == "On")
-                    switchControl.State = 1;
+                    checkBox.State = NSCellStateValue.On;
 
                 if (group.name == "Off")
-                    switchControl.State = 0;
+                    checkBox.State = NSCellStateValue.Off;
             }
 
-            return new View(switchControl);
+            return new View(checkBox);
         }
 
 
@@ -84,19 +96,44 @@ namespace FigmaSharp.NativeControls.Cocoa
                 code.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar (currentNode, parentNode));
 
             code.Configure (currentNode.Node, name);
-            code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+            code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
 
+            frame.TryGetNativeControlVariant (out var controlVariant);
+
+            switch (controlVariant) {
+                case NativeControlVariant.Regular:
+                    code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+                    code.WriteEquality (currentNode.Name, nameof (NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize (CodeGenerationHelpers.Font.SystemFontSize));
+                    break;
+                case NativeControlVariant.Small:
+                    code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
+                    code.WriteEquality(currentNode.Name, nameof(NSButton.Font),
+                        CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+                    break;
+            }
+
+            FigmaText text = frame.children
+                .OfType<FigmaText> ()
+                .FirstOrDefault ();
+
+            if (text != null) {
+                var labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+
+                code.WriteEquality(name, nameof(NSButton.Title), labelTranslated,
+                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+            }
+            
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()
                 .FirstOrDefault (s => (s.name == "On" || s.name == "Off") && s.visible);
 
-            if (group != null)
-            {
+            if (group != null) {
                 if (group.name == "On")
-                    code.WriteEquality (name, nameof (NSSwitch.State), "1", inQuotes: false);
+                    code.WriteEquality (name, nameof (NSButton.State), NSCellStateValue.On);
 
                 if (group.name == "Off")
-                    code.WriteEquality(name, nameof(NSSwitch.State), "0", inQuotes: false);
+                    code.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.Off);
             }
 
             return code;

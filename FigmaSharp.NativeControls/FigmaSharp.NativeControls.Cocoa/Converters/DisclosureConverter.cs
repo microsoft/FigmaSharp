@@ -1,30 +1,27 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Text;
@@ -40,62 +37,79 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class DisclosureConverter : FigmaNativeControlConverter
+    public class DisclosureViewConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode)
-		{
-			return typeof(NSButton);
-		}
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.DisclosureTriange;
+			return currentNode.TryGetNativeControlType(out var controlType) &&
+                controlType == NativeControlType.DisclosureView;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var instance = (FigmaFrameEntity)currentNode;
-			var view = new DisclosureTriangle ();
-			var nativeView = (FNSButton)view.NativeObject;
-			nativeView.Configure (instance);
+			var frame = (FigmaFrame)currentNode;
 
-			instance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
-				case NativeControlComponentType.DisclosureTriangleStandard:
-				case NativeControlComponentType.DisclosureTriangleStandardDark:
-					nativeView.ControlSize = NSControlSize.Regular;
-					break;
-			}
+			var disclosureView = new NSView();
 
-			return view;
+			var subView = new NSView(disclosureView.Bounds);
+			subView.WantsLayer = true;
+		    subView.Layer.BackgroundColor = NSColor.Red.CGColor;
+
+
+			var disclosureTriangle = new NSButton();
+			disclosureTriangle.SetFrameSize(new CoreGraphics.CGSize(130, 13));
+			disclosureTriangle.SetButtonType(NSButtonType.PushOnPushOff);
+			disclosureTriangle.BezelStyle = NSBezelStyle.Disclosure;
+
+            disclosureTriangle.Activated += delegate {
+
+			//	disclosureTriangle.State = NSCellStateValue.Off;
+
+	        };
+
+
+			disclosureView.AddSubview(disclosureTriangle);
+			disclosureView.AddSubview(subView);
+
+
+			disclosureTriangle.LeftAnchor.ConstraintEqualToAnchor(disclosureView.LeftAnchor, 8)
+							.Active = true;
+
+			disclosureTriangle.TopAnchor.ConstraintEqualToAnchor(disclosureView.TopAnchor, 8)
+							.Active = true;
+
+			return new View(disclosureView);
 		}
 
 		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+			var figmaInstance = (FigmaFrame)currentNode.Node;
 
-			StringBuilder builder = new StringBuilder ();
+			StringBuilder code = new StringBuilder ();
 			string name = currentNode.Name;
-
+            /*
 			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor (name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			builder.Configure (figmaInstance, name);
+			code.Configure (figmaInstance, name);
 
-			builder.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.PushOnPushOff);
-			builder.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Disclosure);
-			builder.WriteEquality (name, nameof (NSButton.Title), CodeGenerationHelpers.StringEmpty);
-			builder.WriteMethod (name, nameof (NSButton.Highlight), false);
+			code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.PushOnPushOff);
+			code.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Disclosure);
+			code.WriteEquality (name, nameof (NSButton.Title), CodeGenerationHelpers.StringEmpty);
+			code.WriteMethod (name, nameof (NSButton.Highlight), false);
 
 			figmaInstance.TryGetNativeControlComponentType (out var controlType);
 			switch (controlType) {
 				case NativeControlComponentType.DisclosureTriangleStandard:
 				case NativeControlComponentType.DisclosureTriangleStandardDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+					code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
-
-			return builder;
+            */
+			return code;
 		}
 	}
 }

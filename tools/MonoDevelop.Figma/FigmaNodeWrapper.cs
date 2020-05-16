@@ -64,11 +64,11 @@ namespace MonoDevelop.Figma
         }
     }
 
-    class FigmaFrameEntityWrapper : FigmaNodeWrapper
+    class FigmaFrameWrapper : FigmaNodeWrapper
     {
-        FigmaFrameEntity vector => (FigmaFrameEntity)node;
+        FigmaFrame vector => (FigmaFrame)node;
 
-        public FigmaFrameEntityWrapper(FigmaFrameEntity node) : base(node)
+        public FigmaFrameWrapper(FigmaFrame node) : base(node)
         {
 
         }
