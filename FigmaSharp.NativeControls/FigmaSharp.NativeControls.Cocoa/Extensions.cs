@@ -23,6 +23,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+using System;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
@@ -34,33 +35,47 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			foreach (var style in figmaText.styles)
 			{
-				if (fileProvider.TryGetStyle(style.Value, out FigmaStyle fillStyle))
+				try
 				{
-					if (style.Key == styleKey)
+					if (fileProvider.TryGetStyle(style.Value, out FigmaStyle fillStyle))
 					{
-						stringColor = colorConverter.FromStyleToStringColor(fillStyle.name);
-						return stringColor == null;
+						if (style.Key == styleKey)
+						{
+							stringColor = colorConverter.FromStyleToStringColor(fillStyle.name);
+							return stringColor == null;
+						}
+						continue;
 					}
-					continue;
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex);
 				}
 			}
 
 			stringColor = null;
 			return stringColor == null;
 		}
-	
-		public static bool TryGetNSColorByStyleKey (this FigmaText figmaText, IFigmaFileProvider fileProvider, IColorConverter colorConverter, string styleKey, out AppKit.NSColor color)
+
+		public static bool TryGetNSColorByStyleKey(this FigmaText figmaText, IFigmaFileProvider fileProvider, IColorConverter colorConverter, string styleKey, out AppKit.NSColor color)
 		{
 			foreach (var style in figmaText.styles)
 			{
-				if (fileProvider.TryGetStyle(style.Value, out FigmaStyle fillStyle))
+				try
 				{
-					if (style.Key == styleKey)
+					if (fileProvider.TryGetStyle(style.Value, out FigmaStyle fillStyle))
 					{
-						color = colorConverter.FromStyleToColor(fillStyle.name) as AppKit.NSColor;
-						return color != null;
+						if (style.Key == styleKey)
+						{
+							color = colorConverter.FromStyleToColor(fillStyle.name) as AppKit.NSColor;
+							return color != null;
+						}
+						continue;
 					}
-					continue;
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex);
 				}
 			}
 			color = null;

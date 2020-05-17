@@ -34,14 +34,14 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
-	public class FigmaUser
-	{
-		public string handle { get; set; }
+    public class FigmaUser
+    {
+        public string handle { get; set; }
         public string img_url { get; set; }
         public string id { get; set; }
     }
 
-	public class FigmaFileVersion
+    public class FigmaFileVersion
     {
         public string id { get; set; }
         public DateTime created_at { get; set; }
@@ -54,8 +54,8 @@ namespace FigmaSharp.Models
         public bool IsNamed => !string.IsNullOrEmpty(label);
     }
 
-	public class FigmaFileVersionResponse
-	{
+    public class FigmaFileVersionResponse
+    {
         public FigmaFileVersion[] versions { get; set; }
     }
 
@@ -68,10 +68,10 @@ namespace FigmaSharp.Models
 
     public class FigmaStyle
     {
-		public class Keys
-		{
+        public class Keys
+        {
             public const string Fill = "fill";
-		}
+        }
 
         public string key { get; set; }
         public string name { get; set; }
@@ -95,16 +95,16 @@ namespace FigmaSharp.Models
         public int schemaVersion { get; set; }
 
 
-		public void Save (string filePath)
-		{
+        public void Save (string filePath)
+        {
             if (File.Exists (filePath)) {
                 File.Delete (filePath);
             }
             using (var file = File.CreateText (filePath)) {
-				var serializer = new JsonSerializer {
-					Formatting = Formatting.Indented
-				};
-				serializer.Serialize (file, this);
+                var serializer = new JsonSerializer {
+                    Formatting = Formatting.Indented
+                };
+                serializer.Serialize (file, this);
             }
         }
     }

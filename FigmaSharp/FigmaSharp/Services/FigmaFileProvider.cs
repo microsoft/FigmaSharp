@@ -416,8 +416,8 @@ namespace FigmaSharp.Services
 			return false;
 		}
 
-        public bool TryGetStyle (string fillStyleValue, out FigmaStyle style)
-        {
+		public bool TryGetStyle (string fillStyleValue, out FigmaStyle style)
+		{
 			return Response.styles.TryGetValue(fillStyleValue, out style);
 			// string.Format("{0}.{1}", typeof(NSColor), nameof(NSColor.SecondaryLabelColor)
 		}

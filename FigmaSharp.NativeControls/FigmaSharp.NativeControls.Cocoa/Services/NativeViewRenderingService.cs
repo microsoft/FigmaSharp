@@ -37,28 +37,28 @@ using FigmaSharp.Views;
 namespace FigmaSharp.Services
 {
     public class NativeViewRenderingService : FigmaViewRendererService
-	{
+    {
         public NativeViewRenderingService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null,
-			FigmaViewPropertySetterBase propertySetter = null,
-			IColorConverter colorConverter = null)
+            FigmaViewPropertySetterBase propertySetter = null,
+            IColorConverter colorConverter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? NativeControlsContext.Current.GetConverters (),
                   propertySetter ?? NativeControlsContext.Current.GetViewPropertySetter(),
                   colorConverter ?? NativeControlsContext.Current.GetColorConverter())
-		{
+        {
 
         }
 
-		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
-		{
+        protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+        {
             var windowContent = currentNode.GetWindowContent();
             if (windowContent != null && windowContent is IFigmaNodeContainer nodeContainer) {
                 return nodeContainer.children;
             }
-			return base.GetCurrentChildren(currentNode, parentNode, converter, options);
-		}
+            return base.GetCurrentChildren(currentNode, parentNode, converter, options);
+        }
 
-		public override bool ProcessesImageFromNode (FigmaNode node)
+        public override bool ProcessesImageFromNode (FigmaNode node)
 		{
  			return node.IsImageNode () || node.IsFigmaImageViewNode ();
 		}

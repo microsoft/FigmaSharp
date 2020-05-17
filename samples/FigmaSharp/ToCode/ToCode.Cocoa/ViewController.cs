@@ -106,7 +106,6 @@ namespace ToCode.Cocoa
 			codeRenderer.Clear();
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
-			var color = new ColorConverter();
 			var options = new FigmaCodeRendererServiceOptions() {
 				TranslateLabels = openUrlButton.State == NSCellStateValue.On,
 			};

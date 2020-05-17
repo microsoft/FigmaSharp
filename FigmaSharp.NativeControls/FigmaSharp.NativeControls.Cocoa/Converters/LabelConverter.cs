@@ -86,7 +86,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-			if (rendererService is FigmaViewRendererService rnd && figmaText.TryGetNSColorByStyleKey (rnd.FileProvider, rnd.colorConverter, FigmaStyle.Keys.Fill, out NSColor textColor))
+            if (rendererService is FigmaViewRendererService rnd && figmaText.TryGetNSColorByStyleKey (rnd.FileProvider, rnd.colorConverter, FigmaStyle.Keys.Fill, out NSColor textColor))
                 textField.TextColor = textColor;
 
             textField.Configure(figmaText, configureColor: false);

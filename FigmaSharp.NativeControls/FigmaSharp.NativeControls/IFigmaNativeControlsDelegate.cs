@@ -34,10 +34,10 @@ namespace FigmaSharp
 	{
 		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
 
-        FigmaCodePropertyConverterBase GetCodePropertyConverter ();
+		FigmaCodePropertyConverterBase GetCodePropertyConverter ();
 
-        FigmaViewConverter[] GetConverters (bool includeAll = true);
-        FigmaViewPropertySetterBase GetViewPropertySetter();
+		FigmaViewConverter[] GetConverters (bool includeAll = true);
+		FigmaViewPropertySetterBase GetViewPropertySetter();
 
 		IColorConverter GetColorConverter();
 	}
