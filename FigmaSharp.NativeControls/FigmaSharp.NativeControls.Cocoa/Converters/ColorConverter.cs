@@ -44,9 +44,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			{
 				var index = value.IndexOf("/");
 				if (index > -1)
-				{
 					value = value.Substring(index + 1);
-				}
 				var color = ThemeColors.FirstOrDefault(c => c.styleName == value).color;
 				return color;
 			}
@@ -79,58 +77,58 @@ namespace FigmaSharp.NativeControls.Cocoa
 			return null;
 		}
 
-		static IReadOnlyList<(string styleName, NSColor color, string nsColorName)> ThemeColors = new List<(string styleName, NSColor color, string nsColorName)>
-		{
-			// System color palette
-			//("System/Light/Red", NSColor.SystemRedColor, nameof (NSColor.SystemRedColor)),
-            //("System/Light/Green", NSColor.SystemGreenColor, nameof (NSColor.SystemGreenColor)),
-            //("System/Light/Blue", NSColor.SystemBlueColor, nameof ( NSColor.SystemBlueColor)),
-            //("System/Light/Orange", NSColor.SystemOrangeColor, nameof (NSColor.SystemOrangeColor)),
-            //("System/Light/Yellow", NSColor.SystemYellowColor, nameof (NSColor.SystemYellowColor)),
-            //("System/Light/Brown",NSColor.SystemBrownColor, nameof ( NSColor.SystemBrownColor)),
-            //("System/Light/Pink", NSColor.SystemPinkColor, nameof (NSColor.SystemPinkColor)),
-            //("System/Light/Purple", NSColor.SystemPurpleColor, nameof (NSColor.SystemPurpleColor)),
-            //("System/Teal", NSColor.SystemTealColor, nameof (NSColor.SystemTealColor)),
-			////("System/Indigo", NSColor.SystemIndigoColor), //breaks in mojave
-			//("System/Gray", NSColor.SystemGrayColor, nameof (NSColor.SystemGrayColor)),
+        static IReadOnlyList<(string styleName, NSColor color, string nsColorName)> ThemeColors = new List<(string styleName, NSColor color, string nsColorName)>
+        {
+            // System color palette
+            ("System/Light/Red", NSColor.SystemRedColor, nameof (NSColor.SystemRedColor)),
+            ("System/Light/Green", NSColor.SystemGreenColor, nameof (NSColor.SystemGreenColor)),
+            ("System/Light/Blue", NSColor.SystemBlueColor, nameof ( NSColor.SystemBlueColor)),
+            ("System/Light/Orange", NSColor.SystemOrangeColor, nameof (NSColor.SystemOrangeColor)),
+            ("System/Light/Yellow", NSColor.SystemYellowColor, nameof (NSColor.SystemYellowColor)),
+            ("System/Light/Brown",NSColor.SystemBrownColor, nameof ( NSColor.SystemBrownColor)),
+            ("System/Light/Pink", NSColor.SystemPinkColor, nameof (NSColor.SystemPinkColor)),
+            ("System/Light/Purple", NSColor.SystemPurpleColor, nameof (NSColor.SystemPurpleColor)),
+            ("System/Teal", NSColor.SystemTealColor, nameof (NSColor.SystemTealColor)),
+            ("System/Indigo", NSColor.SystemIndigoColor,  nameof ( NSColor.SystemIndigoColor)), //breaks in mojave
+            ("System/Gray", NSColor.SystemGrayColor, nameof (NSColor.SystemGrayColor)),
 
-			//// Text
-			//("Text/Label", NSColor.LabelColor, nameof ( NSColor.LabelColor)),
-			//("Text/Label Secondary", NSColor.SecondaryLabelColor, nameof (NSColor.SecondaryLabelColor)),
-			//("Text/Label Tertiary", NSColor.TertiaryLabelColor, nameof ( NSColor.TertiaryLabelColor)),
-			//("Text/Label Quaternary", NSColor.QuaternaryLabelColor, nameof ( NSColor.QuaternaryLabelColor)),
-			//("Text/Link", NSColor.LinkColor, nameof (NSColor.LinkColor)),
-			//("Text/Placeholder", NSColor.PlaceholderTextColor, nameof (NSColor.PlaceholderTextColor)),
-			//("Text/Window Frame", NSColor.WindowFrameText, nameof (NSColor.WindowFrameText)),
-			//("Text/Menu Item Selected", NSColor.SelectedMenuItemText, nameof (NSColor.SelectedMenuItemText)),
-			//("Text/Control Selected Alternate", NSColor.AlternateSelectedControlText, nameof (NSColor.AlternateSelectedControlText)),
-			//("Text/Header", NSColor.HeaderText, nameof (NSColor.HeaderText)),
-			//("Text/Text", NSColor.Text, nameof (NSColor.Text)),
-			//("Text/Selected", NSColor.SelectedText, nameof (NSColor.SelectedText)),
-			//("Text/Selected Unemphasized", NSColor.UnemphasizedSelectedTextColor, nameof (NSColor.UnemphasizedSelectedTextColor)),
-			//("Text/Control", NSColor.ControlText, nameof (NSColor.ControlText)),
-			//("Text/Control Selected", NSColor.SelectedControlText, nameof (NSColor.SelectedControlText)),
-			//("Text/Control Disabled", NSColor.DisabledControlText, nameof (NSColor.DisabledControlText)),
+            // Text
+            ("Text/Label", NSColor.LabelColor, nameof ( NSColor.LabelColor)),
+            ("Text/Label Secondary", NSColor.SecondaryLabelColor, nameof (NSColor.SecondaryLabelColor)),
+            ("Text/Label Tertiary", NSColor.TertiaryLabelColor, nameof ( NSColor.TertiaryLabelColor)),
+            ("Text/Label Quaternary", NSColor.QuaternaryLabelColor, nameof ( NSColor.QuaternaryLabelColor)),
+            ("Text/Link", NSColor.LinkColor, nameof (NSColor.LinkColor)),
+            ("Text/Placeholder", NSColor.PlaceholderTextColor, nameof (NSColor.PlaceholderTextColor)),
+            ("Text/Window Frame", NSColor.WindowFrameText, nameof (NSColor.WindowFrameText)),
+            ("Text/Menu Item Selected", NSColor.SelectedMenuItemText, nameof (NSColor.SelectedMenuItemText)),
+            ("Text/Control Selected Alternate", NSColor.AlternateSelectedControlText, nameof (NSColor.AlternateSelectedControlText)),
+            ("Text/Header", NSColor.HeaderText, nameof (NSColor.HeaderText)),
+            ("Text/Text", NSColor.Text, nameof (NSColor.Text)),
+            ("Text/Selected", NSColor.SelectedText, nameof (NSColor.SelectedText)),
+            ("Text/Selected Unemphasized", NSColor.UnemphasizedSelectedTextColor, nameof (NSColor.UnemphasizedSelectedTextColor)),
+            ("Text/Control", NSColor.ControlText, nameof (NSColor.ControlText)),
+            ("Text/Control Selected", NSColor.SelectedControlText, nameof (NSColor.SelectedControlText)),
+            ("Text/Control Disabled", NSColor.DisabledControlText, nameof (NSColor.DisabledControlText)),
 
-			// Chrome
-			//("Chrome/Separator", NSColor.SeparatorColor),
-			//("Chrome/Grid", NSColor.Grid),
-			//("Chrome/Text BG", NSColor.TextBackground),
-			//("Chrome/Text Selected BG", NSColor.SelectedTextBackground),
-			//("Chrome/Text Selected Unemphasized BG", NSColor.UnemphasizedSelectedTextBackgroundColor),
-			//("Chrome/Window BG", NSColor.WindowBackground),
-			//("Chrome/Under Page BG", NSColor.UnderPageBackgroundColor),
-			//("Chrome/Control BG", NSColor.ControlBackground),
-			//("Chrome/Content Selected BG", NSColor.SelectedContentBackgroundColor),
-			//("Chrome/Content Selected Unemphasized BG", NSColor.UnemphasizedSelectedContentBackgroundColor),
-			//("Chrome/Content Alternating BG", NSColor.AlternatingContentBackgroundColors[1]),
-			//("Chrome/Control", NSColor.Control),
-			//("Chrome/Control Selected", NSColor.SelectedControl),
-			//("Chrome/Control Accent", NSColor.ControlAccentColor),
+            // Chrome
+            ("Chrome/Separator", NSColor.SeparatorColor, nameof (NSColor.SeparatorColor)),
+            ("Chrome/Grid", NSColor.Grid, nameof (NSColor.Grid)),
+            ("Chrome/Text BG", NSColor.TextBackground, nameof (NSColor.TextBackground)),
+            ("Chrome/Text Selected BG", NSColor.SelectedTextBackground, nameof (NSColor.SelectedTextBackground)),
+            ("Chrome/Text Selected Unemphasized BG", NSColor.UnemphasizedSelectedTextBackgroundColor, nameof (NSColor.UnemphasizedSelectedTextBackgroundColor)),
+            ("Chrome/Window BG", NSColor.WindowBackground, nameof (NSColor.WindowBackground)),
+            ("Chrome/Under Page BG", NSColor.UnderPageBackgroundColor, nameof (NSColor.UnderPageBackgroundColor)),
+            ("Chrome/Control BG", NSColor.ControlBackground, nameof (NSColor.ControlBackground)),
+            ("Chrome/Content Selected BG", NSColor.SelectedContentBackgroundColor, nameof (NSColor.SelectedContentBackgroundColor)),
+            ("Chrome/Content Selected Unemphasized BG", NSColor.UnemphasizedSelectedContentBackgroundColor, nameof (NSColor.UnemphasizedSelectedContentBackgroundColor)),
+            ("Chrome/Content Alternating BG", NSColor.AlternatingContentBackgroundColors[1], $"AlternatingContentBackgroundColors[1]"),
+            ("Chrome/Control", NSColor.Control, nameof (NSColor.Control)),
+            ("Chrome/Control Selected", NSColor.SelectedControl, nameof (NSColor.SelectedControl)),
+            ("Chrome/Control Accent", NSColor.ControlAccentColor, nameof (NSColor.ControlAccentColor)),
 
-			//// Misc
-			//("Misc/Find Highlight", NSColor.FindHighlightColor),
-			//("Misc/Keyboard Focus Indicator", NSColor.KeyboardFocusIndicator),
-		};
+            // Misc
+            ("Misc/Find Highlight", NSColor.FindHighlightColor, nameof (NSColor.FindHighlightColor)),
+            ("Misc/Keyboard Focus Indicator", NSColor.KeyboardFocusIndicator, nameof (NSColor.KeyboardFocusIndicator))
+        };
 	}
 }
