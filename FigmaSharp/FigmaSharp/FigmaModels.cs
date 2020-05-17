@@ -329,8 +329,8 @@ namespace FigmaSharp.Models
         public FigmaEffect[] effects { get; set; }
 
         [Category ("General")]
-        [System.ComponentModel.DisplayName ("Is Mask")]
-        [System.ComponentModel.Description ("Does this node mask sibling nodes in front of it?")]
+        [DisplayName ("Is Mask")]
+        [Description ("Does this node mask sibling nodes in front of it?")]
         public bool isMask { get; set; }
 
         [DisplayName ("Children")]
@@ -340,6 +340,28 @@ namespace FigmaSharp.Models
         public FigmaPaint[] fills { get; set; }
         public bool HasFills => fills?.Length > 0;
 
+        [DisplayName("Strokes")]
+        public FigmaPaint[] strokes { get; set; }
+        public bool HasStrokes => strokes?.Length > 0;
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Weight")]
+        public int strokeWeight { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Geometry")]
+        public FigmaPath[] strokeGeometry { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Align")]
+        public string strokeAlign { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Align")]
+        public string layoutAlign { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Mode")]
         public string layoutMode { get; set; }
 
         [Category("AutoLayout")]
@@ -369,9 +391,15 @@ namespace FigmaSharp.Models
         public float horizontalPadding { get; set; }
 
         [DisplayName("Vertical Padding")]
-        public float verticalPadding { get; set; } 
+        public float verticalPadding { get; set; }
 
+        [Category("General")]
+        [DisplayName("Corner Radius")]
+        public float cornerRadius { get; set; }
 
+        [Category("General")]
+        [DisplayName("RectangleCornerRadii")]
+        public float[] rectangleCornerRadii { get; set; }
     }
 
     public enum FigmaLayoutMode
@@ -475,6 +503,7 @@ namespace FigmaSharp.Models
 		[Category ("Stroke")]
         [DisplayName ("Strokes")]
         public FigmaPaint[] strokes { get; set; }
+        public bool HasStrokes => strokes?.Length > 0;
 
         [Category ("Stroke")]
         [DisplayName ("Stroke Weight")]
