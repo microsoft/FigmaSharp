@@ -30,11 +30,14 @@ using System.Windows.Controls;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
+using System;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
-    { 
+    {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(ImageView);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaEntity = (FigmaVectorEntity)currentNode;
