@@ -42,7 +42,7 @@ namespace FigmaSharp.Services
 
 		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null, IColorConverter colorConverter = null) : base (figmaProvider, figmaViewConverters ?? NativeControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? NativeControlsContext.Current.GetCodePropertyConverter (),
-			colorConverter)
+			colorConverter ?? NativeControlsContext.Current.GetColorConverter ())
 		{
 
 		}

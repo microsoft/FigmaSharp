@@ -44,7 +44,7 @@ namespace FigmaSharp.Services
             : base (figmaProvider,
                   figmaViewConverters ?? NativeControlsContext.Current.GetConverters (),
                   propertySetter ?? NativeControlsContext.Current.GetViewPropertySetter(),
-                  colorConverter)
+                  colorConverter ?? NativeControlsContext.Current.GetColorConverter())
 		{
 
         }

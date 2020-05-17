@@ -38,5 +38,7 @@ namespace FigmaSharp
 
         FigmaViewConverter[] GetConverters (bool includeAll = true);
         FigmaViewPropertySetterBase GetViewPropertySetter();
-    }
+
+		IColorConverter GetColorConverter();
+	}
 }

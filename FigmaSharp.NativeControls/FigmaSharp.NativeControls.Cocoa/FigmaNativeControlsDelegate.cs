@@ -27,7 +27,6 @@
  */
 
 using System.Linq;
-
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls.Cocoa.Converters;
@@ -39,6 +38,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 		static readonly FigmaCodePropertyConverterBase codePropertyConverter = new NativeControlsPropertyConverter ();
 
 		static readonly FigmaViewPropertySetterBase viewPropertySetter = new FigmaViewPropertySetter ();
+
+		static readonly IColorConverter colorConverter = new ColorConverter ();
 
 		static FigmaViewConverter[] allConverters;
 		static FigmaViewConverter[] converters;
@@ -99,5 +100,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public FigmaViewPropertySetterBase GetViewPropertySetter() => viewPropertySetter;
 
+		public IColorConverter GetColorConverter() => colorConverter;
 	}
 }

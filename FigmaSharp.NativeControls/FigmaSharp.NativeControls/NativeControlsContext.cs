@@ -64,8 +64,11 @@ namespace FigmaSharp
         public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
             => figmaDelegate.GetCodePropertyConverter ();
 
+        public IColorConverter GetColorConverter()
+            => figmaDelegate.GetColorConverter();
+
         public FigmaViewConverter[] GetConverters (bool includeAll = true)
-             => figmaDelegate.GetConverters (includeAll);
+            => figmaDelegate.GetConverters (includeAll);
 
         #endregion
     }
