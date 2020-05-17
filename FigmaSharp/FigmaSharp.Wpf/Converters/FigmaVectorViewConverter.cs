@@ -34,7 +34,9 @@ using FigmaSharp.Views;
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
-    { 
+    {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(ImageView);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var vector = (RectangleVector)currentNode;

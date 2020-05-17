@@ -1,5 +1,4 @@
-﻿using ExampleFigma;
-using FigmaSharp.Wpf;
+﻿using FigmaSharp.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,7 @@ namespace BasicRendering.Wpf
         {
             InitializeComponent();
 
-            var scrollViewWrapper = new ScrollViewWrapper(ContainerPanel);
+            var scrollViewWrapper = new ScrollView(ContainerPanel);
             manager = new ExampleViewManager(scrollViewWrapper);
         }
     }

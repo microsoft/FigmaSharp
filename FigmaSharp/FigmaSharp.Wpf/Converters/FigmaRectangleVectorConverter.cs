@@ -30,11 +30,14 @@ using FigmaSharp.Converters;
 using FigmaSharp.Models; 
 using FigmaSharp.Views;
 using FigmaSharp.Services;
+using System;
 
 namespace FigmaSharp.Wpf.Converters
 { 
     public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
-    { 
+    {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(View);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaEntity = (RectangleVector)currentNode;
@@ -42,7 +45,7 @@ namespace FigmaSharp.Wpf.Converters
             var image = new CanvasImage();
             var rectangleView = new View(image); 
             image.Configure(figmaEntity);
-
+             
             return rectangleView;
         } 
 
@@ -50,5 +53,6 @@ namespace FigmaSharp.Wpf.Converters
         {
             return string.Empty;
         }
+
     }
 }

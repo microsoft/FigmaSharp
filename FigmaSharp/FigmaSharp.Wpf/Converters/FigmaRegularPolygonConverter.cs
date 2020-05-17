@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaRegularPolygonConverter : FigmaRegularPolygonConverterBase
-    { 
+    {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(ImageView);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var currengroupView = new CanvasImage();

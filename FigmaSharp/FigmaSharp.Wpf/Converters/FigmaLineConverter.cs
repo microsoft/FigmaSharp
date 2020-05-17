@@ -27,23 +27,26 @@
  */
 
 using FigmaSharp.Converters;
-using System.Windows.Controls;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
+using System;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaLineConverter : FigmaLineConverterBase
     {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(View);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaLine = (FigmaLine)currentNode;
+            var figmaEntity = (FigmaLine)currentNode;
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageView();
-            image.Configure(figmaLine);
-            return figmaImageView;
+            var lineView = new View(image);
+            image.Configure(figmaEntity);
+
+            return lineView; 
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)

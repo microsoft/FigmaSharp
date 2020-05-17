@@ -31,11 +31,14 @@ using System.Windows.Controls;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
+using System;
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(Label);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);

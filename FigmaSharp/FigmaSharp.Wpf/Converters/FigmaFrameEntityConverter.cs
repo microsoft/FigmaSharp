@@ -37,7 +37,9 @@ using System;
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
-    { 
+    {
+        public override Type GetControlType(FigmaNode currentNode) => typeof(ImageView);
+
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             IView view;
