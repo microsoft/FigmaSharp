@@ -475,6 +475,7 @@ namespace FigmaSharp.Models
 		[Category ("Stroke")]
         [DisplayName ("Strokes")]
         public FigmaPaint[] strokes { get; set; }
+        public bool HasStrokes => strokes?.Length > 0;
 
         [Category ("Stroke")]
         [DisplayName ("Stroke Weight")]
