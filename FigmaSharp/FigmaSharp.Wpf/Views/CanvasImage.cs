@@ -34,16 +34,12 @@ namespace FigmaSharp.Wpf
 {
     public class CanvasImage : Canvas, IDisposable
     {
-        public System.Windows.Controls.Image ImageView
-        {
-            get;
-            private set;
-        }
+        System.Windows.Controls.Image imageView;
 
         public CanvasImage()
         {
-            ImageView = new System.Windows.Controls.Image();
-            ImageView.ClipToBounds = true;
+            imageView = new System.Windows.Controls.Image();
+            imageView.ClipToBounds = true;
             this.SizeChanged += CanvasImage_SizeChanged;
         }
 
@@ -56,14 +52,14 @@ namespace FigmaSharp.Wpf
         {
             if (imageSource == null)
             {
-                Children.Remove(ImageView);
-                ImageView.Source = null;
+                Children.Remove(imageView);
+                imageView.Source = null;
             }
             else
             {
-                if (!Children.Contains(ImageView))
-                    Children.Add(ImageView);
-                ImageView.Source = imageSource;
+                if (!Children.Contains(imageView))
+                    Children.Add(imageView);
+                imageView.Source = imageSource;
 
                 Refresh();
             }
@@ -71,12 +67,12 @@ namespace FigmaSharp.Wpf
 
         void Refresh()
         {
-            if (!Children.Contains(ImageView))
+            if (!Children.Contains(imageView))
                 return;
-            SetLeft(ImageView, 0);
-            SetTop(ImageView, 0);
-            ImageView.Width = Width;
-            ImageView.Height = Height;
+            SetLeft(imageView, 0);
+            SetTop(imageView, 0);
+            imageView.Width = Width;
+            imageView.Height = Height;
         }
 
         public void Dispose()

@@ -20,12 +20,12 @@ namespace FigmaSharp.Wpf
 				//image.Height = value.Height;
 			}
 		}
-
-		protected ImageSource image;
-        public Image(ImageSource image)
-        {
-            this.image = image;
-        }
+		
+		ImageSource image;
+		public Image(ImageSource image)
+		{
+			this.image = image;
+		}
 
 		public void Dispose()
 		{
