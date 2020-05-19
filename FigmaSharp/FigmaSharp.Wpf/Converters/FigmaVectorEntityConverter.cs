@@ -36,7 +36,7 @@ namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(ImageView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
