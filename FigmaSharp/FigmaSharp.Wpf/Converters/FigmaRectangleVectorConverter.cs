@@ -36,7 +36,7 @@ namespace FigmaSharp.Wpf.Converters
 { 
     public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(View);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
