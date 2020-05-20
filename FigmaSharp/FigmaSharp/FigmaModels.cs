@@ -524,6 +524,10 @@ namespace FigmaSharp.Models
         [DisplayName ("Fills")]
         public FigmaPaint[] fills { get; set; }
         public bool HasFills => fills?.Length > 0;
+
+        [Category("Style")]
+        [DisplayName("Styles")]
+        public Dictionary<string, string> styles { get; set; }
     }
 
     public class FigmaPath
