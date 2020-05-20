@@ -136,14 +136,6 @@ namespace FigmaSharp.NativeControls.Cocoa
         }
 
 
-		protected NSFont GetNSFont(NativeControlVariant controlVariant)
-		{
-			if (controlVariant == NativeControlVariant.Small)
-				return NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
-
-			return NSFont.SystemFontOfSize(NSFont.SystemFontSize);
-		}
-
 		protected string GetNSFontSizeName(NativeControlVariant controlVariant)
 		{
 			if (controlVariant == NativeControlVariant.Small)
@@ -158,6 +150,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 				return NSFont.SmallSystemFontSize;
 
 			return NSFont.SystemFontSize;
+		}
+
+
+		protected NSFont GetNSFont(NativeControlVariant controlVariant)
+		{
+			if (controlVariant == NativeControlVariant.Small)
+				return NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
+
+			return NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 		}
 
 		protected NSFont GetNSFont(NativeControlVariant controlVariant, FigmaText text)
@@ -181,6 +182,14 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			return NSFont.SystemFontOfSize(GetNSFontSize(controlVariant), fontWeight);
+		}
+
+		protected string GetNSFontName(NativeControlVariant controlVariant)
+		{
+			if (controlVariant == NativeControlVariant.Small)
+				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+
+			return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
 		}
 
 		protected string GetNSFontName(NativeControlVariant controlVariant, FigmaText text, bool withWeight = true)
@@ -210,19 +219,41 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		}
 
-		
-		protected string GetNSFontName(NativeControlVariant controlVariant)
+
+		public nfloat GetNSFontWeight(FigmaText text)
 		{
-			if (controlVariant == NativeControlVariant.Small)
-				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+			string fontName = text?.style?.fontPostScriptName;
 
-			return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+			if (fontName != null)
+			{
+				if (fontName.EndsWith("-Black"))
+					return NSFontWeight.Black;
+
+				if (fontName.EndsWith("-Heavy"))
+					return NSFontWeight.Heavy;
+
+				if (fontName.EndsWith("-Bold"))
+					return NSFontWeight.Bold;
+
+				if (fontName.EndsWith("-Semibold"))
+					return NSFontWeight.Semibold;
+
+				if (fontName.EndsWith("-Regular"))
+					return NSFontWeight.Regular;
+
+				if (fontName.EndsWith("-Light"))
+					return NSFontWeight.Light;
+
+				if (fontName.EndsWith("-Thin"))
+					return NSFontWeight.Thin;
+
+				if (fontName.EndsWith("-Ultralight"))
+					return NSFontWeight.UltraLight;
+			}
+
+			// The default macOS font is of medium weight
+			return NSFontWeight.Medium;
 		}
-
-
-
-
-
 
 		protected string GetNSFontWeightName(FigmaText text)
 		{
@@ -258,41 +289,6 @@ namespace FigmaSharp.NativeControls.Cocoa
 			}
 
 			return $"{ typeof(NSFontWeight) }.{ weight }";
-		}
-
-		public nfloat GetNSFontWeight(FigmaText text)
-		{
-			string fontName = text?.style?.fontPostScriptName;
-
-			if (fontName != null)
-			{
-				if (fontName.EndsWith("-Black"))
-					return NSFontWeight.Black;
-
-				if (fontName.EndsWith("-Heavy"))
-					return NSFontWeight.Heavy;
-
-				if (fontName.EndsWith("-Bold"))
-					return NSFontWeight.Bold;
-
-				if (fontName.EndsWith("-Semibold"))
-					return NSFontWeight.Semibold;
-
-				if (fontName.EndsWith("-Regular"))
-					return NSFontWeight.Regular;
-
-				if (fontName.EndsWith("-Light"))
-					return NSFontWeight.Light;
-
-				if (fontName.EndsWith("-Thin"))
-					return NSFontWeight.Thin;
-
-				if (fontName.EndsWith("-Ultralight"))
-					return NSFontWeight.UltraLight;
-			}
-
-			// The default macOS font is of medium weight
-			return NSFontWeight.Medium;
 		}
 
 
