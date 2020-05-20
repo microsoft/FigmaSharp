@@ -28,7 +28,9 @@
 
 using System;
 using System.Linq;
+
 using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.NativeControls;
