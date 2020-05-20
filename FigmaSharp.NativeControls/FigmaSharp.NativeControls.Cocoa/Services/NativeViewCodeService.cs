@@ -65,7 +65,7 @@ namespace FigmaSharp.Services
 				}
             }
 
-            if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity) {
+            if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrame) {
                 return true;
             }
 
@@ -92,7 +92,7 @@ namespace FigmaSharp.Services
 				return new FigmaNode[0];
 			}
 
-			if (node.Node.IsDialogParentContainer (NativeControlType.WindowStandard)) {
+			if (node.Node.IsDialogParentContainer (NativeControlType.Window)) {
 				if (node.Node is IFigmaNodeContainer nodeContainer) {
 					var item = nodeContainer.children.FirstOrDefault (s => s.IsNodeWindowContent ());
 					if (item != null && item is IFigmaNodeContainer children) {
