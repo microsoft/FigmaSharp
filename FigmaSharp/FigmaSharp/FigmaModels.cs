@@ -51,7 +51,7 @@ namespace FigmaSharp.Models
         
     }
 
-    public class FigmaInstance : FigmaFrameEntity
+    public class FigmaInstance : FigmaFrame
     {
         [Category ("General")]
         [DisplayName ("Component Id")]
@@ -208,7 +208,7 @@ namespace FigmaSharp.Models
         LUMINOSITY
     }
 
-    public class FigmaGroup : FigmaFrameEntity
+    public class FigmaGroup : FigmaFrame
     {
         public override bool HasImage()
         {
@@ -247,7 +247,7 @@ namespace FigmaSharp.Models
         public FigmaLayoutConstraint constraints { get; set; }
     }
 
-    public class FigmaFrameEntity : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    public class FigmaFrame : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
     {
         public virtual bool HasImage()
         {
@@ -680,7 +680,7 @@ namespace FigmaSharp.Models
             FigmaNode?.ToString() ?? base.ToString();
     }
 
-    public class FigmaComponentEntity : FigmaFrameEntity
+    public class FigmaComponentEntity : FigmaFrame
     {
 
     }
