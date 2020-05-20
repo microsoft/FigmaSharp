@@ -28,77 +28,43 @@ using System.Text;
 
 using AppKit;
 
+using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class WindowConverter : CocoaConverter
+	public class ImageRenderConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSWindow);
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var controlType) &&
-				controlType == NativeControlType.Window;
+			return currentNode.name.StartsWith("!image");
 		}
-
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			return null;
+			var vector = new FigmaSharp.Views.Cocoa.ImageView();
+			var currengroupView = (NSImageView)vector.NativeObject;
+			currengroupView.Configure(currentNode);
+			return vector;
 		}
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			return new StringBuilder();
-		}
-	}
+			var builder = new StringBuilder();
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
+			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+			currentNode.Node.TryGetNodeCustomName(out string nodeName);
 
-	public class WindowSheetConverter : CocoaConverter
-	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
+			var imageNamedMethod = CodeGenerationHelpers.GetMethod(typeof(NSImage).FullName, nameof(NSImage.ImageNamed), nodeName, true);
+			builder.WriteEquality(currentNode.Name, nameof(NSImageView.Image), imageNamedMethod);
 
-		public override bool CanConvert(FigmaNode currentNode)
-		{
-			return currentNode.TryGetNativeControlType(out var controlType) &&
-				controlType == NativeControlType.WindowSheet;
-		}
-
-
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
-		{
-			return null;
-		}
-
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
-		{
-			return new StringBuilder();
-		}
-	}
-
-
-	public class WindowPanelConverter : CocoaConverter
-	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSPanel);
-
-		public override bool CanConvert(FigmaNode currentNode)
-		{
-			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.WindowPanel;
-		}
-
-
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
-		{
-			return null;
-		}
-
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
-		{
-			return new StringBuilder();
+			return builder;
 		}
 	}
 }
