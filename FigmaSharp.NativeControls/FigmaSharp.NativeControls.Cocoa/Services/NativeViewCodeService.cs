@@ -57,10 +57,12 @@ namespace FigmaSharp.Services
 
 		internal override bool IsNodeSkipped (FigmaCodeNode node)
 		{
-            if (node.Node is FigmaInstance nodeInstance && (nodeInstance.Parent?.IsParentMainContainer  () ?? false))
+            if (node.Node is FigmaInstance nodeInstance)
             {
-                if (figmaProvider.TryGetMainComponent(nodeInstance, out _))
-                    return true;
+                if (figmaProvider.TryGetMainComponent(nodeInstance, out var maincomponent) && maincomponent.Parent is FigmaCanvas)
+                {
+					return true;
+				}
             }
 
             if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity) {
