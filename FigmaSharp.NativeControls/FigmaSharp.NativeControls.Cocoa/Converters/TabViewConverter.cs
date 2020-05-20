@@ -1,102 +1,121 @@
-﻿/* 
- * CustomButtonConverter.cs 
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using AppKit;
 
-using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class TabViewConverter : FigmaNativeControlConverter
+    public class TabViewConverter : CocoaConverter
     {
-        public override Type GetControlType(FigmaNode currentNode)
-        => typeof(NSTabView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSTabView);
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.TabView;
+            return currentNode.TryGetNativeControlType(out var controlType) &&
+                controlType == NativeControlType.TabView;
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
-        {
-            var figmaInstance = (FigmaFrameEntity)currentNode;
-            var view = new TabView();
-           
-            List<NSTabViewItem> tabs = new List<NSTabViewItem>();
 
-            var tabNodes = figmaInstance.FirstChild (s => s.name == "tabs");
+        protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+        {
+            var frame = (FigmaFrame)currentNode;
+            var tabView = new NSTabView();
+           
+            List<NSTabViewItem> items = new List<NSTabViewItem>();
+            var tabNodes = frame.FirstChild (s => s.name == ComponentString.ITEMS);
+
             if (tabNodes == null)
-                return view;
+                return new View(tabView);
 
             foreach (FigmaNode tabNode in tabNodes.GetChildren (t => t.visible, reverseChildren: true))
             {
-                var firstChild = tabNode.FirstChild(s => s.name.In("Basic", "Default") && s.visible);
-                if (firstChild != null) {
-                    var figmaText = firstChild.FirstChild (s => s.name == "lbl") as FigmaText;
-                    if (figmaText != null)
-                    {
-                        var item = new NSTabViewItem() {
-                            Label = figmaText.characters
-                        };
-                        tabs.Add(item);
-                    }
+                var firstChild = tabNode.FirstChild(s => s.name.In(ComponentString.STATE_REGULAR, ComponentString.STATE_SELECTED) && s.visible);
+
+                if (firstChild != null)
+                {
+                    FigmaText text = firstChild.FirstChild (s => s.name == ComponentString.TITLE) as FigmaText;
+
+                    if (text != null)
+                        items.Add(new NSTabViewItem() { Label = text.characters });
                 }
             }
 
-            var tabView = (NSTabView)view.NativeObject;
-            tabView.SetItems(tabs.ToArray());
+            tabView.SetItems(items.ToArray());
 
-			return view;
+			return new View(tabView);
         }
 
         protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var builder = new StringBuilder();
+            var code = new StringBuilder();
+            string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-            // TODO output:
+            var frame = (FigmaFrame)currentNode.Node;
+            currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
-            // var tabView = new NSTabView();
-            // tabView.SetItems(new NSTabViewItem[] {
-            //     new NSTabViewItem() { Label = "label1" },
-            //     new NSTabViewItem() { Label = "label2" },
-            //     new NSTabViewItem() { Label = "label3" }
-            // });
+            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+                code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            return builder;
+            var itemNodes = frame.FirstChild(s => s.name == ComponentString.ITEMS);
+
+            if (itemNodes == null)
+                return null;
+
+            code.AppendLine();
+            code.AppendLine($"{ name }.{ nameof(NSTabView.SetItems) }(");
+            code.AppendLine($"\tnew { typeof(NSTabViewItem[]) }");
+            code.AppendLine("\t{");
+
+            foreach (FigmaNode tabNode in itemNodes.GetChildren(t => t.visible, reverseChildren: true))
+            {
+                var firstChild = tabNode.FirstChild(s => s.name.In(ComponentString.STATE_REGULAR, ComponentString.STATE_SELECTED) && s.visible);
+
+                if (firstChild != null)
+                {
+                    FigmaText text = firstChild.FirstChild(s => s.name == ComponentString.TITLE) as FigmaText;
+
+                    if (text != null)
+                        code.AppendLine($"\t\tnew {typeof(NSTabViewItem)}() {{ {nameof(NSTabViewItem.Label)} = \"{text.characters}\" }},");
+                }
+            }
+
+            code.AppendLine("\t}");
+            code.AppendLine(");");
+
+            return code;
         }
     }
 }
