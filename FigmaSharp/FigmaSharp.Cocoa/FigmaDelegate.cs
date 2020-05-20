@@ -20,7 +20,7 @@ namespace FigmaSharp.Cocoa
             new FigmaRectangleVectorConverter (),
             new FigmaElipseConverter (),
             new FigmaVectorViewConverter (),
-            new FigmaFrameEntityConverter (),
+            new FigmaFrameConverter (),
             new FigmaVectorEntityConverter (),
         };
 
