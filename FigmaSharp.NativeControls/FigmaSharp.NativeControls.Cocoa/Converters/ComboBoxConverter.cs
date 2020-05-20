@@ -1,34 +1,34 @@
-﻿/* 
- * CustomTextFieldConverter.cs
- * 
- * Author:
- *   Jose Medrano <josmed@microsoft.com>
- *
- * Copyright (C) 2018 Microsoft, Corp
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to permit
- * persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
- * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-using AppKit;
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
+//
+// Copyright (C) 2020 Microsoft, Corp
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 using System;
 using System.Linq;
 using System.Text;
+
+using AppKit;
+using Foundation;
 
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -38,90 +38,70 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class ComboBoxConverter : FigmaNativeControlConverter
+    public class ComboBoxConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode)
-		{
-			return typeof(NSComboBox);
-		}
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSComboBox);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var value) && value == NativeControlType.ComboBox;
+			return currentNode.TryGetNativeControlType(out var controlType) &&
+                controlType == NativeControlType.ComboBox;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var view = new NSComboBox ();
-			var figmaInstance = (FigmaFrameEntity)currentNode;
-			view.Configure (currentNode);
+			var combobox = new NSComboBox ();
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
-				case NativeControlComponentType.ComboBoxSmall:
-				case NativeControlComponentType.ComboBoxSmallDark:
-					view.ControlSize = NSControlSize.Small;
-					break;
-				case NativeControlComponentType.ComboBoxStandard:
-				case NativeControlComponentType.ComboBoxStandardDark:
-					view.ControlSize = NSControlSize.Regular;
-					view.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
-					break;
-			}
+			var frame = (FigmaFrame)currentNode;
+			frame.TryGetNativeControlVariant (out var controlVariant);
 
-			var label = figmaInstance.children
+			combobox.ControlSize = GetNSControlSize(controlVariant);
+			combobox.Font = GetNSFont(controlVariant);
+
+			FigmaText text = frame.children
 			   .OfType<FigmaText> ()
-			   .FirstOrDefault (s => s.name == "lbl");
+			   .FirstOrDefault (s => s.name == ComponentString.TITLE);
 
-			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				view.StringValue = label.characters;
-			}
+			if (text != null && !string.IsNullOrEmpty(text.characters))
+				combobox.StringValue = text.characters;
 
-			return new View (view);
+			return new View(combobox);
 		}
+
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+			var code = new StringBuilder();
+			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			var builder = new StringBuilder ();
-			var name = Resources.Ids.Conversion.NameIdentifier;
+			var frame = (FigmaFrame)currentNode.Node;
+			currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+			currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
-			if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-				builder.WriteConstructor (name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			builder.Configure (currentNode.Node, name);
+			code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
 
-			figmaInstance.TryGetNativeControlComponentType (out var controlType);
-			switch (controlType) {
-				case NativeControlComponentType.ComboBoxSmall:
-				case NativeControlComponentType.ComboBoxSmallDark:
-					builder.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Small);
-					break;
-				case NativeControlComponentType.ComboBoxStandard:
-				case NativeControlComponentType.ComboBoxStandardDark:
-					builder.WriteEquality(currentNode.Name, nameof(NSButton.Font),
-					    CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
-					break;
-			}
-
-			var label = figmaInstance.children
+			FigmaText text = frame.children
 				.OfType<FigmaText> ()
-				.FirstOrDefault (s => s.name == "lbl");
+				.FirstOrDefault (s => s.name == ComponentString.TITLE);
 
-			if (label != null && !string.IsNullOrEmpty (label.characters)) {
-				var textLabel = NativeControlHelper.GetTranslatableString(label.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				if (!rendererService.CurrentRendererOptions.TranslateLabels) {
-					textLabel = $"\"{textLabel}\"";
-				}
-				var nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
-				builder.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
+			if (text != null && !string.IsNullOrEmpty (text.characters)) {
+				code.WriteEquality(name, nameof(NSButton.StringValue), text.characters, inQuotes: true);
+
+				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+
+				//if (!rendererService.CurrentRendererOptions.TranslateLabels)
+				//	textLabel = $"\"{textLabel}\"";
+
+				//string nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
+				//code.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
 			}
-			//if (controlType.ToString ().EndsWith ("Dark", StringComparison.Ordinal)) {
-			//	builder.AppendLine (string.Format ("{0}.Appearance = NSAppearance.GetAppearance ({1});", name, NSAppearance.NameDarkAqua.GetType ().FullName));
-			//}
 
-			return builder;
+			return code;
 		}
 	}
 }
