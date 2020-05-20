@@ -1,6 +1,6 @@
-﻿//
-// Author:
-//   netonjm <josmed@microsoft.com>
+﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -22,7 +22,7 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
+
 using System;
 using System.Text;
 using FigmaSharp.Models;
@@ -33,7 +33,7 @@ using System.Linq;
 
 namespace FigmaSharp.NativeControls.Cocoa.Converters
 {
-	public class CustomViewCodeConverter : FigmaNativeControlConverter
+	public class CustomViewCodeConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
@@ -75,15 +75,12 @@ namespace FigmaSharp.NativeControls.Cocoa.Converters
 					builder.WriteConstructor(currentNode.Name, type, !currentNode.Node.TryGetNodeCustomName(out var _));
 			}
 
-			builder.Configure(currentNode.Node, currentNode.Name);
-
 			return builder;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
 			return null;
 		}
-
 	}
 }
