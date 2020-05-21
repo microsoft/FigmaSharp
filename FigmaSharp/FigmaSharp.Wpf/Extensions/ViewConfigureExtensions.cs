@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Wpf
@@ -25,33 +26,48 @@ namespace FigmaSharp.Wpf
 
             if (child is IAbsoluteBoundingBox container)
             {
-                view.Width = (int) container.absoluteBoundingBox.width;
-                view.Height = (int) container.absoluteBoundingBox.height;
+                view.Width = (int) container.absoluteBoundingBox.Width;
+                view.Height = (int) container.absoluteBoundingBox.Height;
             }
         }
 
-        public static void Configure(this UserControl view, FigmaElipse elipse)
+        public static void Configure(this FrameworkElement view, FigmaElipse child)
         {
-            Configure(view, (FigmaVectorEntity)elipse);
+            Configure(view, (FigmaVectorEntity)child);
+
+            if (view is Panel canvas)
+            {
+                canvas.Children.Add(new Ellipse
+                {
+                    Width = canvas.Width,
+                    Height = canvas.Height,
+                    Fill = canvas.Background
+                });
+
+                canvas.Background = Brushes.Transparent;
+            }
         }
 
-        public static void Configure(this UserControl figmaLineView, FigmaLine figmaLine)
+        public static void Configure(this FrameworkElement view, FigmaLine child)
         {
-            Configure(figmaLineView, (FigmaVectorEntity)figmaLine);
+            Configure(view, (FigmaVectorEntity)child);
 
-            var fills = figmaLine.fills.OfType<FigmaPaint> ().FirstOrDefault ();
-            if (fills != null) {
-                figmaLineView.Background = fills.color.ToColor ();
+            if (view is Panel canvas)
+            {
+                if (child.HasStrokes && child.strokes[0].color != null)
+                {
+                    canvas.Background = child.strokes[0].color.ToColor();
+                }
             }
 
-            var absolute = figmaLine.absoluteBoundingBox;
-            var lineWidth = absolute.width == 0 ? figmaLine.strokeWeight : absolute.width;
+            var absolute = child.absoluteBoundingBox;
+            var lineWidth = absolute.Width == 0 ? child.strokeWeight : absolute.Width;
 
-            figmaLineView.Width = (int)lineWidth;
+            view.Width = (int)lineWidth;
 
-            var lineHeight = absolute.height == 0 ? figmaLine.strokeWeight : absolute.height;
+            var lineHeight = absolute.Height == 0 ? child.strokeWeight : absolute.Height;
 
-            figmaLineView.Height = (int)lineHeight;
+            view.Height = (int)lineHeight;
         }
 
         public static void Configure(this FrameworkElement view, FigmaVectorEntity child)
@@ -66,8 +82,8 @@ namespace FigmaSharp.Wpf
                 }
             }
         }
-
-        public static void Configure(this FrameworkElement view, FigmaRectangleVector child)
+         
+        public static void Configure(this FrameworkElement view, RectangleVector child)
         {
             Configure(view, (FigmaVectorEntity)child);
 

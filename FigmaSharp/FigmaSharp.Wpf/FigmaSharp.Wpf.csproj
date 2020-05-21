@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
+    <Compile Include="PropertyConverter\FigmaCodePropertyConverter.cs" />
+    <Compile Include="PropertyConverter\FigmaViewPropertySetter.cs" />
     <Compile Include="Views\CanvasImage.cs" />
     <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
     <Compile Include="Converters\FigmaCodePositionConverter.cs" />
@@ -80,10 +82,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewWrapperts\ImageViewWrapper.cs" />
-    <Compile Include="ViewWrapperts\ImageWrapper.cs" />
-    <Compile Include="ViewWrapperts\ScrollViewWrapper.cs" />
-    <Compile Include="ViewWrapperts\ViewWrapper.cs" />
+    <Compile Include="ViewWrappers\ImageView.cs" />
+    <Compile Include="ViewWrappers\Image.cs" />
+    <Compile Include="ViewWrappers\ScrollView.cs" />
+    <Compile Include="ViewWrappers\View.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -95,6 +97,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{558ECD10-2DD2-4E41-B07B-CBF755C80486}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
       <Project>{ad306162-8dad-4dbd-b264-bda8765cc107}</Project>
       <Name>FigmaSharp</Name>

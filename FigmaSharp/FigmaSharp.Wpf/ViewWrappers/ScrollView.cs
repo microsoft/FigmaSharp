@@ -31,26 +31,27 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Wpf
 {
-    public class ScrollViewWrapper : ViewWrapper, IScrollViewWrapper
+    public class ScrollView : View, IScrollView
     {
         readonly ScrollViewer scrollView;
 
         Canvas canvasContainer;
-        IViewWrapper canvasContainerWrapper;
+        IView canvasContainerWrapper; 
 
-        public FigmaColor BackgroundColor
+        public new Color BackgroundColor
         {
             get => scrollView.Background.ToFigmaColor();
             set => scrollView.Background = value.ToColor();
         }
 
-        public override IReadOnlyList<IViewWrapper> Children => canvasContainerWrapper.Children;
+        public override IReadOnlyList<IView> Children => canvasContainerWrapper.Children;
 
-        public IViewWrapper ContentView {
-            get => new ViewWrapper(canvasContainer);
+        public IView ContentView {
+            get => canvasContainerWrapper;
             set {
                 if (value!= null && value.NativeObject is Canvas canvas)
                 {
@@ -61,24 +62,24 @@ namespace FigmaSharp.Wpf
             }
         }
 
-        public ScrollViewWrapper(ScrollViewer scrollView) : base(scrollView)
+        public ScrollView(ScrollViewer scrollView) : base(scrollView)
         {
             this.scrollView = scrollView;
 
-            ContentView = new ViewWrapper (new Canvas());
+            ContentView = new View (new Canvas());
 
             scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
             scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
 
-        public override void AddChild(IViewWrapper view) => canvasContainerWrapper.AddChild(view);
+        public override void AddChild(IView view) => canvasContainerWrapper.AddChild(view);
 
-        public override void RemoveChild(IViewWrapper view) => canvasContainerWrapper.RemoveChild(view);
+        public override void RemoveChild(IView view) => canvasContainerWrapper.RemoveChild(view);
 
         public void AdjustToContent()
         {
             var children = Children;
-            FigmaRectangle contentRect = FigmaRectangle.Zero;
+            Rectangle contentRect = Rectangle.Zero;
             for (int i = 0; i < children.Count; i++)
             {
                 if (i == 0)
@@ -89,7 +90,7 @@ namespace FigmaSharp.Wpf
                     contentRect = contentRect.UnionWith(children[i].Allocation);
                 }
             }
-            SetContentSize(contentRect.width, contentRect.height);
+            SetContentSize(contentRect.Width, contentRect.Height);
         }
 
         public void SetContentSize(float width, float height)

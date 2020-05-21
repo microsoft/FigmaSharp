@@ -34,10 +34,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -65,6 +66,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExampleViewManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -88,7 +90,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -98,15 +99,23 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FigmaSharp.Wpf\FigmaSharp.Wpf.csproj">
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{558ECD10-2DD2-4E41-B07B-CBF755C80486}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Wpf\FigmaSharp.Wpf.csproj">
       <Project>{f7968a6f-1358-45fe-8be4-957ffbbe50ef}</Project>
       <Name>FigmaSharp.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{ad306162-8dad-4dbd-b264-bda8765cc107}</Project>
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{501083B2-B62E-4150-BC0F-5D049DFC6E42}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\BasicRendering.Shared\BasicRendering.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

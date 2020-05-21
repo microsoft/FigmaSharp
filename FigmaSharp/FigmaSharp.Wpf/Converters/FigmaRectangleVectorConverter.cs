@@ -26,30 +26,33 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Converters;
-using System.Windows.Controls;
-using FigmaSharp.Models;
+using FigmaSharp.Converters; 
+using FigmaSharp.Models; 
+using FigmaSharp.Views;
+using FigmaSharp.Services;
 using System;
 
 namespace FigmaSharp.Wpf.Converters
-{
-
-    public class FigmaRectangleVectorConverter : FigmaRectangleVectorConverterBase
+{ 
+    public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
-        public override IViewWrapper ConvertTo(FigmaNode currentNode, ProcessedNode parent)
+        public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
+
+        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaEntity = (FigmaRectangleVector)currentNode;
+            var figmaEntity = (RectangleVector)currentNode;
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageViewWrapper();
+            var rectangleView = new View(image); 
             image.Configure(figmaEntity);
+             
+            return rectangleView;
+        } 
 
-            return figmaImageView;
-        }
-
-        public override string ConvertToCode(FigmaNode currentNode)
+        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
         }
+
     }
 }

@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Wpf.PropertyConverter;
 
 namespace FigmaSharp.Wpf
 {
@@ -54,45 +56,39 @@ namespace FigmaSharp.Wpf
             return null;
         }
 
-        public IImageWrapper GetImage(string url)
+        public IImage GetImage(string url)
         {
             ImageSource image = null;
             Application.Current.Dispatcher.Invoke(() => { image = GetFromUrl(url); });
-            return new ImageWrapper (image);
+            return new Image (image);
         }
 
-        public IImageWrapper GetImageFromFilePath(string filePath)
+        public IImage GetImageFromFilePath(string filePath)
         {
             BitmapImage source = null;
             Application.Current.Dispatcher.Invoke(() => { source = new BitmapImage(new Uri(filePath)); });
-            return new ImageWrapper (source);
+            return new Image (source);
         }
 
-        public IImageWrapper GetImageFromManifest(Assembly assembly, string imageRef)
+        public IImage GetImageFromManifest(Assembly assembly, string imageRef)
         {
             ImageSource assemblyImage = null;
             Application.Current.Dispatcher.Invoke(() => { assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef)); });
-            return new ImageWrapper (assemblyImage);
+            return new Image (assemblyImage);
         }
-
-        public string GetFigmaFileContent(string file, string token) =>
-             FigmaApiHelper.GetFigmaFileContent (file, token);
-
+         
         public string GetManifestResource(Assembly assembly, string file) =>
             FigmaApiHelper.GetManifestResource (assembly, file);
+         
+        public IView CreateEmptyView() => new View (new Canvas ());
 
-        public FigmaResponse GetFigmaResponseFromContent(string template) =>
-            FigmaApiHelper.GetFigmaResponseFromContent (template);
-
-        public IViewWrapper CreateEmptyView() => new ViewWrapper (new Canvas ());
-
-        public IImageViewWrapper GetImageView(IImageWrapper image)
+        public IImageView GetImageView(IImage image)
         {
-            ImageViewWrapper imageView = null;
+            ImageView imageView = null;
             Application.Current.Dispatcher.Invoke(() => {
-                var picture = new CanvasImage();
-                imageView = new ImageViewWrapper(picture);
-                imageView.SetImage(image);
+            //var picture = new CanvasImage();
+            imageView = new ImageView();// picture);
+                imageView.Image = image;
             });
           
             return imageView;
@@ -100,11 +96,16 @@ namespace FigmaSharp.Wpf
 
         public void BeginInvoke(Action handler) => Application.Current.Dispatcher.Invoke(handler);
 
-        static readonly FigmaCodePositionConverterBase positionConverter = new FigmaCodePositionConverter();
-        static readonly FigmaCodeAddChildConverterBase addChildConverter = new FigmaCodeAddChildConverter();
+        static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaCodePropertyConverter();
+        static readonly FigmaViewPropertySetterBase propertySetter = new FigmaViewPropertySetter();
 
-        public FigmaCodePositionConverterBase GetPositionConverter() => positionConverter;
+        public FigmaCodePropertyConverterBase GetCodePropertyConverter() => codePropertyConverter;
 
-        public FigmaCodeAddChildConverterBase GetAddChildConverter() => addChildConverter;
+        public string GetSvgData(string url)
+        {
+            return "";
+        }
+
+        public FigmaViewPropertySetterBase GetPropertySetter() => propertySetter;
     }
 }
