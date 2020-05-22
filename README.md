@@ -4,7 +4,7 @@
 
 ![A macOS app window created with FigmaSharp](.github/screenshot.png)
 
-FigmaSharp turns your Figma design into .NET objects or can generate code and layout files to create native apps. Free and Open Source software under the [MIT LICENSE]().
+FigmaSharp turns your Figma design into .NET objects and can generate code and layout files to create native apps. Free and Open Source software under the [MIT LICENSE]().
 
 [![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
 
@@ -21,9 +21,7 @@ This will be your only chance to copy the token, so make sure you keep a copy in
 
 Try out automatic builds of the FigmaSharp app and Visual Studio extension from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
 
-Do you have questions, need support, or want to contribute? Join the chat room:
-
-[![Gitter](https://badges.gitter.im/Microsoft/FigmaSharp.svg)](https://gitter.im/Microsoft/FigmaSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+Do you have questions, need support, or want to contribute? Join the [chat on Discord](https://discord.com/channels/710495994667728996/710495994667728999).
 
 <br/>
 
