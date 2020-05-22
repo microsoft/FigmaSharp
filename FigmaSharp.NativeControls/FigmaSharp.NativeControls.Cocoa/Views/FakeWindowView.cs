@@ -40,8 +40,10 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			WantsLayer = true;
 
-			Layer.BorderWidth = 0.5f;
+			Layer.BorderWidth = 1;
 			Layer.CornerRadius = 5;
+			Layer.ZPosition = 1;
+
 
 			CreateTitleBar(title);
 			CreateTrafficLights();
@@ -186,10 +188,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		void CreateHighlight()
 		{
+			highlight.WantsLayer = true;
+			highlight.Layer.ZPosition = 1;
 			highlight.BoxType = NSBoxType.NSBoxCustom;
-			highlight.BorderColor = NSColor.Highlight.ColorWithAlphaComponent(0.4f);
-			highlight.BorderWidth = 0.5f;
-			highlight.CornerRadius = 4.5f;
+			highlight.BorderColor = NSColor.Highlight.ColorWithAlphaComponent(0.33f);
+			highlight.BorderWidth = 1f;
+			highlight.CornerRadius = 4f;
 
 			AddSubview(highlight);
 		}
