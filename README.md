@@ -21,7 +21,7 @@ This will be your only chance to copy the token, so make sure you keep a copy in
 
 Try out automatic builds of the FigmaSharp app and Visual Studio extension from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
 
-Do you have questions, need support, or want to contribute? Join the [chat on Discourse](https://discord.com/channels/710495994667728996/710495994667728999).
+Do you have questions, need support, or want to contribute? Join the [chat on Discord](https://discord.com/channels/710495994667728996/710495994667728999).
 
 <br/>
 
