@@ -30,6 +30,7 @@ using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {

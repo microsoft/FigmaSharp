@@ -26,13 +26,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Converters;
-using System.Windows.Controls;
+using FigmaSharp.Converters; 
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using System.Windows;
 using System;
+using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {
@@ -44,9 +44,9 @@ namespace FigmaSharp.Wpf.Converters
         {
             IView view;
             if (rendererService.ProcessesImageFromNode(currentNode))
-                view = new FigmaSharp.Wpf.ImageView();
+                view = new ImageView();
             else
-                view = new FigmaSharp.Wpf.View();
+                view = new View();
 
             var currengroupView = view.NativeObject as FrameworkElement;
             var figmaFrameEntity = (FigmaFrameEntity)currentNode;

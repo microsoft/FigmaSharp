@@ -82,10 +82,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewWrappers\ImageView.cs" />
-    <Compile Include="ViewWrappers\Image.cs" />
-    <Compile Include="ViewWrappers\ScrollView.cs" />
-    <Compile Include="ViewWrappers\View.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -97,6 +93,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Wpf\FigmaSharp.Views.Wpf.csproj">
+      <Project>{8bcca4d3-0725-46b8-868d-bc56a8385a7b}</Project>
+      <Name>FigmaSharp.Views.Wpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{558ECD10-2DD2-4E41-B07B-CBF755C80486}</Project>
       <Name>FigmaSharp.Views</Name>

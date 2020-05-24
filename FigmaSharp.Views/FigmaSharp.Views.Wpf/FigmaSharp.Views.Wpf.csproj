@@ -4,19 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D19CA994-F936-418C-BE42-4699F80C651D}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>BasicRendering.Wpf</RootNamespace>
-    <AssemblyName>BasicRendering.Wpf</AssemblyName>
+    <ProjectGuid>{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>FigmaSharp.Views.Wpf</RootNamespace>
+    <AssemblyName>FigmaSharp.Views.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,17 +24,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,22 +48,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ExampleViewManager.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ViewWrappers\Image.cs" />
+    <Compile Include="ViewWrappers\ImageView.cs" />
+    <Compile Include="ViewWrappers\ScrollView.cs" />
+    <Compile Include="ViewWrappers\View.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -96,30 +78,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Wpf\FigmaSharp.Views.Wpf.csproj">
-      <Project>{8bcca4d3-0725-46b8-868d-bc56a8385a7b}</Project>
-      <Name>FigmaSharp.Views.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{558ECD10-2DD2-4E41-B07B-CBF755C80486}</Project>
-      <Name>FigmaSharp.Views</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Wpf\FigmaSharp.Wpf.csproj">
-      <Project>{f7968a6f-1358-45fe-8be4-957ffbbe50ef}</Project>
-      <Name>FigmaSharp.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{501083B2-B62E-4150-BC0F-5D049DFC6E42}</Project>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{501083b2-b62e-4150-bc0f-5d049dfc6e42}</Project>
       <Name>FigmaSharp</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.1</Version>
-    </PackageReference>
+    <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{558ecd10-2dd2-4e41-b07b-cbf755c80486}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

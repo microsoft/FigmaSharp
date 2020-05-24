@@ -25,12 +25,12 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using FigmaSharp.Converters;
-using System.Windows.Controls;
+using FigmaSharp.Converters; 
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using System;
+using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {

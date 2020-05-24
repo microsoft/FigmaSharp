@@ -2,11 +2,8 @@
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using FigmaSharp.Views.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FigmaSharp.Wpf.Converters
 {

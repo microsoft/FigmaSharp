@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Wpf.PropertyConverter;
+using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf
 {
@@ -60,21 +61,21 @@ namespace FigmaSharp.Wpf
         {
             ImageSource image = null;
             Application.Current.Dispatcher.Invoke(() => { image = GetFromUrl(url); });
-            return new Image (image);
+            return new Views.Wpf.Image(image);
         }
 
         public IImage GetImageFromFilePath(string filePath)
         {
             BitmapImage source = null;
             Application.Current.Dispatcher.Invoke(() => { source = new BitmapImage(new Uri(filePath)); });
-            return new Image (source);
+            return new Views.Wpf.Image(source);
         }
 
         public IImage GetImageFromManifest(Assembly assembly, string imageRef)
         {
             ImageSource assemblyImage = null;
             Application.Current.Dispatcher.Invoke(() => { assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef)); });
-            return new Image (assemblyImage);
+            return new Views.Wpf.Image(assemblyImage);
         }
          
         public string GetManifestResource(Assembly assembly, string file) =>

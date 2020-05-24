@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 
-namespace FigmaSharp.Wpf
+namespace FigmaSharp.Views.Wpf
 {
     public class View : IView
     {
