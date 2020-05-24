@@ -55,8 +55,6 @@
     <Compile Include="PropertyConverter\FigmaCodePropertyConverter.cs" />
     <Compile Include="PropertyConverter\FigmaViewPropertySetter.cs" />
     <Compile Include="Views\CanvasImage.cs" />
-    <Compile Include="Converters\FigmaCodeAddChildConverter.cs" />
-    <Compile Include="Converters\FigmaCodePositionConverter.cs" />
     <Compile Include="Converters\FigmaElipseConverter.cs" />
     <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
     <Compile Include="Converters\FigmaLineConverter.cs" />
@@ -68,7 +66,6 @@
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="FigmaDelegate.cs" />
-    <Compile Include="FigmaViewsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

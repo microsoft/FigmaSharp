@@ -74,7 +74,7 @@ namespace FigmaSharp.Wpf
         public IImage GetImageFromManifest(Assembly assembly, string imageRef)
         {
             ImageSource assemblyImage = null;
-            Application.Current.Dispatcher.Invoke(() => { assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef)); });
+            Application.Current.Dispatcher.Invoke(() => { assemblyImage = ViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef)); });
             return new Views.Wpf.Image(assemblyImage);
         }
          
