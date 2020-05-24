@@ -2,10 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using FigmaSharp.Models;
-using FigmaSharp.Views;
-using FigmaSharp.Wpf.Converters;
+using FigmaSharp.Views; 
 
-namespace FigmaSharp.Wpf
+namespace FigmaSharp.Views.Wpf
 {
     public class ImageView : View, IImageView
     {
