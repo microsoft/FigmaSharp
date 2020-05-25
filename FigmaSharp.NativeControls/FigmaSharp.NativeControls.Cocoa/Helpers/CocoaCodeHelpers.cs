@@ -122,7 +122,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public static string GetNSColorString(string colorStyleName)
 		{
-			return "";// $"{nameof(NSColor)}.{themeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColorName}";
+			return $"{nameof(NSColor)}.{ColorService.ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).ColorName}";
 		}
 	}
 }

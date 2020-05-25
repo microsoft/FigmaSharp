@@ -135,7 +135,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public static NSColor GetNSColor(string colorStyleName)
 		{
-			return NSColor.Clear;// themeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColor;
+			return ColorService.ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).Color;
 		}
 	}
 }

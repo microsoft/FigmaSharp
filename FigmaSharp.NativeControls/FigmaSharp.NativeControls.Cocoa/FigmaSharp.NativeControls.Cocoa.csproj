@@ -81,7 +81,6 @@
     <Compile Include="CocoaConverter.cs" />
     <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
     <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
-    <Compile Include="CocoaConverter.ThemeColors.cs" />
     <Compile Include="CocoaConverter.ComponentStrings.cs" />
     <Compile Include="Views\FakeSheetView.cs" />
     <Compile Include="Views\FakeWindowView.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
     <Compile Include="Helpers\CocoaCodeHelpers.cs" />
     <Compile Include="Helpers\CocoaHelpers.cs" />
+    <Compile Include="Services\ColorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

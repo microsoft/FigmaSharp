@@ -28,10 +28,10 @@ using AppKit;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public abstract partial class CocoaConverter
+	public static class ColorService
 	{
-		static readonly IReadOnlyList<(string styleName, NSColor themeColor, string themeColorName)> themeColors
-                           = new List<(string styleName, NSColor themeColor, string themeColorName)>
+		public static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
+		                          = new List<(string StyleName, NSColor Color, string ColorName)>
 		{
 			// System color palette
 			("System/Red", NSColor.SystemRedColor, nameof(NSColor.SystemRedColor)),
