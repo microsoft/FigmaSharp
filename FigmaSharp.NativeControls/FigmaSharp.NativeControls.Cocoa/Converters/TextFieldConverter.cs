@@ -41,8 +41,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
-			FigmaNode optionsGroup = currentNode.GetChildren()
-                .FirstOrDefault(s => s.name == "!options" && s.visible);
+			FigmaNode optionsGroup = currentNode.Options();
 
 			FigmaNode passwordNode = optionsGroup?.GetChildren()
 				.OfType<FigmaNode>()
@@ -82,7 +81,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				textField = new NSSearchField();
 
 
-			FigmaNode optionsGroup = frame.children.FirstOrDefault(s => s.name == "!options" && s.visible);
+			FigmaNode optionsGroup = frame.Options();
 
 			FigmaNode passwordNode = optionsGroup?.GetChildren()
 	            .OfType<FigmaNode>()
@@ -133,7 +132,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			FigmaNode optionsGroup = frame.children.FirstOrDefault(s => s.name == "!options" && s.visible);
+			FigmaNode optionsGroup = frame.Options();
 
 			FigmaNode passwordNode = optionsGroup?.GetChildren()
 				.OfType<FigmaNode>()
