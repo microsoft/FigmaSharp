@@ -91,7 +91,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
 				{
 					if (styleMap.Key == "fill")
-						code.WriteEquality(name, nameof(NSColorWell.Color), CocoaCodeHelpers.GetNSColorName(style.name));
+						code.WriteEquality(name, nameof(NSColorWell.Color), CocoaCodeHelpers.GetNSColorString(style.name));
 				}
 			}
 

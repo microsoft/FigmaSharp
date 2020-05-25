@@ -130,11 +130,11 @@ namespace FigmaSharp.NativeControls.Cocoa
                     if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
                     {
                         if (styleMap.Key == "fill")
-                            code.WriteEquality(name, nameof(NSBox.FillColor), CocoaCodeHelpers.GetNSColorName(style.name));
+                            code.WriteEquality(name, nameof(NSBox.FillColor), CocoaCodeHelpers.GetNSColorString(style.name));
 
                         if (styleMap.Key == "stroke")
                         {
-                            code.WriteEquality(name, nameof(NSBox.BorderColor), CocoaCodeHelpers.GetNSColorName(style.name));
+                            code.WriteEquality(name, nameof(NSBox.BorderColor), CocoaCodeHelpers.GetNSColorString(style.name));
                             code.WriteEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
                             borderSet = true;
                         }

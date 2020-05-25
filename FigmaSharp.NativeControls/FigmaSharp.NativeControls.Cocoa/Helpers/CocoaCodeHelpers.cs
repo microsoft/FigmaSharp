@@ -33,7 +33,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 {
 	public static class CocoaCodeHelpers
 	{
-		public static string GetNSFontSizeName(NativeControlVariant controlVariant)
+		public static string GetNSFontSizeString(NativeControlVariant controlVariant)
 		{
 			if (controlVariant == NativeControlVariant.Small)
 				return $"{ typeof(NSFont) }.{ nameof(NSFont.SmallSystemFontSize) }";
@@ -42,15 +42,15 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 
 
-		public static string GetNSFontName(NativeControlVariant controlVariant)
+		public static string GetNSFontString(NativeControlVariant controlVariant)
 		{
 			if (controlVariant == NativeControlVariant.Small)
-				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) })";
 
-			return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+			return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) })";
 		}
 
-		public static string GetNSFontName(NativeControlVariant controlVariant, FigmaText text, bool withWeight = true)
+		public static string GetNSFontString(NativeControlVariant controlVariant, FigmaText text, bool withWeight = true)
 		{
 			var fontWeight = CocoaHelpers.GetNSFontWeight(text);
 
@@ -58,26 +58,26 @@ namespace FigmaSharp.NativeControls.Cocoa
 			{
 				// The system default Medium is slightly different, so let Cocoa handle that
 				if (fontWeight == NSFontWeight.Medium || !withWeight)
-					return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+					return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) })";
 			}
 
 			if (controlVariant == NativeControlVariant.Small)
 			{
 				// The system default Medium is slightly different, so let Cocoa handle that
 				if (fontWeight == NSFontWeight.Medium || !withWeight)
-					return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+					return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) })";
 				else
-					return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) }, { GetNSFontWeightName(text) })";
+					return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) }, { GetNSFontWeightString(text) })";
 			}
 
 			if (withWeight)
-				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) }, { GetNSFontWeightName(text) })";
+				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) }, { GetNSFontWeightString(text) })";
 			else
-				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeName(controlVariant) })";
+				return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ GetNSFontSizeString(controlVariant) })";
 		}
 
 
-		public static string GetNSFontWeightName(FigmaText text)
+		public static string GetNSFontWeightString(FigmaText text)
 		{
 			// The default macOS font is of medium weight
 			string weight = nameof(NSFontWeight.Medium);
@@ -114,13 +114,13 @@ namespace FigmaSharp.NativeControls.Cocoa
 		}
 
 
-		public static string GetNSTextAlignmentName(FigmaText text)
+		public static string GetNSTextAlignmentString(FigmaText text)
 		{
 			return $"{nameof(NSTextAlignment)}.{CocoaHelpers.GetNSTextAlignment(text)}";
 		}
 
 
-		public static string GetNSColorName(string colorStyleName)
+		public static string GetNSColorString(string colorStyleName)
 		{
 			return "";// $"{nameof(NSColor)}.{themeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColorName}";
 		}

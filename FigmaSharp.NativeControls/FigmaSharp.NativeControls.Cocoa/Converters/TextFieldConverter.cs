@@ -155,7 +155,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
 
 			if (text != null) {
-				code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontName(controlVariant, text, withWeight: false));
+				code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontString(controlVariant, text, withWeight: false));
 
 				var stringLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 				code.WriteEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);

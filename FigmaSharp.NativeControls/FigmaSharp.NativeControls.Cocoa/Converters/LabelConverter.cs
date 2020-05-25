@@ -123,16 +123,16 @@ namespace FigmaSharp.NativeControls.Cocoa
             code.WriteEquality(name, nameof(NSTextField.StringValue), labelComponent, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
             if (text != null)
-                code.WriteEquality(name, nameof(NSTextField.Alignment), CocoaCodeHelpers.GetNSTextAlignmentName(text).ToString());
+                code.WriteEquality(name, nameof(NSTextField.Alignment), CocoaCodeHelpers.GetNSTextAlignmentString(text).ToString());
 
             if (controlType == NativeControlType.LabelHeader)
             {
                 code.WriteEquality(name, nameof(NSTextField.Font),
-                    $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ headerFontSize }, { CocoaCodeHelpers.GetNSFontWeightName(text) })");
+                    $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ headerFontSize }, { CocoaCodeHelpers.GetNSFontWeightString(text) })");
             }
             else
             {
-                code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontName(controlVariant, text));
+                code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontString(controlVariant, text));
             }
 
             foreach (var styleMap in text?.styles)
@@ -140,7 +140,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
                 {
                     if (styleMap.Key == "fill")
-                        code.WriteEquality(name, nameof(NSTextField.TextColor), CocoaCodeHelpers.GetNSColorName(style.name));
+                        code.WriteEquality(name, nameof(NSTextField.TextColor), CocoaCodeHelpers.GetNSColorString(style.name));
                 }
             }
 
