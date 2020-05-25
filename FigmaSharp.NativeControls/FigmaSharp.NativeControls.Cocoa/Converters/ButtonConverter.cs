@@ -69,8 +69,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            button.ControlSize = GetNSControlSize(controlVariant);
-            button.Font = GetNSFont(controlVariant);
+            button.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+            button.Font = CocoaHelpers.GetNSFont(controlVariant);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
@@ -119,8 +119,8 @@ namespace FigmaSharp.NativeControls.Cocoa
                     break;
             }
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
+            code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontName(controlVariant));
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()

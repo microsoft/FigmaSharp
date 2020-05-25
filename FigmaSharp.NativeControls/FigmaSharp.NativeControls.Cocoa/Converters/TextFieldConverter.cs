@@ -109,12 +109,12 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (text != null)
 			{
-				textField.Alignment = GetNSTextAlignment(text);
+				textField.Alignment = CocoaHelpers.GetNSTextAlignment(text);
 				textField.StringValue = text.characters;
 			}
 
-			textField.ControlSize = GetNSControlSize(controlVariant);
-			textField.Font = GetNSFont(controlVariant);
+			textField.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+			textField.Font = CocoaHelpers.GetNSFont(controlVariant);
 
 			return new View(textField);
 		}
@@ -155,7 +155,7 @@ namespace FigmaSharp.NativeControls.Cocoa
                 FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
 
 			if (text != null) {
-				code.WriteEquality(name, nameof(NSTextField.Font), GetNSFontName(controlVariant, text, withWeight: false));
+				code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontName(controlVariant, text, withWeight: false));
 
 				var stringLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 				code.WriteEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);

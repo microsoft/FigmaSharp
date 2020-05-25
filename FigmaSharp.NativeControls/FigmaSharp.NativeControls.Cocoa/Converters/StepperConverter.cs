@@ -57,7 +57,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var frame = (FigmaFrame)currentNode;
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			stepper.ControlSize = GetNSControlSize(controlVariant);
+			stepper.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
 
 			return new View(stepper);
 		}
@@ -75,7 +75,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
 
 			return code;
 		}

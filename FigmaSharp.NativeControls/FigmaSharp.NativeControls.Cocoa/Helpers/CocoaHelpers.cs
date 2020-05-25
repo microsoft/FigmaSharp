@@ -31,7 +31,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public static class ViewHelpers
+	public static class CocoaHelpers
 	{
 		public static NSControlSize GetNSControlSize(NativeControlVariant controlVariant)
 		{
@@ -135,7 +135,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public static NSColor GetNSColor(string colorStyleName)
 		{
-			return themeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColor;
+			return NSColor.Clear;// themeColors.FirstOrDefault(c => c.styleName == colorStyleName).themeColor;
 		}
 	}
 }

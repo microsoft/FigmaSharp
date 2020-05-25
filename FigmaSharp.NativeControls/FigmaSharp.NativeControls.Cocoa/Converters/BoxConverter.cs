@@ -75,11 +75,11 @@ namespace FigmaSharp.NativeControls.Cocoa
                     if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
                     {
                         if (styleMap.Key == "fill")
-                            box.FillColor = GetNSColor(style.name);
+                            box.FillColor = CocoaHelpers.GetNSColor(style.name);
 
                         if (styleMap.Key == "stroke")
                         {
-                            box.BorderColor = GetNSColor(style.name);
+                            box.BorderColor = CocoaHelpers.GetNSColor(style.name);
                             box.BorderWidth = rectangle.strokeWeight;
                         }
                     }
@@ -130,11 +130,11 @@ namespace FigmaSharp.NativeControls.Cocoa
                     if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
                     {
                         if (styleMap.Key == "fill")
-                            code.WriteEquality(name, nameof(NSBox.FillColor), GetNSColorName(style.name));
+                            code.WriteEquality(name, nameof(NSBox.FillColor), CocoaCodeHelpers.GetNSColorName(style.name));
 
                         if (styleMap.Key == "stroke")
                         {
-                            code.WriteEquality(name, nameof(NSBox.BorderColor), GetNSColorName(style.name));
+                            code.WriteEquality(name, nameof(NSBox.BorderColor), CocoaCodeHelpers.GetNSColorName(style.name));
                             code.WriteEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
                             borderSet = true;
                         }

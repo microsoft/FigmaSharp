@@ -64,8 +64,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 
-            checkBox.ControlSize = GetNSControlSize(controlVariant);
-            checkBox.Font = GetNSFont(controlVariant, text);
+            checkBox.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+            checkBox.Font = CocoaHelpers.GetNSFont(controlVariant, text);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
@@ -106,8 +106,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
+            code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontName(controlVariant));
 
             FigmaText text = frame.children
                 .OfType<FigmaText> ()

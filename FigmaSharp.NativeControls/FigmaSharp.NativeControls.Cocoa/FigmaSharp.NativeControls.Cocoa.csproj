@@ -90,6 +90,8 @@
     <Compile Include="Views\FigmaContainerBundleWindow.cs" />
     <Compile Include="Converters\Misc\FigmaCodeViewConverter.cs" />
     <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
+    <Compile Include="Helpers\CocoaCodeHelpers.cs" />
+    <Compile Include="Helpers\CocoaHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

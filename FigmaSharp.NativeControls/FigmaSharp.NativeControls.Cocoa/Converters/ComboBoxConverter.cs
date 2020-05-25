@@ -56,8 +56,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			var frame = (FigmaFrame)currentNode;
 			frame.TryGetNativeControlVariant (out var controlVariant);
 
-			combobox.ControlSize = GetNSControlSize(controlVariant);
-			combobox.Font = GetNSFont(controlVariant);
+			combobox.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+			combobox.Font = CocoaHelpers.GetNSFont(controlVariant);
 
 			FigmaText text = frame.children
 			   .OfType<FigmaText> ()
@@ -82,8 +82,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
-			code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontName(controlVariant));
 
 			FigmaText text = frame.children
 				.OfType<FigmaText> ()

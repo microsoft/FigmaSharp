@@ -52,7 +52,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			frame.TryGetNativeControlType(out var controlType);
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			progressIndicator.ControlSize = GetNSControlSize(controlVariant);
+			progressIndicator.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
 
 			FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()
@@ -84,7 +84,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
 
 			FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()

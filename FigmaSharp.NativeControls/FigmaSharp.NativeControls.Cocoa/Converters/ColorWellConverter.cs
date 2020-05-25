@@ -62,7 +62,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
 				{
 					if (styleMap.Key == "fill")
-						colorWell.Color = GetNSColor(style.name);
+						colorWell.Color = CocoaHelpers.GetNSColor(style.name);
 				}
 			}
 
@@ -91,7 +91,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 				if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
 				{
 					if (styleMap.Key == "fill")
-						code.WriteEquality(name, nameof(NSColorWell.Color), GetNSColorName(style.name));
+						code.WriteEquality(name, nameof(NSColorWell.Color), CocoaCodeHelpers.GetNSColorName(style.name));
 				}
 			}
 

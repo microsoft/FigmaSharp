@@ -56,8 +56,8 @@ namespace FigmaSharp.NativeControls.Cocoa
             frame.TryGetNativeControlType(out var controlType);
             frame.TryGetNativeControlVariant(out var controlVariant);
 
-            segmentedControl.ControlSize = GetNSControlSize(controlVariant);
-            segmentedControl.Font = GetNSFont(controlVariant);
+            segmentedControl.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+            segmentedControl.Font = CocoaHelpers.GetNSFont(controlVariant);
 
             FigmaNode items = frame.FirstChild(s => s.name == ComponentString.ITEMS);
 
@@ -101,8 +101,8 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
+            code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontName(controlVariant));
 
             FigmaNode items = frame.FirstChild(s => s.name == ComponentString.ITEMS);
 

@@ -69,8 +69,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 
-            radio.ControlSize = GetNSControlSize(controlVariant);
-            radio.Font = GetNSFont(controlVariant, text);
+            radio.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+            radio.Font = CocoaHelpers.GetNSFont(controlVariant, text);
 
             FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()
@@ -102,8 +102,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             code.WriteMethod(name, nameof(NSButton.SetButtonType), NSButtonType.Radio);
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
+            code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontName(controlVariant));
 
             FigmaText text = frame.children
                 .OfType<FigmaText>()

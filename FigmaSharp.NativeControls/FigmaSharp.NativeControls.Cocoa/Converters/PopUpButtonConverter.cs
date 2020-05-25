@@ -61,8 +61,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (controlType == NativeControlType.PopUpButtonPullDown)
 				popUp.PullsDown = true;
 
-			popUp.ControlSize = GetNSControlSize(controlVariant);
-			popUp.Font = GetNSFont(controlVariant);
+			popUp.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+			popUp.Font = CocoaHelpers.GetNSFont(controlVariant);
 
 			FigmaText text = frame.children
 				   .OfType<FigmaText>()
@@ -91,8 +91,8 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (controlType == NativeControlType.PopUpButtonPullDown)
 				code.WriteEquality(name, nameof(NSPopUpButton.PullsDown), true);
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), GetNSControlSize(controlVariant));
-			code.WriteEquality(name, nameof(NSSegmentedControl.Font), GetNSFontName(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontName(controlVariant));
 
 			FigmaText text = frame.children
 			   .OfType<FigmaText>()
