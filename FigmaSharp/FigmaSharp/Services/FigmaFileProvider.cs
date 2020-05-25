@@ -396,13 +396,13 @@ namespace FigmaSharp.Services
 			Response.Save (filePath);
 		}
 
-        public bool TryGetMainComponent(FigmaInstance nodeInstance, out FigmaComponentEntity result)
+        public bool TryGetMainComponent(FigmaInstance nodeInstance, out FigmaInstance result)
         {
 			//Get the instance
 			var componentNode = GetMainGeneratedLayers();
 			foreach (var item in componentNode)
 			{
-				if (item is FigmaComponentEntity figmaInstance && figmaInstance.id == nodeInstance.componentId) {
+				if (item is FigmaInstance figmaInstance && figmaInstance.id == nodeInstance.componentId) {
 					result = figmaInstance;
 					return true;
                 }
