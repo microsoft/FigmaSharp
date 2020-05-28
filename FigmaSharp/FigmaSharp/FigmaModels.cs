@@ -116,7 +116,7 @@ namespace FigmaSharp.Models
 
         [Category ("General")]
         [DisplayName ("GradientHandlePositions")]
-        public FigmaVector[] gradientHandlePositions { get; set; }
+        public FigmaPoint[] gradientHandlePositions { get; set; }
 
         [Category ("General")]
         [DisplayName ("Gradient Stops")]
@@ -309,7 +309,7 @@ namespace FigmaSharp.Models
         [Category ("General")]
         [DisplayName ("Size")]
         [Description ("Width and height of element. This is different from the width and height of the bounding box in that the absolute bounding box represents the element after scaling and rotation. Only present if geometry=paths is passed")]
-        public FigmaVector size { get; set; }
+        public FigmaPoint size { get; set; }
 
         [Category ("General")]
         [DisplayName ("Relative Transform")]
@@ -409,7 +409,7 @@ namespace FigmaSharp.Models
         Horizontal
     }
 
-    public class FigmaVector : FigmaNode
+    public class FigmaPoint : FigmaNode
     {
         [Category ("General")]
         [DisplayName ("X")]
@@ -486,7 +486,7 @@ namespace FigmaSharp.Models
 
         [Category ("General")]
         [DisplayName ("Size")]
-        public FigmaVector size { get; set; }
+        public FigmaPoint size { get; set; }
 
         [Category ("General")]
         [DisplayName ("Relative Transform")]
@@ -582,7 +582,7 @@ namespace FigmaSharp.Models
 
         [Category ("General")]
         [DisplayName ("Offset")]
-        public FigmaVector offset { get; set; }
+        public FigmaPoint offset { get; set; }
     }
 
     public class FigmaCanvas : FigmaNode, IFigmaDocumentContainer

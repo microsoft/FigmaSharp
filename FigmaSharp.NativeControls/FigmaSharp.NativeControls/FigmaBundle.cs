@@ -215,7 +215,7 @@ namespace FigmaSharp
 
 		public static IEnumerable<FigmaNode> OfTypeImage (FigmaNode child)
 		{
-			if (child.name.Contains ("!image") || child is FigmaVector) {
+			if (child.name.Contains ("!image") || child is FigmaPoint) {
 				yield return child;
 			}
 
