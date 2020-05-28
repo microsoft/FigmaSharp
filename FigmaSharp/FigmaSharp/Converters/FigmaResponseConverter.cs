@@ -88,7 +88,7 @@ namespace FigmaSharp
             }
             else if (jsonObject["type"].Value<string>() == "VECTOR")
             {
-                figmaObject = jsonObject.ToObject<FigmaVectorEntity>();
+                figmaObject = jsonObject.ToObject<FigmaVector>();
             }
             else if (jsonObject["type"].Value<string>() == "TEXT")
             {

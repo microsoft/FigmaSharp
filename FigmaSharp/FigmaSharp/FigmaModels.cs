@@ -41,12 +41,12 @@ namespace FigmaSharp.Models
         bool HasImage();
     }
 
-    public class FigmaElipse : FigmaVectorEntity
+    public class FigmaElipse : FigmaVector
     {
         
     }
 
-    public class FigmaStar : FigmaVectorEntity
+    public class FigmaStar : FigmaVector
     {
         
     }
@@ -67,17 +67,17 @@ namespace FigmaSharp.Models
         }
     }
 
-    public class FigmaRegularPolygon : FigmaVectorEntity
+    public class FigmaRegularPolygon : FigmaVector
     {
         
     }
 
-    public class FigmaLine : FigmaVectorEntity
+    public class FigmaLine : FigmaVector
     {
         
     }
 
-    public class RectangleVector : FigmaVectorEntity
+    public class RectangleVector : FigmaVector
     {
         [Category ("General")]
         [DisplayName ("Corner Radius")]
@@ -435,7 +435,7 @@ namespace FigmaSharp.Models
         bool HasImage();
     }
 
-    public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
     {
         public virtual bool HasImage ()
         {
@@ -536,7 +536,7 @@ namespace FigmaSharp.Models
         FigmaNode[] children { get; set; }
     }
 
-    public class FigmaBoolean : FigmaVectorEntity, IFigmaNodeContainer
+    public class FigmaBoolean : FigmaVector, IFigmaNodeContainer
     {
         [Category ("General")]
         [DisplayName ("Children")]
@@ -715,7 +715,7 @@ namespace FigmaSharp.Models
         }
     }
 
-    public class FigmaText : FigmaVectorEntity
+    public class FigmaText : FigmaVector
     {
         public override bool HasImage()
         {
