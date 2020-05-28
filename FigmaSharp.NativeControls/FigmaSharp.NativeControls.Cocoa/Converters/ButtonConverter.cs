@@ -49,7 +49,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaInstance = (FigmaFrameEntity)currentNode;
+            var figmaInstance = (FigmaFrame)currentNode;
 
             var button = new Button();
             var view = (NSButton)button.NativeObject;
@@ -140,7 +140,7 @@ namespace FigmaSharp.NativeControls.Cocoa
         {
             var builder = new StringBuilder();
 
-            var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+            var figmaInstance = (FigmaFrame)currentNode.Node;
             var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))

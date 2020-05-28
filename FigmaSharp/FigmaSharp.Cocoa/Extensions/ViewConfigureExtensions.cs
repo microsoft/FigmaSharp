@@ -11,7 +11,7 @@ namespace FigmaSharp.Cocoa
 {
 	public static class ViewConfigureExtensions
     {
-        public static void Configure(this NSView view, FigmaFrameEntity child)
+        public static void Configure(this NSView view, FigmaFrame child)
         {
             Configure(view, (FigmaNode)child);
 		

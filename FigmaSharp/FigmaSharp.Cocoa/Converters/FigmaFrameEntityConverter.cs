@@ -55,7 +55,7 @@ namespace FigmaSharp.Cocoa.Converters
                 view  = new View ();
 
             var currengroupView = view.NativeObject as NSView;
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            var figmaFrameEntity = (FigmaFrame)currentNode;
             currengroupView.Configure(currentNode);
 
             currengroupView.AlphaValue = figmaFrameEntity.opacity;
@@ -80,7 +80,7 @@ namespace FigmaSharp.Cocoa.Converters
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode.Node;
+            var figmaFrameEntity = (FigmaFrame)currentNode.Node;
             StringBuilder builder = new StringBuilder();
 
             var name = Resources.Ids.Conversion.NameIdentifier;

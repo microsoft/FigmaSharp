@@ -84,7 +84,7 @@ namespace FigmaSharp
             }
             else if (jsonObject["type"].Value<string>() == "FRAME")
             {
-                figmaObject = jsonObject.ToObject<FigmaFrameEntity>();
+                figmaObject = jsonObject.ToObject<FigmaFrame>();
             }
             else if (jsonObject["type"].Value<string>() == "VECTOR")
             {

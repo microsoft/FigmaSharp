@@ -55,7 +55,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var instance = (FigmaFrameEntity)currentNode;
+			var instance = (FigmaFrame)currentNode;
 			var view = new Stepper ();
 			var nativeView = (FNSStepper)view.NativeObject;
 			nativeView.Configure (instance);
@@ -77,7 +77,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+			var figmaInstance = (FigmaFrame)currentNode.Node;
 			var builder = new StringBuilder ();
 			string name = currentNode.Name;
 

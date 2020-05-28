@@ -36,7 +36,7 @@ namespace FigmaSharp.Converters
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode is FigmaFrameEntity;
+            return currentNode is FigmaFrame;
         }
     }
 }

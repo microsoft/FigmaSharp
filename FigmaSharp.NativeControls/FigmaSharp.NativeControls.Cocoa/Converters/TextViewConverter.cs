@@ -54,7 +54,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode;
+			var figmaInstance = (FigmaFrame)currentNode;
 
 			figmaInstance.TryGetNativeControlType(out var controlType);
 			ITextView view = new TextView();
@@ -96,7 +96,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var instance = (FigmaFrameEntity)currentNode.Node;
+			var instance = (FigmaFrame)currentNode.Node;
 
 			string textViewName = currentNode.Name;
 

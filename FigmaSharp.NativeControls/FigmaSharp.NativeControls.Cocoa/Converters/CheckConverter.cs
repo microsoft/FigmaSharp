@@ -55,7 +55,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaInstance = (FigmaFrameEntity)currentNode;
+            var figmaInstance = (FigmaFrame)currentNode;
 
 			var button = new CheckBox() { Text = string.Empty };
 			var view = (NSButton)button.NativeObject;
@@ -88,7 +88,7 @@ namespace FigmaSharp.NativeControls.Cocoa
             //check with labels needs check in child
             var checkButtonFigmaNode = figmaInstance.children
 				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox)
-				as FigmaFrameEntity;
+				as FigmaFrame;
 
             button.IsChecked = figmaInstance.children
                 .OfType<FigmaGroup> ()
@@ -103,7 +103,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+            var figmaInstance = (FigmaFrame)currentNode.Node;
 
             var builder = new StringBuilder ();
             var name = Resources.Ids.Conversion.NameIdentifier;
@@ -145,7 +145,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
             var checkButtonFigmaNode = figmaInstance.children
                 .FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.CheckBox)
-                as FigmaFrameEntity;
+                as FigmaFrame;
 
             if (checkButtonFigmaNode != null) {
                 figmaInstance = checkButtonFigmaNode;

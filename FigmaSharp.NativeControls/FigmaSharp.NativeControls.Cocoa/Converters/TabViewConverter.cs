@@ -53,7 +53,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var figmaInstance = (FigmaFrameEntity)currentNode;
+            var figmaInstance = (FigmaFrame)currentNode;
             var view = new TabView();
            
             List<NSTabViewItem> tabs = new List<NSTabViewItem>();

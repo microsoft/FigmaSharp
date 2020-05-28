@@ -59,7 +59,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var frame = (FigmaFrameEntity)currentNode;
+			var frame = (FigmaFrame)currentNode;
 
 			var nativeView = new FakeSheetView();
 			var view = new View(nativeView);
@@ -126,7 +126,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
 			string title = "";
-			var frame = (FigmaFrameEntity)currentNode;
+			var frame = (FigmaFrame)currentNode;
 
 			var nativeView = new FakeWindowView(title);
 			nativeView.LiveButtonAlwaysVisible = LiveButtonAlwaysVisible;

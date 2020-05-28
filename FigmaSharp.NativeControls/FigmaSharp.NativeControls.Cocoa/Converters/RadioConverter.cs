@@ -57,7 +57,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode;
+			var figmaInstance = (FigmaFrame)currentNode;
 
 			var button = new RadioBox() { Text = "" };
 			var view = (NSButton)button.NativeObject;
@@ -89,7 +89,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
 				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton)
-				as FigmaFrameEntity;
+				as FigmaFrame;
 
 			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;
@@ -109,7 +109,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity)currentNode.Node;
+			var figmaInstance = (FigmaFrame)currentNode.Node;
 
 			var builder = new StringBuilder();
 			var name = currentNode.Name;
@@ -149,7 +149,7 @@ CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFon
 
 			//radio buttons with label needs another
 			var radioButtonFigmaNode = figmaInstance.children
-				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton) as FigmaFrameEntity;
+				.FirstOrDefault(s => s.TryGetNativeControlType(out var value) && value == NativeControlType.RadioButton) as FigmaFrame;
 
 			if (radioButtonFigmaNode != null) {
 				figmaInstance = radioButtonFigmaNode;

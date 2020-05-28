@@ -54,7 +54,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var figmaInstance = (FigmaFrameEntity) currentNode;
+			var figmaInstance = (FigmaFrame) currentNode;
 
 			figmaInstance.TryGetNativeControlType (out var controlType);
 			ITextBox textBox = controlType == NativeControlType.Filter ? (ITextBox) new SearchBox() : new TextBox();
@@ -93,7 +93,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var instance = (FigmaFrameEntity)currentNode.Node;
+			var instance = (FigmaFrame)currentNode.Node;
 			var name = currentNode.Name;
 
 			var builder = new StringBuilder ();

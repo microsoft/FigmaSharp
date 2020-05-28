@@ -49,7 +49,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public static IButton CreateButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
 		{
 			IButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			if (currentNode is FigmaFrame figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
 				{
@@ -69,7 +69,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public static IButton CreateButtonFromFigmaNode(FigmaNode currentNode)
 		{
 			IButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			if (currentNode is FigmaFrame figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
 				{
@@ -89,7 +89,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public static IImageButton CreateImageButtonFromFigmaNode(FNSButton button, FigmaNode currentNode)
 		{
 			IImageButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			if (currentNode is FigmaFrame figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
 				{
@@ -109,7 +109,7 @@ namespace FigmaSharp.NativeControls.Cocoa
 		public static IImageButton CreateImageButtonFromFigmaNode(FigmaNode currentNode)
 		{
 			IImageButton btn = null;
-			if (currentNode is FigmaFrameEntity figmaFrameEntity)
+			if (currentNode is FigmaFrame figmaFrameEntity)
 			{
 				if (!string.IsNullOrEmpty(figmaFrameEntity.transitionNodeID))
 				{

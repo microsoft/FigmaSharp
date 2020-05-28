@@ -259,7 +259,7 @@ namespace FigmaSharp.NativeControls
 
         public static bool IsParentMainContainer (this FigmaNode node)
         {
-            if (node is FigmaFrameEntity figmaFrameEntity && figmaFrameEntity.Parent is FigmaCanvas) {
+            if (node is FigmaFrame figmaFrameEntity && figmaFrameEntity.Parent is FigmaCanvas) {
                 return true;
             };
             return false;

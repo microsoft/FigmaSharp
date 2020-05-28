@@ -65,7 +65,7 @@ namespace FigmaSharp.Services
 				}
             }
 
-            if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrameEntity) {
+            if (node.Node.Parent is FigmaCanvas && node.Node is FigmaFrame) {
                 return true;
             }
 
