@@ -41,17 +41,17 @@ namespace FigmaSharp.Models
         bool HasImage();
     }
 
-    public class FigmaElipse : FigmaVectorEntity
+    public class FigmaElipse : FigmaVector
     {
         
     }
 
-    public class FigmaStar : FigmaVectorEntity
+    public class FigmaStar : FigmaVector
     {
         
     }
 
-    public class FigmaInstance : FigmaFrameEntity
+    public class FigmaInstance : FigmaFrame
     {
         [Category ("General")]
         [DisplayName ("Component Id")]
@@ -67,17 +67,17 @@ namespace FigmaSharp.Models
         }
     }
 
-    public class FigmaRegularPolygon : FigmaVectorEntity
+    public class FigmaRegularPolygon : FigmaVector
     {
         
     }
 
-    public class FigmaLine : FigmaVectorEntity
+    public class FigmaLine : FigmaVector
     {
         
     }
 
-    public class RectangleVector : FigmaVectorEntity
+    public class RectangleVector : FigmaVector
     {
         [Category ("General")]
         [DisplayName ("Corner Radius")]
@@ -116,7 +116,7 @@ namespace FigmaSharp.Models
 
         [Category ("General")]
         [DisplayName ("GradientHandlePositions")]
-        public FigmaVector[] gradientHandlePositions { get; set; }
+        public FigmaPoint[] gradientHandlePositions { get; set; }
 
         [Category ("General")]
         [DisplayName ("Gradient Stops")]
@@ -208,7 +208,7 @@ namespace FigmaSharp.Models
         LUMINOSITY
     }
 
-    public class FigmaGroup : FigmaFrameEntity
+    public class FigmaGroup : FigmaFrame
     {
         public override bool HasImage()
         {
@@ -247,7 +247,7 @@ namespace FigmaSharp.Models
         public FigmaLayoutConstraint constraints { get; set; }
     }
 
-    public class FigmaFrameEntity : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    public class FigmaFrame : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
     {
         public virtual bool HasImage()
         {
@@ -309,7 +309,7 @@ namespace FigmaSharp.Models
         [Category ("General")]
         [DisplayName ("Size")]
         [Description ("Width and height of element. This is different from the width and height of the bounding box in that the absolute bounding box represents the element after scaling and rotation. Only present if geometry=paths is passed")]
-        public FigmaVector size { get; set; }
+        public FigmaPoint size { get; set; }
 
         [Category ("General")]
         [DisplayName ("Relative Transform")]
@@ -409,7 +409,7 @@ namespace FigmaSharp.Models
         Horizontal
     }
 
-    public class FigmaVector : FigmaNode
+    public class FigmaPoint : FigmaNode
     {
         [Category ("General")]
         [DisplayName ("X")]
@@ -435,7 +435,7 @@ namespace FigmaSharp.Models
         bool HasImage();
     }
 
-    public class FigmaVectorEntity : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
     {
         public virtual bool HasImage ()
         {
@@ -486,7 +486,7 @@ namespace FigmaSharp.Models
 
         [Category ("General")]
         [DisplayName ("Size")]
-        public FigmaVector size { get; set; }
+        public FigmaPoint size { get; set; }
 
         [Category ("General")]
         [DisplayName ("Relative Transform")]
@@ -536,7 +536,7 @@ namespace FigmaSharp.Models
         FigmaNode[] children { get; set; }
     }
 
-    public class FigmaBoolean : FigmaVectorEntity, IFigmaNodeContainer
+    public class FigmaBoolean : FigmaVector, IFigmaNodeContainer
     {
         [Category ("General")]
         [DisplayName ("Children")]
@@ -582,7 +582,7 @@ namespace FigmaSharp.Models
 
         [Category ("General")]
         [DisplayName ("Offset")]
-        public FigmaVector offset { get; set; }
+        public FigmaPoint offset { get; set; }
     }
 
     public class FigmaCanvas : FigmaNode, IFigmaDocumentContainer
@@ -680,7 +680,7 @@ namespace FigmaSharp.Models
             FigmaNode?.ToString() ?? base.ToString();
     }
 
-    public class FigmaComponentEntity : FigmaFrameEntity
+    public class FigmaComponentEntity : FigmaFrame
     {
 
     }
@@ -715,7 +715,7 @@ namespace FigmaSharp.Models
         }
     }
 
-    public class FigmaText : FigmaVectorEntity
+    public class FigmaText : FigmaVector
     {
         public override bool HasImage()
         {

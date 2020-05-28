@@ -194,8 +194,8 @@ namespace MonoDevelop.Figma
 
     class FigmaVectorEntityWrapper : FigmaNodeWrapper
     {
-        FigmaVectorEntity vector;
-        public FigmaVectorEntityWrapper(FigmaVectorEntity node) : base(node)
+        FigmaVector vector;
+        public FigmaVectorEntityWrapper(FigmaVector node) : base(node)
         {
             vector = node;
         }

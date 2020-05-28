@@ -96,7 +96,7 @@ namespace FigmaSharp.Cocoa
             figmaLineView.AlphaValue = figmaLine.opacity;
         }
 		
-        public static void Configure(this NSView view, FigmaVectorEntity child)
+        public static void Configure(this NSView view, FigmaVector child)
         {
             Configure(view, (FigmaNode)child);
             view.AlphaValue = child.opacity;
@@ -109,7 +109,7 @@ namespace FigmaSharp.Cocoa
 
         public static void Configure(this NSView view, RectangleVector child)
         {
-            Configure(view, (FigmaVectorEntity)child);
+            Configure(view, (FigmaVector)child);
 
             //var shapeLayer = new CAShapeLayer
             //{

@@ -93,17 +93,17 @@ namespace FigmaSharp
                 sender.AppendLine (value);
         }
 
-        public static bool IsVectorImage (this FigmaVectorEntity node)
+        public static bool IsVectorImage (this FigmaVector node)
 		{
             return node.fills.OfType<FigmaPaint> ().Any (s => s.type == "IMAGE" && !string.IsNullOrEmpty (s.imageRef));
 		}
 
         public static bool IsImageNode (this FigmaNode node)
         {
-			if (node.GetType () == typeof (FigmaVectorEntity)) {
+			if (node.GetType () == typeof (FigmaVector)) {
                 return true;
 			}
-			if (node is FigmaVectorEntity vectorEntity && vectorEntity.IsVectorImage ()) {
+			if (node is FigmaVector vectorEntity && vectorEntity.IsVectorImage ()) {
                 return true;
 			}
             return false;
@@ -233,9 +233,9 @@ namespace FigmaSharp
             }
         }
 
-		public static IEnumerable<FigmaVectorEntity> OfTypeImage(this FigmaNode child)
+		public static IEnumerable<FigmaVector> OfTypeImage(this FigmaNode child)
         {
-            if (child.GetType () != typeof (FigmaText) && child is FigmaVectorEntity figmaVectorEntity)
+            if (child.GetType () != typeof (FigmaText) && child is FigmaVector figmaVectorEntity)
             {
                 yield return figmaVectorEntity;
             }
