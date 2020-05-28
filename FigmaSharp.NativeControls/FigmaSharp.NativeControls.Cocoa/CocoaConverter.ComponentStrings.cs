@@ -23,44 +23,40 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System.Collections.Generic;
-using AppKit;
+using System;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public abstract partial class CocoaConverter
+	// Use Xcode Interface Builder names
+	public static class ComponentString
 	{
-		// Use Xcode Interface Builder names
-		protected static class ComponentString
-		{
-			public const string TITLE = "Title";
-			public const string TEXT = "Text";
-			public const string PASSWORD = "Password";
-			public const string PLACEHOLDER = "Placeholder";
+		public const string TITLE = "Title";
+		public const string TEXT = "Text";
+		public const string PASSWORD = "Password";
+		public const string PLACEHOLDER = "Placeholder";
 
-			// Values
-			public const string VALUE = "Value";
-			public const string ITEMS = "Items";
+		// Values
+		public const string VALUE = "Value";
+		public const string ITEMS = "Items";
 
-			// States
-			public const string STATE_REGULAR = "State: Regular";
-			public const string STATE_DISABLED = "State: Disabled";
-			public const string STATE_DEFAULT = "State: Default";
-			public const string STATE_SELECTED = "State: Selected";
+		// States
+		public const string STATE_REGULAR = "State: Regular";
+		public const string STATE_DISABLED = "State: Disabled";
+		public const string STATE_DEFAULT = "State: Default";
+		public const string STATE_SELECTED = "State: Selected";
 
-			public const string FOCUS = "Focus";
+		public const string FOCUS = "Focus";
 
-			// CheckBox, Radio, and Switch
-			public const string STATE_ON = "State: On";
-			public const string STATE_OFF = "State: Off";
-			public const string STATE_MIXED = "State: Mixed";
+		// CheckBox, Radio, and Switch
+		public const string STATE_ON = "State: On";
+		public const string STATE_OFF = "State: Off";
+		public const string STATE_MIXED = "State: Mixed";
 
-			// ProgressIndicator
-			public const string STYLE_SPINNING = "Style: Spinning";
-			public const string STYLE_BAR = "Style: Bar";
+		// ProgressIndicator
+		public const string STYLE_SPINNING = "Style: Spinning";
+		public const string STYLE_BAR = "Style: Bar";
 
-			public const string STYLE_DETERMINATE = "Style: Determinate";
-			public const string STYLE_INDETERMINATE = "Style: Indeterminate";
-		}
+		public const string STYLE_DETERMINATE = "Style: Determinate";
+		public const string STYLE_INDETERMINATE = "Style: Indeterminate";
 	}
 }
