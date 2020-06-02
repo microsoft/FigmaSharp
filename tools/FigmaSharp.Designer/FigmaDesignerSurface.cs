@@ -196,7 +196,8 @@ namespace FigmaSharp.Designer
         {
             foreach (var item in session.ProcessedNodes)
             {
-                if (item.View.NativeObject == viewWrapper.NativeObject)
+                //some processed nodes at first level doesnt' have an associed view
+                if (item.View?.NativeObject == viewWrapper.NativeObject)
                 {
                     return true;
                 }
