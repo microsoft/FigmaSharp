@@ -1,15 +1,12 @@
 # FigmaSharp – Create apps with Figma
 
-> Here at Microsoft we ❤️ [Figma](https://www.figma.com/). We use it for everything and anything. So much so, we thought why not use it to actually implement our user interfaces? Sounds crazy enough to work. Let's give this a go.
+> Here at Microsoft we ❤️ [Figma](https://www.figma.com/). We use it for everything and anything. So much so, we thought why not use it to actually implement our user interfaces? Sounds crazy enough to work. Let's give this a go. 
 
 ![A macOS app window created with FigmaSharp](.github/screenshot.png)
 
 FigmaSharp turns your Figma design into .NET objects and can generate code and layout files to create native apps. Free and Open Source software under the [MIT LICENSE]().
 
 [![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
-
-<br/>
-
 
 # Getting started
 
@@ -23,19 +20,26 @@ Try out automatic builds of the FigmaSharp app and Visual Studio extension from 
 
 Do you have questions, need support, or want to contribute? Join the [chat on Discord](https://discord.com/channels/710495994667728996/710495994667728999).
 
+Do you want to know more?
+
+[![FigmaSharp demo](https://img.youtube.com/vi/mr8HjS4rb9E/0.jpg)](https://www.youtube.com/watch?v=mr8HjS4rb9E)
+
+
 <br/>
 
 
 ## Visual Studio extension
 
-The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and bundle them into your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page.
+The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and bundle them into your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
+
 
 <br/>
 
 
 ## FigmaSharp app
 
-The app previews Figma documents without having to install Visual Studio. Download the .app from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
+The app previews Figma documents without having to install Visual Studio. Download the .app from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page.
+
 
 <br/>
 
