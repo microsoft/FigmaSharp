@@ -20,10 +20,6 @@ Try out automatic builds of the FigmaSharp app and Visual Studio extension from 
 
 Do you have questions, need support, or want to contribute? Join the [chat on Discord](https://discord.com/channels/710495994667728996/710495994667728999).
 
-Do you want to know more?
-
-[![FigmaSharp demo](https://img.youtube.com/vi/mr8HjS4rb9E/0.jpg)](https://www.youtube.com/watch?v=mr8HjS4rb9E)
-
 
 <br/>
 
