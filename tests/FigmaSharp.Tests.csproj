@@ -47,7 +47,7 @@
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
     <ProjectReference Include="..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
-      <Project>{B53923F3-3EDA-47BB-971E-B8D65C06E053}</Project>
+      <Project>{A8372FD9-04BB-41F0-85C8-CBAB9E587501}</Project>
       <Name>FigmaSharp.Controls</Name>
     </ProjectReference>
   </ItemGroup>
