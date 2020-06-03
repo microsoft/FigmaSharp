@@ -39,6 +39,9 @@ namespace FigmaSharp.Controls.Cocoa
 {
     public class ButtonConverter : CocoaConverter
     {
+        public override bool CanSetAccessibilityLabel => false;
+        public override bool CanSetAccessibilityHelp => false;
+
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
         public override bool CanConvert(FigmaNode currentNode)
