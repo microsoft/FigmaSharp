@@ -46,14 +46,14 @@ namespace FigmaSharp
 
 		readonly string argumentName;
 		readonly string enumTypeName;
-		public List<FigmaFrameEntity> figmaFrameEntities;
+		public List<FigmaFrame> figmaFrameEntities;
 
 		FigmaCodeNode parentNode;
 		FigmaCodeRendererService rendererService;
 
 		const int DefaultWindowBarHeight = 22;
 
-		public ShowContentMethodCodeObject(List<FigmaFrameEntity> figmaFrames, string name, string contentViewName, string enumTypeName, FigmaCodeNode parentNode, FigmaCodeRendererService figmaRendererService) : base (name)
+		public ShowContentMethodCodeObject(List<FigmaFrame> figmaFrames, string name, string contentViewName, string enumTypeName, FigmaCodeNode parentNode, FigmaCodeRendererService figmaRendererService) : base (name)
         {
 			MethodModifier = CodeObjectModifier.Public;
 			argumentName = "content";
@@ -132,14 +132,14 @@ namespace FigmaSharp
 
 	public class FigmaContainerBundleWindow : FigmaBundleWindow
 	{
-		public IEnumerable<FigmaFrameEntity> ReferencedWindows { get; private set; }
+		public IEnumerable<FigmaFrame> ReferencedWindows { get; private set; }
 
 		public FigmaContainerBundleWindow(FigmaBundle figmaBundle, string viewName, FigmaNode figmaNode) : base(figmaBundle, viewName, figmaNode)
 		{
 
 		}
 
-		Rectangle GetRectangle (FigmaFrameEntity currentNode)
+		Rectangle GetRectangle (FigmaFrame currentNode)
         {
 			var content = currentNode.FirstChild(s => s.IsNodeWindowContent());
 			if (content is IAbsoluteBoundingBox absoluteBounding && currentNode is IAbsoluteBoundingBox parentAbsoluteBoundingBox)
@@ -165,7 +165,7 @@ namespace FigmaSharp
 
 			var converter = codeRendererService.codePropertyConverter;
 
-			var names = windows.OfType <FigmaFrameEntity> ()
+			var names = windows.OfType <FigmaFrame> ()
 				.ToList ();
 
 			var enumName = "Content";

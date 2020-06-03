@@ -111,7 +111,7 @@ namespace MonoDevelop.Figma
 			var mainFigmaNodes = fileProvider.GetMainGeneratedLayers();
 			foreach (var figmaNode in mainFigmaNodes)
 			{
-				if (!(figmaNode is FigmaFrameEntity) || (figmaNode is FigmaGroup))
+				if (!(figmaNode is FigmaFrame) || (figmaNode is FigmaGroup))
 					continue;
 				var figmaBundleView = currentBundle.GetFigmaFileView(figmaNode);
 				figmaBundleView.Generate(codeRendererService, writePublicClassIfExists: false, namesSpace: currentBundle.Namespace, translateLabels);

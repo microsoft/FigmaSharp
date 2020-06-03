@@ -32,52 +32,39 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-	public class StepperConverter : CocoaConverter
+	public class ImageRenderConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSStepper);
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
 
-        public override bool CanSetAccessibilityLabel => false;
-
-
-        public override bool CanConvert(FigmaNode currentNode)
+		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.Stepper;
+			return currentNode.name.StartsWith("!image");
 		}
 
-
-		protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var stepper = new NSStepper();
-
-			var frame = (FigmaFrame)currentNode;
-			frame.TryGetNativeControlVariant(out var controlVariant);
-
-			stepper.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-
-			return new View(stepper);
+			var vector = new FigmaSharp.Views.Cocoa.ImageView();
+			var currengroupView = (NSImageView)vector.NativeObject;
+			currengroupView.Configure(currentNode);
+			return vector;
 		}
-
 
 		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			var code = new StringBuilder();
-			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
-
-			var frame = (FigmaFrame)currentNode.Node;
-			currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
-			currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
-
+			var builder = new StringBuilder();
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+			currentNode.Node.TryGetNodeCustomName(out string nodeName);
 
-			return code;
+			var imageNamedMethod = CodeGenerationHelpers.GetMethod(typeof(NSImage).FullName, nameof(NSImage.ImageNamed), nodeName, true);
+			builder.WriteEquality(currentNode.Name, nameof(NSImageView.Image), imageNamedMethod);
+
+			return builder;
 		}
 	}
 }

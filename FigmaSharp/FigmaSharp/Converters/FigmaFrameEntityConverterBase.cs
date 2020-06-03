@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameEntityConverter.cs
+ * FigmaFrameConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaFrameEntityConverterBase : FigmaViewConverter
+    public abstract class FigmaFrameConverterBase : FigmaViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode is FigmaFrameEntity;
+            return currentNode is FigmaFrame;
         }
     }
 }

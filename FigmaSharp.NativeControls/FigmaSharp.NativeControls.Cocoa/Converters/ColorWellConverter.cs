@@ -28,7 +28,6 @@ using System.Linq;
 using System.Text;
 
 using AppKit;
-using Foundation;
 
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
@@ -38,35 +37,36 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class ComboBoxConverter : CocoaConverter
+	public class ColorWellConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSComboBox);
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSColorWell);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.ComboBox;
+			return currentNode.TryGetNativeControlType(out var colorType) &&
+				colorType == NativeControlType.ColorWell;
 		}
 
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var combobox = new NSComboBox ();
-
+			var colorWell = new NSColorWell();
 			var frame = (FigmaFrame)currentNode;
-			frame.TryGetNativeControlVariant (out var controlVariant);
 
-			combobox.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-			combobox.Font = CocoaHelpers.GetNSFont(controlVariant);
+			FigmaVectorEntity rectangle = frame.children
+				.OfType<FigmaVectorEntity>()
+				.FirstOrDefault(s => s.name == ComponentString.VALUE);
 
-			FigmaText text = frame.children
-			   .OfType<FigmaText> ()
-			   .FirstOrDefault (s => s.name == ComponentString.TITLE);
+			foreach (var styleMap in rectangle?.styles)
+			{
+				if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
+				{
+					if (styleMap.Key == "fill")
+						colorWell.Color = CocoaHelpers.GetNSColor(style.name);
+				}
+			}
 
-			if (text != null && !string.IsNullOrEmpty(text.characters))
-				combobox.StringValue = text.characters;
-
-			return new View(combobox);
+			return new View(colorWell);
 		}
 
 
@@ -82,23 +82,17 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
-			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontString(controlVariant));
+			FigmaVectorEntity rectangle = frame.children
+	            .OfType<FigmaVectorEntity>()
+	            .FirstOrDefault(s => s.name == ComponentString.VALUE);
 
-			FigmaText text = frame.children
-				.OfType<FigmaText> ()
-				.FirstOrDefault (s => s.name == ComponentString.TITLE);
-
-			if (text != null && !string.IsNullOrEmpty (text.characters)) {
-				code.WriteEquality(name, nameof(NSButton.StringValue), text.characters, inQuotes: true);
-
-				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-
-				//if (!rendererService.CurrentRendererOptions.TranslateLabels)
-				//	textLabel = $"\"{textLabel}\"";
-
-				//string nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
-				//code.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
+			foreach (var styleMap in rectangle?.styles)
+			{
+				if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
+				{
+					if (styleMap.Key == "fill")
+						code.WriteEquality(name, nameof(NSColorWell.Color), CocoaCodeHelpers.GetNSColorString(style.name));
+				}
 			}
 
 			return code;

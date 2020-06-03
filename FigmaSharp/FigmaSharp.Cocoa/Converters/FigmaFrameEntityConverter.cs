@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameEntityConverter.cs
+ * FigmaFrameConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -39,7 +39,7 @@ using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
+    public class FigmaFrameConverter : FigmaFrameConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
@@ -55,13 +55,13 @@ namespace FigmaSharp.Cocoa.Converters
                 view  = new View ();
 
             var currengroupView = view.NativeObject as NSView;
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            var FigmaFrame = (FigmaFrame)currentNode;
             currengroupView.Configure(currentNode);
 
-            currengroupView.AlphaValue = figmaFrameEntity.opacity;
+            currengroupView.AlphaValue = FigmaFrame.opacity;
 
-			if (figmaFrameEntity.HasFills) {
-                foreach (var fill in figmaFrameEntity.fills) {
+			if (FigmaFrame.HasFills) {
+                foreach (var fill in FigmaFrame.fills) {
 					if (fill.type == "IMAGE") {
 						//we need to add this to our service
                     } else if (fill.type == "SOLID") {
@@ -80,7 +80,7 @@ namespace FigmaSharp.Cocoa.Converters
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode.Node;
+            var FigmaFrame = (FigmaFrame)currentNode.Node;
             StringBuilder builder = new StringBuilder();
 
             var name = Resources.Ids.Conversion.NameIdentifier;
@@ -88,7 +88,7 @@ namespace FigmaSharp.Cocoa.Converters
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            builder.Configure(figmaFrameEntity, currentNode.Name);
+            builder.Configure(FigmaFrame, currentNode.Name);
             return builder.ToString();
         }
     }

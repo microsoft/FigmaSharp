@@ -50,21 +50,40 @@ namespace FigmaSharp.NativeControls.Cocoa
 		{
 			if (converters == null) {
 				converters = new FigmaViewConverter[] {
-					new CustomViewCodeConverter (),
-					new ImageRenderConverter (),
-					new StepperConverter (),
-					new DisclosureConverter (),
-					new SpinnerConverter (),
-					new ProgressBarConverter (),
-					new CheckConverter (),
-					new ComboBoxConverter (),
-					new PopUpButtonConverter (),
-					new RadioConverter (),
+					// Buttons
 					new ButtonConverter (),
+					new StepperConverter (),
+					new SegmentedControlConverter (),
+
+					// Labels
+					new LabelConverter (),
+
+					// TextFields
 					new TextFieldConverter (),
 					new TextViewConverter (),
+
+					// Selection
+					new PopUpButtonConverter (),
+					new ComboBoxConverter (),
+					new CheckBoxConverter (),
+					new RadioConverter (),
+					new SwitchConverter (),
+					new ColorWellConverter(),
+
+					// Status
+					new ProgressIndicatorBarConverter (),
+					new ProgressIndicatorCircularConverter (),
+					new SliderLinearConverter(),
+					new SliderCircularConverter(),
+
+					// Containers
 					new TabViewConverter (),
-					new LabelConverter ()
+					new BoxConverter (),
+					new DisclosureViewConverter (),
+
+					// Other
+					new CustomViewCodeConverter (),
+					new ImageRenderConverter (),
 				};
 			}
 
@@ -86,11 +105,11 @@ namespace FigmaSharp.NativeControls.Cocoa
 
 			if (figmaNode is IFigmaNodeContainer nodeContainer) {
 				foreach (var figmaInstance in nodeContainer.children) {
-					if (figmaInstance.IsWindowOfType (NativeControlType.WindowStandard)) 
+					if (figmaInstance.IsWindowOfType (NativeControlType.Window)) 
 						return new FigmaBundleWindow (bundle, name, figmaNode);
 					if (figmaInstance.IsWindowOfType (NativeControlType.WindowSheet))
 						return new FigmaBundleWindow (bundle, name, figmaNode);
-					if (figmaInstance.IsWindowOfType ( NativeControlType.WindowPanel))
+					if (figmaInstance.IsWindowOfType (NativeControlType.WindowPanel))
 						return new FigmaBundleWindow (bundle, name, figmaNode);
 				}
 			}

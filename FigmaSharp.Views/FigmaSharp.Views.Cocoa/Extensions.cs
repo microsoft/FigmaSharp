@@ -42,7 +42,7 @@ namespace FigmaSharp
 
 		public static NSColor ToNSColor (this Color color, float opacity = -1)
 		{
-			if (color.R == 0 && color.G == 0 && color.R == 0 && color.A == 0)
+			if (color.R == 0 && color.G == 0 && color.B == 0 && color.A == 0)
 				return NSColor.Clear;
 			var alpha = (opacity == -1 ? color.A : opacity);
 			return NSColor.FromDeviceRgba ((nfloat)color.R, (nfloat)color.G, (nfloat)color.B, (nfloat)alpha);

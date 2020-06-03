@@ -93,16 +93,16 @@ namespace FigmaSharp.Services
             }
          }
 
-        protected override bool RendersConstraints(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override bool RendersConstraints(ProcessedNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
         {
             if (currentNode.FigmaNode.IsDialogParentContainer())
                 return false;
             if (currentNode.FigmaNode.IsNodeWindowContent())
                 return false;
-            return base.RendersConstraints (currentNode, parent, rendererService);
+            return base.RendersConstraints (currentNode, parentNode, rendererService);
         }
 
-        protected override bool RendersSize(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override bool RendersSize(ProcessedNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
         {
             //if (currentNode.FigmaNode.IsDialogParentContainer())
             //    return false;
@@ -112,7 +112,7 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        protected override bool RendersAddChild(ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected override bool RendersAddChild(ProcessedNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
         {
             return true;
         }
@@ -125,7 +125,7 @@ namespace FigmaSharp.Services
 			return base.NodeScansChildren (currentNode, converter, options);
 		}
 
-		protected override bool SkipsNode (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
+		protected override bool SkipsNode (FigmaNode currentNode, ProcessedNode parentNode, FigmaViewRendererServiceOptions options)
 		{
 			if (currentNode.IsDialog ()) {
 				return true;

@@ -24,53 +24,68 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Linq;
 using System.Text;
 
 using AppKit;
-using Foundation;
 
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class ComboBoxConverter : CocoaConverter
+    public class DisclosureViewConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSComboBox);
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.ComboBox;
+                controlType == NativeControlType.DisclosureView;
 		}
 
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
-			var combobox = new NSComboBox ();
-
 			var frame = (FigmaFrame)currentNode;
-			frame.TryGetNativeControlVariant (out var controlVariant);
 
-			combobox.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-			combobox.Font = CocoaHelpers.GetNSFont(controlVariant);
+			var disclosureView = new NSView();
 
-			FigmaText text = frame.children
-			   .OfType<FigmaText> ()
-			   .FirstOrDefault (s => s.name == ComponentString.TITLE);
+			/* TODO
+			var subView = new NSView(disclosureView.Bounds);
+			subView.WantsLayer = true;
+		    subView.Layer.BackgroundColor = NSColor.Red.CGColor;
 
-			if (text != null && !string.IsNullOrEmpty(text.characters))
-				combobox.StringValue = text.characters;
 
-			return new View(combobox);
+			var disclosureTriangle = new NSButton();
+			disclosureTriangle.SetFrameSize(new CoreGraphics.CGSize(130, 13));
+			disclosureTriangle.SetButtonType(NSButtonType.PushOnPushOff);
+			disclosureTriangle.BezelStyle = NSBezelStyle.Disclosure;
+
+            disclosureTriangle.Activated += delegate {
+
+			//	disclosureTriangle.State = NSCellStateValue.Off;
+
+	        };
+
+
+			disclosureView.AddSubview(disclosureTriangle);
+			disclosureView.AddSubview(subView);
+
+
+			disclosureTriangle.LeftAnchor.ConstraintEqualToAnchor(disclosureView.LeftAnchor, 8)
+							.Active = true;
+
+			disclosureTriangle.TopAnchor.ConstraintEqualToAnchor(disclosureView.TopAnchor, 8)
+							.Active = true;
+			*/
+			return new View(disclosureView);
 		}
 
-
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var code = new StringBuilder();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -82,25 +97,21 @@ namespace FigmaSharp.NativeControls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
-			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontString(controlVariant));
+			/* TODO
 
-			FigmaText text = frame.children
-				.OfType<FigmaText> ()
-				.FirstOrDefault (s => s.name == ComponentString.TITLE);
+			code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.PushOnPushOff);
+			code.WriteEquality (name, nameof (NSButton.BezelStyle), NSBezelStyle.Disclosure);
+			code.WriteEquality (name, nameof (NSButton.Title), CodeGenerationHelpers.StringEmpty);
+			code.WriteMethod (name, nameof (NSButton.Highlight), false);
 
-			if (text != null && !string.IsNullOrEmpty (text.characters)) {
-				code.WriteEquality(name, nameof(NSButton.StringValue), text.characters, inQuotes: true);
-
-				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-
-				//if (!rendererService.CurrentRendererOptions.TranslateLabels)
-				//	textLabel = $"\"{textLabel}\"";
-
-				//string nsstringcontructor = typeof (Foundation.NSString).GetConstructor (new[] { textLabel });
-				//code.WriteMethod (name, nameof (NSComboBox.Add), nsstringcontructor);
+			figmaInstance.TryGetNativeControlComponentType (out var controlType);
+			switch (controlType) {
+				case NativeControlComponentType.DisclosureTriangleStandard:
+				case NativeControlComponentType.DisclosureTriangleStandardDark:
+					code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
+					break;
 			}
-
+            */
 			return code;
 		}
 	}

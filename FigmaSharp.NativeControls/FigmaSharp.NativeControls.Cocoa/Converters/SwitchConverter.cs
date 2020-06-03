@@ -24,60 +24,59 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using AppKit;
 
+using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.NativeControls.Cocoa
 {
-    public class TabViewConverter : CocoaConverter
+    public class SwitchConverter : CocoaConverter
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSTabView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSSwitch);
+
+        public override bool CanSetAccessibilityLabel => false;
+
 
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.TabView;
+                controlType == NativeControlType.Switch;
         }
 
 
         protected override IView OnConvertToView (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
         {
             var frame = (FigmaFrame)currentNode;
-            var tabView = new NSTabView();
-           
-            List<NSTabViewItem> items = new List<NSTabViewItem>();
-            var tabNodes = frame.FirstChild (s => s.name == ComponentString.ITEMS);
+            var switchControl = new NSSwitch();
 
-            if (tabNodes == null)
-                return new View(tabView);
+            frame.TryGetNativeControlVariant (out var controlVariant);
+            switchControl.ControlSize = NSControlSize.Regular;
 
-            foreach (FigmaNode tabNode in tabNodes.GetChildren (t => t.visible, reverseChildren: true))
+            FigmaGroup group = frame.children
+                .OfType<FigmaGroup>()
+                .FirstOrDefault(s => (s.name == ComponentString.STATE_ON || s.name == ComponentString.STATE_OFF) && s.visible);
+
+            if (group != null)
             {
-                var firstChild = tabNode.FirstChild(s => s.name.In(ComponentString.STATE_REGULAR, ComponentString.STATE_SELECTED) && s.visible);
+                if (group.name == ComponentString.STATE_ON)
+                    switchControl.State = 1;
 
-                if (firstChild != null)
-                {
-                    FigmaText text = firstChild.FirstChild (s => s.name == ComponentString.TITLE) as FigmaText;
-
-                    if (text != null)
-                        items.Add(new NSTabViewItem() { Label = text.characters });
-                }
+                if (group.name == ComponentString.STATE_OFF)
+                    switchControl.State = 0;
             }
 
-            tabView.SetItems(items.ToArray());
-
-			return new View(tabView);
+            return new View(switchControl);
         }
 
-        protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+
+        protected override StringBuilder OnConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var code = new StringBuilder();
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -89,31 +88,20 @@ namespace FigmaSharp.NativeControls.Cocoa
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            var itemNodes = frame.FirstChild(s => s.name == ComponentString.ITEMS);
+            code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
 
-            if (itemNodes == null)
-                return null;
+            FigmaGroup group = frame.children
+                .OfType<FigmaGroup> ()
+                .FirstOrDefault (s => s.name.In(ComponentString.STATE_ON, ComponentString.STATE_OFF) && s.visible);
 
-            code.AppendLine();
-            code.AppendLine($"{ name }.{ nameof(NSTabView.SetItems) }(");
-            code.AppendLine($"\tnew { typeof(NSTabViewItem[]) }");
-            code.AppendLine("\t{");
-
-            foreach (FigmaNode tabNode in itemNodes.GetChildren(t => t.visible, reverseChildren: true))
+            if (group != null)
             {
-                var firstChild = tabNode.FirstChild(s => s.name.In(ComponentString.STATE_REGULAR, ComponentString.STATE_SELECTED) && s.visible);
+                if (group.name == ComponentString.STATE_ON)
+                    code.WriteEquality (name, nameof (NSSwitch.State), "1", inQuotes: false);
 
-                if (firstChild != null)
-                {
-                    FigmaText text = firstChild.FirstChild(s => s.name == ComponentString.TITLE) as FigmaText;
-
-                    if (text != null)
-                        code.AppendLine($"\t\tnew {typeof(NSTabViewItem)}() {{ {nameof(NSTabViewItem.Label)} = \"{text.characters}\" }},");
-                }
+                if (group.name == ComponentString.STATE_OFF)
+                    code.WriteEquality(name, nameof(NSSwitch.State), "0", inQuotes: false);
             }
-
-            code.AppendLine("\t}");
-            code.AppendLine(");");
 
             return code;
         }
