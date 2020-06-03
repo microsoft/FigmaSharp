@@ -11,7 +11,7 @@ using MonoDevelop.Ide;
 using System.Collections.Generic;
 using FigmaSharp.Models;
 using FigmaSharp.Cocoa;
-using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Views.Cocoa;
 
 namespace MonoDevelop.Figma

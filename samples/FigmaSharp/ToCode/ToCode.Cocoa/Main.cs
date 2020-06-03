@@ -24,14 +24,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System;
-
 using AppKit;
-
-using FigmaSharp;
-using FigmaSharp.Cocoa;
-using FigmaSharp.NativeControls;
-using FigmaSharp.NativeControls.Cocoa;
+using System;
+using FigmaSharp.Controls.Cocoa;
 
 namespace ToCode.Cocoa
 {

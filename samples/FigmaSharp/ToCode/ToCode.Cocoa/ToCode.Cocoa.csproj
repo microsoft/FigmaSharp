@@ -27,12 +27,13 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>true</UseSGen>
-    <UseRefCounting>true</UseRefCounting>
+    <UseSGen>true</UseSGen>
     <HttpClientHandler></HttpClientHandler>
     <LinkMode></LinkMode>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
     <RunWithWarnings>true</RunWithWarnings>
+    <UseRefCounting>true</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -107,29 +108,29 @@
     <BundleResource Include="Resources\text.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj">
-      <Project>{80D20B03-FF89-47CF-A676-B67B9DE2DAF2}</Project>
-      <Name>FigmaSharp.NativeControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\FigmaSharp.NativeControls.Cocoa.csproj">
-      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
-      <Name>FigmaSharp.NativeControls.Cocoa</Name>
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
+      <Project>{B53923F3-3EDA-47BB-971E-B8D65C06E053}</Project>
+      <Name>FigmaSharp.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj">
+      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
+      <Name>FigmaSharp.Controls.Cocoa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
       <Name>FigmaSharp.Views.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\tools\FigmaSharp.Designer\FigmaSharp.Designer.csproj">
       <Project>{4E7F6BD9-33C0-4544-9186-7FDCD0047F4B}</Project>

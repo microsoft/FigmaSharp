@@ -29,11 +29,9 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-
 using FigmaSharp;
-using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Services;
-
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using MonoDevelop.Ide;
@@ -42,7 +40,7 @@ using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma.Commands
 {
-	class CreateEmptyManifesCommandHandler : FigmaCommandHandler
+    class CreateEmptyManifesCommandHandler : FigmaCommandHandler
 	{
 		protected override void OnUpdate (CommandInfo info)
 		{

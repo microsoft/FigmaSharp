@@ -2,7 +2,7 @@
  * Author:
  *   Hylke Bons <hylbo@microsoft.com>
  *
- * Copyright (C) 2019 Microsoft, Corp
+ * Copyright (C) 2020 Microsoft, Corp
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -24,19 +24,58 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 using AppKit;
-using FigmaSharp.Controls.Cocoa;
+using CoreGraphics;
 
-namespace FigmaSharpApp
+namespace FigmaSharp.Controls.Cocoa
 {
-	static class MainClass
+	class FakeSheetView : NSView
 	{
-		static void Main (string[] args)
+		public FakeSheetView()
 		{
-			NativeControlsApplication.Init ();
-			NSApplication.Init ();
-			NSApplication.Main (args);
+			WantsLayer = true;
+			Layer.BorderWidth = 0.5f;
+
+			CreateHighlight();
+		}
+
+		bool DarkMode { get { return (EffectiveAppearance.Name == NSAppearance.NameDarkAqua); } }
+
+		// Dark mode has a light border inside the window
+		NSBox highlight = new NSBox();
+
+		void CreateHighlight()
+		{
+			highlight.BoxType = NSBoxType.NSBoxCustom;
+			highlight.BorderColor = NSColor.Highlight.ColorWithAlphaComponent(0.4f);
+			highlight.BorderWidth = 0.5f;
+
+			AddSubview(highlight);
+		}
+
+		public override void UpdateLayer()
+		{
+			base.UpdateLayer();
+
+			if (DarkMode)
+				Layer.BorderColor = NSColor.ControlDarkShadow.CGColor;
+			else
+				Layer.BorderColor = NSColor.WindowFrame.CGColor;
+
+			Layer.BackgroundColor = NSColor.WindowBackground.ColorWithAlphaComponent(0.66f).CGColor;
+
+
+			// Highlight
+			highlight.Hidden = !DarkMode;
+		}
+
+
+		public override void SetFrameSize(CGSize newSize)
+		{
+			base.SetFrameSize(newSize);
+
+			// Highlight
+			highlight.Frame = new CGRect(1, 1, Frame.Width - 2, Frame.Height - 2);
 		}
 	}
 }

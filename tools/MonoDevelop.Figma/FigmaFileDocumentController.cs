@@ -25,29 +25,25 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Threading.Tasks;
-using AppKit;
-using MonoDevelop.Components;
-using MonoDevelop.Components.Mac;
-using MonoDevelop.Core;
-using MonoDevelop.Ide;
-using MonoDevelop.Ide.Gui;
-using FigmaSharp;
 using System;
-using Foundation;
-using CoreGraphics;
 using System.Collections.Generic;
 using System.IO;
-using FigmaSharp.Services;
+using System.Threading.Tasks;
+using AppKit;
+using FigmaSharp;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Designer;
-using MonoDevelop.DesignerSupport;
-using Gtk;
-using MonoDevelop.Ide.Gui.Documents;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.NativeControls.Cocoa;
+using Gtk;
+using MonoDevelop.Components;
+using MonoDevelop.Core;
+using MonoDevelop.DesignerSupport;
+using MonoDevelop.Ide;
+using MonoDevelop.Ide.Gui;
+using MonoDevelop.Ide.Gui.Documents;
 
 namespace MonoDevelop.Figma
 {
