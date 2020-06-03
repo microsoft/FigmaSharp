@@ -31,7 +31,7 @@ using Foundation;
 
 using FigmaSharp;
 using FigmaSharp.Models;
-using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
 

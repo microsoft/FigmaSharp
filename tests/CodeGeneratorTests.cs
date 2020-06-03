@@ -1,13 +1,11 @@
 ﻿using System;
-using NUnit;
-using NUnit.Framework;
-using FigmaSharp;
-using System.Text;
 using System.IO;
+using System.Text;
+using NUnit.Framework;
 
 namespace FigmaSharp.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class CodeGeneratorTests
 	{
         [Test]
@@ -47,32 +45,33 @@ namespace FigmaSharp.Tests
         }
 
         [Test]
-        public void PartialDesignerClassGenerationTest ()
+        public void PartialDesignerClassGenerationTest()
         {
-            var codeGenerator = new FigmaPartialDesignerClass ();
-            codeGenerator.Manifest = new FigmaManifest () {
+            var codeGenerator = new FigmaPartialDesignerClass();
+            codeGenerator.Manifest = new FigmaManifest()
+            {
                 Date = DateTime.Now,
                 FileId = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
                 DocumentVersion = "0.1f",
                 RemoteApiVersion = "1.1"
             };
 
-            codeGenerator.Usings.Add ("AppKit"); 
+            codeGenerator.Usings.Add("AppKit");
             codeGenerator.ClassName = "MyGeneratedCustomView";
             codeGenerator.Namespace = "LocalFile.Cocoa";
-            var classCode = codeGenerator.Generate ();
+            var classCode = codeGenerator.Generate();
             Assert.IsNotEmpty(classCode);
         }
 
         [Test]
-        public void PublicPartialClassGenerationTest ()
+        public void PublicPartialClassGenerationTest()
         {
-            var codeGenerator = new FigmaPublicPartialClass ();
-            codeGenerator.Usings.Add ("AppKit");
+            var codeGenerator = new FigmaPublicPartialClass();
+            codeGenerator.Usings.Add("AppKit");
             codeGenerator.ClassName = "MyGeneratedCustomView";
             codeGenerator.Namespace = "LocalFile.Cocoa";
             codeGenerator.BaseClass = "AppKit.NSView";
-            var classCode = codeGenerator.Generate ();
+            var classCode = codeGenerator.Generate();
             Assert.IsNotEmpty(classCode);
         }
     }

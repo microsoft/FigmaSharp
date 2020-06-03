@@ -1,8 +1,10 @@
 ﻿/* 
+ * CustomTextFieldConverter.cs
+ * 
  * Author:
- *   Hylke Bons <hylbo@microsoft.com>
+ *   Jose Medrano <josmed@microsoft.com>
  *
- * Copyright (C) 2019 Microsoft, Corp
+ * Copyright (C) 2018 Microsoft, Corp
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -24,19 +26,26 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Cocoa;
 
-using AppKit;
-using FigmaSharp.Controls.Cocoa;
-
-namespace FigmaSharpApp
+namespace FigmaSharp.Controls.Cocoa
 {
-	static class MainClass
+    public static class NativeControlsApplication
 	{
-		static void Main (string[] args)
+		public static void Init (string token)
 		{
-			NativeControlsApplication.Init ();
-			NSApplication.Init ();
-			NSApplication.Main (args);
+			//Figma initialization
+			FigmaApplication.Init (token);
+
+			var applicationDelegate = new FigmaNativeControlsDelegate ();
+			NativeControlsContext.Current.Configuration (applicationDelegate);
+		}
+
+		public static void Init ()
+		{
+			FigmaApplication.Init ();
+			var applicationDelegate = new FigmaNativeControlsDelegate ();
+			NativeControlsContext.Current.Configuration (applicationDelegate);
 		}
 	}
 }

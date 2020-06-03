@@ -25,14 +25,12 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Collections.Generic;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading;
-using FigmaSharp.Views;
+using System.Threading.Tasks;
 using FigmaSharp.Models;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
@@ -46,7 +44,7 @@ namespace FigmaSharp.Services
 
         protected IView container;
         protected IFigmaFileProvider fileProvider;
-        internal IFigmaFileProvider FileProvider => fileProvider;
+        public IFigmaFileProvider FileProvider => fileProvider;
 
         public T FindViewStartsWith<T>(string name, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase) where T : IView
 		{

@@ -1,20 +1,15 @@
-﻿using System;
-
-using AppKit;
-using FigmaSharp;
-using FigmaSharp.Services;
-using Foundation;
-using System.Linq;
-using FigmaSharp.NativeControls.Cocoa;
-using FigmaSharp.Cocoa.Converters;
+﻿using AppKit;
+using System;
 using System.Text;
+using FigmaSharp;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
-using FigmaSharp.NativeControls.Cocoa.Converters;
+using FigmaSharp.Services;
+using Foundation;
 
 namespace ToCode.Cocoa
 {
-	public partial class ViewController : NSViewController
+    public partial class ViewController : NSViewController
 	{
 		FigmaNodeView data;
 		OutlinePanel outlinePanel;

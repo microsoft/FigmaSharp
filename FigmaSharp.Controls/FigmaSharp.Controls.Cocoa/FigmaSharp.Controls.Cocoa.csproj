@@ -1,16 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{96EC7ED1-203D-4833-BEE0-9E597CA3BF65}</ProjectGuid>
+    <ProjectGuid>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>FigmaSharpApp</RootNamespace>
-    <AssemblyName>FigmaSharpApp</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FigmaSharp.Controls.Cocoa</RootNamespace>
+    <AssemblyName>FigmaSharp.Controls.Cocoa</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <ReleaseVersion>0.1.1</ReleaseVersion>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -22,14 +22,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <EnableCodeSigning>false</EnableCodeSigning>
-    <CodeSigningKey>Mac Developer</CodeSigningKey>
     <CreatePackage>false</CreatePackage>
     <EnablePackageSigning>false</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
-    <UseSGen>true</UseSGen>
-    <UseRefCounting>true</UseRefCounting>
-    <HttpClientHandler></HttpClientHandler>
-    <LinkMode>None</LinkMode>
+    <UseSGen>false</UseSGen>
+    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
+    <XamMacArch></XamMacArch>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
@@ -40,78 +38,74 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <EnableCodeSigning>false</EnableCodeSigning>
-    <CreatePackage>true</CreatePackage>
+    <CreatePackage>false</CreatePackage>
     <EnablePackageSigning>false</EnablePackageSigning>
-    <IncludeMonoRuntime>true</IncludeMonoRuntime>
-    <UseSGen>true</UseSGen>
-    <UseRefCounting>true</UseRefCounting>
-    <LinkMode>Platform</LinkMode>
-    <HttpClientHandler></HttpClientHandler>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
+    <LinkMode>None</LinkMode>
     <XamMacArch></XamMacArch>
+    <ExternalConsole>false</ExternalConsole>
+    <LangVersion>Default</LangVersion>
     <AOTMode>None</AOTMode>
-    <ConsolePause>true</ConsolePause>
-    <CodeSigningKey>Mac Developer</CodeSigningKey>
-    <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-          <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />     
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Converters\ButtonConverter.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="NativeControlsApplication.cs" />
+    <Compile Include="FigmaNativeControlsDelegate.cs" />
+    <Compile Include="Services\NativeViewCodeService.cs" />
+    <Compile Include="Services\NativeViewRenderingService.cs" />
+    <Compile Include="Converters\TextFieldConverter.cs" />
+    <Compile Include="Converters\StepperConverter.cs" />
+    <Compile Include="Converters\ColorWellConverter.cs" />
+    <Compile Include="Converters\PopUpButtonConverter.cs" />
+    <Compile Include="Converters\CheckBoxConverter.cs" />
+    <Compile Include="Converters\RadioConverter.cs" />
+    <Compile Include="Converters\SwitchConverter.cs" />
+    <Compile Include="Converters\ProgressIndicatorConverter.cs" />
+    <Compile Include="Converters\ComboBoxConverter.cs" />
+    <Compile Include="Converters\SliderConverter.cs" />
+    <Compile Include="Converters\LabelConverter.cs" />
+    <Compile Include="Converters\TextViewConverter.cs" />
+    <Compile Include="Converters\BoxConverter.cs" />
+    <Compile Include="Converters\TabViewConverter.cs" />
+    <Compile Include="Converters\WindowConverter.cs" />
+    <Compile Include="Converters\DisclosureViewConverter.cs" />
+    <Compile Include="Converters\SegmentedControlConverter.cs" />
+    <Compile Include="CocoaConverter.cs" />
+    <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
+    <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
+    <Compile Include="CocoaConverter.ComponentStrings.cs" />
+    <Compile Include="Views\FakeSheetView.cs" />
+    <Compile Include="Views\FakeWindowView.cs" />
+    <Compile Include="Views\FigmaBundleView.cs" />
+    <Compile Include="Views\FigmaBundleWindow.cs" />
+    <Compile Include="Views\FigmaContainerBundleWindow.cs" />
+    <Compile Include="Converters\Misc\FigmaCodeViewConverter.cs" />
+    <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
+    <Compile Include="Helpers\CocoaCodeHelpers.cs" />
+    <Compile Include="Helpers\CocoaHelpers.cs" />
+    <Compile Include="Services\ColorService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="figma.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
+    <Folder Include="Services\" />
+    <Folder Include="Converters\Misc\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Info.plist" />
-    <None Include="Entitlements.plist" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Main.cs" />
-    <Compile Include="AppDelegate.cs" />
-    <Compile Include="Helpers\TokenStore.cs" />
-    <Compile Include="Helpers\FigmaLink.cs" />
-    <Compile Include="Views\OpenLocationViewController.cs" />
-    <Compile Include="Views\OpenLocationViewController.designer.cs">
-      <DependentUpon>OpenLocationViewController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DocumentViewController.cs" />
-    <Compile Include="Views\DocumentViewController.designer.cs">
-      <DependentUpon>DocumentViewController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DocumentWindowController.cs" />
-    <Compile Include="Views\DocumentWindowController.designer.cs">
-      <DependentUpon>DocumentWindowController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AppDelegate.designer.cs">
-      <DependentUpon>AppDelegate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FileContainerView.cs" />
-    <Compile Include="Views\FileContainerView.designer.cs">
-      <DependentUpon>FileContainerView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Helpers\RecentStore.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="Main.storyboard">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </InterfaceDefinition>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="FigmaSharpApp.icns" />
-    <BundleResource Include="FigmaSharpApp_dark.icns" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
@@ -120,13 +114,17 @@
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
       <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
+    <ProjectReference Include="..\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
       <Project>{B53923F3-3EDA-47BB-971E-B8D65C06E053}</Project>
       <Name>FigmaSharp.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj">
-      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
-      <Name>FigmaSharp.Controls.Cocoa</Name>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
