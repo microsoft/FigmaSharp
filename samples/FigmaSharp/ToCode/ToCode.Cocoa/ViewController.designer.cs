@@ -29,7 +29,10 @@ namespace ToCode.Cocoa
 
 		[Outlet]
 		AppKit.NSView treeHierarchyContainer { get; set; }
-		
+
+		[Outlet]
+		AppKit.NSTextField urlTextField { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
 			if (translateButton != null)
@@ -61,6 +64,12 @@ namespace ToCode.Cocoa
 			if (treeHierarchyContainer != null) {
 				treeHierarchyContainer.Dispose ();
 				treeHierarchyContainer = null;
+			}
+
+			if (urlTextField != null)
+			{
+				urlTextField.Dispose();
+				urlTextField = null;
 			}
 		}
 	}

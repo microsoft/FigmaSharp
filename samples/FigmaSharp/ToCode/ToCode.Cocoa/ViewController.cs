@@ -18,7 +18,7 @@ namespace ToCode.Cocoa
 		FigmaDesignerDelegate figmaDelegate;
 		FigmaCodeRendererService codeRenderer;
 
-		const string fileId = "7E9P9fEYGJijRXigfSz0kP";
+		const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
@@ -39,6 +39,8 @@ namespace ToCode.Cocoa
 
 			outlinePanel.RaiseFirstResponder += OutlinePanel_RaiseFirstResponder;
 
+            urlTextField.Activated += UrlTextField_Activated;
+
 			treeHierarchyContainer.AddSubview (scrollView);
 
 			treeHierarchyContainer.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -51,21 +53,35 @@ namespace ToCode.Cocoa
 
 			figmaDelegate = new FigmaDesignerDelegate ();
 
-			var converters = NativeControlsContext.Current.GetConverters ();
-			fileProvider = new FigmaRemoteFileProvider ();
-			fileProvider.Load (fileId);
+			urlTextField.StringValue = fileIds;
 
-			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
-			codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
-
-			data = new FigmaNodeView (fileProvider.Response.document);
-			figmaDelegate.ConvertToNodes (fileProvider.Response.document, data);
-			outlinePanel.GenerateTree (data);
+			RefreshTree(fileIds);
 		}
 
-		private void OpenUrlButton_Activated (object sender, EventArgs e)
+		void RefreshTree (string docId)
+        {
+			var converters = NativeControlsContext.Current.GetConverters();
+			fileProvider = new FigmaRemoteFileProvider();
+			fileProvider.Load(docId);
+
+			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter();
+			codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter);
+
+			data = new FigmaNodeView(fileProvider.Response.document);
+			figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
+			outlinePanel.GenerateTree(data);
+
+			((NSTextView)logTextField.DocumentView).Value = string.Empty;
+		}
+
+        private void UrlTextField_Activated(object sender, EventArgs e)
+        {
+			RefreshTree(urlTextField.StringValue);
+		}
+
+        private void OpenUrlButton_Activated (object sender, EventArgs e)
 		{
-			var url = new NSUrl (string.Format ("https://www.figma.com/file/{0}", fileId));
+			var url = new NSUrl (string.Format ("https://www.figma.com/file/{0}", urlTextField.StringValue));
 			NSWorkspace.SharedWorkspace.OpenUrl (url);
 		}
 
