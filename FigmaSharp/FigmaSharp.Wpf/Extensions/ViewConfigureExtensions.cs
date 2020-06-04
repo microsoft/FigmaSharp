@@ -94,10 +94,30 @@ namespace FigmaSharp.Wpf
         {
             Configure(label, (FigmaNode)text);
 
-            label.ConfigureStyle(text.style);
+            label.HorizontalContentAlignment = text.style.textAlignHorizontal == "CENTER" ? HorizontalAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+            label.VerticalContentAlignment = text.style.textAlignVertical == "CENTER" ? VerticalAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalAlignment.Top : VerticalAlignment.Bottom;
 
-            label.HorizontalAlignment = text.style.textAlignHorizontal == "CENTER" ? HorizontalAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? HorizontalAlignment.Left : HorizontalAlignment.Right;
-            label.VerticalAlignment = text.style.textAlignVertical == "CENTER" ? VerticalAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+            label.HorizontalAlignment = HorizontalAlignment.Center;
+            string family = text.style.fontFamily;
+            if (family == "SF UI Text")
+            {
+                family = ".SF NS Text";
+            }
+            else if (family == "SF Mono")
+            {
+                family = ".SF NS Display";
+            }
+            else
+            {
+                Console.WriteLine("FONT: {0} - {1}", family, text.style.fontPostScriptName);
+            } 
+            label.FontFamily = new FontFamily(family);
+            label.FontSize = text.style.fontSize;// -3 ;
+            label.FontWeight = FontWeight.FromOpenTypeWeight(text.style.fontWeight);
+            if (text.style.letterSpacing > 0)
+            {
+                label.FontStretch = FontStretch.FromOpenTypeStretch(text.style.letterSpacing > 9 ? 9 : (int)text.style.letterSpacing);
+            }
 
             label.Opacity = text.opacity;
 
@@ -105,7 +125,7 @@ namespace FigmaSharp.Wpf
             if (fills != null)
             {
                 label.Foreground = fills.color.ToColor();
-            }
+            } 
         }
     }
 }

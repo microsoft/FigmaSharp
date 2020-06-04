@@ -36,31 +36,7 @@ namespace FigmaSharp.Wpf
     public static class FigmaExtensions
     {
         #region View Extensions
-         
-        public static void ConfigureStyle (this Label label, FigmaTypeStyle style)
-        {
-            string family = style.fontFamily;
-            if (family == "SF UI Text")
-            {
-                family = ".SF NS Text";
-            }
-            else if (family == "SF Mono")
-            {
-                family = ".SF NS Display";
-            }
-            else
-            {
-                Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
-            }
-
-            var size = style.fontSize - 3;
-            var isBold = style.fontPostScriptName != null && style.fontPostScriptName.EndsWith("-Bold");
-
-            label.FontSize = size;
-            label.FontFamily = new FontFamily(family);
-            label.FontWeight = isBold ?  FontWeights.Bold : FontWeights.Regular;
-        }
-
+          
         #endregion
     }
 }
