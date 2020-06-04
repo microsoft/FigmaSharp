@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using FigmaSharp;
 using System.Linq;
-using FigmaSharp.Services;
+using FigmaSharp;
+using FigmaSharp.Controls.Services;
 
 namespace FigmaDocumentExporter.Shell
 {
-	class Program
+    class Program
 	{
 		static void Main (string[] args)
 		{
@@ -75,7 +75,7 @@ namespace FigmaDocumentExporter.Shell
 
 			var query = new FigmaFileQuery (fileId);
 
-			var fileProvider = new FigmaRemoteFileProvider();
+			var fileProvider = new ControlsRemoteFileProvider();
 			fileProvider.Load(fileId);
 
 			fileProvider.Save(outputFilePath);

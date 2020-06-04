@@ -27,25 +27,22 @@
  */
 
 using System;
-using AppKit;
+using System.Collections.Generic;
 using System.Linq;
-using MonoDevelop;
-
+using System.Text;
+using AppKit;
 using CoreGraphics;
 using FigmaSharp;
+using FigmaSharp.Controls.Services;
 using FigmaSharp.Designer;
+using FigmaSharp.Models;
 using FigmaSharp.Services;
 using MonoDevelop.Ide;
-using System.Collections.Generic;
-using MonoDevelop.Ide.Gui.Dialogs;
-using System.IO;
-using System.Text;
-using FigmaSharp.Models;
 
 namespace MonoDevelop.Figma
 {
 
-	class FigmaDragAndDropContent : NSView
+    class FigmaDragAndDropContent : NSView
     {
         public event EventHandler<string> SelectCode;
         public event EventHandler DragBegin;
@@ -121,7 +118,7 @@ namespace MonoDevelop.Figma
             scrollView.AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable; 
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileProvider = new FigmaRemoteFileProvider ();
+            fileProvider = new ControlsRemoteFileProvider();
 
             SetCocoaCodeRenderer ();
             //SetCodeRenderer(ModuleService.Platform.MAC);

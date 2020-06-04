@@ -31,6 +31,7 @@ using System.IO;
 using System.Threading.Tasks;
 using FigmaSharp;
 using FigmaSharp.Controls.Cocoa;
+using FigmaSharp.Controls.Services;
 using FigmaSharp.Services;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
@@ -353,7 +354,7 @@ namespace MonoDevelop.Figma.Commands
 
 				await Task.Run(() => {
 					//we need to ask to figma server to get nodes as demmand
-					var fileProvider = new FigmaLocalFileProvider (bundle.ResourcesDirectoryPath);
+					var fileProvider = new ControlsLocalFileProvider(bundle.ResourcesDirectoryPath);
 					fileProvider.Load (bundle.DocumentFilePath);
 					bundle.Reload ();
 
