@@ -16,7 +16,6 @@ namespace FigmaSharp.Cocoa
             Configure(view, (FigmaNode)child);
 		
 			view.AlphaValue = child.opacity;
-
 			view.Layer.BackgroundColor = child.backgroundColor.MixOpacity(child.opacity).ToCGColor();
 		}
 
@@ -24,55 +23,6 @@ namespace FigmaSharp.Cocoa
         {
             view.Hidden = !child.visible;
             view.WantsLayer = true;
-
-            //if (child is IAbsoluteBoundingBox container)
-            //{
-            //    view.SetFrameSize(new CGSize(container.absoluteBoundingBox.Width, container.absoluteBoundingBox.Height));
-            //}
-        }
-
-        public static void Configure(this NSView view, FigmaElipse elipse)
-        {
-            Configure(view, (FigmaNode)elipse);
-
-            //var circleLayer = new CAShapeLayer();
-            //var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, elipse.absoluteBoundingBox.Width, elipse.absoluteBoundingBox.Height));
-            //circleLayer.Path = bezierPath.ToCGPath();
-
-            //view.Layer.AddSublayer(circleLayer);
-
-            //var fills = elipse.fills.OfType<FigmaPaint>().FirstOrDefault();
-            //if (fills != null && fills.color != null)
-            //{
-            //    circleLayer.FillColor = fills.color.MixOpacity(fills.opacity).ToNSColor().CGColor;
-            //} else
-            //{
-            //    circleLayer.FillColor = NSColor.Clear.CGColor;
-            //}
-
-            //var strokes = elipse.strokes.FirstOrDefault();
-            //if (strokes != null)
-            //{
-            //    if (strokes.color != null)
-            //    {
-            //        circleLayer.StrokeColor = strokes.color.MixOpacity(strokes.opacity).ToNSColor().CGColor;
-            //    }
-            //}
-
-            //if (elipse.strokeDashes != null)
-            //{
-            //    var number = new NSNumber[elipse.strokeDashes.Length];
-            //    for (int i = 0; i < elipse.strokeDashes.Length; i++)
-            //    {
-            //        number[i] = elipse.strokeDashes[i];
-            //    }
-            //    circleLayer.LineDashPattern = number;
-            //}
-
-            //circleLayer.BackgroundColor = NSColor.Clear.CGColor;
-            //circleLayer.LineWidth = elipse.strokeWeight;
-
-            view.AlphaValue = elipse.opacity;
         }
 
         public static void Configure(this NSView figmaLineView, FigmaLine figmaLine)
@@ -102,7 +52,7 @@ namespace FigmaSharp.Cocoa
             view.AlphaValue = child.opacity;
         }
 
-        static Color MixOpacity (this Color color, float opacity)
+        public static Color MixOpacity (this Color color, float opacity)
         {
             return new Color { A = color.A, R = color.R, G = color.G, B = color.B };
         }

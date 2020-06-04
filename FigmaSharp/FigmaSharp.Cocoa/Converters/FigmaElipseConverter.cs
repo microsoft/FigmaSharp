@@ -28,14 +28,16 @@
 
 using System;
 using System.Text;
+using System.Linq;
 using AppKit;
-
+using CoreAnimation;
+using CoreGraphics;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views.Cocoa;
+using Foundation;
 
 namespace FigmaSharp.Cocoa.Converters
 {
@@ -45,10 +47,42 @@ namespace FigmaSharp.Cocoa.Converters
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var elipseView = new ImageView();// { TranslatesAutoresizingMaskIntoConstraints = false };
-            var elipse = (FigmaElipse)currentNode;
-			((NSImageView) elipseView.NativeObject).Configure(elipse);
-            return elipseView;
+            var elipseView = new NSView();
+            elipseView.Configure(currentNode);
+
+            var elipseNode = (FigmaElipse)currentNode;
+            elipseView.AlphaValue = elipseNode.opacity;
+
+            var circleLayer = new CAShapeLayer();
+            var bezierPath = NSBezierPath.FromOvalInRect(
+                new CGRect(elipseNode.strokeWeight, elipseNode.strokeWeight,
+                elipseNode.absoluteBoundingBox.Width - (elipseNode.strokeWeight*2), elipseNode.absoluteBoundingBox.Height - ((elipseNode.strokeWeight * 2))));
+            circleLayer.Path = bezierPath.ToCGPath();
+
+            elipseView.Layer.AddSublayer(circleLayer);
+             
+            //to define system colors
+            var fills = elipseNode.fills.OfType<FigmaPaint>().FirstOrDefault();
+            if (fills != null && fills.color != null)
+                circleLayer.FillColor = fills.color.ToCGColor();
+            else
+                circleLayer.FillColor = NSColor.Clear.CGColor;
+
+            var strokes = elipseNode.strokes.FirstOrDefault();
+            if (strokes?.color != null)
+                circleLayer.StrokeColor = strokes.color.MixOpacity(strokes.opacity).ToNSColor().CGColor;
+
+            if (elipseNode.strokeDashes != null)
+            {
+                var number = new NSNumber[elipseNode.strokeDashes.Length];
+                for (int i = 0; i < elipseNode.strokeDashes.Length; i++)
+                    number[i] = elipseNode.strokeDashes[i];
+                circleLayer.LineDashPattern = number;
+            }
+
+            circleLayer.LineWidth = elipseNode.strokeWeight;
+          
+            return new View (elipseView);
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
