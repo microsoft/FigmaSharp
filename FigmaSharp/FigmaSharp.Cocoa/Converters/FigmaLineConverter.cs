@@ -60,7 +60,7 @@ namespace FigmaSharp.Cocoa.Converters
 
             builder.Configure (currentNode.Node, currentNode.Name);
 
-            builder.AppendLine (string.Format ("{0}.BoxType = {1};", currentNode.Name, NSBoxType.NSBoxSeparator.GetFullName ()));
+            builder.AppendLine (string.Format ("{0}.{1} = {2};", currentNode.Name, nameof(NSBox.BoxType), NSBoxType.NSBoxSeparator.GetFullName ()));
 
             return builder.ToString();
         }

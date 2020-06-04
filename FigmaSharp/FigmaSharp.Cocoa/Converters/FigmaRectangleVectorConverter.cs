@@ -41,13 +41,18 @@ namespace FigmaSharp.Cocoa.Converters
     public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
-            => typeof(NSImageView);
+            => typeof(NSView);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var vectorEntity = (RectangleVector)currentNode;
-            var vector = new ImageView ();
-            var currengroupView = (NSImageView)vector.NativeObject;
+            IView view;
+            if (rendererService.ProcessesImageFromNode(currentNode))
+                view = new ImageView();
+            else
+                view = new View();
+
+            var currengroupView = (NSView) view.NativeObject;
             currengroupView.Configure (currentNode);
 
             if (vectorEntity.HasFills) {
@@ -74,8 +79,7 @@ namespace FigmaSharp.Cocoa.Converters
                 }
             }
             //view.layer.borderColor = UIColor (red: 1, green: 1, blue: 1, alpha: 1).cgColor
-
-            return vector;
+            return view;
         }
 
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
