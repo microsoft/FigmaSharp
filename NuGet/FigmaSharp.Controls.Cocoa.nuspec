@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>FigmaSharp.NativeControls.Cocoa</id>
-    <title>FigmaSharp.NativeControls.Cocoa</title>
+    <id>FigmaSharp.Controls.Cocoa</id>
+    <title>FigmaSharp.Controls.Cocoa</title>
     <version>0.6-alpha</version>
     <authors>Jose Medrano</authors>
     <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
@@ -24,7 +24,7 @@
   </metadata>
 
   <files>
-    <file src="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Cocoa\bin\Release\*.dll" target="lib/net472" />
+    <file src="..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\bin\Release\*.dll" target="lib/net472" />
   </files>
 
 </package>

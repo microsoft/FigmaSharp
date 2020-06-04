@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>FigmaSharp.NativeControls</id>
-    <title>FigmaSharp.NativeControls</title>
+    <id>FigmaSharp.NativeControls.Forms</id>
+    <title>FigmaSharp.NativeControls.Forms</title>
     <version>0.6.0-alpha</version>
     <authors>Jose Medrano</authors>
     <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
@@ -15,13 +15,15 @@
     <tags>figma designer design</tags>
     <dependencies>
       <dependency id="FigmaSharp" version="0.6.0-alpha" />
+      <dependency id="FigmaSharp.Forms" version="0.6.0-alpha" />
       <dependency id="FigmaSharp.Views" version="0.6.0-alpha" />
+      <dependency id="FigmaSharp.Views.Forms" version="0.6.0-alpha" />
       <dependency id="Newtonsoft.Json" version="12.0.1" />
     </dependencies>
   </metadata>
 
   <files>
-    <file src="..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\bin\Release\netstandard2.0\*.dll" target="lib/netstandard2.0" />
+    <file src="..\FigmaSharp.Controls\FigmaSharp.Controls.Forms\bin\Release\netstandard2.0\*.dll" target="lib/netstandard2.0" />
   </files>
 
 </package>
