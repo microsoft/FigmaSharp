@@ -39,7 +39,7 @@ namespace LocalFile.Cocoa
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
 		{
-			var button = FigmaSharp.NativeControls.Cocoa.TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
+			var button = FigmaSharp.Controls.Cocoa.TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
 			//button.Border = false;
 			return button;
 		}
