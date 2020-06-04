@@ -29,7 +29,7 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using System.Linq;
-using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Controls.Cocoa;
 using System;
 
 namespace LocalFile.Cocoa

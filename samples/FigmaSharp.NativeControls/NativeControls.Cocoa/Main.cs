@@ -33,7 +33,7 @@ using CoreGraphics;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
-using FigmaSharp.NativeControls.Cocoa;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
