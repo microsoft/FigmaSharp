@@ -27,16 +27,15 @@
  */
 
 using System.Linq;
-
 using FigmaSharp.Cocoa;
-using FigmaSharp.Models;
 using FigmaSharp.Controls.Cocoa.Converters;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public class FigmaNativeControlsDelegate : IFigmaNativeControlsDelegate
+    public class FigmaControlsDelegate : IFigmaControlsDelegate
 	{
-		static readonly FigmaCodePropertyConverterBase codePropertyConverter = new NativeControlsPropertyConverter ();
+		static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaControlsPropertyConverter ();
 
 		static readonly FigmaViewPropertySetterBase viewPropertySetter = new FigmaViewPropertySetter ();
 
@@ -105,11 +104,11 @@ namespace FigmaSharp.Controls.Cocoa
 
 			if (figmaNode is IFigmaNodeContainer nodeContainer) {
 				foreach (var figmaInstance in nodeContainer.children) {
-					if (figmaInstance.IsWindowOfType (NativeControlType.Window)) 
+					if (figmaInstance.IsWindowOfType (FigmaControlType.Window)) 
 						return new FigmaBundleWindow (bundle, name, figmaNode);
-					if (figmaInstance.IsWindowOfType (NativeControlType.WindowSheet))
+					if (figmaInstance.IsWindowOfType (FigmaControlType.WindowSheet))
 						return new FigmaBundleWindow (bundle, name, figmaNode);
-					if (figmaInstance.IsWindowOfType (NativeControlType.WindowPanel))
+					if (figmaInstance.IsWindowOfType (FigmaControlType.WindowPanel))
 						return new FigmaBundleWindow (bundle, name, figmaNode);
 				}
 			}

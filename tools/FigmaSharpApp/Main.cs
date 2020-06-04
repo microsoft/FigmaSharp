@@ -34,7 +34,7 @@ namespace FigmaSharpApp
 	{
 		static void Main (string[] args)
 		{
-			NativeControlsApplication.Init ();
+			FigmaControlsApplication.Init ();
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}

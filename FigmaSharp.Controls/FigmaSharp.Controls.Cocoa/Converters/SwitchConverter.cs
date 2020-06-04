@@ -47,7 +47,7 @@ namespace FigmaSharp.Controls.Cocoa
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.Switch;
+                controlType == FigmaControlType.Switch;
         }
 
 
@@ -82,7 +82,7 @@ namespace FigmaSharp.Controls.Cocoa
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             var frame = (FigmaFrame)currentNode.Node;
-            currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
             currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))

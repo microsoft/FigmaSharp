@@ -58,7 +58,7 @@ namespace FigmaSharp.Controls.Cocoa
 			slider.MinValue = 0;
 			slider.MaxValue = 1;
 
-			if (controlType == NativeControlType.SliderLinear)
+			if (controlType == FigmaControlType.SliderLinear)
 				slider.DoubleValue = 0.618;
 
 			FigmaGroup group = frame.children
@@ -77,7 +77,7 @@ namespace FigmaSharp.Controls.Cocoa
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			var frame = (FigmaFrame)currentNode.Node;
-			currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+			currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
 			currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
@@ -88,7 +88,7 @@ namespace FigmaSharp.Controls.Cocoa
 			code.WriteEquality(name, nameof(NSProgressIndicator.MinValue), "0");
 			code.WriteEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
 
-            if (controlType == NativeControlType.SliderLinear)
+            if (controlType == FigmaControlType.SliderLinear)
 				code.WriteEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");
 
 			FigmaGroup group = frame.children
@@ -108,7 +108,7 @@ namespace FigmaSharp.Controls.Cocoa
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-				controlType == NativeControlType.SliderLinear;
+				controlType == FigmaControlType.SliderLinear;
 		}
 
 
@@ -149,7 +149,7 @@ namespace FigmaSharp.Controls.Cocoa
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-				controlType == NativeControlType.SliderCircular;
+				controlType == FigmaControlType.SliderCircular;
 		}
 
 

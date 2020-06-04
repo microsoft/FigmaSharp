@@ -126,8 +126,8 @@ namespace MonoDevelop.Figma
 
 			await fileProvider.LoadAsync(bundle.DocumentFilePath);
 
-			var converters = NativeControlsContext.Current.GetConverters();
-			var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter();
+			var converters = FigmaControlsContext.Current.GetConverters();
+			var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
 			var codeRendererService = new NativeViewCodeService(fileProvider, converters, codePropertyConverter);
 
 			figmaBundleView.Generate(outputDirectory, codeRendererService, namesSpace: bundle.Namespace, translateStrings: translateStrings);

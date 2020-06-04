@@ -53,7 +53,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 			currentNode.TryGetNativeControlType(out var controlType);
 
-			if (controlType == NativeControlType.SearchField)
+			if (controlType == FigmaControlType.SearchField)
 				return typeof(NSSearchField);
 
 			return typeof(NSTextField);
@@ -63,8 +63,8 @@ namespace FigmaSharp.Controls.Cocoa
 		{
 			currentNode.TryGetNativeControlType(out var controlType);
 
-			return controlType == NativeControlType.TextField ||
-				   controlType == NativeControlType.SearchField;
+			return controlType == FigmaControlType.TextField ||
+				   controlType == FigmaControlType.SearchField;
 		}
 
 
@@ -77,7 +77,7 @@ namespace FigmaSharp.Controls.Cocoa
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
 
-			if (controlType == NativeControlType.SearchField)
+			if (controlType == FigmaControlType.SearchField)
 				textField = new NSSearchField();
 
 
@@ -126,7 +126,7 @@ namespace FigmaSharp.Controls.Cocoa
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			var frame = (FigmaFrame)currentNode.Node;
-			currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+			currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
 			currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))

@@ -45,8 +45,8 @@ namespace FigmaSharp.Controls.Cocoa
 		{
 			currentNode.TryGetNativeControlType(out var value);
 
-            return (value == NativeControlType.PopUpButton ||
-                    value == NativeControlType.PopUpButtonPullDown);
+            return (value == FigmaControlType.PopUpButton ||
+                    value == FigmaControlType.PopUpButtonPullDown);
 		}
 
 
@@ -58,7 +58,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 			var popUp = new NSPopUpButton();
 
-			if (controlType == NativeControlType.PopUpButtonPullDown)
+			if (controlType == FigmaControlType.PopUpButtonPullDown)
 				popUp.PullsDown = true;
 
 			popUp.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
@@ -80,7 +80,7 @@ namespace FigmaSharp.Controls.Cocoa
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			var frame = (FigmaFrame)currentNode.Node;
-			currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+			currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
 			currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
@@ -88,7 +88,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 			code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
 
-			if (controlType == NativeControlType.PopUpButtonPullDown)
+			if (controlType == FigmaControlType.PopUpButtonPullDown)
 				code.WriteEquality(name, nameof(NSPopUpButton.PullsDown), true);
 
 			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));

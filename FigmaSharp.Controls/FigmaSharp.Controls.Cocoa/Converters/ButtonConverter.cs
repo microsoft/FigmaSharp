@@ -45,8 +45,8 @@ namespace FigmaSharp.Controls.Cocoa
         {
             currentNode.TryGetNativeControlType(out var controlType);
 
-            return controlType == NativeControlType.Button ||
-                   controlType == NativeControlType.ButtonHelp;
+            return controlType == FigmaControlType.Button ||
+                   controlType == FigmaControlType.ButtonHelp;
         }
 
 
@@ -60,10 +60,10 @@ namespace FigmaSharp.Controls.Cocoa
 
             switch (controlType)
             {
-                case NativeControlType.Button:
+                case FigmaControlType.Button:
                     button.BezelStyle = NSBezelStyle.Rounded;
                     break;
-                case NativeControlType.ButtonHelp:
+                case FigmaControlType.ButtonHelp:
                     button.BezelStyle = NSBezelStyle.HelpButton;
                     button.Title = string.Empty;
                     break;
@@ -82,7 +82,7 @@ namespace FigmaSharp.Controls.Cocoa
                     .OfType<FigmaText>()
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
-                if (text != null && controlType != NativeControlType.ButtonHelp)
+                if (text != null && controlType != FigmaControlType.ButtonHelp)
                     button.Title = text.characters;
 
                 if (group.name == ComponentString.STATE_DISABLED)
@@ -102,7 +102,7 @@ namespace FigmaSharp.Controls.Cocoa
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             var frame = (FigmaFrame)currentNode.Node;
-            currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
             currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
@@ -110,10 +110,10 @@ namespace FigmaSharp.Controls.Cocoa
 
             switch (controlType)
             {
-                case NativeControlType.Button:
+                case FigmaControlType.Button:
                     code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
                     break;
-                case NativeControlType.ButtonHelp:
+                case FigmaControlType.ButtonHelp:
                     code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
                     code.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
                     break;
@@ -131,7 +131,7 @@ namespace FigmaSharp.Controls.Cocoa
                     .OfType<FigmaText> ()
                     .FirstOrDefault (s => s.name == ComponentString.TITLE);
 
-                if (text != null && controlType != NativeControlType.ButtonHelp)
+                if (text != null && controlType != FigmaControlType.ButtonHelp)
                 {
                     string labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
                     code.WriteEquality(name, nameof(NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);

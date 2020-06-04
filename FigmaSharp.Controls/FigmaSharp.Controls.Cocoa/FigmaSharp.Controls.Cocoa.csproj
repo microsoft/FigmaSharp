@@ -58,8 +58,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\ButtonConverter.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="NativeControlsApplication.cs" />
-    <Compile Include="FigmaNativeControlsDelegate.cs" />
+    <Compile Include="FigmaControlsApplication.cs" />
+    <Compile Include="FigmaControlsDelegate.cs" />
     <Compile Include="Services\NativeViewCodeService.cs" />
     <Compile Include="Services\NativeViewRenderingService.cs" />
     <Compile Include="Converters\TextFieldConverter.cs" />

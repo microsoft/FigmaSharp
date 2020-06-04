@@ -30,30 +30,30 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp
 {
-	public class NativeControlsContext : IFigmaNativeControlsDelegate
+	public class FigmaControlsContext : IFigmaControlsDelegate
     {
-        IFigmaNativeControlsDelegate figmaDelegate;
+        IFigmaControlsDelegate figmaDelegate;
 
         public FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode)
 			=> figmaDelegate.GetBundleView (bundle, name, figmaNode);
 
         #region Static Methods
 
-        static NativeControlsContext current;
+        static FigmaControlsContext current;
         /// <summary>
         /// The shared AppContext for the application.
         /// </summary>
         /// <value>The current.</value>
-        public static NativeControlsContext Current {
+        public static FigmaControlsContext Current {
             get {
                 if (current == null) {
-                    current = new NativeControlsContext ();
+                    current = new FigmaControlsContext ();
                 }
                 return current;
             }
         }
 
-		internal void Configuration (IFigmaNativeControlsDelegate applicationDelegate)
+		internal void Configuration (IFigmaControlsDelegate applicationDelegate)
 		{
             figmaDelegate = applicationDelegate;
         }

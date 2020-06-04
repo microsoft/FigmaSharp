@@ -178,8 +178,8 @@ namespace MonoDevelop.Figma
 
 		void SetCocoaCodeRenderer ()
 		{
-            var converters = NativeControlsContext.Current.GetConverters ();
-            var codePropertyConverter = NativeControlsContext.Current.GetCodePropertyConverter ();
+            var converters = FigmaControlsContext.Current.GetConverters ();
+            var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter ();
             codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
         }
 

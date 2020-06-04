@@ -38,8 +38,8 @@ namespace FigmaSharp.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? NativeControlsContext.Current.GetConverters(true),
-			codePropertyConverter ?? NativeControlsContext.Current.GetCodePropertyConverter ())
+		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter ())
 		{
 
 		}
@@ -90,7 +90,7 @@ namespace FigmaSharp.Services
 				return new FigmaNode[0];
 			}
 
-			if (node.Node.IsDialogParentContainer (NativeControlType.Window)) {
+			if (node.Node.IsDialogParentContainer (FigmaControlType.Window)) {
 				if (node.Node is IFigmaNodeContainer nodeContainer) {
 					var item = nodeContainer.children.FirstOrDefault (s => s.IsNodeWindowContent ());
 					if (item != null && item is IFigmaNodeContainer children) {

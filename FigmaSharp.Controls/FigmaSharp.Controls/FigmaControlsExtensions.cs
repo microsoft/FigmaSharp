@@ -29,7 +29,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls
@@ -161,7 +160,7 @@ namespace FigmaSharp.Controls
             return figmaNode.FirstChild(s => s.name == "!options");
         }
 
-        public static bool IsDialogParentContainer (this FigmaNode figmaNode, NativeControlType controlType)
+        public static bool IsDialogParentContainer (this FigmaNode figmaNode, FigmaControlType controlType)
         {
             return figmaNode is IFigmaNodeContainer container && container.children
                 .OfType<FigmaInstance> ()
@@ -180,7 +179,7 @@ namespace FigmaSharp.Controls
         public static bool IsDialog (this FigmaNode figmaNode)
         {
             if (TryGetNativeControlType (figmaNode, out var value) &&
-                (value == NativeControlType.WindowPanel || value == NativeControlType.WindowSheet || value == NativeControlType.Window)) {
+                (value == FigmaControlType.WindowPanel || value == FigmaControlType.WindowSheet || value == FigmaControlType.Window)) {
                 return true;
             }
             return false;
@@ -191,7 +190,7 @@ namespace FigmaSharp.Controls
             return (node is FigmaInstance || node is FigmaComponentEntity) && node.name.Contains("!container");
         }
 
-        public static bool IsWindowOfType (this FigmaNode figmaNode, NativeControlType controlType)
+        public static bool IsWindowOfType (this FigmaNode figmaNode, FigmaControlType controlType)
         {
             if (figmaNode.TryGetNativeControlType (out var value) && value == controlType) {
                 return true;
@@ -215,17 +214,17 @@ namespace FigmaSharp.Controls
             return false;
         }
 
-        public static bool TryGetNativeControlType (this FigmaNode node, out NativeControlType nativeControlType)
+        public static bool TryGetNativeControlType (this FigmaNode node, out FigmaControlType nativeControlType)
         {
-            nativeControlType = NativeControlType.NotDefined;
+            nativeControlType = FigmaControlType.NotDefined;
             if (node is FigmaComponentEntity) {
                 nativeControlType = GetNativeControlType (node.name);
-                return nativeControlType != NativeControlType.NotDefined;
+                return nativeControlType != FigmaControlType.NotDefined;
             }
 
             if (node is FigmaInstance figmaInstance && figmaInstance.Component != null) {
                 nativeControlType = figmaInstance.Component.ToNativeControlType ();
-                return nativeControlType != NativeControlType.NotDefined;
+                return nativeControlType != FigmaControlType.NotDefined;
             }
 
             return false;
@@ -236,17 +235,17 @@ namespace FigmaSharp.Controls
             return GetNativeControlVariant (figmaComponent.name);
         }
 
-        public static NativeControlType ToNativeControlType (this FigmaComponent figmaComponent)
+        public static FigmaControlType ToNativeControlType (this FigmaComponent figmaComponent)
         {
             return GetNativeControlType (figmaComponent.name);
         }
 
-        static NativeControlType GetNativeControlType (string name)
+        static FigmaControlType GetNativeControlType (string name)
         {
             var found = controlsList.FirstOrDefault (s => s.name == name);
             if (found.Equals (default)) {
                 Console.WriteLine ("Component Key not found: {0}", name);
-                return NativeControlType.NotDefined;
+                return FigmaControlType.NotDefined;
             }
             return found.nativeControlType;
         }
