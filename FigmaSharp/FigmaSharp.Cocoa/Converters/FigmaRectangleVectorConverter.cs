@@ -41,7 +41,7 @@ namespace FigmaSharp.Cocoa.Converters
     public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
-            => typeof(NSImageView);
+            => typeof(NSView);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
