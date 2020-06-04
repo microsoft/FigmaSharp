@@ -26,26 +26,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Cocoa;
+using FigmaSharp.Models;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp
 {
-    public static class NativeControlsApplication
+	public interface IFigmaControlsDelegate
 	{
-		public static void Init (string token)
-		{
-			//Figma initialization
-			FigmaApplication.Init (token);
+		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
 
-			var applicationDelegate = new FigmaNativeControlsDelegate ();
-			NativeControlsContext.Current.Configuration (applicationDelegate);
-		}
+        FigmaCodePropertyConverterBase GetCodePropertyConverter ();
 
-		public static void Init ()
-		{
-			FigmaApplication.Init ();
-			var applicationDelegate = new FigmaNativeControlsDelegate ();
-			NativeControlsContext.Current.Configuration (applicationDelegate);
-		}
-	}
+        FigmaViewConverter[] GetConverters (bool includeAll = true);
+        FigmaViewPropertySetterBase GetViewPropertySetter();
+    }
 }

@@ -299,7 +299,7 @@ namespace FigmaSharp
 		{
 			var name = figmaNode.GetClassName();
 			if (HasCorrectClassName(name)) {
-				var figmaBundleView = NativeControlsContext.Current.GetBundleView(this, name, figmaNode);
+				var figmaBundleView = FigmaControlsContext.Current.GetBundleView(this, name, figmaNode);
 				return figmaBundleView;
 			}
 			return null;

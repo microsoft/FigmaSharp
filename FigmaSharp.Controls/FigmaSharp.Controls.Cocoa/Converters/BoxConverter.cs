@@ -45,9 +45,9 @@ namespace FigmaSharp.Controls.Cocoa
         {
             currentNode.TryGetNativeControlType(out var value);
 
-            return value == NativeControlType.Box ||
-                   value == NativeControlType.BoxCustom ||
-                   value == NativeControlType.Separator;
+            return value == FigmaControlType.Box ||
+                   value == FigmaControlType.BoxCustom ||
+                   value == FigmaControlType.Separator;
         }
 
 
@@ -56,12 +56,12 @@ namespace FigmaSharp.Controls.Cocoa
             var frame = (FigmaFrame)currentNode;
             var box = new NSBox();
 
-            currentNode.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.TryGetNativeControlType(out FigmaControlType controlType);
 
-            if (controlType == NativeControlType.Separator)
+            if (controlType == FigmaControlType.Separator)
                 box.BoxType = NSBoxType.NSBoxSeparator;
 
-            if (controlType == NativeControlType.BoxCustom)
+            if (controlType == FigmaControlType.BoxCustom)
             {
                 box.BoxType = NSBoxType.NSBoxCustom;
                 box.BorderWidth = 0;
@@ -86,7 +86,7 @@ namespace FigmaSharp.Controls.Cocoa
                 }
             }
 
-            if (controlType == NativeControlType.Box)
+            if (controlType == FigmaControlType.Box)
             {
                 FigmaText text = frame.children
                    .OfType<FigmaText>()
@@ -107,16 +107,16 @@ namespace FigmaSharp.Controls.Cocoa
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             var frame = (FigmaFrame)currentNode.Node;
-            currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
             currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            if (controlType == NativeControlType.Separator)
+            if (controlType == FigmaControlType.Separator)
                 code.WriteEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxSeparator);
 
-            if (controlType == NativeControlType.BoxCustom)
+            if (controlType == FigmaControlType.BoxCustom)
             {
                 code.WriteEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
                 bool borderSet = false;

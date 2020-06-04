@@ -33,7 +33,7 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-    public class NativeControlsPropertyConverter : FigmaSharp.Cocoa.Converters.FigmaCodePropertyConverter
+    public class FigmaControlsPropertyConverter : FigmaSharp.Cocoa.Converters.FigmaCodePropertyConverter
 	{
         protected override string GetDefaultParentName (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {

@@ -131,15 +131,15 @@ namespace FigmaSharp.Controls.Cocoa
 		public virtual bool CanSetAccessibilityHelp => true;
 		public virtual bool CanSetAccessibilityRole => true;
 
-		string GetAccessibilityTitle(NativeControlType nativeControlType)
+		string GetAccessibilityTitle(FigmaControlType nativeControlType)
 		{
 			switch (nativeControlType)
 			{
-				case NativeControlType.Button:
-				case NativeControlType.CheckBox:
-				case NativeControlType.Radio:
-				case NativeControlType.PopUpButton:
-				case NativeControlType.ComboBox:
+				case FigmaControlType.Button:
+				case FigmaControlType.CheckBox:
+				case FigmaControlType.Radio:
+				case FigmaControlType.PopUpButton:
+				case FigmaControlType.ComboBox:
 					return nameof(AppKit.NSView.AccessibilityTitle);
 				default:
 					break;

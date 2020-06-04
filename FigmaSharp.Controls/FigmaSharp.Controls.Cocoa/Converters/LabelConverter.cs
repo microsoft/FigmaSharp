@@ -46,10 +46,10 @@ namespace FigmaSharp.Controls.Cocoa
         {
             currentNode.TryGetNativeControlType(out var controlType);
 
-            return controlType == NativeControlType.Label ||
-                   controlType == NativeControlType.LabelHeader ||
-                   controlType == NativeControlType.LabelGroup ||
-                   controlType == NativeControlType.LabelSecondary;
+            return controlType == FigmaControlType.Label ||
+                   controlType == FigmaControlType.LabelHeader ||
+                   controlType == FigmaControlType.LabelGroup ||
+                   controlType == FigmaControlType.LabelSecondary;
         }
 
 
@@ -70,7 +70,7 @@ namespace FigmaSharp.Controls.Cocoa
                 .OfType<FigmaText>()
                 .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
-            currentNode.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.TryGetNativeControlType(out FigmaControlType controlType);
             currentNode.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (text != null)
@@ -80,7 +80,7 @@ namespace FigmaSharp.Controls.Cocoa
                 label.Font = CocoaHelpers.GetNSFont(controlVariant, text);
             }
 
-            if (controlType == NativeControlType.LabelHeader)
+            if (controlType == FigmaControlType.LabelHeader)
                 label.Font = NSFont.SystemFontOfSize(headerFontSize, CocoaHelpers.GetNSFontWeight(text));
 
             if (text?.styles != null) {
@@ -103,7 +103,7 @@ namespace FigmaSharp.Controls.Cocoa
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
             var frame = (FigmaFrame)currentNode.Node;
-            currentNode.Node.TryGetNativeControlType(out NativeControlType controlType);
+            currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
             currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
@@ -127,7 +127,7 @@ namespace FigmaSharp.Controls.Cocoa
             if (text != null)
                 code.WriteEquality(name, nameof(NSTextField.Alignment), CocoaCodeHelpers.GetNSTextAlignmentString(text).ToString());
 
-            if (controlType == NativeControlType.LabelHeader)
+            if (controlType == FigmaControlType.LabelHeader)
             {
                 code.WriteEquality(name, nameof(NSTextField.Font),
                     $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ headerFontSize }, { CocoaCodeHelpers.GetNSFontWeightString(text) })");

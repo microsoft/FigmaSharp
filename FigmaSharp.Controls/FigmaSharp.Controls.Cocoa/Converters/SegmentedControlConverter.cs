@@ -44,7 +44,7 @@ namespace FigmaSharp.Controls.Cocoa
         public override bool CanConvert(FigmaNode currentNode)
         {
             return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == NativeControlType.SegmentedControl;
+                controlType == FigmaControlType.SegmentedControl;
         }
 
 

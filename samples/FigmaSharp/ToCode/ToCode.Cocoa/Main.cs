@@ -34,7 +34,7 @@ namespace ToCode.Cocoa
     {
         static void Main(string[] args)
         {
-            NativeControlsApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
+            FigmaControlsApplication.Init(Environment.GetEnvironmentVariable("TOKEN"));
             NSApplication.Init();
             NSApplication.Main(args);
         }

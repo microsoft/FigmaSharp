@@ -48,7 +48,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 		public override bool CanConvert (FigmaNode currentNode)
 		{
-			return currentNode.IsDialogParentContainer(NativeControlType.WindowSheet);
+			return currentNode.IsDialogParentContainer(FigmaControlType.WindowSheet);
 		}
 
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
@@ -110,10 +110,10 @@ namespace FigmaSharp.Controls.Cocoa
 		public override bool CanConvert (FigmaNode currentNode)
 		{
 			if (currentNode.IsWindowContent ()) {
-				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (NativeControlType.Window);
+				return currentNode.Parent != null && currentNode.Parent.IsDialogParentContainer (FigmaControlType.Window);
 			}
 
-			var isWindow = currentNode.IsDialogParentContainer (NativeControlType.Window);
+			var isWindow = currentNode.IsDialogParentContainer (FigmaControlType.Window);
 			return isWindow;
 		}
 
