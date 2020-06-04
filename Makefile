@@ -32,7 +32,7 @@ package: check-dependencies
 	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj /p:Configuration=Release /restore
 	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj /p:Configuration=Release /restore
 
-	mono nuget.exe restore FigmaSharp.sln
+	mono nuget.exe restore FigmaSharp.Mac.sln
 	msbuild FigmaSharp/FigmaSharp/FigmaSharp.csproj $(ARGS)
 	msbuild FigmaSharp/FigmaSharp.Cocoa/FigmaSharp.Cocoa.csproj $(ARGS)
 
