@@ -98,7 +98,7 @@ namespace MonoDevelop.Figma
 			var currentBundle = await Task.Run (() =>
 			{
 				var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
-				bundle.SaveAll (includeImages);
+				bundle.SaveAll (includeImages, fileProvider);
 				return bundle;
 			});
 

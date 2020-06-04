@@ -28,7 +28,7 @@ namespace MonoDevelop.Figma
 			var codeRendererService = new NativeViewCodeService(fileProvider);
 
 			await Task.Run(() => {
-				figmaBundle.Update(version, includeImages: includeImages);
+				figmaBundle.Update(version, fileProvider, includeImages: includeImages);
 			});
 			await sender.IncludeBundleAsync(figmaBundle, includeImages: includeImages);
 

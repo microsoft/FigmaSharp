@@ -358,7 +358,7 @@ namespace MonoDevelop.Figma.Commands
 					bundle.Reload ();
 
 					var codeRendererService = new NativeViewCodeService(fileProvider);
-					bundle.SaveAll (includeImages);
+					bundle.SaveAll (includeImages, fileProvider);
 				});
 
 				IdeApp.Workbench.StatusBar.EndProgress ();

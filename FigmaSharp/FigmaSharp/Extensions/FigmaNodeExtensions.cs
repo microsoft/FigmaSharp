@@ -98,16 +98,6 @@ namespace FigmaSharp
             return node.fills.OfType<FigmaPaint> ().Any (s => s.type == "IMAGE" && !string.IsNullOrEmpty (s.imageRef));
 		}
 
-        public static bool IsImageNode (this FigmaNode node)
-        {
-			if (node.GetType () == typeof (FigmaVectorEntity)) {
-                return true;
-			}
-			if (node is FigmaVectorEntity vectorEntity && vectorEntity.IsVectorImage ()) {
-                return true;
-			}
-            return false;
-        }
 
         public static string GetNodeTypeName (this FigmaNode node)
 		{
@@ -233,25 +223,6 @@ namespace FigmaSharp
             }
         }
 
-		public static IEnumerable<FigmaVectorEntity> OfTypeImage(this FigmaNode child)
-        {
-            if (child.GetType () != typeof (FigmaText) && child is FigmaVectorEntity figmaVectorEntity)
-            {
-                yield return figmaVectorEntity;
-            }
-
-            if (child is IFigmaNodeContainer nodeContainer)
-            {
-                foreach (var item in nodeContainer.children)
-                {
-                    foreach (var resultItems in OfTypeImage(item))
-                    {
-                        yield return resultItems;
-                    }
-                }
-            }
-        }
-
         ////TODO: Change to async multithread
         //public static async Task SaveFigmaImageFiles(this FigmaPaint[] paints, string fileId, string directoryPath, string format = ".png")
         //{
@@ -267,7 +238,7 @@ namespace FigmaSharp
 
         public static IEnumerable<FigmaNode> FindImageNodes (this FigmaNode sender, Func<FigmaNode, bool> condition = null)
         {
-			if (sender is IFigmaImage && (condition == null || condition (sender))) {
+			if (sender is Models.IFigmaImage && (condition == null || condition (sender))) {
                 yield return sender;
 			}
 

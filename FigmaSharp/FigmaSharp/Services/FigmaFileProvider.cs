@@ -59,8 +59,12 @@ namespace FigmaSharp.Services
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
+
 		bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
 		bool TryGetStyle(string fillStyleValue, out FigmaStyle style);
+
+		bool IsImageNode(FigmaNode figmaNode);
+		void SaveResourceFiles(string destinationDirectory, string format, Dictionary<string, string> remotefile);
 	}
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
@@ -146,7 +150,9 @@ namespace FigmaSharp.Services
 				for (int i = 0; i < numberLoop; i++) {
 					var vectors = imageFigmaNodes.Skip (i * CallNumber).Take (CallNumber);
 					Console.WriteLine ("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count ());
-					var ids = vectors.Select (s => s.FigmaNode.id).ToArray ();
+					var ids = vectors.Select (s => new FigmaDownloadImage (s.FigmaNode))
+						.ToArray ();
+
 					var figmaImageResponse = AppContext.Api.GetImages (File, ids, imageFormat);
 					if (figmaImageResponse != null) {
 						foreach (var image in figmaImageResponse.images) {
@@ -415,5 +421,96 @@ namespace FigmaSharp.Services
 		{
 			return Response.styles.TryGetValue(fillStyleValue, out style);
 		}
+
+        #region Image Resources
+
+        public virtual void SaveResourceFiles(string destinationDirectory, string format, Dictionary<string, string> remotefile)
+        {
+			if (!Directory.Exists(destinationDirectory))
+			{
+				throw new DirectoryNotFoundException(destinationDirectory);
+			}
+			List<Task> downloads = new List<Task>();
+
+			foreach (var file in remotefile)
+			{
+				if (file.Value == null)
+				{
+					continue;
+				}
+
+				var key = FigmaResourceConverter.FromResource(file.Key);
+
+				var figmaNode = Response.document.FindNode(s => s.id == file.Key)
+					.FirstOrDefault();
+
+				//is a file theme
+
+				if (IsImageNode(figmaNode))
+				{
+
+				}
+
+				string customNodeName;
+				if (!figmaNode.TryGetNodeCustomName(out customNodeName))
+				{
+					customNodeName = figmaNode.id;
+				}
+
+				var fileName = string.Concat(customNodeName, format);
+				var fullPath = Path.Combine(destinationDirectory, fileName);
+
+				if (System.IO.File.Exists(fullPath))
+				{
+					System.IO.File.Delete(fullPath);
+				}
+
+				try
+				{
+					using (System.Net.WebClient client = new System.Net.WebClient())
+					{
+						client.DownloadFile(new Uri(file.Value), fullPath);
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex);
+				}
+			};
+		}
+
+		public virtual bool IsImageNode(FigmaNode figmaNode)
+		{
+			if (figmaNode.GetType() == typeof(FigmaVectorEntity))
+			{
+				return true;
+			}
+			if (figmaNode is FigmaVectorEntity vectorEntity && vectorEntity.IsVectorImage())
+			{
+				return true;
+			}
+			return false;
+		}
+
+		public IEnumerable<FigmaNode> SearchImageNodes (FigmaNode mainNode)
+		{
+            if (IsImageNode (mainNode))
+            {
+                yield return mainNode;
+            }
+
+            if (mainNode is IFigmaNodeContainer nodeContainer)
+            {
+                foreach (var item in nodeContainer.children)
+                {
+                    foreach (var resultItems in SearchImageNodes (item))
+                    {
+                        yield return resultItems;
+                    }
+                }
+            }
+        }
+
+		#endregion
 	}
 }

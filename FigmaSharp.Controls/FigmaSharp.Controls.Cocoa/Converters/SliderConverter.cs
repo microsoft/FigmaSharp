@@ -43,8 +43,6 @@ namespace FigmaSharp.Controls.Cocoa
 
 		public override bool CanSetAccessibilityLabel => false;
 
-
-
 		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
 		{
 			var slider = new NSSlider();

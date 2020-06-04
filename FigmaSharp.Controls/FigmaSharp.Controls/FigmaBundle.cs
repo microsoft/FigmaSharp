@@ -115,11 +115,11 @@ namespace FigmaSharp
 		/// Updates and Reloads a bundler to a specific version
 		/// </summary>
 		/// <param name="version"></param>
-		public void Update (FigmaFileVersion version, bool includeImages = true)
+		public void Update (FigmaFileVersion version, FigmaFileProvider provider, bool includeImages = true)
 		{
 			Version = version;
 			Reload ();
-			SaveAll (includeImages);
+			SaveAll (includeImages, provider);
 		}
 
 		public void Save ()
@@ -154,7 +154,7 @@ namespace FigmaSharp
 		}
 
 		//Generates the .figmafile
-		internal void SaveLocalDocument (bool includeImages)
+		internal void SaveLocalDocument (bool includeImages, FigmaFileProvider provider)
 		{
 			if (string.IsNullOrEmpty (FileId)) {
 				throw new InvalidOperationException ("id not set");
@@ -174,7 +174,7 @@ namespace FigmaSharp
 				return;
 
 			var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
-			GenerateOutputResourceFiles (FileId, Document, resourcesDirectoryPath);
+			GenerateOutputResourceFiles (provider, FileId, resourcesDirectoryPath);
 		}
 
 		#region Static Methods
@@ -213,29 +213,15 @@ namespace FigmaSharp
 			}
 		}
 
-		public static IEnumerable<FigmaNode> OfTypeImage (FigmaNode child)
-		{
-			if (child.name.Contains ("!image") || child is FigmaVector) {
-				yield return child;
-			}
-
-			if (child is IFigmaNodeContainer nodeContainer) {
-				foreach (var item in nodeContainer.children) {
-					foreach (var resultItems in OfTypeImage (item)) {
-						yield return resultItems;
-					}
-				}
-			}
-		}
-
 		//Generates all the resources from the current .figmafile
-		internal static void GenerateOutputResourceFiles (string fileId, FigmaFileResponse figmaResponse, string resourcesDirectoryPath)
+		internal static void GenerateOutputResourceFiles (FigmaFileProvider provider, string fileId, string resourcesDirectoryPath)
 		{
-			var figmaImageIds = new List<string>();
+			var figmaImageIds = new List<FigmaDownloadImage>();
 
-			foreach (var mainNode in figmaResponse.document.children)
+			foreach (var mainNode in provider.Response.document.children)
 			{
-				figmaImageIds.AddRange(OfTypeImage(mainNode).Select(s => s.id));
+				figmaImageIds.AddRange(provider.SearchImageNodes (mainNode)
+					.Select (s => new FigmaDownloadImage (s)));
 			}
 
 			//var mainNode = figmaResponse.document.children.FirstOrDefault ();
@@ -246,7 +232,7 @@ namespace FigmaSharp
 				}
 
 				var figmaImageResponse = AppContext.Api.GetImages (fileId, figmaImageIds.ToArray ());
-				FileHelper.SaveFiles (figmaResponse, resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
+				provider.SaveResourceFiles(resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
 			}
 		}
 
@@ -329,10 +315,10 @@ namespace FigmaSharp
 			LoadLocalDocument ();
 		}
 
-		public void SaveAll (bool includeImages)
+		public void SaveAll (bool includeImages, FigmaFileProvider provider)
 		{
 			Save ();
-			SaveLocalDocument (includeImages);
+			SaveLocalDocument (includeImages, provider);
 			//if (createViews)
 			//	SaveViews (codeRendererService, writePublicClassIfExists, translateLabels: translateLabels);
 			Console.WriteLine ($"[Done] Saved all the files from Figma Package");

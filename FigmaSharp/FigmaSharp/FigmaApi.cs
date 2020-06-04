@@ -30,6 +30,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 using FigmaSharp.Models;
 
@@ -47,7 +48,7 @@ namespace FigmaSharp
 		#region Urls
 
 		string GetFigmaFileUrl (string fileId) => string.Format ("https://api.figma.com/v1/files/{0}", fileId);
-		string GetFigmaImageUrl (string fileId, params string[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds));
+		string GetFigmaImageUrl (string fileId, params IFigmaDownloadImage[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds.Select(s => s.GetResourceId ()).ToArray ()));
 		string GetFigmaFileVersionsUrl (string fileId) => string.Format ("{0}/versions", GetFigmaFileUrl (fileId));
 
 		#endregion
@@ -90,8 +91,9 @@ namespace FigmaSharp
 
 		#region Images
 
-		public FigmaImageResponse GetImages (string fileId, string[] ids, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
+		public FigmaImageResponse GetImages (string fileId, IFigmaDownloadImage[] ids, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
 		{
+			var currentIds = ids.Select(s => s.GetResourceId()).ToArray();
 			var query = new FigmaImageQuery (fileId, ids);
 			query.Scale = scale;
 			query.Format = format;

@@ -221,7 +221,7 @@ namespace FigmaSharp.Services
 
         public virtual bool ProcessesImageFromNode (FigmaNode node)
         {
-           return node.IsImageNode ();
+           return fileProvider.IsImageNode (node);
         }
 
         private void FileProvider_ImageLinksProcessed(object sender, EventArgs e)

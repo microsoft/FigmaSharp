@@ -58,7 +58,7 @@ namespace FigmaSharp.Services
 
 		public override bool ProcessesImageFromNode (FigmaNode node)
 		{
- 			return node.IsImageNode () || node.IsFigmaImageViewNode ();
+ 			return fileProvider.IsImageNode (node) || node.IsFigmaImageViewNode ();
 		}
 
         public override void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
