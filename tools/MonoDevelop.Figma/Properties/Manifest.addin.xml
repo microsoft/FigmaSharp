@@ -3,8 +3,8 @@
     <Runtime>
         <Import assembly="FigmaSharp.dll" />
         <Import assembly="FigmaSharp.Cocoa.dll" />
-        <Import assembly="FigmaSharp.NativeControls.dll" />
-        <Import assembly="FigmaSharp.NativeControls.Cocoa.dll" />
+        <Import assembly="FigmaSharp.Controls.dll" />
+        <Import assembly="FigmaSharp.Controls.Cocoa.dll" />
     </Runtime>
     <Extension path="/MonoDevelop/Ide/StartupHandlers">
         <Class class="MonoDevelop.Figma.Commands.FigmaInitCommand"/>
