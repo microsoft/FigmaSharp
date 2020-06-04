@@ -83,12 +83,14 @@ namespace FigmaSharp.Controls.Cocoa
             if (controlType == NativeControlType.LabelHeader)
                 label.Font = NSFont.SystemFontOfSize(headerFontSize, CocoaHelpers.GetNSFontWeight(text));
 
-            foreach (var styleMap in text?.styles)
-            {
-                if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
+            if (text?.styles != null) {
+                foreach (var styleMap in text.styles)
                 {
-                    if (styleMap.Key == "fill")
-                        label.TextColor = CocoaHelpers.GetNSColor(style.name);
+                    if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
+                    {
+                        if (styleMap.Key == "fill")
+                            label.TextColor = CocoaHelpers.GetNSColor(style.name);
+                    }
                 }
             }
 
