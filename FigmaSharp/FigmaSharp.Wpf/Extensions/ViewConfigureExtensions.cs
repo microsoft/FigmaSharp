@@ -10,7 +10,7 @@ namespace FigmaSharp.Wpf
 {
     public static class ViewConfigureExtensions
     {
-        public static void Configure(this FrameworkElement view, FigmaFrameEntity child)
+        public static void Configure(this FrameworkElement view, FigmaFrame child)
         {
             Configure(view, (FigmaNode)child);
             view.Opacity = child.opacity;
