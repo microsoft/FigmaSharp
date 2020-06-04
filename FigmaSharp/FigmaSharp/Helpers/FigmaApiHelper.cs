@@ -44,17 +44,31 @@ namespace FigmaSharp
 
         public static bool TryParseFileUrl (string link, out string fileId)
         {
-            try {
-                string path = new Uri (link).AbsolutePath;
-                if (path.StartsWith (prefix)) {
-                    string id = path.Substring (prefix.Length);
-                    if (id.Contains (urlSeparatorChar))
-                        id = id.Substring (0, id.IndexOf (urlSeparatorChar));
-                    fileId = id;
-                    return true;
-                }
-            } catch {
+            if (string.IsNullOrEmpty(link))
+            {
+                fileId = string.Empty;
+                return false;
             }
+
+            if (Uri.TryCreate (link, UriKind.Absolute, out var result))
+            {
+                try
+                {
+                    string path = result.AbsolutePath;
+                    if (path.StartsWith(prefix))
+                    {
+                        string id = path.Substring(prefix.Length);
+                        if (id.Contains(urlSeparatorChar))
+                            id = id.Substring(0, id.IndexOf(urlSeparatorChar));
+                        fileId = id;
+                        return true;
+                    }
+                }
+                catch
+                {
+                }
+            }
+          
             fileId = link;
             return false;
         }
