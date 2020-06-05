@@ -56,11 +56,6 @@ namespace FigmaSharp.Services
 			return base.GetCurrentChildren(currentNode, parentNode, converter, options);
 		}
 
-		public override bool ProcessesImageFromNode (FigmaNode node)
-		{
- 			return fileProvider.IsImageNode (node) || node.IsFigmaImageViewNode ();
-		}
-
         public override void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
         {
             if (node is IAbsoluteBoundingBox bounNode) {
@@ -119,7 +114,7 @@ namespace FigmaSharp.Services
 
         protected override bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
-			if (currentNode.IsFigmaImageViewNode ())
+			if (fileProvider.RendersAsImage (currentNode))
 				return false;
 
 			return base.NodeScansChildren (currentNode, converter, options);

@@ -42,7 +42,6 @@ namespace FigmaSharp.Services
 	public interface IFigmaFileProvider
 	{
 		string File { get; }
-		bool NeedsImageLinks { get; }
 		event EventHandler ImageLinksProcessed;
 		List<FigmaNode> Nodes { get; }
 		FigmaFileResponse Response { get; }
@@ -63,8 +62,8 @@ namespace FigmaSharp.Services
 		bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
 		bool TryGetStyle(string fillStyleValue, out FigmaStyle style);
 
-		bool IsImageNode(FigmaNode figmaNode);
-		void SaveResourceFiles(string destinationDirectory, string format, Dictionary<string, string> remotefile);
+		bool RendersAsImage(FigmaNode figmaNode);
+		void SaveResourceFiles(string destinationDirectory, string format, IFigmaDownloadImageNode[] downloadImages);
 	}
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
@@ -117,8 +116,6 @@ namespace FigmaSharp.Services
 
 	public class FigmaRemoteFileProvider : FigmaFileProvider
 	{
-		public override bool NeedsImageLinks => true;
-
 		public FigmaFileVersion Version { get; set; }
 
 		public override string GetContentTemplate (string file)
@@ -150,7 +147,7 @@ namespace FigmaSharp.Services
 				for (int i = 0; i < numberLoop; i++) {
 					var vectors = imageFigmaNodes.Skip (i * CallNumber).Take (CallNumber);
 					Console.WriteLine ("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count ());
-					var ids = vectors.Select (s => new FigmaDownloadImage (s.FigmaNode))
+					var ids = vectors.Select (s => CreateEmptyDownloadImageNode (s.FigmaNode))
 						.ToArray ();
 
 					var figmaImageResponse = AppContext.Api.GetImages (File, ids, imageFormat);
@@ -275,8 +272,6 @@ namespace FigmaSharp.Services
 
 	public abstract class FigmaFileProvider : IFigmaFileProvider
 	{
-		public virtual bool NeedsImageLinks => false;
-
 		public event EventHandler ImageLinksProcessed;
 
 		public FigmaFileResponse Response { get; protected set; }
@@ -337,6 +332,9 @@ namespace FigmaSharp.Services
 		{
 			return FindByPath (fullPath.Split ('/'));
 		}
+
+		public FigmaNode GetParentNode (FigmaNode node)
+			=> Nodes.FirstOrDefault(s => s is IFigmaNodeContainer container && container.children.Any(c => c == node));
 
 		/// <summary>
 		/// Finds a node using the path of the views, returns null in case of no data
@@ -424,53 +422,27 @@ namespace FigmaSharp.Services
 
         #region Image Resources
 
-        public virtual void SaveResourceFiles(string destinationDirectory, string format, Dictionary<string, string> remotefile)
+        public virtual void SaveResourceFiles(string destinationDirectory, string format, IFigmaDownloadImageNode[] downloadImages)
         {
 			if (!Directory.Exists(destinationDirectory))
-			{
 				throw new DirectoryNotFoundException(destinationDirectory);
-			}
-			List<Task> downloads = new List<Task>();
 
-			foreach (var file in remotefile)
+			foreach (var downloadImage in downloadImages)
 			{
-				if (file.Value == null)
-				{
+				if (string.IsNullOrEmpty(downloadImage.Url))
 					continue;
-				}
 
-				var key = FigmaResourceConverter.FromResource(file.Key);
-
-				var figmaNode = Response.document.FindNode(s => s.id == file.Key)
-					.FirstOrDefault();
-
-				//is a file theme
-
-				if (IsImageNode(figmaNode))
-				{
-
-				}
-
-				string customNodeName;
-				if (!figmaNode.TryGetNodeCustomName(out customNodeName))
-				{
-					customNodeName = figmaNode.id;
-				}
-
+				string customNodeName = downloadImage.GetOutputFileName();
 				var fileName = string.Concat(customNodeName, format);
 				var fullPath = Path.Combine(destinationDirectory, fileName);
 
 				if (System.IO.File.Exists(fullPath))
-				{
 					System.IO.File.Delete(fullPath);
-				}
 
 				try
 				{
 					using (System.Net.WebClient client = new System.Net.WebClient())
-					{
-						client.DownloadFile(new Uri(file.Value), fullPath);
-					}
+						client.DownloadFile(new Uri(downloadImage.Url), fullPath);
 				}
 				catch (Exception ex)
 				{
@@ -479,22 +451,20 @@ namespace FigmaSharp.Services
 			};
 		}
 
-		public virtual bool IsImageNode(FigmaNode figmaNode)
+        public virtual bool RendersAsImage (FigmaNode figmaNode)
 		{
-			if (figmaNode.GetType() == typeof(FigmaVectorEntity))
-			{
+			if (figmaNode.ContainsSourceImage ())
 				return true;
-			}
-			if (figmaNode is FigmaVectorEntity vectorEntity && vectorEntity.IsVectorImage())
-			{
+
+			if (figmaNode is IFigmaImage figmaImage && figmaImage.HasImage())
 				return true;
-			}
+
 			return false;
 		}
 
 		public IEnumerable<FigmaNode> SearchImageNodes (FigmaNode mainNode)
 		{
-            if (IsImageNode (mainNode))
+            if (RendersAsImage (mainNode))
             {
                 yield return mainNode;
             }
@@ -510,6 +480,10 @@ namespace FigmaSharp.Services
                 }
             }
         }
+
+		public IEnumerable<FigmaNode> SearchImageNodes() => SearchImageNodes(Response.document);
+
+		public virtual IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node) => new FigmaDownloadImageNode(node);
 
 		#endregion
 	}

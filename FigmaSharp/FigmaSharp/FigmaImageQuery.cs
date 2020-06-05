@@ -36,20 +36,27 @@ namespace FigmaSharp
 		pdf
 	}
 
-    public interface IFigmaDownloadImage
+    public interface IFigmaDownloadImageNode
     {
-        string GetResourceId();
+        Models.FigmaNode Node { get; }
+        string ResourceId { get; }
+        string Url { get; set; }
+
+        string GetOutputFileName();
     }
 
-    public class FigmaDownloadImage : IFigmaDownloadImage
+    public class FigmaDownloadImageNode : IFigmaDownloadImageNode
     {
-        readonly Models.FigmaNode node;
-        public string GetResourceId() => node.id;
+        public string ResourceId => Node.id;
+        public string Url { get; set; }
 
-        public FigmaDownloadImage (Models.FigmaNode node)
+        public Models.FigmaNode Node { get; }
+        public FigmaDownloadImageNode(Models.FigmaNode node)
         {
-            this.node = node;
+            this.Node = node;
         }
+
+        public string GetOutputFileName() => Node.id;
     }
 
     public abstract class FigmaFileBaseQuery
@@ -93,7 +100,7 @@ namespace FigmaSharp
 
     public class FigmaImageQuery : FigmaFileBaseQuery
     {
-        public FigmaImageQuery(string fileId, IFigmaDownloadImage[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
+        public FigmaImageQuery(string fileId, IFigmaDownloadImageNode[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
         {
             Ids = ids;
         }
@@ -101,7 +108,7 @@ namespace FigmaSharp
 		/// <summary>
 		/// A comma separated list of node IDs to render
 		/// </summary>
-		public IFigmaDownloadImage[] Ids { get; set; }
+		public IFigmaDownloadImageNode[] Ids { get; set; }
 
 		/// <summary>
 		/// A number between 0.01 and 4, the image scaling factor

@@ -90,10 +90,10 @@ namespace FigmaDocumentExporter.Shell
 
 				Console.WriteLine ("[Import] Downloading {0} image/s...", figmaImageNodes.Length);
 
-				var figmaImageIds = figmaImageNodes.Select (s => new FigmaDownloadImage (s)).ToArray ();
+				var figmaImageIds = figmaImageNodes.Select (s => fileProvider.CreateEmptyDownloadImageNode (s)).ToArray ();
 				if (figmaImageIds.Length > 0) {
-					var figmaImageResponse = FigmaSharp.AppContext.Api.GetImages (fileId, figmaImageIds);
-					fileProvider.SaveResourceFiles(outputDirectory, ".png", figmaImageResponse.images);
+					FigmaSharp.AppContext.Api.ProcessDownloadImages (fileId, figmaImageIds);
+					fileProvider.SaveResourceFiles(outputDirectory, ".png", figmaImageIds);
 				}
 				Console.WriteLine ("[Import] Success.");
 			}

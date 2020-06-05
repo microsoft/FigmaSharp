@@ -93,11 +93,24 @@ namespace FigmaSharp
                 sender.AppendLine (value);
         }
 
-        public static bool IsVectorImage (this FigmaVectorEntity node)
+        public static bool ContainsSourceImage (this FigmaNode node)
 		{
-            return node.fills.OfType<FigmaPaint> ().Any (s => s.type == "IMAGE" && !string.IsNullOrEmpty (s.imageRef));
-		}
+            FigmaPaint[] fills = null;
+            if (node is FigmaFrame frame) {
+                fills = frame.fills;
+            }
+            else if (node is FigmaVectorEntity vector)
+            {
+                fills = vector.fills;
+            }
+            if (fills != null)
+            {
+                return fills.OfType<FigmaPaint>()
+                .Any(s => s.type == "IMAGE" && !string.IsNullOrEmpty(s.imageRef));
+            }
 
+            return false;
+		}
 
         public static string GetNodeTypeName (this FigmaNode node)
 		{

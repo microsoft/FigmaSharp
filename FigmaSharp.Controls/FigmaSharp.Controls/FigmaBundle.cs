@@ -216,12 +216,11 @@ namespace FigmaSharp
 		//Generates all the resources from the current .figmafile
 		internal static void GenerateOutputResourceFiles (FigmaFileProvider provider, string fileId, string resourcesDirectoryPath)
 		{
-			var figmaImageIds = new List<FigmaDownloadImage>();
-
+			var figmaImageIds = new List<IFigmaDownloadImageNode>();
 			foreach (var mainNode in provider.Response.document.children)
 			{
 				figmaImageIds.AddRange(provider.SearchImageNodes (mainNode)
-					.Select (s => new FigmaDownloadImage (s)));
+					.Select (s => provider.CreateEmptyDownloadImageNode (s)));
 			}
 
 			//var mainNode = figmaResponse.document.children.FirstOrDefault ();
@@ -231,8 +230,9 @@ namespace FigmaSharp
 					Directory.CreateDirectory (resourcesDirectoryPath);
 				}
 
-				var figmaImageResponse = AppContext.Api.GetImages (fileId, figmaImageIds.ToArray ());
-				provider.SaveResourceFiles(resourcesDirectoryPath, ImageFormat, figmaImageResponse.images);
+				var downloadImages = figmaImageIds.ToArray();
+				AppContext.Api.ProcessDownloadImages (fileId, downloadImages);
+				provider.SaveResourceFiles(resourcesDirectoryPath, ImageFormat, downloadImages);
 			}
 		}
 

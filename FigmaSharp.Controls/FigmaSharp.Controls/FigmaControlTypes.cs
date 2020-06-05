@@ -85,7 +85,6 @@ namespace FigmaSharp.Controls
         Small
     }
 
-
     public static partial class FigmaControlsExtension
     {
         static IReadOnlyList<(string name, FigmaControlType nativeControlType, NativeControlVariant nativeControlVariant)> controlsList = 

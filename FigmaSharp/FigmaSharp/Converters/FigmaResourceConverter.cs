@@ -61,8 +61,6 @@ namespace FigmaSharp.Converters
 {
     public static class FigmaResourceConverter
     {
-       
-
         const string specialChar = "-";
         public static string FromResource (string data)
         {
