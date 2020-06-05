@@ -691,6 +691,7 @@ namespace FigmaSharp.Models
 
     public class FigmaNode
     {
+        [JsonIgnore()]
         [Category ("General")]
         [DisplayName ("Parent")]
         public FigmaNode Parent { get; set; }
