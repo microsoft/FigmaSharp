@@ -229,9 +229,12 @@ namespace FigmaSharp
 				if (!Directory.Exists (resourcesDirectoryPath)) {
 					Directory.CreateDirectory (resourcesDirectoryPath);
 				}
-
+				
 				var downloadImages = figmaImageIds.ToArray();
-				AppContext.Api.ProcessDownloadImages (fileId, downloadImages);
+
+				//2 scales
+				foreach (var scale in new int[] { 1,2 })
+					AppContext.Api.ProcessDownloadImages(fileId, downloadImages, scale: scale);
 				provider.SaveResourceFiles(resourcesDirectoryPath, ImageFormat, downloadImages);
 			}
 		}

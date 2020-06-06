@@ -131,12 +131,17 @@ namespace FigmaSharp
 
         #region ImageView node
 
+        internal static bool HasNodeImageName(this FigmaNode node) => node.name.StartsWith(imageNodeName);
+
         internal static bool IsSingleImageViewNode(this FigmaNode node)
-            => node.name.StartsWith(imageNodeName) && node is IFigmaNodeContainer container && container.children.Length == 0;
+            => HasNodeImageName (node)
+            && node is IFigmaNodeContainer container
+            && !container.children.Any (s => Enum.GetNames (typeof(CocoaThemes)).Contains (s.name));
 
         internal static bool IsThemedImageViewNode (this FigmaNode node, out CocoaThemes theme)
         {
-            if (node.Parent != null && node.Parent.name.StartsWith(imageNodeName) && Enum.TryParse(node.name, true, out theme))
+            if (node.Parent != null && node.Parent.HasNodeImageName ())
+                if (Enum.TryParse(node.name, true, out theme))
                 return true;
             theme = default;
             return false;

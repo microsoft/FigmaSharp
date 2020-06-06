@@ -429,24 +429,27 @@ namespace FigmaSharp.Services
 
 			foreach (var downloadImage in downloadImages)
 			{
-				if (string.IsNullOrEmpty(downloadImage.Url))
-					continue;
+                foreach (var imageScale in downloadImage.Scales)
+                {
+					if (string.IsNullOrEmpty(imageScale.Url))
+						continue;
 
-				string customNodeName = downloadImage.GetOutputFileName();
-				var fileName = string.Concat(customNodeName, format);
-				var fullPath = Path.Combine(destinationDirectory, fileName);
+					string customNodeName = downloadImage.GetOutputFileName(imageScale.Scale);
+					var fileName = string.Concat(customNodeName, format);
+					var fullPath = Path.Combine(destinationDirectory, fileName);
 
-				if (System.IO.File.Exists(fullPath))
-					System.IO.File.Delete(fullPath);
+					if (System.IO.File.Exists(fullPath))
+						System.IO.File.Delete(fullPath);
 
-				try
-				{
-					using (System.Net.WebClient client = new System.Net.WebClient())
-						client.DownloadFile(new Uri(downloadImage.Url), fullPath);
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex);
+					try
+					{
+						using (System.Net.WebClient client = new System.Net.WebClient())
+							client.DownloadFile(new Uri(imageScale.Url), fullPath);
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex);
+					}
 				}
 			};
 		}
@@ -462,14 +465,24 @@ namespace FigmaSharp.Services
 			return false;
 		}
 
+		public virtual bool SearchImageChildren(FigmaNode figmaNode) => true;
+
 		public IEnumerable<FigmaNode> SearchImageNodes (FigmaNode mainNode)
 		{
-            if (RendersAsImage (mainNode))
+			if (mainNode is FigmaInstance)
+				yield break;
+
+			if (RendersAsImage (mainNode))
             {
                 yield return mainNode;
+				yield break;
             }
 
-            if (mainNode is IFigmaNodeContainer nodeContainer)
+			//we don't want iterate on children
+			if (!SearchImageChildren (mainNode))
+				yield break;
+
+			if (mainNode is IFigmaNodeContainer nodeContainer)
             {
                 foreach (var item in nodeContainer.children)
                 {
@@ -478,8 +491,17 @@ namespace FigmaSharp.Services
                         yield return resultItems;
                     }
                 }
-            }
-        }
+            } else if (mainNode is FigmaDocument document)
+            {
+				foreach (var item in document.children)
+				{
+					foreach (var resultItems in SearchImageNodes(item))
+					{
+						yield return resultItems;
+					}
+				}
+			}
+		}
 
 		public IEnumerable<FigmaNode> SearchImageNodes() => SearchImageNodes(Response.document);
 

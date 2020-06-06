@@ -28,7 +28,7 @@
 
 using System;
 using System.Reflection;
-
+using FigmaSharp.Models;
 using FigmaSharp.Views;
 
 namespace FigmaSharp

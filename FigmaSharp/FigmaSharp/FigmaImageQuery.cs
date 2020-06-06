@@ -26,6 +26,8 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Collections.Generic;
+
 namespace FigmaSharp
 {
 	public enum ImageQueryFormat
@@ -36,27 +38,44 @@ namespace FigmaSharp
 		pdf
 	}
 
+    public class ImageScale
+    {
+        public ImageScale(float scale, string url)
+        {
+            Scale = scale;
+            Url = url;
+        }
+
+        public float Scale { get; }
+        public string Url { get; }
+    }
+
     public interface IFigmaDownloadImageNode
     {
+        List<ImageScale> Scales { get; }
         Models.FigmaNode Node { get; }
         string ResourceId { get; }
-        string Url { get; set; }
 
-        string GetOutputFileName();
+        string GetOutputFileName(float scale);
     }
 
     public class FigmaDownloadImageNode : IFigmaDownloadImageNode
     {
         public string ResourceId => Node.id;
+
         public string Url { get; set; }
+        public float Scale { get; set; }
 
         public Models.FigmaNode Node { get; }
+
+        public List<ImageScale> Scales { get; } = new List<ImageScale>();
+
         public FigmaDownloadImageNode(Models.FigmaNode node)
         {
             this.Node = node;
         }
 
-        public string GetOutputFileName() => Node.id;
+        public string GetOutputFileName(float scale) => Node.id;
     }
 
     public abstract class FigmaFileBaseQuery

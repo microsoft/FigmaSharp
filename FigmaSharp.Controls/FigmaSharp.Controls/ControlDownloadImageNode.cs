@@ -21,6 +21,7 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+using System.Collections.Generic;
 using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls
@@ -33,14 +34,19 @@ namespace FigmaSharp.Controls
         public string Url { get; set; }
 
         public Models.FigmaNode Node { get; }
+
+        public List<ImageScale> Scales { get; } = new List<ImageScale>();
+
         public ControlDownloadImageNode(Models.FigmaNode node, FigmaFileProvider provider)
         {
             this.provider = provider;
             this.Node = node;
         }
 
-        public string GetOutputFileName()
+        public string GetOutputFileName(float scale)
         {
+            string scaleName = scale == 1 ? "" : $"@{scale:N0}x";
+
             //we want try set custom name if not id
             string customName;
 
@@ -50,18 +56,18 @@ namespace FigmaSharp.Controls
                 switch (theme)
                 {
                     case CocoaThemes.Dark:
-                        return string.Format("{0}~dark@2x", customName);
+                        return string.Format("{0}~dark{1}", customName, scaleName);
                     case CocoaThemes.DarkHC:
-                        return string.Format("{0}~contrast~dark@2x", customName);
+                        return string.Format("{0}~contrast~dark{1}", customName, scaleName);
                     case CocoaThemes.Light:
-                        return string.Format("{0}@2x", customName);
+                        return string.Format("{0}{1}", customName, scaleName);
                     case CocoaThemes.LightHC:
-                        return string.Format("{0}~contrast@2x", customName);
+                        return string.Format("{0}~contrast{1}", customName, scaleName);
                 }
             }
 
             Node.TryGetNodeCustomName(out customName);
             return customName;
-        } 
+        }
     }
 }

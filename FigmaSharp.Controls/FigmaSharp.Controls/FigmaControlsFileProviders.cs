@@ -39,6 +39,9 @@ namespace FigmaSharp.Controls.Services
 		{
 		}
 
+		public override bool SearchImageChildren(FigmaNode figmaNode)
+			=> !(figmaNode.IsSingleImageViewNode() || (figmaNode.Parent?.HasNodeImageName() ?? false));
+
 		public override bool RendersAsImage(FigmaNode figmaNode)
 		{
 			if (figmaNode.IsImageViewNode())
@@ -62,6 +65,9 @@ namespace FigmaSharp.Controls.Services
 
 		public override IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node)
 			=> new ControlDownloadImageNode(node, this);
+
+		public override bool SearchImageChildren(FigmaNode figmaNode)
+			=> !(figmaNode.IsSingleImageViewNode() || (figmaNode.Parent?.HasNodeImageName() ?? false));
 
 		public override bool RendersAsImage(FigmaNode figmaNode)
 		{
@@ -91,6 +97,9 @@ namespace FigmaSharp.Controls.Services
 
 			return false;
 		}
+
+		public override bool SearchImageChildren(FigmaNode figmaNode)
+			=> !(figmaNode.IsSingleImageViewNode () || (figmaNode.Parent?.HasNodeImageName() ?? false));
 
 		public override IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node)
 			=> new ControlDownloadImageNode(node, this);

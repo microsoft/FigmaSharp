@@ -103,7 +103,7 @@ namespace FigmaSharp
             {
 				var resourceId = resourceIds.FirstOrDefault(s => s.ResourceId == image.Key);
 				if (resourceId != null)
-					resourceId.Url = image.Value;
+					resourceId.Scales.Add(new ImageScale(scale, image.Value));
 			}
 		}
 
