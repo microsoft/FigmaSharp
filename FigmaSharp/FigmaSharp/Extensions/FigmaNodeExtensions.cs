@@ -99,7 +99,7 @@ namespace FigmaSharp
             if (node is FigmaFrame frame) {
                 fills = frame.fills;
             }
-            else if (node is FigmaVectorEntity vector)
+            else if (node is FigmaVector vector)
             {
                 fills = vector.fills;
             }

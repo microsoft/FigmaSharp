@@ -44,7 +44,7 @@ namespace FigmaSharp.Cocoa.Converters
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
-            var vectorEntity = (FigmaVectorEntity)currentNode;
+            var vectorEntity = (FigmaVector)currentNode;
             var vector = new ImageView();
             var currengroupView = (NSImageView)vector.NativeObject;
             currengroupView.Configure(currentNode);
@@ -72,7 +72,7 @@ namespace FigmaSharp.Cocoa.Converters
             var builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
                 builder.WriteConstructor (currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
-            builder.Configure((FigmaVectorEntity)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+            builder.Configure((FigmaVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();
         }
     }

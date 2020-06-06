@@ -32,7 +32,7 @@ namespace FigmaSharp.Cocoa
 			//}
 		}
 
-		public static void Configure (this StringBuilder builder, FigmaVectorEntity figmaNode, string name)
+		public static void Configure (this StringBuilder builder, FigmaVector figmaNode, string name)
 		{
 			Configure (builder, (FigmaNode)figmaNode, name);
 
@@ -53,7 +53,7 @@ namespace FigmaSharp.Cocoa
 
 		public static void Configure (this StringBuilder builder, RectangleVector child, string name)
 		{
-			Configure (builder, (FigmaVectorEntity)child, name);
+			Configure (builder, (FigmaVector)child, name);
 
 			builder.AppendLine (string.Format ("{0}.Layer.CornerRadius = {1};", name, child.cornerRadius.ToDesignerString ()));
 		}

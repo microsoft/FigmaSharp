@@ -66,8 +66,8 @@ namespace FigmaSharp.Controls.Cocoa
                 box.BoxType = NSBoxType.NSBoxCustom;
                 box.BorderWidth = 0;
 
-                FigmaVectorEntity rectangle = frame.children
-                    .OfType<FigmaVectorEntity>()
+                FigmaVector rectangle = frame.children
+                    .OfType<FigmaVector>()
                     .FirstOrDefault();
 
                 foreach (var styleMap in rectangle?.styles)
@@ -121,8 +121,8 @@ namespace FigmaSharp.Controls.Cocoa
                 code.WriteEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
                 bool borderSet = false;
 
-                FigmaVectorEntity rectangle = frame.children
-                    .OfType<FigmaVectorEntity>()
+                FigmaVector rectangle = frame.children
+                    .OfType<FigmaVector>()
                     .FirstOrDefault();
 
                 foreach (var styleMap in rectangle?.styles)

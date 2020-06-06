@@ -53,8 +53,8 @@ namespace FigmaSharp.Controls.Cocoa
 			var colorWell = new NSColorWell();
 			var frame = (FigmaFrame)currentNode;
 
-			FigmaVectorEntity rectangle = frame.children
-				.OfType<FigmaVectorEntity>()
+			FigmaVector rectangle = frame.children
+				.OfType<FigmaVector>()
 				.FirstOrDefault(s => s.name == ComponentString.VALUE);
 
 			foreach (var styleMap in rectangle?.styles)
@@ -82,8 +82,8 @@ namespace FigmaSharp.Controls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			FigmaVectorEntity rectangle = frame.children
-	            .OfType<FigmaVectorEntity>()
+			FigmaVector rectangle = frame.children
+	            .OfType<FigmaVector>()
 	            .FirstOrDefault(s => s.name == ComponentString.VALUE);
 
 			foreach (var styleMap in rectangle?.styles)
