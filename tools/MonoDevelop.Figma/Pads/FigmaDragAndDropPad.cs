@@ -26,16 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 using System;
-using FigmaSharp;
 using Gtk;
-using Microsoft.VisualStudio.Text.Editor;
 using MonoDevelop.Components;
 using MonoDevelop.DesignerSupport.Toolbox;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
-using Xwt.GtkBackend;
 
 namespace MonoDevelop.Figma
 {

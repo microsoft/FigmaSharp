@@ -23,6 +23,14 @@
         <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\" />
         <Folder Include="Commands\" />
         <Folder Include="NodeBuilders\" />
+        <Folder Include="Pads\" />
+        <Folder Include="Views\" />
+        <Folder Include="DocumentControllers\" />
+        <Folder Include="Panels\" />
+        <Folder Include="Extensions\" />
+        <Folder Include="PropertyProviders\" />
+        <Folder Include="Helpers\" />
+        <Folder Include="ProjectItems\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />

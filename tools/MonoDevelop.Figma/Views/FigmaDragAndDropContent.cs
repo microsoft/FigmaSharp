@@ -41,7 +41,6 @@ using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma
 {
-
     class FigmaDragAndDropContent : NSView
     {
         public event EventHandler<string> SelectCode;
