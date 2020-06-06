@@ -34,7 +34,7 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
-	public class FigmaUser
+    public class FigmaUser
 	{
 		public string handle { get; set; }
         public string img_url { get; set; }
@@ -52,11 +52,6 @@ namespace FigmaSharp.Models
 
         public string CurrentName => !string.IsNullOrEmpty(label) ? label : created_at.ToString("g");
         public bool IsNamed => !string.IsNullOrEmpty(label);
-    }
-
-	public class FigmaFileVersionResponse
-	{
-        public FigmaFileVersion[] versions { get; set; }
     }
 
     public class FigmaComponent
@@ -102,14 +97,5 @@ namespace FigmaSharp.Models
 				serializer.Serialize (file, this);
             }
         }
-    }
-
-    /// <summary>
-    /// FigmaImageResponse contains a list of URLs to images requested from a figma.com URL.
-    /// </summary>
-    public class FigmaImageResponse
-    {
-        public string err { get; set; }
-        public Dictionary<string, string> images { get; set; }
     }
 }

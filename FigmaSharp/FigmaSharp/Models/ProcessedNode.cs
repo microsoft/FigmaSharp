@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameResponse.cs - Response model from FigmaQuery
+ * FigmaModels.cs - Models to parse json from Figma API
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,20 +26,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
+using FigmaSharp.Views;
 
-namespace FigmaSharp
+namespace FigmaSharp.Models
 {
-    public class FigmaFrameResponse
+    public class ProcessedNode
     {
-        public FigmaFrameResponse(FigmaFileResponse figmaResponse, int page)
-        {
-            Page = page;
-            FigmaResponse = figmaResponse;
-        }
-        public int Page { get; }
-        public FigmaCanvas PageContent => FigmaResponse.document.children[Page];
+        public FigmaNode FigmaNode { get; set; }
+        public IView View { get; set; }
+        public ProcessedNode ParentView { get; set; }
 
-        public FigmaFileResponse FigmaResponse { get; }
+        public override string ToString() =>
+            FigmaNode?.ToString() ?? base.ToString();
     }
 }

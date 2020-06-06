@@ -29,18 +29,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-using FigmaSharp.Views;
-
 using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
-	public interface INodeImage
-    {
-        bool HasImage();
-    }
-
     public class FigmaElipse : FigmaVector
     {
         public override bool HasImage() => false;
@@ -168,45 +160,6 @@ namespace FigmaSharp.Models
         public FigmaConstraint constraint { get; set; }
     }
 
-    public enum FigmaEasingType
-    {
-        EASE_IN, EASE_OUT, EASE_IN_AND_OUT,
-    }
-
-    public enum FigmaBlendMode
-    {
-        //normal
-        PASS_THROUGH,
-        NORMAL,
-
-        //Darken:
-        DARKEN,
-        MULTIPLY,
-        LINEAR_BURN,
-        COLOR_BURN,
-
-        //Lighten:
-        LIGHTEN,
-        SCREEN,
-        LINEAR_DODGE,
-        COLOR_DODGE,
-
-        //Contrast:
-        OVERLAY,
-        SOFT_LIGHT,
-        HARD_LIGHT,
-
-        //Inversion:
-        DIFFERENCE,
-        EXCLUSION,
-
-        //Component:
-        HUE,
-        SATURATION,
-        COLOR,
-        LUMINOSITY
-    }
-
     public class FigmaGroup : FigmaFrame
     {
         public override bool HasImage()
@@ -215,11 +168,6 @@ namespace FigmaSharp.Models
         }
     }
    
-	public interface IFigmaDocumentContainer : IFigmaNodeContainer, IAbsoluteBoundingBox
-	{
-		Color backgroundColor { get; set; }
-    }
-
     public class FigmaBackground
     {
         [Category ("General")]
@@ -401,13 +349,6 @@ namespace FigmaSharp.Models
         public float[] rectangleCornerRadii { get; set; }
     }
 
-    public enum FigmaLayoutMode
-    {
-        None,
-        Vertical,
-        Horizontal
-    }
-
     public class FigmaPoint : FigmaNode
     {
         [Category ("General")]
@@ -417,21 +358,6 @@ namespace FigmaSharp.Models
         [Category ("General")]
         [DisplayName ("Y")]
         public float y { get; set; }
-    }
-
-    public interface IAbsoluteBoundingBox
-    {
-        Rectangle absoluteBoundingBox { get; set; }
-    }
-
-    public interface IConstraints
-    {
-        FigmaLayoutConstraint constraints { get; set; }
-    }
-
-    public interface IFigmaImage
-    {
-        bool HasImage();
     }
 
     public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
@@ -532,11 +458,6 @@ namespace FigmaSharp.Models
     public class FigmaPath
     {
 
-    }
-
-    public interface IFigmaNodeContainer
-    {
-        FigmaNode[] children { get; set; }
     }
 
     public class FigmaBoolean : FigmaVector, IFigmaNodeContainer
@@ -671,16 +592,6 @@ namespace FigmaSharp.Models
     public class FigmaDocument : FigmaNode
     {
         public FigmaCanvas[] children { get; set; }
-    }
-
-    public class ProcessedNode
-    {
-        public FigmaNode FigmaNode { get; set; }
-        public IView View { get; set; }
-        public ProcessedNode ParentView { get; set; }
-
-        public override string ToString() =>
-            FigmaNode?.ToString() ?? base.ToString();
     }
 
     public class FigmaComponentEntity : FigmaFrame
