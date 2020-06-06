@@ -12,6 +12,7 @@
     <Folder Include="Resources\" />
     <Folder Include="FigmaPackage\" />
     <Folder Include="Extensions\" />
+    <Folder Include="WebApi\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
