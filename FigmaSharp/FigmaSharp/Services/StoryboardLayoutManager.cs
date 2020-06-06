@@ -17,7 +17,7 @@ namespace FigmaSharp.Services
             Run(mainNodes, contentView, rendererService);
         }
 
-        public void Run (ProcessedNode[] mainViews, IView contentView, FigmaViewRendererService rendererService)
+        public void Run (ViewNode[] mainViews, IView contentView, FigmaViewRendererService rendererService)
         {
             var orderedNodes = mainViews
         .OrderBy(s => ((IAbsoluteBoundingBox)s.FigmaNode).absoluteBoundingBox.Left)

@@ -49,7 +49,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name.In(OpenButtonName, CloneButtonName, NewButtonName);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
 		{
 			var spinner = new ProgressBar();
 			return spinner;

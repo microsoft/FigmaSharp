@@ -42,7 +42,7 @@ namespace FigmaSharp.Controls.Cocoa
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 
@@ -118,7 +118,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSProgressIndicator).Style = NSProgressIndicatorStyle.Spinning;
@@ -147,7 +147,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSProgressIndicator).Style = NSProgressIndicatorStyle.Bar;

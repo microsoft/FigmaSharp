@@ -39,8 +39,8 @@ namespace FigmaSharp.Services
         protected readonly List<ViewConverter> DefaultConverters;
         public readonly List<ViewConverter> CustomConverters;
 
-        public List<ProcessedNode> NodesProcessed = new List<ProcessedNode>();
-        public readonly List<ProcessedNode> ImageVectors = new List<ProcessedNode>();
+        public List<ViewNode> NodesProcessed = new List<ViewNode>();
+        public readonly List<ViewNode> ImageVectors = new List<ViewNode>();
 
         protected IView container;
         protected IFigmaFileProvider fileProvider;
@@ -124,12 +124,12 @@ namespace FigmaSharp.Services
 			return fileProvider.Nodes.FirstOrDefault(s => s.id == id);
 		}
 
-		public ProcessedNode FindProcessedNodeByName(string name)
+		public ViewNode FindProcessedNodeByName(string name)
         {
             return NodesProcessed.FirstOrDefault(s => s.FigmaNode.name == name);
         }
 
-		public ProcessedNode FindProcessedNodeById(string Id)
+		public ViewNode FindProcessedNodeById(string Id)
 		{
 			return NodesProcessed.FirstOrDefault(s => s.FigmaNode.id == Id);
 		}
@@ -164,7 +164,7 @@ namespace FigmaSharp.Services
         {
             try
             {
-                var processedParentView = new ProcessedNode() { FigmaNode = figmaNode, View = View };
+                var processedParentView = new ViewNode(figmaNode, View);
                 NodesProcessed.Add(processedParentView);
 
                 //in canvas we want calculate the bounds size
@@ -234,7 +234,7 @@ namespace FigmaSharp.Services
             return null;
         }
 
-		protected virtual bool SkipsNode (FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
+		protected virtual bool SkipsNode (FigmaNode currentNode, ViewNode parent, FigmaViewRendererServiceOptions options)
 		{
             if (options != null && options.ToIgnore != null && options.ToIgnore.Contains(currentNode))
                 return true;
@@ -242,7 +242,7 @@ namespace FigmaSharp.Services
 		}
 
         //TODO: This 
-        protected void GenerateViewsRecursively(FigmaNode currentNode, ProcessedNode parent, FigmaViewRendererServiceOptions options)
+        protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, FigmaViewRendererServiceOptions options)
         {
             Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
@@ -259,10 +259,10 @@ namespace FigmaSharp.Services
                 converter = GetProcessedConverter(currentNode, DefaultConverters);
             }
 
-            ProcessedNode currentProcessedNode = null;
+            ViewNode currentProcessedNode = null;
             if (converter != null) {
                 var currentView = options.IsToViewProcessed ? converter.ConvertTo(currentNode, parent, this) : null;
-                currentProcessedNode = new ProcessedNode() { FigmaNode = currentNode, View = currentView, ParentView = parent };
+                currentProcessedNode = new ViewNode(currentNode, currentView, parent);
                 NodesProcessed.Add(currentProcessedNode);
             } else {
                 Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
@@ -447,7 +447,7 @@ namespace FigmaSharp.Services
 
         #endregion
 
-        protected void RecursivelyConfigureViews (ProcessedNode parentNode, FigmaViewRendererServiceOptions options)
+        protected void RecursivelyConfigureViews (ViewNode parentNode, FigmaViewRendererServiceOptions options)
         {
             var children = NodesProcessed.Where(s => s.ParentView == parentNode);
             foreach (var child in children)
@@ -471,17 +471,17 @@ namespace FigmaSharp.Services
             }
         }
 
-        protected virtual bool RendersAddChild (ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected virtual bool RendersAddChild (ViewNode currentNode, ViewNode parent, FigmaRendererService rendererService)
         {
             return true;
         }
 
-        protected virtual bool RendersConstraints (ProcessedNode currentNode,ProcessedNode parent, FigmaRendererService rendererService)
+        protected virtual bool RendersConstraints (ViewNode currentNode,ViewNode parent, FigmaRendererService rendererService)
         {
             return !((currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas));
         }
 
-        protected virtual bool RendersSize (ProcessedNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        protected virtual bool RendersSize (ViewNode currentNode, ViewNode parent, FigmaRendererService rendererService)
         {
             return true;
         }

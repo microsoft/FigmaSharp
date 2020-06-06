@@ -55,7 +55,7 @@ namespace FigmaSharp.Controls.Cocoa
 
         const int headerFontSize = 16;
 
-        protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+        protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
         {
             var label = new NSTextField();
 

@@ -30,11 +30,18 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Models
 {
-    public class ProcessedNode
+    public class ViewNode
     {
+        public ViewNode (FigmaNode figmaNode, IView view, ViewNode parentView = null)
+        {
+            FigmaNode = figmaNode;
+            View = view;
+            ParentView = parentView;
+        }
+
         public FigmaNode FigmaNode { get; set; }
         public IView View { get; set; }
-        public ProcessedNode ParentView { get; set; }
+        public ViewNode ParentView { get; set; }
 
         public override string ToString() =>
             FigmaNode?.ToString() ?? base.ToString();

@@ -43,7 +43,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 		public override bool CanSetAccessibilityLabel => false;
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			var slider = new NSSlider();
 
@@ -110,7 +110,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 
@@ -151,7 +151,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSSlider).SliderType = NSSliderType.Circular;

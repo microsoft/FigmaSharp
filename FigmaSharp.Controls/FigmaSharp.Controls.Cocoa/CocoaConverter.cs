@@ -42,9 +42,9 @@ namespace FigmaSharp.Controls.Cocoa
 			return false;
 		}
 
-		protected abstract IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService);
+		protected abstract IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService);
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			var converted = OnConvertToView(currentNode, parentNode, rendererService);
 

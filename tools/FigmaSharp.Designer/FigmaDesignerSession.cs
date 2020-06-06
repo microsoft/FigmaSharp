@@ -49,9 +49,9 @@ namespace FigmaSharp.Designer
 
         public FigmaFileResponse Response => fileProvider.Response;
 
-        public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
+        public List<ViewNode> ProcessedNodes => rendererService.NodesProcessed;
 
-        public ProcessedNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.FigmaNode is FigmaCanvas).ToArray ();
+        public ViewNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.FigmaNode is FigmaCanvas).ToArray ();
 
         public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, StoryboardLayoutManager figmaViewRendererDistributionService)
         {

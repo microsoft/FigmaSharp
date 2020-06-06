@@ -51,7 +51,7 @@ namespace FigmaSharp.Services
 		Task LoadAsync(string file);
 		void Load(string file);
 		void Save (string filePath);
-		void OnStartImageLinkProcessing (List<ProcessedNode> imageVectors);
+		void OnStartImageLinkProcessing (List<ViewNode> imageVectors);
 
 		FigmaNode[] GetMainGeneratedLayers ();
 
@@ -82,7 +82,7 @@ namespace FigmaSharp.Services
 
 		public string ImageFormat { get; set; } = ".png";
 
-		public override void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes)
+		public override void OnStartImageLinkProcessing (List<ViewNode> imageFigmaNodes)
 		{
 			//not needed in local files
 			Console.WriteLine ($"Loading images..");
@@ -132,7 +132,7 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		void ProcessRemoteImages (List<ProcessedNode> imageFigmaNodes, ImageQueryFormat imageFormat)
+		void ProcessRemoteImages (List<ViewNode> imageFigmaNodes, ImageQueryFormat imageFormat)
 		{
 			try {
 				var totalImages = imageFigmaNodes.Count ();
@@ -218,7 +218,7 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		public override void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes)
+		public override void OnStartImageLinkProcessing (List<ViewNode> imageFigmaNodes)
 		{
 			if (imageFigmaNodes.Count == 0) {
 				OnImageLinkProcessed ();
@@ -251,7 +251,7 @@ namespace FigmaSharp.Services
 			return AppContext.Current.GetManifestResource (Assembly, file);
 		}
 
-		public override void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes)
+		public override void OnStartImageLinkProcessing (List<ViewNode> imageFigmaNodes)
 		{
 			Console.WriteLine ($"Loading images..");
 
@@ -393,7 +393,7 @@ namespace FigmaSharp.Services
 
 		public abstract string GetContentTemplate (string file);
 
-		public abstract void OnStartImageLinkProcessing (List<ProcessedNode> imageFigmaNodes);
+		public abstract void OnStartImageLinkProcessing (List<ViewNode> imageFigmaNodes);
 
 		public void Save (string filePath)
 		{

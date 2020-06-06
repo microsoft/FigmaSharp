@@ -88,7 +88,7 @@ namespace FigmaSharp.Services
             }
          }
 
-        protected override bool RendersConstraints(ProcessedNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+        protected override bool RendersConstraints(ViewNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
         {
             if (currentNode.FigmaNode.IsDialogParentContainer())
                 return false;
@@ -97,7 +97,7 @@ namespace FigmaSharp.Services
             return base.RendersConstraints (currentNode, parentNode, rendererService);
         }
 
-        protected override bool RendersSize(ProcessedNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+        protected override bool RendersSize(ViewNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
         {
             //if (currentNode.FigmaNode.IsDialogParentContainer())
             //    return false;
@@ -107,7 +107,7 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        protected override bool RendersAddChild(ProcessedNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+        protected override bool RendersAddChild(ViewNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
         {
             return true;
         }
@@ -120,7 +120,7 @@ namespace FigmaSharp.Services
 			return base.NodeScansChildren (currentNode, converter, options);
 		}
 
-		protected override bool SkipsNode (FigmaNode currentNode, ProcessedNode parentNode, FigmaViewRendererServiceOptions options)
+		protected override bool SkipsNode (FigmaNode currentNode, ViewNode parentNode, FigmaViewRendererServiceOptions options)
 		{
 			if (currentNode.IsDialog ()) {
 				return true;
@@ -128,9 +128,9 @@ namespace FigmaSharp.Services
 			return false;
 		}
 
-        internal ProcessedNode[] GetProcessedNodes(FigmaNode[] mainNodes)
+        internal ViewNode[] GetProcessedNodes(FigmaNode[] mainNodes)
 		{
-            ProcessedNode[] resultNodes = new ProcessedNode[mainNodes.Length];
+            ViewNode[] resultNodes = new ViewNode[mainNodes.Length];
 			for (int i = 0; i < mainNodes.Length; i++)
 			{
                 var currentNode = mainNodes[i];

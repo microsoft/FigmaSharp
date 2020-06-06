@@ -51,7 +51,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return currentNode.IsDialogParentContainer(FigmaControlType.WindowSheet);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 
@@ -117,7 +117,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return isWindow;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertTo (FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
 		{
 			string title = "";
 			var frame = (FigmaFrame)currentNode;
@@ -160,7 +160,7 @@ namespace FigmaSharp.Controls.Cocoa
 				var mainNodes = currentNode.GetChildren()
 					.ToArray();
 
-				ProcessedNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
+				ViewNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
 
 				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };
 				layoutManager.Run(processedNodes, window.Content, secondaryRender);
