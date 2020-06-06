@@ -302,42 +302,6 @@ namespace FigmaSharp.Services
         }
 	}
 
-	[Obsolete("Use FigmaViewRendererService instead")]
-	public class FigmaFileRendererService : RendererService
-    {
-        public FigmaFileRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
-        {
-        }
-
-        public Task StartAsync(string file, IView container) => StartAsync(file, container, new FigmaViewRendererServiceOptions());
-        public Task StartAsync(string file, IView container, FigmaViewRendererServiceOptions options) => Task.Run(() => Start(file, container, options: options));
-
-        public void Start(string file, IView container) =>
-            Start(file, container, new FigmaViewRendererServiceOptions());
-
-        public void Start(string file, IView container, FigmaViewRendererServiceOptions options)
-        {
-            Console.WriteLine("[FigmaRemoteFileService] Starting service process..");
-            Console.WriteLine($"Reading {file} from resources..");
-
-            this.container = container;
-
-            try
-            {
-                if (options.LoadFileProvider)
-                {
-                    fileProvider.Load(file);
-                }
-                Refresh(options);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error reading resource");
-                Console.WriteLine(ex);
-            }
-        }
-    }
-
     public class ViewRendererService : RendererService
     {
         public ViewPropertyNodeConfigureBase PropertySetter { get; }
