@@ -65,7 +65,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return null;
 		}
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			var builder = new StringBuilder ();
 
@@ -78,7 +78,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return builder;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			return null;
 		}

@@ -42,7 +42,7 @@ namespace FigmaSharp.Controls.Cocoa
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 
@@ -72,7 +72,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(progressIndicator);
 		}
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			var code = new StringBuilder();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -118,7 +118,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSProgressIndicator).Style = NSProgressIndicatorStyle.Spinning;
@@ -126,7 +126,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -147,7 +147,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			IView view = base.OnConvertToView(currentNode, parentNode, rendererService);
 			(view.NativeObject as NSProgressIndicator).Style = NSProgressIndicatorStyle.Bar;
@@ -155,7 +155,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;

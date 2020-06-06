@@ -35,7 +35,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class FigmaControlsPropertyConverter : FigmaSharp.Cocoa.Converters.FigmaCodePropertyConverter
 	{
-        protected override string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
         {
             //component instance window case
             if (currentNode.Node.Parent.IsInstanceContent(rendererService.figmaProvider, out var figmaInstance))
@@ -61,7 +61,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         }
 
 
-        public override string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
         {
 			if (currentNode.Node.Parent != null && propertyName == PropertyNames.AddChild) {
 

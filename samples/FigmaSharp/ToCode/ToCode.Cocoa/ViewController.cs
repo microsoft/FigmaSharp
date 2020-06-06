@@ -17,7 +17,7 @@ namespace ToCode.Cocoa
 		RemoteNodeProvider fileProvider;
 
 		FigmaDesignerDelegate figmaDelegate;
-		FigmaCodeRendererService codeRenderer;
+		CodeRendererService codeRenderer;
 
 		const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 

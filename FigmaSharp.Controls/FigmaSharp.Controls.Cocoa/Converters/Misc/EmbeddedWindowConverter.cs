@@ -49,7 +49,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return currentNode.IsDialogParentContainer(FigmaControlType.WindowSheet);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 
@@ -82,7 +82,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			return string.Empty;
 		}
@@ -115,7 +115,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return isWindow;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertTo (FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			string title = "";
 			var frame = (FigmaFrame)currentNode;
@@ -176,7 +176,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			return string.Empty;
 		}

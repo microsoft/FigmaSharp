@@ -35,7 +35,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public class FigmaRendererService
+    public class RendererService
     {
         protected readonly List<LayerConverter> DefaultConverters;
         public readonly List<LayerConverter> CustomConverters;
@@ -154,7 +154,7 @@ namespace FigmaSharp.Services
             return null;
         }
 
-        public FigmaRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters)
+        public RendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters)
         {
             this.fileProvider = figmaProvider;
             DefaultConverters = figmaViewConverters.Where(s => s.IsLayer).ToList();
@@ -303,7 +303,7 @@ namespace FigmaSharp.Services
 	}
 
 	[Obsolete("Use FigmaViewRendererService instead")]
-	public class FigmaFileRendererService : FigmaRendererService
+	public class FigmaFileRendererService : RendererService
     {
         public FigmaFileRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
         {
@@ -338,16 +338,16 @@ namespace FigmaSharp.Services
         }
     }
 
-    public class FigmaViewRendererService : FigmaRendererService
+    public class ViewRendererService : RendererService
     {
         public ViewPropertyNodeConfigureBase PropertySetter { get; }
 
-        public FigmaViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
+        public ViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
           
         }
 
-        public FigmaViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public ViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }
@@ -472,17 +472,17 @@ namespace FigmaSharp.Services
             }
         }
 
-        protected virtual bool RendersAddChild (ViewNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+        protected virtual bool RendersAddChild (ViewNode currentNode, ViewNode parent, RendererService rendererService)
         {
             return true;
         }
 
-        protected virtual bool RendersConstraints (ViewNode currentNode,ViewNode parent, FigmaRendererService rendererService)
+        protected virtual bool RendersConstraints (ViewNode currentNode,ViewNode parent, RendererService rendererService)
         {
             return !((currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas));
         }
 
-        protected virtual bool RendersSize (ViewNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+        protected virtual bool RendersSize (ViewNode currentNode, ViewNode parent, RendererService rendererService)
         {
             return true;
         }

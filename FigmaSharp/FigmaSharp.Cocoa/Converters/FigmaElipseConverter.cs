@@ -45,7 +45,7 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
         {
             var elipseView = new NSView();
             elipseView.Configure(currentNode);
@@ -85,7 +85,7 @@ namespace FigmaSharp.Cocoa.Converters
             return new View (elipseView);
         }
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
 

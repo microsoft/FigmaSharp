@@ -13,7 +13,7 @@ namespace FigmaSharp.Services
 		public bool TranslateLabels { get; set; }
 	}
 
-	public class FigmaCodeRendererService
+	public class CodeRendererService
 	{
 		internal const string DefaultViewName = "view";
 
@@ -24,7 +24,7 @@ namespace FigmaSharp.Services
 		LayerConverter[] figmaConverters;
 		LayerConverter[] customConverters;
 
-		public FigmaCodeRendererService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters,
+		public CodeRendererService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters,
 			CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
@@ -171,17 +171,17 @@ namespace FigmaSharp.Services
 			}
 		}
 
-        protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
         {
 			return !((node != null && node == MainNode) || node.Node is FigmaCanvas || node.Node.Parent is FigmaCanvas);
 		}
 
-		protected virtual bool RendersSize(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+		protected virtual bool RendersSize(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
         {
 			return true;
 		}
 
-		protected virtual bool RendersAddChild(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+		protected virtual bool RendersAddChild(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
         {
 			return true;
         }

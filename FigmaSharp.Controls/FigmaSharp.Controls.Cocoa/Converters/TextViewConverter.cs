@@ -48,7 +48,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 			frame.TryGetNativeControlType(out var controlType);
@@ -85,7 +85,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(scrollView);
 		}
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			var code = new StringBuilder();
 

@@ -37,14 +37,14 @@ namespace LocalFile.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == CloseButtonId;
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
 		{
 			var button = FigmaSharp.Controls.Cocoa.TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
 			//button.Border = false;
 			return button;
 		}
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService) => string.Empty;
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService) => string.Empty;
 
 		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}

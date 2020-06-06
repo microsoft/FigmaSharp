@@ -49,13 +49,13 @@ namespace LocalFile.Cocoa
 			return currentNode.name.In(OpenButtonName, CloneButtonName, NewButtonName);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
 		{
 			var spinner = new ProgressBar();
 			return spinner;
 		}
 
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			return string.Empty;
 		}

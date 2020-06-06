@@ -43,9 +43,9 @@ namespace FigmaSharp.Controls.Cocoa
 			return false;
 		}
 
-		protected abstract IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService);
+		protected abstract IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService);
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
 		{
 			var converted = OnConvertToView(currentNode, parentNode, rendererService);
 
@@ -75,9 +75,9 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected abstract StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService);
+		protected abstract StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService);
 
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			var builder = OnConvertToCode(currentNode, parentNode, rendererService);
 			if (builder != null)

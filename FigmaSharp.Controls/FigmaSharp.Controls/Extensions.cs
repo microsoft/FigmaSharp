@@ -171,7 +171,7 @@ namespace FigmaSharp
             return null;
         }
 
-        public static void RenderInWindow(this FigmaViewRendererService sender, IWindow mainWindow, string windowLayerName, FigmaViewRendererServiceOptions options = null)
+        public static void RenderInWindow(this ViewRendererService sender, IWindow mainWindow, string windowLayerName, FigmaViewRendererServiceOptions options = null)
         {
             var windowFigmaNode = sender.FileProvider.FindByName (windowLayerName);
 

@@ -37,7 +37,7 @@ using FigmaSharp.Converters;
 
 namespace FigmaSharp.Services
 {
-    public class NativeViewRenderingService : FigmaViewRendererService
+    public class NativeViewRenderingService : ViewRendererService
 	{
 		public NativeViewRenderingService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
             : base (figmaProvider,
@@ -89,7 +89,7 @@ namespace FigmaSharp.Services
             }
          }
 
-        protected override bool RendersConstraints(ViewNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+        protected override bool RendersConstraints(ViewNode currentNode, ViewNode parentNode, RendererService rendererService)
         {
             if (currentNode.FigmaNode.IsDialogParentContainer())
                 return false;
@@ -98,7 +98,7 @@ namespace FigmaSharp.Services
             return base.RendersConstraints (currentNode, parentNode, rendererService);
         }
 
-        protected override bool RendersSize(ViewNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+        protected override bool RendersSize(ViewNode currentNode, ViewNode parentNode, RendererService rendererService)
         {
             //if (currentNode.FigmaNode.IsDialogParentContainer())
             //    return false;
@@ -108,7 +108,7 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        protected override bool RendersAddChild(ViewNode currentNode, ViewNode parentNode, FigmaRendererService rendererService)
+        protected override bool RendersAddChild(ViewNode currentNode, ViewNode parentNode, RendererService rendererService)
         {
             return true;
         }

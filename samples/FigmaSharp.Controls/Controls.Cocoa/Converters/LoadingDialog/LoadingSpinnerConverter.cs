@@ -46,7 +46,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name == LoadingSpinnerName;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
 		{
 			var spinner = new ProgressBar();
 			//var nativeView = (FNSProgressIndicator)spinner.NativeObject;
@@ -56,7 +56,7 @@ namespace LocalFile.Cocoa
 			return spinner;
 		}
 
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			return string.Empty;
 		}

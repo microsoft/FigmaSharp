@@ -63,7 +63,7 @@ namespace FigmaSharp
         /// <value>The content view.</value>
         public IView ContentView { get; private set; }
 
-        readonly FigmaViewRendererService rendererService;
+        readonly ViewRendererService rendererService;
         readonly AssemblyResourceNodeProvider figmaLocalFileProvider;
 
         string file;
@@ -85,7 +85,7 @@ namespace FigmaSharp
 
             var assembly = System.Reflection.Assembly.GetCallingAssembly();
             figmaLocalFileProvider = new AssemblyResourceNodeProvider(assembly, file);
-            rendererService = new FigmaViewRendererService(figmaLocalFileProvider, figmaViewConverters, propertySetter);
+            rendererService = new ViewRendererService(figmaLocalFileProvider, figmaViewConverters, propertySetter);
     
         }
 

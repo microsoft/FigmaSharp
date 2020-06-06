@@ -48,7 +48,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name == DoThisLaterButtonName;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
 		{
 			string text = string.Empty;
 			if (currentNode is IFigmaNodeContainer container)
@@ -63,7 +63,7 @@ namespace LocalFile.Cocoa
 			return button;
 		}
 
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
 		{
 			return string.Empty;
 		}

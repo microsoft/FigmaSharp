@@ -299,7 +299,7 @@ namespace FigmaSharp
 		//	SaveViews(codeRendererService, writePublicClassIfExists, translateLabels, Views.ToArray ());
 		//}
 
-		public void SaveViews(FigmaCodeRendererService codeRendererService, bool writePublicClassIfExists, bool translateLabels, params FigmaBundleViewBase[] Views)
+		public void SaveViews(CodeRendererService codeRendererService, bool writePublicClassIfExists, bool translateLabels, params FigmaBundleViewBase[] Views)
 		{
 			foreach (var view in Views)
 			{

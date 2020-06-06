@@ -42,7 +42,7 @@ namespace FigmaSharp.Cocoa.Converters
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSBox);
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, FigmaRendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
         {
             var figmaLineView = new HorizontalBar ();
             var nativeView = (FNSBox)figmaLineView.NativeObject;
@@ -51,7 +51,7 @@ namespace FigmaSharp.Cocoa.Converters
             return figmaLineView;
         }
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
 

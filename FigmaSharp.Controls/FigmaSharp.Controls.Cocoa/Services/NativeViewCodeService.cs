@@ -35,7 +35,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-    public class NativeViewCodeService : FigmaCodeRendererService
+    public class NativeViewCodeService : CodeRendererService
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
@@ -155,17 +155,17 @@ namespace FigmaSharp.Services
 		}
 
 
-        protected override bool RendersAddChild(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        protected override bool RendersAddChild(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
         {
 			return true;
 		}
 
-        protected override bool RendersSize(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        protected override bool RendersSize(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
         {
 			return true;
 		}
 
-        protected override bool RendersConstraints(CodeNode node, CodeNode parent, FigmaCodeRendererService rendererService)
+        protected override bool RendersConstraints(CodeNode node, CodeNode parent, CodeRendererService rendererService)
         {
 			if (node.Node.IsDialogParentContainer())
 				return false;

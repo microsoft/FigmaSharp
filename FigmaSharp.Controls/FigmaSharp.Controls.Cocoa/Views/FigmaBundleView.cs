@@ -38,7 +38,7 @@ namespace FigmaSharp
 		{
 		}
 
-		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, FigmaCodeRendererService codeRendererService, bool translateLabels)
+		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRendererService codeRendererService, bool translateLabels)
 		{
 			if (FigmaNode == null)
 				return;
