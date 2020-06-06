@@ -67,7 +67,7 @@ namespace FigmaSharp.Controls
             }
 
             Node.TryGetNodeCustomName(out customName);
-            return customName;
+            return string.Format("{0}{1}", customName, scaleName);
         }
     }
 }
