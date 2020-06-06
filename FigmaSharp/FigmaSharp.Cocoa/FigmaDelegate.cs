@@ -13,7 +13,7 @@ namespace FigmaSharp.Cocoa
 {
     public class FigmaDelegate : IFigmaDelegate
     {
-        static readonly FigmaViewConverter[] figmaViewConverters = {
+        static readonly ViewConverter[] figmaViewConverters = {
             new FigmaRegularPolygonConverter (),
             new FigmaTextConverter (),
             new FigmaLineConverter (),
@@ -59,7 +59,7 @@ namespace FigmaSharp.Cocoa
             return wrapper;
         }
 
-        public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
+        public ViewConverter[] GetFigmaConverters() => figmaViewConverters;
 
         public IView CreateEmptyView() => new View();
 

@@ -35,7 +35,7 @@ using System;
 
 namespace LocalFile.Cocoa
 {
-	class SignInMicrosoftButtonConverter : FigmaViewConverter
+	class SignInMicrosoftButtonConverter : ViewConverter
 	{
 		public const string SignInMicrosoftButtonName = "SignInMicrosoftButton";
 		const string LogoImageName = "MSLogoImage";

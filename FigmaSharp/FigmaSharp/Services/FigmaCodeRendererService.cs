@@ -21,10 +21,10 @@ namespace FigmaSharp.Services
 
 		internal FigmaCodePropertyConverterBase codePropertyConverter;
 
-		FigmaViewConverter[] figmaConverters;
-		FigmaViewConverter[] customConverters;
+		ViewConverter[] figmaConverters;
+		ViewConverter[] customConverters;
 
-		public FigmaCodeRendererService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters,
+		public FigmaCodeRendererService (IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters,
 			FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
@@ -33,7 +33,7 @@ namespace FigmaSharp.Services
 			this.codePropertyConverter = codePropertyConverter;
 		}
 
-		FigmaViewConverter GetConverter (FigmaCodeNode node, FigmaViewConverter[] converters)
+		ViewConverter GetConverter (FigmaCodeNode node, ViewConverter[] converters)
 		{
 			foreach (var customViewConverter in converters) {
 				if (customViewConverter.CanConvert (node.Node)) {
@@ -84,7 +84,7 @@ namespace FigmaSharp.Services
 				Nodes.Add(node);
 
 			FigmaCodeNode calculatedParentNode = null;
-			FigmaViewConverter converter = null;
+			ViewConverter converter = null;
 
 			var isNodeSkipped = IsNodeSkipped (node);
 
@@ -191,7 +191,7 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected virtual void OnPreConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		protected virtual void OnPreConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 			
 		}
@@ -206,17 +206,17 @@ namespace FigmaSharp.Services
 
 		}
 
-        protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+        protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 
 		}
 
-		protected virtual void OnChildAdded (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		protected virtual void OnChildAdded (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 
 		}
 
-		protected virtual void OnFrameSet (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		protected virtual void OnFrameSet (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 
 		}
@@ -225,7 +225,7 @@ namespace FigmaSharp.Services
 		const string end = "Converter";
 		const string ViewIdentifier = "View";
 
-		protected virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, out string identifier)
+		protected virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, out string identifier)
 		{
 			try {
 				identifier = converter.GetType().Name;

@@ -39,16 +39,16 @@ namespace FigmaSharp.Controls.Cocoa
 
 		static readonly FigmaViewPropertySetterBase viewPropertySetter = new FigmaViewPropertySetter ();
 
-		static FigmaViewConverter[] allConverters;
-		static FigmaViewConverter[] converters;
+		static ViewConverter[] allConverters;
+		static ViewConverter[] converters;
 
 		public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
 		  => codePropertyConverter;
 
-		public FigmaViewConverter[] GetConverters (bool includeAll = true)
+		public ViewConverter[] GetConverters (bool includeAll = true)
 		{
 			if (converters == null) {
-				converters = new FigmaViewConverter[] {
+				converters = new ViewConverter[] {
 					// Buttons
 					new ButtonConverter (),
 					new StepperConverter (),

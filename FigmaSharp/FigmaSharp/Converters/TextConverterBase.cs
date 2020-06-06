@@ -30,7 +30,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaTextConverterBase : FigmaViewConverter
+    public abstract class TextConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 

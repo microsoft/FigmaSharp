@@ -34,7 +34,7 @@ using System;
 
 namespace LocalFile.Cocoa
 {
-	class DoThisLaterButtonConverter : FigmaViewConverter
+	class DoThisLaterButtonConverter : ViewConverter
 	{
 		public const string DoThisLaterButtonName = "DoThisLaterButton";
 		

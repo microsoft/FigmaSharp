@@ -37,7 +37,7 @@ using FigmaSharp.Controls;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public class EmbededSheetDialogConverter : FigmaViewConverter
+	public class EmbededSheetDialogConverter : ViewConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
@@ -90,7 +90,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 	}
 
-	public class EmbededWindowConverter : FigmaViewConverter
+	public class EmbededWindowConverter : ViewConverter
 	{
         public override Type GetControlType(FigmaNode currentNode)
         => typeof(AppKit.NSView);

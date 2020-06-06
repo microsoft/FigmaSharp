@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaVectorViewConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaLineConverterBase : FigmaViewConverter
+    public abstract class RegularPolygonConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType () == typeof (FigmaLine) || (currentNode.type == "VECTOR" && currentNode.name == "sep");
+            return currentNode.GetType() == typeof(FigmaRegularPolygon);
         }
     }
 }

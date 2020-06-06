@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * RectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaRegularPolygonConverterBase : FigmaViewConverter
+    public abstract class RectangleVectorConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaRegularPolygon);
+            return currentNode.GetType() == typeof(RectangleVector);
         }
     }
 }

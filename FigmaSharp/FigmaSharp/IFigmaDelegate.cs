@@ -38,7 +38,7 @@ namespace FigmaSharp
         bool IsVerticalAxisFlipped { get; }
 
         IView CreateEmptyView();
-        FigmaViewConverter[] GetFigmaConverters();
+        ViewConverter[] GetFigmaConverters();
 
         IImage GetImage(string url);
 		string GetSvgData(string url);

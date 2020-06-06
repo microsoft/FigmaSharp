@@ -35,7 +35,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp
 {
-	public abstract class FigmaViewConverter : CustomViewConverter
+	public abstract class ViewConverter : CustomViewConverter
 	{
 
     }

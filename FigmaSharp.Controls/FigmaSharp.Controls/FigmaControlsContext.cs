@@ -64,7 +64,7 @@ namespace FigmaSharp
         public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
             => figmaDelegate.GetCodePropertyConverter ();
 
-        public FigmaViewConverter[] GetConverters (bool includeAll = true)
+        public ViewConverter[] GetConverters (bool includeAll = true)
              => figmaDelegate.GetConverters (includeAll);
 
         #endregion

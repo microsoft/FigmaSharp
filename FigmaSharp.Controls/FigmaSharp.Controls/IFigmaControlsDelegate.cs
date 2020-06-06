@@ -36,7 +36,7 @@ namespace FigmaSharp
 
         FigmaCodePropertyConverterBase GetCodePropertyConverter ();
 
-        FigmaViewConverter[] GetConverters (bool includeAll = true);
+        ViewConverter[] GetConverters (bool includeAll = true);
         FigmaViewPropertySetterBase GetViewPropertySetter();
     }
 }

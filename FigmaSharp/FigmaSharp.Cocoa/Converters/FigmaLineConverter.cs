@@ -38,7 +38,7 @@ using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaLineConverter : FigmaLineConverterBase
+    public class FigmaLineConverter : LineConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSBox);
 

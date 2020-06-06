@@ -26,40 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
-
-namespace FigmaSharp
-{
-	public static class NodeExtensions
-	{
-        public static bool TryGetNodeCustomName (this FigmaNode node, out string customName)
-        {
-            customName = node.name;
-            var index = customName.IndexOf ('\"');
-
-            if (index > 2 && (customName[index - 1] == ':' || customName[index - 1] == '=')) {
-                return false;
-            }
-
-            if (index > -1 && index < customName.Length - 1) {
-                customName = customName.Substring (index + 1);
-
-                index = customName.IndexOf ('\"');
-                if (index > -1 && index < customName.Length) {
-                    customName = customName.Substring (0, index);
-                    //customName = RemoveIllegalCharacters (customName);
-                    return true;
-                }
-            }
-            customName = node.name;
-            //customName = RemoveIllegalCharacters (node.name);
-            return false;
-        }
-    }
-}
 namespace FigmaSharp.Converters
 {
-    public static class FigmaResourceConverter
+    public static class FigmaResourceHelper
     {
         const string specialChar = "-";
         public static string FromResource (string data)

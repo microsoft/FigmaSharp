@@ -39,7 +39,7 @@ using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaFrameConverter : FigmaFrameConverterBase
+    public class FigmaFrameConverter : FrameConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 

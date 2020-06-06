@@ -1,5 +1,5 @@
 ﻿/* 
- * RectangleVectorConverter.cs
+ * FigmaFrameConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class RectangleVectorConverterBase : FigmaViewConverter
+    public abstract class FrameConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(RectangleVector);
+            return currentNode is FigmaFrame;
         }
     }
 }

@@ -37,7 +37,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
+    public class FigmaVectorEntityConverter : VectorConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
             => typeof(NSImageView);

@@ -38,7 +38,7 @@ namespace FigmaSharp.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (IFigmaFileProvider figmaProvider, FigmaViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+		public NativeViewCodeService (IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters = null, FigmaCodePropertyConverterBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter ())
 		{
 
@@ -124,7 +124,7 @@ namespace FigmaSharp.Services
 			return base.HasChildrenToRender (node);
 		}
 
-		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, out string identifier)
+		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, out string identifier)
 		{
 			if (node.Node.TryGetCodeViewName (out identifier)) {
 				return true;
@@ -142,7 +142,7 @@ namespace FigmaSharp.Services
 			base.Clear();
 		}
 
-		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, FigmaViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
+		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, FigmaCodePropertyConverterBase codePropertyConverter)
 		{
 			if (!NodeRendersVar (node, parent)) {
 				if (node.Node.TryGetNodeCustomName (out string name)) {

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameConverter.cs
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaFrameConverterBase : FigmaViewConverter
+    public abstract class LineConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode is FigmaFrame;
+            return currentNode.GetType () == typeof (FigmaLine) || (currentNode.type == "VECTOR" && currentNode.name == "sep");
         }
     }
 }

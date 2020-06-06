@@ -35,7 +35,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public abstract class CocoaConverter : FigmaViewConverter
+	public abstract class CocoaConverter : ViewConverter
 	{
 		public override bool ScanChildren(FigmaNode currentNode)
 		{

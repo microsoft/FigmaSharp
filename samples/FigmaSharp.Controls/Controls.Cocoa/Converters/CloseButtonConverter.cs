@@ -31,7 +31,7 @@ using FigmaSharp.Views;
 
 namespace LocalFile.Cocoa
 {
-	class CloseButtonConverter : FigmaViewConverter
+	class CloseButtonConverter : ViewConverter
 	{
 		public const string CloseButtonId = "window-close";
 

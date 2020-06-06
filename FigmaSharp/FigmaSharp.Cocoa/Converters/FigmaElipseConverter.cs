@@ -41,7 +41,7 @@ using Foundation;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaElipseConverter : FigmaElipseConverterBase
+    public class FigmaElipseConverter : ElipseConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 

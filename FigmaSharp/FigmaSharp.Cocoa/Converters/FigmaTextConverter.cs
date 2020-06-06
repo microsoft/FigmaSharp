@@ -37,7 +37,7 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaTextConverter : FigmaTextConverterBase
+    public class FigmaTextConverter : TextConverterBase
     {
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {

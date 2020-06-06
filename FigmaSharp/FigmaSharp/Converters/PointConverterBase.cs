@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorEntityConverter.cs
+ * FigmaVectorViewConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaVectorEntityConverterBase : FigmaViewConverter
+    public abstract class PointConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaVector);
+            return currentNode.GetType() == typeof(FigmaPoint);
         }
     }
 }

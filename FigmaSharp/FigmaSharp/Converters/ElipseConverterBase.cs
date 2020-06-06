@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * FigmaElipseConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FigmaVectorViewConverterBase : FigmaViewConverter
+    public abstract class ElipseConverterBase : ViewConverter
     {
         public override bool IsLayer => true;
 
-        public override bool CanConvert(FigmaNode currentNode)
+		public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaPoint);
+            return currentNode.GetType() == typeof(FigmaElipse);
         }
     }
 }

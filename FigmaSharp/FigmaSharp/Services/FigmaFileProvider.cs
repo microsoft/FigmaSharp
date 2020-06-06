@@ -90,7 +90,7 @@ namespace FigmaSharp.Services
 			if (imageFigmaNodes.Count > 0) {
 				foreach (var vector in imageFigmaNodes) {
 					try {
-						var recoveredKey = FigmaResourceConverter.FromResource (vector.FigmaNode.id);
+						var recoveredKey = FigmaResourceHelper.FromResource (vector.FigmaNode.id);
 						string filePath = Path.Combine (ResourcesDirectory, string.Concat (recoveredKey, ImageFormat));
 
 						if (!System.IO.File.Exists (filePath)) {
@@ -257,7 +257,7 @@ namespace FigmaSharp.Services
 
 			if (imageFigmaNodes.Count > 0) {
 				foreach (var vector in imageFigmaNodes) {
-					var recoveredKey = FigmaResourceConverter.FromResource (vector.FigmaNode.id);
+					var recoveredKey = FigmaResourceHelper.FromResource (vector.FigmaNode.id);
 					var image = AppContext.Current.GetImageFromManifest (Assembly, recoveredKey);
 					if (image != null && vector.View is IImageView imageView) {
 						imageView.Image = image;

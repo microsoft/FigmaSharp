@@ -36,7 +36,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
+    public class FigmaVectorViewConverter : PointConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
         => typeof(AppKit.NSView);

@@ -33,7 +33,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class WhySignInLinkConverter : FigmaViewConverter
+	class WhySignInLinkConverter : ViewConverter
 	{
 		public const string SearchFilterId = "filter";
 

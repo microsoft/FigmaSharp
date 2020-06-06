@@ -37,7 +37,7 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaRegularPolygonConverter : FigmaRegularPolygonConverterBase
+    public class FigmaRegularPolygonConverter : RegularPolygonConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
          => typeof(NSView);
