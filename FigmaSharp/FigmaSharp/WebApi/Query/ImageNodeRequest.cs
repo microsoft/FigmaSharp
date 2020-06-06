@@ -30,12 +30,22 @@ using System.Collections.Generic;
 
 namespace FigmaSharp
 {
-    public interface IFigmaDownloadImageNode
+    public class ImageNodeRequest : IImageNodeRequest
     {
-        List<ImageScale> Scales { get; }
-        Models.FigmaNode Node { get; }
-        string ResourceId { get; }
+        public string ResourceId => Node.id;
 
-        string GetOutputFileName(float scale);
+        public string Url { get; set; }
+        public float Scale { get; set; }
+
+        public Models.FigmaNode Node { get; }
+
+        public List<ImageScale> Scales { get; } = new List<ImageScale>();
+
+        public ImageNodeRequest(Models.FigmaNode node)
+        {
+            this.Node = node;
+        }
+
+        public string GetOutputFileName(float scale) => Node.id;
     }
 }

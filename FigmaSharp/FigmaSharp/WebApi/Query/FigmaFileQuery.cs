@@ -28,7 +28,7 @@
 
 namespace FigmaSharp
 {
-    public class FigmaFileQuery : FigmaFileBaseQuery
+    public class FigmaFileQuery : FigmaApiBaseQuery
     {
         public string Version { get; private set; }
 

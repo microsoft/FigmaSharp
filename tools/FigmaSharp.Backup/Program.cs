@@ -90,7 +90,7 @@ namespace FigmaSharp.Backup
 
 				Console.WriteLine ("[Import] Downloading {0} image/s...", figmaImageNodes.Length);
 
-				var figmaImageIds = figmaImageNodes.Select (s => fileProvider.CreateEmptyDownloadImageNode (s)).ToArray ();
+				var figmaImageIds = figmaImageNodes.Select (s => fileProvider.CreateEmptyImageNodeRequest (s)).ToArray ();
 				if (figmaImageIds.Length > 0) {
 					FigmaSharp.AppContext.Api.ProcessDownloadImages (fileId, figmaImageIds, scale: 2);
 					FigmaSharp.AppContext.Api.ProcessDownloadImages(fileId, figmaImageIds, scale: 1);

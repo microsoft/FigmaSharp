@@ -216,11 +216,11 @@ namespace FigmaSharp
 		//Generates all the resources from the current .figmafile
 		internal static void GenerateOutputResourceFiles (NodeProvider provider, string fileId, string resourcesDirectoryPath)
 		{
-			var figmaImageIds = new List<IFigmaDownloadImageNode>();
+			var figmaImageIds = new List<IImageNodeRequest>();
 			foreach (var mainNode in provider.Response.document.children)
 			{
 				figmaImageIds.AddRange(provider.SearchImageNodes (mainNode)
-					.Select (s => provider.CreateEmptyDownloadImageNode (s)));
+					.Select (s => provider.CreateEmptyImageNodeRequest (s)));
 			}
 
 			//var mainNode = figmaResponse.document.children.FirstOrDefault ();

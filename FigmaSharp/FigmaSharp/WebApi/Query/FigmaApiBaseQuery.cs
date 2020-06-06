@@ -26,26 +26,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System.Collections.Generic;
-
 namespace FigmaSharp
 {
-    public class FigmaDownloadImageNode : IFigmaDownloadImageNode
+    public abstract class FigmaApiBaseQuery
     {
-        public string ResourceId => Node.id;
+        public string FileId { get; private set; }
+        public string PersonalAccessToken { get; private set; }
 
-        public string Url { get; set; }
-        public float Scale { get; set; }
-
-        public Models.FigmaNode Node { get; }
-
-        public List<ImageScale> Scales { get; } = new List<ImageScale>();
-
-        public FigmaDownloadImageNode(Models.FigmaNode node)
+        public FigmaApiBaseQuery(string fileId, string personalAccessToken = null)
         {
-            this.Node = node;
+            FileId = fileId;
+            PersonalAccessToken = personalAccessToken;
         }
-
-        public string GetOutputFileName(float scale) => Node.id;
     }
 }

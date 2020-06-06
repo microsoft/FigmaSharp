@@ -54,7 +54,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        void ProcessRemoteImages(List<ViewNode> imageFigmaNodes, ImageQueryFormat imageFormat)
+        void ProcessRemoteImages(List<ViewNode> imageFigmaNodes, ImageFormat imageFormat)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace FigmaSharp.Services
                 {
                     var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
                     Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
-                    var ids = vectors.Select(s => CreateEmptyDownloadImageNode(s.FigmaNode))
+                    var ids = vectors.Select(s => CreateEmptyImageNodeRequest(s.FigmaNode))
                         .ToArray();
 
                     var figmaImageResponse = AppContext.Api.GetImages(File, ids, imageFormat);
@@ -100,7 +100,7 @@ namespace FigmaSharp.Services
                 //get images not dupplicates
                 Console.WriteLine("Finished image to download {0}", images.Count);
 
-                if (imageFormat == ImageQueryFormat.svg)
+                if (imageFormat == ImageFormat.svg)
                 {
                     throw new NotImplementedException("svg not implemented");
                     //with all the keys now we get the dupplicated images
@@ -174,7 +174,7 @@ namespace FigmaSharp.Services
             {
 
                 var images = imageFigmaNodes.ToList();
-                ProcessRemoteImages(images, ImageQueryFormat.png);
+                ProcessRemoteImages(images, ImageFormat.png);
 
                 OnImageLinkProcessed();
             });

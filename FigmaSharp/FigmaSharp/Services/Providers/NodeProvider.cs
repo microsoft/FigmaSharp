@@ -187,7 +187,7 @@ namespace FigmaSharp.Services
 
         #region Image Resources
 
-        public virtual void SaveResourceFiles(string destinationDirectory, string format, IFigmaDownloadImageNode[] downloadImages)
+        public virtual void SaveResourceFiles(string destinationDirectory, string format, IImageNodeRequest[] downloadImages)
         {
 			if (!Directory.Exists(destinationDirectory))
 				throw new DirectoryNotFoundException(destinationDirectory);
@@ -270,7 +270,7 @@ namespace FigmaSharp.Services
 
 		public IEnumerable<FigmaNode> SearchImageNodes() => SearchImageNodes(Response.document);
 
-		public virtual IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node) => new FigmaDownloadImageNode(node);
+		public virtual IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node) => new ImageNodeRequest(node);
 
 		#endregion
 	}

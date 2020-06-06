@@ -53,8 +53,8 @@ namespace FigmaSharp.Controls.Services
 			return false;
 		}
 
-		public override IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node)
-			=> new ControlDownloadImageNode(node, this);
+		public override IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node)
+			=> new ControlImageNodeRequest(node);
 	}
 
 	public class ControlsRemoteFileProvider : RemoteNodeProvider
@@ -63,8 +63,8 @@ namespace FigmaSharp.Controls.Services
 		{
 		}
 
-		public override IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node)
-			=> new ControlDownloadImageNode(node, this);
+		public override IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node)
+			=> new ControlImageNodeRequest(node);
 
 		public override bool SearchImageChildren(FigmaNode figmaNode)
 			=> !(figmaNode.IsSingleImageViewNode() || (figmaNode.Parent?.HasNodeImageName() ?? false));
@@ -101,7 +101,7 @@ namespace FigmaSharp.Controls.Services
 		public override bool SearchImageChildren(FigmaNode figmaNode)
 			=> !(figmaNode.IsSingleImageViewNode () || (figmaNode.Parent?.HasNodeImageName() ?? false));
 
-		public override IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node)
-			=> new ControlDownloadImageNode(node, this);
+		public override IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node)
+			=> new ControlImageNodeRequest(node);
 	}
 }

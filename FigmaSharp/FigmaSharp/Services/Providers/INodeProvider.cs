@@ -56,6 +56,6 @@ namespace FigmaSharp.Services
         bool TryGetStyle(string fillStyleValue, out FigmaStyle style);
 
         bool RendersAsImage(FigmaNode figmaNode);
-        void SaveResourceFiles(string destinationDirectory, string format, IFigmaDownloadImageNode[] downloadImages);
+        void SaveResourceFiles(string destinationDirectory, string format, IImageNodeRequest[] downloadImages);
     }
 }

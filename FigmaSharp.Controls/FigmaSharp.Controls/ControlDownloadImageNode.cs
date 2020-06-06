@@ -22,14 +22,10 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System.Collections.Generic;
-using FigmaSharp.Services;
-
 namespace FigmaSharp.Controls
 {
-    public class ControlDownloadImageNode : IFigmaDownloadImageNode
+    public class ControlImageNodeRequest : IImageNodeRequest
     {
-        readonly NodeProvider provider;
-
         public string ResourceId => Node.id;
         public string Url { get; set; }
 
@@ -37,9 +33,8 @@ namespace FigmaSharp.Controls
 
         public List<ImageScale> Scales { get; } = new List<ImageScale>();
 
-        public ControlDownloadImageNode(Models.FigmaNode node, NodeProvider provider)
+        public ControlImageNodeRequest(Models.FigmaNode node)
         {
-            this.provider = provider;
             this.Node = node;
         }
 

@@ -28,7 +28,7 @@
 
 namespace FigmaSharp
 {
-    public enum ImageQueryFormat
+    public enum ImageFormat
 	{
 		png,
 		jpg,
@@ -48,9 +48,9 @@ namespace FigmaSharp
         public string Url { get; }
     }
 
-    public class FigmaImageQuery : FigmaFileBaseQuery
+    public class FigmaImageQuery : FigmaApiBaseQuery
     {
-        public FigmaImageQuery(string fileId, IFigmaDownloadImageNode[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
+        public FigmaImageQuery(string fileId, IImageNodeRequest[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
         {
             Ids = ids;
         }
@@ -58,7 +58,7 @@ namespace FigmaSharp
 		/// <summary>
 		/// A comma separated list of node IDs to render
 		/// </summary>
-		public IFigmaDownloadImageNode[] Ids { get; set; }
+		public IImageNodeRequest[] Ids { get; set; }
 
 		/// <summary>
 		/// A number between 0.01 and 4, the image scaling factor
@@ -68,7 +68,7 @@ namespace FigmaSharp
 		/// <summary>
 		/// A string enum for the image output format, can be jpg, png, svg, or pdf
 		/// </summary>
-		public ImageQueryFormat Format { get; set; }
+		public ImageFormat Format { get; set; }
 
 		/// <summary>
 		/// A specific version ID to use. Omitting this will use the current version of the file

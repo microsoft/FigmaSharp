@@ -49,7 +49,7 @@ namespace FigmaSharp
 		#region Urls
 
 		string GetFigmaFileUrl (string fileId) => string.Format ("https://api.figma.com/v1/files/{0}", fileId);
-		string GetFigmaImageUrl (string fileId, params IFigmaDownloadImageNode[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds.Select(s => s.ResourceId).ToArray ()));
+		string GetFigmaImageUrl (string fileId, params IImageNodeRequest[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds.Select(s => s.ResourceId).ToArray ()));
 		string GetFigmaFileVersionsUrl (string fileId) => string.Format ("{0}/versions", GetFigmaFileUrl (fileId));
 
 		#endregion
@@ -88,7 +88,7 @@ namespace FigmaSharp
 
 		#region Images
 
-		public FigmaImageResponse GetImages (string fileId, IFigmaDownloadImageNode[] resourceIds, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
+		public FigmaImageResponse GetImages (string fileId, IImageNodeRequest[] resourceIds, ImageFormat format = ImageFormat.png, float scale = 2)
 		{
 			var currentIds = resourceIds.Select(s => s.ResourceId).ToArray();
 			var query = new FigmaImageQuery (fileId, resourceIds);
@@ -97,7 +97,7 @@ namespace FigmaSharp
 			return GetImage (query);
 		}
 
-		public void ProcessDownloadImages (string fileId, IFigmaDownloadImageNode[] resourceIds, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
+		public void ProcessDownloadImages (string fileId, IImageNodeRequest[] resourceIds, ImageFormat format = ImageFormat.png, float scale = 2)
 		{
 			var response = GetImages(fileId, resourceIds, format, scale);
             foreach (var image in response.images)
@@ -128,7 +128,7 @@ namespace FigmaSharp
 			return JsonConvert.DeserializeObject<FigmaImageResponse> (result);
 		}
 
-		string GetContentUrl <T> (T figmaQuery, Func<T, string> handler) where T : FigmaFileBaseQuery
+		string GetContentUrl <T> (T figmaQuery, Func<T, string> handler) where T : FigmaApiBaseQuery
 		{
 			var token = string.IsNullOrEmpty (figmaQuery.PersonalAccessToken) ?
 	Token : figmaQuery.PersonalAccessToken;
