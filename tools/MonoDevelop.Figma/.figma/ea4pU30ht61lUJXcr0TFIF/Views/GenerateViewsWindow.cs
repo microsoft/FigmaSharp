@@ -1,21 +1,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
-using AppKit;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using AppKit;
+using FigmaSharp;
+using FigmaSharp.Controls.Services;
+using FigmaSharp.Services;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
-using FigmaSharp;
-using MonoDevelop.Ide.Gui.Pads.ProjectPad;
-using FigmaSharp.Services;
-using MonoDevelop.Core;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace MonoDevelop.Figma
 {
-	class ValueData
+    class ValueData
 	{
 		public readonly FigmaBundleViewBase View;
 		public readonly IFigmaFileProvider fileProvider;
@@ -107,7 +105,7 @@ namespace MonoDevelop.Figma
 
 			foreach (var figmaBundle in project.GetFigmaPackages())
 			{
-				var fileProvider = new FigmaLocalFileProvider(figmaBundle.ResourcesDirectoryPath);
+				var fileProvider = new ControlsLocalFileProvider(figmaBundle.ResourcesDirectoryPath);
 				await fileProvider.LoadAsync(figmaBundle.DocumentFilePath);
 
 				var mainFigmaNodes = fileProvider.GetMainGeneratedLayers();

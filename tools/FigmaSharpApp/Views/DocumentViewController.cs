@@ -25,15 +25,13 @@
  */
 
 using System;
-
 using AppKit;
-using Foundation;
-
-using FigmaSharp;
-using FigmaSharp.Models;
 using FigmaSharp.Controls.Cocoa;
+using FigmaSharp.Controls.Services;
+using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa;
+using Foundation;
 
 namespace FigmaSharpApp
 {
@@ -157,7 +155,7 @@ namespace FigmaSharpApp
 			FigmaSharp.AppContext.Current.SetAccessToken(Token);
 
 			if (response == null || version != null) {
-				fileProvider = new FigmaRemoteFileProvider() { File = DocumentID, Version = version };
+				fileProvider = new ControlsRemoteFileProvider() { File = DocumentID, Version = version };
 				fileProvider.ImageLinksProcessed += (sender, e) => {
 					InvokeOnMainThread(() => {
 						windowController.ToggleToolbarSpinner(toggle_on: false);

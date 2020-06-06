@@ -37,6 +37,7 @@ using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Controls.Services;
 
 namespace LocalFile.Cocoa
 {
@@ -83,7 +84,7 @@ namespace LocalFile.Cocoa
 		{
 			const string fileName = "FwVa4JS5QsohRhNEnEBKslFk";
 
-			var fileProvider = new FigmaRemoteFileProvider ();
+			var fileProvider = new ControlsRemoteFileProvider ();
 			fileProvider.Load(fileName);
 
 			var rendererService = new NativeViewRenderingService (fileProvider);
@@ -120,7 +121,7 @@ namespace LocalFile.Cocoa
 
 		//	//we add the control converters
 		//	var converters = NativeControlsContext.Current.GetConverters ();
-		//	fileProvider = new FigmaRemoteFileProvider ();
+		//	fileProvider = new ControlsRemoteFileProvider ();
 		//	fileProvider.Load(document);
 
 		//	var setter = NativeControlsContext.Current.GetViewPropertySetter();
@@ -214,7 +215,7 @@ namespace LocalFile.Cocoa
 		//			new SignInMicrosoftButtonConverter(),
 		//		//new CreateAccountLinkConverter (),
 		//		//new WhySignInLinkConverter (),
-				
+
 		//	};
 		//	rendererService.CustomConverters.AddRange(customConverters);
 

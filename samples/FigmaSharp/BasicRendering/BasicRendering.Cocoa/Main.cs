@@ -28,15 +28,13 @@ using System;
 using AppKit;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views;
 using FigmaSharp.Services;
-using System.Linq;
-using FigmaSharp.Models;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	static class MainClass
+    static class MainClass
 	{
 		//static ExampleViewManager manager;
 		static IScrollView scrollView;

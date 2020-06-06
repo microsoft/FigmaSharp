@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
-using FigmaSharp;
 using System.Linq;
+using FigmaSharp;
+using FigmaSharp.Controls.Services;
 
 namespace FigmaDocumentExporter.Shell
 {
-	class Program
+    class Program
 	{
 		static void Main (string[] args)
 		{
@@ -73,22 +74,27 @@ namespace FigmaDocumentExporter.Shell
 			Console.WriteLine ("[Import] Starting from remote document '{0}' ({1} images) in local file: {2}", fileId, processImages ? "with" : "without", outputFilePath);
 
 			var query = new FigmaFileQuery (fileId);
-			var response = FigmaSharp.AppContext.Api.GetFile (query);
-			response.Save (outputFilePath);
+
+			var fileProvider = new ControlsRemoteFileProvider();
+			fileProvider.Load(fileId);
+
+			fileProvider.Save(outputFilePath);
 
 			Console.WriteLine ("[Import] Success.");
 
 			if (processImages) {
 
-				var mainNode = response.document.children.FirstOrDefault ();
-				var figmaModelImages = mainNode.OfTypeImage ().ToArray ();
+				var mainNode = fileProvider.Response.document.children.FirstOrDefault ();
+				var figmaImageNodes = fileProvider.SearchImageNodes(fileProvider.Response.document)
+					.ToArray ();
 
-				Console.WriteLine ("[Import] Downloading {0} image/s...", figmaModelImages.Length);
+				Console.WriteLine ("[Import] Downloading {0} image/s...", figmaImageNodes.Length);
 
-				var figmaImageIds = figmaModelImages.Select (s => s.id).ToArray ();
+				var figmaImageIds = figmaImageNodes.Select (s => fileProvider.CreateEmptyDownloadImageNode (s)).ToArray ();
 				if (figmaImageIds.Length > 0) {
-					var figmaImageResponse = FigmaSharp.AppContext.Api.GetImages (fileId, figmaImageIds);
-					FileHelper.SaveFiles (response, outputDirectory, ".png", figmaImageResponse.images);
+					FigmaSharp.AppContext.Api.ProcessDownloadImages (fileId, figmaImageIds, scale: 2);
+					FigmaSharp.AppContext.Api.ProcessDownloadImages(fileId, figmaImageIds, scale: 1);
+					fileProvider.SaveResourceFiles(outputDirectory, ".png", figmaImageIds);
 				}
 				Console.WriteLine ("[Import] Success.");
 			}

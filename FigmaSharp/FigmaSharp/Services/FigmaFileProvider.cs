@@ -42,7 +42,6 @@ namespace FigmaSharp.Services
 	public interface IFigmaFileProvider
 	{
 		string File { get; }
-		bool NeedsImageLinks { get; }
 		event EventHandler ImageLinksProcessed;
 		List<FigmaNode> Nodes { get; }
 		FigmaFileResponse Response { get; }
@@ -59,8 +58,12 @@ namespace FigmaSharp.Services
 		FigmaNode FindByFullPath (string fullPath);
 		FigmaNode FindByPath (params string[] path);
 		FigmaNode FindByName (string nodeName);
+
 		bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
 		bool TryGetStyle(string fillStyleValue, out FigmaStyle style);
+
+		bool RendersAsImage(FigmaNode figmaNode);
+		void SaveResourceFiles(string destinationDirectory, string format, IFigmaDownloadImageNode[] downloadImages);
 	}
 
 	public class FigmaLocalFileProvider : FigmaFileProvider
@@ -113,8 +116,6 @@ namespace FigmaSharp.Services
 
 	public class FigmaRemoteFileProvider : FigmaFileProvider
 	{
-		public override bool NeedsImageLinks => true;
-
 		public FigmaFileVersion Version { get; set; }
 
 		public override string GetContentTemplate (string file)
@@ -146,7 +147,9 @@ namespace FigmaSharp.Services
 				for (int i = 0; i < numberLoop; i++) {
 					var vectors = imageFigmaNodes.Skip (i * CallNumber).Take (CallNumber);
 					Console.WriteLine ("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count ());
-					var ids = vectors.Select (s => s.FigmaNode.id).ToArray ();
+					var ids = vectors.Select (s => CreateEmptyDownloadImageNode (s.FigmaNode))
+						.ToArray ();
+
 					var figmaImageResponse = AppContext.Api.GetImages (File, ids, imageFormat);
 					if (figmaImageResponse != null) {
 						foreach (var image in figmaImageResponse.images) {
@@ -269,8 +272,6 @@ namespace FigmaSharp.Services
 
 	public abstract class FigmaFileProvider : IFigmaFileProvider
 	{
-		public virtual bool NeedsImageLinks => false;
-
 		public event EventHandler ImageLinksProcessed;
 
 		public FigmaFileResponse Response { get; protected set; }
@@ -331,6 +332,9 @@ namespace FigmaSharp.Services
 		{
 			return FindByPath (fullPath.Split ('/'));
 		}
+
+		public FigmaNode GetParentNode (FigmaNode node)
+			=> Nodes.FirstOrDefault(s => s is IFigmaNodeContainer container && container.children.Any(c => c == node));
 
 		/// <summary>
 		/// Finds a node using the path of the views, returns null in case of no data
@@ -415,5 +419,94 @@ namespace FigmaSharp.Services
 		{
 			return Response.styles.TryGetValue(fillStyleValue, out style);
 		}
+
+        #region Image Resources
+
+        public virtual void SaveResourceFiles(string destinationDirectory, string format, IFigmaDownloadImageNode[] downloadImages)
+        {
+			if (!Directory.Exists(destinationDirectory))
+				throw new DirectoryNotFoundException(destinationDirectory);
+
+			foreach (var downloadImage in downloadImages)
+			{
+                foreach (var imageScale in downloadImage.Scales)
+                {
+					if (string.IsNullOrEmpty(imageScale.Url))
+						continue;
+
+					string customNodeName = downloadImage.GetOutputFileName(imageScale.Scale);
+					var fileName = string.Concat(customNodeName, format);
+					var fullPath = Path.Combine(destinationDirectory, fileName);
+
+					if (System.IO.File.Exists(fullPath))
+						System.IO.File.Delete(fullPath);
+
+					try
+					{
+						using (System.Net.WebClient client = new System.Net.WebClient())
+							client.DownloadFile(new Uri(imageScale.Url), fullPath);
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex);
+					}
+				}
+			};
+		}
+
+        public virtual bool RendersAsImage (FigmaNode figmaNode)
+		{
+			if (figmaNode.ContainsSourceImage ())
+				return true;
+
+			if (figmaNode is IFigmaImage figmaImage && figmaImage.HasImage())
+				return true;
+
+			return false;
+		}
+
+		public virtual bool SearchImageChildren(FigmaNode figmaNode) => true;
+
+		public IEnumerable<FigmaNode> SearchImageNodes (FigmaNode mainNode)
+		{
+			if (mainNode is FigmaInstance)
+				yield break;
+
+			if (RendersAsImage (mainNode))
+            {
+                yield return mainNode;
+				yield break;
+            }
+
+			//we don't want iterate on children
+			if (!SearchImageChildren (mainNode))
+				yield break;
+
+			if (mainNode is IFigmaNodeContainer nodeContainer)
+            {
+                foreach (var item in nodeContainer.children)
+                {
+                    foreach (var resultItems in SearchImageNodes (item))
+                    {
+                        yield return resultItems;
+                    }
+                }
+            } else if (mainNode is FigmaDocument document)
+            {
+				foreach (var item in document.children)
+				{
+					foreach (var resultItems in SearchImageNodes(item))
+					{
+						yield return resultItems;
+					}
+				}
+			}
+		}
+
+		public IEnumerable<FigmaNode> SearchImageNodes() => SearchImageNodes(Response.document);
+
+		public virtual IFigmaDownloadImageNode CreateEmptyDownloadImageNode(FigmaNode node) => new FigmaDownloadImageNode(node);
+
+		#endregion
 	}
 }

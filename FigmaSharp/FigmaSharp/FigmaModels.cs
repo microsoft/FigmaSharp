@@ -43,7 +43,7 @@ namespace FigmaSharp.Models
 
     public class FigmaElipse : FigmaVectorEntity
     {
-        
+        public override bool HasImage() => false;
     }
 
     public class FigmaStar : FigmaVectorEntity
@@ -61,10 +61,7 @@ namespace FigmaSharp.Models
         [DisplayName ("Component")]
         public FigmaComponent Component { get; set; }
 
-        public override bool HasImage()
-        {
-            return false;
-        }
+        public override bool HasImage() => false;
     }
 
     public class FigmaRegularPolygon : FigmaVectorEntity
@@ -74,11 +71,13 @@ namespace FigmaSharp.Models
 
     public class FigmaLine : FigmaVectorEntity
     {
-        
+        public override bool HasImage() => false;
     }
 
     public class RectangleVector : FigmaVectorEntity
     {
+        public override bool HasImage() => false;
+
         [Category ("General")]
         [DisplayName ("Corner Radius")]
         public float cornerRadius { get; set; }
@@ -691,6 +690,7 @@ namespace FigmaSharp.Models
 
     public class FigmaNode
     {
+        [JsonIgnore()]
         [Category ("General")]
         [DisplayName ("Parent")]
         public FigmaNode Parent { get; set; }

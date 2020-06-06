@@ -30,6 +30,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 using FigmaSharp.Models;
 
@@ -47,12 +48,8 @@ namespace FigmaSharp
 		#region Urls
 
 		string GetFigmaFileUrl (string fileId) => string.Format ("https://api.figma.com/v1/files/{0}", fileId);
-		string GetFigmaImageUrl (string fileId, params string[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds));
+		string GetFigmaImageUrl (string fileId, params IFigmaDownloadImageNode[] imageIds) => string.Format ("https://api.figma.com/v1/images/{0}?ids={1}", fileId, string.Join (",", imageIds.Select(s => s.ResourceId).ToArray ()));
 		string GetFigmaFileVersionsUrl (string fileId) => string.Format ("{0}/versions", GetFigmaFileUrl (fileId));
-
-		#endregion
-
-		#region File
 
 		#endregion
 
@@ -90,12 +87,24 @@ namespace FigmaSharp
 
 		#region Images
 
-		public FigmaImageResponse GetImages (string fileId, string[] ids, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
+		public FigmaImageResponse GetImages (string fileId, IFigmaDownloadImageNode[] resourceIds, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
 		{
-			var query = new FigmaImageQuery (fileId, ids);
+			var currentIds = resourceIds.Select(s => s.ResourceId).ToArray();
+			var query = new FigmaImageQuery (fileId, resourceIds);
 			query.Scale = scale;
 			query.Format = format;
 			return GetImage (query);
+		}
+
+		public void ProcessDownloadImages (string fileId, IFigmaDownloadImageNode[] resourceIds, ImageQueryFormat format = ImageQueryFormat.png, float scale = 2)
+		{
+			var response = GetImages(fileId, resourceIds, format, scale);
+            foreach (var image in response.images)
+            {
+				var resourceId = resourceIds.FirstOrDefault(s => s.ResourceId == image.Key);
+				if (resourceId != null)
+					resourceId.Scales.Add(new ImageScale(scale, image.Value));
+			}
 		}
 
 		public FigmaImageResponse GetImage (FigmaImageQuery figmaQuery)

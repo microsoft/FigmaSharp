@@ -1,17 +1,13 @@
-﻿using System;
-using AppKit;
-using CoreGraphics;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FigmaSharp;
 using FigmaSharp.Services;
-using FigmaSharp.Cocoa;
-using System.Collections.Generic;
-using System.Linq;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
 namespace Game.Cocoa
 {
-	enum PlayerMovement
+    enum PlayerMovement
 	{
 		Left, Up, Right, Down
 	}

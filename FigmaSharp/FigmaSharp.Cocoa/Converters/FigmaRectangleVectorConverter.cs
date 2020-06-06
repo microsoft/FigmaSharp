@@ -47,7 +47,7 @@ namespace FigmaSharp.Cocoa.Converters
         {
             var vectorEntity = (RectangleVector)currentNode;
             IView view;
-            if (rendererService.ProcessesImageFromNode(currentNode))
+            if (rendererService.FileProvider.RendersAsImage (currentNode))
                 view = new ImageView();
             else
                 view = new View();

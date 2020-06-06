@@ -26,6 +26,8 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Collections.Generic;
+
 namespace FigmaSharp
 {
 	public enum ImageQueryFormat
@@ -35,6 +37,46 @@ namespace FigmaSharp
 		svg,
 		pdf
 	}
+
+    public class ImageScale
+    {
+        public ImageScale(float scale, string url)
+        {
+            Scale = scale;
+            Url = url;
+        }
+
+        public float Scale { get; }
+        public string Url { get; }
+    }
+
+    public interface IFigmaDownloadImageNode
+    {
+        List<ImageScale> Scales { get; }
+        Models.FigmaNode Node { get; }
+        string ResourceId { get; }
+
+        string GetOutputFileName(float scale);
+    }
+
+    public class FigmaDownloadImageNode : IFigmaDownloadImageNode
+    {
+        public string ResourceId => Node.id;
+
+        public string Url { get; set; }
+        public float Scale { get; set; }
+
+        public Models.FigmaNode Node { get; }
+
+        public List<ImageScale> Scales { get; } = new List<ImageScale>();
+
+        public FigmaDownloadImageNode(Models.FigmaNode node)
+        {
+            this.Node = node;
+        }
+
+        public string GetOutputFileName(float scale) => Node.id;
+    }
 
     public abstract class FigmaFileBaseQuery
     {
@@ -77,7 +119,7 @@ namespace FigmaSharp
 
     public class FigmaImageQuery : FigmaFileBaseQuery
     {
-        public FigmaImageQuery(string fileId, string[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
+        public FigmaImageQuery(string fileId, IFigmaDownloadImageNode[] ids, string personalAccessToken = null) : base (fileId, personalAccessToken)
         {
             Ids = ids;
         }
@@ -85,7 +127,7 @@ namespace FigmaSharp
 		/// <summary>
 		/// A comma separated list of node IDs to render
 		/// </summary>
-		public string[] Ids { get; set; }
+		public IFigmaDownloadImageNode[] Ids { get; set; }
 
 		/// <summary>
 		/// A number between 0.01 and 4, the image scaling factor

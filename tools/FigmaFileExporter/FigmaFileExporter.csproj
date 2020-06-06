@@ -8,5 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj" />
   </ItemGroup>
 </Project>

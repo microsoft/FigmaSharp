@@ -36,8 +36,18 @@ using FigmaSharp.Controls;
 
 namespace FigmaSharp
 {
+    public enum CocoaThemes
+    {
+        Default,
+        Light,
+        LightHC,
+        Dark,
+        DarkHC
+    }
+
     public static class Extensions
     {
+        const string imageNodeName = "!image";
         const string a11yLabel = "label:\"";
         const string a11yHelp = "help:\"";
         const string a11yRole = "role:\"";
@@ -119,14 +129,33 @@ namespace FigmaSharp
             return false;
         }
 
-        public static bool IsFigmaImageViewNode (this FigmaNode node)
-		{
-			if (node.name.Contains ("!image")) {
+        #region ImageView node
+
+        internal static bool HasNodeImageName(this FigmaNode node) => node.name.StartsWith(imageNodeName);
+
+        internal static bool IsSingleImageViewNode(this FigmaNode node)
+            => HasNodeImageName (node)
+            && node is IFigmaNodeContainer container
+            && !container.children.Any (s => Enum.GetNames (typeof(CocoaThemes)).Contains (s.name));
+
+        internal static bool IsThemedImageViewNode (this FigmaNode node, out CocoaThemes theme)
+        {
+            if (node.Parent != null && node.Parent.HasNodeImageName ())
+                if (Enum.TryParse(node.name, true, out theme))
                 return true;
-			}
+            theme = default;
             return false;
+        } 
+
+        internal static bool IsImageViewNode(this FigmaNode node)
+        {
+            //images without defining any theme renders as image
+            if (node.IsSingleImageViewNode ())
+                return true;
+            return IsThemedImageViewNode(node, out _);
         }
 
+        #endregion
 
         public static FigmaInstance GetBaseComponentNode(this FigmaFileProvider fileProvider, FigmaNode node)
         {

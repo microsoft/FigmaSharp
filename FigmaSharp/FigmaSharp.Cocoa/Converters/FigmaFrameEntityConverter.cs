@@ -49,7 +49,7 @@ namespace FigmaSharp.Cocoa.Converters
 		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             IView view;
-            if (rendererService.ProcessesImageFromNode (currentNode))
+            if (rendererService.FileProvider.RendersAsImage (currentNode))
                 view = new ImageView ();
 			else
                 view  = new View ();

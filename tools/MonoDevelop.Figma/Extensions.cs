@@ -1,34 +1,32 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using FigmaSharp;
+using FigmaSharp.Controls.Services;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
 using MonoDevelop.Core;
+using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
 using MonoDevelop.Projects;
-using FigmaSharp.Services;
-using MonoDevelop.Ide;
-using System.Collections.Generic;
-using FigmaSharp.Models;
-using FigmaSharp.Cocoa;
-using FigmaSharp.Controls.Cocoa;
-using FigmaSharp.Views.Cocoa;
 
 namespace MonoDevelop.Figma
 {
-	public static class Extensions
+    public static class Extensions
 	{
 		public static async Task UpdateFigmaFilesAsync (this Project sender, IEnumerable<ProjectFile> projectFiles, FigmaBundle figmaBundle, FigmaFileVersion version, bool translateStrings)
         {
 			var includeImages = true;
-			var fileProvider = new FigmaRemoteFileProvider() { Version = version };
+			var fileProvider = new ControlsRemoteFileProvider() { Version = version };
 			await fileProvider.LoadAsync(figmaBundle.FileId);
 
 			Console.WriteLine($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");
 			var codeRendererService = new NativeViewCodeService(fileProvider);
 
 			await Task.Run(() => {
-				figmaBundle.Update(version, includeImages: includeImages);
+				figmaBundle.Update(version, fileProvider, includeImages: includeImages);
 			});
 			await sender.IncludeBundleAsync(figmaBundle, includeImages: includeImages);
 

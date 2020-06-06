@@ -8,6 +8,7 @@ using AppKit;
 
 using FigmaSharp;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
@@ -16,7 +17,7 @@ using MonoDevelop.Projects;
 
 namespace MonoDevelop.Figma
 {
-	public partial class FigmaPackageWindow : AppKit.NSWindow
+    public partial class FigmaPackageWindow : AppKit.NSWindow
 	{
 		public string FileId => figmaUrlTextField.StringValue;
 
@@ -91,14 +92,14 @@ namespace MonoDevelop.Figma
 			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
 
 			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new FigmaRemoteFileProvider();
+			var fileProvider = new ControlsRemoteFileProvider();
 			await fileProvider.LoadAsync (fileId);
 
 			//bundle generation
 			var currentBundle = await Task.Run (() =>
 			{
 				var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
-				bundle.SaveAll (includeImages);
+				bundle.SaveAll (includeImages, fileProvider);
 				return bundle;
 			});
 

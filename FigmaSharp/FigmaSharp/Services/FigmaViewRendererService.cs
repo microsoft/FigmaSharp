@@ -184,7 +184,7 @@ namespace FigmaSharp.Services
                 //Images
                 if (options.AreImageProcessed) {
                     foreach (var processedNode in NodesProcessed) {
-                        if (ProcessesImageFromNode (processedNode.FigmaNode)) {
+                        if (FileProvider.RendersAsImage (processedNode.FigmaNode)) {
                             ImageVectors.Add (processedNode);
                         }
                     }
@@ -217,11 +217,6 @@ namespace FigmaSharp.Services
                 canvas = fileProvider.Response.document.children.FirstOrDefault ();
             }
             ProcessFromNode (canvas, container, options);
-        }
-
-        public virtual bool ProcessesImageFromNode (FigmaNode node)
-        {
-           return node.IsImageNode ();
         }
 
         private void FileProvider_ImageLinksProcessed(object sender, EventArgs e)
