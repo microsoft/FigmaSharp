@@ -41,7 +41,7 @@ namespace FigmaSharp
         {
             return typeof(FigmaNode).IsAssignableFrom(objectType) ||
             typeof(FigmaComponent) == objectType ||
-            typeof(FigmaVector) == objectType;
+            typeof(FigmaPoint) == objectType;
         }
 
         public override object ReadJson(JsonReader reader,
@@ -53,9 +53,9 @@ namespace FigmaSharp
 
             if (!jsonObject.ContainsKey ("type") || string.IsNullOrEmpty (jsonObject["type"].Value<string> ()))
             {
-                if (objectType == typeof (FigmaVector))
+                if (objectType == typeof (FigmaPoint))
                 {
-                    return jsonObject.ToObject<FigmaVector>();
+                    return jsonObject.ToObject<FigmaPoint>();
                 }
                 if (objectType == typeof(FigmaComponent))
                 {

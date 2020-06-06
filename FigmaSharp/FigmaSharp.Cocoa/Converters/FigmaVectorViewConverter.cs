@@ -45,7 +45,7 @@ namespace FigmaSharp.Cocoa.Converters
         {
 			var vector = new ImageView();
 			var currengroupView = (NSImageView)vector.NativeObject;
-            currengroupView.Configure((FigmaVector)currentNode);
+            currengroupView.Configure((FigmaPoint)currentNode);
             return vector;
         }
 
