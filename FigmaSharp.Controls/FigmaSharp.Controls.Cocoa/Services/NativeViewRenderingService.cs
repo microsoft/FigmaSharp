@@ -48,7 +48,7 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, LayerConverter converter, FigmaViewRendererServiceOptions options)
+		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, LayerConverter converter, ViewRenderServiceOptions options)
 		{
             var windowContent = currentNode.GetWindowContent();
             if (windowContent != null && windowContent is IFigmaNodeContainer nodeContainer) {
@@ -57,14 +57,14 @@ namespace FigmaSharp.Services
 			return base.GetCurrentChildren(currentNode, parentNode, converter, options);
 		}
 
-        public override void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
+        public override void RenderInWindow(IWindow mainWindow, FigmaNode node, ViewRenderServiceOptions options = null)
         {
             if (node is IAbsoluteBoundingBox bounNode) {
                 mainWindow.Size = new Size(bounNode.absoluteBoundingBox.Width, bounNode.absoluteBoundingBox.Height);
             }
 
             if (options == null) {
-                options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
+                options = new ViewRenderServiceOptions() { GenerateMainView = false };
             }
 
             var content = node.GetWindowContent() ?? node;
@@ -113,7 +113,7 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        protected override bool NodeScansChildren (FigmaNode currentNode, LayerConverter converter, FigmaViewRendererServiceOptions options)
+        protected override bool NodeScansChildren (FigmaNode currentNode, LayerConverter converter, ViewRenderServiceOptions options)
 		{
 			if (fileProvider.RendersAsImage (currentNode))
 				return false;
@@ -121,7 +121,7 @@ namespace FigmaSharp.Services
 			return base.NodeScansChildren (currentNode, converter, options);
 		}
 
-		protected override bool SkipsNode (FigmaNode currentNode, ViewNode parentNode, FigmaViewRendererServiceOptions options)
+		protected override bool SkipsNode (FigmaNode currentNode, ViewNode parentNode, ViewRenderServiceOptions options)
 		{
 			if (currentNode.IsDialog ()) {
 				return true;

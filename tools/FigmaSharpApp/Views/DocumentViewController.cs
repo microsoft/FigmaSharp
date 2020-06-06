@@ -174,7 +174,7 @@ namespace FigmaSharpApp
 			}
 
 			var scrollView = CreateScrollView();
-			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
+			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new ViewRenderServiceOptions() { StartPage = pageIndex });
 
 			windowController.ToggleToolbarSpinner(toggle_on: true);
 

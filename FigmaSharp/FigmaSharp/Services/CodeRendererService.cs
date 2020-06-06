@@ -7,12 +7,6 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-	public class CodeRenderServiceOptions
-	{
-		public bool RendersConstructorFirstElement { get; set; }
-		public bool TranslateLabels { get; set; }
-	}
-
 	public class CodeRenderService
 	{
 		internal const string DefaultViewName = "view";

@@ -59,7 +59,7 @@ namespace FigmaSharp
             return null;
         }
 
-        public static void RenderInWindow(this ViewRenderService sender, IWindow mainWindow, string windowLayerName, FigmaViewRendererServiceOptions options = null)
+        public static void RenderInWindow(this ViewRenderService sender, IWindow mainWindow, string windowLayerName, ViewRenderServiceOptions options = null)
         {
             var windowFigmaNode = sender.FileProvider.FindByName (windowLayerName);
 
@@ -73,7 +73,7 @@ namespace FigmaSharp
 
                 if (options == null)
                 {
-                    options = new FigmaViewRendererServiceOptions();
+                    options = new ViewRenderServiceOptions();
                     options.AreImageProcessed = false;
                 }
 

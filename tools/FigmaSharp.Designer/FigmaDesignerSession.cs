@@ -64,7 +64,7 @@ namespace FigmaSharp.Designer
 
         string baseDirectory;
 
-        public void Reload(IView contentView, string file, FigmaViewRendererServiceOptions options)
+        public void Reload(IView contentView, string file, ViewRenderServiceOptions options)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public async Task ReloadAsync (IView contentView, string file, FigmaViewRendererServiceOptions options)
+        public async Task ReloadAsync (IView contentView, string file, ViewRenderServiceOptions options)
         {
             try
             {

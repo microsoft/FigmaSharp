@@ -215,7 +215,7 @@ namespace MonoDevelop.Figma
             await RefreshAll();
         }
 
-        FigmaViewRendererServiceOptions fileOptions = new FigmaViewRendererServiceOptions();
+        ViewRenderServiceOptions fileOptions = new ViewRenderServiceOptions();
 
         async Task RefreshAll()
         {

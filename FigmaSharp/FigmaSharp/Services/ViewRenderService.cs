@@ -161,7 +161,7 @@ namespace FigmaSharp.Services
             CustomConverters = figmaViewConverters.Where(s => !s.IsLayer).ToList();
         }
 
-        public void ProcessFromNode (FigmaNode figmaNode, IView View, FigmaViewRendererServiceOptions options)
+        public void ProcessFromNode (FigmaNode figmaNode, IView View, ViewRenderServiceOptions options)
         {
             try
             {
@@ -203,7 +203,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        public void Refresh(FigmaViewRendererServiceOptions options)
+        public void Refresh(ViewRenderServiceOptions options)
         {
             //on refresh we want clear results
             ImageVectors.Clear();
@@ -235,7 +235,7 @@ namespace FigmaSharp.Services
             return null;
         }
 
-		protected virtual bool SkipsNode (FigmaNode currentNode, ViewNode parent, FigmaViewRendererServiceOptions options)
+		protected virtual bool SkipsNode (FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
 		{
             if (options != null && options.ToIgnore != null && options.ToIgnore.Contains(currentNode))
                 return true;
@@ -243,7 +243,7 @@ namespace FigmaSharp.Services
 		}
 
         //TODO: This 
-        protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, FigmaViewRendererServiceOptions options)
+        protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
         {
             Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
@@ -276,7 +276,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, LayerConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, LayerConverter converter, ViewRenderServiceOptions options)
 		{
             if (currentNode is IFigmaNodeContainer nodeContainer)
 			{
@@ -285,7 +285,7 @@ namespace FigmaSharp.Services
             return Enumerable.Empty<FigmaNode>();
         }
 
-        protected virtual bool NodeScansChildren (FigmaNode currentNode, LayerConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual bool NodeScansChildren (FigmaNode currentNode, LayerConverter converter, ViewRenderServiceOptions options)
 		{
             if (converter == null)
                 return false;
@@ -316,7 +316,7 @@ namespace FigmaSharp.Services
             this.PropertySetter = propertySetter;
         }
 
-        public void RenderInWindow(IWindow mainWindow, FigmaViewRendererServiceOptions options = null)
+        public void RenderInWindow(IWindow mainWindow, ViewRenderServiceOptions options = null)
         {
             var allCanvas = fileProvider.Nodes
                 .OfType<FigmaCanvas>()
@@ -335,7 +335,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        public void RenderInWindow(IWindow mainWindow, string nodeName, FigmaViewRendererServiceOptions options = null)
+        public void RenderInWindow(IWindow mainWindow, string nodeName, ViewRenderServiceOptions options = null)
         {
             var node = fileProvider.Nodes
                 .FirstOrDefault(s =>s.name == nodeName || (s.TryGetNodeCustomName(out string name) && name == nodeName));
@@ -345,14 +345,14 @@ namespace FigmaSharp.Services
             RenderInWindow(mainWindow, node, options);
         }
 
-        public virtual void RenderInWindow(IWindow mainWindow, FigmaNode node, FigmaViewRendererServiceOptions options = null)
+        public virtual void RenderInWindow(IWindow mainWindow, FigmaNode node, ViewRenderServiceOptions options = null)
         {
             if (node is IAbsoluteBoundingBox bounNode) {
                 mainWindow.Size = new Size(bounNode.absoluteBoundingBox.Width, bounNode.absoluteBoundingBox.Height);
             }
 
             if (options == null) {
-                options = new FigmaViewRendererServiceOptions();
+                options = new ViewRenderServiceOptions();
             }
 
             ProcessFromNode(node, mainWindow.Content, options);
@@ -363,7 +363,7 @@ namespace FigmaSharp.Services
 
         #region Rendering
 
-        public T RenderByFullPath<T> (IView parent, FigmaViewRendererServiceOptions options,  string path) where T : IView
+        public T RenderByFullPath<T> (IView parent, ViewRenderServiceOptions options,  string path) where T : IView
         {
             FigmaNode node = fileProvider.FindByPath (path);
             if (node == null)
@@ -371,7 +371,7 @@ namespace FigmaSharp.Services
             return (T)RenderByNode (node, parent, options);
         }
 
-        public T RenderByPath<T> (FigmaViewRendererServiceOptions options, IView parent, params string[] path) where T : IView
+        public T RenderByPath<T> (ViewRenderServiceOptions options, IView parent, params string[] path) where T : IView
         {
             FigmaNode node = fileProvider.FindByPath (path);
             if (node == null)
@@ -381,10 +381,10 @@ namespace FigmaSharp.Services
 
         protected FigmaNode firstNode;
 
-        public IView RenderByNode(FigmaNode node, IView parent, FigmaViewRendererServiceOptions options = null)
+        public IView RenderByNode(FigmaNode node, IView parent, ViewRenderServiceOptions options = null)
         {
             if (options == null)
-                options = new FigmaViewRendererServiceOptions();
+                options = new ViewRenderServiceOptions();
 
             firstNode = node;
 
@@ -397,12 +397,12 @@ namespace FigmaSharp.Services
             return processedNode.View;
         }
 
-        public T RenderByNode<T>(FigmaNode node, IView parent, FigmaViewRendererServiceOptions options = null) where T : IView
+        public T RenderByNode<T>(FigmaNode node, IView parent, ViewRenderServiceOptions options = null) where T : IView
         {
             return (T) RenderByNode<T>(node, parent, options);
         }
 
-        public T RenderByName<T> (string figmaName, IView parent, FigmaViewRendererServiceOptions options = null) where T : IView
+        public T RenderByName<T> (string figmaName, IView parent, ViewRenderServiceOptions options = null) where T : IView
         {
             var node = FindNodeByName (figmaName);
             if (node == null)
@@ -412,7 +412,7 @@ namespace FigmaSharp.Services
 
         #endregion
 
-        protected void RecursivelyConfigureViews (ViewNode parentNode, FigmaViewRendererServiceOptions options)
+        protected void RecursivelyConfigureViews (ViewNode parentNode, ViewRenderServiceOptions options)
         {
             var children = NodesProcessed.Where(s => s.ParentView == parentNode);
             foreach (var child in children)
@@ -451,10 +451,10 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        public async Task StartAsync (string figmaName, IView container, FigmaViewRendererServiceOptions options = null)
+        public async Task StartAsync (string figmaName, IView container, ViewRenderServiceOptions options = null)
 		{
             if (options == null) {
-                options = new FigmaViewRendererServiceOptions();
+                options = new ViewRenderServiceOptions();
             }
 
             Console.WriteLine("[FigmaViewRenderer] Starting process..");
@@ -485,10 +485,10 @@ namespace FigmaSharp.Services
             }
         }
 
-        public void Start(string figmaName, IView container, FigmaViewRendererServiceOptions options = null)
+        public void Start(string figmaName, IView container, ViewRenderServiceOptions options = null)
         {
             if (options == null) {
-                options = new FigmaViewRendererServiceOptions();
+                options = new ViewRenderServiceOptions();
             }
 
             Console.WriteLine("[FigmaViewRenderer] Starting process..");
@@ -516,26 +516,5 @@ namespace FigmaSharp.Services
                 Console.WriteLine(ex);
             }
         }
-    }
-
-    public class FigmaViewRendererServiceOptions
-    {
-        public bool IsToViewProcessed { get; set; } = true;
-        public bool AreImageProcessed { get; set; } = true;
-        public int StartPage { get; set; } = 0;
-
-        public FigmaNode[] ToIgnore { get; set; }
-        public bool LoadFileProvider { get; set; } = true;
-
-        public bool ConfigureViews { get; set; } = true;
-
-        public bool GenerateMainView { get; set; } = true;
-
-        public bool FrameInMainViews { get; set; } = false;
-
-        /// <summary>
-        /// Allows configure in rederer process all children subviews from FigmaInstances (Components)
-        /// </summary>
-        public bool ScanChildrenFromFigmaInstances { get; set; } = true;
     }
 }

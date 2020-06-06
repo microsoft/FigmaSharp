@@ -152,7 +152,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
 
-				var options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
+				var options = new ViewRenderServiceOptions() { GenerateMainView = false };
 				secondaryRender.RenderInWindow(window, currentNode, options);
 
 				var mainNodes = currentNode.GetChildren()
