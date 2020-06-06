@@ -43,7 +43,7 @@ namespace FigmaSharp.Cocoa.Converters
         public override Type GetControlType(FigmaNode currentNode)
             => typeof(NSView);
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
             var vectorEntity = (RectangleVector)currentNode;
             IView view;
@@ -82,7 +82,7 @@ namespace FigmaSharp.Cocoa.Converters
             return view;
         }
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             StringBuilder builder = new StringBuilder();
 

@@ -169,7 +169,7 @@ namespace MonoDevelop.Figma
               .ToArray();
 
             var codePropertyConverters = ModuleService.CodePropertyConverters.FirstOrDefault(s => s.Platform == platform)?.Converter;
-            codeRenderer = new CodeRendererService (fileProvider, converters, codePropertyConverters);
+            codeRenderer = new CodeRenderService (fileProvider, converters, codePropertyConverters);
         }
 
 		void SetCocoaCodeRenderer ()
@@ -189,7 +189,7 @@ namespace MonoDevelop.Figma
 
         RemoteNodeProvider fileProvider;
         FigmaDesignerDelegate figmaDelegate;
-        CodeRendererService codeRenderer;
+        CodeRenderService codeRenderer;
         FigmaNodeView data;
 
 

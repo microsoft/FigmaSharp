@@ -21,42 +21,11 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
-namespace FigmaSharp.Controls.Services
+namespace FigmaSharp.Controls.Services.Providers
 {
-	public class ControlsLocalFileProvider : FileNodeProvider
-	{
-		public ControlsLocalFileProvider(string resourcesDirectory) : base(resourcesDirectory)
-		{
-		}
-
-		public override bool SearchImageChildren(FigmaNode figmaNode)
-			=> !(figmaNode.IsSingleImageViewNode() || (figmaNode.Parent?.HasNodeImageName() ?? false));
-
-		public override bool RendersAsImage(FigmaNode figmaNode)
-		{
-			if (figmaNode.IsImageViewNode())
-				return true;
-
-			if (base.RendersAsImage(figmaNode))
-				return true;
-
-			return false;
-		}
-
-		public override IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node)
-			=> new ControlImageNodeRequest(node);
-	}
-
 	public class ControlsRemoteFileProvider : RemoteNodeProvider
 	{
 		public ControlsRemoteFileProvider()
@@ -79,29 +48,5 @@ namespace FigmaSharp.Controls.Services
 
 			return false;
 		}
-	}
-
-	public class ControlsManifestFileProvider : AssemblyResourceNodeProvider
-	{
-		public ControlsManifestFileProvider(Assembly assembly, string file) : base(assembly, file)
-		{
-		}
-
-		public override bool RendersAsImage(FigmaNode figmaNode)
-		{
-			if (figmaNode.IsImageViewNode())
-				return true;
-
-			if (base.RendersAsImage(figmaNode))
-				return true;
-
-			return false;
-		}
-
-		public override bool SearchImageChildren(FigmaNode figmaNode)
-			=> !(figmaNode.IsSingleImageViewNode () || (figmaNode.Parent?.HasNodeImageName() ?? false));
-
-		public override IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node)
-			=> new ControlImageNodeRequest(node);
 	}
 }

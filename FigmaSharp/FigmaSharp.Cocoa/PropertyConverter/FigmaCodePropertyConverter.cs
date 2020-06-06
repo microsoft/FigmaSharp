@@ -35,12 +35,12 @@ namespace FigmaSharp.Cocoa.Converters
 {
 	public class FigmaCodePropertyConverter : CodePropertyNodeConfigureBase
 	{
-		protected virtual string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+		protected virtual string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return CodeGenerationHelpers.This;
 		}
 
-		public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+		public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			if (propertyName == PropertyNames.Frame)
 			{

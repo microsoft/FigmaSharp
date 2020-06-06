@@ -9,7 +9,7 @@ namespace FigmaSharp.Cocoa
 {
     public class FigmaViewPropertySetter : ViewPropertyNodeConfigureBase
     {
-        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, RendererService rendererService)
+        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, RenderService rendererService)
         {
             if (propertyName == PropertyNames.AddChild)
             {

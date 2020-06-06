@@ -46,7 +46,7 @@ namespace FigmaSharp
 		{
 		}
 
-		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRendererService codeRendererService, bool translateLabels)
+		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRenderService codeRendererService, bool translateLabels)
 		{
 			if (FigmaNode == null)
 				return;
@@ -128,7 +128,7 @@ namespace FigmaSharp
 				builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
 			}
 
-			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = translateLabels };
+			var options = new CodeRenderServiceOptions() { TranslateLabels = translateLabels };
 			codeRendererService.GetCode (builder, new CodeNode(FigmaNode, null), null, options);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 

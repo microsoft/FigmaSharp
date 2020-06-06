@@ -7,13 +7,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-	public class FigmaCodeRendererServiceOptions
+	public class CodeRenderServiceOptions
 	{
 		public bool RendersConstructorFirstElement { get; set; }
 		public bool TranslateLabels { get; set; }
 	}
 
-	public class CodeRendererService
+	public class CodeRenderService
 	{
 		internal const string DefaultViewName = "view";
 
@@ -24,7 +24,7 @@ namespace FigmaSharp.Services
 		LayerConverter[] figmaConverters;
 		LayerConverter[] customConverters;
 
-		public CodeRendererService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters,
+		public CodeRenderService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters,
 			CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
@@ -43,7 +43,7 @@ namespace FigmaSharp.Services
 			return null;
 		}
 
-		internal FigmaCodeRendererServiceOptions CurrentRendererOptions { get; set; }
+		internal CodeRenderServiceOptions CurrentRendererOptions { get; set; }
 		internal CodeNode ParentMainNode { get; set; }
 		internal CodeNode MainNode { get; set; }
 
@@ -59,7 +59,7 @@ namespace FigmaSharp.Services
 			MainNode = null;
 		}
 
-		public void GetCode (StringBuilder builder, CodeNode node, CodeNode parent = null, FigmaCodeRendererServiceOptions currentRendererOptions = null)
+		public void GetCode (StringBuilder builder, CodeNode node, CodeNode parent = null, CodeRenderServiceOptions currentRendererOptions = null)
 		{
 			//in first level we clear all identifiers
 			if (parent == null) {
@@ -72,7 +72,7 @@ namespace FigmaSharp.Services
 					OnStartGetCode ();
 					
 					//we initialize
-					CurrentRendererOptions = currentRendererOptions ?? new FigmaCodeRendererServiceOptions ();
+					CurrentRendererOptions = currentRendererOptions ?? new CodeRenderServiceOptions ();
 
 					//we store our main node
 					MainNode = node;
@@ -171,17 +171,17 @@ namespace FigmaSharp.Services
 			}
 		}
 
-        protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
+        protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, CodeRenderService figmaCodeRendererService)
         {
 			return !((node != null && node == MainNode) || node.Node is FigmaCanvas || node.Node.Parent is FigmaCanvas);
 		}
 
-		protected virtual bool RendersSize(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
+		protected virtual bool RendersSize(CodeNode node, CodeNode parent, CodeRenderService figmaCodeRendererService)
         {
 			return true;
 		}
 
-		protected virtual bool RendersAddChild(CodeNode node, CodeNode parent, CodeRendererService figmaCodeRendererService)
+		protected virtual bool RendersAddChild(CodeNode node, CodeNode parent, CodeRenderService figmaCodeRendererService)
         {
 			return true;
         }

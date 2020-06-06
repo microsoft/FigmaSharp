@@ -10,14 +10,14 @@ namespace FigmaSharp.Services
         public int HorizontalMargins { get; set; } = 64;
         public int VerticalMargins { get; set; } = 64;
 
-        public void Run(IView contentView, ViewRendererService rendererService)
+        public void Run(IView contentView, ViewRenderService rendererService)
         {
             var mainNodes = rendererService.NodesProcessed.Where(s => s.FigmaNode.Parent is FigmaCanvas)
                 .ToArray ();
             Run(mainNodes, contentView, rendererService);
         }
 
-        public void Run (ViewNode[] mainViews, IView contentView, ViewRendererService rendererService)
+        public void Run (ViewNode[] mainViews, IView contentView, ViewRenderService rendererService)
         {
             var orderedNodes = mainViews
         .OrderBy(s => ((IAbsoluteBoundingBox)s.FigmaNode).absoluteBoundingBox.Left)

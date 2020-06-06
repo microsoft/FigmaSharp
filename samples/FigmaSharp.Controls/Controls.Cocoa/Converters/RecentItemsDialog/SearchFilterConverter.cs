@@ -38,7 +38,7 @@ namespace LocalFile.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == SearchFilterId;
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
 			var customSearch = new CustomSearchField();
 			var search = new SearchBox(customSearch);
@@ -46,7 +46,7 @@ namespace LocalFile.Cocoa
 		}
 
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService) => string.Empty;
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService) => string.Empty;
 
 		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}

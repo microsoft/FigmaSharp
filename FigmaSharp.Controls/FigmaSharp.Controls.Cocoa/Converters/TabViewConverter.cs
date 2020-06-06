@@ -48,7 +48,7 @@ namespace FigmaSharp.Controls.Cocoa
         }
 
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
+        protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
         {
             var frame = (FigmaFrame)currentNode;
             var tabView = new NSTabView();
@@ -77,7 +77,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(tabView);
         }
 
-        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var code = new StringBuilder();
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;

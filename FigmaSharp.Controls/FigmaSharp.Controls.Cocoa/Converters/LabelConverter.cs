@@ -55,7 +55,7 @@ namespace FigmaSharp.Controls.Cocoa
 
         const int headerFontSize = 16;
 
-        protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RendererService rendererService)
+        protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
         {
             var label = new NSTextField();
 
@@ -97,7 +97,7 @@ namespace FigmaSharp.Controls.Cocoa
             return new View(label);
         }
 
-        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var code = new StringBuilder();
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;

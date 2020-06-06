@@ -60,7 +60,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="FigmaControlsApplication.cs" />
     <Compile Include="FigmaControlsDelegate.cs" />
-    <Compile Include="Services\NativeViewCodeService.cs" />
+    <Compile Include="Services\ControlCodeRendererService.cs" />
     <Compile Include="Services\NativeViewRenderingService.cs" />
     <Compile Include="Converters\TextFieldConverter.cs" />
     <Compile Include="Converters\StepperConverter.cs" />
@@ -94,6 +94,9 @@
     <Compile Include="Helpers\CocoaHelpers.cs" />
     <Compile Include="Services\ColorService.cs" />
     <Compile Include="Views\FigmaTransitionButton.cs" />
+    <Compile Include="Services\Providers\ControlsLocalFileProvider.cs" />
+    <Compile Include="Services\Providers\ControlsRemoteFileProvider.cs" />
+    <Compile Include="Services\Providers\ControlsManifestFileProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -105,6 +108,7 @@
     <Folder Include="Services\" />
     <Folder Include="Converters\Misc\" />
     <Folder Include="Views\" />
+    <Folder Include="Services\Providers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">

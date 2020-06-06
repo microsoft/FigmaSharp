@@ -39,7 +39,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class FigmaTextConverter : TextConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
             Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);
@@ -52,7 +52,7 @@ namespace FigmaSharp.Cocoa.Converters
             return label;
         }
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var figmaText = (FigmaText)currentNode.Node;
 

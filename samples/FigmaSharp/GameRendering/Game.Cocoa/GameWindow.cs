@@ -41,7 +41,7 @@ namespace Game.Cocoa
 			//we initialize our renderer service, this uses all the converters passed
 			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
 			
-            var rendererService = new ViewRendererService(fileProvider);
+            var rendererService = new ViewRenderService(fileProvider);
 
 			//play background music
 			backgroundMusic = new MusicPlayer ("Background", "mp3");

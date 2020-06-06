@@ -32,7 +32,7 @@ namespace FigmaSharp
 			FigmaNode = figmaNode;
 		}
 
-		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (CodeRendererService codeRendererService, string namesSpace = null, bool translateStrings = false)
+		public FigmaPartialDesignerClass GetFigmaPartialDesignerClass (CodeRenderService codeRendererService, string namesSpace = null, bool translateStrings = false)
 		{
 			var partialDesignerClass = new FigmaPartialDesignerClass ();
 			partialDesignerClass.Manifest = new FigmaManifest () {
@@ -52,7 +52,7 @@ namespace FigmaSharp
 			return partialDesignerClass;
 		}
 
-		protected abstract void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRendererService codeRendererService, bool translateStrings);
+		protected abstract void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRenderService codeRendererService, bool translateStrings);
 
 		protected abstract void OnGetPublicDesignerClass (FigmaPublicPartialClass publicPartialClass);
 
@@ -68,7 +68,7 @@ namespace FigmaSharp
 			return publicPartialClass;
 		}
 
-		public void Generate (CodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
+		public void Generate (CodeRenderService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
 		{
 			Generate(bundle.ViewsDirectoryPath, codeRendererService, writePublicClassIfExists, namesSpace, translateStrings);
 		}
@@ -83,7 +83,7 @@ namespace FigmaSharp
 			}
 		}
 
-		public void GeneratePartialDesignerClass(CodeRendererService codeRendererService, string directoryPath, string namesSpace = null, bool translateStrings = false)
+		public void GeneratePartialDesignerClass(CodeRenderService codeRendererService, string directoryPath, string namesSpace = null, bool translateStrings = false)
 		{
 			var partialDesignerClass = GetFigmaPartialDesignerClass(codeRendererService, namesSpace, translateStrings);
 
@@ -91,7 +91,7 @@ namespace FigmaSharp
 			partialDesignerClass.Save(partialDesignerClassFilePath);
 		}
 
-			public void Generate (string directoryPath, CodeRendererService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
+			public void Generate (string directoryPath, CodeRenderService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
 		{
 			if (!Directory.Exists(directoryPath))
 				Directory.CreateDirectory(directoryPath);

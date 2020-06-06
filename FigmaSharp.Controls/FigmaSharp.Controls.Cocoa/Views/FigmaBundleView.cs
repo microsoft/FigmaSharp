@@ -38,7 +38,7 @@ namespace FigmaSharp
 		{
 		}
 
-		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRendererService codeRendererService, bool translateLabels)
+		protected override void OnGetPartialDesignerClass (FigmaPartialDesignerClass partialDesignerClass, CodeRenderService codeRendererService, bool translateLabels)
 		{
 			if (FigmaNode == null)
 				return;
@@ -50,7 +50,7 @@ namespace FigmaSharp
 
 			builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 
-			var options = new FigmaCodeRendererServiceOptions() {
+			var options = new CodeRenderServiceOptions() {
                 TranslateLabels = translateLabels
             };
 

@@ -17,7 +17,7 @@ namespace ToCode.Cocoa
 		RemoteNodeProvider fileProvider;
 
 		FigmaDesignerDelegate figmaDelegate;
-		CodeRendererService codeRenderer;
+		CodeRenderService codeRenderer;
 
 		const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 
@@ -118,7 +118,7 @@ namespace ToCode.Cocoa
 			codeRenderer.Clear();
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
-			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
+			var options = new CodeRenderServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
 			codeRenderer.GetCode (builder, new CodeNode (e, null), null, options);
 			CopyToLogView (builder.ToString ());
 		}

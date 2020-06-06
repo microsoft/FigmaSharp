@@ -35,7 +35,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public class RendererService
+    public class RenderService
     {
         protected readonly List<LayerConverter> DefaultConverters;
         public readonly List<LayerConverter> CustomConverters;
@@ -154,7 +154,7 @@ namespace FigmaSharp.Services
             return null;
         }
 
-        public RendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters)
+        public RenderService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters)
         {
             this.fileProvider = figmaProvider;
             DefaultConverters = figmaViewConverters.Where(s => s.IsLayer).ToList();
@@ -302,16 +302,16 @@ namespace FigmaSharp.Services
         }
 	}
 
-    public class ViewRendererService : RendererService
+    public class ViewRenderService : RenderService
     {
         public ViewPropertyNodeConfigureBase PropertySetter { get; }
 
-        public ViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
+        public ViewRenderService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
           
         }
 
-        public ViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public ViewRenderService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }
@@ -436,17 +436,17 @@ namespace FigmaSharp.Services
             }
         }
 
-        protected virtual bool RendersAddChild (ViewNode currentNode, ViewNode parent, RendererService rendererService)
+        protected virtual bool RendersAddChild (ViewNode currentNode, ViewNode parent, RenderService rendererService)
         {
             return true;
         }
 
-        protected virtual bool RendersConstraints (ViewNode currentNode,ViewNode parent, RendererService rendererService)
+        protected virtual bool RendersConstraints (ViewNode currentNode,ViewNode parent, RenderService rendererService)
         {
             return !((currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas));
         }
 
-        protected virtual bool RendersSize (ViewNode currentNode, ViewNode parent, RendererService rendererService)
+        protected virtual bool RendersSize (ViewNode currentNode, ViewNode parent, RenderService rendererService)
         {
             return true;
         }

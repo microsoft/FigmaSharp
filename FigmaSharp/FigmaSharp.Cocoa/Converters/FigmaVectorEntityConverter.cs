@@ -42,7 +42,7 @@ namespace FigmaSharp.Cocoa.Converters
         public override Type GetControlType(FigmaNode currentNode)
             => typeof(NSImageView);
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
             var vectorEntity = (FigmaVector)currentNode;
             var vector = new ImageView();
@@ -67,7 +67,7 @@ namespace FigmaSharp.Cocoa.Converters
             return vector;
         }
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))

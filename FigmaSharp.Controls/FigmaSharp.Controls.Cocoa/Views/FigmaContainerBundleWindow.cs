@@ -49,11 +49,11 @@ namespace FigmaSharp
 		public List<FigmaFrame> figmaFrameEntities;
 
 		CodeNode parentNode;
-		CodeRendererService rendererService;
+		CodeRenderService rendererService;
 
 		const int DefaultWindowBarHeight = 22;
 
-		public ShowContentMethodCodeObject(List<FigmaFrame> figmaFrames, string name, string contentViewName, string enumTypeName, CodeNode parentNode, CodeRendererService figmaRendererService) : base (name)
+		public ShowContentMethodCodeObject(List<FigmaFrame> figmaFrames, string name, string contentViewName, string enumTypeName, CodeNode parentNode, CodeRenderService figmaRendererService) : base (name)
         {
 			MethodModifier = CodeObjectModifier.Public;
 			argumentName = "content";
@@ -155,7 +155,7 @@ namespace FigmaSharp
 			return default;
 		}
 
-		protected override void OnGetPartialDesignerClass(FigmaPartialDesignerClass partialDesignerClass, CodeRendererService codeRendererService, bool translateLabels)
+		protected override void OnGetPartialDesignerClass(FigmaPartialDesignerClass partialDesignerClass, CodeRenderService codeRendererService, bool translateLabels)
 		{
 			base.OnGetPartialDesignerClass(partialDesignerClass, codeRendererService, translateLabels);
 

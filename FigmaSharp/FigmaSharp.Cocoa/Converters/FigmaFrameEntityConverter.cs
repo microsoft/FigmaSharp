@@ -46,7 +46,7 @@ namespace FigmaSharp.Cocoa.Converters
         public override bool ScanChildren (FigmaNode currentNode)
             => true;
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
             IView view;
             if (rendererService.FileProvider.RendersAsImage (currentNode))
@@ -78,7 +78,7 @@ namespace FigmaSharp.Cocoa.Converters
             return view;
         }
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var FigmaFrame = (FigmaFrame)currentNode.Node;
             StringBuilder builder = new StringBuilder();

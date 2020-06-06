@@ -30,7 +30,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
@@ -299,7 +298,7 @@ namespace FigmaSharp
 		//	SaveViews(codeRendererService, writePublicClassIfExists, translateLabels, Views.ToArray ());
 		//}
 
-		public void SaveViews(CodeRendererService codeRendererService, bool writePublicClassIfExists, bool translateLabels, params FigmaBundleViewBase[] Views)
+		public void SaveViews(CodeRenderService codeRendererService, bool writePublicClassIfExists, bool translateLabels, params FigmaBundleViewBase[] Views)
 		{
 			foreach (var view in Views)
 			{
