@@ -224,7 +224,7 @@ namespace FigmaSharp.Services
             Console.WriteLine($"Image Links ended.");
         }
 
-        protected CustomViewConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<CustomViewConverter> customViewConverters)
+        protected ViewConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<ViewConverter> customViewConverters)
         {
             foreach (var customViewConverter in customViewConverters) {
                 if (customViewConverter.CanConvert(currentNode)) {
@@ -275,7 +275,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, ViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
             if (currentNode is IFigmaNodeContainer nodeContainer)
 			{
@@ -284,7 +284,7 @@ namespace FigmaSharp.Services
             return Enumerable.Empty<FigmaNode>();
         }
 
-        protected virtual bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual bool NodeScansChildren (FigmaNode currentNode, ViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
             if (converter == null)
                 return false;

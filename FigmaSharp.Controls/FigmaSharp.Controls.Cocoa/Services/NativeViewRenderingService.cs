@@ -47,7 +47,7 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, ViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
             var windowContent = currentNode.GetWindowContent();
             if (windowContent != null && windowContent is IFigmaNodeContainer nodeContainer) {
@@ -112,7 +112,7 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        protected override bool NodeScansChildren (FigmaNode currentNode, CustomViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected override bool NodeScansChildren (FigmaNode currentNode, ViewConverter converter, FigmaViewRendererServiceOptions options)
 		{
 			if (fileProvider.RendersAsImage (currentNode))
 				return false;

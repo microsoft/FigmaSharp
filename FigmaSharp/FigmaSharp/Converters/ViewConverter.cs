@@ -35,13 +35,8 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp
 {
-	public abstract class ViewConverter : CustomViewConverter
+	public abstract class ViewConverter 
 	{
-
-    }
-
-    public abstract class CustomViewConverter
-    {
 		public abstract Type GetControlType (FigmaNode currentNode);
 
 		public virtual bool IsLayer { get; }
