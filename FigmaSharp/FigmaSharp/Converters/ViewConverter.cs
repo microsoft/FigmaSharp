@@ -121,6 +121,6 @@ namespace FigmaSharp
 
         public abstract IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService);
 
-        public abstract string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
+        public abstract string ConvertToCode (CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService);
     }
 }

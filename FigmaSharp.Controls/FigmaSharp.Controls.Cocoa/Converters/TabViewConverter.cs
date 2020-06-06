@@ -77,7 +77,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(tabView);
         }
 
-        protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var code = new StringBuilder();
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;

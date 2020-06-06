@@ -48,12 +48,12 @@ namespace FigmaSharp
 		readonly string enumTypeName;
 		public List<FigmaFrame> figmaFrameEntities;
 
-		FigmaCodeNode parentNode;
+		CodeNode parentNode;
 		FigmaCodeRendererService rendererService;
 
 		const int DefaultWindowBarHeight = 22;
 
-		public ShowContentMethodCodeObject(List<FigmaFrame> figmaFrames, string name, string contentViewName, string enumTypeName, FigmaCodeNode parentNode, FigmaCodeRendererService figmaRendererService) : base (name)
+		public ShowContentMethodCodeObject(List<FigmaFrame> figmaFrames, string name, string contentViewName, string enumTypeName, CodeNode parentNode, FigmaCodeRendererService figmaRendererService) : base (name)
         {
 			MethodModifier = CodeObjectModifier.Public;
 			argumentName = "content";
@@ -101,14 +101,14 @@ namespace FigmaSharp
 				//	contentViewName, figmaFrameEntities[i].Item2.Left, nameof(AppKit.NSWindow.ContentView));
 				//figmaClassBase.AppendLine(sb, $"{figmaFrameEntities[i].Item2}.{nameof(AppKit.NSLayoutConstraint.Active)} = {true.ToDesignerString()};");
 
-				var parentNode = new FigmaCodeNode(figmaFrameEntities[i], nameof(AppKit.NSWindow.ContentView));
+				var parentNode = new CodeNode(figmaFrameEntities[i], nameof(AppKit.NSWindow.ContentView));
 				var nodeContent = figmaFrameEntities[i].children.FirstOrDefault(s => s.IsNodeWindowContent());
 
 				//hack:
 				var oldboundingBox = figmaFrameEntities[i].absoluteBoundingBox;
 				figmaFrameEntities[i].absoluteBoundingBox = new Rectangle(oldboundingBox.X, oldboundingBox.Y + DefaultWindowBarHeight, oldboundingBox.Width, oldboundingBox.Height - DefaultWindowBarHeight);
 
-				var codeNode = new FigmaCodeNode(nodeContent, contentViewName, parent: parentNode);
+				var codeNode = new CodeNode(nodeContent, contentViewName, parent: parentNode);
 				var frameCode = rendererService.codePropertyConverter.ConvertToCode(PropertyNames.Frame, codeNode, parentNode, rendererService);
 
 				foreach (var line in frameCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
@@ -175,7 +175,7 @@ namespace FigmaSharp
 			var currentContent = "currentContent";
 			var contentName = "ShowContent";
 
-			var figmaCode = new FigmaCodeNode(FigmaNode);
+			var figmaCode = new CodeNode(FigmaNode);
 			var contentClassMethod = new ShowContentMethodCodeObject (names, contentName, currentContent, enumName, figmaCode, codeRendererService);
             partialDesignerClass.Methods.Add (contentClassMethod);
 			partialDesignerClass.PrivateMembers.Add ((typeof(AppKit.NSView).FullName, currentContent));

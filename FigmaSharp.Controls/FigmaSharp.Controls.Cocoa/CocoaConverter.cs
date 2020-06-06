@@ -74,9 +74,9 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 
 
-		protected abstract StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
+		protected abstract StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService);
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var builder = OnConvertToCode(currentNode, parentNode, rendererService);
 			if (builder != null)

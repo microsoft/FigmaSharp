@@ -69,7 +69,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(slider);
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var code = new StringBuilder();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -125,7 +125,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -159,7 +159,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;

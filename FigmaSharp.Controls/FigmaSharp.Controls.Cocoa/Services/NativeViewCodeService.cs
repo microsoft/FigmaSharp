@@ -44,7 +44,7 @@ namespace FigmaSharp.Services
 
 		}
 
-		internal override bool NeedsRenderConstructor(FigmaCodeNode node, FigmaCodeNode parent)
+		internal override bool NeedsRenderConstructor(CodeNode node, CodeNode parent)
 		{
 			if (parent != null && IsMainNode(parent.Node) && (CurrentRendererOptions?.RendersConstructorFirstElement ?? false))
 				return false;
@@ -53,7 +53,7 @@ namespace FigmaSharp.Services
 
 		#region Rendering
 
-		internal override bool IsNodeSkipped (FigmaCodeNode node)
+		internal override bool IsNodeSkipped (CodeNode node)
 		{
             if (node.Node is FigmaInstance nodeInstance)
             {
@@ -79,12 +79,12 @@ namespace FigmaSharp.Services
 			return false;
 		}
 
-		internal override bool IsMainViewContainer (FigmaCodeNode node)
+		internal override bool IsMainViewContainer (CodeNode node)
 		{
 			return node.Node.IsWindowContent ();
 		}
 
-		internal override FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
+		internal override FigmaNode[] GetChildrenToRender (CodeNode node)
 		{
 			if (node.Node is FigmaBoolean) {
 				return new FigmaNode[0];
@@ -110,7 +110,7 @@ namespace FigmaSharp.Services
 			return base.GetChildrenToRender (node);
 		}
 
-		internal override bool HasChildrenToRender (FigmaCodeNode node)
+		internal override bool HasChildrenToRender (CodeNode node)
 		{
 			if (node.Node is FigmaInstance nodeInstance)
 			{
@@ -124,7 +124,7 @@ namespace FigmaSharp.Services
 			return base.HasChildrenToRender (node);
 		}
 
-		protected override bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, out string identifier)
+		protected override bool TryGetCodeViewName (CodeNode node, CodeNode parent, ViewConverter converter, out string identifier)
 		{
 			if (node.Node.TryGetCodeViewName (out identifier)) {
 				return true;
@@ -142,7 +142,7 @@ namespace FigmaSharp.Services
 			base.Clear();
 		}
 
-		protected override void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected override void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 			if (!NodeRendersVar (node, parent)) {
 				if (node.Node.TryGetNodeCustomName (out string name)) {
@@ -154,17 +154,17 @@ namespace FigmaSharp.Services
 		}
 
 
-        protected override bool RendersAddChild(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        protected override bool RendersAddChild(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
         {
 			return true;
 		}
 
-        protected override bool RendersSize(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        protected override bool RendersSize(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
         {
 			return true;
 		}
 
-        protected override bool RendersConstraints(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService rendererService)
+        protected override bool RendersConstraints(CodeNode node, CodeNode parent, FigmaCodeRendererService rendererService)
         {
 			if (node.Node.IsDialogParentContainer())
 				return false;

@@ -119,7 +119,7 @@ namespace ToCode.Cocoa
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
 			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
-			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null, options);
+			codeRenderer.GetCode (builder, new CodeNode (e, null), null, options);
 			CopyToLogView (builder.ToString ());
 		}
 

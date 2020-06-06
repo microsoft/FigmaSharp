@@ -32,6 +32,6 @@ namespace FigmaSharp
 {
     public abstract class CodePropertyNodeConfigureBase
     {
-        public abstract string ConvertToCode (string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
+        public abstract string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService);
     }
 }

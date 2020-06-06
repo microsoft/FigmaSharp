@@ -33,7 +33,7 @@ namespace FigmaSharp.Services
 			this.codePropertyConverter = codePropertyConverter;
 		}
 
-		ViewConverter GetConverter (FigmaCodeNode node, ViewConverter[] converters)
+		ViewConverter GetConverter (CodeNode node, ViewConverter[] converters)
 		{
 			foreach (var customViewConverter in converters) {
 				if (customViewConverter.CanConvert (node.Node)) {
@@ -44,13 +44,13 @@ namespace FigmaSharp.Services
 		}
 
 		internal FigmaCodeRendererServiceOptions CurrentRendererOptions { get; set; }
-		internal FigmaCodeNode ParentMainNode { get; set; }
-		internal FigmaCodeNode MainNode { get; set; }
+		internal CodeNode ParentMainNode { get; set; }
+		internal CodeNode MainNode { get; set; }
 
 		public bool IsMainNode (FigmaNode figmaNode) => MainNode != null && figmaNode == MainNode?.Node;
 
 
-		readonly internal List<FigmaCodeNode> Nodes = new List<FigmaCodeNode>();
+		readonly internal List<CodeNode> Nodes = new List<CodeNode>();
 
 		public virtual void Clear ()
 		{
@@ -59,7 +59,7 @@ namespace FigmaSharp.Services
 			MainNode = null;
 		}
 
-		public void GetCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent = null, FigmaCodeRendererServiceOptions currentRendererOptions = null)
+		public void GetCode (StringBuilder builder, CodeNode node, CodeNode parent = null, FigmaCodeRendererServiceOptions currentRendererOptions = null)
 		{
 			//in first level we clear all identifiers
 			if (parent == null) {
@@ -83,7 +83,7 @@ namespace FigmaSharp.Services
 			if (node != null)
 				Nodes.Add(node);
 
-			FigmaCodeNode calculatedParentNode = null;
+			CodeNode calculatedParentNode = null;
 			ViewConverter converter = null;
 
 			var isNodeSkipped = IsNodeSkipped (node);
@@ -160,7 +160,7 @@ namespace FigmaSharp.Services
 			var navigateChild = converter?.ScanChildren (node.Node) ?? true; 
 			if (navigateChild && HasChildrenToRender (node)) {
 				foreach (var item in GetChildrenToRender (node)) {
-					var figmaNode = new FigmaCodeNode(item, parent: node);
+					var figmaNode = new CodeNode(item, parent: node);
 					GetCode (builder, figmaNode, calculatedParentNode);
 				}
 			}
@@ -171,17 +171,17 @@ namespace FigmaSharp.Services
 			}
 		}
 
-        protected virtual bool RendersConstraints(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+        protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
         {
 			return !((node != null && node == MainNode) || node.Node is FigmaCanvas || node.Node.Parent is FigmaCanvas);
 		}
 
-		protected virtual bool RendersSize(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+		protected virtual bool RendersSize(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
         {
 			return true;
 		}
 
-		protected virtual bool RendersAddChild(FigmaCodeNode node, FigmaCodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
+		protected virtual bool RendersAddChild(CodeNode node, CodeNode parent, FigmaCodeRendererService figmaCodeRendererService)
         {
 			return true;
         }
@@ -191,12 +191,12 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected virtual void OnPreConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected virtual void OnPreConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 			
 		}
 
-		public bool NodeRendersVar (FigmaCodeNode currentNode, FigmaCodeNode parentNode)
+		public bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)
         {
 			if (currentNode.Node.GetNodeTypeName () == "mastercontent") {
 				return false;
@@ -206,17 +206,17 @@ namespace FigmaSharp.Services
 
 		}
 
-        protected virtual void OnPostConvertToCode (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+        protected virtual void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 
 		}
 
-		protected virtual void OnChildAdded (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected virtual void OnChildAdded (StringBuilder builder, CodeNode node, CodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 
 		}
 
-		protected virtual void OnFrameSet (StringBuilder builder, FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected virtual void OnFrameSet (StringBuilder builder, CodeNode node, CodeNode parent, ViewConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 
 		}
@@ -225,7 +225,7 @@ namespace FigmaSharp.Services
 		const string end = "Converter";
 		const string ViewIdentifier = "View";
 
-		protected virtual bool TryGetCodeViewName (FigmaCodeNode node, FigmaCodeNode parent, ViewConverter converter, out string identifier)
+		protected virtual bool TryGetCodeViewName (CodeNode node, CodeNode parent, ViewConverter converter, out string identifier)
 		{
 			try {
 				identifier = converter.GetType().Name;
@@ -256,7 +256,7 @@ namespace FigmaSharp.Services
 
 		#region Rendering Iteration
 
-		internal virtual bool NeedsRenderConstructor (FigmaCodeNode node, FigmaCodeNode parent)
+		internal virtual bool NeedsRenderConstructor (CodeNode node, CodeNode parent)
 		{
 			if (parent != null
 				&& IsMainNode (parent.Node)
@@ -268,12 +268,12 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		internal virtual bool IsMainViewContainer (FigmaCodeNode node)
+		internal virtual bool IsMainViewContainer (CodeNode node)
 		{
 			return true;
 		}
 
-		internal virtual FigmaNode[] GetChildrenToRender (FigmaCodeNode node)
+		internal virtual FigmaNode[] GetChildrenToRender (CodeNode node)
 		{
 			if (node.Node is IFigmaNodeContainer nodeContainer) {
 				return nodeContainer.children;
@@ -281,12 +281,12 @@ namespace FigmaSharp.Services
 			return new FigmaNode[0];
 		}
 
-		internal virtual bool HasChildrenToRender (FigmaCodeNode node)
+		internal virtual bool HasChildrenToRender (CodeNode node)
 		{
 			return node.Node is IFigmaNodeContainer;
 		}
 
-		internal virtual bool IsNodeSkipped (FigmaCodeNode node)
+		internal virtual bool IsNodeSkipped (CodeNode node)
 		{
 			return false;
 		}

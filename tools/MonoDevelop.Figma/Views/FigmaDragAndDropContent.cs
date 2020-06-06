@@ -59,7 +59,7 @@ namespace MonoDevelop.Figma
 		public string GetCode (FigmaNode selectedNode)
 		{
             StringBuilder builder = new StringBuilder ();
-            codeRenderer.GetCode (builder, new FigmaCodeNode (selectedNode, null), null);
+            codeRenderer.GetCode (builder, new CodeNode (selectedNode, null), null);
             return builder.ToString ();
         }
 

@@ -85,7 +85,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(scrollView);
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			var code = new StringBuilder();
 

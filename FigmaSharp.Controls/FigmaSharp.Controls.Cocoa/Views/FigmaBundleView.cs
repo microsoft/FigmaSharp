@@ -54,7 +54,7 @@ namespace FigmaSharp
                 TranslateLabels = translateLabels
             };
 
-            codeRendererService.GetCode (builder, new FigmaCodeNode (FigmaNode, null), null, options);
+            codeRendererService.GetCode (builder, new CodeNode (FigmaNode, null), null, options);
 
             if (codeRendererService is NativeViewCodeService nativeViewCodeService)
             {

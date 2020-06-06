@@ -3,9 +3,9 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-	public class FigmaCodeNode
+	public class CodeNode
 	{
-		public FigmaCodeNode (FigmaNode node, string name = null, bool isClass = false, FigmaCodeNode parent = null)
+		public CodeNode (FigmaNode node, string name = null, bool isClass = false, CodeNode parent = null)
 		{
 			Node = node;
 			Name = name;
@@ -17,7 +17,7 @@ namespace FigmaSharp.Services
 
 		public FigmaNode Node { get; private set; }
 
-		public FigmaCodeNode Parent { get; private set; }
+		public CodeNode Parent { get; private set; }
 
 		public string Name { get; set; }
 

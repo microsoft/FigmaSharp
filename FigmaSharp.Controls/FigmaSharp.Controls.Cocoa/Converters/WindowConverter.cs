@@ -50,7 +50,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return null;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return new StringBuilder();
 		}
@@ -73,7 +73,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return null;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return new StringBuilder();
 		}
@@ -96,7 +96,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return null;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
 			return new StringBuilder();
 		}

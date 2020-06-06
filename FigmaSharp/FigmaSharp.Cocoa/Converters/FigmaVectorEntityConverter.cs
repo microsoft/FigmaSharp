@@ -67,7 +67,7 @@ namespace FigmaSharp.Cocoa.Converters
             return vector;
         }
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             var builder = new StringBuilder();
             if (rendererService.NeedsRenderConstructor (currentNode, parentNode))

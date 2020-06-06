@@ -129,7 +129,7 @@ namespace FigmaSharp
 			}
 
 			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = translateLabels };
-			codeRendererService.GetCode (builder, new FigmaCodeNode(FigmaNode, null), null, options);
+			codeRendererService.GetCode (builder, new CodeNode(FigmaNode, null), null, options);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 
 			if (codeRendererService is NativeViewCodeService nativeViewCodeService) {

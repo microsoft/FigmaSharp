@@ -85,7 +85,7 @@ namespace FigmaSharp.Cocoa.Converters
             return new View (elipseView);
         }
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             StringBuilder builder = new StringBuilder();
 
