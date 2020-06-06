@@ -93,6 +93,7 @@
     <Compile Include="Helpers\CocoaCodeHelpers.cs" />
     <Compile Include="Helpers\CocoaHelpers.cs" />
     <Compile Include="Services\ColorService.cs" />
+    <Compile Include="Views\FigmaTransitionButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

@@ -59,7 +59,6 @@
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
-    <Compile Include="Views\FigmaTransitionButton.cs" />
     <Compile Include="Extensions\CodeGenerationExtensions.cs" />
     <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
@@ -70,7 +69,6 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Views\" />
     <Folder Include="Helpers\" />
     <Folder Include="PropertyConverter\" />
   </ItemGroup>
