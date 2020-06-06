@@ -4,7 +4,7 @@ using System.Linq;
 using FigmaSharp;
 using FigmaSharp.Controls.Services;
 
-namespace FigmaDocumentExporter.Shell
+namespace FigmaSharp.Backup
 {
     class Program
 	{
