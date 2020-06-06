@@ -27,15 +27,13 @@
  */
 
 using System;
-
 using FigmaSharp.Models;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace FigmaSharp
 {
-	public class FigmaResponseConverter : JsonConverter
+    public class FigmaResponseConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
