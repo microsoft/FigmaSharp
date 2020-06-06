@@ -26,11 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System.Collections.Generic;
-
 namespace FigmaSharp
 {
-	public enum ImageQueryFormat
+    public enum ImageQueryFormat
 	{
 		png,
 		jpg,
@@ -48,73 +46,6 @@ namespace FigmaSharp
 
         public float Scale { get; }
         public string Url { get; }
-    }
-
-    public interface IFigmaDownloadImageNode
-    {
-        List<ImageScale> Scales { get; }
-        Models.FigmaNode Node { get; }
-        string ResourceId { get; }
-
-        string GetOutputFileName(float scale);
-    }
-
-    public class FigmaDownloadImageNode : IFigmaDownloadImageNode
-    {
-        public string ResourceId => Node.id;
-
-        public string Url { get; set; }
-        public float Scale { get; set; }
-
-        public Models.FigmaNode Node { get; }
-
-        public List<ImageScale> Scales { get; } = new List<ImageScale>();
-
-        public FigmaDownloadImageNode(Models.FigmaNode node)
-        {
-            this.Node = node;
-        }
-
-        public string GetOutputFileName(float scale) => Node.id;
-    }
-
-    public abstract class FigmaFileBaseQuery
-    {
-        public string FileId { get; private set; }
-        public string PersonalAccessToken { get; private set; }
-
-        public FigmaFileBaseQuery (string fileId, string personalAccessToken = null)
-        {
-            FileId = fileId;
-            PersonalAccessToken = personalAccessToken;
-        }
-    }
-
-    public class FigmaFileVersionQuery : FigmaFileBaseQuery
-    {
-        public FigmaFileVersionQuery (string fileId, string personalAccessToken = null) : base (fileId, personalAccessToken)
-        {
-        }
-    }
-
-    public class FigmaFileQuery : FigmaFileBaseQuery
-    {
-        public string Version { get; private set; }
-
-        public FigmaFileQuery (string fileId, string personalAccessToken = null) : this (fileId, (string)null, personalAccessToken)
-        {
-
-        }
-
-        public FigmaFileQuery (string fileId, Models.FigmaFileVersion version, string personalAccessToken = null) : this (fileId, version?.id, personalAccessToken)
-        {
-           
-        }
-
-        public FigmaFileQuery (string fileId, string version, string personalAccessToken = null) : base (fileId, personalAccessToken)
-        {
-            Version = version;
-        }
     }
 
     public class FigmaImageQuery : FigmaFileBaseQuery
