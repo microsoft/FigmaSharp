@@ -26,17 +26,52 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System; 
-using System.Windows.Media;
-using System.Windows.Controls;
+using System.Windows.Media; 
 using System.Windows;
 using FigmaSharp.Models;
+using System.Windows.Documents;
+using System.Linq;
+using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf
 {
     public static class FigmaExtensions
     {
         #region View Extensions
-          
+
+        public static void ConfigureStyle(this TextElement textElement, FigmaTypeStyle style)
+        {
+            string family = style.fontFamily;
+            if (family == "SF UI Text")
+            {
+                family = ".SF NS Text";
+            }
+            else if (family == "SF Mono")
+            {
+                family = ".SF NS Display";
+            }
+            else
+            {
+                Console.WriteLine("FONT: {0} - {1}", family, style.fontPostScriptName);
+            }
+            textElement.FontFamily = new FontFamily(family);
+
+            if(style.fontSize > 0)
+                textElement.FontSize = style.fontSize;// -3 ;
+
+            textElement.FontWeight = FontWeight.FromOpenTypeWeight(style.fontWeight);
+            if (style.letterSpacing != default)
+            {
+                textElement.FontStretch = FontStretch.FromOpenTypeStretch(style.letterSpacing > 9 ? 9 : (int)style.letterSpacing);
+            }
+
+            var fill = style.fills.FirstOrDefault();
+            if (fill != null)
+            {
+                textElement.Foreground = fill.color.ToColor();
+            }
+        }
+
         #endregion
     }
 }

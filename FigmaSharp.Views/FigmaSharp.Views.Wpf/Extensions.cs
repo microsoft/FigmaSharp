@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace FigmaSharp
+namespace FigmaSharp.Views.Wpf
 {
     public static class Extensions
     {

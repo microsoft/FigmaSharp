@@ -2,9 +2,12 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using FigmaSharp.Extensions;
 using FigmaSharp.Models;
+using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf
 {
@@ -90,42 +93,63 @@ namespace FigmaSharp.Wpf
             //view.Layer.CornerRadius = child.cornerRadius;
         }
 
-        public static void Configure(this Label label, FigmaText text)
+        public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);
-
-            label.HorizontalContentAlignment = text.style.textAlignHorizontal == "CENTER" ? HorizontalAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? HorizontalAlignment.Left : HorizontalAlignment.Right;
-            label.VerticalContentAlignment = text.style.textAlignVertical == "CENTER" ? VerticalAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalAlignment.Top : VerticalAlignment.Bottom;
-
-            label.HorizontalAlignment = HorizontalAlignment.Center;
-            string family = text.style.fontFamily;
-            if (family == "SF UI Text")
-            {
-                family = ".SF NS Text";
-            }
-            else if (family == "SF Mono")
-            {
-                family = ".SF NS Display";
-            }
-            else
-            {
-                Console.WriteLine("FONT: {0} - {1}", family, text.style.fontPostScriptName);
-            } 
-            label.FontFamily = new FontFamily(family);
-            label.FontSize = text.style.fontSize;// -3 ;
-            label.FontWeight = FontWeight.FromOpenTypeWeight(text.style.fontWeight);
-            if (text.style.letterSpacing > 0)
-            {
-                label.FontStretch = FontStretch.FromOpenTypeStretch(text.style.letterSpacing > 9 ? 9 : (int)text.style.letterSpacing);
-            }
+             
+            label.TextAlignment = text.style.textAlignHorizontal == "CENTER" ? TextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? TextAlignment.Left : TextAlignment.Right;
+            
+            // textblock doesn't support vertical text alignment, unfortunately
+            label.VerticalAlignment = text.style.textAlignVertical == "CENTER" ? VerticalAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalAlignment.Top : VerticalAlignment.Bottom;
 
             label.Opacity = text.opacity;
 
-            var fills = text.fills.FirstOrDefault();
-            if (fills != null)
+            text.style.FillEmptyStylePropertiesWithDefaults(text);
+
+            if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
             {
-                label.Foreground = fills.color.ToColor();
-            } 
+                foreach(var overrideStyle in text.styleOverrideTable.Values)
+                {
+                    overrideStyle.FillEmptyStylePropertiesWithDefaults(text);
+                }
+
+                var chars = text.characters.ToCharArray();
+
+                // since we can expect in most cases a style will continue for multiple chars, 
+                // there's an optimization to be made here
+
+                int i = 0;
+                for (; i < text.characterStyleOverrides.Length; i++)
+                { 
+                    var run = new Run(chars[i].ToString());
+
+                    var key = text.characterStyleOverrides[i].ToString();
+                    if (text.styleOverrideTable.ContainsKey(key))
+                    {
+                        //if there is a style to override
+                        var styleOverride = text.styleOverrideTable[key];
+                        run.ConfigureStyle(styleOverride); 
+                    }
+                    else
+                    {
+                        //we want the default values
+                        run.ConfigureStyle(text.style); 
+                    } 
+
+                    label.Inlines.Add(run);
+                }
+
+                var remainingChars = chars.Skip(i);
+                var lastRun = new Run(string.Concat(remainingChars));
+                lastRun.ConfigureStyle(text.style);
+                label.Inlines.Add(lastRun);
+            }
+            else
+            {
+                var run = new Run(text.characters);
+                run.ConfigureStyle(text.style);
+                label.Inlines.Add(run);
+            }
         }
     }
 }

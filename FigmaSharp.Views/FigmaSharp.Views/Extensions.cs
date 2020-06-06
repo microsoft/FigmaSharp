@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace FigmaSharp
+namespace FigmaSharp.Views
 {
 	public static class Extensions
 	{

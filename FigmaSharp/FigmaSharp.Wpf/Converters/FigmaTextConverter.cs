@@ -38,14 +38,13 @@ namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(Label);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(TextBlock);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
             
-            var textField = new Label(); 
-            textField.Content = figmaText.characters;
+            var textField = new TextBlock();  
             textField.Configure(figmaText);
             var wrapper = new View(textField);
             return wrapper;
