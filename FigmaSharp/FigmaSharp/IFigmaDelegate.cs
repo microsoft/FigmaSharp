@@ -28,7 +28,7 @@
 
 using System;
 using System.Reflection;
-
+using FigmaSharp.Converters;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -38,7 +38,7 @@ namespace FigmaSharp
         bool IsVerticalAxisFlipped { get; }
 
         IView CreateEmptyView();
-        ViewConverter[] GetFigmaConverters();
+        LayerConverter[] GetFigmaConverters();
 
         IImage GetImage(string url);
 		string GetSvgData(string url);

@@ -30,7 +30,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class PointConverterBase : ViewConverter
+    public abstract class PointConverterBase : LayerConverter
     {
         public override bool IsLayer => true;
 

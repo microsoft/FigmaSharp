@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 
@@ -36,8 +37,8 @@ namespace FigmaSharp.Services
 {
     public class FigmaRendererService
     {
-        protected readonly List<ViewConverter> DefaultConverters;
-        public readonly List<ViewConverter> CustomConverters;
+        protected readonly List<LayerConverter> DefaultConverters;
+        public readonly List<LayerConverter> CustomConverters;
 
         public List<ViewNode> NodesProcessed = new List<ViewNode>();
         public readonly List<ViewNode> ImageVectors = new List<ViewNode>();
@@ -153,7 +154,7 @@ namespace FigmaSharp.Services
             return null;
         }
 
-        public FigmaRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters)
+        public FigmaRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters)
         {
             this.fileProvider = figmaProvider;
             DefaultConverters = figmaViewConverters.Where(s => s.IsLayer).ToList();
@@ -224,7 +225,7 @@ namespace FigmaSharp.Services
             Console.WriteLine($"Image Links ended.");
         }
 
-        protected ViewConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<ViewConverter> customViewConverters)
+        protected LayerConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<LayerConverter> customViewConverters)
         {
             foreach (var customViewConverter in customViewConverters) {
                 if (customViewConverter.CanConvert(currentNode)) {
@@ -275,7 +276,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, ViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, LayerConverter converter, FigmaViewRendererServiceOptions options)
 		{
             if (currentNode is IFigmaNodeContainer nodeContainer)
 			{
@@ -284,7 +285,7 @@ namespace FigmaSharp.Services
             return Enumerable.Empty<FigmaNode>();
         }
 
-        protected virtual bool NodeScansChildren (FigmaNode currentNode, ViewConverter converter, FigmaViewRendererServiceOptions options)
+        protected virtual bool NodeScansChildren (FigmaNode currentNode, LayerConverter converter, FigmaViewRendererServiceOptions options)
 		{
             if (converter == null)
                 return false;
@@ -304,7 +305,7 @@ namespace FigmaSharp.Services
 	[Obsolete("Use FigmaViewRendererService instead")]
 	public class FigmaFileRendererService : FigmaRendererService
     {
-        public FigmaFileRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
+        public FigmaFileRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
         {
         }
 
@@ -341,12 +342,12 @@ namespace FigmaSharp.Services
     {
         public ViewPropertyNodeConfigureBase PropertySetter { get; }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
+        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
           
         }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }

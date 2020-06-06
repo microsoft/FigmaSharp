@@ -9,12 +9,13 @@ using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.Cocoa.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Helpers;
+using FigmaSharp.Converters;
 
 namespace FigmaSharp.Cocoa
 {
     public class FigmaDelegate : IFigmaDelegate
     {
-        static readonly ViewConverter[] figmaViewConverters = {
+        static readonly LayerConverter[] figmaViewConverters = {
             new FigmaRegularPolygonConverter (),
             new FigmaTextConverter (),
             new FigmaLineConverter (),
@@ -60,7 +61,7 @@ namespace FigmaSharp.Cocoa
             return wrapper;
         }
 
-        public ViewConverter[] GetFigmaConverters() => figmaViewConverters;
+        public LayerConverter[] GetFigmaConverters() => figmaViewConverters;
 
         public IView CreateEmptyView() => new View();
 

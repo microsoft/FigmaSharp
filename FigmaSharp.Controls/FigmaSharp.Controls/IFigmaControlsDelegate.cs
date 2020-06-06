@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 
 namespace FigmaSharp
@@ -36,7 +37,7 @@ namespace FigmaSharp
 
         CodePropertyNodeConfigureBase GetCodePropertyConverter ();
 
-        ViewConverter[] GetConverters (bool includeAll = true);
+        LayerConverter[] GetConverters (bool includeAll = true);
         ViewPropertyNodeConfigureBase GetViewPropertySetter();
     }
 }

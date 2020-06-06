@@ -35,7 +35,7 @@ using System;
 
 namespace LocalFile.Cocoa
 {
-	class SignInMicrosoftButtonConverter : ViewConverter
+	class SignInMicrosoftButtonConverter : LayerConverter
 	{
 		public const string SignInMicrosoftButtonName = "SignInMicrosoftButton";
 		const string LogoImageName = "MSLogoImage";

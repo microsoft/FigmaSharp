@@ -34,7 +34,7 @@ using System;
 
 namespace LocalFile.Cocoa
 {
-	class DoThisLaterButtonConverter : ViewConverter
+	class DoThisLaterButtonConverter : LayerConverter
 	{
 		public const string DoThisLaterButtonName = "DoThisLaterButton";
 		

@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 
 namespace FigmaSharp
@@ -64,7 +65,7 @@ namespace FigmaSharp
         public CodePropertyNodeConfigureBase GetCodePropertyConverter ()
             => figmaDelegate.GetCodePropertyConverter ();
 
-        public ViewConverter[] GetConverters (bool includeAll = true)
+        public LayerConverter[] GetConverters (bool includeAll = true)
              => figmaDelegate.GetConverters (includeAll);
 
         #endregion

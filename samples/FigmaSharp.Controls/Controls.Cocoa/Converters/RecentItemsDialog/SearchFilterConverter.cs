@@ -32,7 +32,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class SearchFilterConverter : ViewConverter
+	class SearchFilterConverter : LayerConverter
 	{
 		public const string SearchFilterId = "filter";
 

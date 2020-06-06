@@ -33,9 +33,9 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
-namespace FigmaSharp
+namespace FigmaSharp.Converters
 {
-	public abstract class ViewConverter 
+	public abstract class LayerConverter 
 	{
 		public abstract Type GetControlType (FigmaNode currentNode);
 

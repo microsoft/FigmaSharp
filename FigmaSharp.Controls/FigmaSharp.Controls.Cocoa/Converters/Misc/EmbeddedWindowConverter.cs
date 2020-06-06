@@ -25,19 +25,17 @@
 
 using System;
 using System.Linq;
-
 using AppKit;
-
 using FigmaSharp.Cocoa;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Controls;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public class EmbededSheetDialogConverter : ViewConverter
+    public class EmbededSheetDialogConverter : LayerConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
@@ -90,7 +88,7 @@ namespace FigmaSharp.Controls.Cocoa
 		}
 	}
 
-	public class EmbededWindowConverter : ViewConverter
+	public class EmbededWindowConverter : LayerConverter
 	{
         public override Type GetControlType(FigmaNode currentNode)
         => typeof(AppKit.NSView);

@@ -30,7 +30,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class ElipseConverterBase : ViewConverter
+    public abstract class ElipseConverterBase : LayerConverter
     {
         public override bool IsLayer => true;
 

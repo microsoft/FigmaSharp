@@ -30,7 +30,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class RegularPolygonConverterBase : ViewConverter
+    public abstract class RegularPolygonConverterBase : LayerConverter
     {
         public override bool IsLayer => true;
 

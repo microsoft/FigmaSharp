@@ -29,6 +29,7 @@
 using System.Linq;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Converters;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls.Cocoa
@@ -39,16 +40,16 @@ namespace FigmaSharp.Controls.Cocoa
 
 		static readonly ViewPropertyNodeConfigureBase viewPropertySetter = new FigmaViewPropertySetter ();
 
-		static ViewConverter[] allConverters;
-		static ViewConverter[] converters;
+		static LayerConverter[] allConverters;
+		static LayerConverter[] converters;
 
 		public CodePropertyNodeConfigureBase GetCodePropertyConverter ()
 		  => codePropertyConverter;
 
-		public ViewConverter[] GetConverters (bool includeAll = true)
+		public LayerConverter[] GetConverters (bool includeAll = true)
 		{
 			if (converters == null) {
-				converters = new ViewConverter[] {
+				converters = new LayerConverter[] {
 					// Buttons
 					new ButtonConverter (),
 					new StepperConverter (),

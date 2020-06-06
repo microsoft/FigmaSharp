@@ -29,13 +29,14 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public abstract class CocoaConverter : ViewConverter
+	public abstract class CocoaConverter : LayerConverter
 	{
 		public override bool ScanChildren(FigmaNode currentNode)
 		{

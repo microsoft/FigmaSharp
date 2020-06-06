@@ -33,7 +33,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class OperationButtonConverter : ViewConverter
+	class OperationButtonConverter : LayerConverter
 	{
 		public const string OpenButtonName = "OpenButton";
 		public const string CloneButtonName = "CloneButton";

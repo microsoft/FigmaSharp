@@ -32,7 +32,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class LoadingSpinnerConverter : ViewConverter
+	class LoadingSpinnerConverter : LayerConverter
 	{
 		public const string LoadingSpinnerName = "progess indicator ~dark";
 
