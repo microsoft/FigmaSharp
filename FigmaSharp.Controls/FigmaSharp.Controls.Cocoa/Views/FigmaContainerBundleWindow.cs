@@ -109,12 +109,12 @@ namespace FigmaSharp
 				figmaFrameEntities[i].absoluteBoundingBox = new Rectangle(oldboundingBox.X, oldboundingBox.Y + DefaultWindowBarHeight, oldboundingBox.Width, oldboundingBox.Height - DefaultWindowBarHeight);
 
 				var codeNode = new FigmaCodeNode(nodeContent, contentViewName, parent: parentNode);
-				var frameCode = rendererService.codePropertyConverter.ConvertToCode(CodeProperties.Frame, codeNode, parentNode, rendererService);
+				var frameCode = rendererService.codePropertyConverter.ConvertToCode(PropertyNames.Frame, codeNode, parentNode, rendererService);
 
 				foreach (var line in frameCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
 					figmaClassBase.AppendLine(sb, line);
 
-				var contraintsCode = rendererService.codePropertyConverter.ConvertToCode(CodeProperties.Constraints, codeNode, parentNode, rendererService);
+				var contraintsCode = rendererService.codePropertyConverter.ConvertToCode(PropertyNames.Constraints, codeNode, parentNode, rendererService);
                 foreach (var line in contraintsCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
 					figmaClassBase.AppendLine(sb, line);
 

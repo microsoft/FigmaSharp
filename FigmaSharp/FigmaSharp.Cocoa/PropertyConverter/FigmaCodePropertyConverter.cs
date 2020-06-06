@@ -33,7 +33,7 @@ using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-	public class FigmaCodePropertyConverter : FigmaCodePropertyConverterBase
+	public class FigmaCodePropertyConverter : CodePropertyNodeConfigureBase
 	{
 		protected virtual string GetDefaultParentName (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
@@ -42,7 +42,7 @@ namespace FigmaSharp.Cocoa.Converters
 
 		public override string ConvertToCode(string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
 		{
-			if (propertyName == CodeProperties.Frame)
+			if (propertyName == PropertyNames.Frame)
 			{
 				System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
@@ -82,11 +82,11 @@ namespace FigmaSharp.Cocoa.Converters
 				}
 				return string.Empty;
 			}
-			if (propertyName == CodeProperties.AddChild)
+			if (propertyName == PropertyNames.AddChild)
 			{
 				return parentNode?.GetMethod(nameof(NSView.AddSubview), currentNode.Name);
 			}
-			if (propertyName == CodeProperties.Size)
+			if (propertyName == PropertyNames.Size)
 			{
 				if (currentNode.Node is IAbsoluteBoundingBox container)
 				{
@@ -106,7 +106,7 @@ namespace FigmaSharp.Cocoa.Converters
 				}
 				return string.Empty;
 			}
-			if (propertyName == CodeProperties.Position)
+			if (propertyName == PropertyNames.Position)
 			{
 				//first level has an special behaviour on positioning 
 				if (currentNode.Node.Parent is FigmaCanvas)
@@ -133,7 +133,7 @@ namespace FigmaSharp.Cocoa.Converters
 				return string.Empty;
 			}
 
-			if (propertyName == CodeProperties.Constraints)
+			if (propertyName == PropertyNames.Constraints)
 			{
 				if (currentNode.Node is IConstraints constrainedNode && currentNode.Node.Parent != null)
 				{

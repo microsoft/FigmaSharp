@@ -89,7 +89,7 @@ namespace FigmaSharp
             return figmaDelegate.GetImageView(image);
         }
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter()
+        public CodePropertyNodeConfigureBase GetCodePropertyConverter()
 			=> figmaDelegate.GetCodePropertyConverter ();
 
         #region Static
@@ -114,7 +114,7 @@ namespace FigmaSharp
 
         public static FigmaApi Api { get; } = new FigmaApi ();
         public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
-        public FigmaViewPropertySetterBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
+        public ViewPropertyNodeConfigureBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
 
         #endregion
     }

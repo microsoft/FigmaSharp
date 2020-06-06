@@ -24,8 +24,8 @@ namespace FigmaSharp.Cocoa
             new FigmaVectorEntityConverter (),
         };
 
-        static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaCodePropertyConverter ();
-        static readonly FigmaViewPropertySetterBase propertySetter = new FigmaViewPropertySetter ();
+        static readonly CodePropertyNodeConfigureBase codePropertyConverter = new FigmaCodePropertyConverter ();
+        static readonly ViewPropertyNodeConfigureBase propertySetter = new FigmaViewPropertySetter ();
 
         public bool IsVerticalAxisFlipped => false;
 
@@ -68,7 +68,7 @@ namespace FigmaSharp.Cocoa
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter () => codePropertyConverter;
-        public FigmaViewPropertySetterBase GetPropertySetter() => propertySetter;
+        public CodePropertyNodeConfigureBase GetCodePropertyConverter () => codePropertyConverter;
+        public ViewPropertyNodeConfigureBase GetPropertySetter() => propertySetter;
     }
 }

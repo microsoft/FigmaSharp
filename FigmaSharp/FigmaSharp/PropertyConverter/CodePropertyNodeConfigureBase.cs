@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,17 +26,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
-	public interface IFigmaControlsDelegate
-	{
-		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
-
-        CodePropertyNodeConfigureBase GetCodePropertyConverter ();
-
-        ViewConverter[] GetConverters (bool includeAll = true);
-        ViewPropertyNodeConfigureBase GetViewPropertySetter();
+    public abstract class CodePropertyNodeConfigureBase
+    {
+        public abstract string ConvertToCode (string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService);
     }
 }

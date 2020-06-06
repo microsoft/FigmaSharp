@@ -339,14 +339,14 @@ namespace FigmaSharp.Services
 
     public class FigmaViewRendererService : FigmaRendererService
     {
-        public FigmaViewPropertySetterBase PropertySetter { get; }
+        public ViewPropertyNodeConfigureBase PropertySetter { get; }
 
         public FigmaViewRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
           
         }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters, FigmaViewPropertySetterBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }
@@ -459,13 +459,13 @@ namespace FigmaSharp.Services
                 }
 
                 if (RendersAddChild(child, parentNode, this))
-                    PropertySetter.Configure(CodeProperties.AddChild, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                    PropertySetter.Configure(PropertyNames.AddChild, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
 
                 if (RendersSize (child, parentNode, this))
-                    PropertySetter.Configure(CodeProperties.Frame, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                    PropertySetter.Configure(PropertyNames.Frame, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
 
                 if (RendersConstraints(child, parentNode, this))
-                    PropertySetter.Configure(CodeProperties.Constraints, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                    PropertySetter.Configure(PropertyNames.Constraints, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
 
                 RecursivelyConfigureViews (child, options);
             }

@@ -63,7 +63,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
         public override string ConvertToCode (string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
-			if (currentNode.Node.Parent != null && propertyName == CodeProperties.AddChild) {
+			if (currentNode.Node.Parent != null && propertyName == PropertyNames.AddChild) {
 
                 var defaultParentName = GetDefaultParentName(currentNode, parentNode, rendererService);
                 if (!string.IsNullOrEmpty (defaultParentName))

@@ -19,6 +19,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Services\" />
     <Folder Include="Properties\" />
+    <Folder Include="PropertyConverter\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1">

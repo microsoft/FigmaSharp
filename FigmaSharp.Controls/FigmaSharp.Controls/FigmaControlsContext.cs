@@ -58,10 +58,10 @@ namespace FigmaSharp
             figmaDelegate = applicationDelegate;
         }
 
-        public FigmaViewPropertySetterBase GetViewPropertySetter()
+        public ViewPropertyNodeConfigureBase GetViewPropertySetter()
             => figmaDelegate.GetViewPropertySetter();
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
+        public CodePropertyNodeConfigureBase GetCodePropertyConverter ()
             => figmaDelegate.GetCodePropertyConverter ();
 
         public ViewConverter[] GetConverters (bool includeAll = true)

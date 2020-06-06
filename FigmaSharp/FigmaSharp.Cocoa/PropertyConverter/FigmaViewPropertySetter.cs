@@ -7,16 +7,16 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Cocoa
 {
-    public class FigmaViewPropertySetter : FigmaViewPropertySetterBase
+    public class FigmaViewPropertySetter : ViewPropertyNodeConfigureBase
     {
         public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService)
         {
-            if (propertyName == CodeProperties.AddChild)
+            if (propertyName == PropertyNames.AddChild)
             {
                 parent?.AddChild(view);
                 return;
             }
-            if (propertyName == CodeProperties.Constraints)
+            if (propertyName == PropertyNames.Constraints)
             {
                 if (currentNode is IConstraints constrainedNode && view.NativeObject is AppKit.NSView nativeView && parent.NativeObject is AppKit.NSView parentNativeView)
                 {
@@ -78,7 +78,7 @@ namespace FigmaSharp.Cocoa
                 return;
             }
 
-            if (propertyName == CodeProperties.Frame)
+            if (propertyName == PropertyNames.Frame)
             {
                 if (currentNode is IAbsoluteBoundingBox absoluteBounding)
                 {

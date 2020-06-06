@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaViewExtensions.cs - Extension methods for NSViews
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,17 +26,14 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
-
 namespace FigmaSharp
 {
-	public interface IFigmaControlsDelegate
-	{
-		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
-
-        CodePropertyNodeConfigureBase GetCodePropertyConverter ();
-
-        ViewConverter[] GetConverters (bool includeAll = true);
-        ViewPropertyNodeConfigureBase GetViewPropertySetter();
+    public static class PropertyNames
+    {
+        public const string Size = "Size";
+        public const string Position = "Position";
+        public const string AddChild = "AddChild";
+        public const string Frame = "Frame";
+        public const string Constraints = "Constraints";
     }
 }

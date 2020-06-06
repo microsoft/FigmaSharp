@@ -45,7 +45,7 @@ namespace FigmaSharp.Services
 
             if (UsesConstraints) {
                 foreach (var node in orderedNodes)
-                    rendererService.PropertySetter.Configure(CodeProperties.Constraints,
+                    rendererService.PropertySetter.Configure(PropertyNames.Constraints,
                         node.View, node.FigmaNode, node.ParentView?.View, node.ParentView?.FigmaNode, rendererService);
             } else {
                 var rectangle = orderedNodes

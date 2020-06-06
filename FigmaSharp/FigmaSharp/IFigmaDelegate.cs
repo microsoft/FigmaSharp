@@ -51,7 +51,7 @@ namespace FigmaSharp
         IImageView GetImageView(IImage image);
         void BeginInvoke(Action handler);
         
-        FigmaCodePropertyConverterBase GetCodePropertyConverter ();
-        FigmaViewPropertySetterBase GetPropertySetter();
+        CodePropertyNodeConfigureBase GetCodePropertyConverter ();
+        ViewPropertyNodeConfigureBase GetPropertySetter();
     }
 }

@@ -35,14 +35,14 @@ namespace FigmaSharp.Controls.Cocoa
 {
     public class FigmaControlsDelegate : IFigmaControlsDelegate
 	{
-		static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaControlsPropertyConverter ();
+		static readonly CodePropertyNodeConfigureBase codePropertyConverter = new FigmaControlsPropertyConverter ();
 
-		static readonly FigmaViewPropertySetterBase viewPropertySetter = new FigmaViewPropertySetter ();
+		static readonly ViewPropertyNodeConfigureBase viewPropertySetter = new FigmaViewPropertySetter ();
 
 		static ViewConverter[] allConverters;
 		static ViewConverter[] converters;
 
-		public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
+		public CodePropertyNodeConfigureBase GetCodePropertyConverter ()
 		  => codePropertyConverter;
 
 		public ViewConverter[] GetConverters (bool includeAll = true)
@@ -115,7 +115,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new FigmaBundleView (bundle, name, figmaNode);
 		}
 
-		public FigmaViewPropertySetterBase GetViewPropertySetter() => viewPropertySetter;
+		public ViewPropertyNodeConfigureBase GetViewPropertySetter() => viewPropertySetter;
 
 	}
 }

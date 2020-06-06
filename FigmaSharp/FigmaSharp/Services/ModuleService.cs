@@ -50,14 +50,14 @@ namespace FigmaSharp.Services
 
     public class PlatformFigmaCodePropertyConverter
     {
-        public PlatformFigmaCodePropertyConverter (string platform, FigmaCodePropertyConverterBase converter)
+        public PlatformFigmaCodePropertyConverter (string platform, CodePropertyNodeConfigureBase converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public FigmaCodePropertyConverterBase Converter { get; private set; }
+        public CodePropertyNodeConfigureBase Converter { get; private set; }
     }
 
     public static class ModuleService
@@ -194,7 +194,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodePropertyConverterBase);
+                var interfaceType = typeof(CodePropertyNodeConfigureBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -208,7 +208,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodePropertyConverterBase element)
+                        if (Activator.CreateInstance(type) is CodePropertyNodeConfigureBase element)
                             CodePropertyConverters.Add(new PlatformFigmaCodePropertyConverter(platform, element));
                     }
                     catch (Exception ex)
@@ -229,7 +229,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodePropertyConverterBase);
+                var interfaceType = typeof(CodePropertyNodeConfigureBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -243,7 +243,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodePropertyConverterBase element)
+                        if (Activator.CreateInstance(type) is CodePropertyNodeConfigureBase element)
                             CodePropertyConverters.Add(new PlatformFigmaCodePropertyConverter (platform, element));
                     }
                     catch (Exception ex)

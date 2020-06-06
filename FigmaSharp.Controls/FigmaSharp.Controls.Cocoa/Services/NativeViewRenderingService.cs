@@ -38,7 +38,7 @@ namespace FigmaSharp.Services
 {
     public class NativeViewRenderingService : FigmaViewRendererService
 	{
-		public NativeViewRenderingService (IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters = null, FigmaViewPropertySetterBase propertySetter = null)
+		public NativeViewRenderingService (IFigmaFileProvider figmaProvider, ViewConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? FigmaControlsContext.Current.GetConverters (),
                   propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter()
