@@ -9,6 +9,7 @@ using AppKit;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Services;
+using FigmaSharp.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
