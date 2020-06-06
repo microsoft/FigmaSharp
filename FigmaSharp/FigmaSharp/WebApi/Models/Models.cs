@@ -33,6 +33,8 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
+    #region Based Nodes
+
     public class FigmaElipse : FigmaVector
     {
         public override bool HasImage() => false;
@@ -78,6 +80,372 @@ namespace FigmaSharp.Models
         [DisplayName ("RectangleCornerRadii")]
         public float[] rectangleCornerRadii { get; set; }
     }
+
+    public class FigmaGroup : FigmaFrame
+    {
+        public override bool HasImage()
+        {
+            return false;
+        }
+    }
+
+    public class FigmaSlice : FigmaNode, IAbsoluteBoundingBox, IConstraints
+    {
+        [Category("General")]
+        [DisplayName("Absolute BoundingBox")]
+        public Rectangle absoluteBoundingBox { get; set; }
+
+        [Category("General")]
+        [DisplayName("Constraints")]
+        public FigmaLayoutConstraint constraints { get; set; }
+    }
+
+    public class FigmaFrame : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    {
+        public virtual bool HasImage()
+        {
+            return false;
+        }
+
+        [Category("General")]
+        [Obsolete("Please use the fills field instead")]
+        [DisplayName("Background Color")]
+        [Description("[DEPRECATED] Background color of the node. This is deprecated, as frames now support more than a solid color as a background. Please use the fills field instead.")]
+        public Color backgroundColor { get; set; }
+
+        [Category("General")]
+        [DisplayName("Export Settings")]
+        public FigmaExportSetting[] exportSettings { get; set; }
+
+        [Category("General")]
+        [DisplayName("Blend Mode")]
+        public string blendMode { get; set; }
+
+        [Category("General")]
+        [DisplayName("Preserve Ratio")]
+        public bool preserveRatio { get; set; }
+
+        [Category("General")]
+        [DisplayName("Constraints")]
+        public FigmaLayoutConstraint constraints { get; set; }
+
+        [Category("General")]
+        [Obsolete("Please use the fills field instead")]
+        [DisplayName("Background")]
+        [Description("[DEPRECATED] Background of the node. This is deprecated, as backgrounds for frames are now in the fills field.")]
+        public FigmaBackground[] background { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Node ID")]
+        public string transitionNodeID { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Duration")]
+        public float transitionDuration { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Easing")]
+        public string transitionEasing { get; set; }
+
+        [Category("General")]
+        [DisplayName("Opacity")]
+        [Description("Opacity of the node")]
+        [DefaultValue(1f)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public float opacity { get; set; }
+
+        [Category("General")]
+        [DisplayName("Absolute BoundingBox")]
+        [Description("Bounding box of the node in absolute space coordinates")]
+        public Rectangle absoluteBoundingBox { get; set; }
+
+        [Category("General")]
+        [DisplayName("Size")]
+        [Description("Width and height of element. This is different from the width and height of the bounding box in that the absolute bounding box represents the element after scaling and rotation. Only present if geometry=paths is passed")]
+        public FigmaPoint size { get; set; }
+
+        [Category("General")]
+        [DisplayName("Relative Transform")]
+        [Description("The top two rows of a matrix that represents the 2D transform of this node relative to its parent. The bottom row of the matrix is implicitly always (0, 0, 1). Use to transform coordinates in geometry. Only present if geometry=paths is passed")]
+        public FigmaTransform relativeTransform { get; set; }
+
+        [Category("General")]
+        [DisplayName("Clips Content")]
+        public bool clipsContent { get; set; }
+
+        [Category("General")]
+        [DisplayName("Layout Grids")]
+        public FigmaLayoutGrid[] layoutGrids { get; set; }
+
+        [Category("General")]
+        [DisplayName("Effects")]
+        public FigmaEffect[] effects { get; set; }
+
+        [Category("General")]
+        [DisplayName("Is Mask")]
+        [Description("Does this node mask sibling nodes in front of it?")]
+        public bool isMask { get; set; }
+
+        [DisplayName("Children")]
+        public FigmaNode[] children { get; set; }
+
+        [DisplayName("Fills")]
+        public FigmaPaint[] fills { get; set; }
+        public bool HasFills => fills?.Length > 0;
+
+        [DisplayName("Strokes")]
+        public FigmaPaint[] strokes { get; set; }
+        public bool HasStrokes => strokes?.Length > 0;
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Weight")]
+        public int strokeWeight { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Geometry")]
+        public FigmaPath[] strokeGeometry { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Align")]
+        public string strokeAlign { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Align")]
+        public string layoutAlign { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Mode")]
+        public string layoutMode { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Mode")]
+        public FigmaLayoutMode LayoutMode
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(layoutMode))
+                    return FigmaLayoutMode.None;
+
+                foreach (var item in Enum.GetValues(typeof(FigmaLayoutMode)))
+                {
+                    if (item.ToString().ToUpper() == layoutMode)
+                        return (FigmaLayoutMode)item;
+                }
+                return FigmaLayoutMode.None;
+            }
+        }
+
+        [Category("AutoLayout")]
+        [DisplayName("Item Spacing")]
+        public float itemSpacing { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Horizontal Padding")]
+        public float horizontalPadding { get; set; }
+
+        [DisplayName("Vertical Padding")]
+        public float verticalPadding { get; set; }
+
+        [Category("General")]
+        [DisplayName("Corner Radius")]
+        public float cornerRadius { get; set; }
+
+        [Category("General")]
+        [DisplayName("RectangleCornerRadii")]
+        public float[] rectangleCornerRadii { get; set; }
+    }
+
+    public class FigmaPoint : FigmaNode
+    {
+        [Category("General")]
+        [DisplayName("X")]
+        public float x { get; set; }
+
+        [Category("General")]
+        [DisplayName("Y")]
+        public float y { get; set; }
+    }
+
+    public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    {
+        public virtual bool HasImage()
+        {
+            return true;
+        }
+
+        [Category("General")]
+        [DisplayName("Export Settings")]
+        public FigmaExportSetting[] exportSettings { get; set; }
+
+        [Category("General")]
+        [DisplayName("Blend Mode")]
+        public FigmaBlendMode blendMode { get; set; }
+
+        [Category("General")]
+        [DisplayName("Preserve Ratio")]
+        public bool preserveRatio { get; set; }
+
+        [Category("General")]
+        [DisplayName("Constraints")]
+        public FigmaLayoutConstraint constraints { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Node ID")]
+        public string transitionNodeID { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Duration")]
+        public float transitionDuration { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Easing")]
+        public FigmaEasingType transitionEasing { get; set; }
+
+        [Category("General")]
+        [DisplayName("Opacity")]
+        [DefaultValue(1f)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public float opacity { get; set; }
+
+        [Category("General")]
+        [DisplayName("Absolute BoundingBox")]
+        public Rectangle absoluteBoundingBox { get; set; }
+
+        [Category("General")]
+        [DisplayName("Effects")]
+        public FigmaEffect[] effects { get; set; }
+
+        [Category("General")]
+        [DisplayName("Size")]
+        public FigmaPoint size { get; set; }
+
+        [Category("General")]
+        [DisplayName("Relative Transform")]
+        public FigmaTransform relativeTransform { get; set; }
+
+        [Category("General")]
+        [DisplayName("Is Mask")]
+        public bool isMask { get; set; }
+
+        [Category("General")]
+        [DisplayName("FillGeometry")]
+        public FigmaPath[] fillGeometry { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Strokes")]
+        public FigmaPaint[] strokes { get; set; }
+        public bool HasStrokes => strokes?.Length > 0;
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Weight")]
+        public int strokeWeight { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Geometry")]
+        public FigmaPath[] strokeGeometry { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Align")]
+        public string strokeAlign { get; set; }
+
+        [Category("Stroke")]
+        [DisplayName("Stroke Dashes")]
+        public float[] strokeDashes { get; set; }
+
+        [DisplayName("Fills")]
+        public FigmaPaint[] fills { get; set; }
+        public bool HasFills => fills?.Length > 0;
+
+        [Category("Style")]
+        [DisplayName("Styles")]
+        public Dictionary<string, string> styles { get; set; }
+    }
+
+    public class FigmaBoolean : FigmaVector, IFigmaNodeContainer
+    {
+        [Category("General")]
+        [DisplayName("Children")]
+        public FigmaNode[] children { get; set; }
+
+        [Category("General")]
+        [DisplayName("Boolean Operation")]
+        public string booleanOperation { get; set; }
+
+        public override bool HasImage()
+        {
+            return false;
+        }
+    }
+
+    public class FigmaCanvas : FigmaNode, IFigmaDocumentContainer
+    {
+        [Category("General")]
+        [DisplayName("Background")]
+        public FigmaPaint[] background { get; set; }
+
+        [Category("General")]
+        [DisplayName("Background Color")]
+        public Color backgroundColor { get; set; }
+
+        [Category("General")]
+        [DisplayName("PrototypeStartNodeID")]
+        public string prototypeStartNodeID { get; set; }
+
+        [Category("General")]
+        [DisplayName("Export Settings")]
+        public FigmaExportSetting[] exportSettings { get; set; }
+
+        [Category("General")]
+        [DisplayName("Children")]
+        public FigmaNode[] children { get; set; }
+
+        [Category("General")]
+        [DisplayName("Absolute BoundingBox")]
+        public Rectangle absoluteBoundingBox { get; set; }
+    }
+
+    public class FigmaDocument : FigmaNode
+    {
+        public FigmaCanvas[] children { get; set; }
+    }
+
+    public class FigmaComponentEntity : FigmaFrame
+    {
+
+    }
+
+    public class FigmaNode
+    {
+        [JsonIgnore()]
+        [Category("General")]
+        [DisplayName("Parent")]
+        public FigmaNode Parent { get; set; }
+
+        [Category("General")]
+        [DisplayName("Id")]
+        public string id { get; set; }
+
+        [Category("General")]
+        [DisplayName("Name")]
+        public string name { get; set; }
+
+        [Category("General")]
+        [DisplayName("Type")]
+        public string type { get; set; }
+
+        [Category("General")]
+        [DisplayName("Visible")]
+        [DefaultValue(true)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public bool visible { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}:{1}:{2}]", type, id, name);
+        }
+    }
+
+    #endregion
 
     public class FigmaPaint
     {
@@ -160,14 +528,6 @@ namespace FigmaSharp.Models
         public FigmaConstraint constraint { get; set; }
     }
 
-    public class FigmaGroup : FigmaFrame
-    {
-        public override bool HasImage()
-        {
-            return false;
-        }
-    }
-   
     public class FigmaBackground
     {
         [Category ("General")]
@@ -183,297 +543,9 @@ namespace FigmaSharp.Models
         public Color color { get; set; }
     }
 
-    public class FigmaSlice : FigmaNode, IAbsoluteBoundingBox, IConstraints
-    {
-        [Category ("General")]
-        [DisplayName ("Absolute BoundingBox")]
-        public Rectangle absoluteBoundingBox { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Constraints")]
-        public FigmaLayoutConstraint constraints { get; set; }
-    }
-
-    public class FigmaFrame : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
-    {
-        public virtual bool HasImage()
-        {
-            return false;
-        }
-
-        [Category ("General")]
-        [Obsolete ("Please use the fills field instead")]
-        [DisplayName ("Background Color")]
-        [Description ("[DEPRECATED] Background color of the node. This is deprecated, as frames now support more than a solid color as a background. Please use the fills field instead.")]
-        public Color backgroundColor { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Export Settings")]
-        public FigmaExportSetting[] exportSettings { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Blend Mode")]
-        public string blendMode { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Preserve Ratio")]
-        public bool preserveRatio { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Constraints")]
-        public FigmaLayoutConstraint constraints { get; set; }
-
-        [Category ("General")]
-        [Obsolete ("Please use the fills field instead")]
-        [DisplayName ("Background")]
-        [Description ("[DEPRECATED] Background of the node. This is deprecated, as backgrounds for frames are now in the fills field.")]
-        public FigmaBackground[] background { get; set; }
-
-        [Category ("Transition")]
-        [DisplayName ("Transition Node ID")]
-        public string transitionNodeID { get; set; }
-
-        [Category ("Transition")]
-        [DisplayName ("Transition Duration")]
-        public float transitionDuration { get; set; }
-
-        [Category ("Transition")]
-        [DisplayName ("Transition Easing")]
-        public string transitionEasing { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Opacity")]
-        [Description ("Opacity of the node")]
-        [DefaultValue(1f)]
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public float opacity { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Absolute BoundingBox")]
-        [Description ("Bounding box of the node in absolute space coordinates")]
-        public Rectangle absoluteBoundingBox { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Size")]
-        [Description ("Width and height of element. This is different from the width and height of the bounding box in that the absolute bounding box represents the element after scaling and rotation. Only present if geometry=paths is passed")]
-        public FigmaPoint size { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Relative Transform")]
-        [Description ("The top two rows of a matrix that represents the 2D transform of this node relative to its parent. The bottom row of the matrix is implicitly always (0, 0, 1). Use to transform coordinates in geometry. Only present if geometry=paths is passed")]
-        public FigmaTransform relativeTransform { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Clips Content")]
-        public bool clipsContent { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Layout Grids")]
-        public FigmaLayoutGrid[] layoutGrids { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Effects")]
-        public FigmaEffect[] effects { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Is Mask")]
-        [Description ("Does this node mask sibling nodes in front of it?")]
-        public bool isMask { get; set; }
-
-        [DisplayName ("Children")]
-        public FigmaNode[] children { get; set; }
-
-        [DisplayName ("Fills")]
-        public FigmaPaint[] fills { get; set; }
-        public bool HasFills => fills?.Length > 0;
-
-        [DisplayName("Strokes")]
-        public FigmaPaint[] strokes { get; set; }
-        public bool HasStrokes => strokes?.Length > 0;
-
-        [Category("Stroke")]
-        [DisplayName("Stroke Weight")]
-        public int strokeWeight { get; set; }
-
-        [Category("Stroke")]
-        [DisplayName("Stroke Geometry")]
-        public FigmaPath[] strokeGeometry { get; set; }
-
-        [Category("Stroke")]
-        [DisplayName("Stroke Align")]
-        public string strokeAlign { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Layout Align")]
-        public string layoutAlign { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Layout Mode")]
-        public string layoutMode { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Layout Mode")]
-        public FigmaLayoutMode LayoutMode
-        {
-            get
-            {
-                if (string.IsNullOrEmpty (layoutMode))
-                    return FigmaLayoutMode.None;
-
-                foreach (var item in Enum.GetValues (typeof (FigmaLayoutMode)))
-                {
-                    if (item.ToString().ToUpper() == layoutMode)
-                        return (FigmaLayoutMode) item;
-                }
-                return FigmaLayoutMode.None;
-            }
-        }
-
-        [Category("AutoLayout")]
-        [DisplayName("Item Spacing")]
-        public float itemSpacing { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Horizontal Padding")]
-        public float horizontalPadding { get; set; }
-
-        [DisplayName("Vertical Padding")]
-        public float verticalPadding { get; set; }
-
-        [Category("General")]
-        [DisplayName("Corner Radius")]
-        public float cornerRadius { get; set; }
-
-        [Category("General")]
-        [DisplayName("RectangleCornerRadii")]
-        public float[] rectangleCornerRadii { get; set; }
-    }
-
-    public class FigmaPoint : FigmaNode
-    {
-        [Category ("General")]
-        [DisplayName ("X")]
-        public float x { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Y")]
-        public float y { get; set; }
-    }
-
-    public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
-    {
-        public virtual bool HasImage ()
-        {
-            return true;
-        }
-
-		[Category ("General")]
-        [DisplayName ("Export Settings")]
-        public FigmaExportSetting[] exportSettings { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Blend Mode")]
-        public FigmaBlendMode blendMode { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Preserve Ratio")]
-        public bool preserveRatio { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Constraints")]
-        public FigmaLayoutConstraint constraints { get; set; }
-
-        [Category ("Transition")]
-        [DisplayName ("Transition Node ID")]
-        public string transitionNodeID { get; set; }
-
-        [Category ("Transition")]
-        [DisplayName ("Transition Duration")]
-        public float transitionDuration { get; set; }
-
-        [Category ("Transition")]
-        [DisplayName ("Transition Easing")]
-        public FigmaEasingType transitionEasing { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Opacity")]
-        [DefaultValue(1f)]
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public float opacity { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Absolute BoundingBox")]
-        public Rectangle absoluteBoundingBox { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Effects")]
-        public FigmaEffect[] effects { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Size")]
-        public FigmaPoint size { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Relative Transform")]
-        public FigmaTransform relativeTransform { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Is Mask")]
-        public bool isMask { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("FillGeometry")]
-        public FigmaPath[] fillGeometry { get; set; }
-
-		[Category ("Stroke")]
-        [DisplayName ("Strokes")]
-        public FigmaPaint[] strokes { get; set; }
-        public bool HasStrokes => strokes?.Length > 0;
-
-        [Category ("Stroke")]
-        [DisplayName ("Stroke Weight")]
-        public int strokeWeight { get; set; }
-
-        [Category ("Stroke")]
-        [DisplayName ("Stroke Geometry")]
-        public FigmaPath[] strokeGeometry { get; set; }
-
-        [Category ("Stroke")]
-        [DisplayName ("Stroke Align")]
-        public string strokeAlign { get; set; }
-
-        [Category ("Stroke")]
-        [DisplayName ("Stroke Dashes")]
-        public float[] strokeDashes { get; set; }
-
-        [DisplayName ("Fills")]
-        public FigmaPaint[] fills { get; set; }
-        public bool HasFills => fills?.Length > 0;
-
-        [Category("Style")]
-        [DisplayName("Styles")]
-        public Dictionary<string, string> styles { get; set; }
-    }
-
     public class FigmaPath
     {
 
-    }
-
-    public class FigmaBoolean : FigmaVector, IFigmaNodeContainer
-    {
-        [Category ("General")]
-        [DisplayName ("Children")]
-        public FigmaNode[] children { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Boolean Operation")]
-        public string booleanOperation { get; set; }
-
-        public override bool HasImage()
-        {
-            return false;
-        }
     }
 
     public class FigmaTransform
@@ -508,33 +580,6 @@ namespace FigmaSharp.Models
         [DisplayName ("Offset")]
         public FigmaPoint offset { get; set; }
     }
-
-    public class FigmaCanvas : FigmaNode, IFigmaDocumentContainer
-    {
-        [Category ("General")]
-        [DisplayName ("Background")]
-        public FigmaPaint[] background { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Background Color")]
-        public Color backgroundColor { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("PrototypeStartNodeID")]
-        public string prototypeStartNodeID { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Export Settings")]
-        public FigmaExportSetting[] exportSettings { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Children")]
-        public FigmaNode[] children { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Absolute BoundingBox")]
-        public Rectangle absoluteBoundingBox { get; set; }
-	}
 
 	public class FigmaLayoutConstraint
     {
@@ -587,47 +632,6 @@ namespace FigmaSharp.Models
         [Category ("General")]
         [DisplayName ("Count")]
         public int count { get; set; }
-    }
-
-    public class FigmaDocument : FigmaNode
-    {
-        public FigmaCanvas[] children { get; set; }
-    }
-
-    public class FigmaComponentEntity : FigmaFrame
-    {
-
-    }
-
-    public class FigmaNode
-    {
-        [JsonIgnore()]
-        [Category ("General")]
-        [DisplayName ("Parent")]
-        public FigmaNode Parent { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Id")]
-        public string id { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Name")]
-        public string name { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Type")]
-        public string type { get; set; }
-
-        [Category ("General")]
-        [DisplayName ("Visible")]
-        [DefaultValue (true)]
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        public bool visible { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format("[{0}:{1}:{2}]", type, id, name);
-        }
     }
 
     public class FigmaText : FigmaVector

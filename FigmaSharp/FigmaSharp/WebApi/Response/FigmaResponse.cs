@@ -26,7 +26,6 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -34,25 +33,6 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp.Models
 {
-    public class FigmaUser
-	{
-		public string handle { get; set; }
-        public string img_url { get; set; }
-        public string id { get; set; }
-    }
-
-	public class FigmaFileVersion
-    {
-        public string id { get; set; }
-        public DateTime created_at { get; set; }
-        public string label { get; set; }
-        public string description { get; set; }
-        public FigmaUser user { get; set; }
-        public string thumbnail_url { get; set; }
-
-        public string CurrentName => !string.IsNullOrEmpty(label) ? label : created_at.ToString("g");
-        public bool IsNamed => !string.IsNullOrEmpty(label);
-    }
 
     public class FigmaComponent
     {
