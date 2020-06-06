@@ -26,17 +26,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Helpers
 {
-    public static class FigmaResourceHelper
+    public static class ResourceHelper
     {
         const string specialChar = "-";
-        public static string FromResource (string data)
+        public static string FromLocalResourceNameToUrlResourceName (string data)
         {
             return data.Replace(":", specialChar);
         }
 
-        public static string ToResource (string data)
+        public static string FromUrlResourceNameToLocalResourceName (string data)
         {
             return data.Replace("_", specialChar);
         }

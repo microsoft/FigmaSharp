@@ -158,7 +158,7 @@ namespace MonoDevelop.Figma
 
 			RefreshStates ();
 
-			if (FigmaApiHelper.TryParseFileUrl (FileId, out string fileId)) {
+			if (WebApiHelper.TryParseFileUrl (FileId, out string fileId)) {
 				figmaUrlTextField.StringValue = fileId;
 			}
 

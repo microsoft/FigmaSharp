@@ -35,9 +35,9 @@ using FigmaSharp.Models;
 
 using Newtonsoft.Json;
 
-namespace FigmaSharp
+namespace FigmaSharp.Helpers
 {
-	public static class FigmaApiHelper
+	public static class WebApiHelper
     {
         const string prefix = "/file/";
         const char urlSeparatorChar = '/';
@@ -130,7 +130,5 @@ namespace FigmaSharp
         //	}
         //	return string.Empty;
         //}
-
-
     }
 }

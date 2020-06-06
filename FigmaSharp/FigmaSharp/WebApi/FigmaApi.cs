@@ -35,6 +35,7 @@ using System.Linq;
 using FigmaSharp.Models;
 
 using Newtonsoft.Json;
+using FigmaSharp.Helpers;
 
 namespace FigmaSharp
 {
@@ -76,13 +77,13 @@ namespace FigmaSharp
 		public FigmaFileResponse GetFile (FigmaFileQuery figmaQuery)
 		{
 			var content = GetContentFile (figmaQuery);
-			return FigmaApiHelper.GetFigmaResponseFromFileContent (content);
+			return WebApiHelper.GetFigmaResponseFromFileContent (content);
 		}
 
 		public FigmaFileVersionResponse GetFileVersions (FigmaFileVersionQuery figmaQuery)
 		{
 			var content = GetContentFileVersion (figmaQuery);
-			return FigmaApiHelper.GetFigmaResponseFromFileVersionContent (content);
+			return WebApiHelper.GetFigmaResponseFromFileVersionContent (content);
 		}
 
 		#region Images

@@ -8,6 +8,7 @@ using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.Cocoa.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.Helpers;
 
 namespace FigmaSharp.Cocoa
 {
@@ -64,7 +65,7 @@ namespace FigmaSharp.Cocoa
         public IView CreateEmptyView() => new View();
 
         public string GetManifestResource(Assembly assembly, string file) =>
-            FigmaApiHelper.GetManifestResource(assembly, file);
+            WebApiHelper.GetManifestResource(assembly, file);
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
