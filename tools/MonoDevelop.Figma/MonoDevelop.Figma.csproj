@@ -22,6 +22,7 @@
         <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\" />
         <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\" />
         <Folder Include="Commands\" />
+        <Folder Include="NodeBuilders\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
