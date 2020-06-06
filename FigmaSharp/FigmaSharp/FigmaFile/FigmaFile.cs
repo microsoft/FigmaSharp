@@ -38,6 +38,7 @@ namespace FigmaSharp
     /// <summary>
     /// Use FigmaFile to load a FigmaDocument from a .figma file bundled in your project.
     /// </summary>
+    [Obsolete ("Not used anymore")]
     public class FigmaFile : IFigmaFile
     {
         public const string FigmaPackageId = "FigmaPackageId";
