@@ -35,17 +35,7 @@ using Newtonsoft.Json;
 
 namespace FigmaSharp
 {
-	[System.AttributeUsage (System.AttributeTargets.Property)]
-	public class ManifestDescription : System.Attribute
-	{
-		public string Description { get; }
-		public ManifestDescription (string description)
-		{
-			this.Description = description;
-		}
-	}
-
-	public class FigmaManifest
+    public class FigmaManifest
 	{
 		[ManifestDescription ("File Id")]
 		public string FileId { get; set; }
