@@ -34,7 +34,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public class FigmaRemoteFileProvider : FigmaFileProvider
+    public class RemoteNodeProvider : NodeProvider
     {
         public FigmaFileVersion Version { get; set; }
 

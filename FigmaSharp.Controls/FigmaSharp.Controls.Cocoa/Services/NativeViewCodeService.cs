@@ -39,7 +39,7 @@ namespace FigmaSharp.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters = null, CodePropertyNodeConfigureBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+		public NativeViewCodeService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null, CodePropertyNodeConfigureBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter ())
 		{
 

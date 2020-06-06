@@ -44,7 +44,7 @@ namespace LocalFile.Cocoa
 	static class MainClass
 	{
 		static IWindow mainWindow;
-		static FigmaRemoteFileProvider fileProvider;
+		static RemoteNodeProvider fileProvider;
 
 		static void Main(string[] args)
 		{

@@ -53,7 +53,7 @@ namespace MonoDevelop.Figma
 			return !string.IsNullOrEmpty(figmaPackageId);
 		}
 
-		public static bool TryGetFigmaNode (this ProjectFile sender, FigmaFileProvider fileProvider, out FigmaNode figmaNode)
+		public static bool TryGetFigmaNode (this ProjectFile sender, NodeProvider fileProvider, out FigmaNode figmaNode)
 		{
 			if (sender.IsFigmaDesignerFile () && TryGetNodeName (sender,out var figmaName)) {
 				figmaNode = fileProvider.FindById (figmaName);
@@ -143,7 +143,7 @@ namespace MonoDevelop.Figma
 			return currentProject.Files.OfType<ProjectFile>().Where(s => s.IsFigmaDesignerFile());
 		}
 
-		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, IFigmaFileProvider fileProvider, string namesSpace = null)
+		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, INodeProvider fileProvider, string namesSpace = null)
 		{
 			var figmaFolder = project.GetFigmaFolder();
 

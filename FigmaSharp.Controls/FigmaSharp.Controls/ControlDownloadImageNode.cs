@@ -28,7 +28,7 @@ namespace FigmaSharp.Controls
 {
     public class ControlDownloadImageNode : IFigmaDownloadImageNode
     {
-        readonly FigmaFileProvider provider;
+        readonly NodeProvider provider;
 
         public string ResourceId => Node.id;
         public string Url { get; set; }
@@ -37,7 +37,7 @@ namespace FigmaSharp.Controls
 
         public List<ImageScale> Scales { get; } = new List<ImageScale>();
 
-        public ControlDownloadImageNode(Models.FigmaNode node, FigmaFileProvider provider)
+        public ControlDownloadImageNode(Models.FigmaNode node, NodeProvider provider)
         {
             this.provider = provider;
             this.Node = node;

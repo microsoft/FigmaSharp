@@ -34,11 +34,11 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public class FigmaManifestFileProvider : FigmaFileProvider
+    public class AssemblyResourceNodeProvider : NodeProvider
     {
         public Assembly Assembly { get; set; }
 
-        public FigmaManifestFileProvider(Assembly assembly, string file)
+        public AssemblyResourceNodeProvider(Assembly assembly, string file)
         {
             Assembly = assembly;
             File = file;

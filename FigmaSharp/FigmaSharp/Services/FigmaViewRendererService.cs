@@ -44,8 +44,8 @@ namespace FigmaSharp.Services
         public readonly List<ViewNode> ImageVectors = new List<ViewNode>();
 
         protected IView container;
-        protected IFigmaFileProvider fileProvider;
-        public IFigmaFileProvider FileProvider => fileProvider;
+        protected INodeProvider fileProvider;
+        public INodeProvider FileProvider => fileProvider;
 
         public T FindViewStartsWith<T>(string name, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase) where T : IView
 		{
@@ -154,7 +154,7 @@ namespace FigmaSharp.Services
             return null;
         }
 
-        public FigmaRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters)
+        public FigmaRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters)
         {
             this.fileProvider = figmaProvider;
             DefaultConverters = figmaViewConverters.Where(s => s.IsLayer).ToList();
@@ -305,7 +305,7 @@ namespace FigmaSharp.Services
 	[Obsolete("Use FigmaViewRendererService instead")]
 	public class FigmaFileRendererService : FigmaRendererService
     {
-        public FigmaFileRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
+        public FigmaFileRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters) : base (figmaProvider, figmaViewConverters)
         {
         }
 
@@ -342,12 +342,12 @@ namespace FigmaSharp.Services
     {
         public ViewPropertyNodeConfigureBase PropertySetter { get; }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
+        public FigmaViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
           
         }
 
-        public FigmaViewRendererService(IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public FigmaViewRendererService(INodeProvider figmaProvider, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }

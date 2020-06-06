@@ -33,7 +33,7 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls.Services
 {
-	public class ControlsLocalFileProvider : FigmaLocalFileProvider
+	public class ControlsLocalFileProvider : FileNodeProvider
 	{
 		public ControlsLocalFileProvider(string resourcesDirectory) : base(resourcesDirectory)
 		{
@@ -57,7 +57,7 @@ namespace FigmaSharp.Controls.Services
 			=> new ControlDownloadImageNode(node, this);
 	}
 
-	public class ControlsRemoteFileProvider : FigmaRemoteFileProvider
+	public class ControlsRemoteFileProvider : RemoteNodeProvider
 	{
 		public ControlsRemoteFileProvider()
 		{
@@ -81,7 +81,7 @@ namespace FigmaSharp.Controls.Services
 		}
 	}
 
-	public class ControlsManifestFileProvider : FigmaManifestFileProvider
+	public class ControlsManifestFileProvider : AssemblyResourceNodeProvider
 	{
 		public ControlsManifestFileProvider(Assembly assembly, string file) : base(assembly, file)
 		{

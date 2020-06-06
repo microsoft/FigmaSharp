@@ -39,7 +39,7 @@ namespace FigmaSharp.Controls.Cocoa
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
-        public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
+        public EmbededSheetDialogConverter(INodeProvider newWindowProvider)
 		{
 
 		}
@@ -98,9 +98,9 @@ namespace FigmaSharp.Controls.Cocoa
 		public event EventHandler LivePreviewLoading;
 		public event EventHandler LivePreviewLoaded;
 
-		readonly IFigmaFileProvider newWindowProvider;
+		readonly INodeProvider newWindowProvider;
 
-		public EmbededWindowConverter(IFigmaFileProvider newWindowProvider)
+		public EmbededWindowConverter(INodeProvider newWindowProvider)
 		{
 			this.newWindowProvider = newWindowProvider;
 		}

@@ -157,7 +157,7 @@ namespace FigmaSharp
 
         #endregion
 
-        public static FigmaInstance GetBaseComponentNode(this FigmaFileProvider fileProvider, FigmaNode node)
+        public static FigmaInstance GetBaseComponentNode(this NodeProvider fileProvider, FigmaNode node)
         {
             var figmaInstance = node.GetDialogInstanceFromParentContainer();
             if (figmaInstance != null) {

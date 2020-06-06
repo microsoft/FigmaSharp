@@ -139,7 +139,7 @@ namespace FigmaSharp.Controls.Cocoa
 
             foreach (var styleMap in text?.styles)
             {
-                if ((rendererService.figmaProvider as FigmaFileProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
+                if ((rendererService.figmaProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
                 {
                     if (styleMap.Key == "fill")
                         code.WriteEquality(name, nameof(NSTextField.TextColor), CocoaCodeHelpers.GetNSColorString(style.name));

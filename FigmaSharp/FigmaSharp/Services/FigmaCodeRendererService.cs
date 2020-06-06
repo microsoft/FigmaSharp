@@ -17,14 +17,14 @@ namespace FigmaSharp.Services
 	{
 		internal const string DefaultViewName = "view";
 
-		internal IFigmaFileProvider figmaProvider;
+		internal INodeProvider figmaProvider;
 
 		internal CodePropertyNodeConfigureBase codePropertyConverter;
 
 		LayerConverter[] figmaConverters;
 		LayerConverter[] customConverters;
 
-		public FigmaCodeRendererService (IFigmaFileProvider figmaProvider, LayerConverter[] figmaViewConverters,
+		public FigmaCodeRendererService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters,
 			CodePropertyNodeConfigureBase codePropertyConverter)
 		{
 			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();

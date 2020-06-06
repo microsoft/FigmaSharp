@@ -16,9 +16,9 @@ namespace MonoDevelop.Figma
     class ValueData
 	{
 		public readonly FigmaBundleViewBase View;
-		public readonly IFigmaFileProvider fileProvider;
+		public readonly INodeProvider fileProvider;
 
-		public ValueData(FigmaBundleViewBase view, IFigmaFileProvider fileProvider)
+		public ValueData(FigmaBundleViewBase view, INodeProvider fileProvider)
 		{
 			this.View = view;
 			this.fileProvider = fileProvider;
@@ -118,7 +118,7 @@ namespace MonoDevelop.Figma
 			return test;
 		}
 
-		async Task<ProjectFile> CreateBundleView(FigmaBundleViewBase figmaBundleView, Project currentProject, IFigmaFileProvider fileProvider, bool translateStrings)
+		async Task<ProjectFile> CreateBundleView(FigmaBundleViewBase figmaBundleView, Project currentProject, INodeProvider fileProvider, bool translateStrings)
 		{
 			var bundle = figmaBundleView.Bundle;
 

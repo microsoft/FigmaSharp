@@ -115,7 +115,7 @@ namespace FigmaSharp
 		/// Updates and Reloads a bundler to a specific version
 		/// </summary>
 		/// <param name="version"></param>
-		public void Update (FigmaFileVersion version, FigmaFileProvider provider, bool includeImages = true)
+		public void Update (FigmaFileVersion version, NodeProvider provider, bool includeImages = true)
 		{
 			Version = version;
 			Reload ();
@@ -154,7 +154,7 @@ namespace FigmaSharp
 		}
 
 		//Generates the .figmafile
-		internal void SaveLocalDocument (bool includeImages, FigmaFileProvider provider)
+		internal void SaveLocalDocument (bool includeImages, NodeProvider provider)
 		{
 			if (string.IsNullOrEmpty (FileId)) {
 				throw new InvalidOperationException ("id not set");
@@ -214,7 +214,7 @@ namespace FigmaSharp
 		}
 
 		//Generates all the resources from the current .figmafile
-		internal static void GenerateOutputResourceFiles (FigmaFileProvider provider, string fileId, string resourcesDirectoryPath)
+		internal static void GenerateOutputResourceFiles (NodeProvider provider, string fileId, string resourcesDirectoryPath)
 		{
 			var figmaImageIds = new List<IFigmaDownloadImageNode>();
 			foreach (var mainNode in provider.Response.document.children)
@@ -318,7 +318,7 @@ namespace FigmaSharp
 			LoadLocalDocument ();
 		}
 
-		public void SaveAll (bool includeImages, FigmaFileProvider provider)
+		public void SaveAll (bool includeImages, NodeProvider provider)
 		{
 			Save ();
 			SaveLocalDocument (includeImages, provider);

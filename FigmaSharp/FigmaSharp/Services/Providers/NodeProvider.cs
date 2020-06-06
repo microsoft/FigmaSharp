@@ -35,7 +35,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-    public abstract class FigmaFileProvider : IFigmaFileProvider
+    public abstract class NodeProvider : INodeProvider
 	{
 		public event EventHandler ImageLinksProcessed;
 

@@ -34,9 +34,9 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public class FigmaLocalFileProvider : FigmaFileProvider
+    public class FileNodeProvider : NodeProvider
     {
-        public FigmaLocalFileProvider(string resourcesDirectory)
+        public FileNodeProvider(string resourcesDirectory)
         {
             ResourcesDirectory = resourcesDirectory;
         }

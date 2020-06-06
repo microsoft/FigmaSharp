@@ -43,7 +43,7 @@ namespace FigmaSharp.Designer
     {
         readonly FigmaViewRendererService rendererService;
         readonly StoryboardLayoutManager distributionService;
-        readonly IFigmaFileProvider fileProvider;
+        readonly INodeProvider fileProvider;
 
         public bool IsModified { get; internal set; }
 
@@ -53,7 +53,7 @@ namespace FigmaSharp.Designer
 
         public ViewNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.FigmaNode is FigmaCanvas).ToArray ();
 
-        public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, StoryboardLayoutManager figmaViewRendererDistributionService)
+        public FigmaDesignerSession(INodeProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, StoryboardLayoutManager figmaViewRendererDistributionService)
         {
             fileProvider = figmaFileProvider;
             rendererService = figmaViewRendererService;

@@ -14,7 +14,7 @@ namespace ToCode.Cocoa
 	{
 		FigmaNodeView data;
 		OutlinePanel outlinePanel;
-		FigmaRemoteFileProvider fileProvider;
+		RemoteNodeProvider fileProvider;
 
 		FigmaDesignerDelegate figmaDelegate;
 		FigmaCodeRendererService codeRenderer;

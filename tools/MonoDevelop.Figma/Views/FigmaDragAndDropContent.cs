@@ -187,7 +187,7 @@ namespace MonoDevelop.Figma
             scrollView?.SetFrameSize(new CoreGraphics.CGSize(newSize.Width, newSize.Height - 30));
         }
 
-        FigmaRemoteFileProvider fileProvider;
+        RemoteNodeProvider fileProvider;
         FigmaDesignerDelegate figmaDelegate;
         FigmaCodeRendererService codeRenderer;
         FigmaNodeView data;

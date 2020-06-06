@@ -139,7 +139,7 @@ namespace FigmaSharpApp
 		}
 
 		FigmaFileResponse response;
-		FigmaRemoteFileProvider fileProvider;
+		RemoteNodeProvider fileProvider;
 		NativeViewRenderingService rendererService;
 
 		async void Load (FigmaFileVersion version = null, int pageIndex = 0)

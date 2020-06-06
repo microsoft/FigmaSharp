@@ -182,7 +182,7 @@ namespace FigmaSharp
 			partialDesignerClass.PrivateMembers.Add ((enumName, contentClassMethod.SelectedContentName));
 		}
 
-		static IEnumerable<FigmaNode> GetReferencedWindows (IFigmaFileProvider fileProvider, FigmaNode node)
+		static IEnumerable<FigmaNode> GetReferencedWindows (INodeProvider fileProvider, FigmaNode node)
 		{
             foreach (var mainLayer in fileProvider.GetMainGeneratedLayers())
             {

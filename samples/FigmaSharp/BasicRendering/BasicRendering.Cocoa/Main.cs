@@ -64,7 +64,7 @@ namespace LocalFile.Cocoa
 			//native toolkit positioning system
 
 			//in this case we want use a remote file provider (figma url from our document)
-			var fileProvider = new FigmaRemoteFileProvider();
+			var fileProvider = new RemoteNodeProvider();
 
 			//we initialize our renderer service, this uses all the converters passed
 			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>

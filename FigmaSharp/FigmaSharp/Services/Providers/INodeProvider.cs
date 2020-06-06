@@ -32,7 +32,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-    public interface IFigmaFileProvider
+    public interface INodeProvider
     {
         string File { get; }
         event EventHandler ImageLinksProcessed;
