@@ -24,6 +24,11 @@
 
 namespace FigmaSharp.Models
 {
+    public enum FigmaEasingType
+    {
+        EASE_IN, EASE_OUT, EASE_IN_AND_OUT,
+    }
+
     public enum FigmaLayoutMode
     {
         None,
