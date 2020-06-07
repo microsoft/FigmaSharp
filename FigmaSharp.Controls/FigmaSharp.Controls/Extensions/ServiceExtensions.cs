@@ -2,6 +2,7 @@
  * CustomTextFieldConverter.cs
  * 
  * Author:
+ *   Hylke Bons <hylbo@microsoft.com>
  *   Jose Medrano <josmed@microsoft.com>
  *
  * Copyright (C) 2018 Microsoft, Corp
@@ -32,18 +33,9 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
-namespace FigmaSharp
+namespace FigmaSharp.Controls
 {
-    public enum CocoaThemes
-    {
-        Default,
-        Light,
-        LightHC,
-        Dark,
-        DarkHC
-    }
-
-    public static class Extensions
+    public static class ServiceExtensions
     {
         public static FigmaInstance GetBaseComponentNode(this NodeProvider fileProvider, FigmaNode node)
         {
