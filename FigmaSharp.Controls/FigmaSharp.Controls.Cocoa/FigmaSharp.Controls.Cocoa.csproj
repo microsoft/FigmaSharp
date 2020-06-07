@@ -100,6 +100,10 @@
     <Compile Include="CocoaThemes.cs" />
     <Compile Include="Extensions\ImageNodeExtensions.cs" />
     <Compile Include="WebApi\ControlImageNodeRequest.cs" />
+    <Compile Include="Extensions\NodeExtensions.cs" />
+    <Compile Include="Services\ControlTypeService.cs" />
+    <Compile Include="Extensions\ServiceExtensions.cs" />
+    <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

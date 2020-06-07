@@ -27,7 +27,7 @@ using System;
 using System.Linq;
 using FigmaSharp.Models;
 
-namespace FigmaSharp.Controls
+namespace FigmaSharp.Controls.Cocoa
 {
     static class AccessibilityNodeExtensions
     {

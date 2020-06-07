@@ -23,6 +23,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System.Linq;
 using System.Collections.Generic;
 
 namespace FigmaSharp.Controls
@@ -85,8 +86,11 @@ namespace FigmaSharp.Controls
         Small
     }
 
-    public static partial class FigmaControlsExtension
+    public static class ControlTypeService
     {
+        public static (string name, FigmaControlType nativeControlType, NativeControlVariant nativeControlVariant) GetByName(string name)
+            => controlsList.FirstOrDefault(s => s.name == name);
+
         static IReadOnlyList<(string name, FigmaControlType nativeControlType, NativeControlVariant nativeControlVariant)> controlsList = 
             new List<(string name, FigmaControlType nativeControlType, NativeControlVariant nativeControlVariant)>
         {

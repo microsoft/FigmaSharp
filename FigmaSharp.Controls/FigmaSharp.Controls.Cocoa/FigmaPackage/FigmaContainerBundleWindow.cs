@@ -27,15 +27,13 @@
  */
 
 using System;
-using System.Text;
-using System.Linq;
-
 using System.Collections.Generic;
-using FigmaSharp.Cocoa;
+using System.Linq;
+using System.Text;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Models;
-using FigmaSharp.Services;
-using FigmaSharp.Controls;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {

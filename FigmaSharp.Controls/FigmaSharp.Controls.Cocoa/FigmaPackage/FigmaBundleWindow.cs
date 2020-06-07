@@ -35,6 +35,7 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 using FigmaSharp.Controls;
 using FigmaSharp.Services;
+using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
 
 namespace FigmaSharp
