@@ -68,7 +68,7 @@ namespace MonoDevelop.Figma.Commands
                 await Task.Run(() =>
                 {
                     //we need to ask to figma server to get nodes as demmand
-                    var fileProvider = new ControlsLocalFileProvider(bundle.ResourcesDirectoryPath);
+                    var fileProvider = new ControlFileNodeProvider(bundle.ResourcesDirectoryPath);
                     fileProvider.Load(bundle.DocumentFilePath);
                     bundle.Reload();
 

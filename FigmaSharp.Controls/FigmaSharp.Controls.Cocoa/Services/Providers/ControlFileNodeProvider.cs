@@ -21,17 +21,19 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-using System.Reflection;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls.Cocoa.Services
 {
-    public class ControlsManifestFileProvider : AssemblyResourceNodeProvider
+	public class ControlFileNodeProvider : FileNodeProvider
 	{
-		public ControlsManifestFileProvider(Assembly assembly, string file) : base(assembly, file)
+		public ControlFileNodeProvider(string resourcesDirectory) : base(resourcesDirectory)
 		{
 		}
+
+		public override bool SearchImageChildren(FigmaNode figmaNode)
+			=> !(figmaNode.IsSingleImageViewNode() || (figmaNode.Parent?.HasNodeImageName() ?? false));
 
 		public override bool RendersAsImage(FigmaNode figmaNode)
 		{
@@ -43,9 +45,6 @@ namespace FigmaSharp.Controls.Cocoa.Services
 
 			return false;
 		}
-
-		public override bool SearchImageChildren(FigmaNode figmaNode)
-			=> !(figmaNode.IsSingleImageViewNode () || (figmaNode.Parent?.HasNodeImageName() ?? false));
 
 		public override IImageNodeRequest CreateEmptyImageNodeRequest(FigmaNode node)
 			=> new ControlImageNodeRequest(node);

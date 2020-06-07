@@ -48,7 +48,7 @@ namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {
-        public static NSView FindNativeViewByName(this Services.RenderService rendererService, string name)
+        public static NSView FindNativeViewByName(this Services.ViewRenderService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {

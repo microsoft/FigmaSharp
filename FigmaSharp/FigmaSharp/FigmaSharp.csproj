@@ -37,9 +37,6 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Services\ViewContentRendererService.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
   </ItemGroup>
 </Project>

@@ -105,7 +105,7 @@ namespace MonoDevelop.Figma
 
 			foreach (var figmaBundle in project.GetFigmaPackages())
 			{
-				var fileProvider = new ControlsLocalFileProvider(figmaBundle.ResourcesDirectoryPath);
+				var fileProvider = new ControlFileNodeProvider(figmaBundle.ResourcesDirectoryPath);
 				await fileProvider.LoadAsync(figmaBundle.DocumentFilePath);
 
 				var mainFigmaNodes = fileProvider.GetMainGeneratedLayers();

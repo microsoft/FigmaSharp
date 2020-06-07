@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using FigmaSharp;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Backup
 {
@@ -75,7 +75,7 @@ namespace FigmaSharp.Backup
 
 			var query = new FigmaFileQuery (fileId);
 
-			var fileProvider = new ControlsRemoteFileProvider();
+			var fileProvider = new RemoteNodeProvider();
 			fileProvider.Load(fileId);
 
 			fileProvider.Save(outputFilePath);

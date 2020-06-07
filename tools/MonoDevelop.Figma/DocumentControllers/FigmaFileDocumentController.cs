@@ -62,7 +62,7 @@ namespace MonoDevelop.Figma
 
         FigmaDesignerOutlinePad outlinePad;
 
-        ControlsLocalFileProvider fileProvider;
+        ControlFileNodeProvider fileProvider;
         ControlViewRenderingService rendererService;
         StoryboardLayoutManager layoutManager;
 
@@ -112,7 +112,7 @@ namespace MonoDevelop.Figma
               
                 var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
 
-                fileProvider = new ControlsLocalFileProvider(localPath) { File = filePath.FullPath };
+                fileProvider = new ControlFileNodeProvider(localPath) { File = filePath.FullPath };
                 rendererService = new ControlViewRenderingService (fileProvider);
 
                 //we generate a new file provider for embeded windows
