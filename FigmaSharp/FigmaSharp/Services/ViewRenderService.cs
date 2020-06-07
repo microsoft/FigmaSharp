@@ -36,7 +36,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
 {
-    public class RenderService
+    public abstract class RenderService
     {
         protected readonly List<NodeConverter> DefaultConverters;
         public readonly List<NodeConverter> CustomConverters;
@@ -243,40 +243,6 @@ namespace FigmaSharp.Services
             return  false;
 		}
 
-        //TODO: This 
-        protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
-        {
-            Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
-
-            //if (currentNode.name.StartsWith ("#") || currentNode.name.StartsWith ("//")) {
-            //    Console.WriteLine ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
-            //    return;
-            //}
-
-            if (SkipsNode (currentNode, parent, options))
-                return;
-
-            var converter = GetProcessedConverter(currentNode, CustomConverters);
-            if (converter == null) {
-                converter = GetProcessedConverter(currentNode, DefaultConverters);
-            }
-
-            ViewNode currentProcessedNode = null;
-            if (converter != null) {
-                var currentView = options.IsToViewProcessed ? converter.ConvertTo(currentNode, parent, this) : null;
-                currentProcessedNode = new ViewNode(currentNode, currentView, parent);
-                NodesProcessed.Add(currentProcessedNode);
-            } else {
-                Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
-            }
-
-            if (NodeScansChildren (currentNode, converter, options)) {
-                foreach (var item in GetCurrentChildren (currentNode, parent?.FigmaNode, converter, options)) {
-                    GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
-                }
-            }
-        }
-
         protected virtual IEnumerable<FigmaNode> GetCurrentChildren (FigmaNode currentNode, FigmaNode parentNode, NodeConverter converter, ViewRenderServiceOptions options)
 		{
             if (currentNode is IFigmaNodeContainer nodeContainer)
@@ -301,7 +267,9 @@ namespace FigmaSharp.Services
 
             return true;
         }
-	}
+
+        protected abstract void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options);
+    }
 
     public class ViewRenderService : RenderService
     {
@@ -517,5 +485,47 @@ namespace FigmaSharp.Services
                 Console.WriteLine(ex);
             }
         }
+
+
+        //TODO: This 
+        protected override void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
+        {
+            Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
+
+            //if (currentNode.name.StartsWith ("#") || currentNode.name.StartsWith ("//")) {
+            //    Console.WriteLine ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
+            //    return;
+            //}
+
+            if (SkipsNode(currentNode, parent, options))
+                return;
+
+            var converter = GetProcessedConverter(currentNode, CustomConverters);
+            if (converter == null)
+            {
+                converter = GetProcessedConverter(currentNode, DefaultConverters);
+            }
+
+            ViewNode currentProcessedNode = null;
+            if (converter != null)
+            {
+                var currentView = options.IsToViewProcessed ? converter.ConvertToView(currentNode, parent, this) : null;
+                currentProcessedNode = new ViewNode(currentNode, currentView, parent);
+                NodesProcessed.Add(currentProcessedNode);
+            }
+            else
+            {
+                Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
+            }
+
+            if (NodeScansChildren(currentNode, converter, options))
+            {
+                foreach (var item in GetCurrentChildren(currentNode, parent?.FigmaNode, converter, options))
+                {
+                    GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
+                }
+            }
+        }
+
     }
 }

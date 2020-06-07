@@ -50,7 +50,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return currentNode.IsDialogParentContainer(FigmaControlType.WindowSheet);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 
@@ -116,7 +116,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return isWindow;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			string title = "";
 			var frame = (FigmaFrame)currentNode;

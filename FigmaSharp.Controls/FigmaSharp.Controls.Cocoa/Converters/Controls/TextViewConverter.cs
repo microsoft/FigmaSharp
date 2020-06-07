@@ -47,7 +47,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 		}
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 			frame.TryGetNativeControlType(out var controlType);

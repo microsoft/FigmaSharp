@@ -39,7 +39,7 @@ namespace FigmaSharp.Cocoa.Converters
 {
     public class TextConverter : TextConverterBase
     {
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
             Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);

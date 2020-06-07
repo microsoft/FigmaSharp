@@ -42,7 +42,7 @@ namespace FigmaSharp.Cocoa.Converters
         public override Type GetControlType(FigmaNode currentNode)
             => typeof(NSImageView);
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var vectorEntity = (FigmaVector)currentNode;
             var vector = new ImageView();

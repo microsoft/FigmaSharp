@@ -44,7 +44,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return currentNode.name.StartsWith("!image");
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var vector = new FigmaSharp.Views.Cocoa.ImageView();
 			var currengroupView = (NSImageView)vector.NativeObject;

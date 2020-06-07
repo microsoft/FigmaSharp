@@ -78,7 +78,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return builder;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, RenderService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			return null;
 		}
