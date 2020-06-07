@@ -55,7 +55,7 @@ namespace FigmaSharp
 
 		public ShowContentMethodCodeObject(List<FigmaFrame> figmaFrames, string name, string contentViewName, string enumTypeName, CodeNode parentNode, CodeRenderService figmaRendererService) : base (name)
         {
-			MethodModifier = CodeObjectModifier.Public;
+			MethodModifier = CodeObjectModifierType.Public;
 			argumentName = "content";
 			selectedContentName = "SelectedContent";
 			figmaFrameEntities = figmaFrames;
@@ -70,7 +70,7 @@ namespace FigmaSharp
 		{
 			figmaClassBase.AddTabLevel ();
 
-			figmaClassBase.GenerateMethod (sb, Name, CodeObjectModifier.Protected,
+			figmaClassBase.GenerateMethod (sb, Name, CodeObjectModifierType.Protected,
 				arguments: new List<(string, string)>() {(enumTypeName, argumentName) });
 
 			figmaClassBase.AppendLine (sb, $"{contentViewName}?.{nameof(AppKit.NSView.RemoveFromSuperview)}();");

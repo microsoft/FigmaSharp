@@ -13,6 +13,7 @@
     <Folder Include="FigmaPackage\" />
     <Folder Include="Extensions\" />
     <Folder Include="WebApi\" />
+    <Folder Include="CodeGenerator\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
