@@ -112,19 +112,21 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                 {
                     var nativeView = view.NativeObject as AppKit.NSView;
 
-                    //var parentNativeView = parent.NativeObject as AppKit.NSView;
+                    var parentNativeView = parent.NativeObject as AppKit.NSView;
                     var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
-                    widthConstraint.Active = true;
 
                     var constrainedNode = currentNode as IConstraints;
-                    if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal) 
+                    if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal)
                         widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
 
-                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
-                        heightConstraint.Active = true;
+                    widthConstraint.Active = true;
 
-                        if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
-                            heightConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
+                    var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
+
+                    if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
+                        heightConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
+
+                    heightConstraint.Active = true;
 
                 }
                 return;
