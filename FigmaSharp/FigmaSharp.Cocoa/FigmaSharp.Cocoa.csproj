@@ -48,29 +48,30 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FigmaDelegate.cs" />
-    <Compile Include="Converters\FigmaElipseConverter.cs" />
-    <Compile Include="Converters\FigmaFrameEntityConverter.cs" />
-    <Compile Include="Converters\FigmaLineConverter.cs" />
-    <Compile Include="Converters\FigmaRectangleVectorConverter.cs" />
-    <Compile Include="Converters\FigmaTextConverter.cs" />
-    <Compile Include="Converters\FigmaVectorViewConverter.cs" />
-    <Compile Include="Converters\FigmaVectorEntityConverter.cs" />
+    <Compile Include="Converters\TextConverter.cs" />
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
-    <Compile Include="Converters\FigmaRegularPolygonConverter.cs" />
     <Compile Include="Extensions\CodeGenerationExtensions.cs" />
     <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
     <Compile Include="FigmaVersionMenu.cs" />
     <Compile Include="PropertyConfigure\CodePropertyConfigure.cs" />
     <Compile Include="PropertyConfigure\ViewPropertyConfigure.cs" />
+    <Compile Include="Converters\Layers\ElipseConverter.cs" />
+    <Compile Include="Converters\Layers\FrameConverter.cs" />
+    <Compile Include="Converters\Layers\LineConverter.cs" />
+    <Compile Include="Converters\Layers\PointConverter.cs" />
+    <Compile Include="Converters\Layers\RectangleVectorConverter.cs" />
+    <Compile Include="Converters\Layers\RegularPolygonConverter.cs" />
+    <Compile Include="Converters\Layers\VectorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
     <Folder Include="PropertyConfigure\" />
+    <Folder Include="Converters\Layers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

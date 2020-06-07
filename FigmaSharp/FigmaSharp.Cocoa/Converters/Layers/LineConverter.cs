@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * LineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -38,7 +38,7 @@ using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaLineConverter : LineConverterBase
+    public class LineConverter : LineConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSBox);
 

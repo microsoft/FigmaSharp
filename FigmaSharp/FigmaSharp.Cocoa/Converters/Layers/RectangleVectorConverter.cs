@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaFrameConverter.cs
+ * RectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,6 +25,8 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
+using System.Linq;
 using System.Text;
 using AppKit;
 
@@ -32,63 +34,62 @@ using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.Views.Cocoa;
-using System.Linq;
-using System;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaFrameConverter : FrameConverterBase
+    public class RectangleVectorConverter : RectangleVectorConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
+        public override Type GetControlType(FigmaNode currentNode)
+            => typeof(NSView);
 
-        public override bool ScanChildren (FigmaNode currentNode)
-            => true;
-
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
+            var vectorEntity = (RectangleVector)currentNode;
             IView view;
             if (rendererService.FileProvider.RendersAsImage (currentNode))
-                view = new ImageView ();
-			else
-                view  = new View ();
+                view = new ImageView();
+            else
+                view = new View();
 
-            var currengroupView = view.NativeObject as NSView;
-            var FigmaFrame = (FigmaFrame)currentNode;
-            currengroupView.Configure(currentNode);
+            var currengroupView = (NSView) view.NativeObject;
+            currengroupView.Configure (currentNode);
 
-            currengroupView.AlphaValue = FigmaFrame.opacity;
-
-			if (FigmaFrame.HasFills) {
-                foreach (var fill in FigmaFrame.fills) {
-					if (fill.type == "IMAGE") {
-						//we need to add this to our service
+            if (vectorEntity.HasFills) {
+                foreach (var fill in vectorEntity.fills) {
+                    if (fill.type == "IMAGE") {
+                        //we need to add this to our service
                     } else if (fill.type == "SOLID") {
-                       if (fill.visible) {
-                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
+                        if (fill.visible && fill.color != null) {
+                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor (fill.opacity);
                         }
                     } else {
                         Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
-					}
-                    //currengroupView.Layer.Hidden = !fill.visible;
+                    }
                 }
             }
-		
+
+            currengroupView.Layer.CornerRadius = vectorEntity.cornerRadius;
+          
+            var stroke = vectorEntity.strokes?.FirstOrDefault ();
+            if (stroke != null) {
+                currengroupView.Layer.BorderWidth = vectorEntity.strokeWeight;
+                if (stroke.visible && stroke.color != null) {
+                    currengroupView.Layer.BorderColor = stroke.color.ToCGColor (stroke.opacity);
+                }
+            }
+            //view.layer.borderColor = UIColor (red: 1, green: 1, blue: 1, alpha: 1).cgColor
             return view;
         }
 
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
-            var FigmaFrame = (FigmaFrame)currentNode.Node;
             StringBuilder builder = new StringBuilder();
 
-            var name = Resources.Ids.Conversion.NameIdentifier;
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
+                builder.WriteConstructor (currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
-
-            builder.Configure(FigmaFrame, currentNode.Name);
+            builder.Configure((RectangleVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
             return builder.ToString();
         }
     }

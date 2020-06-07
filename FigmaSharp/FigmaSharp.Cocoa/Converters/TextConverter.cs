@@ -1,5 +1,5 @@
 ﻿/* 
-* FigmaTextConverter.cs
+* TextConverter.cs
 * 
 * Author:
 *   Jose Medrano <josmed@microsoft.com>
@@ -37,7 +37,7 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaTextConverter : TextConverterBase
+    public class TextConverter : TextConverterBase
     {
         public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {

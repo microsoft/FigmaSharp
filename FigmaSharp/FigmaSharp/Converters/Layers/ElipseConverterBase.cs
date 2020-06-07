@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * ElipseConverterBase.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -30,13 +30,13 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class LineConverterBase : NodeConverter
+    public abstract class ElipseConverterBase : NodeConverter
     {
         public override bool IsLayer => true;
 
-        public override bool CanConvert(FigmaNode currentNode)
+		public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType () == typeof (FigmaLine) || (currentNode.type == "VECTOR" && currentNode.name == "sep");
+            return currentNode.GetType() == typeof(FigmaElipse);
         }
     }
 }

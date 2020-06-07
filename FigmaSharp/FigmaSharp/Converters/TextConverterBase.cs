@@ -1,5 +1,5 @@
 ﻿/* 
-* FigmaTextConverter.cs
+* TextConverterBase.cs
 * 
 * Author:
 *   Jose Medrano <josmed@microsoft.com>

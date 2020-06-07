@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * RegularPolygonConverterBase.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>

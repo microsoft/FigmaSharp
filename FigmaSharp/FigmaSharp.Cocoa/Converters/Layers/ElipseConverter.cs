@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaElipseConverter.cs 
+ * ElipseConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -41,7 +41,7 @@ using Foundation;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaElipseConverter : ElipseConverterBase
+    public class ElipseConverter : ElipseConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 

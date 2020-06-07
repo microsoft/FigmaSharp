@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * VectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,33 +26,54 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using System.Text;
 using AppKit;
-using FigmaSharp.Converters;
 
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaRegularPolygonConverter : RegularPolygonConverterBase
+    public class VectorConverter : VectorConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
-         => typeof(NSView);
+            => typeof(NSImageView);
 
         public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
-			var vector = new ImageView();
-			var currengroupView = (FNSImageView)vector.NativeObject;
-            currengroupView.Configure((FigmaRegularPolygon)currentNode);
+            var vectorEntity = (FigmaVector)currentNode;
+            var vector = new ImageView();
+            var currengroupView = (NSImageView)vector.NativeObject;
+            currengroupView.Configure(currentNode);
+
+            if (vectorEntity.HasFills) {
+                foreach (var fill in vectorEntity.fills) {
+                    if (fill.type == "IMAGE") {
+                        //we need to add this to our service
+                    } else if (fill.type == "SOLID") {
+                        if (fill.visible) {
+                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
+                        }
+                    } else {
+                        Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
+                    }
+                    //currengroupView.Layer.Hidden = !fill.visible;
+                }
+            }
+
             return vector;
         }
 
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
-            return string.Empty;
+            var builder = new StringBuilder();
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
+                builder.WriteConstructor (currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+            builder.Configure((FigmaVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+            return builder.ToString();
         }
     }
 }

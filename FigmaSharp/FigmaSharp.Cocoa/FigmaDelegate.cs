@@ -46,14 +46,14 @@ namespace FigmaSharp.Cocoa
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly NodeConverter[] figmaViewConverters = {
-            new FigmaRegularPolygonConverter (),
-            new FigmaTextConverter (),
-            new FigmaLineConverter (),
-            new FigmaRectangleVectorConverter (),
-            new FigmaElipseConverter (),
-            new FigmaVectorViewConverter (),
-            new FigmaFrameConverter (),
-            new FigmaVectorEntityConverter (),
+            new RegularPolygonConverter (),
+            new TextConverter (),
+            new LineConverter (),
+            new RectangleVectorConverter (),
+            new ElipseConverter (),
+            new PointConverter (),
+            new FrameConverter (),
+            new VectorConverter (),
         };
 
         static readonly CodePropertyConfigureBase codePropertyConverter = new CodePropertyConfigure ();

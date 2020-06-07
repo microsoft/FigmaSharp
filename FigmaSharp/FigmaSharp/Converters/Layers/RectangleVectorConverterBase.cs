@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * RectangleVectorConverterBase.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -24,34 +24,19 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
-  */
-using System;
-using AppKit;
+ */
 
-using FigmaSharp.Converters;
 using FigmaSharp.Models;
-using FigmaSharp.Services;
-using FigmaSharp.Views;
-using FigmaSharp.Views.Cocoa;
 
-namespace FigmaSharp.Cocoa.Converters
+namespace FigmaSharp.Converters
 {
-    public class FigmaVectorViewConverter : PointConverterBase
+    public abstract class RectangleVectorConverterBase : NodeConverter
     {
-        public override Type GetControlType(FigmaNode currentNode)
-        => typeof(AppKit.NSView);
+        public override bool IsLayer => true;
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+        public override bool CanConvert(FigmaNode currentNode)
         {
-			var vector = new ImageView();
-			var currengroupView = (NSImageView)vector.NativeObject;
-            currengroupView.Configure((FigmaPoint)currentNode);
-            return vector;
-        }
-
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
-        {
-            return string.Empty;
+            return currentNode.GetType() == typeof(RectangleVector);
         }
     }
 }

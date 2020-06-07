@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * RegularPolygonConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,18 +25,34 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
+using AppKit;
+using FigmaSharp.Converters;
 
 using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Native.Cocoa;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Cocoa.Converters
 {
-    public abstract class PointConverterBase : NodeConverter
+    public class RegularPolygonConverter : RegularPolygonConverterBase
     {
-        public override bool IsLayer => true;
+        public override Type GetControlType(FigmaNode currentNode)
+         => typeof(NSView);
 
-        public override bool CanConvert(FigmaNode currentNode)
+        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
-            return currentNode.GetType() == typeof(FigmaPoint);
+			var vector = new ImageView();
+			var currengroupView = (FNSImageView)vector.NativeObject;
+            currengroupView.Configure((FigmaRegularPolygon)currentNode);
+            return vector;
+        }
+
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        {
+            return string.Empty;
         }
     }
 }

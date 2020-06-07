@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorEntityConverter.cs
+ * FrameConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -28,7 +28,6 @@
 using System;
 using System.Text;
 using AppKit;
-
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -37,42 +36,56 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
-    public class FigmaVectorEntityConverter : VectorConverterBase
+    public class FrameConverter : FrameConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode)
-            => typeof(NSImageView);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
-        public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+        public override bool ScanChildren (FigmaNode currentNode)
+            => true;
+
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
         {
-            var vectorEntity = (FigmaVector)currentNode;
-            var vector = new ImageView();
-            var currengroupView = (NSImageView)vector.NativeObject;
+            IView view;
+            if (rendererService.FileProvider.RendersAsImage (currentNode))
+                view = new ImageView ();
+			else
+                view  = new View ();
+
+            var currengroupView = view.NativeObject as NSView;
+            var FigmaFrame = (FigmaFrame)currentNode;
             currengroupView.Configure(currentNode);
 
-            if (vectorEntity.HasFills) {
-                foreach (var fill in vectorEntity.fills) {
-                    if (fill.type == "IMAGE") {
-                        //we need to add this to our service
+            currengroupView.AlphaValue = FigmaFrame.opacity;
+
+			if (FigmaFrame.HasFills) {
+                foreach (var fill in FigmaFrame.fills) {
+					if (fill.type == "IMAGE") {
+						//we need to add this to our service
                     } else if (fill.type == "SOLID") {
-                        if (fill.visible) {
-                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
+                       if (fill.visible) {
+                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
                         }
                     } else {
                         Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
-                    }
+					}
                     //currengroupView.Layer.Hidden = !fill.visible;
                 }
             }
-
-            return vector;
+		
+            return view;
         }
 
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
-            var builder = new StringBuilder();
-            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WriteConstructor (currentNode.Name, GetControlType (currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
-            builder.Configure((FigmaVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+            var FigmaFrame = (FigmaFrame)currentNode.Node;
+            StringBuilder builder = new StringBuilder();
+
+            var name = Resources.Ids.Conversion.NameIdentifier;
+
+            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+                builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+
+            builder.Configure(FigmaFrame, currentNode.Name);
             return builder.ToString();
         }
     }
