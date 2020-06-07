@@ -86,7 +86,7 @@ namespace Xamarin.Forms
         }
 
         public void RenderByName(string name) =>
-            RenderByName(name, new ViewRenderServiceOptions());
+            RenderByNode(FileProvider.FindByName(name));
 
         public void RenderByNode(FigmaNode node, ViewRenderServiceOptions options)
         {

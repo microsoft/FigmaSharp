@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <ReleaseVersion>0.1.1</ReleaseVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj" />
+    <ProjectReference Include="..\..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls.Forms\FigmaSharp.Controls.Forms.csproj" />
+    <ProjectReference Include="..\..\..\..\..\FigmaSharp\FigmaSharp.Forms\FigmaSharp.Forms.csproj" />
+    <ProjectReference Include="..\..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
+    <ProjectReference Include="..\..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Forms\FigmaSharp.Views.Forms.csproj" />
+  </ItemGroup>
+</Project>

@@ -38,7 +38,7 @@ namespace LocalFile.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == "WhySignInLink";
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
 		{
 			var figmaText = (FigmaText)currentNode;
 			var linkButton = new Button

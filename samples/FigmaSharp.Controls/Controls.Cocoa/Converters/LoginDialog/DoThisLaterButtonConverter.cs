@@ -48,7 +48,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name == DoThisLaterButtonName;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
 		{
 			string text = string.Empty;
 			if (currentNode is IFigmaNodeContainer container)

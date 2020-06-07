@@ -38,7 +38,7 @@ namespace LocalFile.Cocoa
 
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == CloseButtonId;
 
-		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
 		{
 			var button = TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
 			//button.Border = false;

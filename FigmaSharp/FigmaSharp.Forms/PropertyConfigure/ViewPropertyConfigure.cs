@@ -65,10 +65,10 @@ namespace FigmaSharp.Forms.PropertyConfigure
                     //    rightConstraint.Active = true;
                     //}
 
-                    if (constraints.horizontal.Contains("LEFT"))
-                    {
+                    //if (constraints.horizontal.Contains("LEFT"))
+                    //{
                         x = Math.Max ((absoluteBoundingBox.X - absoluteBoundBoxParent.X), 0);
-                    }
+                    //}
 
                     //if (constraints.vertical.Contains("BOTTOM") || constraints.horizontal == "SCALE")
                     //{
@@ -80,10 +80,10 @@ namespace FigmaSharp.Forms.PropertyConfigure
                     //    bottomConstraint.Active = true;
                     //}
 
-                    if (constraints.vertical.Contains("TOP"))
-                    {
+                    //if (constraints.vertical.Contains("TOP"))
+                    //{
                         y = Math.Max ((absoluteBoundingBox.Y - absoluteBoundBoxParent.Y),0);
-                    }
+                    //}
 
                     //if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
                     //{
