@@ -33,7 +33,7 @@ using System.Linq;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-	public class CustomViewCodeConverter : CocoaConverter
+	public class CustomViewConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
@@ -44,7 +44,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return null;
 		}
 
-		public CustomViewCodeConverter()
+		public CustomViewConverter()
 		{
 		}
 

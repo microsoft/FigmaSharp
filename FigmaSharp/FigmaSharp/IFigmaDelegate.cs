@@ -29,6 +29,7 @@
 using System;
 using System.Reflection;
 using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -51,7 +52,7 @@ namespace FigmaSharp
         IImageView GetImageView(IImage image);
         void BeginInvoke(Action handler);
         
-        CodePropertyNodeConfigureBase GetCodePropertyConverter ();
-        ViewPropertyNodeConfigureBase GetPropertySetter();
+        CodePropertyConfigureBase GetCodePropertyConverter ();
+        ViewPropertyConfigureBase GetPropertySetter();
     }
 }

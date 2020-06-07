@@ -28,6 +28,7 @@
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp
 {
@@ -35,9 +36,9 @@ namespace FigmaSharp
 	{
 		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
 
-        CodePropertyNodeConfigureBase GetCodePropertyConverter ();
+        CodePropertyConfigureBase GetCodePropertyConverter ();
 
         NodeConverter[] GetConverters (bool includeAll = true);
-        ViewPropertyNodeConfigureBase GetViewPropertySetter();
+        ViewPropertyConfigureBase GetViewPropertySetter();
     }
 }

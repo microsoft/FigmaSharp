@@ -28,16 +28,17 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using FigmaSharp.Models;
-using FigmaSharp.Views;
 using FigmaSharp.Converters;
+using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
+using FigmaSharp.Views;
 
 namespace FigmaSharp.Controls.Cocoa.Services
 {
     public class ControlViewRenderingService : ViewRenderService
 	{
-		public ControlViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
+		public ControlViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyConfigureBase propertySetter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? FigmaControlsContext.Current.GetConverters (),
                   propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter()

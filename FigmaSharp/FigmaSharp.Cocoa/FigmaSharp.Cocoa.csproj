@@ -63,14 +63,14 @@
     <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
     <Compile Include="FigmaVersionMenu.cs" />
-    <Compile Include="PropertyConverter\FigmaCodePropertyConverter.cs" />
-    <Compile Include="PropertyConverter\FigmaViewPropertySetter.cs" />
+    <Compile Include="PropertyConfigure\CodePropertyConfigure.cs" />
+    <Compile Include="PropertyConfigure\ViewPropertyConfigure.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
-    <Folder Include="PropertyConverter\" />
+    <Folder Include="PropertyConfigure\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

@@ -19,7 +19,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Services\" />
     <Folder Include="Properties\" />
-    <Folder Include="PropertyConverter\" />
+    <Folder Include="PropertyConfigure\" />
     <Folder Include="FigmaFile\" />
     <Folder Include="WebApi\" />
     <Folder Include="WebApi\Query\" />

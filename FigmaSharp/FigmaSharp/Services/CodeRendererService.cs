@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp.Services
 {
@@ -13,13 +14,13 @@ namespace FigmaSharp.Services
 
 		internal INodeProvider figmaProvider;
 
-		internal CodePropertyNodeConfigureBase codePropertyConverter;
+		internal CodePropertyConfigureBase codePropertyConverter;
 
 		NodeConverter[] figmaConverters;
 		NodeConverter[] customConverters;
 
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters,
-			CodePropertyNodeConfigureBase codePropertyConverter)
+			CodePropertyConfigureBase codePropertyConverter)
 		{
 			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
 			this.figmaConverters = figmaViewConverters.Where (s => s.IsLayer).ToArray (); ;
@@ -185,7 +186,7 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected virtual void OnPreConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected virtual void OnPreConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 			
 		}
@@ -200,17 +201,17 @@ namespace FigmaSharp.Services
 
 		}
 
-        protected virtual void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+        protected virtual void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 
 		}
 
-		protected virtual void OnChildAdded (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected virtual void OnChildAdded (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 
 		}
 
-		protected virtual void OnFrameSet (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected virtual void OnFrameSet (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 
 		}

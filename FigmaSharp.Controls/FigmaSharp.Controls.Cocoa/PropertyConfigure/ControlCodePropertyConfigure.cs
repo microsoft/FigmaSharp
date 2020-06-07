@@ -1,5 +1,5 @@
 ﻿/* 
- * CustomTextFieldConverter.cs
+ * FigmaControlsPropertyConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -27,14 +27,15 @@
  */
 
 using AppKit;
-
 using FigmaSharp.Cocoa;
+using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 
-namespace FigmaSharp.Controls.Cocoa.Converters
+namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
 {
-    public class FigmaControlsPropertyConverter : FigmaSharp.Cocoa.Converters.FigmaCodePropertyConverter
-	{
+    public class ControlCodePropertyConfigure : CodePropertyConfigure
+    {
         protected override string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             //component instance window case
@@ -59,7 +60,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             return null;
         }
-
 
         public override string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {

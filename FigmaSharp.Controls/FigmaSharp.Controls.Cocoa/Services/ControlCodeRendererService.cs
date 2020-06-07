@@ -31,6 +31,7 @@ using System.Linq;
 using System.Text;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls.Cocoa.Services
@@ -39,7 +40,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyNodeConfigureBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+		public NativeViewCodeService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter ())
 		{
 
@@ -143,7 +144,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			base.Clear();
 		}
 
-		protected override void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyNodeConfigureBase codePropertyConverter)
+		protected override void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 			if (!NodeRendersVar (node, parent)) {
 				if (node.Node.TryGetNodeCustomName (out string name)) {

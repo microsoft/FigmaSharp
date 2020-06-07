@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaViewExtensions.cs - Extension methods for NSViews
+ * PropertyNames.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,14 +26,14 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
-using FigmaSharp.Services;
-using FigmaSharp.Views;
-
-namespace FigmaSharp
+namespace FigmaSharp.PropertyConfigure
 {
-    public abstract class ViewPropertyNodeConfigureBase
+    public static class PropertyNames
     {
-        public abstract void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, RenderService rendererService);
+        public const string Size = "Size";
+        public const string Position = "Position";
+        public const string AddChild = "AddChild";
+        public const string Frame = "Frame";
+        public const string Constraints = "Constraints";
     }
 }

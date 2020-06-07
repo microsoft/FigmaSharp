@@ -28,6 +28,7 @@
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp
 {
@@ -59,10 +60,10 @@ namespace FigmaSharp
             figmaDelegate = applicationDelegate;
         }
 
-        public ViewPropertyNodeConfigureBase GetViewPropertySetter()
+        public ViewPropertyConfigureBase GetViewPropertySetter()
             => figmaDelegate.GetViewPropertySetter();
 
-        public CodePropertyNodeConfigureBase GetCodePropertyConverter ()
+        public CodePropertyConfigureBase GetCodePropertyConverter ()
             => figmaDelegate.GetCodePropertyConverter ();
 
         public NodeConverter[] GetConverters (bool includeAll = true)

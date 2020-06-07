@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp.Services

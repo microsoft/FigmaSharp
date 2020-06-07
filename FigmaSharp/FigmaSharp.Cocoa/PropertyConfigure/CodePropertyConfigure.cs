@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * CodePropertyConfigure.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,14 +26,15 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
-using FigmaSharp.Services;
-using AppKit;
 using System;
+using AppKit;
+using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
-namespace FigmaSharp.Cocoa.Converters
+namespace FigmaSharp.Cocoa.PropertyConfigure
 {
-	public class FigmaCodePropertyConverter : CodePropertyNodeConfigureBase
+    public class CodePropertyConfigure : CodePropertyConfigureBase
 	{
 		protected virtual string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{

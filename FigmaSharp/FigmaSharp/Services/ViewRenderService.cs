@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaViewExtensions.cs - Extension methods for NSViews
+ * ViewRenderService.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
@@ -304,14 +305,14 @@ namespace FigmaSharp.Services
 
     public class ViewRenderService : RenderService
     {
-        public ViewPropertyNodeConfigureBase PropertySetter { get; }
+        public ViewPropertyConfigureBase PropertySetter { get; }
 
         public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
         {
           
         }
 
-        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
         {
             this.PropertySetter = propertySetter;
         }

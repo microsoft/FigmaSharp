@@ -29,7 +29,7 @@
 using System;
 using System.Reflection;
 using FigmaSharp.Converters;
-using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -90,7 +90,7 @@ namespace FigmaSharp
             return figmaDelegate.GetImageView(image);
         }
 
-        public CodePropertyNodeConfigureBase GetCodePropertyConverter()
+        public CodePropertyConfigureBase GetCodePropertyConverter()
 			=> figmaDelegate.GetCodePropertyConverter ();
 
         #region Static
@@ -115,7 +115,7 @@ namespace FigmaSharp
 
         public static FigmaApi Api { get; } = new FigmaApi ();
         public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
-        public ViewPropertyNodeConfigureBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
+        public ViewPropertyConfigureBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
 
         #endregion
     }

@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaViewExtensions.cs - Extension methods for NSViews
+ * CodePropertyConfigureBase.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -28,9 +28,9 @@
 
 using FigmaSharp.Services;
 
-namespace FigmaSharp
+namespace FigmaSharp.PropertyConfigure
 {
-    public abstract class CodePropertyNodeConfigureBase
+    public abstract class CodePropertyConfigureBase
     {
         public abstract string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService);
     }

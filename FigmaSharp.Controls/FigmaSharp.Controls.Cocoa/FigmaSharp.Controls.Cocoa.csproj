@@ -61,11 +61,9 @@
     <Compile Include="Services\ControlCodeRendererService.cs" />
     <Compile Include="Services\NativeViewRenderingService.cs" />
     <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
-    <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
     <Compile Include="CocoaConverter.ComponentStrings.cs" />
     <Compile Include="Views\FakeSheetView.cs" />
     <Compile Include="Views\FakeWindowView.cs" />
-    <Compile Include="Converters\Misc\FigmaCodeViewConverter.cs" />
     <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
     <Compile Include="Helpers\CodeHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
@@ -97,6 +95,8 @@
     <Compile Include="Converters\Controls\TextViewConverter.cs" />
     <Compile Include="Converters\Controls\WindowConverter.cs" />
     <Compile Include="Converters\CocoaConverter.cs" />
+    <Compile Include="PropertyConfigure\ControlCodePropertyConfigure.cs" />
+    <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -111,6 +111,7 @@
     <Folder Include="Services\Providers\" />
     <Folder Include="FigmaPackage\" />
     <Folder Include="Converters\Controls\" />
+    <Folder Include="PropertyConfigure\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">

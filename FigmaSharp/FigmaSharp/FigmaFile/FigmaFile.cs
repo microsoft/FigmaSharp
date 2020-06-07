@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
@@ -73,7 +74,7 @@ namespace FigmaSharp
         /// </summary>
         /// <param name="file">File.</param>
         /// <param name="figmaViewConverters">Figma view converters.</param>
-        public FigmaFile (string file, NodeConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter)
+        public FigmaFile (string file, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter)
         {
             this.file = file;
 
