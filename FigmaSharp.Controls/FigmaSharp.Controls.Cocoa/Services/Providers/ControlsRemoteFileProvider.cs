@@ -26,9 +26,9 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls.Cocoa.Services
 {
-	public class ControlsRemoteFileProvider : RemoteNodeProvider
+	public class ControlRemoteNodeProvider : RemoteNodeProvider
 	{
-		public ControlsRemoteFileProvider()
+		public ControlRemoteNodeProvider()
 		{
 		}
 

@@ -117,7 +117,7 @@ namespace MonoDevelop.Figma
             scrollView.AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable; 
 
             figmaDelegate = new FigmaDesignerDelegate();
-            fileProvider = new ControlsRemoteFileProvider();
+            fileProvider = new ControlRemoteNodeProvider();
 
             SetCocoaCodeRenderer ();
             //SetCodeRenderer(ModuleService.Platform.MAC);

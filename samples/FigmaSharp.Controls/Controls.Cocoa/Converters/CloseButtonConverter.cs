@@ -24,6 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -39,7 +40,7 @@ namespace LocalFile.Cocoa
 
 		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
-			var button = FigmaSharp.Controls.Cocoa.TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
+			var button = TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
 			//button.Border = false;
 			return button;
 		}

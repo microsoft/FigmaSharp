@@ -59,7 +59,7 @@
     <Compile Include="FigmaControlsApplication.cs" />
     <Compile Include="FigmaControlsDelegate.cs" />
     <Compile Include="Services\ControlCodeRendererService.cs" />
-    <Compile Include="Services\NativeViewRenderingService.cs" />
+    <Compile Include="Services\ControlViewRenderingService.cs" />
     <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
     <Compile Include="CocoaConverter.ComponentStrings.cs" />
     <Compile Include="Views\FakeSheetView.cs" />

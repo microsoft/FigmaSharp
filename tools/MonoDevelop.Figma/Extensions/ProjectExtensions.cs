@@ -19,7 +19,7 @@ namespace MonoDevelop.Figma
 		public static async Task UpdateFigmaFilesAsync (this Project sender, IEnumerable<ProjectFile> projectFiles, FigmaBundle figmaBundle, FigmaFileVersion version, bool translateStrings)
         {
 			var includeImages = true;
-			var fileProvider = new ControlsRemoteFileProvider() { Version = version };
+			var fileProvider = new ControlRemoteNodeProvider() { Version = version };
 			await fileProvider.LoadAsync(figmaBundle.FileId);
 
 			Console.WriteLine($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");

@@ -89,7 +89,7 @@ namespace MonoDevelop.Figma
 			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
 
 			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new ControlsRemoteFileProvider();
+			var fileProvider = new ControlRemoteNodeProvider();
 			await fileProvider.LoadAsync (fileId);
 
 			//bundle generation

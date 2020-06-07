@@ -1,6 +1,6 @@
-﻿using System;
-using FigmaSharp;
+﻿using FigmaSharp;
 using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
 
 namespace LocalFile.Shared
 {

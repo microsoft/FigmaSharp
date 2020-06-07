@@ -2,7 +2,7 @@
 using System.Text;
 using AppKit;
 using FigmaSharp;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -62,7 +62,7 @@ namespace ToCode.Cocoa
 		void RefreshTree (string docId)
         {
 			var converters = FigmaControlsContext.Current.GetConverters();
-			fileProvider = new ControlsRemoteFileProvider();
+			fileProvider = new ControlRemoteNodeProvider();
 			fileProvider.Load(docId);
 
 			var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();

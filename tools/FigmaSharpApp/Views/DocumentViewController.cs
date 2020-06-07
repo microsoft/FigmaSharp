@@ -155,7 +155,7 @@ namespace FigmaSharpApp
 			FigmaSharp.AppContext.Current.SetAccessToken(Token);
 
 			if (response == null || version != null) {
-				fileProvider = new ControlsRemoteFileProvider() { File = DocumentID, Version = version };
+				fileProvider = new ControlRemoteNodeProvider() { File = DocumentID, Version = version };
 				fileProvider.ImageLinksProcessed += (sender, e) => {
 					InvokeOnMainThread(() => {
 						windowController.ToggleToolbarSpinner(toggle_on: false);
