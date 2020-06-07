@@ -24,16 +24,15 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class WhySignInLinkConverter : LayerConverter
+    class WhySignInLinkConverter : NodeConverter
 	{
 		public const string SearchFilterId = "filter";
 

@@ -26,6 +26,7 @@
 
 using System;
 using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -33,7 +34,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class OperationButtonConverter : LayerConverter
+	class OperationButtonConverter : NodeConverter
 	{
 		public const string OpenButtonName = "OpenButton";
 		public const string CloneButtonName = "CloneButton";

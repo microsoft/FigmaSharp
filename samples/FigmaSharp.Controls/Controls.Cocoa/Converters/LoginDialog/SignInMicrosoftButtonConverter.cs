@@ -24,18 +24,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using AppKit;
-using FigmaSharp;
-using FigmaSharp.Models;
-using FigmaSharp.Views;
-using System.Linq;
-using FigmaSharp.Services;
-using FigmaSharp.Controls.Cocoa;
 using System;
+using System.Linq;
+using AppKit;
+using FigmaSharp.Controls.Cocoa;
+using FigmaSharp.Converters;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Views;
 
 namespace LocalFile.Cocoa
 {
-	class SignInMicrosoftButtonConverter : LayerConverter
+    class SignInMicrosoftButtonConverter : NodeConverter
 	{
 		public const string SignInMicrosoftButtonName = "SignInMicrosoftButton";
 		const string LogoImageName = "MSLogoImage";

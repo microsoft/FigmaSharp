@@ -24,7 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -32,7 +32,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class LoadingSpinnerConverter : LayerConverter
+    class LoadingSpinnerConverter : NodeConverter
 	{
 		public const string LoadingSpinnerName = "progess indicator ~dark";
 

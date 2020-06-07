@@ -24,14 +24,14 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace LocalFile.Cocoa
 {
-	class CloseButtonConverter : LayerConverter
+    class CloseButtonConverter : NodeConverter
 	{
 		public const string CloseButtonId = "window-close";
 

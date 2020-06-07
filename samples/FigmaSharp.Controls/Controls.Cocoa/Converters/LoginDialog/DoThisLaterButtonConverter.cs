@@ -24,17 +24,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using System;
+using System.Linq;
+using FigmaSharp.Controls.Cocoa;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using System.Linq;
-using FigmaSharp.Controls.Cocoa;
-using System;
 
 namespace LocalFile.Cocoa
 {
-	class DoThisLaterButtonConverter : LayerConverter
+    class DoThisLaterButtonConverter : NodeConverter
 	{
 		public const string DoThisLaterButtonName = "DoThisLaterButton";
 		
