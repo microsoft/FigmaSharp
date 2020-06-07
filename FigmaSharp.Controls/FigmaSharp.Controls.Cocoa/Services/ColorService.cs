@@ -23,6 +23,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System.Linq;
 using System.Collections.Generic;
 using AppKit;
 
@@ -30,6 +31,16 @@ namespace FigmaSharp.Controls.Cocoa
 {
 	public static class ColorService
 	{
+		public static string GetNSColorString(string colorStyleName)
+		{
+			return $"{nameof(NSColor)}.{ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).ColorName}";
+		}
+
+		public static NSColor GetNSColor(string colorStyleName)
+		{
+			return ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).Color;
+		}
+
 		public static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
 		                          = new List<(string StyleName, NSColor Color, string ColorName)>
 		{

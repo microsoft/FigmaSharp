@@ -119,10 +119,5 @@ namespace FigmaSharp.Controls.Cocoa
 			return $"{nameof(NSTextAlignment)}.{CocoaHelpers.GetNSTextAlignment(text)}";
 		}
 
-
-		public static string GetNSColorString(string colorStyleName)
-		{
-			return $"{nameof(NSColor)}.{ColorService.ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).ColorName}";
-		}
 	}
 }
