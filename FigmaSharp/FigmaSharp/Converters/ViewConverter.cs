@@ -35,7 +35,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Converters
 {
-	public abstract class LayerConverter 
+	public abstract class NodeConverter 
 	{
 		public abstract Type GetControlType (FigmaNode currentNode);
 

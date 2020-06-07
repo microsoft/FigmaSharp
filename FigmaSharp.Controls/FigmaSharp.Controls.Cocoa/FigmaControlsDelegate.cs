@@ -40,16 +40,16 @@ namespace FigmaSharp.Controls.Cocoa
 
 		static readonly ViewPropertyNodeConfigureBase viewPropertySetter = new FigmaViewPropertySetter ();
 
-		static LayerConverter[] allConverters;
-		static LayerConverter[] converters;
+		static NodeConverter[] allConverters;
+		static NodeConverter[] converters;
 
 		public CodePropertyNodeConfigureBase GetCodePropertyConverter ()
 		  => codePropertyConverter;
 
-		public LayerConverter[] GetConverters (bool includeAll = true)
+		public NodeConverter[] GetConverters (bool includeAll = true)
 		{
 			if (converters == null) {
-				converters = new LayerConverter[] {
+				converters = new NodeConverter[] {
 					// Buttons
 					new ButtonConverter (),
 					new StepperConverter (),

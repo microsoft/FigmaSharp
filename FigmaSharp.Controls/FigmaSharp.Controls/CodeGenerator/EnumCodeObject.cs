@@ -15,7 +15,7 @@ namespace FigmaSharp
         public override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
         {
             figmaClassBase.AddTabLevel();
-            figmaClassBase.GenerateEnum(sb, Name, CodeObjectModifierTypes.Public);
+            figmaClassBase.GenerateEnum(sb, Name, CodeObjectModifierType.Public);
             for (int i = 0; i < Values.Count; i++)
             {
                 var comma = (i < Values.Count - 1) ? "," : "";

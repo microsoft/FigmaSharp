@@ -12,7 +12,7 @@ namespace FigmaSharp
 
         }
 
-        public CodeObjectModifierTypes MethodModifier { get; set; } = CodeObjectModifierTypes.Private;
+        public CodeObjectModifierType MethodModifier { get; set; } = CodeObjectModifierType.Private;
 
         abstract public void Write(FigmaClassBase figmaClassBase, StringBuilder sb);
     }

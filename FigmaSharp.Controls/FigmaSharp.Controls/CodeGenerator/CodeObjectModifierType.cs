@@ -1,6 +1,6 @@
 ﻿namespace FigmaSharp
 {
-    public enum CodeObjectModifierTypes
+    public enum CodeObjectModifierType
 	{
 		Private,
 		Public,

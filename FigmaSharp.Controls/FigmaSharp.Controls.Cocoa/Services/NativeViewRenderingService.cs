@@ -39,7 +39,7 @@ namespace FigmaSharp.Services
 {
     public class NativeViewRenderingService : ViewRenderService
 	{
-		public NativeViewRenderingService (INodeProvider figmaProvider, LayerConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
+		public NativeViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? FigmaControlsContext.Current.GetConverters (),
                   propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter()
@@ -48,7 +48,7 @@ namespace FigmaSharp.Services
 
 		}
 
-		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, LayerConverter converter, ViewRenderServiceOptions options)
+		protected override IEnumerable<FigmaNode> GetCurrentChildren(FigmaNode currentNode, FigmaNode parentNode, NodeConverter converter, ViewRenderServiceOptions options)
 		{
             var windowContent = currentNode.GetWindowContent();
             if (windowContent != null && windowContent is IFigmaNodeContainer nodeContainer) {
@@ -113,7 +113,7 @@ namespace FigmaSharp.Services
             return true;
         }
 
-        protected override bool NodeScansChildren (FigmaNode currentNode, LayerConverter converter, ViewRenderServiceOptions options)
+        protected override bool NodeScansChildren (FigmaNode currentNode, NodeConverter converter, ViewRenderServiceOptions options)
 		{
 			if (fileProvider.RendersAsImage (currentNode))
 				return false;

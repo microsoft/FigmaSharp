@@ -73,7 +73,7 @@ namespace FigmaSharp
         /// </summary>
         /// <param name="file">File.</param>
         /// <param name="figmaViewConverters">Figma view converters.</param>
-        public FigmaFile (string file, LayerConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter)
+        public FigmaFile (string file, NodeConverter[] figmaViewConverters, ViewPropertyNodeConfigureBase propertySetter)
         {
             this.file = file;
 

@@ -14,7 +14,7 @@ namespace FigmaSharp
 
         public override void Write(FigmaClassBase figmaClassBase, StringBuilder sb)
         {
-            figmaClassBase.GenerateMethod(sb, Name, CodeObjectModifierTypes.Public);
+            figmaClassBase.GenerateMethod(sb, Name, CodeObjectModifierType.Public);
             Write(figmaClassBase, sb);
             figmaClassBase.CloseBracket(sb);
         }

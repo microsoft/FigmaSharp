@@ -39,14 +39,14 @@ namespace FigmaSharp.Services
 {
     public class PlatformCustomViewConverter
     {
-        public PlatformCustomViewConverter (string platform, LayerConverter converter)
+        public PlatformCustomViewConverter (string platform, NodeConverter converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public LayerConverter Converter { get; private set; }
+        public NodeConverter Converter { get; private set; }
     }
 
     public class PlatformFigmaCodePropertyConverter
@@ -160,7 +160,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(LayerConverter);
+                var interfaceType = typeof(NodeConverter);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -174,7 +174,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is LayerConverter element)
+                        if (Activator.CreateInstance(type) is NodeConverter element)
                             Converters.Add(new PlatformCustomViewConverter(platform, element));
                     }
                     catch (Exception ex)

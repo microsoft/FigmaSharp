@@ -57,14 +57,14 @@ namespace FigmaSharp
                 builder.AppendLine($"using {current};");
         }
 
-        internal void GenerateEnum(StringBuilder sb, string name, CodeObjectModifierTypes objectModifier)
+        internal void GenerateEnum(StringBuilder sb, string name, CodeObjectModifierType objectModifier)
         {
             AppendLine(sb, $"{objectModifier.ToString().ToLower()} enum {name}");
             OpenBracket(sb);
         }
 
         internal void GenerateMethod(StringBuilder sb, string methodName,
-            CodeObjectModifierTypes modifier = CodeObjectModifierTypes.Private, List<(string, string)> arguments = null)
+            CodeObjectModifierType modifier = CodeObjectModifierType.Private, List<(string, string)> arguments = null)
         {
             string args = string.Empty;
 

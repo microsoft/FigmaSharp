@@ -30,7 +30,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class RectangleVectorConverterBase : LayerConverter
+    public abstract class RectangleVectorConverterBase : NodeConverter
     {
         public override bool IsLayer => true;
 

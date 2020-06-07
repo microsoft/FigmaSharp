@@ -30,7 +30,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Converters
 {
-    public abstract class FrameConverterBase : LayerConverter
+    public abstract class FrameConverterBase : NodeConverter
     {
         public override bool IsLayer => true;
 
