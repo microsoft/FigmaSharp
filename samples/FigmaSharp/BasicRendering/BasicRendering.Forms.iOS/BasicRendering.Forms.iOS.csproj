@@ -14,6 +14,7 @@
     <AssemblyName>BasicRendering.Forms.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -129,29 +130,29 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BasicRendering.Forms\BasicRendering.Forms.csproj">
-      <Project>{6C684F0D-E083-4E19-A98F-0F5175B4F0F0}</Project>
-      <Name>BasicRendering.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Forms\FigmaSharp.Forms.csproj">
-      <Project>{7D7C6203-CF6A-42EF-86C2-345E84768337}</Project>
-      <Name>FigmaSharp.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Forms\FigmaSharp.NativeControls.Forms.csproj">
-      <Project>{0C0ECA9C-1509-4249-B120-F820CBB37B61}</Project>
-      <Name>FigmaSharp.NativeControls.Forms</Name>
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Forms\FigmaSharp.Views.Forms.csproj">
+      <Project>{78F27E64-5EAC-40DB-9E55-8FE3C27F115A}</Project>
+      <Name>FigmaSharp.Views.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Forms\FigmaSharp.Views.Forms.csproj">
-      <Project>{473823C7-567D-434C-95E2-746A5726889F}</Project>
-      <Name>FigmaSharp.Views.Forms</Name>
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Forms\FigmaSharp.Forms.csproj">
+      <Project>{67015C69-0D4D-44F9-86D3-8BE0202805B7}</Project>
+      <Name>FigmaSharp.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
+      <Project>{A8372FD9-04BB-41F0-85C8-CBAB9E587501}</Project>
+      <Name>FigmaSharp.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BasicRendering.Forms\BasicRendering.Forms.csproj">
+      <Project>{6F128664-7949-4D48-87B7-0A70852179A7}</Project>
+      <Name>BasicRendering.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

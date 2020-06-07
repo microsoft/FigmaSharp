@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,9 +24,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj" />
     <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Forms\FigmaSharp.Forms.csproj" />
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls\FigmaSharp.NativeControls.csproj" />
-    <ProjectReference Include="..\..\..\..\FigmaSharp.NativeControls\FigmaSharp.NativeControls.Forms\FigmaSharp.NativeControls.Forms.csproj" />
     <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
     <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Forms\FigmaSharp.Views.Forms.csproj" />
   </ItemGroup>

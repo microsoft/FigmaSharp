@@ -4,13 +4,14 @@ using Xamarin.Forms;
 using System.Linq;
 using System;
 using FigmaSharp.Views;
+using FigmaSharp.Converters;
 
 namespace BasicRendering.Forms
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class MainPage : FigmaRemoteContentPage
+    public partial class MainPage : RemoteContentPage
     {
 		const string LoginPage = "Log-In Page";
 		const string ExhibitionPage = "Exhibition";
@@ -24,7 +25,7 @@ namespace BasicRendering.Forms
 			LoadDocument("fKugSkFGdwOF4vDsPGnJee");
 
 			//this converters are reused in all the renderings
-			AddConverter(new CustomButtonConverter(), new NavigationMenuButtonConverter());
+			//AddConverter(new CustomButtonConverter(), new NavigationMenuButtonConverter());
 
 			ProcessTransitionNodeID (StartNodeID);
 		}
@@ -59,7 +60,7 @@ namespace BasicRendering.Forms
 			}
 		}
 
-		void RenderViewWithConverters (FigmaSharp.Models.FigmaNode node, params FigmaViewConverter[] converters)
+		void RenderViewWithConverters (FigmaSharp.Models.FigmaNode node, params NodeConverter[] converters)
 		{
 			if (converters != null && converters.Length > 0)
 				AddConverter(converters);

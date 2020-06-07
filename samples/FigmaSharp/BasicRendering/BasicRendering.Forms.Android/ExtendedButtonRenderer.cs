@@ -1,62 +1,61 @@
-﻿using System.ComponentModel;
-using Android.Views;
-using FigmaSharp.Views.Forms;
-using LiteForms.Forms;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
+﻿//using System.ComponentModel;
+//using Android.Views;
+//using LiteForms.Forms;
+//using Xamarin.Forms;
+//using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(ExtendedButton), typeof(ExtendedButtonRenderer))]
-namespace LiteForms.Forms
-{
-	public static class AlignmentHelper
-	{
-		[System.Obsolete]
-		public static GravityFlags ToHorizontalGravityFlags(this Xamarin.Forms.TextAlignment alignment)
-		{
-			if (alignment == Xamarin.Forms.TextAlignment.Center)
-				return GravityFlags.AxisSpecified;
-			return alignment == Xamarin.Forms.TextAlignment.End ? GravityFlags.Right : GravityFlags.Left;
-		}
+//[assembly: ExportRenderer(typeof(ExtendedButton), typeof(ExtendedButtonRenderer))]
+//namespace LiteForms.Forms
+//{
+//	public static class AlignmentHelper
+//	{
+//		[System.Obsolete]
+//		public static GravityFlags ToHorizontalGravityFlags(this Xamarin.Forms.TextAlignment alignment)
+//		{
+//			if (alignment == Xamarin.Forms.TextAlignment.Center)
+//				return GravityFlags.AxisSpecified;
+//			return alignment == Xamarin.Forms.TextAlignment.End ? GravityFlags.Right : GravityFlags.Left;
+//		}
 
-	}
+//	}
 
-	[System.Obsolete]
-	public class ExtendedButtonRenderer : Xamarin.Forms.Platform.Android.ButtonRenderer
-	{
-		public new ExtendedButton Element
-		{
-			get
-			{
-				return (ExtendedButton)base.Element;
-			}
-		}
+//	[System.Obsolete]
+//	public class ExtendedButtonRenderer : Xamarin.Forms.Platform.Android.ButtonRenderer
+//	{
+//		public new ExtendedButton Element
+//		{
+//			get
+//			{
+//				return (ExtendedButton)base.Element;
+//			}
+//		}
 
-		protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
-		{
-			base.OnElementChanged(e);
+//		protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
+//		{
+//			base.OnElementChanged(e);
 
-			if (e.NewElement == null)
-			{
-				return;
-			}
+//			if (e.NewElement == null)
+//			{
+//				return;
+//			}
 
-			SetTextAlignment();
-		}
+//			SetTextAlignment();
+//		}
 
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
+//		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+//		{
+//			base.OnElementPropertyChanged(sender, e);
 
-			if (e.PropertyName == ExtendedButton.HorizontalTextAlignmentProperty.PropertyName)
-			{
-				SetTextAlignment();
-			}
-		}
+//			if (e.PropertyName == ExtendedButton.HorizontalTextAlignmentProperty.PropertyName)
+//			{
+//				SetTextAlignment();
+//			}
+//		}
 
-		public void SetTextAlignment()
-		{
-			Control.Gravity = AlignmentHelper.ToHorizontalGravityFlags(Element.HorizontalTextAlignment);
-		}
+//		public void SetTextAlignment()
+//		{
+//			Control.Gravity = AlignmentHelper.ToHorizontalGravityFlags(Element.HorizontalTextAlignment);
+//		}
 
-	}
-}
+//	}
+//}

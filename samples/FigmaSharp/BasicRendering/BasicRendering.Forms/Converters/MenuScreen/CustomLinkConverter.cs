@@ -1,18 +1,20 @@
 ﻿using System;
 using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using FigmaSharp.Views.Forms;
 
 namespace BasicRendering.Forms
 {
-	public class CustomLinkConverter : FigmaViewConverter
+    public class CustomLinkConverter : NodeConverter
 	{
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name.EndsWith("CustomLink", StringComparison.Ordinal);
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
 		{
-			var button = new FigmaSharp.Forms.FigmaTransitionImageButton();
+			var button = new TransitionImageButton();
 			if (currentNode is FigmaText figmaFrameEntity)
 			{
 				button.TransitionNodeID = figmaFrameEntity.transitionNodeID;
@@ -26,6 +28,8 @@ namespace BasicRendering.Forms
 			return button;
 		}
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService) => string.Empty;
-	}
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parent, CodeRenderService rendererService) => string.Empty;
+
+		public override Type GetControlType(FigmaNode currentNode) => typeof(Xamarin.Forms.View);
+    }
 }

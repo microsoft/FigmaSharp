@@ -1,18 +1,19 @@
-﻿using FigmaSharp;
+﻿using System;
+using System.Linq;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Forms;
-using System.Linq;
 
 namespace BasicRendering.Forms
 {
-	public class LoginTextFieldConverter : FigmaViewConverter
+    public class LoginTextFieldConverter : NodeConverter
 	{
 		public override bool CanConvert(FigmaNode currentNode) =>
 			currentNode.name.In ("EmailTextField", "PasswordTextField");
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
 		{
 			var entry = new Xamarin.Forms.Entry();
 
@@ -30,6 +31,8 @@ namespace BasicRendering.Forms
 			return view;
 		}
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(FigmaNode currentNode, FigmaCodeRendererService rendererService) => string.Empty;
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService) => string.Empty;
+
+		public override Type GetControlType(FigmaNode currentNode) => typeof(Xamarin.Forms.View);
 	}
 }
