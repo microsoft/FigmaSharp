@@ -97,6 +97,9 @@
     <Compile Include="Converters\CocoaConverter.cs" />
     <Compile Include="PropertyConfigure\ControlCodePropertyConfigure.cs" />
     <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
+    <Compile Include="CocoaThemes.cs" />
+    <Compile Include="Extensions\ImageNodeExtensions.cs" />
+    <Compile Include="WebApi\ControlImageNodeRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -112,6 +115,8 @@
     <Folder Include="FigmaPackage\" />
     <Folder Include="Converters\Controls\" />
     <Folder Include="PropertyConfigure\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="WebApi\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">

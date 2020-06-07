@@ -12,7 +12,6 @@
     <Folder Include="Resources\" />
     <Folder Include="FigmaPackage\" />
     <Folder Include="Extensions\" />
-    <Folder Include="WebApi\" />
     <Folder Include="CodeGenerator\" />
   </ItemGroup>
   <ItemGroup>
