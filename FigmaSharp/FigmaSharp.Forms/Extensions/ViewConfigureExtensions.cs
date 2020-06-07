@@ -19,10 +19,6 @@ namespace FigmaSharp.Forms
         public static void Configure(this Xamarin.Forms.View view, FigmaNode child)
         {
             view.IsVisible = child.visible;
-            if (child is IAbsoluteBoundingBox container)
-            {
-                AbsoluteLayout.SetLayoutBounds(view, new Xamarin.Forms.Rectangle(0, 0, container.absoluteBoundingBox.Width, container.absoluteBoundingBox.Height));
-            }
         }
 
         public static void Configure(this Label label, FigmaText text)

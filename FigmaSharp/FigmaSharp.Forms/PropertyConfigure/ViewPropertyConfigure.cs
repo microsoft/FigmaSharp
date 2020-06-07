@@ -31,6 +31,7 @@ using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
+using Xamarin.Forms;
 
 namespace FigmaSharp.Forms.PropertyConfigure
 {
@@ -45,10 +46,69 @@ namespace FigmaSharp.Forms.PropertyConfigure
             }
             if (propertyName == PropertyNames.Constraints)
             {
+                if (currentNode is IConstraints constrainedNode && view.NativeObject is BindableObject && parent.NativeObject is BindableObject parentNativeView)
+                {
+                    float x = 0, y = 0;
+                    var constraints = constrainedNode.constraints;
+                    var absoluteBoundingBox = ((IAbsoluteBoundingBox)currentNode)
+                        .absoluteBoundingBox;
+                    var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)parentNode)
+                        .absoluteBoundingBox;
+
+                    //if (constraints.horizontal.Contains("RIGHT") || constraints.horizontal == "SCALE")
+                    //{
+                    //    var endPosition1 = absoluteBoundingBox.X + absoluteBoundingBox.Width;
+                    //    var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
+                    //    var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
+
+                    //    var rightConstraint = nativeView.RightAnchor.ConstraintEqualToAnchor(parentNativeView.RightAnchor, -value);
+                    //    rightConstraint.Active = true;
+                    //}
+
+                    if (constraints.horizontal.Contains("LEFT"))
+                    {
+                        x = Math.Max ((absoluteBoundingBox.X - absoluteBoundBoxParent.X), 0);
+                    }
+
+                    //if (constraints.vertical.Contains("BOTTOM") || constraints.horizontal == "SCALE")
+                    //{
+                    //    var endPosition1 = absoluteBoundingBox.Y + absoluteBoundingBox.Height;
+                    //    var endPosition2 = absoluteBoundBoxParent.Y + absoluteBoundBoxParent.Height;
+                    //    var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
+
+                    //    var bottomConstraint = nativeView.BottomAnchor.ConstraintEqualToAnchor(parentNativeView.BottomAnchor, -value2);
+                    //    bottomConstraint.Active = true;
+                    //}
+
+                    if (constraints.vertical.Contains("TOP"))
+                    {
+                        y = Math.Max ((absoluteBoundingBox.Y - absoluteBoundBoxParent.Y),0);
+                    }
+
+                    //if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
+                    //{
+                    //    var delta = absoluteBoundingBox.X - absoluteBoundBoxParent.X - absoluteBoundBoxParent.Center.X;
+                    //    nativeView.LeftAnchor.ConstraintEqualToAnchor(parentNativeView.CenterXAnchor, delta)
+                    //        .Active = true;
+                    //}
+
+                    //if (constraints.vertical == "CENTER" || constraints.vertical == "SCALE")
+                    //{
+                    //    var delta = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y - absoluteBoundBoxParent.Center.Y;
+                    //    //var delta = absoluteBoundBoxParent.Center.Substract(absoluteBoundingBox.Origin).Y;
+                    //    var test = nativeView.TopAnchor.ConstraintEqualToAnchor(parentNativeView.CenterYAnchor, delta);
+                    //    test.Active = true;
+                    //}
+                    AbsoluteLayout.SetLayoutBounds(view.NativeObject as BindableObject, new Xamarin.Forms.Rectangle(x, y, absoluteBoundingBox.Width, absoluteBoundingBox.Height));
+                }
                 return;
             }
             if (propertyName == PropertyNames.Frame)
             {
+                if (currentNode is IAbsoluteBoundingBox container)
+                {
+                  
+                }
                 return;
             }
         }

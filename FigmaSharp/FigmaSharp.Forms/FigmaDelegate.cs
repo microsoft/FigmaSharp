@@ -17,7 +17,7 @@ namespace FigmaSharp.Forms
         static readonly NodeConverter[] figmaViewConverters = {
             new PointConverter (),
             new FrameConverter (),
-            new  TextConverter (),
+            new TextConverter (),
             new VectorConverter (),
             new RectangleVectorConverter (),
             new ElipseConverter (),
@@ -29,19 +29,19 @@ namespace FigmaSharp.Forms
         public IImage GetImage (string url)
         {
            var image = ImageSource.FromUri (new Uri (url));
-            return new FigmaSharp.Views.Forms.Image(image);
+            return new Views.Forms.Image(image);
         }
 
         public IImage GetImageFromManifest (Assembly assembly, string imageRef)
         {
-            var assemblyImage = FigmaViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef));
-            return new FigmaSharp.Views.Forms.Image (assemblyImage);
+            var assemblyImage = ViewsHelper.GetManifestImageResource(assembly, string.Format("{0}.png", imageRef));
+            return new Views.Forms.Image (assemblyImage);
         }
 
         public IImage GetImageFromFilePath(string filePath)
         {
            var image = ImageSource.FromFile(filePath);
-           return new FigmaSharp.Views.Forms.Image(image);
+           return new Views.Forms.Image(image);
         }
 
         public NodeConverter[] GetFigmaConverters() => figmaViewConverters;
@@ -52,7 +52,7 @@ namespace FigmaSharp.Forms
         public string GetManifestResource(Assembly assembly, string file) =>
             WebApiHelper.GetManifestResource(assembly, file);
 
-        public IView CreateEmptyView() => new FigmaSharp.Views.Forms.View(new AbsoluteLayout());
+        public IView CreateEmptyView() => new Views.Forms.View(new AbsoluteLayout());
 
         public IImageView GetImageView(IImage image)
         {
@@ -61,7 +61,7 @@ namespace FigmaSharp.Forms
             return imageView;
         }
 
-        public void BeginInvoke(Action handler) => Xamarin.Forms.Device.BeginInvokeOnMainThread(handler);
+        public void BeginInvoke(Action handler) => Device.BeginInvokeOnMainThread(handler);
 
         static readonly CodePropertyConfigureBase positionConverter = new CodePropertyConfigure();
         static readonly ViewPropertyConfigureBase addChildConverter = new ViewPropertyConfigure();

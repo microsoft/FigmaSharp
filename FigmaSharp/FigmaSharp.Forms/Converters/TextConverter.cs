@@ -40,7 +40,7 @@ namespace FigmaSharp.Forms.Converters
         {
             var figmaText = ((FigmaText)currentNode);
             var font = figmaText.style.ToFont();
-            var textField = FigmaViewsHelper.CreateLabel(figmaText.characters, font);
+            var textField = ViewsHelper.CreateLabel(figmaText.characters, font);
             textField.Configure(figmaText);
             var wrapper = new Views.Forms.View (textField);
             return wrapper;

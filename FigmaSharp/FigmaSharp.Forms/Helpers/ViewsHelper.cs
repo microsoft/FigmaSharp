@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FigmaSharp.Forms
 {
-    public static class FigmaViewsHelper
+    public static class ViewsHelper
     {
         static string GetResourceDefaultName (Assembly assembly, string resourceName)
         {

@@ -21,6 +21,7 @@
     <Folder Include="Views\" />
     <Folder Include="PropertyConfigure\" />
     <Folder Include="ContentPage\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ViewWrappers\ImageViewWrapper.cs" />
