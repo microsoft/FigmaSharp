@@ -26,9 +26,7 @@
 using System;
 using System.Linq;
 using System.Text;
-
 using AppKit;
-
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
@@ -36,9 +34,9 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
-	public class PopUpButtonConverter : CocoaConverter
+    public class PopUpButtonConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSPopUpButton);
 

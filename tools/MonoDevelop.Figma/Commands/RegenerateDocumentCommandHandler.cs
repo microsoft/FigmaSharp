@@ -28,8 +28,7 @@
 
 using System.Threading.Tasks;
 using FigmaSharp;
-using FigmaSharp.Controls.Services;
-using FigmaSharp.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;

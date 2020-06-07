@@ -31,12 +31,13 @@ using AppKit;
 
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Helpers;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class BoxConverter : CocoaConverter
     {

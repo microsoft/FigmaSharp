@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppKit;
 using FigmaSharp;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Services;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;

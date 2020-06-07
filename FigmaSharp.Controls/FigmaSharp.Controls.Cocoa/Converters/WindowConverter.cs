@@ -25,14 +25,12 @@
 
 using System;
 using System.Text;
-
 using AppKit;
-
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public class WindowConverter : CocoaConverter
 	{

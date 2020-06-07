@@ -24,7 +24,7 @@
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
-namespace FigmaSharp.Controls.Services
+namespace FigmaSharp.Controls.Cocoa.Services
 {
 	public class ControlsLocalFileProvider : FileNodeProvider
 	{

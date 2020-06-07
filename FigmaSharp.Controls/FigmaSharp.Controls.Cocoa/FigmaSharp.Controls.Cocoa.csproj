@@ -84,9 +84,6 @@
     <Compile Include="CocoaConverter.ComponentStrings.cs" />
     <Compile Include="Views\FakeSheetView.cs" />
     <Compile Include="Views\FakeWindowView.cs" />
-    <Compile Include="Views\FigmaBundleView.cs" />
-    <Compile Include="Views\FigmaBundleWindow.cs" />
-    <Compile Include="Views\FigmaContainerBundleWindow.cs" />
     <Compile Include="Converters\Misc\FigmaCodeViewConverter.cs" />
     <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
     <Compile Include="Helpers\CodeHelper.cs" />
@@ -97,6 +94,9 @@
     <Compile Include="Services\Providers\ControlsRemoteFileProvider.cs" />
     <Compile Include="Services\Providers\ControlsManifestFileProvider.cs" />
     <Compile Include="Helpers\TransitionHelper.cs" />
+    <Compile Include="FigmaPackage\FigmaBundleView.cs" />
+    <Compile Include="FigmaPackage\FigmaBundleWindow.cs" />
+    <Compile Include="FigmaPackage\FigmaContainerBundleWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -109,6 +109,7 @@
     <Folder Include="Converters\Misc\" />
     <Folder Include="Views\" />
     <Folder Include="Services\Providers\" />
+    <Folder Include="FigmaPackage\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">

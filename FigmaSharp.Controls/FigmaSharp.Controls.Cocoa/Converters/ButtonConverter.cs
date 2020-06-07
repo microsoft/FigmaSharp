@@ -36,7 +36,7 @@ using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class ButtonConverter : CocoaConverter
     {

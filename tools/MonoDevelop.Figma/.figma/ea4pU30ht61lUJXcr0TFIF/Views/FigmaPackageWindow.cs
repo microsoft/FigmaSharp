@@ -3,16 +3,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AppKit;
-
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Helpers;
 using FigmaSharp.Models;
-using FigmaSharp.Services;
-
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 

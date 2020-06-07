@@ -27,9 +27,9 @@
 using System;
 using AppKit;
 using FigmaSharp.Controls.Cocoa;
-using FigmaSharp.Controls.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Views.Cocoa;
 using Foundation;
 
@@ -140,7 +140,7 @@ namespace FigmaSharpApp
 
 		FigmaFileResponse response;
 		RemoteNodeProvider fileProvider;
-		NativeViewRenderingService rendererService;
+		ControlViewRenderingService rendererService;
 
 		async void Load (FigmaFileVersion version = null, int pageIndex = 0)
 		{
@@ -165,7 +165,7 @@ namespace FigmaSharpApp
 				var embeddedSheetConverter = new EmbededSheetDialogConverter(fileProvider);
 				var embeddedWindowConverter = new EmbededWindowConverter(fileProvider);
 
-				rendererService = new NativeViewRenderingService(fileProvider);
+				rendererService = new ControlViewRenderingService (fileProvider);
 				rendererService.CustomConverters.Add(embeddedSheetConverter);
 				rendererService.CustomConverters.Add(embeddedWindowConverter);
 

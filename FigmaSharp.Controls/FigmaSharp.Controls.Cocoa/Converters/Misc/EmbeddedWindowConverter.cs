@@ -27,6 +27,7 @@ using System;
 using System.Linq;
 using AppKit;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -150,7 +151,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 				await newWindowProvider.LoadAsync (rendererService.FileProvider.File);
 
-				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
+				var secondaryRender = new ControlViewRenderingService(newWindowProvider);
 
 				var options = new ViewRenderServiceOptions() { GenerateMainView = false };
 				secondaryRender.RenderInWindow(window, currentNode, options);

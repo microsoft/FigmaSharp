@@ -29,11 +29,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FigmaSharp.Controls;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 
-namespace FigmaSharp.Services
+namespace FigmaSharp.Controls.Cocoa.Services
 {
     public class NativeViewCodeService : CodeRenderService
     {

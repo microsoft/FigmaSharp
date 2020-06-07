@@ -35,7 +35,7 @@ using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class DisclosureViewConverter : CocoaConverter
 	{

@@ -33,7 +33,7 @@ using System.Text;
 using AppKit;
 using CoreGraphics;
 using FigmaSharp;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
 using FigmaSharp.Services;

@@ -29,6 +29,7 @@
 using FigmaSharp.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Services;
 
 namespace FigmaSharp
 {

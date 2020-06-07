@@ -26,16 +26,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using AppKit;
-
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class TabViewConverter : CocoaConverter
     {

@@ -32,7 +32,7 @@ using System.Threading.Tasks;
 using AppKit;
 using FigmaSharp;
 using FigmaSharp.Controls.Cocoa;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -63,7 +63,7 @@ namespace MonoDevelop.Figma
         FigmaDesignerOutlinePad outlinePad;
 
         ControlsLocalFileProvider fileProvider;
-        NativeViewRenderingService rendererService;
+        ControlViewRenderingService rendererService;
         StoryboardLayoutManager layoutManager;
 
         private FilePath filePath;
@@ -113,7 +113,7 @@ namespace MonoDevelop.Figma
                 var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
 
                 fileProvider = new ControlsLocalFileProvider(localPath) { File = filePath.FullPath };
-                rendererService = new NativeViewRenderingService (fileProvider);
+                rendererService = new ControlViewRenderingService (fileProvider);
 
                 //we generate a new file provider for embeded windows
                 var tmpRemoteProvider = new FileNodeProvider(localPath) { File = filePath.FullPath };

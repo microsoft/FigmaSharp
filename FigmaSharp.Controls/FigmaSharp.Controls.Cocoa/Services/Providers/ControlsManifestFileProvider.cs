@@ -21,17 +21,11 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
-namespace FigmaSharp.Controls.Services.Providers
+namespace FigmaSharp.Controls.Cocoa.Services
 {
     public class ControlsManifestFileProvider : AssemblyResourceNodeProvider
 	{

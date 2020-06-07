@@ -37,7 +37,7 @@ using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Controls.Cocoa.Helpers;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class ComboBoxConverter : CocoaConverter
 	{

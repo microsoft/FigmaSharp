@@ -26,20 +26,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using FigmaSharp.Models;
-using FigmaSharp.Controls;
 using FigmaSharp.Views;
 using FigmaSharp.Converters;
+using FigmaSharp.Services;
 
-namespace FigmaSharp.Services
+namespace FigmaSharp.Controls.Cocoa.Services
 {
-    public class NativeViewRenderingService : ViewRenderService
+    public class ControlViewRenderingService : ViewRenderService
 	{
-		public NativeViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
+		public ControlViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyNodeConfigureBase propertySetter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? FigmaControlsContext.Current.GetConverters (),
                   propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter()
