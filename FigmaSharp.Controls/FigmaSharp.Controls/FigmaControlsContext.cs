@@ -26,7 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp
 {
@@ -58,13 +60,13 @@ namespace FigmaSharp
             figmaDelegate = applicationDelegate;
         }
 
-        public FigmaViewPropertySetterBase GetViewPropertySetter()
+        public ViewPropertyConfigureBase GetViewPropertySetter()
             => figmaDelegate.GetViewPropertySetter();
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
+        public CodePropertyConfigureBase GetCodePropertyConverter ()
             => figmaDelegate.GetCodePropertyConverter ();
 
-        public FigmaViewConverter[] GetConverters (bool includeAll = true)
+        public NodeConverter[] GetConverters (bool includeAll = true)
              => figmaDelegate.GetConverters (includeAll);
 
         #endregion

@@ -27,28 +27,30 @@
  */
 
 using System.Linq;
-using FigmaSharp.Cocoa;
+using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.Controls.Cocoa.Converters;
+using FigmaSharp.Controls.Cocoa.PropertyConfigure;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp.Controls.Cocoa
 {
     public class FigmaControlsDelegate : IFigmaControlsDelegate
 	{
-		static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaControlsPropertyConverter ();
+		static readonly CodePropertyConfigureBase codePropertyConverter = new ControlCodePropertyConfigure();
+		static readonly ViewPropertyConfigureBase viewPropertySetter = new ViewPropertyConfigure ();
 
-		static readonly FigmaViewPropertySetterBase viewPropertySetter = new FigmaViewPropertySetter ();
+		static NodeConverter[] allConverters;
+		static NodeConverter[] converters;
 
-		static FigmaViewConverter[] allConverters;
-		static FigmaViewConverter[] converters;
-
-		public FigmaCodePropertyConverterBase GetCodePropertyConverter ()
+		public CodePropertyConfigureBase GetCodePropertyConverter ()
 		  => codePropertyConverter;
 
-		public FigmaViewConverter[] GetConverters (bool includeAll = true)
+		public NodeConverter[] GetConverters (bool includeAll = true)
 		{
 			if (converters == null) {
-				converters = new FigmaViewConverter[] {
+				converters = new NodeConverter[] {
 					// Buttons
 					new ButtonConverter (),
 					new StepperConverter (),
@@ -81,7 +83,7 @@ namespace FigmaSharp.Controls.Cocoa
 					new DisclosureViewConverter (),
 
 					// Other
-					new CustomViewCodeConverter (),
+					new CustomViewConverter (),
 					new ImageRenderConverter (),
 				};
 			}
@@ -115,7 +117,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return new FigmaBundleView (bundle, name, figmaNode);
 		}
 
-		public FigmaViewPropertySetterBase GetViewPropertySetter() => viewPropertySetter;
+		public ViewPropertyConfigureBase GetViewPropertySetter() => viewPropertySetter;
 
 	}
 }

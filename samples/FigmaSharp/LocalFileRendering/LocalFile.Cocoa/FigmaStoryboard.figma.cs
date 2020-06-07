@@ -1,11 +1,12 @@
-﻿using System;
-using FigmaSharp;
+﻿using FigmaSharp;
+using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
 
 namespace LocalFile.Shared
 {
     public class FigmaStoryboard : FigmaFile
 	{
-        public FigmaStoryboard(FigmaViewConverter[] figmaViewConverters = null, FigmaViewPropertySetterBase propertySetter = null) : base ("FigmaStoryboard.figma", figmaViewConverters, propertySetter)
+        public FigmaStoryboard(NodeConverter[] figmaViewConverters = null, ViewPropertyConfigureBase propertySetter = null) : base ("FigmaStoryboard.figma", figmaViewConverters, propertySetter)
         {
             InitializeComponent();
         }

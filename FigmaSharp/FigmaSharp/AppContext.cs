@@ -28,7 +28,8 @@
 
 using System;
 using System.Reflection;
-using FigmaSharp.Models;
+using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -67,7 +68,7 @@ namespace FigmaSharp
 
         public IView CreateEmptyView() => figmaDelegate.CreateEmptyView();
 
-        public FigmaViewConverter[] GetFigmaConverters() => figmaDelegate.GetFigmaConverters();
+        public NodeConverter[] GetFigmaConverters() => figmaDelegate.GetFigmaConverters();
 
         public IImage GetImage(string url) => figmaDelegate.GetImage(url);
 		public string GetSvgData(string url) => figmaDelegate.GetSvgData(url);
@@ -89,7 +90,7 @@ namespace FigmaSharp
             return figmaDelegate.GetImageView(image);
         }
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter()
+        public CodePropertyConfigureBase GetCodePropertyConverter()
 			=> figmaDelegate.GetCodePropertyConverter ();
 
         #region Static
@@ -114,7 +115,7 @@ namespace FigmaSharp
 
         public static FigmaApi Api { get; } = new FigmaApi ();
         public bool IsVerticalAxisFlipped => figmaDelegate.IsVerticalAxisFlipped;
-        public FigmaViewPropertySetterBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
+        public ViewPropertyConfigureBase GetPropertySetter() => figmaDelegate.GetPropertySetter();
 
         #endregion
     }

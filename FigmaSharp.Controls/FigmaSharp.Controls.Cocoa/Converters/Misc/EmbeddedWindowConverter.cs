@@ -25,23 +25,22 @@
 
 using System;
 using System.Linq;
-
 using AppKit;
-
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Services;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Controls;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public class EmbededSheetDialogConverter : FigmaViewConverter
+    public class EmbededSheetDialogConverter : NodeConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
-        public EmbededSheetDialogConverter(IFigmaFileProvider newWindowProvider)
+        public EmbededSheetDialogConverter(INodeProvider newWindowProvider)
 		{
 
 		}
@@ -51,7 +50,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return currentNode.IsDialogParentContainer(FigmaControlType.WindowSheet);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
 
@@ -84,13 +83,13 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return string.Empty;
 		}
 	}
 
-	public class EmbededWindowConverter : FigmaViewConverter
+	public class EmbededWindowConverter : NodeConverter
 	{
         public override Type GetControlType(FigmaNode currentNode)
         => typeof(AppKit.NSView);
@@ -100,9 +99,9 @@ namespace FigmaSharp.Controls.Cocoa
 		public event EventHandler LivePreviewLoading;
 		public event EventHandler LivePreviewLoaded;
 
-		readonly IFigmaFileProvider newWindowProvider;
+		readonly INodeProvider newWindowProvider;
 
-		public EmbededWindowConverter(IFigmaFileProvider newWindowProvider)
+		public EmbededWindowConverter(INodeProvider newWindowProvider)
 		{
 			this.newWindowProvider = newWindowProvider;
 		}
@@ -117,7 +116,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return isWindow;
 		}
 
-		public override IView ConvertTo (FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		public override IView ConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			string title = "";
 			var frame = (FigmaFrame)currentNode;
@@ -152,15 +151,15 @@ namespace FigmaSharp.Controls.Cocoa
 
 				await newWindowProvider.LoadAsync (rendererService.FileProvider.File);
 
-				var secondaryRender = new NativeViewRenderingService(newWindowProvider);
+				var secondaryRender = new ControlViewRenderingService(newWindowProvider);
 
-				var options = new FigmaViewRendererServiceOptions() { GenerateMainView = false };
+				var options = new ViewRenderServiceOptions() { GenerateMainView = false };
 				secondaryRender.RenderInWindow(window, currentNode, options);
 
 				var mainNodes = currentNode.GetChildren()
 					.ToArray();
 
-				ProcessedNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
+				ViewNode[] processedNodes = secondaryRender.GetProcessedNodes(mainNodes);
 
 				var layoutManager = new StoryboardLayoutManager() { UsesConstraints = true };
 				layoutManager.Run(processedNodes, window.Content, secondaryRender);
@@ -178,7 +177,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

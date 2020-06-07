@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using FigmaSharp.Helpers;
 using NUnit.Framework;
 
 namespace FigmaSharp.Tests
@@ -18,7 +19,7 @@ namespace FigmaSharp.Tests
 		{
 			var file = Path.Combine (currentPath, fileExample);
 			var data = File.ReadAllText (file);
-			var doc = FigmaApiHelper.GetFigmaResponseFromFileContent (data);
+			var doc = WebApiHelper.GetFigmaResponseFromFileContent (data);
 			Assert.IsNotNull (file);
 		}
 	}

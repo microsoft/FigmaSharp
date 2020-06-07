@@ -28,7 +28,8 @@
 
 using System;
 using System.Reflection;
-
+using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -38,7 +39,7 @@ namespace FigmaSharp
         bool IsVerticalAxisFlipped { get; }
 
         IView CreateEmptyView();
-        FigmaViewConverter[] GetFigmaConverters();
+        NodeConverter[] GetFigmaConverters();
 
         IImage GetImage(string url);
 		string GetSvgData(string url);
@@ -51,7 +52,7 @@ namespace FigmaSharp
         IImageView GetImageView(IImage image);
         void BeginInvoke(Action handler);
         
-        FigmaCodePropertyConverterBase GetCodePropertyConverter ();
-        FigmaViewPropertySetterBase GetPropertySetter();
+        CodePropertyConfigureBase GetCodePropertyConverter ();
+        ViewPropertyConfigureBase GetPropertySetter();
     }
 }

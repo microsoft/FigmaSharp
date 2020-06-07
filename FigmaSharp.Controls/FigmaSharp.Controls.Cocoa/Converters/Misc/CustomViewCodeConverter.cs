@@ -33,7 +33,7 @@ using System.Linq;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-	public class CustomViewCodeConverter : CocoaConverter
+	public class CustomViewConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode)
 		{
@@ -44,7 +44,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return null;
 		}
 
-		public CustomViewCodeConverter()
+		public CustomViewConverter()
 		{
 		}
 
@@ -65,7 +65,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return null;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var builder = new StringBuilder ();
 
@@ -78,7 +78,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return builder;
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			return null;
 		}

@@ -24,7 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -32,7 +32,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class LoadingSpinnerConverter : FigmaViewConverter
+    class LoadingSpinnerConverter : NodeConverter
 	{
 		public const string LoadingSpinnerName = "progess indicator ~dark";
 
@@ -46,7 +46,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name == LoadingSpinnerName;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
 			var spinner = new ProgressBar();
 			//var nativeView = (FNSProgressIndicator)spinner.NativeObject;
@@ -56,7 +56,7 @@ namespace LocalFile.Cocoa
 			return spinner;
 		}
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

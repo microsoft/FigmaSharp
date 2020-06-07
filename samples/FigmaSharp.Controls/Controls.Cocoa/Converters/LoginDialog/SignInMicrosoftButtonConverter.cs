@@ -24,18 +24,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using AppKit;
-using FigmaSharp;
-using FigmaSharp.Models;
-using FigmaSharp.Views;
-using System.Linq;
-using FigmaSharp.Services;
-using FigmaSharp.Controls.Cocoa;
 using System;
+using System.Linq;
+using AppKit;
+using FigmaSharp.Controls.Cocoa.Helpers;
+using FigmaSharp.Converters;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Views;
 
 namespace LocalFile.Cocoa
 {
-	class SignInMicrosoftButtonConverter : FigmaViewConverter
+    class SignInMicrosoftButtonConverter : NodeConverter
 	{
 		public const string SignInMicrosoftButtonName = "SignInMicrosoftButton";
 		const string LogoImageName = "MSLogoImage";
@@ -47,7 +47,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name == SignInMicrosoftButtonName;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
 			string text = string.Empty;
 			if (currentNode is IFigmaNodeContainer container)
@@ -61,7 +61,7 @@ namespace LocalFile.Cocoa
 			}
 
 			IView msLogoView = null;
-			if (rendererService is FigmaViewRendererService viewRendererService)
+			if (rendererService is ViewRenderService viewRendererService)
 				msLogoView = viewRendererService.RenderByName<IView>(LogoImageName, null);
 		
 			var flatButton =  new FixedFlatButton(text, msLogoView.NativeObject as NSView);
@@ -70,7 +70,7 @@ namespace LocalFile.Cocoa
 			return button;
 		}
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

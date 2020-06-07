@@ -13,7 +13,7 @@ namespace BasicRendering.Wpf
     {
         const string fileName = "qVIUSmz8AkK158q8pY3L23";// https://www.figma.com/file/qVIUSmz8AkK158q8pY3L23/NicoTest?node-id=0%3A1
 
-        readonly FigmaRemoteFileProvider fileProvider;
+        readonly NodeProvider fileProvider;
 
         public string WindowTitle => fileProvider.Response.name;
 
@@ -28,11 +28,11 @@ namespace BasicRendering.Wpf
             //native toolkit positioning system
 
             //in this case we want use a remote file provider (figma url from our document)
-            fileProvider = new FigmaRemoteFileProvider();
+            fileProvider = new RemoteNodeProvider();
 
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
-            var rendererService = new FigmaViewRendererService(fileProvider, converters);
+            var rendererService = new ViewRenderService(fileProvider, converters);
             rendererService.Start(fileName, scrollView);
 
             //now we have all the views processed and the relationship we can distribute all the views into the desired base view

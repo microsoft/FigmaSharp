@@ -44,7 +44,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return currentNode.name.StartsWith("!image");
 		}
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ProcessedNode parentNode, FigmaRendererService rendererService)
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var vector = new FigmaSharp.Views.Cocoa.ImageView();
 			var currengroupView = (NSImageView)vector.NativeObject;
@@ -52,7 +52,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return vector;
 		}
 
-		protected override StringBuilder OnConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var builder = new StringBuilder();
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))

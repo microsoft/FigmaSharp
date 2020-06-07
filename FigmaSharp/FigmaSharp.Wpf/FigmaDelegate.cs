@@ -12,22 +12,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
-using FigmaSharp.Wpf.PropertyConverter;
 using FigmaSharp.Views.Wpf;
+using FigmaSharp.Helpers;
+using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Wpf.PropertyConfigure;
 
 namespace FigmaSharp.Wpf
 {
     public class FigmaDelegate : IFigmaDelegate
     {
-        static readonly FigmaViewConverter[] figmaViewConverters = {
-            new FigmaRegularPolygonConverter (),
-            new FigmaVectorViewConverter (),
-            new FigmaFrameEntityConverter (),
-            new FigmaTextConverter (),
-            new FigmaVectorEntityConverter (),
-            new FigmaRectangleVectorConverter (),
-            new FigmaElipseConverter (),
-            new FigmaLineConverter ()
+        static readonly NodeConverter[] figmaViewConverters = {
+            new RegularPolygonConverter (),
+            new Converters.PointConverter (),
+            new FrameConverter (),
+            new TextConverter (),
+            new Converters.VectorConverter (),
+            new RectangleVectorConverter (),
+            new ElipseConverter (),
+            new LineConverter ()
         };
 
         public bool IsVerticalAxisFlipped => false;
@@ -36,7 +38,7 @@ namespace FigmaSharp.Wpf
         {
         }
 
-        public FigmaViewConverter[] GetFigmaConverters()
+        public NodeConverter[] GetFigmaConverters()
         {
             return figmaViewConverters;
         }
@@ -79,7 +81,7 @@ namespace FigmaSharp.Wpf
         }
          
         public string GetManifestResource(Assembly assembly, string file) =>
-            FigmaApiHelper.GetManifestResource (assembly, file);
+            WebApiHelper.GetManifestResource (assembly, file);
          
         public IView CreateEmptyView() => new View (new Canvas ());
 
@@ -97,16 +99,16 @@ namespace FigmaSharp.Wpf
 
         public void BeginInvoke(Action handler) => Application.Current.Dispatcher.Invoke(handler);
 
-        static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaCodePropertyConverter();
-        static readonly FigmaViewPropertySetterBase propertySetter = new FigmaViewPropertySetter();
+        static readonly CodePropertyConfigureBase codePropertyConverter = new CodePropertyConfigure();
+        static readonly ViewPropertyConfigureBase propertySetter = new ViewPropertyConfigure();
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter() => codePropertyConverter;
+        public CodePropertyConfigureBase GetCodePropertyConverter() => codePropertyConverter;
 
         public string GetSvgData(string url)
         {
             return "";
         }
 
-        public FigmaViewPropertySetterBase GetPropertySetter() => propertySetter;
+        public ViewPropertyConfigureBase GetPropertySetter() => propertySetter;
     }
 }

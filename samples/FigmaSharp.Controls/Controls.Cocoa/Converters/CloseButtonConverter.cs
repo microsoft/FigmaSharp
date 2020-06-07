@@ -24,27 +24,28 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using FigmaSharp.Controls.Cocoa.Helpers;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace LocalFile.Cocoa
 {
-	class CloseButtonConverter : FigmaViewConverter
+    class CloseButtonConverter : NodeConverter
 	{
 		public const string CloseButtonId = "window-close";
 
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == CloseButtonId;
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
-			var button = FigmaSharp.Controls.Cocoa.TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
+			var button = TransitionHelper.CreateImageButtonFromFigmaNode(currentNode);
 			//button.Border = false;
 			return button;
 		}
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService) => string.Empty;
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService) => string.Empty;
 
 		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}

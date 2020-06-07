@@ -2,7 +2,7 @@
 using System.Text;
 using AppKit;
 using FigmaSharp;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -14,10 +14,10 @@ namespace ToCode.Cocoa
 	{
 		FigmaNodeView data;
 		OutlinePanel outlinePanel;
-		FigmaRemoteFileProvider fileProvider;
+		RemoteNodeProvider fileProvider;
 
 		FigmaDesignerDelegate figmaDelegate;
-		FigmaCodeRendererService codeRenderer;
+		CodeRenderService codeRenderer;
 
 		const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 
@@ -62,7 +62,7 @@ namespace ToCode.Cocoa
 		void RefreshTree (string docId)
         {
 			var converters = FigmaControlsContext.Current.GetConverters();
-			fileProvider = new ControlsRemoteFileProvider();
+			fileProvider = new ControlRemoteNodeProvider();
 			fileProvider.Load(docId);
 
 			var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
@@ -118,8 +118,8 @@ namespace ToCode.Cocoa
 			codeRenderer.Clear();
 			currentSelectedNode = e;
 			var builder = new StringBuilder ();
-			var options = new FigmaCodeRendererServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
-			codeRenderer.GetCode (builder, new FigmaCodeNode (e, null), null, options);
+			var options = new CodeRenderServiceOptions() { TranslateLabels = openUrlButton.State == NSCellStateValue.On };
+			codeRenderer.GetCode (builder, new CodeNode (e, null), null, options);
 			CopyToLogView (builder.ToString ());
 		}
 

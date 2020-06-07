@@ -41,19 +41,19 @@ namespace FigmaSharp.Designer
 {
     public class FigmaDesignerSession
     {
-        readonly FigmaViewRendererService rendererService;
+        readonly ViewRenderService rendererService;
         readonly StoryboardLayoutManager distributionService;
-        readonly IFigmaFileProvider fileProvider;
+        readonly INodeProvider fileProvider;
 
         public bool IsModified { get; internal set; }
 
         public FigmaFileResponse Response => fileProvider.Response;
 
-        public List<ProcessedNode> ProcessedNodes => rendererService.NodesProcessed;
+        public List<ViewNode> ProcessedNodes => rendererService.NodesProcessed;
 
-        public ProcessedNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.FigmaNode is FigmaCanvas).ToArray ();
+        public ViewNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.FigmaNode is FigmaCanvas).ToArray ();
 
-        public FigmaDesignerSession(IFigmaFileProvider figmaFileProvider, FigmaViewRendererService figmaViewRendererService, StoryboardLayoutManager figmaViewRendererDistributionService)
+        public FigmaDesignerSession(INodeProvider figmaFileProvider, ViewRenderService figmaViewRendererService, StoryboardLayoutManager figmaViewRendererDistributionService)
         {
             fileProvider = figmaFileProvider;
             rendererService = figmaViewRendererService;
@@ -64,7 +64,7 @@ namespace FigmaSharp.Designer
 
         string baseDirectory;
 
-        public void Reload(IView contentView, string file, FigmaViewRendererServiceOptions options)
+        public void Reload(IView contentView, string file, ViewRenderServiceOptions options)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace FigmaSharp.Designer
             }
         }
 
-        public async Task ReloadAsync (IView contentView, string file, FigmaViewRendererServiceOptions options)
+        public async Task ReloadAsync (IView contentView, string file, ViewRenderServiceOptions options)
         {
             try
             {

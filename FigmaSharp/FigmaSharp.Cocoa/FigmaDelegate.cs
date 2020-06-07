@@ -1,4 +1,32 @@
-﻿using System;
+﻿/* 
+ * FigmaDelegate.cs 
+ * 
+ * Author:
+ *   Jose Medrano <josmed@microsoft.com>
+ *
+ * Copyright (C) 2018 Microsoft, Corp
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -8,24 +36,28 @@ using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
 using FigmaSharp.Cocoa.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.Helpers;
+using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Cocoa.PropertyConfigure;
 
 namespace FigmaSharp.Cocoa
 {
     public class FigmaDelegate : IFigmaDelegate
     {
-        static readonly FigmaViewConverter[] figmaViewConverters = {
-            new FigmaRegularPolygonConverter (),
-            new FigmaTextConverter (),
-            new FigmaLineConverter (),
-            new FigmaRectangleVectorConverter (),
-            new FigmaElipseConverter (),
-            new FigmaVectorViewConverter (),
-            new FigmaFrameConverter (),
-            new FigmaVectorEntityConverter (),
+        static readonly NodeConverter[] figmaViewConverters = {
+            new RegularPolygonConverter (),
+            new TextConverter (),
+            new LineConverter (),
+            new RectangleVectorConverter (),
+            new ElipseConverter (),
+            new PointConverter (),
+            new FrameConverter (),
+            new VectorConverter (),
         };
 
-        static readonly FigmaCodePropertyConverterBase codePropertyConverter = new FigmaCodePropertyConverter ();
-        static readonly FigmaViewPropertySetterBase propertySetter = new FigmaViewPropertySetter ();
+        static readonly CodePropertyConfigureBase codePropertyConverter = new CodePropertyConfigure ();
+        static readonly ViewPropertyConfigureBase propertySetter = new ViewPropertyConfigure ();
 
         public bool IsVerticalAxisFlipped => false;
 
@@ -59,16 +91,16 @@ namespace FigmaSharp.Cocoa
             return wrapper;
         }
 
-        public FigmaViewConverter[] GetFigmaConverters() => figmaViewConverters;
+        public NodeConverter[] GetFigmaConverters() => figmaViewConverters;
 
         public IView CreateEmptyView() => new View();
 
         public string GetManifestResource(Assembly assembly, string file) =>
-            FigmaApiHelper.GetManifestResource(assembly, file);
+            WebApiHelper.GetManifestResource(assembly, file);
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
-        public FigmaCodePropertyConverterBase GetCodePropertyConverter () => codePropertyConverter;
-        public FigmaViewPropertySetterBase GetPropertySetter() => propertySetter;
+        public CodePropertyConfigureBase GetCodePropertyConverter () => codePropertyConverter;
+        public ViewPropertyConfigureBase GetPropertySetter() => propertySetter;
     }
 }

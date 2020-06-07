@@ -24,17 +24,17 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using System;
+using System.Linq;
+using FigmaSharp.Controls.Cocoa.Helpers;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using System.Linq;
-using FigmaSharp.Controls.Cocoa;
-using System;
 
 namespace LocalFile.Cocoa
 {
-	class DoThisLaterButtonConverter : FigmaViewConverter
+    class DoThisLaterButtonConverter : NodeConverter
 	{
 		public const string DoThisLaterButtonName = "DoThisLaterButton";
 		
@@ -48,7 +48,7 @@ namespace LocalFile.Cocoa
 			return currentNode.name == DoThisLaterButtonName;
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
 			string text = string.Empty;
 			if (currentNode is IFigmaNodeContainer container)
@@ -63,7 +63,7 @@ namespace LocalFile.Cocoa
 			return button;
 		}
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

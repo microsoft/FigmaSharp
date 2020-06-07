@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 
 namespace FigmaSharp.Services
@@ -10,14 +11,14 @@ namespace FigmaSharp.Services
         public int HorizontalMargins { get; set; } = 64;
         public int VerticalMargins { get; set; } = 64;
 
-        public void Run(IView contentView, FigmaViewRendererService rendererService)
+        public void Run(IView contentView, ViewRenderService rendererService)
         {
             var mainNodes = rendererService.NodesProcessed.Where(s => s.FigmaNode.Parent is FigmaCanvas)
                 .ToArray ();
             Run(mainNodes, contentView, rendererService);
         }
 
-        public void Run (ProcessedNode[] mainViews, IView contentView, FigmaViewRendererService rendererService)
+        public void Run (ViewNode[] mainViews, IView contentView, ViewRenderService rendererService)
         {
             var orderedNodes = mainViews
         .OrderBy(s => ((IAbsoluteBoundingBox)s.FigmaNode).absoluteBoundingBox.Left)
@@ -45,7 +46,7 @@ namespace FigmaSharp.Services
 
             if (UsesConstraints) {
                 foreach (var node in orderedNodes)
-                    rendererService.PropertySetter.Configure(CodeProperties.Constraints,
+                    rendererService.PropertySetter.Configure(PropertyNames.Constraints,
                         node.View, node.FigmaNode, node.ParentView?.View, node.ParentView?.FigmaNode, rendererService);
             } else {
                 var rectangle = orderedNodes

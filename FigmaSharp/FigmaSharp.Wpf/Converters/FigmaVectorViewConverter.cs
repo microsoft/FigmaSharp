@@ -34,11 +34,11 @@ using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class FigmaVectorViewConverter : FigmaVectorViewConverterBase
+    public class PointConverter : PointConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var vector = (RectangleVector)currentNode;
 
@@ -48,7 +48,7 @@ namespace FigmaSharp.Wpf.Converters
             return figmaImageView;
         }
          
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             return string.Empty;
         }

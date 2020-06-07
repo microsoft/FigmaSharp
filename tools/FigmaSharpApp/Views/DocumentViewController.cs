@@ -27,9 +27,9 @@
 using System;
 using AppKit;
 using FigmaSharp.Controls.Cocoa;
-using FigmaSharp.Controls.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Views.Cocoa;
 using Foundation;
 
@@ -139,8 +139,8 @@ namespace FigmaSharpApp
 		}
 
 		FigmaFileResponse response;
-		FigmaRemoteFileProvider fileProvider;
-		NativeViewRenderingService rendererService;
+		RemoteNodeProvider fileProvider;
+		ControlViewRenderingService rendererService;
 
 		async void Load (FigmaFileVersion version = null, int pageIndex = 0)
 		{
@@ -155,7 +155,7 @@ namespace FigmaSharpApp
 			FigmaSharp.AppContext.Current.SetAccessToken(Token);
 
 			if (response == null || version != null) {
-				fileProvider = new ControlsRemoteFileProvider() { File = DocumentID, Version = version };
+				fileProvider = new ControlRemoteNodeProvider() { File = DocumentID, Version = version };
 				fileProvider.ImageLinksProcessed += (sender, e) => {
 					InvokeOnMainThread(() => {
 						windowController.ToggleToolbarSpinner(toggle_on: false);
@@ -165,7 +165,7 @@ namespace FigmaSharpApp
 				var embeddedSheetConverter = new EmbededSheetDialogConverter(fileProvider);
 				var embeddedWindowConverter = new EmbededWindowConverter(fileProvider);
 
-				rendererService = new NativeViewRenderingService(fileProvider);
+				rendererService = new ControlViewRenderingService (fileProvider);
 				rendererService.CustomConverters.Add(embeddedSheetConverter);
 				rendererService.CustomConverters.Add(embeddedWindowConverter);
 
@@ -174,7 +174,7 @@ namespace FigmaSharpApp
 			}
 
 			var scrollView = CreateScrollView();
-			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new FigmaViewRendererServiceOptions() { StartPage = pageIndex });
+			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new ViewRenderServiceOptions() { StartPage = pageIndex });
 
 			windowController.ToggleToolbarSpinner(toggle_on: true);
 

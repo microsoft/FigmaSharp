@@ -3,15 +3,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AppKit;
-
 using FigmaSharp;
 using FigmaSharp.Cocoa;
-using FigmaSharp.Controls.Services;
+using FigmaSharp.Controls.Cocoa.Services;
+using FigmaSharp.Helpers;
 using FigmaSharp.Models;
-using FigmaSharp.Services;
-
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 
@@ -92,7 +89,7 @@ namespace MonoDevelop.Figma
 			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
 
 			//we need to ask to figma server to get nodes as demmand
-			var fileProvider = new ControlsRemoteFileProvider();
+			var fileProvider = new ControlRemoteNodeProvider();
 			await fileProvider.LoadAsync (fileId);
 
 			//bundle generation
@@ -158,7 +155,7 @@ namespace MonoDevelop.Figma
 
 			RefreshStates ();
 
-			if (FigmaApiHelper.TryParseFileUrl (FileId, out string fileId)) {
+			if (WebApiHelper.TryParseFileUrl (FileId, out string fileId)) {
 				figmaUrlTextField.StringValue = fileId;
 			}
 

@@ -26,6 +26,7 @@
 
 using System;
 using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -33,7 +34,7 @@ using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class OperationButtonConverter : FigmaViewConverter
+	class OperationButtonConverter : NodeConverter
 	{
 		public const string OpenButtonName = "OpenButton";
 		public const string CloneButtonName = "CloneButton";
@@ -49,13 +50,13 @@ namespace LocalFile.Cocoa
 			return currentNode.name.In(OpenButtonName, CloneButtonName, NewButtonName);
 		}
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
 			var spinner = new ProgressBar();
 			return spinner;
 		}
 
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

@@ -26,7 +26,9 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp
 {
@@ -34,9 +36,9 @@ namespace FigmaSharp
 	{
 		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
 
-        FigmaCodePropertyConverterBase GetCodePropertyConverter ();
+        CodePropertyConfigureBase GetCodePropertyConverter ();
 
-        FigmaViewConverter[] GetConverters (bool includeAll = true);
-        FigmaViewPropertySetterBase GetViewPropertySetter();
+        NodeConverter[] GetConverters (bool includeAll = true);
+        ViewPropertyConfigureBase GetViewPropertySetter();
     }
 }

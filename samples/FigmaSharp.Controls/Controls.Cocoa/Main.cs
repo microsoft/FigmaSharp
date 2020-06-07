@@ -25,26 +25,20 @@
  */
 
 using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using AppKit;
-using CoreGraphics;
 using FigmaSharp;
-using FigmaSharp.Cocoa;
-using FigmaSharp.Models;
 using FigmaSharp.Controls.Cocoa;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Controls.Services;
 
 namespace LocalFile.Cocoa
 {
-	static class MainClass
+    static class MainClass
 	{
 		static IWindow mainWindow;
-		static FigmaRemoteFileProvider fileProvider;
+		static RemoteNodeProvider fileProvider;
 
 		static void Main(string[] args)
 		{
@@ -84,10 +78,10 @@ namespace LocalFile.Cocoa
 		{
 			const string fileName = "FwVa4JS5QsohRhNEnEBKslFk";
 
-			var fileProvider = new ControlsRemoteFileProvider ();
+			var fileProvider = new ControlRemoteNodeProvider ();
 			fileProvider.Load(fileName);
 
-			var rendererService = new NativeViewRenderingService (fileProvider);
+			var rendererService = new ControlViewRenderingService(fileProvider);
 			//we want to include some special converters to handle windows like normal view containers
 			rendererService.CustomConverters.Add(new EmbededSheetDialogConverter(fileProvider));
 			rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));

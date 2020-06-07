@@ -24,22 +24,21 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views.Cocoa;
 
 namespace LocalFile.Cocoa
 {
-	class WhySignInLinkConverter : FigmaViewConverter
+    class WhySignInLinkConverter : NodeConverter
 	{
 		public const string SearchFilterId = "filter";
 
 		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == "WhySignInLink";
 
-		public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+		public override IView ConvertTo(FigmaNode currentNode, ViewNode parent, RenderService rendererService)
 		{
 			var figmaText = (FigmaText)currentNode;
 			var linkButton = new Button
@@ -51,7 +50,7 @@ namespace LocalFile.Cocoa
 		}
 
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService) => string.Empty;
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService) => string.Empty;
 
 		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}

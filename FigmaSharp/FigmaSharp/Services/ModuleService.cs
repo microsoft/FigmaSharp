@@ -33,31 +33,33 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using Newtonsoft.Json;
+using FigmaSharp.Converters;
+using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp.Services
 {
     public class PlatformCustomViewConverter
     {
-        public PlatformCustomViewConverter (string platform, FigmaViewConverter converter)
+        public PlatformCustomViewConverter (string platform, NodeConverter converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public FigmaViewConverter Converter { get; private set; }
+        public NodeConverter Converter { get; private set; }
     }
 
     public class PlatformFigmaCodePropertyConverter
     {
-        public PlatformFigmaCodePropertyConverter (string platform, FigmaCodePropertyConverterBase converter)
+        public PlatformFigmaCodePropertyConverter (string platform, CodePropertyConfigureBase converter)
         {
             Platform = platform;
             Converter = converter;
         }
 
         public string Platform { get; private set; }
-        public FigmaCodePropertyConverterBase Converter { get; private set; }
+        public CodePropertyConfigureBase Converter { get; private set; }
     }
 
     public static class ModuleService
@@ -159,7 +161,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaViewConverter);
+                var interfaceType = typeof(NodeConverter);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -173,7 +175,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaViewConverter element)
+                        if (Activator.CreateInstance(type) is NodeConverter element)
                             Converters.Add(new PlatformCustomViewConverter(platform, element));
                     }
                     catch (Exception ex)
@@ -194,7 +196,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodePropertyConverterBase);
+                var interfaceType = typeof(CodePropertyConfigureBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -208,7 +210,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodePropertyConverterBase element)
+                        if (Activator.CreateInstance(type) is CodePropertyConfigureBase element)
                             CodePropertyConverters.Add(new PlatformFigmaCodePropertyConverter(platform, element));
                     }
                     catch (Exception ex)
@@ -229,7 +231,7 @@ namespace FigmaSharp.Services
             try
             {
                 //we get all the type converters from the selected assembly
-                var interfaceType = typeof(FigmaCodePropertyConverterBase);
+                var interfaceType = typeof(CodePropertyConfigureBase);
                 var types = assembly.GetTypes()
                     .Where(interfaceType.IsAssignableFrom);
 
@@ -243,7 +245,7 @@ namespace FigmaSharp.Services
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
-                        if (Activator.CreateInstance(type) is FigmaCodePropertyConverterBase element)
+                        if (Activator.CreateInstance(type) is CodePropertyConfigureBase element)
                             CodePropertyConverters.Add(new PlatformFigmaCodePropertyConverter (platform, element));
                     }
                     catch (Exception ex)
