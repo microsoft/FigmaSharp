@@ -27,10 +27,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-        <PackageReference Include="NUnit" Version="3.12.0" />
-        <PackageReference Include="Newtonsoft.Json">
-          <Version>12.0.1</Version>
-        </PackageReference>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGeneratorTests.cs" />
@@ -38,23 +38,23 @@
     <Compile Include="LocalFileTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
-      <Name>FigmaSharp.Views</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
-      <Project>{A8372FD9-04BB-41F0-85C8-CBAB9E587501}</Project>
-      <Name>FigmaSharp.Controls</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="test.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
+      <Project>{a138eb90-b46b-4928-a413-7f2e2c3e0ca5}</Project>
+      <Name>FigmaSharp.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{558ecd10-2dd2-4e41-b07b-cbf755c80486}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{501083b2-b62e-4150-bc0f-5d049dfc6e42}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

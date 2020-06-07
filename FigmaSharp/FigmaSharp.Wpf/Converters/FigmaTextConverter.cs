@@ -32,22 +32,19 @@ using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using System;
-using FigmaSharp.Views.Wpf;
+using FigmaSharp.Views.Wpf; 
 
 namespace FigmaSharp.Wpf.Converters
 {
     public class FigmaTextConverter : FigmaTextConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(Label);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(TextBlock);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
-            //var font = figmaText.style.ToFont();
-            //var textField = new Label ();
-            var textField = new Label();
-            //textField.Font = font;
-            textField.Content = figmaText.characters;
+            
+            var textField = new TextBlock();  
             textField.Configure(figmaText);
             var wrapper = new View(textField);
             return wrapper;
@@ -56,6 +53,6 @@ namespace FigmaSharp.Wpf.Converters
         public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
         {
             return string.Empty;
-        }
+        } 
     }
 }

@@ -36,20 +36,20 @@ using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class FigmaFrameEntityConverter : FigmaFrameEntityConverterBase
+    public class FigmaFrameEntityConverter : FigmaFrameConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
         public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
         {
             IView view;
-            if (rendererService.ProcessesImageFromNode(currentNode))
+            if (rendererService.FileProvider.RendersAsImage(currentNode))
                 view = new ImageView();
             else
                 view = new View();
 
             var currengroupView = view.NativeObject as FrameworkElement;
-            var figmaFrameEntity = (FigmaFrameEntity)currentNode;
+            var figmaFrameEntity = (FigmaFrame)currentNode;
             currengroupView.Configure(currentNode);
             
             // TODO: Resolve alpha, background color
