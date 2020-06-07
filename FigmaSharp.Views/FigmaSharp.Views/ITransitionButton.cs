@@ -1,4 +1,6 @@
-﻿/* 
+﻿/*
+ * IFigmaTransitionButton.cs
+ * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
  *
@@ -24,39 +26,18 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views.Native.Cocoa;
-
-namespace FigmaSharp.Cocoa
+namespace FigmaSharp.Views
 {
-	public class FigmaTransitionImageButton : ImageButton, ITransitableButton
+	public interface ITransitableButton : IButton, IViewTransitable
 	{
-		public string TransitionNodeID { get; set; }
-		public float TransitionDuration { get; set; }
-		public string TransitionEasing { get; set; }
 
-		public FigmaTransitionImageButton()
-		{
-		}
-
-		public FigmaTransitionImageButton(FNSButton button) : base(button)
-		{
-		}
 	}
 
-	public class FigmaTransitionButton : Button, IViewTransitable, ITransitableButton
+	public interface IViewTransitable
 	{
-		public string TransitionNodeID { get; set; }
-		public float TransitionDuration { get; set; }
-		public string TransitionEasing { get; set; }
-
-		public FigmaTransitionButton()
-		{
-		}
-
-		public FigmaTransitionButton(FNSButton button) : base(button)
-		{
-		}
+		string TransitionNodeID { get; set; }
+		float TransitionDuration { get; set; }
+		string TransitionEasing { get; set; }
 	}
 }
 

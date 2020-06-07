@@ -74,19 +74,19 @@ namespace FigmaSharp
         /// </summary>
         /// <param name="file">File.</param>
         /// <param name="figmaViewConverters">Figma view converters.</param>
-        public FigmaFile (string file, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter)
+        public FigmaFile (string file, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertyConfigure)
         {
             this.file = file;
 
             ContentView = AppContext.Current.CreateEmptyView();
             FigmaImages = new List<IImageView>();
 
-            if (propertySetter == null)
-                propertySetter = AppContext.Current.GetPropertySetter();
+            if (propertyConfigure == null)
+                propertyConfigure = AppContext.Current.GetViewPropertyConfigure();
 
             var assembly = System.Reflection.Assembly.GetCallingAssembly();
             figmaLocalFileProvider = new AssemblyResourceNodeProvider(assembly, file);
-            rendererService = new ViewRenderService(figmaLocalFileProvider, figmaViewConverters, propertySetter);
+            rendererService = new ViewRenderService(figmaLocalFileProvider, figmaViewConverters, propertyConfigure);
     
         }
 
