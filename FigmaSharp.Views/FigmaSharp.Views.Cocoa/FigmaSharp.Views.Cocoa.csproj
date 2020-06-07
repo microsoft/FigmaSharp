@@ -76,6 +76,7 @@
     <Compile Include="ViewWrappers\HorizontalBar.cs" />
     <Compile Include="ViewWrappers\TextView.cs" />
     <Compile Include="ViewWrappers\TabView.cs" />
+    <Compile Include="FigmaTransitionButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />

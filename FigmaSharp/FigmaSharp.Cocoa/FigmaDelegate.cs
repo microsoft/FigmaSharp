@@ -100,7 +100,8 @@ namespace FigmaSharp.Cocoa
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
-        public CodePropertyConfigureBase GetCodePropertyConverter () => codePropertyConverter;
-        public ViewPropertyConfigureBase GetPropertySetter() => propertySetter;
+
+        public CodePropertyConfigureBase GetCodePropertyConfigure () => codePropertyConverter;
+        public ViewPropertyConfigureBase GetViewPropertyConfigure () => propertySetter;
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBBB8608-7B63-4C07-9609-16DDEB01C081}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.WinForms", "samples\basic-rendering\BasicRendering.WinForms\BasicRendering.WinForms.csproj", "{461B4A01-C603-4C8A-9763-642197569E9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.WinForms", "samples\basic-rendering\WinForms\BasicRendering.WinForms.csproj", "{461B4A01-C603-4C8A-9763-642197569E9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BasicRendering", "BasicRendering", "{0F4964C7-A0DB-41E8-A8DE-01861F2FE09C}"
 EndProject
@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FigmaSharp.Views", "FigmaSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Wpf", "FigmaSharp\FigmaSharp.Wpf\FigmaSharp.Wpf.csproj", "{F7968A6F-1358-45FE-8BE4-957FFBBE50EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Wpf", "samples\FigmaSharp\BasicRendering\BasicRendering.Wpf\BasicRendering.Wpf.csproj", "{D19CA994-F936-418C-BE42-4699F80C651D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Wpf", "samples\FigmaSharp\BasicRendering\Wpf\BasicRendering.Wpf.csproj", "{D19CA994-F936-418C-BE42-4699F80C651D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Views.Wpf", "FigmaSharp.Views\FigmaSharp.Views.Wpf\FigmaSharp.Views.Wpf.csproj", "{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}"
 EndProject

@@ -68,7 +68,6 @@
     <Compile Include="Helpers\CodeHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="Services\ColorService.cs" />
-    <Compile Include="Views\FigmaTransitionButton.cs" />
     <Compile Include="Services\Providers\ControlFileNodeProvider.cs" />
     <Compile Include="Services\Providers\ControlRemoteNodeProvider.cs" />
     <Compile Include="Services\Providers\ControlAssemblyResourceNodeProvider.cs" />

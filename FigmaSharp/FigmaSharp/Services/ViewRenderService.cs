@@ -47,7 +47,7 @@ namespace FigmaSharp.Services
 
         public ViewPropertyConfigureBase PropertySetter { get; }
 
-        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetPropertySetter ())
+        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetViewPropertyConfigure ())
         {
           
         }
@@ -238,7 +238,7 @@ namespace FigmaSharp.Services
 
         public T RenderByNode<T>(FigmaNode node, IView parent, ViewRenderServiceOptions options = null) where T : IView
         {
-            return (T) RenderByNode<T>(node, parent, options);
+            return (T)RenderByNode(node, parent, options);
         }
 
         public T RenderByName<T> (string figmaName, IView parent, ViewRenderServiceOptions options = null) where T : IView

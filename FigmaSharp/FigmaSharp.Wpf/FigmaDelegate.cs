@@ -102,13 +102,13 @@ namespace FigmaSharp.Wpf
         static readonly CodePropertyConfigureBase codePropertyConverter = new CodePropertyConfigure();
         static readonly ViewPropertyConfigureBase propertySetter = new ViewPropertyConfigure();
 
-        public CodePropertyConfigureBase GetCodePropertyConverter() => codePropertyConverter;
+        public CodePropertyConfigureBase GetCodePropertyConfigure() => codePropertyConverter;
 
         public string GetSvgData(string url)
         {
             return "";
         }
 
-        public ViewPropertyConfigureBase GetPropertySetter() => propertySetter;
+        public ViewPropertyConfigureBase GetViewPropertyConfigure() => propertySetter;
     }
 }
