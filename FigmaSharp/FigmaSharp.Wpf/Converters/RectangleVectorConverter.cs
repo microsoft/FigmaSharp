@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorEntityConverter.cs
+ * FigmaRectangleVectorConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,32 +25,35 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using FigmaSharp.Converters; 
-using FigmaSharp.Models;
+using FigmaSharp.Models; 
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using System;
 using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
-{
-    public class FigmaVectorEntityConverter : FigmaVectorEntityConverterBase
+{ 
+    public class RectangleVectorConverter : RectangleVectorConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
-            var figmaEntity = (FigmaVectorEntity)currentNode;
+            var figmaEntity = (RectangleVector)currentNode;
 
             var image = new CanvasImage();
-            var figmaImageView = new ImageView();
+            var rectangleView = new View(image); 
             image.Configure(figmaEntity);
-            return figmaImageView;
-        }
-         
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+             
+            return rectangleView;
+        } 
+
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             return string.Empty;
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FigmaSharp.Models;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using System;
@@ -7,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FigmaSharp.Wpf.PropertyConverter
+namespace FigmaSharp.Wpf.PropertyConfigure
 {
-    public class FigmaViewPropertySetter : FigmaViewPropertySetterBase
+    public class ViewPropertyConfigure : ViewPropertyConfigureBase
     {
-        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, FigmaRendererService rendererService)
+        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, ViewRenderService rendererService)
         {
-            if (propertyName == CodeProperties.AddChild)
+            if (propertyName == PropertyNames.AddChild)
             {
                 parent?.AddChild(view);
                 return;

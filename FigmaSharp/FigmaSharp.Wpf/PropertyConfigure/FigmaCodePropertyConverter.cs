@@ -1,10 +1,11 @@
-﻿using FigmaSharp.Services;
+﻿using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
-namespace FigmaSharp.Wpf.PropertyConverter
+namespace FigmaSharp.Wpf.PropertyConfigure
 {
-    public class FigmaCodePropertyConverter : FigmaCodePropertyConverterBase
+    public class CodePropertyConfigure : CodePropertyConfigureBase
     {
-        public override string ConvertToCode(string propertyName, FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
         //    if (propertyName == CodeProperties.Frame)
         //    {

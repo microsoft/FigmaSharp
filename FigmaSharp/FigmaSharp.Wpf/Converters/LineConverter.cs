@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaRectangleVectorConverter.cs
+ * FigmaLineConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,34 +26,33 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Converters; 
-using FigmaSharp.Models; 
+using FigmaSharp.Converters;
+using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using System;
 using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
-{ 
-    public class FigmaRectangleVectorConverter : RectangleVectorConverterBase
+{
+    public class LineConverter : LineConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
-            var figmaEntity = (RectangleVector)currentNode;
+            var figmaEntity = (FigmaLine)currentNode;
 
             var image = new CanvasImage();
-            var rectangleView = new View(image); 
+            var lineView = new View(image);
             image.Configure(figmaEntity);
-             
-            return rectangleView;
-        } 
 
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
-        {
-            return string.Empty;
+            return lineView; 
         }
 
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        {
+            return string.Empty;
+        } 
     }
 }

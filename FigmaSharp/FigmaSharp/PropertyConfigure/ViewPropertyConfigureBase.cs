@@ -34,6 +34,6 @@ namespace FigmaSharp.PropertyConfigure
 {
     public abstract class ViewPropertyConfigureBase
     {
-        public abstract void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, RenderService rendererService);
+        public abstract void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, ViewRenderService rendererService);
     }
 }

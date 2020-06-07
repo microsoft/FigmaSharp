@@ -36,7 +36,7 @@ namespace FigmaSharp.Wpf
 
         public static void Configure(this FrameworkElement view, FigmaElipse child)
         {
-            Configure(view, (FigmaVectorEntity)child);
+            Configure(view, (FigmaVector)child);
 
             if (view is Panel canvas)
             {
@@ -53,7 +53,7 @@ namespace FigmaSharp.Wpf
 
         public static void Configure(this FrameworkElement view, FigmaLine child)
         {
-            Configure(view, (FigmaVectorEntity)child);
+            Configure(view, (FigmaVector)child);
 
             if (view is Panel canvas)
             {
@@ -73,7 +73,7 @@ namespace FigmaSharp.Wpf
             view.Height = (int)lineHeight;
         }
 
-        public static void Configure(this FrameworkElement view, FigmaVectorEntity child)
+        public static void Configure(this FrameworkElement view, FigmaVector child)
         {
             Configure(view, (FigmaNode)child);
 
@@ -88,7 +88,7 @@ namespace FigmaSharp.Wpf
          
         public static void Configure(this FrameworkElement view, RectangleVector child)
         {
-            Configure(view, (FigmaVectorEntity)child);
+            Configure(view, (FigmaVector)child);
 
             //view.Layer.CornerRadius = child.cornerRadius;
         }

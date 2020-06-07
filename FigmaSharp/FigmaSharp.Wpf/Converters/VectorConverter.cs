@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaLineConverter.cs 
+ * FigmaVectorEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,8 +25,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-using FigmaSharp.Converters;
+using FigmaSharp.Converters; 
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
@@ -35,24 +34,23 @@ using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class FigmaLineConverter : FigmaLineConverterBase
+    public class VectorConverter : VectorConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
-            var figmaEntity = (FigmaLine)currentNode;
+            var figmaEntity = (FigmaVector)currentNode;
 
             var image = new CanvasImage();
-            var lineView = new View(image);
+            var figmaImageView = new ImageView();
             image.Configure(figmaEntity);
-
-            return lineView; 
+            return figmaImageView;
         }
-
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+         
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             return string.Empty;
-        } 
+        }
     }
 }

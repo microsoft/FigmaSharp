@@ -1,5 +1,5 @@
 ﻿/* 
- * FigmaVectorViewConverter.cs
+ * FigmaFrameEntityConverter.cs
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -25,27 +25,60 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System;
-using FigmaSharp.Converters;
+
+using FigmaSharp.Converters; 
 using FigmaSharp.Models;
-using FigmaSharp.Services;
 using FigmaSharp.Views;
+using FigmaSharp.Services;
+using System.Windows;
+using System;
 using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class PointConverter : PointConverterBase
+    public class FrameConverter : FrameConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(CanvasImage);
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
-            var vector = (RectangleVector)currentNode;
+            IView view;
+            if (rendererService.FileProvider.RendersAsImage(currentNode))
+                view = new ImageView();
+            else
+                view = new View();
 
-            var image = new CanvasImage();
-            var figmaImageView = new ImageView();
-            image.Configure(vector);
-            return figmaImageView;
+            var currengroupView = view.NativeObject as FrameworkElement;
+            var figmaFrameEntity = (FigmaFrame)currentNode;
+            currengroupView.Configure(currentNode);
+            
+            // TODO: Resolve alpha, background color
+            //currengroupView.AlphaValue = figmaFrameEntity.opacity;
+
+            if (figmaFrameEntity.HasFills)
+            {
+                foreach (var fill in figmaFrameEntity.fills)
+                {
+                    if (fill.type == "IMAGE")
+                    {
+                        //we need to add this to our service
+                    }
+                    else if (fill.type == "SOLID")
+                    {
+                        if (fill.visible)
+                        {
+                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"NOT IMPLEMENTED FILL : {fill.type}");
+                    }
+                    //currengroupView.Layer.Hidden = !fill.visible;
+                }
+            }
+
+            return view; 
         }
          
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)

@@ -36,11 +36,11 @@ using FigmaSharp.Views.Wpf;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class FigmaTextConverter : FigmaTextConverterBase
+    public class TextConverter : TextConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(TextBlock);
 
-        public override IView ConvertTo(FigmaNode currentNode, ProcessedNode parent, FigmaRendererService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var figmaText = ((FigmaText)currentNode);
             
@@ -50,7 +50,7 @@ namespace FigmaSharp.Wpf.Converters
             return wrapper;
         }
          
-        public override string ConvertToCode(FigmaCodeNode currentNode, FigmaCodeNode parentNode, FigmaCodeRendererService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             return string.Empty;
         } 
