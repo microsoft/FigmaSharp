@@ -30,6 +30,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -61,8 +62,8 @@ namespace FigmaSharp.Controls.Cocoa
 			if (controlType == FigmaControlType.PopUpButtonPullDown)
 				popUp.PullsDown = true;
 
-			popUp.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-			popUp.Font = CocoaHelpers.GetNSFont(controlVariant);
+			popUp.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
+			popUp.Font = ViewHelper.GetNSFont(controlVariant);
 
 			FigmaText text = frame.children
 				   .OfType<FigmaText>()
@@ -91,15 +92,15 @@ namespace FigmaSharp.Controls.Cocoa
 			if (controlType == FigmaControlType.PopUpButtonPullDown)
 				code.WriteEquality(name, nameof(NSPopUpButton.PullsDown), true);
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
-			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontString(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
 			FigmaText text = frame.children
 			   .OfType<FigmaText>()
 			   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty(text.characters)) {
-				var stringLabel = NativeControlHelper.GetTranslatableString(text.characters,
+				var stringLabel = CodeHelper.GetTranslatableString(text.characters,
                     rendererService.CurrentRendererOptions.TranslateLabels);
 
 				code.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,

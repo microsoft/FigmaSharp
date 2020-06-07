@@ -22,17 +22,20 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Linq;
-
 using AppKit;
-
 using FigmaSharp.Models;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Helpers
 {
-	public static class CocoaCodeHelpers
+    public static class CodeHelper
 	{
+		public static string GetTranslatableString(string text, bool needsTranslation = false)
+		{
+			if (needsTranslation)
+				return $"TranslationCatalog.GetString (\"{text}\")";
+			return text;
+		}
+
 		public static string GetNSFontSizeString(NativeControlVariant controlVariant)
 		{
 			if (controlVariant == NativeControlVariant.Small)
@@ -40,7 +43,6 @@ namespace FigmaSharp.Controls.Cocoa
 
 			return $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontSize) }";
 		}
-
 
 		public static string GetNSFontString(NativeControlVariant controlVariant)
 		{
@@ -52,7 +54,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 		public static string GetNSFontString(NativeControlVariant controlVariant, FigmaText text, bool withWeight = true)
 		{
-			var fontWeight = CocoaHelpers.GetNSFontWeight(text);
+			var fontWeight = ViewHelper.GetNSFontWeight(text);
 
 			if (controlVariant == NativeControlVariant.Regular)
 			{
@@ -116,7 +118,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 		public static string GetNSTextAlignmentString(FigmaText text)
 		{
-			return $"{nameof(NSTextAlignment)}.{CocoaHelpers.GetNSTextAlignment(text)}";
+			return $"{nameof(NSTextAlignment)}.{ViewHelper.GetNSTextAlignment(text)}";
 		}
 
 	}

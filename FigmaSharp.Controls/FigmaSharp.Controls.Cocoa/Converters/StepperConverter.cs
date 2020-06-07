@@ -29,6 +29,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -57,7 +58,7 @@ namespace FigmaSharp.Controls.Cocoa
 			var frame = (FigmaFrame)currentNode;
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			stepper.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+			stepper.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
 
 			return new View(stepper);
 		}
@@ -75,7 +76,7 @@ namespace FigmaSharp.Controls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
 			return code;
 		}

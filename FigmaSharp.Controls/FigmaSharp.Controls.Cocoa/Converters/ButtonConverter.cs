@@ -30,6 +30,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -69,8 +70,8 @@ namespace FigmaSharp.Controls.Cocoa
                     break;
             }
 
-            button.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-            button.Font = CocoaHelpers.GetNSFont(controlVariant);
+            button.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
+            button.Font = ViewHelper.GetNSFont(controlVariant);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
@@ -119,8 +120,8 @@ namespace FigmaSharp.Controls.Cocoa
                     break;
             }
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontString(controlVariant));
+            code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()
@@ -133,7 +134,7 @@ namespace FigmaSharp.Controls.Cocoa
 
                 if (text != null && controlType != FigmaControlType.ButtonHelp)
                 {
-                    string labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                    string labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
                     code.WriteEquality(name, nameof(NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                 }
 

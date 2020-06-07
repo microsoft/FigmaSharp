@@ -29,6 +29,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -101,7 +102,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 					if (CanSetAccessibilityLabel && currentNode.Node.TrySearchA11Label(out var label))
                     {
-						label = NativeControlHelper.GetTranslatableString(label, rendererService.CurrentRendererOptions.TranslateLabels);
+						label = CodeHelper.GetTranslatableString(label, rendererService.CurrentRendererOptions.TranslateLabels);
 						builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
                         hasAccessibility = true;
@@ -109,7 +110,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 					if (CanSetAccessibilityHelp && currentNode.Node.TrySearchA11Help(out var help))
 					{
-						help = NativeControlHelper.GetTranslatableString(help, rendererService.CurrentRendererOptions.TranslateLabels);
+						help = CodeHelper.GetTranslatableString(help, rendererService.CurrentRendererOptions.TranslateLabels);
 						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
                         hasAccessibility = true;

@@ -30,6 +30,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -69,8 +70,8 @@ namespace FigmaSharp.Controls.Cocoa
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 
-            radio.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-            radio.Font = CocoaHelpers.GetNSFont(controlVariant, text);
+            radio.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
+            radio.Font = ViewHelper.GetNSFont(controlVariant, text);
 
             FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()
@@ -102,8 +103,8 @@ namespace FigmaSharp.Controls.Cocoa
 
             code.WriteMethod(name, nameof(NSButton.SetButtonType), NSButtonType.Radio);
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CocoaCodeHelpers.GetNSFontString(controlVariant));
+            code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaText text = frame.children
                 .OfType<FigmaText>()
@@ -111,7 +112,7 @@ namespace FigmaSharp.Controls.Cocoa
 
             if (text != null)
             {
-                var labelTranslated = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                var labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 
                 code.WriteEquality(name, nameof(NSButton.Title), labelTranslated,
                     inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);

@@ -41,7 +41,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).Color;
 		}
 
-		public static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
+		static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
 		                          = new List<(string StyleName, NSColor Color, string ColorName)>
 		{
 			// System color palette

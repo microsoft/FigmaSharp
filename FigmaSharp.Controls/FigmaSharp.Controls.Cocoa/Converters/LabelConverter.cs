@@ -35,6 +35,7 @@ using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Cocoa;
 
 using AppKit;
+using FigmaSharp.Controls.Cocoa.Helpers;
 
 namespace FigmaSharp.Controls.Cocoa
 {
@@ -76,12 +77,12 @@ namespace FigmaSharp.Controls.Cocoa
             if (text != null)
             {
                 label.StringValue = text.characters;
-                label.Alignment = CocoaHelpers.GetNSTextAlignment(text);
-                label.Font = CocoaHelpers.GetNSFont(controlVariant, text);
+                label.Alignment = ViewHelper.GetNSTextAlignment(text);
+                label.Font = ViewHelper.GetNSFont(controlVariant, text);
             }
 
             if (controlType == FigmaControlType.LabelHeader)
-                label.Font = NSFont.SystemFontOfSize(headerFontSize, CocoaHelpers.GetNSFontWeight(text));
+                label.Font = NSFont.SystemFontOfSize(headerFontSize, ViewHelper.GetNSFontWeight(text));
 
             if (text?.styles != null) {
                 foreach (var styleMap in text.styles)
@@ -121,20 +122,20 @@ namespace FigmaSharp.Controls.Cocoa
             code.WriteEquality(name, nameof(NSTextField.DrawsBackground), false);
             code.WriteEquality(name, nameof(NSTextField.PreferredMaxLayoutWidth), "1");
 
-            var labelComponent = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+            var labelComponent = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
             code.WriteEquality(name, nameof(NSTextField.StringValue), labelComponent, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
             if (text != null)
-                code.WriteEquality(name, nameof(NSTextField.Alignment), CocoaCodeHelpers.GetNSTextAlignmentString(text).ToString());
+                code.WriteEquality(name, nameof(NSTextField.Alignment), CodeHelper.GetNSTextAlignmentString(text).ToString());
 
             if (controlType == FigmaControlType.LabelHeader)
             {
                 code.WriteEquality(name, nameof(NSTextField.Font),
-                    $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ headerFontSize }, { CocoaCodeHelpers.GetNSFontWeightString(text) })");
+                    $"{ typeof(NSFont) }.{ nameof(NSFont.SystemFontOfSize) }({ headerFontSize }, { CodeHelper.GetNSFontWeightString(text) })");
             }
             else
             {
-                code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontString(controlVariant, text));
+                code.WriteEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text));
             }
 
             foreach (var styleMap in text?.styles)

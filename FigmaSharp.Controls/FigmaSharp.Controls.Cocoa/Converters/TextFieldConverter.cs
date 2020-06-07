@@ -30,6 +30,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -109,12 +110,12 @@ namespace FigmaSharp.Controls.Cocoa
 
 			if (text != null)
 			{
-				textField.Alignment = CocoaHelpers.GetNSTextAlignment(text);
+				textField.Alignment = ViewHelper.GetNSTextAlignment(text);
 				textField.StringValue = text.characters;
 			}
 
-			textField.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
-			textField.Font = CocoaHelpers.GetNSFont(controlVariant);
+			textField.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
+			textField.Font = ViewHelper.GetNSFont(controlVariant);
 
 			return new View(textField);
 		}
@@ -146,7 +147,7 @@ namespace FigmaSharp.Controls.Cocoa
 				FirstOrDefault (s => s.name == ComponentString.PLACEHOLDER && s.visible);
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase)) {
-				var stringLabel = NativeControlHelper.GetTranslatableString(placeholderText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				var stringLabel = CodeHelper.GetTranslatableString(placeholderText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 				code.WriteEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
 			}
 
@@ -155,9 +156,9 @@ namespace FigmaSharp.Controls.Cocoa
                 FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
 
 			if (text != null) {
-				code.WriteEquality(name, nameof(NSTextField.Font), CocoaCodeHelpers.GetNSFontString(controlVariant, text, withWeight: false));
+				code.WriteEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text, withWeight: false));
 
-				var stringLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+				var stringLabel = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 				code.WriteEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 

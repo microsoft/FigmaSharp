@@ -29,9 +29,9 @@ using AppKit;
 
 using FigmaSharp.Models;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Helpers
 {
-	public static class CocoaHelpers
+	static class ViewHelper
 	{
 		public static NSControlSize GetNSControlSize(NativeControlVariant controlVariant)
 		{

@@ -30,6 +30,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -151,7 +152,7 @@ namespace FigmaSharp.Controls.Cocoa
 
             if (text != null)
             {
-                string stringTitle = NativeControlHelper.GetTranslatableString(text.characters,
+                string stringTitle = CodeHelper.GetTranslatableString(text.characters,
                     rendererService.CurrentRendererOptions.TranslateLabels);
 
                 code.WriteEquality(name, nameof(NSBox.Title), stringTitle,

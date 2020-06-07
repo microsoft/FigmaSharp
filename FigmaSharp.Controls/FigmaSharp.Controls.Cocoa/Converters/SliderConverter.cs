@@ -30,6 +30,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -51,7 +52,7 @@ namespace FigmaSharp.Controls.Cocoa
 			frame.TryGetNativeControlType(out var controlType);
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
-			slider.ControlSize = CocoaHelpers.GetNSControlSize(controlVariant);
+			slider.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
 
 			slider.MinValue = 0;
 			slider.MaxValue = 1;
@@ -81,7 +82,7 @@ namespace FigmaSharp.Controls.Cocoa
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), CocoaHelpers.GetNSControlSize(controlVariant));
+			code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
 			code.WriteEquality(name, nameof(NSProgressIndicator.MinValue), "0");
 			code.WriteEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
