@@ -36,6 +36,8 @@
     <Compile Include="CodeGeneratorTests.cs" />
     <Compile Include="FigmaApiTests.cs" />
     <Compile Include="LocalFileTests.cs" />
+    <Compile Include="NodeExtensionsTests.cs" />
+    <Compile Include="NodeAccessibility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
@@ -44,16 +46,24 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
-      <Project>{a138eb90-b46b-4928-a413-7f2e2c3e0ca5}</Project>
+      <Project>{A8372FD9-04BB-41F0-85C8-CBAB9E587501}</Project>
       <Name>FigmaSharp.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{558ecd10-2dd2-4e41-b07b-cbf755c80486}</Project>
+      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{501083b2-b62e-4150-bc0f-5d049dfc6e42}</Project>
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
       <Name>FigmaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj">
+      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
+      <Name>FigmaSharp.Controls.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

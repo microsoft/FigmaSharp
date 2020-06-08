@@ -29,20 +29,20 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-    static class AccessibilityNodeExtensions
+    internal static class AccessibilityNodeExtensions
     {
-        const string a11yLabel = "label:\"";
-        const string a11yHelp = "help:\"";
-        const string a11yRole = "role:\"";
+        internal const string a11yLabel = "label";
+        internal const string a11yHelp = "help";
+        internal const string a11yRole = "role";
 
-        const string a11yRoleGroup = "group";
+        internal const string a11yRoleGroup = "group";
 
-        const string a11yNodeName = "!a11y";
+        internal const string a11yNodeName = "a11y";
 
         public static bool IsA11Group(this FigmaNode node)
         {
             var a11node = node.GetA11Node();
-            if (a11node != null && a11node.TryGetPropertyValue(a11yRole, out var value) && value == a11yRoleGroup)
+            if (a11node != null && a11node.TryGetChildPropertyValue(a11yRole, out var value) && value == a11yRoleGroup)
                 return true;
             return false;
         }
@@ -54,13 +54,13 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static FigmaNode GetA11Node(this FigmaNode node)
         {
-            return (node as IFigmaNodeContainer)?.children.FirstOrDefault(s => s.name == a11yNodeName);
+            return (node as IFigmaNodeContainer)?.children?.FirstOrDefault(s => s.GetNodeTypeName () == a11yNodeName);
         }
 
         public static bool TrySearchA11Label(this FigmaNode node, out string label)
         {
             var a11node = node.GetA11Node();
-            if (a11node != null && a11node.TryGetPropertyValue(a11yLabel, out label))
+            if (a11node != null && a11node.TryGetChildPropertyValue(a11yLabel, out label))
                 return true;
             label = null;
             return false;
@@ -69,7 +69,7 @@ namespace FigmaSharp.Controls.Cocoa
         public static bool TrySearchA11Help(this FigmaNode node, out string label)
         {
             var a11node = node.GetA11Node();
-            if (a11node != null && a11node.TryGetPropertyValue(a11yHelp, out label))
+            if (a11node != null && a11node.TryGetChildPropertyValue(a11yHelp, out label))
             {
                 return true;
             }
