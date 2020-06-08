@@ -1,7 +1,9 @@
 ﻿using System;
-using LiteForms;
-using LiteForms.Cocoa;
-using LiteForms.Graphics.Mac;
+using FigmaSharp;
+using FigmaSharp.Views.Cocoa;
+//using LiteForms;
+//using LiteForms.Cocoa;
+//using LiteForms.Graphics.Mac;
 
 namespace BasicGraphics.Cocoa
 {

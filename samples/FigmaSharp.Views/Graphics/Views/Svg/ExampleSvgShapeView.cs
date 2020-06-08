@@ -1,18 +1,23 @@
-﻿using LiteForms.Graphics.Mac;
+﻿
+using AppKit;
+using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Cocoa.Graphics;
+using FigmaSharp.Views.Helpers;
 
 namespace BasicGraphics.Cocoa
 {
-	class ExampleSvgShapeView : SvgShapeView
-	{
-		public ExampleSvgShapeView(string file)
-		{
-			var svgData = FileHelper.GetFileDataFromBundle(file);
-			Load(svgData);
-		}
+    class ExampleSvgShapeView : View
+    {
+        static SvgFile GetFile (string file)
+        {
+            var data = FileHelper.GetFileDataFromBundle(file);
+            var svg = new SvgFile(data);
+            return svg;
+        }
 
-		protected override void OnSvgDraw(NGraphics.IImageCanvas canvas, NGraphics.Graphic graphic)
-		{
-
-		}
-	}
+        public ExampleSvgShapeView(string file) : base(GetFile (file))
+        {
+            
+        }
+    }
 }

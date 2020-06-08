@@ -1,14 +1,14 @@
-﻿using LiteForms;
-using LiteForms.Cocoa;
+﻿//using LiteForms;
+//using LiteForms.Cocoa;
 using System.Collections.Generic;
 
 namespace BasicGraphics.Cocoa
 {
-	class Motion
-	{
-		public Transform Initial { get; set; }
-		public Transform Animate { get; set; }
-	}
+	//class Motion
+	//{
+	//	public Transform Initial { get; set; }
+	//	public Transform Animate { get; set; }
+	//}
 
 	public enum TransitionType
 	{

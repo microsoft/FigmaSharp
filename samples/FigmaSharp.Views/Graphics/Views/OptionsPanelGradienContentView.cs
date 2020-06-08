@@ -1,6 +1,7 @@
 ﻿using System;
-using LiteForms;
-using LiteForms.Cocoa;
+using FigmaSharp;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 
 namespace BasicGraphics.Cocoa
 {
@@ -92,9 +93,9 @@ namespace BasicGraphics.Cocoa
 		public event EventHandler SliderScaleValueChanged;
 		public event EventHandler SliderRotateValueChanged;
 
-		public LiteForms.Cocoa.View view;
+		public View view;
 
-		public void SetView(LiteForms.Cocoa.View shapeView)
+		public void SetView(View shapeView)
 		{
 			RemoveView();
 			view = shapeView;
@@ -116,7 +117,7 @@ namespace BasicGraphics.Cocoa
 		{
 			if (view != null && view.Parent != null)
 			{
-				var center = view.Parent.Allocation.Center();
+				var center = view.Parent.Allocation.Center;
 				view.SetPosition(new Point(center.X - (view.Size.Width / 2f), center.Y - (view.Size.Height / 2f)));
 			}
 		}

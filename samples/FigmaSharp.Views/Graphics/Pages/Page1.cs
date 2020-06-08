@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AppKit;
-using LiteForms;
-using LiteForms.Cocoa;
-using LiteForms.Graphics.Mac;
+//using LiteForms;
+//using LiteForms.Cocoa;
+//using LiteForms.Graphics.Mac;
 
 namespace BasicGraphics.Cocoa
 {

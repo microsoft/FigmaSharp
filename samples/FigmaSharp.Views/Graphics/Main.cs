@@ -1,6 +1,7 @@
 ﻿using AppKit;
-using LiteForms;
-using LiteForms.Cocoa;
+using FigmaSharp;
+using FigmaSharp.Views;
+using FigmaSharp.Views.Cocoa;
 using System;
 namespace BasicGraphics.Cocoa
 {
@@ -8,7 +9,7 @@ namespace BasicGraphics.Cocoa
     {
 		static Page1 page1;
 		static Page2 page2;
-		static Page3 page3;
+		//static Page3 page3;
 
 		static PageView selectedPage;
 
@@ -28,12 +29,12 @@ namespace BasicGraphics.Cocoa
 			};
 			//mainWindow.Content.BackgroundColor = Color.Black;
 
-			mainWindow.Content.BackgroundColor = Color.Transparent;
+			//mainWindow.Content.BackgroundColor = Color.Transparent;
 			mainWindow.Center();
 			mainWindow.MovableByWindowBackground = mainWindow.Content.MovableByWindowBackground = true;
-			mainWindow.Borderless = true;
-			mainWindow.IsOpaque = false;
-			mainWindow.BackgroundColor = Color.Transparent;
+			//mainWindow.Borderless = true;
+			//mainWindow.IsOpaque = false;
+			//mainWindow.BackgroundColor = Color.Transparent;
 
 			mainWindow.IsFullSizeContentView = true;
 
@@ -50,11 +51,12 @@ namespace BasicGraphics.Cocoa
 				Allocation = new Rectangle(10, 25, mainWindow.Size.Width - 20, mainWindow.Size.Height - 35),
 				MovableByWindowBackground = true
 			};
+
 			mainWindow.Content.AddChild(actionContainerView);
 
 			page1 = new Page1(actionContainerView);
 			page2 = new Page2(actionContainerView);
-			page3 = new Page3(actionContainerView);
+			//page3 = new Page3(actionContainerView);
 
 			var button = new Button() { Text = "Transformation" };
 			buttonContentStackView.AddChild(button);
@@ -66,13 +68,13 @@ namespace BasicGraphics.Cocoa
 
 			var button3 = new Button() { Text = "Shapes" };
 			buttonContentStackView.AddChild(button3);
-			button3.Clicked += (s, e) => SelectPage(page3);
+			//button3.Clicked += (s, e) => SelectPage(page3);
 
 			//scrollView.SetContentSize(800, 1000);
 
 			mainWindow.Resize += (s, e) => Refresh();
 
-			SelectPage(page1);
+			SelectPage(page2);
 
 			mainWindow.Show();
 

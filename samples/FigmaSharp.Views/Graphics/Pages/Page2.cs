@@ -1,49 +1,53 @@
-﻿using LiteForms;
-using LiteForms.Cocoa;
+﻿//using LiteForms;
+//using LiteForms.Cocoa;
+
+using FigmaSharp;
+using FigmaSharp.Views.Cocoa;
 
 namespace BasicGraphics.Cocoa
 {
-	public class Page2 : PageView
-	{
-		const string Start = "star.svg";
-		const string Arrow = "arrow.svg";
-		const string Symbol = "symbol.svg";
-		const string Machine = "machine.svg";
-		
-		ExampleSvgShapeView svgShapeView;
-		ComboBox combo;
+    public class Page2 : PageView
+    {
+        const string Start = "star.svg";
+        const string Arrow = "arrow.svg";
+        const string Symbol = "symbol.svg";
+        const string Machine = "machine.svg";
 
-		public Page2(OptionsPanelGradienContentView actionContainerView) : base (actionContainerView)
-		{
-			combo = new ComboBox() { Allocation = new Rectangle (10,10,100,20) };
+        ExampleSvgShapeView svgShapeView;
+        ComboBox combo;
 
-			combo.AddItem(Start);
-			combo.AddItem(Arrow);
-			combo.AddItem(Symbol);
-			combo.AddItem(Machine);
-			combo.SelectionIndexChanged += (s, e) => {
-				ShowSvg(combo.SelectedItem);
-			};
-		}
+        public Page2(OptionsPanelGradienContentView actionContainerView) : base(actionContainerView)
+        {
+            combo = new ComboBox() { Allocation = new Rectangle(10, 10, 100, 20) };
 
-		void ShowSvg (string name)
-		{
-			svgShapeView = new ExampleSvgShapeView(name);
-			svgShapeView.Allocation = new Rectangle(40, 40, 300, 300);
+            combo.AddItem(Start);
+            combo.AddItem(Arrow);
+            combo.AddItem(Symbol);
+            combo.AddItem(Machine);
+            combo.SelectionIndexChanged += (s, e) =>
+            {
+                ShowSvg(combo.SelectedItem);
+            };
+        }
 
-			actionContainerView.SetView(svgShapeView);
-		}
+        void ShowSvg(string name)
+        {
+            svgShapeView = new ExampleSvgShapeView(name);
+            svgShapeView.Allocation = new Rectangle(40, 40, 300, 300);
 
-		public override void OnShown()
-		{
-			actionContainerView.AddChild(combo);
-			ShowSvg(Start);
-		}
+            actionContainerView.SetView(svgShapeView);
+        }
 
-		public override void OnHide()
-		{
-			actionContainerView.RemoveChild(combo);
-			actionContainerView.RemoveView();
-		}
-	}
+        public override void OnShown()
+        {
+            actionContainerView.AddChild(combo);
+            ShowSvg(Start);
+        }
+
+        public override void OnHide()
+        {
+            actionContainerView.RemoveChild(combo);
+            actionContainerView.RemoveView();
+        }
+    }
 }
