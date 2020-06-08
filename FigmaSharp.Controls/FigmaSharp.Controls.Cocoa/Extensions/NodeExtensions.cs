@@ -266,8 +266,11 @@ namespace FigmaSharp.Controls.Cocoa
             return figmaNode.FirstChild(s => s.name == "!options");
         }
 
-        static bool TrySearchParameter(FigmaNode node, string parameter, out string value)
+        public static bool TryGetAttributeValue(this FigmaNode node, string parameter, out string value)
         {
+            //we want remove special chars
+            parameter = FigmaSharp.ServiceExtensions.FilterName (parameter);
+
             value = node.name;
             try
             {
@@ -278,8 +281,13 @@ namespace FigmaSharp.Controls.Cocoa
                     index = value.IndexOf("\"");
                     if (index > -1 && index < value.Length)
                     {
-                        value = value.Substring(0, index);
-                        return true;
+                        value = value.Substring(index + 1);
+                        index = value.IndexOf("\"");
+                        if (index > -1 && index < value.Length)
+                        {
+                            value = value.Substring(0, index);
+                            return true;
+                        }
                     }
                 }
             }
@@ -290,13 +298,13 @@ namespace FigmaSharp.Controls.Cocoa
             return false;
         }
 
-        public static bool TryGetPropertyValue(this FigmaNode node, string property, out string value)
+        public static bool TryGetChildPropertyValue(this FigmaNode node, string property, out string value)
         {
-            if (node is IFigmaNodeContainer container)
+            if (node is IFigmaNodeContainer container && container.children != null)
             {
                 foreach (var item in container.children)
                 {
-                    if (TrySearchParameter(item, property, out value))
+                    if (TryGetAttributeValue(item, property, out value))
                     {
                         return true;
                     }

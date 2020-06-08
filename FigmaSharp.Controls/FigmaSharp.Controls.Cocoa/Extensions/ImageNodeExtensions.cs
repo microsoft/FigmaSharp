@@ -24,25 +24,50 @@
 using System;
 using System.Linq;
 using FigmaSharp.Models;
+using FigmaSharp.Controls.Cocoa;
+using FigmaSharp.Cocoa;
+using FigmaSharp;
 
 namespace FigmaSharp.Controls
 {
-    static class ImageNodeExtensions
+    public static class ImageNodeExtensions
     {
-        const string imageNodeName = "!image";
+        const string imageNodeName = "image";
+        const string themeNodeName = "theme";
 
-        internal static bool HasNodeImageName(this FigmaNode node) => node.name.StartsWith(imageNodeName);
+        internal static bool HasNodeImageName(this FigmaNode node)
+            => node.GetNodeTypeName () == imageNodeName;
 
         internal static bool IsSingleImageViewNode(this FigmaNode node)
-            => HasNodeImageName(node)
-            && node is IFigmaNodeContainer container
-            && !container.children.Any(s => Enum.GetNames(typeof(CocoaThemes)).Contains(s.name));
+        {
+            if (!HasNodeImageName(node))
+                return false;
+
+            var containter = node as IFigmaNodeContainer;
+            if (containter != null && containter.children != null)
+            {
+                foreach (var item in containter.children)
+                    if (HasThemedTitle(item))
+                        return false;
+            }
+        
+            return true;
+        }
+
+        internal static bool HasThemedTitle(this FigmaNode node) =>
+            node.TryGetAttributeValue (themeNodeName, out _);
 
         internal static bool IsThemedImageViewNode(this FigmaNode node, out CocoaThemes theme)
         {
             if (node.Parent != null && node.Parent.HasNodeImageName())
-                if (Enum.TryParse(node.name, true, out theme))
-                    return true;
+            {
+                if (node.TryGetAttributeValue(themeNodeName, out var value))
+                {
+                    if (Enum.TryParse(value, true, out theme))
+                        return true;
+                }
+            }
+               
             theme = default;
             return false;
         }

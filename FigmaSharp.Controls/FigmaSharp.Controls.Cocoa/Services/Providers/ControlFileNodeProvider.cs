@@ -33,7 +33,15 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		}
 
 		public override bool SearchImageChildren(FigmaNode figmaNode)
-			=> !(figmaNode.IsSingleImageViewNode() || (figmaNode.Parent?.HasNodeImageName() ?? false));
+		{
+			if (figmaNode.Parent != null && RendersAsImage(figmaNode.Parent))
+				return false;
+			if (!figmaNode.visible)
+				return false;
+			if (figmaNode is FigmaInstance)
+				return false;
+			return true;
+		}
 
 		public override bool RendersAsImage(FigmaNode figmaNode)
 		{
