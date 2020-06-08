@@ -89,7 +89,7 @@
     <Compile Include="Converters\Controls\SliderConverter.cs" />
     <Compile Include="Converters\Controls\StepperConverter.cs" />
     <Compile Include="Converters\Controls\SwitchConverter.cs" />
-    <Compile Include="Converters\Controls\TabViewConverter.cs" />
+    <Compile Include="Converters\Controls\StackViewConverter.cs" />
     <Compile Include="Converters\Controls\TextFieldConverter.cs" />
     <Compile Include="Converters\Controls\TextViewConverter.cs" />
     <Compile Include="Converters\Controls\WindowConverter.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="Services\ControlTypeService.cs" />
     <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
+    <Compile Include="Converters\Controls\TabViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

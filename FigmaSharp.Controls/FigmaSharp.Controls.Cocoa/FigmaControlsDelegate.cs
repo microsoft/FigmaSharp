@@ -78,6 +78,7 @@ namespace FigmaSharp.Controls.Cocoa
 					new SliderCircularConverter(),
 
 					// Containers
+					new StackViewConverter (),
 					new TabViewConverter (),
 					new BoxConverter (),
 					new DisclosureViewConverter (),
