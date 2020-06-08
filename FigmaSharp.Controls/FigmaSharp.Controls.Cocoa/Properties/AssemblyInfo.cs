@@ -20,6 +20,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: InternalsVisibleTo ("MonoDevelop.Figma")]
+[assembly: InternalsVisibleTo("FigmaSharp.Tests")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
