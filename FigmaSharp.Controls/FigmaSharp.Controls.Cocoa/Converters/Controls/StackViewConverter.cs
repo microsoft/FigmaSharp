@@ -40,15 +40,14 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     public class StackViewConverter : CocoaConverter
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSStackView);
+        public override bool ScanChildren(FigmaNode currentNode) => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            if (currentNode is FigmaFrame)
+            if (currentNode is FigmaFrame frame)
             {
-                var layoutMode = (currentNode as FigmaFrame).LayoutMode;
-
-                if (layoutMode == FigmaLayoutMode.Horizontal ||
-                    layoutMode == FigmaLayoutMode.Vertical)
+                if (frame.LayoutMode == FigmaLayoutMode.Horizontal ||
+                    frame.LayoutMode == FigmaLayoutMode.Vertical)
                 {
                     return true;
                 }
@@ -64,14 +63,16 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             var stackView = new NSStackView();
 
             stackView.EdgeInsets = new NSEdgeInsets(
-                top: frame.horizontalPadding,
-                left: frame.verticalPadding,
-                bottom: frame.horizontalPadding,
-                right: frame.horizontalPadding);
+                top:    frame.verticalPadding,
+                left:   frame.horizontalPadding,
+                bottom: frame.verticalPadding,
+                right:  frame.horizontalPadding);
 
             stackView.Spacing = frame.itemSpacing;
 
 
+            // Decide on the NSStackView's gravity by looking at the constraints.
+            // This is not a perfect behavior, but makes sense for most cases
             var gravity = NSStackViewGravity.Leading;
 
             if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
@@ -98,9 +99,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
                 var control = new NSButton()
                 {
-                    Frame = new CoreGraphics.CGRect(0, 0, 0, 0),
                     Title = "test123",
-                    BezelStyle = NSBezelStyle.Rounded
+                    BezelStyle = NSBezelStyle.Rounded,
                 };
 
                 stackView.AddView(control, gravity);
@@ -108,6 +108,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             return new View(stackView);
         }
+
 
         protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
