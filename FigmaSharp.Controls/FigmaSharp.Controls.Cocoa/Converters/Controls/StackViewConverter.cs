@@ -67,41 +67,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             stackView.Spacing = frame.itemSpacing;
 
-
-            // Decide on the NSStackView's gravity by looking at the constraints.
-            // This is not a perfect behavior, but makes sense for most cases
-            var gravity = NSStackViewGravity.Leading;
-
-            if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
-            {
-                stackView.Orientation = NSUserInterfaceLayoutOrientation.Horizontal;
-
-                if (frame.constraints.horizontal == "RIGHT")
-                    gravity = NSStackViewGravity.Trailing;
-            }
-            else
-            {
-                stackView.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
-
-                if (frame.constraints.vertical == "BOTTOM")
-                    gravity = NSStackViewGravity.Trailing;
-            }
-
-
-            var converters = FigmaControlsContext.Current.GetConverters();
-
-            foreach (FigmaNode node in currentNode.GetChildren(t => t.visible, reverseChildren: true))
-            {
-                // TODO: Convert each child node and add it
-
-                var control = new NSButton()
-                {
-                    Title = "test123",
-                    BezelStyle = NSBezelStyle.Rounded,
-                };
-
-                stackView.AddView(control, gravity);
-            }
+            stackView.Orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
+                NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+            stackView.Distribution = NSStackViewDistribution.FillEqually;
 
             return new View(stackView);
         }
