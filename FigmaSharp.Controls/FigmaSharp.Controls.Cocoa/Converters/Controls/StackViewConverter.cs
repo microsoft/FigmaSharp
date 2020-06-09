@@ -1,5 +1,4 @@
 ﻿// Authors:
-//   Jose Medrano <josmed@microsoft.com>
 //   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
@@ -24,14 +23,12 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 using AppKit;
 
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
