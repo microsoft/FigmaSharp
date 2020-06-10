@@ -57,7 +57,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
         {
             var frame = (FigmaFrame)currentNode;
-            var stackView = new NSStackView();
+            var stackView = new NSStackView() { Spacing = frame.itemSpacing };
 
             stackView.EdgeInsets = new NSEdgeInsets(
                 top:    frame.verticalPadding,
@@ -65,11 +65,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 bottom: frame.verticalPadding,
                 right:  frame.horizontalPadding);
 
-            stackView.Spacing = frame.itemSpacing;
+            stackView.Orientation =
+                (frame.LayoutMode == FigmaLayoutMode.Horizontal)
+                    ? NSUserInterfaceLayoutOrientation.Horizontal
+                    : NSUserInterfaceLayoutOrientation.Vertical;
 
-            stackView.Orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-                NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
-            stackView.Distribution = NSStackViewDistribution.FillEqually;
+            stackView.Distribution = NSStackViewDistribution.Fill;
 
             return new View(stackView);
         }
@@ -82,39 +83,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             var frame = (FigmaFrame)currentNode.Node;
 
-            /*
-            currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
-            currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
-            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
-
-            var itemNodes = frame.FirstChild(s => s.name == ComponentString.ITEMS);
-
-            if (itemNodes == null)
-                return null;
-
-            code.AppendLine();
-            code.AppendLine($"{ name }.{ nameof(NSTabView.SetItems) }(");
-            code.AppendLine($"\tnew { typeof(NSTabViewItem[]) }");
-            code.AppendLine("\t{");
-
-            foreach (FigmaNode tabNode in itemNodes.GetChildren(t => t.visible, reverseChildren: true))
-            {
-                var firstChild = tabNode.FirstChild(s => s.name.In(ComponentString.STATE_REGULAR, ComponentString.STATE_SELECTED) && s.visible);
-
-                if (firstChild != null)
-                {
-                    FigmaText text = firstChild.FirstChild(s => s.name == ComponentString.TITLE) as FigmaText;
-
-                    if (text != null)
-                        code.AppendLine($"\t\tnew {typeof(NSTabViewItem)}() {{ {nameof(NSTabViewItem.Label)} = \"{text.characters}\" }},");
-                }
-            }
-
-            code.AppendLine("\t}");
-            code.AppendLine(");");
-            */
             return code;
         }
     }
