@@ -1,0 +1,20 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="NuGet.Restore.targets" />
+    <UsingTask
+		TaskName="FigmaSharp.MSBuild.Tasks.GenerateFigmaPackage" 
+		AssemblyFile="tools/bin/FigmaSharp.MSBuild.dll" />
+    <Target Name="BuildTask">
+        <MSBuild Targets="Build" Projects="FigmaSharp.Tasks.sln" />
+    </Target>
+
+    <Target Name="GeneratePackage" DependsOnTargets="BuildTask">
+        <GenerateFigmaPackage
+            OutputDirectoryPath="$(OutputDirectoryPath)"
+            FileId="$(FileId)"
+            Token="$(Token)"
+            ProcessImages = "$(ProcessImages)"
+            OutputFigmaDocument = "$(OutputFigmaDocument)"
+            OutputImageFormat = "$(OutputImageFormat)"
+            />
+    </Target>
+</Project>

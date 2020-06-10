@@ -1,0 +1,118 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp", "FigmaSharp\FigmaSharp\FigmaSharp.csproj", "{11142FD4-8D40-4724-883A-52E9A84A099B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Views", "FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj", "{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{1581B8FF-72D1-4D3C-846E-25778FD74BD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Controls", "FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj", "{A8372FD9-04BB-41F0-85C8-CBAB9E587501}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Backup", "tools\FigmaSharp.Backup\FigmaSharp.Backup.csproj", "{1A9B21D4-7188-42BE-B934-5F317A556766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.MSBuild", "tools\FigmaSharp.MSBuild\FigmaSharp.MSBuild.csproj", "{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ExampleFigma.Shared\ExampleFigma.Shared.projitems*{461b4a01-c603-4c8a-9763-642197569e9a}*SharedItemsImports = 4
+		ExampleFigma.Shared\ExampleFigma.Shared.projitems*{6b3ed949-8155-4029-89b0-68aec8edc255}*SharedItemsImports = 4
+		ExampleFigma.Shared\ExampleFigma.Shared.projitems*{72d9836a-f902-46a3-8e71-6b327c5d24bb}*SharedItemsImports = 4
+		ExampleFigma.Shared\ExampleFigma.Shared.projitems*{88cc3650-709a-4a60-a43b-0fe2f6c4098d}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|Any CPU = Release|Any CPU
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Release|iPhone.Build.0 = Release|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{11142FD4-8D40-4724-883A-52E9A84A099B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Release|iPhone.Build.0 = Release|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Release|iPhone.Build.0 = Release|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{A8372FD9-04BB-41F0-85C8-CBAB9E587501}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Release|iPhone.Build.0 = Release|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{1A9B21D4-7188-42BE-B934-5F317A556766}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Release|iPhone.Build.0 = Release|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A9B21D4-7188-42BE-B934-5F317A556766} = {1581B8FF-72D1-4D3C-846E-25778FD74BD7}
+		{1112C0E3-7340-492F-BB92-AAC5C7CEF69D} = {1581B8FF-72D1-4D3C-846E-25778FD74BD7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AF39AB59-9991-4134-A69A-4A88A5503FC7}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.StandardHeader = $2
+		$2.Text = @Authors:\n  ${AuthorName} <${AuthorEmail}>\n\nCopyright (C) ${Year} Microsoft, Corp\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n"Software"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to permit\npersons to whom the Software is furnished to do so, subject to the\nfollowing conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS\nOR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN\nNO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,\nDAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR\nOTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE\nUSE OR OTHER DEALINGS IN THE SOFTWARE.
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 80
+		$3.scope = text/x-csharp
+		$3.TabsToSpaces = True
+		$0.CSharpFormattingPolicy = $4
+		$4.scope = text/x-csharp
+		version = 0.1.1
+	EndGlobalSection
+EndGlobal
