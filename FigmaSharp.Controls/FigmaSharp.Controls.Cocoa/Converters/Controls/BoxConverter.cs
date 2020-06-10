@@ -69,23 +69,28 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 box.BoxType = NSBoxType.NSBoxCustom;
                 box.BorderWidth = 0;
 
-                FigmaVector rectangle = frame.children
-                    .OfType<FigmaVector>()
+                RectangleVector rectangle = frame.children
+                    .OfType<RectangleVector>()
                     .FirstOrDefault();
 
-                foreach (var styleMap in rectangle?.styles)
+                if (rectangle != null)
                 {
-                    if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
+                    foreach (var styleMap in rectangle.styles)
                     {
-                        if (styleMap.Key == "fill")
-                            box.FillColor = ColorService.GetNSColor(style.name);
-
-                        if (styleMap.Key == "stroke")
+                        if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
                         {
-                            box.BorderColor = ColorService.GetNSColor(style.name);
-                            box.BorderWidth = rectangle.strokeWeight;
+                            if (styleMap.Key == "fill")
+                                box.FillColor = ColorService.GetNSColor(style.name);
+
+                            if (styleMap.Key == "stroke")
+                            {
+                                box.BorderColor = ColorService.GetNSColor(style.name);
+                                box.BorderWidth = rectangle.strokeWeight;
+                            }
                         }
                     }
+
+                    box.CornerRadius = rectangle.cornerRadius;
                 }
             }
 
