@@ -8,27 +8,33 @@ using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp.Services
 {
-	public class CodeRenderService
+	public class CodeRenderService :  RenderService
 	{
+		Dictionary<string, int> identifiers = new Dictionary<string, int>();
+
+		const string init = "Figma";
+		const string end = "Converter";
+		const string ViewIdentifier = "View";
+
 		internal const string DefaultViewName = "view";
+
+		internal CodeNode MainNode { get; set; }
+		internal CodeNode ParentMainNode { get; set; }
 
 		internal INodeProvider figmaProvider;
 
 		internal CodePropertyConfigureBase codePropertyConverter;
+		readonly internal List<CodeNode> Nodes = new List<CodeNode>();
 
-		NodeConverter[] figmaConverters;
-		NodeConverter[] customConverters;
+		internal CodeRenderServiceOptions CurrentRendererOptions { get; set; }
 
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters,
-			CodePropertyConfigureBase codePropertyConverter)
+			CodePropertyConfigureBase codePropertyConverter) : base (figmaProvider, figmaViewConverters)
 		{
-			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
-			this.figmaConverters = figmaViewConverters.Where (s => s.IsLayer).ToArray (); ;
-			this.figmaProvider = figmaProvider;
 			this.codePropertyConverter = codePropertyConverter;
 		}
 
-		NodeConverter GetConverter (CodeNode node, NodeConverter[] converters)
+		NodeConverter GetConverter (CodeNode node, List<NodeConverter> converters)
 		{
 			foreach (var customViewConverter in converters) {
 				if (customViewConverter.CanConvert (node.Node)) {
@@ -38,14 +44,7 @@ namespace FigmaSharp.Services
 			return null;
 		}
 
-		internal CodeRenderServiceOptions CurrentRendererOptions { get; set; }
-		internal CodeNode ParentMainNode { get; set; }
-		internal CodeNode MainNode { get; set; }
-
 		public bool IsMainNode (FigmaNode figmaNode) => MainNode != null && figmaNode == MainNode?.Node;
-
-
-		readonly internal List<CodeNode> Nodes = new List<CodeNode>();
 
 		public virtual void Clear ()
 		{
@@ -86,10 +85,10 @@ namespace FigmaSharp.Services
 			//on node skipped we don't render
 			if (!isNodeSkipped) {
 				//if (figmaProvider.RendersProperties (node)) {
-				converter = GetConverter (node, customConverters);
+				converter = GetConverter (node, CustomConverters);
 				//bool navigateChild = true;
 				if (converter == null) {
-					converter = GetConverter (node, figmaConverters);
+					converter = GetConverter (node, DefaultConverters);
 				}
 
 				if (converter != null) {
@@ -216,10 +215,6 @@ namespace FigmaSharp.Services
 
 		}
 
-		const string init = "Figma";
-		const string end = "Converter";
-		const string ViewIdentifier = "View";
-
 		protected virtual bool TryGetCodeViewName (CodeNode node, CodeNode parent, NodeConverter converter, out string identifier)
 		{
 			try {
@@ -287,7 +282,5 @@ namespace FigmaSharp.Services
 		}
 
 		#endregion
-
-		Dictionary<string, int> identifiers = new Dictionary<string, int> ();
 	}
 }
