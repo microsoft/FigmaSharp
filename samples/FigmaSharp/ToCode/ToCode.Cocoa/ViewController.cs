@@ -65,8 +65,7 @@ namespace ToCode.Cocoa
 			fileProvider = new ControlRemoteNodeProvider();
 			fileProvider.Load(docId);
 
-			var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
-			codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter);
+			codeRenderer = new NativeViewCodeService(fileProvider, converters);
 
 			data = new FigmaNodeView(fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);

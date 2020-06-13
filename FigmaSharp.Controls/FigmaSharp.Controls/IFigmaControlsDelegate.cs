@@ -33,15 +33,14 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
-	public interface IFigmaControlsDelegate
-	{
-		FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode);
+    public interface IFigmaControlsDelegate
+    {
+        FigmaBundleViewBase GetBundleView(FigmaBundle bundle, string name, FigmaNode figmaNode);
 
-        CodePropertyConfigureBase GetCodePropertyConverter ();
+        NodeConverter[] GetConverters(bool includeAll = true);
 
-        NodeConverter[] GetConverters (bool includeAll = true);
-
-        ViewPropertyConfigureBase GetViewPropertySetter();
+        CodePropertyConfigureBase GetCodePropertyConfigure();
+        ViewPropertyConfigureBase GetViewPropertyConfigure();
         ICodeNameService GetCodeNameService();
     }
 }

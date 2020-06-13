@@ -65,11 +65,11 @@ namespace FigmaSharp
         public ICodeNameService GetCodeNameService()
             => figmaDelegate.GetCodeNameService();
 
-        public ViewPropertyConfigureBase GetViewPropertySetter()
-            => figmaDelegate.GetViewPropertySetter();
+        public ViewPropertyConfigureBase GetViewPropertyConfigure()
+            => figmaDelegate.GetViewPropertyConfigure();
 
-        public CodePropertyConfigureBase GetCodePropertyConverter ()
-            => figmaDelegate.GetCodePropertyConverter ();
+        public CodePropertyConfigureBase GetCodePropertyConfigure ()
+            => figmaDelegate.GetCodePropertyConfigure();
 
         public NodeConverter[] GetConverters (bool includeAll = true)
              => figmaDelegate.GetConverters (includeAll);

@@ -40,8 +40,16 @@ namespace FigmaSharp.Controls.Cocoa.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null, ICodeNameService codeNameService = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
-			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter (), codeNameService ?? FigmaControlsContext.Current.GetCodeNameService())
+		public NativeViewCodeService (
+			INodeProvider figmaProvider,
+			NodeConverter[] figmaViewConverters = null,
+			CodePropertyConfigureBase codePropertyConfigure = null,
+			ICodeNameService codeNameService = null)
+			: base (
+				  figmaProvider,
+				  figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+				  codePropertyConfigure ?? FigmaControlsContext.Current.GetCodePropertyConfigure (),
+				  codeNameService ?? FigmaControlsContext.Current.GetCodeNameService())
 		{
 
 		}

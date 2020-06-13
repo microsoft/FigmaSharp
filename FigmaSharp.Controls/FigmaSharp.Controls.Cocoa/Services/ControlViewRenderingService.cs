@@ -41,7 +41,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		public ControlViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyConfigureBase propertySetter = null)
             : base (figmaProvider,
                   figmaViewConverters ?? FigmaControlsContext.Current.GetConverters (),
-                  propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter()
+                  propertySetter ?? FigmaControlsContext.Current.GetViewPropertyConfigure ()
                   )
 		{
 

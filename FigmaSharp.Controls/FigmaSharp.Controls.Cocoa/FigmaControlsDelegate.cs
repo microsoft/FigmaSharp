@@ -30,16 +30,19 @@ using System.Linq;
 using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.Controls.Cocoa.Converters;
 using FigmaSharp.Controls.Cocoa.PropertyConfigure;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Controls.Cocoa
 {
     public class FigmaControlsDelegate : IFigmaControlsDelegate
 	{
-		static readonly CodePropertyConfigureBase codePropertyConverter = new ControlCodePropertyConfigure();
-		static readonly ViewPropertyConfigureBase viewPropertySetter = new ViewPropertyConfigure ();
+		static CodePropertyConfigureBase codePropertyConverter;
+		static ViewPropertyConfigureBase viewPropertyConfigure;
+		static ICodeNameService codeNameService;
 
 		static NodeConverter[] allConverters;
 		static NodeConverter[] converters;
@@ -117,7 +120,24 @@ namespace FigmaSharp.Controls.Cocoa
 			return new FigmaBundleView (bundle, name, figmaNode);
 		}
 
-		public ViewPropertyConfigureBase GetViewPropertySetter() => viewPropertySetter;
+		public CodePropertyConfigureBase GetCodePropertyConfigure()
+		{
+			if (codePropertyConverter == null)
+				codePropertyConverter = new ControlCodePropertyConfigure ();
+			return codePropertyConverter;
+		}
+		public ViewPropertyConfigureBase GetViewPropertyConfigure()
+		{
+			if (viewPropertyConfigure == null)
+				viewPropertyConfigure = new ViewPropertyConfigure();
+			return viewPropertyConfigure;
+		}
 
+		public ICodeNameService GetCodeNameService()
+		{
+			if (codeNameService == null)
+				codeNameService = new ControlCodeNameService();
+			return codeNameService;
+		}
 	}
 }
