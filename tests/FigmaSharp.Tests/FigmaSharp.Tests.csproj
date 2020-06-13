@@ -33,11 +33,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneratorTests.cs" />
-    <Compile Include="FigmaApiTests.cs" />
-    <Compile Include="LocalFileTests.cs" />
-    <Compile Include="NodeExtensionsTests.cs" />
-    <Compile Include="NodeAccessibility.cs" />
+    <Compile Include="API\FigmaApiTests.cs" />
+    <Compile Include="API\LocalFileTests.cs" />
+    <Compile Include="Services\CodeNameServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
@@ -65,6 +63,10 @@
       <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
       <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="API\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

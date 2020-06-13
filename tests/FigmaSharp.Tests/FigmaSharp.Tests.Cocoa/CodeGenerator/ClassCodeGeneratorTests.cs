@@ -1,15 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using FigmaSharp;
 using NUnit.Framework;
 
-namespace FigmaSharp.Tests
+namespace CodeGenerator
 {
     [TestFixture]
-	public class CodeGeneratorTests
+	public class CodeGenerator
 	{
         [Test]
-        public void ManifestTest ()
+        public void Manifest ()
         {
             var DocumentUrl = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/";
             var RemoteApiVersion = "1.1";
@@ -45,7 +46,7 @@ namespace FigmaSharp.Tests
         }
 
         [Test]
-        public void PartialDesignerClassGenerationTest()
+        public void PartialDesignerClassGeneration()
         {
             var codeGenerator = new FigmaPartialDesignerClass();
             codeGenerator.Manifest = new FigmaManifest()
@@ -64,7 +65,7 @@ namespace FigmaSharp.Tests
         }
 
         [Test]
-        public void PublicPartialClassGenerationTest()
+        public void PublicPartialClassGeneration()
         {
             var codeGenerator = new FigmaPublicPartialClass();
             codeGenerator.Usings.Add("AppKit");

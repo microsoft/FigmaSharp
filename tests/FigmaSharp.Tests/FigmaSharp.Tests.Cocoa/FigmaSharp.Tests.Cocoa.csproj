@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\..\..\packages\NUnit.3.12.0\build\NUnit.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FigmaSharp.Tests.Cocoa</RootNamespace>
+    <AssemblyName>FigmaSharp.Tests.Cocoa</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Services\ControlCodeNameServiceTests.cs" />
+    <Compile Include="CodeGenerator\ClassCodeGeneratorTests.cs" />
+    <Compile Include="Nodes\NodeExtensionsTests.cs" />
+    <Compile Include="Nodes\NodeAccessibility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
+      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
+      <Name>FigmaSharp.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
+      <Project>{A8372FD9-04BB-41F0-85C8-CBAB9E587501}</Project>
+      <Name>FigmaSharp.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj">
+      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
+      <Name>FigmaSharp.Controls.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
+      <Name>FigmaSharp.Views</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
+      <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
+      <Name>FigmaSharp.Views.Cocoa</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="CodeGenerator\" />
+    <Folder Include="Nodes\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

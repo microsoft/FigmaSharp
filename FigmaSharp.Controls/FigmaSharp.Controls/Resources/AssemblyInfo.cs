@@ -9,3 +9,4 @@
 [assembly: InternalsVisibleTo("FigmaSharp.Controls.iOS")]
 [assembly: InternalsVisibleTo("FigmaSharp.Controls.Android")]
 [assembly: InternalsVisibleTo("FigmaSharp.Tests")]
+[assembly: InternalsVisibleTo("FigmaSharp.Tests.Cocoa")]

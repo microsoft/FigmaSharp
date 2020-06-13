@@ -29,10 +29,10 @@ using FigmaSharp.Controls;
 using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Models;
 
-namespace FigmaSharp.Tests
+namespace Nodes
 {
     [TestFixture]
-    public class NodeExtensionsTests
+    public class NodeExtensions
     {
         [Test]
         public void HasNodeImageName ()

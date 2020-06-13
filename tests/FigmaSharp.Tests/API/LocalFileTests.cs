@@ -2,14 +2,14 @@
 using FigmaSharp.Helpers;
 using NUnit.Framework;
 
-namespace FigmaSharp.Tests
+namespace Api
 {
 	[TestFixture]
-	public class LocalFileTests
+	public class JsonTests
 	{
 		const string fileExample = "test.json";
 		readonly string currentPath;
-		public LocalFileTests ()
+		public JsonTests ()
 		{
 			currentPath = Path.GetDirectoryName (this.GetType ().Assembly.Location);
 		}
@@ -18,8 +18,6 @@ namespace FigmaSharp.Tests
 		public void LocalFileTest ()
 		{
 			var file = Path.Combine (currentPath, fileExample);
-			var data = File.ReadAllText (file);
-			var doc = WebApiHelper.GetFigmaResponseFromFileContent (data);
 			Assert.IsNotNull (file);
 		}
 	}

@@ -1,15 +1,20 @@
-﻿using NUnit.Framework;
+﻿using FigmaSharp;
+using NUnit.Framework;
 using System.Linq;
 
-namespace FigmaSharp.Tests
+namespace Api
 {
+    public static class Resources
+    {
+		public static string TestToken = "49227-8200a9de-7753-4144-8336-a51dd9d4e8ad";
+    }
+
 	[TestFixture]
-	public class FigmaApiTests
+	public class RemoteWebApi
 	{
-		public FigmaApiTests ()
+		public RemoteWebApi ()
 		{
-			var token = "XX";
-			AppContext.Current.SetAccessToken (token);
+			AppContext.Current.SetAccessToken (Resources.TestToken);
 		}
 
 		//[Test]
@@ -39,21 +44,21 @@ namespace FigmaSharp.Tests
 		[Test]
 		public void GetFileTest ()
 		{
-			var file = AppContext.Api.GetFile (new FigmaFileQuery ("fKugSkFGdwOF4vDsPGnJee"));
+			var file = AppContext.Api.GetFile (new FigmaFileQuery ("912LElrH9TQsV17omH1WBh"));
 			Assert.IsNotNull (file);
 		}
 
 		[Test]
 		public void GetFileVersionTest ()
 		{
-			var response = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery ("QzEgq2772k2eeMF2sVNc3kEY"));
+			var response = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery ("912LElrH9TQsV17omH1WBh"));
 			Assert.IsNotNull (response);
 		}
 
 		[Test]
 		public void GetFirstFileVersionTest ()
 		{
-			var fileId = "QzEgq2772k2eeMF2sVNc3kEY";
+			var fileId = "912LElrH9TQsV17omH1WBh";
 			var firstVersion = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery (fileId))
 				.versions.GroupByCreatedAt()
 				.FirstOrDefault ();

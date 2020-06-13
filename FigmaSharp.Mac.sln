@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Tests", "tests\F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Cocoa", "samples\FigmaSharp\BasicRendering\Cocoa\BasicRendering.Cocoa.csproj", "{6B3ED949-8155-4029-89B0-68AEC8EDC255}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Tests.Cocoa", "tests\FigmaSharp.Tests\FigmaSharp.Tests.Cocoa\FigmaSharp.Tests.Cocoa.csproj", "{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ExampleFigma.Shared\ExampleFigma.Shared.projitems*{461b4a01-c603-4c8a-9763-642197569e9a}*SharedItemsImports = 4
@@ -250,6 +252,18 @@ Global
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.Release|iPhone.Build.0 = Release|Any CPU
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Release|iPhone.Build.0 = Release|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -266,6 +280,7 @@ Global
 		{1A9B21D4-7188-42BE-B934-5F317A556766} = {1581B8FF-72D1-4D3C-846E-25778FD74BD7}
 		{97A18BDA-8AA6-40E6-9928-B30B49C134E2} = {02319977-D222-4DA2-AE49-05EEF92B3DBF}
 		{6B3ED949-8155-4029-89B0-68AEC8EDC255} = {C9D27015-1694-4E86-A3EF-010227C1F5BD}
+		{4A48A9AE-BC43-42DB-ADCE-D04B89C568EA} = {02319977-D222-4DA2-AE49-05EEF92B3DBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF39AB59-9991-4134-A69A-4A88A5503FC7}
