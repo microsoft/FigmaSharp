@@ -39,7 +39,7 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
         protected override string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             //component instance window case
-            if (currentNode.Node.Parent.IsInstanceContent(rendererService.figmaProvider, out var figmaInstance))
+            if (currentNode.Node.Parent.IsInstanceContent(rendererService.NodeProvider, out var figmaInstance))
             {
                 var viewName = figmaInstance.IsDialog() ? $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}" :
                     CodeGenerationHelpers.This;

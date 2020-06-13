@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FigmaSharp.Converters;
@@ -10,38 +9,22 @@ namespace FigmaSharp.Services
 {
 	public class CodeRenderService :  RenderService
 	{
-		Dictionary<string, int> identifiers = new Dictionary<string, int>();
-
-		const string init = "Figma";
-		const string end = "Converter";
-		const string ViewIdentifier = "View";
-
-		internal const string DefaultViewName = "view";
-
 		internal CodeNode MainNode { get; set; }
 		internal CodeNode ParentMainNode { get; set; }
 
-		internal INodeProvider figmaProvider;
+		internal INodeProvider NodeProvider;
+		internal ICodeNameService NameService;
+		internal CodePropertyConfigureBase PropertyConfigure;
 
-		internal CodePropertyConfigureBase codePropertyConverter;
 		readonly internal List<CodeNode> Nodes = new List<CodeNode>();
 
 		internal CodeRenderServiceOptions CurrentRendererOptions { get; set; }
 
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters,
-			CodePropertyConfigureBase codePropertyConverter) : base (figmaProvider, figmaViewConverters)
+			CodePropertyConfigureBase codePropertyConverter, ICodeNameService codeNameService) : base (figmaProvider, figmaViewConverters)
 		{
-			this.codePropertyConverter = codePropertyConverter;
-		}
-
-		NodeConverter GetConverter (CodeNode node, List<NodeConverter> converters)
-		{
-			foreach (var customViewConverter in converters) {
-				if (customViewConverter.CanConvert (node.Node)) {
-					return customViewConverter;
-				}
-			}
-			return null;
+			this.NameService = codeNameService;
+			this.PropertyConfigure = codePropertyConverter;
 		}
 
 		public bool IsMainNode (FigmaNode figmaNode) => MainNode != null && figmaNode == MainNode?.Node;
@@ -61,8 +44,8 @@ namespace FigmaSharp.Services
 
 					//clear all nodes
 					Nodes.Clear();
-
-					identifiers.Clear ();
+					NameService.Clear();
+					
 					OnStartGetCode ();
 					
 					//we initialize
@@ -85,57 +68,41 @@ namespace FigmaSharp.Services
 			//on node skipped we don't render
 			if (!isNodeSkipped) {
 				//if (figmaProvider.RendersProperties (node)) {
-				converter = GetConverter (node, CustomConverters);
+				converter = CustomConverters.FirstOrDefault(s => s.CanConvert(node.Node));
 				//bool navigateChild = true;
 				if (converter == null) {
-					converter = GetConverter (node, DefaultConverters);
+					converter = DefaultConverters.FirstOrDefault(s => s.CanConvert(node.Node));
 				}
 
 				if (converter != null) {
-					if (!node.HasName) {
-
-						if (!TryGetCodeViewName (node, parent, converter, out string identifier)) {
-							identifier = DefaultViewName;
-						}
-
-						//we store our name to don't generate dupplicates
-						var lastIndex = GetLastInsertedIndex (identifier);
-						if (lastIndex >= 0) {
-							identifiers.Remove (identifier);
-						}
-						lastIndex++;
-
-						node.Name = identifier;
-						if (lastIndex > 0) {
-							node.Name += lastIndex;
-						}
-						identifiers.Add (identifier, lastIndex);
+					if (!NameService.NodeHasName(node)) {
+						node.Name = NameService.GenerateName(node, parent, converter);
 					}
 
-					builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.ViewInformation, node, parent, this));
+					builder.AppendLineIfValue(PropertyConfigure.ConvertToCode(PropertyNames.ViewInformation, node, parent, this));
 
-					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
+					OnPreConvertToCode (builder, node, parent, converter, PropertyConfigure);
 					//we generate our code and replace node name
 
 					var code = converter.ConvertToCode (node, parent, this);
 					builder.AppendLineIfValue (code.Replace (Resources.Ids.Conversion.NameIdentifier, node.Name));
-					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
+					OnPostConvertToCode (builder, node, parent, converter, PropertyConfigure);
 
 					if (RendersAddChild(node, parent, this))
 					{
-						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.AddChild, node, parent, this));
-						OnChildAdded(builder, node, parent, converter, codePropertyConverter);
+						builder.AppendLineIfValue(PropertyConfigure.ConvertToCode(PropertyNames.AddChild, node, parent, this));
+						OnChildAdded(builder, node, parent, converter, PropertyConfigure);
 					}
 
 					if (RendersSize(node, parent, this))
                     {
-						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Frame, node, parent, this));
-						OnFrameSet(builder, node, parent, converter, codePropertyConverter);
+						builder.AppendLineIfValue(PropertyConfigure.ConvertToCode(PropertyNames.Frame, node, parent, this));
+						OnFrameSet(builder, node, parent, converter, PropertyConfigure);
 					}
 
 					if (RendersConstraints(node, parent, this))
 					{
-						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Constraints, node, parent, this));
+						builder.AppendLineIfValue(PropertyConfigure.ConvertToCode(PropertyNames.Constraints, node, parent, this));
 					}
 
 					calculatedParentNode = node;
@@ -203,35 +170,6 @@ namespace FigmaSharp.Services
 		protected virtual void OnFrameSet (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 
-		}
-
-		protected virtual bool TryGetCodeViewName (CodeNode node, CodeNode parent, NodeConverter converter, out string identifier)
-		{
-			try {
-				identifier = converter.GetType().Name;
-				if (identifier.StartsWith (init)) {
-					identifier = identifier.Substring (init.Length);
-				}
-
-				if (identifier.EndsWith (end)) {
-					identifier = identifier.Substring (0, identifier.Length - end.Length);
-				}
-
-				identifier = char.ToLower (identifier[0]) + identifier.Substring (1) + ViewIdentifier;
-
-				return true;
-			} catch (Exception) {
-				identifier = null;
-				return false;
-			}
-		}
-
-		internal int GetLastInsertedIndex (string identifier)
-		{
-			if (!identifiers.TryGetValue (identifier, out int data)) {
-				return -1;
-			}
-			return data;
 		}
 
 		#region Rendering Iteration

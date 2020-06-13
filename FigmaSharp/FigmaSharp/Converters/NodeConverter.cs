@@ -41,7 +41,7 @@ namespace FigmaSharp.Converters
 
 		public virtual bool IsLayer { get; }
 
-        public virtual string Name { get; } = CodeRenderService.DefaultViewName;
+		public virtual string Name { get; } = CodeNameService.DefaultViewName;
 
         public virtual bool ScanChildren (FigmaNode currentNode)
         {

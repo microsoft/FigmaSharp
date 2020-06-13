@@ -108,12 +108,12 @@ namespace FigmaSharp
 				figmaFrameEntities[i].absoluteBoundingBox = new Rectangle(oldboundingBox.X, oldboundingBox.Y + DefaultWindowBarHeight, oldboundingBox.Width, oldboundingBox.Height - DefaultWindowBarHeight);
 
 				var codeNode = new CodeNode(nodeContent, contentViewName, parent: parentNode);
-				var frameCode = rendererService.codePropertyConverter.ConvertToCode(PropertyNames.Frame, codeNode, parentNode, rendererService);
+				var frameCode = rendererService.PropertyConfigure.ConvertToCode(PropertyNames.Frame, codeNode, parentNode, rendererService);
 
 				foreach (var line in frameCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
 					figmaClassBase.AppendLine(sb, line);
 
-				var contraintsCode = rendererService.codePropertyConverter.ConvertToCode(PropertyNames.Constraints, codeNode, parentNode, rendererService);
+				var contraintsCode = rendererService.PropertyConfigure.ConvertToCode(PropertyNames.Constraints, codeNode, parentNode, rendererService);
                 foreach (var line in contraintsCode.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
 					figmaClassBase.AppendLine(sb, line);
 
@@ -158,11 +158,11 @@ namespace FigmaSharp
 		{
 			base.OnGetPartialDesignerClass(partialDesignerClass, codeRendererService, translateLabels);
 
-			var fileProvider = codeRendererService.figmaProvider;
+			var fileProvider = codeRendererService.NodeProvider;
 
 			var windows = GetReferencedWindows (fileProvider, FigmaNode);
 
-			var converter = codeRendererService.codePropertyConverter;
+			var converter = codeRendererService.PropertyConfigure;
 
 			var names = windows.OfType <FigmaFrame> ()
 				.ToList ();
