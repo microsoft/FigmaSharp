@@ -85,7 +85,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (text?.styles != null) {
                 foreach (var styleMap in text.styles)
                 {
-                    if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
+                    if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
                     {
                         if (styleMap.Key == "fill")
                             label.TextColor = ColorService.GetNSColor(style.name);

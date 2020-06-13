@@ -12,7 +12,6 @@ namespace FigmaSharp.Services
 		internal CodeNode MainNode { get; set; }
 		internal CodeNode ParentMainNode { get; set; }
 
-		internal INodeProvider NodeProvider;
 		internal ICodeNameService NameService;
 		internal CodePropertyConfigureBase PropertyConfigure;
 

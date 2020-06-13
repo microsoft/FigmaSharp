@@ -113,14 +113,14 @@ namespace FigmaSharp.Services
                 {
                     foreach (var processedNode in NodesProcessed)
                     {
-                        if (FileProvider.RendersAsImage(processedNode.FigmaNode))
+                        if (NodeProvider.RendersAsImage(processedNode.FigmaNode))
                         {
                             ImageVectors.Add(processedNode);
                         }
                     }
 
-                    fileProvider.ImageLinksProcessed += FileProvider_ImageLinksProcessed;
-                    fileProvider.OnStartImageLinkProcessing(ImageVectors);
+                    NodeProvider.ImageLinksProcessed += FileProvider_ImageLinksProcessed;
+                    NodeProvider.OnStartImageLinkProcessing(ImageVectors);
                 }
 
                 Console.WriteLine("View generation finished.");
@@ -146,13 +146,13 @@ namespace FigmaSharp.Services
             Console.WriteLine($"Reading successfull");
 
             FigmaCanvas canvas;
-            if (options.StartPage >= 0 && options.StartPage <= fileProvider.Response.document.children.Length)
+            if (options.StartPage >= 0 && options.StartPage <= NodeProvider.Response.document.children.Length)
             {
-                canvas = fileProvider.Response.document.children[options.StartPage];
+                canvas = NodeProvider.Response.document.children[options.StartPage];
             }
             else
             {
-                canvas = fileProvider.Response.document.children.FirstOrDefault();
+                canvas = NodeProvider.Response.document.children.FirstOrDefault();
             }
             ProcessFromNode(canvas, container, options);
         }
@@ -161,7 +161,7 @@ namespace FigmaSharp.Services
 
         public void RenderInWindow(IWindow mainWindow, ViewRenderServiceOptions options = null)
         {
-            var allCanvas = fileProvider.Nodes
+            var allCanvas = NodeProvider.Nodes
                 .OfType<FigmaCanvas>()
                 .ToArray();
             if (allCanvas.Length == 0)
@@ -180,7 +180,7 @@ namespace FigmaSharp.Services
 
         public void RenderInWindow(IWindow mainWindow, string nodeName, ViewRenderServiceOptions options = null)
         {
-            var node = fileProvider.Nodes
+            var node = NodeProvider.Nodes
                 .FirstOrDefault(s =>s.name == nodeName || (s.TryGetNodeCustomName(out string name) && name == nodeName));
 
             if (node == null)
@@ -206,7 +206,7 @@ namespace FigmaSharp.Services
 
         public T RenderByFullPath<T> (IView parent, ViewRenderServiceOptions options,  string path) where T : IView
         {
-            FigmaNode node = fileProvider.FindByPath (path);
+            FigmaNode node = NodeProvider.FindByPath (path);
             if (node == null)
                 return default (T);
             return (T)RenderByNode (node, parent, options);
@@ -214,7 +214,7 @@ namespace FigmaSharp.Services
 
         public T RenderByPath<T> (ViewRenderServiceOptions options, IView parent, params string[] path) where T : IView
         {
-            FigmaNode node = fileProvider.FindByPath (path);
+            FigmaNode node = NodeProvider.FindByPath (path);
             if (node == null)
                 return default (T);
             return (T)RenderByNode (node, parent, options);
@@ -279,7 +279,7 @@ namespace FigmaSharp.Services
 
         public T FindViewByPath<T>(params string[] path) where T : IView
         {
-            var node = fileProvider.FindByPath(path);
+            var node = NodeProvider.FindByPath(path);
             if (node == null)
                 return default(T);
             var processed = NodesProcessed.FirstOrDefault(s => s.FigmaNode == node);
@@ -388,7 +388,7 @@ namespace FigmaSharp.Services
             try
             {
                 if (options.LoadFileProvider) {
-                    await fileProvider.LoadAsync(figmaName ?? fileProvider.File);
+                    await NodeProvider.LoadAsync(figmaName ?? NodeProvider.File);
                 }
 
                 //we generate all the processed nodes
@@ -422,7 +422,7 @@ namespace FigmaSharp.Services
             try
             {
                 if (options.LoadFileProvider)
-                    fileProvider.Load(figmaName ?? fileProvider.File);
+                    NodeProvider.Load(figmaName ?? NodeProvider.File);
 
                 //we generate all the processed nodes
                 Refresh(options);

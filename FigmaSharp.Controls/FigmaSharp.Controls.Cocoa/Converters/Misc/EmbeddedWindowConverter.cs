@@ -149,7 +149,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 				LivePreviewLoading?.Invoke(this, EventArgs.Empty);
 
-				await newWindowProvider.LoadAsync (rendererService.FileProvider.File);
+				await newWindowProvider.LoadAsync (rendererService.NodeProvider.File);
 
 				var secondaryRender = new ControlViewRenderingService(newWindowProvider);
 

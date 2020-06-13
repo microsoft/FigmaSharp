@@ -60,7 +60,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			foreach (var styleMap in rectangle?.styles)
 			{
-				if (rendererService.FileProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
+				if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
 				{
 					if (styleMap.Key == "fill")
 						colorWell.Color = ColorService.GetNSColor(style.name);
