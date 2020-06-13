@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace CodeGenerator
 {
     [TestFixture]
-	public class CodeGenerator
+	public class ClassCodeGenerator
 	{
         [Test]
         public void Manifest ()

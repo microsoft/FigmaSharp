@@ -5,11 +5,11 @@ using NUnit.Framework;
 namespace Api
 {
 	[TestFixture]
-	public class JsonTests
+	public class JsonFile
 	{
 		const string fileExample = "test.json";
 		readonly string currentPath;
-		public JsonTests ()
+		public JsonFile()
 		{
 			currentPath = Path.GetDirectoryName (this.GetType ().Assembly.Location);
 		}

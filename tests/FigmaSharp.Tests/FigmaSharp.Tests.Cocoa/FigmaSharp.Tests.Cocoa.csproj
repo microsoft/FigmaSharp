@@ -36,9 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\ControlCodeNameServiceTests.cs" />
-    <Compile Include="CodeGenerator\ClassCodeGeneratorTests.cs" />
     <Compile Include="Nodes\NodeExtensionsTests.cs" />
     <Compile Include="Nodes\NodeAccessibility.cs" />
+    <Compile Include="CodeGenerator\ClassCodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

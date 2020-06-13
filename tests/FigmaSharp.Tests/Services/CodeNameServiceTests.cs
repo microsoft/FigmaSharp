@@ -28,8 +28,8 @@ using NUnit.Framework;
 
 namespace Services
 {
-    [TestFixture]
-    public class CodeNameServiceTests
+    [TestFixture (TestName = "CodeNameService")]
+    public class CodeNameServiceTest
     {
         [Test]
         public void HasName()
