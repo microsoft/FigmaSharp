@@ -43,6 +43,17 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 		public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
+			if (propertyName == PropertyNames.ViewInformation)
+            {
+				var builder = new System.Text.StringBuilder();
+				builder.AppendLine();
+				builder.AppendLine($"// View:     {currentNode.Name}");
+				builder.AppendLine($"// NodeName: {currentNode.Node.name}");
+				builder.AppendLine($"// NodeType: {currentNode.Node.type}");
+				builder.AppendLine($"// NodeId:   {currentNode.Node.id}");
+				return builder.ToString();
+			}
+
 			if (propertyName == PropertyNames.Frame)
 			{
 				System.Text.StringBuilder builder = new System.Text.StringBuilder();

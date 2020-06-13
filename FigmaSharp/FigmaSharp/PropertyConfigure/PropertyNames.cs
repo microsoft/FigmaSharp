@@ -33,6 +33,7 @@ namespace FigmaSharp.PropertyConfigure
         public const string Size = "Size";
         public const string Position = "Position";
         public const string AddChild = "AddChild";
+        public const string ViewInformation = "ViewInformation";
         public const string Frame = "Frame";
         public const string Constraints = "Constraints";
     }

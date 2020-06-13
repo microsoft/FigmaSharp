@@ -112,11 +112,7 @@ namespace FigmaSharp.Services
 						identifiers.Add (identifier, lastIndex);
 					}
 
-					builder.AppendLine();
-					builder.AppendLine ($"// View:     {node.Name}");
-					builder.AppendLine ($"// NodeName: {node.Node.name}");
-					builder.AppendLine ($"// NodeType: {node.Node.type}");
-					builder.AppendLine ($"// NodeId:   {node.Node.id}");
+					builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.ViewInformation, node, parent, this));
 
 					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
 					//we generate our code and replace node name
@@ -124,7 +120,6 @@ namespace FigmaSharp.Services
 					var code = converter.ConvertToCode (node, parent, this);
 					builder.AppendLineIfValue (code.Replace (Resources.Ids.Conversion.NameIdentifier, node.Name));
 					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
-
 
 					if (RendersAddChild(node, parent, this))
 					{
@@ -190,14 +185,9 @@ namespace FigmaSharp.Services
 			
 		}
 
-		public bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)
+		public virtual bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)
         {
-			if (currentNode.Node.GetNodeTypeName () == "mastercontent") {
-				return false;
-            }
-
 			return !currentNode.Node.TryGetNodeCustomName(out var _);
-
 		}
 
         protected virtual void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
