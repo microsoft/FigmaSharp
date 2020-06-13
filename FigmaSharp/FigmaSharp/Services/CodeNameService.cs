@@ -19,7 +19,7 @@ namespace FigmaSharp.Services
 
         internal const string DefaultViewName = "view";
 
-        Dictionary<string, int> identifiers = new Dictionary<string, int>();
+        protected Dictionary<string, int> identifiers = new Dictionary<string, int>();
 
         public string GenerateName(CodeNode node, CodeNode parent, NodeConverter converter)
         {
@@ -78,7 +78,7 @@ namespace FigmaSharp.Services
             }
         }
 
-        internal int GetLastInsertedIndex(string identifier)
+        int GetLastInsertedIndex(string identifier)
         {
             if (!identifiers.TryGetValue(identifier, out int data))
             {

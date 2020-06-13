@@ -23,7 +23,7 @@ namespace FigmaSharp.Services
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters,
 			CodePropertyConfigureBase codePropertyConverter, ICodeNameService codeNameService) : base (figmaProvider, figmaViewConverters)
 		{
-			this.NameService = codeNameService;
+			this.NameService = codeNameService ?? AppContext.Current.GetCodeNameService();
 			this.PropertyConfigure = codePropertyConverter;
 		}
 

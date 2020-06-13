@@ -30,6 +30,7 @@ using System;
 using System.Reflection;
 using FigmaSharp.Converters;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -42,10 +43,8 @@ namespace FigmaSharp
         NodeConverter[] GetFigmaConverters();
 
         IImage GetImage(string url);
-		string GetSvgData(string url);
 
 		IImage GetImageFromFilePath(string filePath);
-        //FigmaResponse GetFigmaResponseFromContent(string template);
         string GetManifestResource(Assembly assembly, string file);
 
         IImage GetImageFromManifest(Assembly assembly, string imageRef);
@@ -54,5 +53,6 @@ namespace FigmaSharp
         
         CodePropertyConfigureBase GetCodePropertyConfigure();
         ViewPropertyConfigureBase GetViewPropertyConfigure();
+        ICodeNameService GetCodeNameService();
     }
 }

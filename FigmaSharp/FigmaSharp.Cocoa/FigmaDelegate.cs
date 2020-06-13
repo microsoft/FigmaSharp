@@ -27,37 +27,25 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-
 using AppKit;
+using FigmaSharp.Cocoa.Converters;
+using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.Converters;
+using FigmaSharp.Helpers;
+using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views.Native.Cocoa;
-using FigmaSharp.Cocoa.Converters;
-using FigmaSharp.Models;
-using FigmaSharp.Helpers;
-using FigmaSharp.Converters;
-using FigmaSharp.PropertyConfigure;
-using FigmaSharp.Cocoa.PropertyConfigure;
 
 namespace FigmaSharp.Cocoa
 {
     public class FigmaDelegate : IFigmaDelegate
     {
-        static readonly NodeConverter[] figmaViewConverters = {
-            new RegularPolygonConverter (),
-            new TextConverter (),
-            new LineConverter (),
-            new RectangleVectorConverter (),
-            new ElipseConverter (),
-            new PointConverter (),
-            new FrameConverter (),
-            new VectorConverter (),
-        };
-
-        static readonly CodePropertyConfigureBase codePropertyConverter = new CodePropertyConfigure ();
-        static readonly ViewPropertyConfigureBase propertySetter = new ViewPropertyConfigure ();
+        static NodeConverter[] figmaViewConverters;
+        static CodePropertyConfigureBase codePropertyConverter;
+        static ViewPropertyConfigureBase viewPropertyConfigure;
+        static ICodeNameService codeNameService;
 
         public bool IsVerticalAxisFlipped => false;
 
@@ -66,11 +54,6 @@ namespace FigmaSharp.Cocoa
             var image = new NSImage(new Foundation.NSUrl(url));
             return new Image(image);
         }
-
-		public string GetSvgData(string url)
-		{
-			return "";
-		}
 
 		public IImage GetImageFromManifest (Assembly assembly, string imageRef)
         {
@@ -91,7 +74,23 @@ namespace FigmaSharp.Cocoa
             return wrapper;
         }
 
-        public NodeConverter[] GetFigmaConverters() => figmaViewConverters;
+        public NodeConverter[] GetFigmaConverters()
+        {
+            if (figmaViewConverters == null)
+            {
+                figmaViewConverters = new NodeConverter[] {
+                    new RegularPolygonConverter(),
+                    new TextConverter(),
+                    new LineConverter(),
+                    new RectangleVectorConverter(),
+                    new ElipseConverter(),
+                    new PointConverter(),
+                    new FrameConverter(),
+                    new VectorConverter(),
+                };
+            }
+            return figmaViewConverters;
+        } 
 
         public IView CreateEmptyView() => new View();
 
@@ -100,8 +99,24 @@ namespace FigmaSharp.Cocoa
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
+        public CodePropertyConfigureBase GetCodePropertyConfigure()
+        {
+            if (codePropertyConverter == null)
+                codePropertyConverter = new CodePropertyConfigure();
+            return codePropertyConverter;
+        }
+        public ViewPropertyConfigureBase GetViewPropertyConfigure()
+        {
+            if (viewPropertyConfigure == null)
+                viewPropertyConfigure = new ViewPropertyConfigure();
+            return viewPropertyConfigure;
+        }
 
-        public CodePropertyConfigureBase GetCodePropertyConfigure () => codePropertyConverter;
-        public ViewPropertyConfigureBase GetViewPropertyConfigure () => propertySetter;
+        public ICodeNameService GetCodeNameService()
+        {
+            if (codeNameService == null)
+                codeNameService = new CodeNameService();
+            return codeNameService;
+        }
     }
 }

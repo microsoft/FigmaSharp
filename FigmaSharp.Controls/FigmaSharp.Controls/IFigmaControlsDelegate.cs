@@ -29,6 +29,7 @@
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
@@ -39,6 +40,8 @@ namespace FigmaSharp
         CodePropertyConfigureBase GetCodePropertyConverter ();
 
         NodeConverter[] GetConverters (bool includeAll = true);
+
         ViewPropertyConfigureBase GetViewPropertySetter();
+        ICodeNameService GetCodeNameService();
     }
 }

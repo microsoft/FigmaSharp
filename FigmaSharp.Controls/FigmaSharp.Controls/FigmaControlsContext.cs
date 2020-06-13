@@ -26,9 +26,11 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
 namespace FigmaSharp
 {
@@ -55,10 +57,13 @@ namespace FigmaSharp
             }
         }
 
-		internal void Configuration (IFigmaControlsDelegate applicationDelegate)
+        internal void Configuration (IFigmaControlsDelegate applicationDelegate)
 		{
             figmaDelegate = applicationDelegate;
         }
+
+        public ICodeNameService GetCodeNameService()
+            => figmaDelegate.GetCodeNameService();
 
         public ViewPropertyConfigureBase GetViewPropertySetter()
             => figmaDelegate.GetViewPropertySetter();

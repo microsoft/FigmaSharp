@@ -103,6 +103,7 @@
     <Compile Include="Services\ControlTypeService.cs" />
     <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
+    <Compile Include="Services\ControlCodeNameService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

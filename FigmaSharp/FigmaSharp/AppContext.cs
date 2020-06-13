@@ -30,6 +30,7 @@ using System;
 using System.Reflection;
 using FigmaSharp.Converters;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -71,7 +72,6 @@ namespace FigmaSharp
         public NodeConverter[] GetFigmaConverters() => figmaDelegate.GetFigmaConverters();
 
         public IImage GetImage(string url) => figmaDelegate.GetImage(url);
-		public string GetSvgData(string url) => figmaDelegate.GetSvgData(url);
 
 		public IImage GetImageFromFilePath(string filePath) =>
             figmaDelegate.GetImageFromFilePath(filePath);
@@ -117,6 +117,9 @@ namespace FigmaSharp
 
         public CodePropertyConfigureBase GetCodePropertyConfigure ()
             => figmaDelegate.GetCodePropertyConfigure();
+
+        public ICodeNameService GetCodeNameService()
+            => figmaDelegate.GetCodeNameService();
 
         #endregion
     }

@@ -40,8 +40,8 @@ namespace FigmaSharp.Controls.Cocoa.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
-			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter ())
+		public NativeViewCodeService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null, ICodeNameService codeNameService = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter (), codeNameService ?? FigmaControlsContext.Current.GetCodeNameService())
 		{
 
 		}
@@ -124,14 +124,6 @@ namespace FigmaSharp.Controls.Cocoa.Services
 				return true;
 			}
 			return base.HasChildrenToRender (node);
-		}
-
-		protected override bool TryGetCodeViewName (CodeNode node, CodeNode parent, NodeConverter converter, out string identifier)
-		{
-			if (node.Node.TryGetCodeViewName (out identifier)) {
-				return true;
-			}
-			return base.TryGetCodeViewName (node, parent, converter, out identifier);
 		}
 
 		protected override void OnStartGetCode()
