@@ -45,8 +45,8 @@ namespace FigmaSharp.Cocoa.Converters
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var vectorEntity = (FigmaVector)currentNode;
-            var vector = new ImageView();
-            var currengroupView = (NSImageView)vector.NativeObject;
+            var vector = new SvgView ();
+            var currengroupView = (NSView)vector.NativeObject;
             currengroupView.Configure(currentNode);
 
             if (vectorEntity.HasFills) {

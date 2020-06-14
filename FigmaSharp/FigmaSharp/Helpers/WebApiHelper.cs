@@ -114,21 +114,21 @@ namespace FigmaSharp.Helpers
             return JsonConvert.DeserializeObject<FigmaFileVersionResponse> (figmaVersionContent);
         }
 
-        //public static string GetUrlContent(string url, string version)
-        //{
-        //	try
-        //	{
-        //		var wc = new System.Net.WebClient();
-        //		byte[] raw = wc.DownloadData(url);
+        public static string GetUrlContent(string url, string version)
+        {
+            try
+            {
+                var wc = new System.Net.WebClient();
+                byte[] raw = wc.DownloadData(url);
 
-        //		string webData = System.Text.Encoding.UTF8.GetString(raw);
-        //		return webData;
-        //	}
-        //	catch (Exception ex)
-        //	{
-        //		Console.WriteLine(ex);
-        //	}
-        //	return string.Empty;
-        //}
+                string webData = System.Text.Encoding.UTF8.GetString(raw);
+                return webData;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return string.Empty;
+        }
     }
 }

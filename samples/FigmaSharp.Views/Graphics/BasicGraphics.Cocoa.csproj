@@ -10,6 +10,7 @@
     <AssemblyName>BasicGraphics.Cocoa</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+    <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="svg\" />
     <Folder Include="Views\" />
     <Folder Include="Views\Svg\" />
     <Folder Include="Pages\" />
@@ -84,10 +84,8 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="FileHelper.cs" />
     <Compile Include="Views\ExampleGradientContentView.cs" />
     <Compile Include="Views\RectangleExampleView.cs" />
-    <Compile Include="Views\Svg\ExampleSvgShapeView.cs" />
     <Compile Include="MotionSvg.cs" />
     <Compile Include="Views\ExampleOperationsContentView.cs" />
     <Compile Include="Pages\Page1.cs" />
@@ -98,35 +96,19 @@
     <Compile Include="Views\OptionsPanelGradienContentView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="svg\arrow.svg" />
-    <BundleResource Include="svg\star.svg" />
-    <BundleResource Include="svg\symbol.svg" />
-    <BundleResource Include="svg\machine.svg" />
+    <BundleResource Include="Resources\arrow.svg" />
+    <BundleResource Include="Resources\machine.svg" />
+    <BundleResource Include="Resources\star.svg" />
+    <BundleResource Include="Resources\symbol.svg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LiteForms\LiteForms.csproj">
-      <Project>{D9B803BB-748A-4D0A-AFC8-FF3164D6678E}</Project>
-      <Name>LiteForms</Name>
+    <ProjectReference Include="..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
+      <Project>{16F5901F-4807-47DD-83EA-EA49E7B95568}</Project>
+      <Name>FigmaSharp.Views</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LiteForms.Cocoa\LiteForms.Cocoa.csproj">
+    <ProjectReference Include="..\..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
-      <Name>LiteForms.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LiteForms.Graphics.Cocoa\LiteForms.Graphics.Cocoa.csproj">
-      <Project>{1C976133-E5AC-41E6-B58F-8B776300AE57}</Project>
-      <Name>LiteForms.Graphics.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LiteForms.Graphics\LiteForms.Graphics.csproj">
-      <Project>{C71B3358-725A-4E0E-9492-72422201424A}</Project>
-      <Name>LiteForms.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\external\NGraphics\NGraphics\NGraphics.csproj">
-      <Project>{C3DCB65F-216D-4ACB-B894-AAB034EDBD2E}</Project>
-      <Name>NGraphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\external\NGraphics\Platforms\NGraphics.Mac\NGraphics.Mac.csproj">
-      <Project>{AB9C83C0-6DC1-4C04-A40A-677897CA22C8}</Project>
-      <Name>NGraphics.Mac</Name>
+      <Name>FigmaSharp.Views.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

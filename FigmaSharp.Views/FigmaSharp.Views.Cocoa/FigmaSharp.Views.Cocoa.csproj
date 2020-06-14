@@ -10,7 +10,6 @@
     <AssemblyName>FigmaSharp.Views.Cocoa</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -51,6 +50,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,9 +79,15 @@
     <Compile Include="ViewWrappers\TextView.cs" />
     <Compile Include="ViewWrappers\TabView.cs" />
     <Compile Include="FigmaTransitionButton.cs" />
+    <Compile Include="Graphics\PathBuilder.cs" />
+    <Compile Include="Graphics\SvgFile.cs" />
+    <Compile Include="Graphics\XExtensions.cs" />
+    <Compile Include="Graphics\PathExtensions.cs" />
+    <Compile Include="ViewWrappers\SvgView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
+    <Folder Include="Graphics\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
@@ -87,7 +95,7 @@
       <Name>FigmaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
+      <Project>{16F5901F-4807-47DD-83EA-EA49E7B95568}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
   </ItemGroup>

@@ -31,4 +31,9 @@ namespace FigmaSharp.Views
 	{
 		IImage Image { get; set; }
 	}
+
+    public interface ISvgView : IView
+    {
+        void Load(string image);
+    }
 }

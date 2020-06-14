@@ -1,0 +1,25 @@
+﻿<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+        <rect width="256" height="256" rx="16" fill="#C4C4C4" />
+    </mask>
+    <g mask="url(#mask0)">
+        <rect x="206" y="80" width="50" height="176" fill="#DDDDDD" />
+        <rect width="256" height="80" fill="#2C2C2C" />
+        <rect y="79" width="256" height="1" fill="black" />
+        <rect y="80" width="206" height="176" fill="white" />
+        <rect x="50" width="80" height="80" fill="#18A0FB" />
+        <rect x="206" y="80" width="1" height="176" fill="#D5D5D5" />
+        <rect y="212" width="206" height="44" fill="#F8F8F8" />
+        <rect y="212" width="206" height="44" fill="#F8F8F8" />
+        <rect x="31" y="231" width="79" height="6" fill="black" fill-opacity="0.08" />
+        <rect x="31" y="99" width="113" height="6" fill="black" fill-opacity="0.08" />
+        <rect x="48" y="187" width="110" height="6" fill="black" fill-opacity="0.08" />
+        <rect y="124" width="206" height="44" fill="#F8F8F8" />
+        <rect y="124" width="206" height="44" fill="#DAEBF7" />
+        <rect x="31" y="143" width="68" height="6" fill="#BEDBEF" />
+        <rect x="82" y="26" width="4" height="29" fill="white" />
+        <rect x="95" y="26" width="4" height="29" fill="white" />
+        <rect x="76" y="49" width="4" height="29" transform="rotate(-90 76 49)" fill="white" />
+        <rect x="76" y="37" width="4" height="29" transform="rotate(-90 76 37)" fill="white" />
+    </g>
+</svg>
