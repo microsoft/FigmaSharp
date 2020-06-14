@@ -83,6 +83,7 @@
     <Compile Include="Graphics\SvgFile.cs" />
     <Compile Include="Graphics\XExtensions.cs" />
     <Compile Include="Graphics\PathExtensions.cs" />
+    <Compile Include="ViewWrappers\SvgView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />

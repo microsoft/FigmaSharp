@@ -13,7 +13,7 @@ namespace BasicGraphics.Cocoa
         const string Symbol = "symbol.svg";
         const string Machine = "machine.svg";
 
-        ExampleSvgShapeView svgShapeView;
+        SvgView svgShapeView;
         ComboBox combo;
 
         public Page2(OptionsPanelGradienContentView actionContainerView) : base(actionContainerView)
@@ -32,7 +32,7 @@ namespace BasicGraphics.Cocoa
 
         void ShowSvg(string name)
         {
-            svgShapeView = new ExampleSvgShapeView(name);
+            svgShapeView = new SvgView (name);
             svgShapeView.Allocation = new Rectangle(40, 40, 300, 300);
 
             actionContainerView.SetView(svgShapeView);

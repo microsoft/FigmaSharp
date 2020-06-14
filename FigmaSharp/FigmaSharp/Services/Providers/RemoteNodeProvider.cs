@@ -102,25 +102,27 @@ namespace FigmaSharp.Services
 
                 if (imageFormat == ImageFormat.svg)
                 {
-                    throw new NotImplementedException("svg not implemented");
+                    //throw new NotImplementedException("svg not implemented");
                     //with all the keys now we get the dupplicated images
-                    //foreach (var imageUrl in imageCacheResponse)
-                    //{
-                    //	var image = FigmaApiHelper.GetUrlContent(imageUrl.Item1);
+                    foreach (var imageUrl in imageCacheResponse)
+                    {
+                        var image = Helpers.WebApiHelper.GetUrlContent(imageUrl.Item1, null);
 
-                    //	foreach (var figmaNodeId in imageUrl.Item2)
-                    //	{
-                    //		var vector = imageFigmaNodes.FirstOrDefault(s => s.FigmaNode.id == figmaNodeId);
-                    //		Console.Write("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
+                        foreach (var figmaNodeId in imageUrl.Item2)
+                        {
+                            var vector = imageFigmaNodes.FirstOrDefault(s => s.FigmaNode.id == figmaNodeId);
+                            Console.Write("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
 
-                    //		if (vector != null && vector.View is FigmaSharp.Graphics.ISvgShapeView imageView) {
-                    //			AppContext.Current.BeginInvoke(() => {
-                    //				imageView.Load(image);
-                    //			});
-                    //		}
-                    //		Console.Write("OK \n");
-                    //	}
-                    //}
+                            if (vector != null && vector.View is ISvgView imageView)
+                            {
+                                AppContext.Current.BeginInvoke(() =>
+                                {
+                                    imageView.Load(image);
+                                });
+                            }
+                            Console.Write("OK \n");
+                        }
+                    }
                 }
                 else
                 {
@@ -172,10 +174,12 @@ namespace FigmaSharp.Services
 
             Task.Run(() =>
             {
-
-                var images = imageFigmaNodes.ToList();
-                ProcessRemoteImages(images, ImageFormat.png);
-
+                var svgImages = imageFigmaNodes.Where(s => s.View is ISvgView).ToList();
+                if (svgImages.Count > 0)
+                    ProcessRemoteImages(svgImages, ImageFormat.svg);
+                var images = imageFigmaNodes.Where(s => !(s.View is ISvgView)).ToList();
+                if (images.Count > 0)
+                    ProcessRemoteImages(images, ImageFormat.png);
                 OnImageLinkProcessed();
             });
         }

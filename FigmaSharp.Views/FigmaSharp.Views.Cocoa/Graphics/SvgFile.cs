@@ -22,7 +22,6 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System;
-using System.Xml.Linq;
 using AppKit;
 using CoreAnimation;
 using CoreGraphics;
@@ -61,7 +60,7 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             Load(Svg.FromData (data));
         }
 
-        public override CGSize IntrinsicContentSize => new CGSize(this.svg.Width, this.svg.Height);
+        public override CGSize IntrinsicContentSize => this.svg == null ? CGSize.Empty : new CGSize(this.svg.Width, this.svg.Height);
 
         void ProcessLoad (Svg svg)
         {
