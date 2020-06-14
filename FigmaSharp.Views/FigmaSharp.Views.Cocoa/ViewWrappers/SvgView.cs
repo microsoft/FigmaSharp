@@ -8,11 +8,11 @@ namespace FigmaSharp.Views.Cocoa
     {
         public void Load(string image)
         {
-            ((SvgFile)nativeView).Load(image);
+            ((SvgNSView)nativeView).Load(image);
             Console.WriteLine(image);
         }
 
-        public SvgView() : base (new SvgFile ())
+        public SvgView() : base (new SvgNSView ())
         {
            
         }

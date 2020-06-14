@@ -1,5 +1,5 @@
 ﻿// Authors:
-//   jmedrano <josmed@microsoft.com>
+//   James Clancey
 //
 // Copyright (C) 2020 Microsoft, Corp
 //

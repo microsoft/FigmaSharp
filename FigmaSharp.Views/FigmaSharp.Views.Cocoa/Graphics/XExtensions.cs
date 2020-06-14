@@ -25,6 +25,7 @@ using System;
 using System.Globalization;
 using System.Xml.Linq;
 using AppKit;
+using CoreGraphics;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {
@@ -38,15 +39,15 @@ namespace FigmaSharp.Views.Cocoa.Graphics
         public static string GetViewBox(this XElement element)
         => element.Attribute("viewBox")?.Value;
 
-        public static NSColor GetFill(this XElement element)
-        {
-            return ConvertToNSColor(element.Attribute("fill")?.Value);
-        }
+        //public static NSColor GetFill(this XElement element)
+        //{
+        //    return ConvertToNSColor(element.Attribute("fill")?.Value);
+        //}
 
-        public static NSColor GetStroke(this XElement element)
-        {
-            return ConvertToNSColor(element.Attribute("stroke")?.Value);
-        }
+        //public static NSColor GetStroke(this XElement element)
+        //{
+        //    return ConvertToNSColor(element.Attribute("stroke")?.Value);
+        //}
 
         public static int GetStrokeWidth(this XElement element)
         => Convert.ToInt32(element.Attribute("stroke-width")?.Value);

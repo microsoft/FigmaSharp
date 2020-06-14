@@ -29,21 +29,39 @@ using FigmaSharp.Views.Graphics;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {
-    public class SvgFile : NSView
+    public enum PathScaling
+    {
+        AspectFit,
+        AspectFill,
+        Fill,
+        None
+    }
+
+    public class SvgNSView : NSView
     {
         public override bool IsFlipped => true;
 
         CAShapeLayer shapeLayer;
+      
+        Svg origSvg;
 
-        Svg svg;
+        PathScaling scaling;
+        public PathScaling Scaling {
+            get => scaling;
+            set
+            {
+                scaling = value;
+                Reload();
+            }
+        }
 
-        public SvgFile(string data)
+        public SvgNSView(string data)
         {
             Initialize();
             Load(data);
         }
 
-        public SvgFile()
+        public SvgNSView()
         {
             Initialize();
         }
@@ -57,68 +75,129 @@ namespace FigmaSharp.Views.Cocoa.Graphics
 
         public void Load (string data)
         {
+            if (string.IsNullOrEmpty(data))
+                return;
+
             Load(Svg.FromData (data));
         }
 
-        public override CGSize IntrinsicContentSize => this.svg == null ? CGSize.Empty : new CGSize(this.svg.Width, this.svg.Height);
+        public override void SetFrameSize(CGSize newSize)
+        {
+            base.SetFrameSize(newSize);
+            Reload();
+        }
 
-        void ProcessLoad (Svg svg)
+        void Reload ()
+        {
+            //don't reload if no svg
+            if (origSvg == null)
+                return;
+
+            //TODO: optimize
+            if (shapeLayer.Sublayers != null)
+            {
+                foreach (var item in shapeLayer.Sublayers)
+                    item.RemoveFromSuperLayer();
+            }
+            Load(origSvg);
+        }
+
+        public void Load (Svg svg)
+        {
+            origSvg = svg;
+
+            RecursivelyAddSublayer(svg);
+            if (svg.Svgs != null)
+            {
+                foreach (var item in svg.Svgs)
+                    RecursivelyAddSublayer(item);
+            }
+        }
+
+        void RecursivelyAddSublayer(Svg svg)
         {
             if (svg.Vectors == null)
                 return;
             foreach (var vector in svg.Vectors)
             {
                 if (vector is GPath gpath)
-                    shapeLayer.AddSublayer(gpath.ToShape());
+                    Add(gpath.ToShape());
                 else if (vector is Path path)
-                    shapeLayer.AddSublayer(path.ToShape());
+                    Add(path.ToShape());
                 else if (vector is CirclePath circlePath)
-                    shapeLayer.AddSublayer(circlePath.ToShape());
+                    Add(circlePath.ToShape());
+                else if (vector is RectanglePath rectanglePath)
+                    Add(rectanglePath.ToShape());
+                else if (vector is LinePath linePath)
+                    Add(linePath.ToShape());
+                else if (vector is TextPath textPath)
+                    Add(textPath.ToShape());
             }
         }
 
-        public void Load (Svg svg)
+        void Add (CALayer layer)
         {
-            this.svg = svg;
+            shapeLayer.AddSublayer(layer);
 
-            ProcessLoad(svg);
-
-            if (svg.Svgs != null)
+            if (layer is CAShapeLayer sh && sh.Path != null)
             {
-                foreach (var item in svg.Svgs)
-                    ProcessLoad(item);
+                var bounds = sh.Path.BoundingBox;
+               
+                if (Scaling == PathScaling.AspectFit)
+                {
+                    nfloat factorX = Frame.Width / bounds.Width;
+                    nfloat factorY = Frame.Height / bounds.Height;
+                    nfloat factor = (nfloat) Math.Min(factorX, factorY);
+
+                    nfloat width = bounds.Width * factor;
+                    nfloat height = bounds.Height * factor;
+                    nfloat translateX = (Frame.Width - width) / 2f;
+                    nfloat translateY = (Frame.Height - height) / 2f;
+
+                    var transform = CGAffineTransform.MakeTranslation(-bounds.X, -bounds.Y);
+                    transform.Translate(translateX, translateY);
+                    transform.Scale (factor, factor);
+                    sh.AffineTransform = transform;
+                }
+                else if (Scaling == PathScaling.AspectFill)
+                {
+                    nfloat factorX = Frame.Width / bounds.Width;
+                    nfloat factorY = Frame.Height / bounds.Height;
+                    nfloat factor = (nfloat) Math.Max(factorX, factorY);
+
+                    nfloat width = bounds.Width * factor;
+                    nfloat height = bounds.Height * factor;
+                    nfloat translateX = (Frame.Width - width) / 2f;
+                    nfloat translateY = (Frame.Height - height) / 2f;
+
+                    var transform = CGAffineTransform.MakeTranslation (-bounds.X, -bounds.Y);
+                    transform.Translate(translateX, translateY, 0);
+                    transform.Scale(factor, factor, 0);
+                    sh.AffineTransform = transform;
+                }
+                else if (Scaling == PathScaling.Fill)
+                {
+                    var factorX = Frame.Width / bounds.Width;
+                    var factorY = Frame.Height / bounds.Height;
+                    var transform = CGAffineTransform.MakeScale (factorX, factorY);
+
+                    var translateX = bounds.X * factorX;
+                    var translateY = bounds.Y * factorY;
+                    transform.Translate(translateX, translateY);
+                    sh.AffineTransform = transform;
+                }
+                else
+                {
+                    var width = bounds.Width;
+                    var height = bounds.Height;
+                    var translateX = (Frame.Width - width) / 2;
+                    var translateY = (Frame.Height - height) / 2;
+
+                    var transform = CGAffineTransform.MakeTranslation (-bounds.X, -bounds.Y);
+                    transform.Translate(translateX, translateY);
+                    sh.AffineTransform = transform;
+                }
             }
-          
-
-            //if (xml.Root.Name.LocalName != "svg")
-            //    throw new Exception("not svg");
-
-            //var width = xml.Root.GetWidth();
-            //var heigh = xml.Root.GetHeight();
-            //var viewBox = xml.Root.GetViewBox();
-
-
-            //Layer.BackgroundColor = xml.Root.GetFill().CGColor;
-
-            //foreach (var node in xml.Root.Elements())
-            //{
-            //    if (node.Name.LocalName == "path")
-            //    {
-            //        var shape = new CAShapeLayer();
-            //        shape.Path = PathBuilder.Build(node.Attribute("d").Value);
-            //        shape.FillColor = NSColor.Red.CGColor; // node.GetFill().CGColor;
-
-            //        var stroke = node.Attribute("stroke")?.Value;
-            //        if (string.IsNullOrEmpty(stroke))
-            //            shape.StrokeColor = XExtensions.ConvertToNSColor(stroke).CGColor;
-
-            //        shape.LineWidth = 2; // node.GetStrokeWidth();
-
-            //        shapeLayer.AddSublayer(shape);
-
-            //        continue;
-            //    }
-            //}
         }
     }
 }

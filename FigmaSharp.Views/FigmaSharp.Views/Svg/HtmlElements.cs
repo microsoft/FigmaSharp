@@ -113,6 +113,12 @@ namespace FigmaSharp.Views.Graphics
 
         [XmlAttribute(attributeName: "stroke-width")]
         public float StrokeWidth { get; set; }
+
+        [XmlAttribute(attributeName: "stroke-linecap")]
+        public string StrokeLineCap { get; set; }
+
+        [XmlAttribute(attributeName: "stroke-linejoin")]
+        public string StrokeLineJoin { get; set; }
     }
 
     [Serializable()]

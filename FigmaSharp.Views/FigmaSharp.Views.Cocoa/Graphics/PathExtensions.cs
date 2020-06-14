@@ -21,6 +21,7 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+using System;
 using AppKit;
 using CoreAnimation;
 using CoreGraphics;
@@ -62,8 +63,8 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             if (!string.IsNullOrEmpty(element.Fill))
                 shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
 
-            shape.BorderWidth = element.StrokeWidth;
-
+            shape.LineWidth = element.StrokeWidth * 2;
+            shape.Bounds = new CGRect(0, 0, element.Width, element.Height);
             return shape;
         }
 
@@ -74,7 +75,6 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             var bezierPath = new NSBezierPath();
             bezierPath.MoveTo(new CGPoint(element.X1, element.Y1));
             bezierPath.LineTo (new CGPoint(element.X2, element.Y2));
-
             line.Path = bezierPath.ToCGPath();
 
             if (!string.IsNullOrEmpty(element.Stroke))
@@ -83,7 +83,12 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             if (!string.IsNullOrEmpty(element.Fill))
                 line.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
 
-            line.BorderWidth = element.StrokeWidth;
+            line.LineWidth = element.StrokeWidth;
+
+            var width = Math.Max(element.X1, element.X2) - Math.Min(element.X1, element.X2);
+            var height = Math.Max(element.Y1, element.Y2) - Math.Min(element.Y1, element.Y2);
+            line.Bounds = new CGRect(0, 0, width, height);
+
             return line;
         }
 
@@ -97,7 +102,7 @@ namespace FigmaSharp.Views.Cocoa.Graphics
         public static CAShapeLayer ToShape(this Path element)
         {
             var shape = new CAShapeLayer();
-
+         
             if (!string.IsNullOrEmpty(element.d))
                 shape.Path = PathBuilder.Build(element.d);
 
@@ -106,8 +111,8 @@ namespace FigmaSharp.Views.Cocoa.Graphics
 
             if (!string.IsNullOrEmpty(element.Fill))
                 shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
-
-            shape.BorderWidth = element.StrokeWidth;
+            
+            shape.LineWidth = element.StrokeWidth * 2;
 
             return shape;
         }
@@ -121,10 +126,13 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             if (!string.IsNullOrEmpty(element.Stroke))
                 shape.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
 
-            shape.BorderWidth = element.StrokeWidth;
+            shape.LineWidth = element.StrokeWidth;
 
             if (!string.IsNullOrEmpty(element.Fill))
                 shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
+
+            var diameter = element.Radio * 2;
+            shape.Bounds = new CGRect(0, 0, diameter, diameter);
 
             return shape;
         }
