@@ -26,23 +26,24 @@ using AppKit;
 using CoreAnimation;
 using CoreGraphics;
 using FigmaSharp.Views.Graphics;
+using Foundation;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {
     public static class PathExtensions
     {
-        public static CAShapeLayer ToShape(this GPath element)
+        public static CAShapeLayer ToShape(this GPath element, Svg context = null)
         {
             var shape = new CAShapeLayer();
             foreach (var item in element.Paths)
                 if (item is GPath gp)
-                    shape.AddSublayer(gp.ToShape());
+                    shape.AddSublayer(gp.ToShape(context));
                 else if (item is Path pa)
-                    shape.AddSublayer(pa.ToShape());
+                    shape.AddSublayer(pa.ToShape(context));
                 else if (item is CirclePath cir)
-                    shape.AddSublayer(cir.ToShape());
+                    shape.AddSublayer(cir.ToShape(context));
                 else if (item is RectanglePath rec)
-                    shape.AddSublayer(rec.ToShape());
+                    shape.AddSublayer(rec.ToShape(context));
                 else if (item is LinePath line)
                     shape.AddSublayer(line.ToShape());
                 else if (item is TextPath text)
@@ -50,25 +51,49 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             return shape;
         }
 
-        public static CAShapeLayer ToShape(this RectanglePath element)
+        public static CALayer ToShape(this RectanglePath element, Svg context)
         {
-            var shape = new CAShapeLayer();
+            CALayer shape;
 
-            var bezierPath = NSBezierPath.FromRect (new CGRect(0, 0, element.Width, element.Height));
-            shape.Path = bezierPath.ToCGPath();
+            var width = element.Width - (element.RX * 2);
+            var height = element.Height - (element.RX * 2);
 
-            if (!string.IsNullOrEmpty(element.Stroke))
-                shape.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
+            if (XExtensions.TryGetLinearColor(element, context,out var gradient))
+            {
+                var gradientLayer = new CAGradientLayer();
+                var colors = new CGColor[gradient.Stops.Length];
+                for (int i = 0; i < gradient.Stops.Length; i++)
+                {
+                    var stop = gradient.Stops[i];
+                    if (XExtensions.TryConvertToNSColor(stop.Color, out var col))
+                        colors[i] = col.CGColor;
+                }
 
-            if (!string.IsNullOrEmpty(element.Fill))
-                shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
+                gradientLayer.StartPoint = new CGPoint(gradient.X1 / width, gradient.Y1 / height);
+                gradientLayer.EndPoint = new CGPoint(gradient.X2 / width, gradient.Y2 / height);
+                gradientLayer.Colors = colors;
+                gradientLayer.Locations = new NSNumber[] { 0.0, 1.0 };
+                shape = gradientLayer;
+            }
+            else { 
+                shape = new CALayer();
+                if (XExtensions.TryConvertToNSColor(element.Fill, out var fillColor))
+                    shape.BackgroundColor = fillColor.CGColor;
+            }
 
-            shape.LineWidth = element.StrokeWidth * 2;
-            shape.Bounds = new CGRect(0, 0, element.Width, element.Height);
+            shape.CornerRadius = element.RX;
+            shape.BorderWidth = element.StrokeWidth;
+
+            if (XExtensions.TryConvertToNSColor(element.Stroke, out var color))
+                shape.BorderColor = color.CGColor;
+
+            //shape.BorderColor = NSColor.Red.CGColor;
+
+            shape.Bounds = new CGRect(0, 0, width, height);
             return shape;
         }
 
-        public static CAShapeLayer ToShape(this LinePath element)
+        public static CAShapeLayer ToShape(this LinePath element, Svg context = null)
         {
             var line = new CAShapeLayer();
 
@@ -77,62 +102,66 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             bezierPath.LineTo (new CGPoint(element.X2, element.Y2));
             line.Path = bezierPath.ToCGPath();
 
-            if (!string.IsNullOrEmpty(element.Stroke))
-                line.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
-
-            if (!string.IsNullOrEmpty(element.Fill))
-                line.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
-
             line.LineWidth = element.StrokeWidth;
 
-            var width = Math.Max(element.X1, element.X2) - Math.Min(element.X1, element.X2);
-            var height = Math.Max(element.Y1, element.Y2) - Math.Min(element.Y1, element.Y2);
-            line.Bounds = new CGRect(0, 0, width, height);
+            if (XExtensions.TryConvertToNSColor(element.Stroke, out var color))
+                line.BorderColor = color.CGColor;
+
+            if (XExtensions.TryConvertToNSColor(element.Fill, out var fillColor))
+                line.FillColor = fillColor.CGColor;
+
+            line.Bounds = line.Path.BoundingBox;
 
             return line;
         }
 
-        public static CATextLayer ToShape(this TextPath element)
+        public static CATextLayer ToShape(this TextPath element, Svg context = null)
         {
             var text = new CATextLayer();
             text.FontSize = element.FontSize;
             return text;
         }
 
-        public static CAShapeLayer ToShape(this Path element)
+        public static CAShapeLayer ToShape(this Path element, Svg context = null)
         {
             var shape = new CAShapeLayer();
          
             if (!string.IsNullOrEmpty(element.d))
                 shape.Path = PathBuilder.Build(element.d);
 
-            if (!string.IsNullOrEmpty(element.Stroke))
-                shape.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
+            if (XExtensions.TryConvertToNSColor(element.Stroke, out var color))
+                shape.BorderColor = color.CGColor;
 
-            if (!string.IsNullOrEmpty(element.Fill))
-                shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
-            
-            shape.LineWidth = element.StrokeWidth * 2;
+            if (XExtensions.TryConvertToNSColor(element.Fill, out var fillColor))
+                shape.FillColor = fillColor.CGColor;
+
+            shape.LineWidth = element.StrokeWidth;
+
+            shape.Bounds = shape.Path.BoundingBox;
 
             return shape;
         }
 
-        public static CAShapeLayer ToShape(this CirclePath element)
+        public static CAShapeLayer ToShape(this CirclePath element, Svg context = null)
         {
+            var border = element.StrokeWidth / 2f;
+            var rect = new CGRect(border, border, element.Radio - element.StrokeWidth, element.Radio-element.StrokeWidth);
+
             var shape = new CAShapeLayer();
-            var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, element.Radio * 2, element.Radio * 2));
+            shape.MasksToBounds = true;
+            var bezierPath = NSBezierPath.FromOvalInRect(rect);
             shape.Path = bezierPath.ToCGPath();
 
-            if (!string.IsNullOrEmpty(element.Stroke))
-                shape.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
+            if (XExtensions.TryConvertToNSColor(element.Stroke, out var color))
+                shape.BorderColor = color.CGColor;
+
+            if (XExtensions.TryConvertToNSColor(element.Fill, out var fillColor))
+                shape.FillColor = fillColor.CGColor;
 
             shape.LineWidth = element.StrokeWidth;
 
-            if (!string.IsNullOrEmpty(element.Fill))
-                shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
-
-            var diameter = element.Radio * 2;
-            shape.Bounds = new CGRect(0, 0, diameter, diameter);
+            //var diameter = element.Radio * 2;
+            shape.Frame = new CGRect (0, 0, element.Radio , element.Radio);
 
             return shape;
         }

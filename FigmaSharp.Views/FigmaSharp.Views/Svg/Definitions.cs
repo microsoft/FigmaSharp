@@ -5,12 +5,44 @@ using System.Xml.Serialization;
 namespace FigmaSharp.Views.Graphics
 {
     [Serializable()]
-    public class Definitions : HtmlElement
+    public class Definition : HtmlElement
     {
     }
 
     [Serializable()]
-    public class StyleDefinition : Definitions
+    public class GradienStop
+    {
+        [XmlAttribute(attributeName: "stop-color")]
+        public string Color { get; set; }
+
+        [XmlAttribute(attributeName: "offset")]
+        public float Offset { get; set; }
+    }
+
+    [Serializable()]
+    public class LinearGradient : Definition
+    {
+        [XmlAttribute(attributeName: "x1")]
+        public float X1 { get; set; }
+
+        [XmlAttribute(attributeName: "x2")]
+        public float X2 { get; set; }
+
+        [XmlAttribute(attributeName: "y1")]
+        public float Y1 { get; set; }
+
+        [XmlAttribute(attributeName: "y2")]
+        public float Y2 { get; set; }
+
+        [XmlAttribute(attributeName: "gradientUnits")]
+        public string GradientUnits { get; set; }
+
+        [XmlElement("stop", Type = typeof(GradienStop))]
+        public GradienStop[] Stops { get; set; }
+    }
+
+    [Serializable()]
+    public class StyleDefinition : Definition
     {
         [XmlAttribute(attributeName: "type")]
         public string ContentType { get; set; }
@@ -46,7 +78,7 @@ namespace FigmaSharp.Views.Graphics
     }
 
     [Serializable()]
-    public class MarkerDefinition : Definitions
+    public class MarkerDefinition : Definition
     {
         [XmlAttribute(attributeName: "type")]
         public float StyleType { get; set; }

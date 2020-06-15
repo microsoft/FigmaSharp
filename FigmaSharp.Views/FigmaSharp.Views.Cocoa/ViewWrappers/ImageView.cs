@@ -40,8 +40,6 @@ namespace FigmaSharp.Views.Cocoa
 		readonly NSImageView imageView;
 		//CALayer imageLayer;
 
-        PathScaling Scaling = PathScaling.AspectFill;
-
         public ImageView () : this (new FNSImageView ())
 		{
 

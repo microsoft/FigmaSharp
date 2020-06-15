@@ -22,14 +22,14 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System;
+using System.Linq;
 using System.Globalization;
 using System.Xml.Linq;
 using AppKit;
-using CoreGraphics;
+using FigmaSharp.Views.Graphics;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {
-
     public static class XExtensions
     {
         public static double GetWidth(this XElement element)
@@ -78,41 +78,86 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             return col;
         }
 
-        public static NSColor ConvertToNSColor(string data)
+        static bool TryGetUrl (string url, out string value)
+        {
+            url = url.Trim();
+            if (url.StartsWith("url("))
+            {
+                url = url.Substring("url(".Length);
+                url = url.Substring(1, url.Length - 2);
+                value = url;
+                return true;
+            }
+            value = "";
+            return false;
+        }
+
+        public static bool TryGetLinearColor (RectanglePath data, Views.Graphics.Svg context, out LinearGradient gradient)
+        {
+            string Id = data.Id;
+            if (TryGetUrl (data.Fill,out var url) )
+            {
+                Id = url;
+            }
+            var definition = context.Definitions.FirstOrDefault(s => s.Id == url);
+            if (definition is LinearGradient linearGradient)
+            {
+                gradient = linearGradient;
+                return true;
+            }
+            gradient = null;
+            return false;
+        }
+
+        public static bool TryConvertToNSColor (string data, out NSColor color)
         {
             if (string.IsNullOrEmpty(data))
-                return NSColor.Clear;
+            {
+                color = NSColor.Clear;
+                return true;
+            }
 
             if (data != "none")
             {
                 if (data == "black")
-                    return NSColor.Black;
+                {
+                    color = NSColor.Clear;
+                    return true;
+                }
                 if (data == "white")
-                    return NSColor.White;
+                {
+                    color = NSColor.White;
+                    return true;
+                }
             }
 
             try
             {
-                data = data.TrimStart('#');
-
-                if (data.Length == 6)
-                    return NSColor.FromCalibratedRgb (
-                                int.Parse(data.Substring(0, 2), NumberStyles.HexNumber),
-                                int.Parse(data.Substring(2, 2), NumberStyles.HexNumber),
-                                int.Parse(data.Substring(4, 2), NumberStyles.HexNumber));
-                else // assuming length of 8
-                    return NSColor.FromCalibratedRgba (
-                                int.Parse(data.Substring(2, 2), NumberStyles.HexNumber),
-                                int.Parse(data.Substring(4, 2), NumberStyles.HexNumber),
-                                int.Parse(data.Substring(6, 2), NumberStyles.HexNumber),
-                                int.Parse(data.Substring(0, 2), NumberStyles.HexNumber));
+                if (data.StartsWith ("#"))
+                {
+                    data = data.TrimStart('#');
+                    if (data.Length == 6)
+                        color = NSColor.FromRgb(
+                                    int.Parse(data.Substring(0, 2), NumberStyles.HexNumber),
+                                    int.Parse(data.Substring(2, 2), NumberStyles.HexNumber),
+                                    int.Parse(data.Substring(4, 2), NumberStyles.HexNumber));
+                    else if (data.Length == 8)// assuming length of 8
+                        color = NSColor.FromRgba(
+                                        int.Parse(data.Substring(2, 2), NumberStyles.HexNumber),
+                                        int.Parse(data.Substring(4, 2), NumberStyles.HexNumber),
+                                        int.Parse(data.Substring(6, 2), NumberStyles.HexNumber),
+                                        int.Parse(data.Substring(0, 2), NumberStyles.HexNumber));
+                    else
+                        color = NSColor.Clear;
+                        return true;
+                    }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-          
-            return NSColor.Clear;
+            color = NSColor.Clear;
+            return true;
         }
     }
 }

@@ -48,7 +48,8 @@ namespace FigmaSharp.Views.Graphics
         [XmlArray("defs")]
         [XmlArrayItem("style", typeof(StyleDefinition))]
         [XmlArrayItem("marker", typeof(MarkerDefinition))]
-        public Definitions[] Definitions { get; set; }
+        [XmlArrayItem("linearGradient", typeof(LinearGradient))]
+        public Definition[] Definitions { get; set; }
 
         [XmlAttribute(attributeName: "viewBox")]
         public string viewBox { get; set; }
