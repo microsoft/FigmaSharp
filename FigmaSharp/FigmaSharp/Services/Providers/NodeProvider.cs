@@ -224,7 +224,7 @@ namespace FigmaSharp.Services
 			if (figmaNode.ContainsSourceImage ())
 				return true;
 
-			if (figmaNode is IFigmaImage figmaImage && figmaImage.HasImage())
+			if (figmaNode is FigmaVector)
 				return true;
 
 			return false;
