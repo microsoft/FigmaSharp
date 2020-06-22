@@ -41,46 +41,108 @@ using Foundation;
 
 namespace FigmaSharp.Cocoa.Converters
 {
+    public class ElipsePropertyConverterBase
+    {
+        public static class Properties
+        {
+            public static string Alpha = "Alpha";
+            public static string FillColor = "FillColor";
+            public static string StrokeColor = "StrokeColor";
+            public static string LineWidth = "LineWidth";
+            public static string StrokeDashes = "StrokeDashes";
+        }
+    }
+
+    public class ElipsePropertyConverter : ElipsePropertyConverterBase
+    {
+        public void ConfigureProperty (string propertyName, FigmaNode node, IView view)
+        {
+            var elipseNode = (FigmaElipse)node;
+            var nativeView = (NSView)view.NativeObject;
+
+            if (propertyName == Properties.Alpha)
+            {
+                view.Opacity = ((FigmaElipse)node).opacity;
+                return;
+            }
+
+            if (propertyName == Properties.FillColor)
+            {
+                //to define system colors
+                var fills = elipseNode.fills.OfType<FigmaPaint>().FirstOrDefault();
+                if (fills != null && fills.color != null)
+                   ((CAShapeLayer)nativeView.Layer).FillColor = fills.color.ToCGColor();
+                else
+                    ((CAShapeLayer)nativeView.Layer).FillColor = NSColor.Clear.CGColor;
+                return;
+            }
+
+            if (propertyName == Properties.StrokeColor)
+            {
+                var strokes = elipseNode.strokes.FirstOrDefault();
+                if (strokes?.color != null)
+                    ((CAShapeLayer)nativeView.Layer).StrokeColor = strokes.color.MixOpacity(strokes.opacity).ToNSColor().CGColor;
+                return;
+            }
+
+            if (propertyName == Properties.LineWidth)
+            {
+                ((CAShapeLayer)nativeView.Layer).LineWidth = elipseNode.strokeWeight;
+                return;
+            }
+
+            if (propertyName == Properties.StrokeDashes)
+            {
+                if (elipseNode.strokeDashes != null)
+                {
+                    var number = new NSNumber[elipseNode.strokeDashes.Length];
+                    for (int i = 0; i < elipseNode.strokeDashes.Length; i++)
+                        number[i] = elipseNode.strokeDashes[i];
+                    ((CAShapeLayer)nativeView.Layer).LineDashPattern = number;
+                }
+                return;
+            }
+        }
+
+        public IView CreateView (FigmaNode node)
+        {
+            var view = new View();
+            var elipseView = (NSView)view.NativeObject;
+            var elipseNode = (FigmaElipse)node;
+
+            var circleLayer = new CAShapeLayer();
+            var bezierPath = NSBezierPath.FromOvalInRect(
+                new CGRect(elipseNode.strokeWeight, elipseNode.strokeWeight,
+                elipseNode.absoluteBoundingBox.Width - (elipseNode.strokeWeight * 2), elipseNode.absoluteBoundingBox.Height - (elipseNode.strokeWeight * 2)));
+            circleLayer.Path = bezierPath.ToCGPath();
+
+            elipseView.Layer = circleLayer;
+            return view;
+        }
+
+        public IView Render (ViewNode current)
+        {
+            var view = CreateView(current.FigmaNode);
+            ConfigureProperty(Properties.Alpha, current.FigmaNode, current.View);
+            ConfigureProperty(Properties.FillColor, current.FigmaNode, current.View);
+            ConfigureProperty(Properties.StrokeColor, current.FigmaNode, current.View);
+            ConfigureProperty(Properties.LineWidth, current.FigmaNode, current.View);
+            ConfigureProperty(Properties.StrokeDashes, current.FigmaNode, current.View);
+            return view;
+        }
+    }
+
     public class ElipseConverter : ElipseConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
+
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var elipseView = new NSView();
             elipseView.Configure(currentNode);
 
-            var elipseNode = (FigmaElipse)currentNode;
-            elipseView.AlphaValue = elipseNode.opacity;
-
-            var circleLayer = new CAShapeLayer();
-            var bezierPath = NSBezierPath.FromOvalInRect(
-                new CGRect(elipseNode.strokeWeight, elipseNode.strokeWeight,
-                elipseNode.absoluteBoundingBox.Width - (elipseNode.strokeWeight*2), elipseNode.absoluteBoundingBox.Height - ((elipseNode.strokeWeight * 2))));
-            circleLayer.Path = bezierPath.ToCGPath();
-
-            elipseView.Layer.AddSublayer(circleLayer);
-             
-            //to define system colors
-            var fills = elipseNode.fills.OfType<FigmaPaint>().FirstOrDefault();
-            if (fills != null && fills.color != null)
-                circleLayer.FillColor = fills.color.ToCGColor();
-            else
-                circleLayer.FillColor = NSColor.Clear.CGColor;
-
-            var strokes = elipseNode.strokes.FirstOrDefault();
-            if (strokes?.color != null)
-                circleLayer.StrokeColor = strokes.color.MixOpacity(strokes.opacity).ToNSColor().CGColor;
-
-            if (elipseNode.strokeDashes != null)
-            {
-                var number = new NSNumber[elipseNode.strokeDashes.Length];
-                for (int i = 0; i < elipseNode.strokeDashes.Length; i++)
-                    number[i] = elipseNode.strokeDashes[i];
-                circleLayer.LineDashPattern = number;
-            }
-
-            circleLayer.LineWidth = elipseNode.strokeWeight;
+         
           
             return new View (elipseView);
         }
