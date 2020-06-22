@@ -36,7 +36,8 @@ namespace FigmaSharp.Converters
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType () == typeof (FigmaLine) || (currentNode.type == "VECTOR" && currentNode.name == "sep");
+            return false;
+            //return currentNode.GetType () == typeof (FigmaLine) || (currentNode.type == "VECTOR" && currentNode.name == "sep");
         }
     }
 }

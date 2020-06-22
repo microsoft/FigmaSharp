@@ -36,7 +36,7 @@ namespace FigmaSharp.Converters
 
 		public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaElipse);
+            return false;
         }
     }
 }

@@ -36,8 +36,14 @@ namespace FigmaSharp.Converters
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.GetType() == typeof(FigmaVector)
-                || currentNode.GetType() == typeof(FigmaStar);
+            return
+                currentNode.GetType() == typeof(FigmaVector)
+                || currentNode.GetType() == typeof(FigmaStar)
+                || currentNode.GetType() == typeof(FigmaLine)
+                || currentNode.GetType() == typeof(RectangleVector)
+                || currentNode.GetType() == typeof(FigmaElipse)
+            ||
+            currentNode.GetType() == typeof(FigmaRegularPolygon);
         }
     }
 }
