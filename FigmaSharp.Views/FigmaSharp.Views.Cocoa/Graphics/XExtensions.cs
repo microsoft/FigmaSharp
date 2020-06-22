@@ -111,17 +111,17 @@ namespace FigmaSharp.Views.Cocoa.Graphics
 
         public static bool TryConvertToNSColor (string data, out NSColor color)
         {
+            color = NSColor.Clear;
             if (string.IsNullOrEmpty(data))
             {
-                color = NSColor.Clear;
-                return true;
+                return false;
             }
 
             if (data != "none")
             {
                 if (data == "black")
                 {
-                    color = NSColor.Clear;
+                    color = NSColor.Black;
                     return true;
                 }
                 if (data == "white")
@@ -137,26 +137,28 @@ namespace FigmaSharp.Views.Cocoa.Graphics
                 {
                     data = data.TrimStart('#');
                     if (data.Length == 6)
+                    {
                         color = NSColor.FromRgb(
                                     int.Parse(data.Substring(0, 2), NumberStyles.HexNumber),
                                     int.Parse(data.Substring(2, 2), NumberStyles.HexNumber),
                                     int.Parse(data.Substring(4, 2), NumberStyles.HexNumber));
-                    else if (data.Length == 8)// assuming length of 8
+                        return true;
+                    }
+                    else if (data.Length == 8)
+                    {// assuming length of 8
                         color = NSColor.FromRgba(
                                         int.Parse(data.Substring(2, 2), NumberStyles.HexNumber),
                                         int.Parse(data.Substring(4, 2), NumberStyles.HexNumber),
                                         int.Parse(data.Substring(6, 2), NumberStyles.HexNumber),
                                         int.Parse(data.Substring(0, 2), NumberStyles.HexNumber));
-                    else
-                        color = NSColor.Clear;
                         return true;
                     }
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-            color = NSColor.Clear;
             return true;
         }
     }
