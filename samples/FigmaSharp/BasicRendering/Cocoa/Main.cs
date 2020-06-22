@@ -39,7 +39,7 @@ namespace LocalFile.Cocoa
 		//static ExampleViewManager manager;
 		static IScrollView scrollView;
 
-        const string fileName = "WOzDi5CXie6lQeXulTw1CO";
+        const string fileName = "eAwEgGPhAGtbC4I6CVW9Kf";
 
 		static void Main (string[] args)
 		{
@@ -55,6 +55,8 @@ namespace LocalFile.Cocoa
 			var mainWindow = new Window (new Rectangle (0, 0, 540, 800)) {
 				Content = scrollView
 			};
+
+            mainWindow.KeyDown += MainWindow_KeyDown;
 
 			mainWindow.Closing += delegate { NSRunningApplication.CurrentApplication.Terminate (); };
 
@@ -79,10 +81,31 @@ namespace LocalFile.Cocoa
 			scrollView.AdjustToContent();
 
 			mainWindow.Show ();
+
+			var window = (NSWindow)mainWindow.NativeObject;
+			window.BackgroundColor = NSColor.Black;
 			//mainWindow.Title = manager.WindowTitle;
 
 			NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
 			NSApplication.SharedApplication.Run ();
 		}
-	}
+
+		private static void MainWindow_KeyDown(object sender, Key e)
+		{
+            switch (e)
+            {
+				case Key.Return:
+					(scrollView.NativeObject as NSScrollView).Magnification = 1;
+					break;
+				case Key.RightBracket:
+					(scrollView.NativeObject as NSScrollView).Magnification += 0.5f;
+					break;
+				case Key.Slash:
+					(scrollView.NativeObject as NSScrollView).Magnification -= 0.5f;
+					break;
+                default:
+                    break;
+            }
+		}
+    }
 }
