@@ -111,12 +111,9 @@ namespace FigmaSharp.Services
                 //Images
                 if (options.AreImageProcessed)
                 {
-                    foreach (var processedNode in NodesProcessed)
+                    foreach (var item in FileProvider.SearchImageNodes (figmaNode))
                     {
-                        if (FileProvider.RendersAsImage(processedNode.FigmaNode))
-                        {
-                            ImageVectors.Add(processedNode);
-                        }
+                        ImageVectors.Add(NodesProcessed.FirstOrDefault (s => s.FigmaNode == item));
                     }
 
                     fileProvider.ImageLinksProcessed += FileProvider_ImageLinksProcessed;

@@ -57,5 +57,6 @@ namespace FigmaSharp.Services
 
         bool RendersAsImage(FigmaNode figmaNode);
         void SaveResourceFiles(string destinationDirectory, string format, IImageNodeRequest[] downloadImages);
+        IEnumerable<FigmaNode> SearchImageNodes(FigmaNode mainNode);
     }
 }

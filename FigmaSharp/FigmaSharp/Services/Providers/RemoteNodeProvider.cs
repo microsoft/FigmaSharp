@@ -164,6 +164,17 @@ namespace FigmaSharp.Services
             }
         }
 
+        public override bool SearchImageChildren(FigmaNode figmaNode)
+        {
+            if (figmaNode.Parent != null && RendersAsImage(figmaNode.Parent))
+                return false;
+            if (!figmaNode.visible)
+                return false;
+            if (figmaNode is FigmaInstance)
+                return false;
+            return true;
+        }
+
         public override void OnStartImageLinkProcessing(List<ViewNode> imageFigmaNodes)
         {
             if (imageFigmaNodes.Count == 0)
