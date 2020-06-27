@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FigmaSharp.Views</id>
-    <version>0.6-alpha</version>
+    <version>$(FSMajorVersion).$(FSMinorVersion).$(FSViewVersion)-alpha</version>
     <title>Small abstraction to build native UIs easily</title>
     <authors>Jose Medrano</authors>
     <owners>Jose Medrano</owners>

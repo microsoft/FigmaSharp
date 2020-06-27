@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FigmaSharp.Views.Forms</id>
-    <version>0.6-alpha</version>
+    <version>$(FSMajorVersion).$(FSMinorVersion).$(FSViewFormsVersion)-alpha</version>
     <title>Xamarin Forms view implementation of Lite.Forms a small abstraction to build native UIs easily</title>
     <authors>Jose Medrano</authors>
     <owners>Jose Medrano</owners>
@@ -14,7 +14,7 @@
     <copyright>netonjm</copyright>
     <tags>abstraction forms cocoa wpf</tags>
     <dependencies>
-    <dependency id="FigmaSharp.Views" version="0.6-alpha" />
+    <dependency id="FigmaSharp.Views" version="$(FSMajorVersion).$(FSMinorVersion).$(FSViewVersion)-alpha" />
   </dependencies>
   </metadata>
   <files>

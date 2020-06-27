@@ -3,7 +3,7 @@
   <metadata>
     <id>FigmaSharp.Cocoa</id>
     <title>FigmaSharp.Cocoa</title>
-    <version>0.6-alpha</version>
+    <version>$(FSMajorVersion).$(FSMinorVersion).$(FSCoreMacVersion)-alpha</version>
     <authors>Jose Medrano</authors>
     <licenseUrl>https://www.microsoft.com/es-es/</licenseUrl>
     <projectUrl>https://www.microsoft.com/es-es/</projectUrl>
@@ -14,11 +14,11 @@
     <copyright>Jose Medrano.</copyright>
     <tags>figma designer design</tags>
     <dependencies>
-      <dependency id="FigmaSharp" version="0.6-alpha" />
-      <dependency id="FigmaSharp.Views" version="0.6-alpha" />
-      <dependency id="FigmaSharp.Views.Cocoa" version="0.6-alpha" />
-      <dependency id="Newtonsoft.Json" version="12.0.1" />
-      <dependency id="System.Drawing.Common" version="4.5.1" /> 
+      <dependency id="FigmaSharp" version="$(FSMajorVersion).$(FSMinorVersion).$(FSCoreMacVersion)-alpha" />
+      <dependency id="FigmaSharp.Views" version="$(FSMajorVersion).$(FSMinorVersion).$(FSViewVersion)-alpha" />
+      <dependency id="FigmaSharp.Views.Cocoa" version="$(FSMajorVersion).$(FSMinorVersion).$(FSViewMacVersion)-alpha" />
+      <dependency id="Newtonsoft.Json" version="$(NewtonsoftNugetVersion)" />
+      <dependency id="System.Drawing.Common" version="$(SystemDrawingCommonVersion)" /> 
     </dependencies>
   </metadata>
 

@@ -14,11 +14,11 @@
     <copyright>Jose Medrano.</copyright>
     <tags>figma designer design</tags>
     <dependencies>
-      <dependency id="FigmaSharp" version="0.6.0-alpha" />
-      <dependency id="FigmaSharp.Forms" version="0.6.0-alpha" />
-      <dependency id="FigmaSharp.Views" version="0.6.0-alpha" />
-      <dependency id="FigmaSharp.Views.Forms" version="0.6.0-alpha" />
-      <dependency id="Newtonsoft.Json" version="12.0.1" />
+      <dependency id="FigmaSharp" version="$(FSMajorVersion).$(FSMinorVersion).$(FSCoreVersion)-alpha" />
+      <dependency id="FigmaSharp.Forms" version="$(FSMajorVersion).$(FSMinorVersion).$(FSCoreFormsVersion)-alpha" />
+      <dependency id="FigmaSharp.Views" version="$(FSMajorVersion).$(FSMinorVersion).$(FSViewVersion)-alpha" />
+      <dependency id="FigmaSharp.Views.Forms" version="$(FSMajorVersion).$(FSMinorVersion).$(FSViewFormsVersion)-alpha" />
+      <dependency id="Newtonsoft.Json" version="$(NewtonsoftNugetVersion)" />
     </dependencies>
   </metadata>
 
