@@ -2,14 +2,14 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
+    <AssemblyVersion>$(ProductMajorVersion).$(ProductMinorVersion).$(ProductExtensionMacPathVersion)</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Mac" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftNugetVersion)">
         <Private>False</Private>        
     </PackageReference>
   </ItemGroup>
@@ -156,4 +156,5 @@
           <DependentUpon>GenerateViewsWindow.cs</DependentUpon>
         </Compile>
       </ItemGroup>
+      <Import Project="..\..\build\Figma.targets" />
 </Project>

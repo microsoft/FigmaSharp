@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\build\Figma.targets" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
+    <AssemblyVersion>$(FSMajorVersion).$(FSMinorVersion).$(FSCoreVersion)</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
@@ -31,10 +32,10 @@
     <Folder Include="Converters\Layers\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftNugetVersion)">
       <Private>False</Private>
     </PackageReference>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="$(SystemComponentModelAnnotationsVersion)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />

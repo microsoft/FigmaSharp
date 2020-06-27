@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\build\Figma.targets" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
+    <AssemblyVersion>$(FSMajorVersion).$(FSMinorVersion).$(FSViewMacVersion)</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,7 +97,7 @@
       <Name>FigmaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{16F5901F-4807-47DD-83EA-EA49E7B95568}</Project>
+      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
   </ItemGroup>

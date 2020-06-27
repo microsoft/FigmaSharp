@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DefaultTargetFrameworkVersion>v4.7.2</DefaultTargetFrameworkVersion>
+    <FSMajorVersion>0</FSMajorVersion>
+    <FSMinorVersion>8</FSMinorVersion>
+    <!-- Core -->
+    <FSCoreVersion>1</FSCoreVersion>
+    <FSCoreMacVersion>1</FSCoreMacVersion>
+    <!-- Controls -->
+    <FSControlVersion>1</FSControlVersion>
+    <FSControlMacVersion>1</FSControlMacVersion>
+    <!-- Views -->
+    <FSViewVersion>1</FSViewVersion>
+    <FSViewMacVersion>1</FSViewMacVersion>
+    <!-- Tools -->
+    <FSAppVersion>1</FSAppVersion>
+    <FSExtensionMacVersion>1</FSExtensionMacVersion>
+    <!-- Nugets -->
+    <NewtonsoftNugetVersion>12.0.1</NewtonsoftNugetVersion>
+    <SystemDrawingCommonVersion>4.7.0</SystemDrawingCommonVersion>
+    <SystemComponentModelAnnotationsVersion>4.7.0</SystemComponentModelAnnotationsVersion>
+    <!-- Nuget Info -->
+    <AuthorCopyright>Jose Medrano</AuthorCopyright>
+  </PropertyGroup>
+</Project>

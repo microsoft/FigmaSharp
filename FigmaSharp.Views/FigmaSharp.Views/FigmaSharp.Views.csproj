@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\..\build\Figma.targets" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
+    <AssemblyVersion>$(FSMajorVersion).$(FSMinorVersion).$(FSViewVersion)</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

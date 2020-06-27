@@ -10,7 +10,6 @@
     <AssemblyName>NativeControls.Cocoa</AssemblyName>
      <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
      <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-     <ReleaseVersion>0.1.1</ReleaseVersion>
      <UseXamMacFullFramework>true</UseXamMacFullFramework>
      <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>

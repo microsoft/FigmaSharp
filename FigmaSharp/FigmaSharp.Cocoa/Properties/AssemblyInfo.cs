@@ -17,8 +17,6 @@ using System.Runtime.CompilerServices;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("1.0.*")]
-
 [assembly: InternalsVisibleTo ("FigmaSharp.Controls")]
 [assembly: InternalsVisibleTo ("FigmaSharp.Controls.Cocoa")]
 [assembly: InternalsVisibleTo ("MonoDevelop.Figma")]
