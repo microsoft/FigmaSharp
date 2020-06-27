@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FigmaSharp.Designer</RootNamespace>
     <AssemblyName>FigmaSharp.Designer</AssemblyName>
-    <TargetFrameworkVersion>$(DefaultTargetFrameworkVersion)</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
     <EnablePackageSigning>false</EnablePackageSigning>
@@ -45,6 +46,7 @@
     <LinkMode>None</LinkMode>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
+    <Commandlineparameters></Commandlineparameters>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
