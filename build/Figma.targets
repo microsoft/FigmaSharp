@@ -7,15 +7,23 @@
     <!-- Core -->
     <FSCoreVersion>1</FSCoreVersion>
     <FSCoreMacVersion>1</FSCoreMacVersion>
+    <FSCoreFormsVersion>1</FSCoreFormsVersion>
+    <FSCoreWpfVersion>1</FSCoreWpfVersion>
     <!-- Controls -->
     <FSControlVersion>1</FSControlVersion>
     <FSControlMacVersion>1</FSControlMacVersion>
+    <FSControlFormsVersion>1</FSControlFormsVersion>
+    <FSControlWpfVersion>1</FSControlWpfVersion>
     <!-- Views -->
     <FSViewVersion>1</FSViewVersion>
     <FSViewMacVersion>1</FSViewMacVersion>
+    <FSViewFormsVersion>1</FSViewFormsVersion>
+    <FSViewWpfVersion>1</FSViewWpfVersion>
     <!-- Tools -->
     <FSAppVersion>1</FSAppVersion>
     <FSExtensionMacVersion>1</FSExtensionMacVersion>
+    <FSExtensionFormsVersion>1</FSExtensionFormsVersion>
+    <FSExtensionWpfVersion>1</FSExtensionWpfVersion>
     <!-- Nugets -->
     <NewtonsoftNugetVersion>12.0.1</NewtonsoftNugetVersion>
     <SystemDrawingCommonVersion>4.7.0</SystemDrawingCommonVersion>
