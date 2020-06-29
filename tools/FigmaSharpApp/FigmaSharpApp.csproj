@@ -72,7 +72,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Helpers\TokenStore.cs" />
     <Compile Include="Helpers\FigmaLink.cs" />
     <Compile Include="Views\OpenLocationViewController.cs" />
     <Compile Include="Views\OpenLocationViewController.designer.cs">

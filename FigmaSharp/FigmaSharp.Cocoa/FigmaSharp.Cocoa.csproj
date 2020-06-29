@@ -65,6 +65,7 @@
     <Compile Include="Converters\Layers\RectangleVectorConverter.cs" />
     <Compile Include="Converters\Layers\RegularPolygonConverter.cs" />
     <Compile Include="Converters\Layers\VectorConverter.cs" />
+    <Compile Include="TokenStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />

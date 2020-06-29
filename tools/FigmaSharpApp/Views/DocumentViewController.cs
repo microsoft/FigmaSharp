@@ -152,8 +152,6 @@ namespace FigmaSharpApp
 			if (response == null)
 				windowController.Title = string.Format ("Opening “{0}”…", DocumentID);
 
-			FigmaSharp.AppContext.Current.SetAccessToken(Token);
-
 			if (response == null || version != null) {
 				fileProvider = new ControlRemoteNodeProvider() { File = DocumentID, Version = version };
 				fileProvider.ImageLinksProcessed += (sender, e) => {

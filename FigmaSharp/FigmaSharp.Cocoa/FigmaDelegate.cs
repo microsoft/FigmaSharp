@@ -27,19 +27,15 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-
 using AppKit;
+using FigmaSharp.Cocoa.Converters;
+using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.Converters;
+using FigmaSharp.Helpers;
+using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
-using FigmaSharp.Views.Native.Cocoa;
-using FigmaSharp.Cocoa.Converters;
-using FigmaSharp.Models;
-using FigmaSharp.Helpers;
-using FigmaSharp.Converters;
-using FigmaSharp.PropertyConfigure;
-using FigmaSharp.Cocoa.PropertyConfigure;
 
 namespace FigmaSharp.Cocoa
 {

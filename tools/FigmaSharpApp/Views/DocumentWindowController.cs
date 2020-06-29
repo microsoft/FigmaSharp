@@ -159,8 +159,6 @@ namespace FigmaSharpApp
 			{
 				var query = new FigmaFileVersionQuery(link_id);
 
-				FigmaSharp.AppContext.Current.SetAccessToken(TokenStore.SharedTokenStore.GetToken());
-
 				return FigmaSharp.AppContext.Api.GetFileVersions(query)
 					.versions.GroupByCreatedAt()
 					.ToArray ();
