@@ -28,6 +28,7 @@
 using System;
 
 using AppKit;
+using FigmaSharp.Cocoa;
 using Foundation;
 
 namespace FigmaSharpApp
@@ -37,7 +38,7 @@ namespace FigmaSharpApp
 		string keychain_token;
 
 		string token_message;
-		string token_message_unsaved = "This token will be saved in your keychain.";
+		const string token_message_unsaved = "No token found in keychain";
 
 
 		public OpenLocationViewController (IntPtr handle) : base (handle)
@@ -49,14 +50,10 @@ namespace FigmaSharpApp
 			base.ViewDidLoad ();
 			token_message = TokenStatusTextField.StringValue;
 
-			try {
-				keychain_token = TokenStore.SharedTokenStore.GetToken ();
-				TokenTextField.StringValue = keychain_token;
-
-			} catch {
+			if (FigmaSharp.AppContext.Current.IsApiConfigured)
+				TokenTextField.StringValue = FigmaSharp.AppContext.Api.Token;
+			else
 				TokenStatusTextField.StringValue = token_message_unsaved;
-				Console.WriteLine ("No token found in keychain.");
-			}
 
 			TokenTextField.Changed += TokenTextFieldChanged;
 			LinkComboBox.Changed += LinkComboboxChanged;
@@ -123,16 +120,27 @@ namespace FigmaSharpApp
 		void OpenButtonActivated (Object sender, EventArgs args)
 		{
 			View.Window.IsVisible = false;
+
+			//is our api key different we store it
+			if (TokenTextField.StringValue != FigmaSharp.AppContext.Api.Token)
+			{
+				FigmaSharp.AppContext.Current.SetAccessToken(TokenTextField.StringValue);
+				try
+				{
+					TokenStore.Current.SetToken(TokenTextField.StringValue);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex);
+				}
+			}
 			PerformSegue ("OpenLocationSegue", this);
 		}
 
 		public override void PrepareForSegue (NSStoryboardSegue segue, NSObject sender)
 		{
 			string token = TokenTextField.StringValue.Trim ();
-			TokenStore.SharedTokenStore.SetToken (token);
-
 			string link_id = LinkComboBox.StringValue.Trim ();
-
 
 			// Check if the Link ID is actually a title from the recent list
 			nint selectedComboBoxIndex = Array.IndexOf(LinkComboBox.Values, new NSString(link_id));

@@ -36,7 +36,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 {
     public class CodePropertyConfigure : CodePropertyConfigureBase
 	{
-		protected virtual string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		protected virtual string GetDefaultParentName (FigmaNode currentNode, FigmaNode parentNode, CodeRenderService rendererService)
 		{
 			return CodeGenerationHelpers.This;
 		}
@@ -85,7 +85,10 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 			}
 			if (propertyName == PropertyNames.AddChild)
 			{
-				return parentNode?.GetMethod(nameof(NSView.AddSubview), currentNode.Name);
+				if (currentNode.Node.Parent?.IsStackView () ?? false)
+					return parentNode?.GetMethod(nameof(NSStackView.AddArrangedSubview), currentNode.Name);
+				else
+					return parentNode?.GetMethod(nameof(NSView.AddSubview), currentNode.Name);
 			}
 			if (propertyName == PropertyNames.Size)
 			{
@@ -139,7 +142,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 				if (currentNode.Node is IConstraints constrainedNode && currentNode.Node.Parent != null)
 				{
 					var parentNodeName = parentNode == null ?
-						GetDefaultParentName(currentNode, parentNode, rendererService) :
+						GetDefaultParentName(currentNode.Node, currentNode.Node.Parent, rendererService) :
 						parentNode.Name;
 
 					var builder = new System.Text.StringBuilder();
@@ -147,7 +150,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                     var constraints = constrainedNode.constraints;
 					var absoluteBoundingBox = ((IAbsoluteBoundingBox)currentNode.Node)
 						.absoluteBoundingBox;
-					var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)(parentNode == null ? currentNode.Node.Parent : parentNode.Node))
+					var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)(parentNode == null ? currentNode.Node.Parent : currentNode.Node.Parent))
 						.absoluteBoundingBox;
 
 					if (constraints.horizontal.Contains("RIGHT") || constraints.horizontal == "SCALE")

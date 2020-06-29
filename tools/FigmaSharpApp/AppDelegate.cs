@@ -24,7 +24,10 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System.Diagnostics;
 using AppKit;
+using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa;
 using Foundation;
 
 namespace FigmaSharpApp
@@ -34,12 +37,21 @@ namespace FigmaSharpApp
 	{
 		public AppDelegate ()
 		{
+			try
+			{
+				FigmaControlsApplication.Init(TokenStore.Current.GetToken());
+			}
+			catch (System.Exception ex)
+			{
+				new EventLog() { Source = this.GetType ().FullName }
+				.WriteEntry(ex.ToString ());
+			}
 		}
 
 		public override void DidFinishLaunching (NSNotification notification)
 		{
+			
 		}
-
 
 		// View menu
 		partial void ToggleDarkModeClicked(NSObject sender)

@@ -152,8 +152,6 @@ namespace FigmaSharpApp
 			if (response == null)
 				windowController.Title = string.Format ("Opening “{0}”…", DocumentID);
 
-			FigmaSharp.AppContext.Current.SetAccessToken(Token);
-
 			if (response == null || version != null) {
 				fileProvider = new ControlRemoteNodeProvider() { File = DocumentID, Version = version };
 				fileProvider.ImageLinksProcessed += (sender, e) => {
@@ -183,18 +181,31 @@ namespace FigmaSharpApp
 
 			NativeScrollView.RemoveFromSuperview();
 			MainScrollView = scrollView;
-
 			NativeScrollView = (NSScrollView)scrollView.NativeObject;
 			View.AddSubview(NativeScrollView);
 
-			windowController.Window.Title = windowController.Title = response.name;
-			windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
+			if (response != null)
+			{
+				windowController.Window.Title = windowController.Title = response.name;
+				windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
 
-			windowController.UpdatePagesPopupButton(response.document, pageIndex);
-			await windowController.UpdateVersionMenu(DocumentID);
-			windowController.EnableButtons(true);
+				windowController.UpdatePagesPopupButton(response.document, pageIndex);
+				await windowController.UpdateVersionMenu(DocumentID);
+				windowController.EnableButtons(true);
 
-			RecentStore.SharedRecentStore.AddRecent(DocumentID, windowController.Window.Title);
+				RecentStore.SharedRecentStore.AddRecent(DocumentID, windowController.Window.Title);
+			}
+			else
+			{
+				if (View.Window?.WindowController is DocumentWindowController controller)
+					controller.ShowError(DocumentID);
+
+				var windowController = this.Storyboard.InstantiateControllerWithIdentifier("OpenLocationWindow") as NSWindowController;
+				windowController.ShowWindow(null);
+
+				this.View.Window.Close();
+			}
+			
 			ToggleSpinner(toggle_on: false);
 		}
 

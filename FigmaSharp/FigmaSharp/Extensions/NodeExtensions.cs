@@ -35,6 +35,19 @@ namespace FigmaSharp
 {
     public static class NodeExtensions
     {
+        public static bool IsStackView (this FigmaNode node)
+        {
+            if (node is FigmaFrame frame)
+            {
+                if (frame.LayoutMode == FigmaLayoutMode.Horizontal ||
+                    frame.LayoutMode == FigmaLayoutMode.Vertical)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool TryGetNodeCustomName(this FigmaNode node, out string customName)
         {
             customName = node.name;

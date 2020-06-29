@@ -26,7 +26,6 @@
 
 
 using AppKit;
-using FigmaSharp.Controls.Cocoa;
 
 namespace FigmaSharpApp
 {
@@ -34,7 +33,6 @@ namespace FigmaSharpApp
 	{
 		static void Main (string[] args)
 		{
-			FigmaControlsApplication.Init ();
 			NSApplication.Init ();
 			NSApplication.Main (args);
 		}

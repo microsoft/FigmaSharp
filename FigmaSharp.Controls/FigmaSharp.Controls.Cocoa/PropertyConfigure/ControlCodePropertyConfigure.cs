@@ -29,6 +29,7 @@
 using AppKit;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 
@@ -36,24 +37,35 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
 {
     public class ControlCodePropertyConfigure : CodePropertyConfigure
     {
-        protected override string GetDefaultParentName (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        protected override string GetDefaultParentName (FigmaNode currentNode, FigmaNode parentNode, CodeRenderService rendererService)
         {
             //component instance window case
-            if (currentNode.Node.Parent.IsInstanceContent(rendererService.figmaProvider, out var figmaInstance))
+            if (currentNode.Parent.IsInstanceContent(rendererService.figmaProvider, out var figmaInstance))
             {
-                var viewName = figmaInstance.IsDialog() ? $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}" :
-                    CodeGenerationHelpers.This;
-                return viewName;
+                if (figmaInstance.IsDialog())
+                    return $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
+                return CodeGenerationHelpers.This;
+            }
+
+            if (currentNode.Parent.IsComponentContent(rendererService.figmaProvider, out var figmaComponent))
+            {
+                //in components we find the base
+                if (figmaComponent.TryGetInstanceDialogParentContainer (rendererService.figmaProvider, out var currentInstance))
+                {
+                    if (currentInstance.IsDialog())
+                        return $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
+                }
+                return CodeGenerationHelpers.This;
             }
 
             //window case
-            if (currentNode.Node.Parent.IsWindowContent() || currentNode.Node.Parent.IsDialogParentContainer())
+            if (currentNode.Parent.IsWindowContent() || currentNode.Parent.IsDialogParentContainer())
             {
                 var contentView = $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
                 return contentView;
             }
 
-            if (currentNode.Node.Parent.IsMainDocumentView())
+            if (currentNode.Parent.IsMainDocumentView())
             {
                 return CodeGenerationHelpers.This;
             }
@@ -65,10 +77,11 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
         {
 			if (currentNode.Node.Parent != null && propertyName == PropertyNames.AddChild) {
 
-                var defaultParentName = GetDefaultParentName(currentNode, parentNode, rendererService);
+                var defaultParentName = GetDefaultParentName(currentNode.Node, currentNode.Node.Parent, rendererService);
                 if (!string.IsNullOrEmpty (defaultParentName))
                     return CodeGenerationHelpers.GetMethod(defaultParentName, nameof(NSView.AddSubview), currentNode.Name);
             }
+
             return base.ConvertToCode (propertyName, currentNode, parentNode, rendererService);
         }
     }

@@ -164,7 +164,7 @@ namespace FigmaSharp.Controls.Cocoa
             {
                 foreach (var item in container.children)
                 {
-                    if (item is FigmaInstance figmaInstance && provider.TryGetMainComponent(figmaInstance, out instanceDialog))
+                    if (item is FigmaInstance figmaInstance && provider.TryGetMainInstance(figmaInstance, out instanceDialog))
                     {
                         return true;
                     }
@@ -180,6 +180,33 @@ namespace FigmaSharp.Controls.Cocoa
             if (node.Parent != null && TryGetInstanceDialogParentContainer(node.Parent, provider, out instanceDialog) && node.IsNodeWindowContent())
             {
                 return true;
+            }
+            instanceDialog = null;
+            return false;
+        }
+
+        public static bool IsComponentContent(this FigmaNode node, INodeProvider provider, out FigmaComponentEntity instanceDialog)
+        {
+            if (node.Parent != null && TryGetComponentDialogParentContainer(node.Parent, provider, out instanceDialog) && node.IsNodeWindowContent())
+            {
+                return true;
+            }
+            instanceDialog = null;
+            return false;
+        }
+
+        public static bool TryGetComponentDialogParentContainer(this FigmaNode figmaNode, INodeProvider provider, out FigmaComponentEntity instanceDialog)
+        {
+            if (figmaNode is IFigmaNodeContainer container)
+            {
+                foreach (var item in container.children)
+                {
+                    if (item is FigmaInstance figmaInstance && provider.TryGetMainComponent (figmaInstance, out instanceDialog))
+                    {
+                        return true;
+                    }
+                }
+
             }
             instanceDialog = null;
             return false;
