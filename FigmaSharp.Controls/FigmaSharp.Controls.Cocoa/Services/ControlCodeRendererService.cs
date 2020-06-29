@@ -59,7 +59,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		{
             if (node.Node is FigmaInstance nodeInstance)
             {
-                if (figmaProvider.TryGetMainComponent(nodeInstance, out var maincomponent) && maincomponent.Parent is FigmaCanvas)
+                if (figmaProvider.TryGetMainInstance(nodeInstance, out var maincomponent) && maincomponent.Parent is FigmaCanvas)
                 {
 					return true;
 				}
@@ -116,7 +116,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		{
 			if (node.Node is FigmaInstance nodeInstance)
 			{
-				if (figmaProvider.TryGetMainComponent(nodeInstance, out _))
+				if (figmaProvider.TryGetMainInstance(nodeInstance, out _))
 					return true;
 			}
 

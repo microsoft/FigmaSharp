@@ -52,10 +52,12 @@ namespace FigmaSharp.Services
         FigmaNode FindByPath(params string[] path);
         FigmaNode FindByName(string nodeName);
 
-        bool TryGetMainComponent(FigmaInstance figmaInstance, out FigmaInstance outInstance);
+        bool TryGetMainInstance (FigmaInstance figmaInstance, out FigmaInstance outInstance);
+        bool TryGetMainComponent (FigmaInstance figmaInstance, out FigmaComponentEntity outInstance);
         bool TryGetStyle(string fillStyleValue, out FigmaStyle style);
 
         bool RendersAsImage(FigmaNode figmaNode);
         void SaveResourceFiles(string destinationDirectory, string format, IImageNodeRequest[] downloadImages);
     }
 }
+ 
