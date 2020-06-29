@@ -47,20 +47,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSStackView);
         public override bool ScanChildren(FigmaNode currentNode) => true;
-
-        public override bool CanConvert(FigmaNode currentNode)
-        {
-            if (currentNode is FigmaFrame frame)
-            {
-                if (frame.LayoutMode == FigmaLayoutMode.Horizontal ||
-                    frame.LayoutMode == FigmaLayoutMode.Vertical)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        public override bool CanConvert(FigmaNode currentNode) => currentNode.IsStackView();
 
         public void ConfigureProperty(string propertyName, FigmaNode node, IView view)
         {

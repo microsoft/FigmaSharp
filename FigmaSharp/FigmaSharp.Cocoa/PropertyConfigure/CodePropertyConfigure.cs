@@ -85,7 +85,10 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 			}
 			if (propertyName == PropertyNames.AddChild)
 			{
-				return parentNode?.GetMethod(nameof(NSView.AddSubview), currentNode.Name);
+				if (parentNode?.Node.IsStackView () ?? false)
+					return parentNode?.GetMethod(nameof(NSStackView.AddArrangedSubview), currentNode.Name);
+				else
+					return parentNode?.GetMethod(nameof(NSView.AddSubview), currentNode.Name);
 			}
 			if (propertyName == PropertyNames.Size)
 			{
