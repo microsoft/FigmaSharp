@@ -38,6 +38,8 @@
     <Compile Include="LocalFileTests.cs" />
     <Compile Include="NodeExtensionsTests.cs" />
     <Compile Include="NodeAccessibility.cs" />
+    <Compile Include="ToCode\CocoaConverters.cs" />
+    <Compile Include="Resources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
@@ -65,6 +67,9 @@
       <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
       <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ToCode\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
