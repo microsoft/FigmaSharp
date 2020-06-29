@@ -35,35 +35,56 @@ namespace MonoDevelop.Figma
     {
         const string FigmaSetting = "FigmaToken";
         const string TokenMessage = "Cannot Access to TokenStore. Using default VS4Mac storage";
+
+        internal static bool UsesTokenStore { get; private set; } = true;
+
+        static FigmaRuntime ()
+        {
+#if DEBUG
+            //in debug we don't want alert messages
+            UsesTokenStore = false;
+#endif
+        }
+
         public static string Token
         {
             get
             {
-                try
+                if (UsesTokenStore)
                 {
-                    return TokenStore.Current.GetToken();
+                    try
+                    {
+                        return TokenStore.Current.GetToken();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(TokenMessage);
+                        Console.WriteLine(ex.ToString());
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(TokenMessage);
-                    Console.WriteLine(ex.ToString());
-                    return PropertyService.Get<string>(FigmaSetting) ?? string.Empty;
-                }
-               
+                return PropertyService.Get<string>(FigmaSetting) ?? string.Empty;
             }
             set
             {
+                Exception exception = null;
+                if (UsesTokenStore)
+                {
+                    try
+                    {
+                        TokenStore.Current.SetToken(value);
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                        Console.WriteLine(TokenMessage);
+                        Console.WriteLine(exception.ToString());
+                    }
+                }
+
+                if (!UsesTokenStore || exception != null)
+                    PropertyService.Set (FigmaSetting, value);
+
                 FigmaSharp.AppContext.Current.SetAccessToken(value);
-                try
-                {
-                    TokenStore.Current.SetToken(value);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(TokenMessage);
-                    Console.WriteLine(ex.ToString ());
-                    PropertyService.Set(FigmaSetting, value);
-                }
                 TokenChanged?.Invoke(null, EventArgs.Empty);
             }
         }
