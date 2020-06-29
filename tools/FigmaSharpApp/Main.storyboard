@@ -285,7 +285,7 @@
         <!--Window Controller-->
         <scene sceneID="l7G-kG-DjR">
             <objects>
-                <windowController showSeguePresentationStyle="single" id="WaF-y5-496" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="OpenLocationWindow" showSeguePresentationStyle="single" id="WaF-y5-496" sceneMemberID="viewController">
                     <window key="window" title="Open Location" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Qdj-Uz-pZ5">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -312,7 +312,7 @@
                                 <rect key="frame" x="191" y="98" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="☰  →  Help and Account  →  Personal Access Tokens" allowsEditingTextAttributes="YES" id="guI-t9-Uwa">
-                                    <font key="font" metaFont="menu" size="11"/>
+                                    <font key="font" metaFont="toolTip"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -321,7 +321,7 @@
                                 <rect key="frame" x="190" y="114" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="Get your token from the Figma app:" allowsEditingTextAttributes="YES" id="kCe-3j-BSd">
-                                    <font key="font" metaFont="menu" size="11"/>
+                                    <font key="font" metaFont="toolTip"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -491,7 +491,7 @@ Gw
                                         <rect key="frame" x="0.0" y="14" width="49" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Page:" id="15S-mK-Y1y">
-                                            <font key="font" metaFont="menu" size="11"/>
+                                            <font key="font" metaFont="toolTip"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
