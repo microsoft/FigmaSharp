@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<Import Project="build\Figma.targets" />
+
+	<Target Name="GenerateNugets" >
+
+		<!-- Views -->
+		<Exec Command='$(BuildDir)mono nuget.exe pack NuGet/FigmaSharp.Views.nuspec -Properties "FSMajorVersion=$(FSMajorVersion);FSMinorVersion=$(FSMinorVersion);FSCoreVersion=$(FSCoreVersion)"' />
+		<Exec Command='$(BuildDir)mono nuget.exe pack NuGet/FigmaSharp.Views.Cocoa.nuspec -Properties "FSMajorVersion=$(FSMajorVersion);FSMinorVersion=$(FSMinorVersion);FSCoreMacVersion=$(FSCoreMacVersion)"' />
+		
+		<!-- Core -->
+		<Exec Command='$(BuildDir)mono nuget.exe pack NuGet/FigmaSharp.nuspec -Properties "FSMajorVersion=$(FSMajorVersion);FSMinorVersion=$(FSMinorVersion);FSControlVersion=$(FSControlVersion)"' />
+		<Exec Command='$(BuildDir)mono nuget.exe pack NuGet/FigmaSharp.Cocoa.nuspec -Properties "FSMajorVersion=$(FSMajorVersion);FSMinorVersion=$(FSMinorVersion);FSControlMacVersion=$(FSControlMacVersion)"' />
+		
+		<!-- Controls -->
+		<Exec Command='$(BuildDir)mono nuget.exe pack NuGet/FigmaSharp.Controls.nuspec -Properties "FSMajorVersion=$(FSMajorVersion);FSMinorVersion=$(FSMinorVersion);FSViewVersion=$(FSViewVersion)"' />
+		<Exec Command='$(BuildDir)mono nuget.exe pack NuGet/FigmaSharp.Controls.Cocoa.nuspec -Properties "FSMajorVersion=$(FSMajorVersion);FSMinorVersion=$(FSMinorVersion);FSViewMacVersion=$(FSViewMacVersion)"' />
+		
+	</Target>
+  
+</Project>
+
+

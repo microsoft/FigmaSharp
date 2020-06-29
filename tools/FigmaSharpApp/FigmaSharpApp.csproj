@@ -10,9 +10,8 @@
     <RootNamespace>FigmaSharpApp</RootNamespace>
     <AssemblyName>FigmaSharpApp</AssemblyName>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
-    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <AssemblyVersion>$(FSMajorVersion).${FSMinorVersion}.${FSAppVersion}</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -47,7 +46,7 @@
     <IncludeMonoRuntime>true</IncludeMonoRuntime>
     <UseSGen>true</UseSGen>
     <UseRefCounting>true</UseRefCounting>
-    <LinkMode>Platform</LinkMode>
+    <LinkMode>None</LinkMode>
     <HttpClientHandler></HttpClientHandler>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
