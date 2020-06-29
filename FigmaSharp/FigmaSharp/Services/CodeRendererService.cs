@@ -113,11 +113,14 @@ namespace FigmaSharp.Services
 						identifiers.Add (identifier, lastIndex);
 					}
 
-					builder.AppendLine();
-					builder.AppendLine ($"// View:     {node.Name}");
-					builder.AppendLine ($"// NodeName: {node.Node.name}");
-					builder.AppendLine ($"// NodeType: {node.Node.type}");
-					builder.AppendLine ($"// NodeId:   {node.Node.id}");
+					if (CurrentRendererOptions.ShowComments)
+                    {
+						builder.AppendLine();
+						builder.AppendLine($"// View:     {node.Name}");
+						builder.AppendLine($"// NodeName: {node.Node.name}");
+						builder.AppendLine($"// NodeType: {node.Node.type}");
+						builder.AppendLine($"// NodeId:   {node.Node.id}");
+					}
 
 					OnPreConvertToCode (builder, node, parent, converter, codePropertyConverter);
 					//we generate our code and replace node name
@@ -127,19 +130,19 @@ namespace FigmaSharp.Services
 					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 
 
-					if (RendersAddChild(node, parent, this))
+					if (CurrentRendererOptions.ShowAddChild && RendersAddChild(node, parent, this))
 					{
 						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.AddChild, node, parent, this));
 						OnChildAdded(builder, node, parent, converter, codePropertyConverter);
 					}
 
-					if (RendersSize(node, parent, this))
+					if (CurrentRendererOptions.ShowSize && RendersSize(node, parent, this))
                     {
 						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Frame, node, parent, this));
 						OnFrameSet(builder, node, parent, converter, codePropertyConverter);
 					}
 
-					if (RendersConstraints(node, parent, this))
+					if (CurrentRendererOptions.ShowConstraints && RendersConstraints(node, parent, this))
 					{
 						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Constraints, node, parent, this));
 					}
@@ -152,7 +155,7 @@ namespace FigmaSharp.Services
 			}
 
 			//without converter we scan the children automatically
-			var navigateChild = converter?.ScanChildren (node.Node) ?? true; 
+			var navigateChild = CurrentRendererOptions.ScanChildren && (converter?.ScanChildren (node.Node) ?? true); 
 			if (navigateChild && HasChildrenToRender (node)) {
 				foreach (var item in GetChildrenToRender (node)) {
 					var figmaNode = new CodeNode(item, parent: node);
