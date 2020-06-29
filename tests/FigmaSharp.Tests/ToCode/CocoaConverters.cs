@@ -30,6 +30,9 @@ using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
 using System.Text;
 using FigmaSharp.Controls.Cocoa.Converters;
+using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Models;
 
 namespace FigmaSharp.Tests.ToCode
 {
@@ -72,10 +75,13 @@ namespace FigmaSharp.Tests.ToCode
                 ShowConstraints = false
             };
 
+            var nodeName = "stackViewView";
             var builder = new StringBuilder();
-            service.GetCode(builder, new CodeNode(stackViewLayer), currentRendererOptions: options);
-            Assert.NotNull(builder);
-            Assert.True(builder.ToString().Contains($"stackViewView.Orientation = NSUserInterfaceLayoutOrientation.{orientation};"));
+            service.GetCode(builder, new CodeNode(stackViewLayer, nodeName), currentRendererOptions: options);
+            builder.ReplaceDefaultNameTag(nodeName);
+
+            Assert.IsNotEmpty(builder.ToString ());
+            Assert.True(builder.ToString().Contains($"{nodeName}.Orientation = NSUserInterfaceLayoutOrientation.{orientation};"));
         }
 
         [Test]
@@ -94,23 +100,23 @@ namespace FigmaSharp.Tests.ToCode
 
             var builder = new StringBuilder();
             service.GetCode(builder, new CodeNode(stackViewLayer), currentRendererOptions: options);
-            Assert.NotNull(builder);
+         
+            Assert.IsNotEmpty(builder.ToString ());
         }
 
         [Test]
         public void StackView_Properties()
         {
+            var converter = converters.OfType<StackViewConverter>()
+              .FirstOrDefault();
+            Assert.NotNull(converter);
+
             var node = provider.FindByName(mainNodeName);
             Assert.NotNull(node);
-
-            var converter = converters
-                .OfType<StackViewConverter>()
-                .FirstOrDefault();
-
-            Assert.NotNull(converter);
+        
             Assert.IsTrue(converter.CanConvert(node));
 
-            var codeNode = new CodeNode(node) { Name = "stackView" };
+            var codeNode = new CodeNode(node);
 
             var builder = new StringBuilder();
             converter.ConfigureCodeProperty(StackViewConverter.Properties.Distribution, codeNode, builder);
@@ -129,5 +135,21 @@ namespace FigmaSharp.Tests.ToCode
             Assert.IsNotEmpty(builder.ToString());
         }
 
+        [Test]
+        public void StackView_AddArrangedSubview()
+        {
+            var codeConfigure = new CodePropertyConfigure();
+
+            var parentName = "parentNode";
+            var parentNode = new CodeNode(provider.FindByName(mainNodeName), parentName); ;
+            Assert.NotNull(parentNode.Node);
+            Assert.IsTrue(parentNode.Node.IsStackView ());
+
+            var nodeName = "currentNode";
+            var codeNode = new CodeNode(new FigmaFrame(), nodeName);
+            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, codeNode, parentNode, null);
+
+            Assert.AreEqual($"{parentName}.AddArrangedSubview ({nodeName});", result);
+        }
     }
 }
