@@ -65,8 +65,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         public void ConfigureProperty(string propertyName, FigmaNode node, IView view)
         {
             var frame = (FigmaFrame)node;
-
             var stackView = (NSStackView)view.NativeObject;
+
             if (propertyName == Properties.EdgeInsets)
             {
                 stackView.EdgeInsets = new NSEdgeInsets(
@@ -110,35 +110,55 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             return view;
         }
 
-        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        public void ConfigureCodeProperty(string propertyName, CodeNode codeNode, StringBuilder code)
+        {
+            var frame = (FigmaFrame)codeNode.Node;
+
+            if (propertyName == Properties.EdgeInsets)
+            {
+                var edgeInsets = typeof(NSEdgeInsets).GetConstructor(
+         frame.verticalPadding.ToString(),
+         frame.horizontalPadding.ToString(),
+         frame.verticalPadding.ToString(),
+         frame.horizontalPadding.ToString());
+                code.WriteEquality(codeNode.Name, nameof(NSStackView.EdgeInsets), edgeInsets);
+                return;
+            }
+
+            if (propertyName == Properties.Spacing)
+            {
+                code.WriteEquality(codeNode.Name, nameof(NSStackView.Spacing), frame.itemSpacing.ToDesignerString ());
+                return;
+            }
+
+            if (propertyName == Properties.Orientation)
+            {
+                var orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
+             NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                code.WriteEquality(codeNode.Name, nameof(NSStackView.Orientation), orientation.GetFullName());
+                return;
+            }
+
+            if (propertyName == Properties.Distribution)
+            {
+                code.WriteEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.FillEqually.GetFullName());
+                return;
+            }
+        }
+
+        protected override StringBuilder OnConvertToCode(CodeNode codeNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var code = new StringBuilder();
 
-            string identifier = Resources.Ids.Conversion.NameIdentifier;
+            codeNode.Name = Resources.Ids.Conversion.NameIdentifier;
 
-            var frame = (FigmaFrame)currentNode.Node;
+            if (rendererService.NeedsRenderConstructor(codeNode, parentNode))
+                code.WriteConstructor(codeNode.Name, GetControlType(codeNode.Node), rendererService.NodeRendersVar(codeNode, parentNode));
 
-            currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
-            currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
-
-            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                code.WriteConstructor(identifier, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
-
-            code.WriteEquality(identifier, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-
-            var edgeInsets = typeof(NSEdgeInsets).GetConstructor(
-                frame.verticalPadding.ToString (),
-                frame.horizontalPadding.ToString(),
-                frame.verticalPadding.ToString(),
-                frame.horizontalPadding.ToString());
-
-            code.WriteEquality(identifier, nameof(NSStackView.Spacing), edgeInsets);
-
-            var orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-                NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
-
-            code.WriteEquality(identifier, nameof(NSStackView.Orientation), orientation.GetFullName ());
-            code.WriteEquality(identifier, nameof(NSStackView.Distribution), NSStackViewDistribution.FillEqually.GetFullName());
+            ConfigureCodeProperty (Properties.EdgeInsets, codeNode, code);
+            ConfigureCodeProperty (Properties.Spacing, codeNode, code);
+            ConfigureCodeProperty (Properties.Orientation, codeNode, code);
+            ConfigureCodeProperty (Properties.Distribution, codeNode, code);
            
             return code;
         }
