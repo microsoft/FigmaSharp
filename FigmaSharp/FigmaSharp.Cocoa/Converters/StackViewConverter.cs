@@ -26,28 +26,18 @@ using System;
 using System.Text;
 
 using AppKit;
-using FigmaSharp.Cocoa;
-using FigmaSharp.Controls.Cocoa.Helpers;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
-namespace FigmaSharp.Controls.Cocoa.Converters
+namespace FigmaSharp.Cocoa.Converters
 {
-    public class StackViewConverter : CocoaConverter
+    public class StackViewConverter : StackViewBase
     {
-        public static class Properties
-        {
-            public static string EdgeInsets = "EdgeInsets";
-            public static string Spacing = "Spacing";
-            public static string Orientation = "Orientation";
-            public static string Distribution = "Distribution";
-        }
-
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSStackView);
         public override bool ScanChildren(FigmaNode currentNode) => true;
-        public override bool CanConvert(FigmaNode currentNode) => currentNode.IsStackView();
 
         public void ConfigureProperty(string propertyName, FigmaNode node, IView view)
         {
@@ -85,7 +75,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             }
         }
 
-        protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var view = new View(new NSStackView());
 
@@ -133,11 +123,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             }
         }
 
-        protected override StringBuilder OnConvertToCode(CodeNode codeNode, CodeNode parentNode, CodeRenderService rendererService)
+        public override string ConvertToCode (CodeNode codeNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var code = new StringBuilder();
-
-            codeNode.Name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor(codeNode, parentNode))
                 code.WriteConstructor(codeNode.Name, GetControlType(codeNode.Node), rendererService.NodeRendersVar(codeNode, parentNode));
@@ -147,7 +135,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             ConfigureCodeProperty (Properties.Orientation, codeNode, code);
             ConfigureCodeProperty (Properties.Distribution, codeNode, code);
            
-            return code;
+            return code.ToString ();
         }
     }
 }

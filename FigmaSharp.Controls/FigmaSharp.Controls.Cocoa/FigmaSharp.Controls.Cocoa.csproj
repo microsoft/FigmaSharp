@@ -89,7 +89,6 @@
     <Compile Include="Converters\Controls\SliderConverter.cs" />
     <Compile Include="Converters\Controls\StepperConverter.cs" />
     <Compile Include="Converters\Controls\SwitchConverter.cs" />
-    <Compile Include="Converters\Controls\StackViewConverter.cs" />
     <Compile Include="Converters\Controls\TextFieldConverter.cs" />
     <Compile Include="Converters\Controls\TextViewConverter.cs" />
     <Compile Include="Converters\Controls\WindowConverter.cs" />

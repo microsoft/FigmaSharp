@@ -66,6 +66,7 @@
     <Compile Include="Converters\Layers\RegularPolygonConverter.cs" />
     <Compile Include="Converters\Layers\VectorConverter.cs" />
     <Compile Include="TokenStore.cs" />
+    <Compile Include="Converters\StackViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />

@@ -42,6 +42,7 @@ namespace FigmaSharp.Cocoa
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly NodeConverter[] figmaViewConverters = {
+            new StackViewConverter (),
             new RegularPolygonConverter (),
             new TextConverter (),
             new LineConverter (),
