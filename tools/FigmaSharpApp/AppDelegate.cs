@@ -24,6 +24,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Diagnostics;
 using AppKit;
 using FigmaSharp.Cocoa;
@@ -43,8 +44,7 @@ namespace FigmaSharpApp
 			}
 			catch (System.Exception ex)
 			{
-				new EventLog() { Source = this.GetType ().FullName }
-				.WriteEntry(ex.ToString ());
+				Console.WriteLine(ex);
 			}
 		}
 
