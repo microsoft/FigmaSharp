@@ -83,15 +83,15 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-			code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
 			FigmaText text = frame.children
 				.OfType<FigmaText> ()
 				.FirstOrDefault (s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty (text.characters)) {
-				code.WriteEquality(name, nameof(NSButton.StringValue), text.characters, inQuotes: true);
+				code.WritePropertyEquality(name, nameof(NSButton.StringValue), text.characters, inQuotes: true);
 
 				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 

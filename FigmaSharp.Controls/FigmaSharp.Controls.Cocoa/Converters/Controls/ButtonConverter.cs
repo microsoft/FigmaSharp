@@ -111,16 +111,16 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             switch (controlType)
             {
                 case FigmaControlType.Button:
-                    code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+                    code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
                     break;
                 case FigmaControlType.ButtonHelp:
-                    code.WriteEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
-                    code.WriteEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
+                    code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
+                    code.WritePropertyEquality(name, nameof(NSButton.Title), string.Empty, inQuotes: true);
                     break;
             }
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()
@@ -134,14 +134,14 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 if (text != null && controlType != FigmaControlType.ButtonHelp)
                 {
                     string labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-                    code.WriteEquality(name, nameof(NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+                    code.WritePropertyEquality(name, nameof(NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                 }
 
                 if (group.name == ComponentString.STATE_DISABLED)
-                    code.WriteEquality(name, nameof(NSButton.Enabled), false);
+                    code.WritePropertyEquality(name, nameof(NSButton.Enabled), false);
 
                 if (group.name == ComponentString.STATE_DEFAULT)
-                    code.WriteEquality (name, nameof(NSButton.KeyEquivalent), "\\r", true);
+                    code.WritePropertyEquality (name, nameof(NSButton.KeyEquivalent), "\\r", true);
             }
 
             return code;

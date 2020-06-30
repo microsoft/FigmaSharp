@@ -50,17 +50,17 @@ namespace FigmaSharp.Cocoa
 			return $"{(includesVar ? "var " : string.Empty)}{viewName} = new {typeFullName}();";
 		}
 
-		public static string GetEquality (string viewName, string propertyName, Enum value)
+		public static string GetPropertyEquality (string viewName, string propertyName, Enum value)
 		{
-			return GetEquality (viewName, propertyName, value.GetFullName ());
+			return GetPropertyEquality (viewName, propertyName, value.GetFullName ());
 		}
 
-		public static string GetEquality (string viewName, string propertyName, bool value)
+		public static string GetPropertyEquality (string viewName, string propertyName, bool value)
 		{
-			return GetEquality (viewName, propertyName, value.ToDesignerString ());
+			return GetPropertyEquality (viewName, propertyName, value.ToDesignerString ());
 		}
 
-		public static string GetEquality (string viewName, string propertyName, string value, bool inQuotes = false, bool instanciate = false)
+		public static string GetPropertyEquality (string viewName, string propertyName, string value, bool inQuotes = false, bool instanciate = false)
 		{
 			if (inQuotes) {
 				var isMultiLine = value.Contains ('\n');

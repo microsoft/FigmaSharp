@@ -11,13 +11,13 @@ namespace FigmaSharp.Cocoa
 	{
 		public static void Configure (this StringBuilder builder, FigmaNode figmaNode, string name)
 		{
-			builder.WriteEquality (name, nameof (NSView.WantsLayer), true);
+			builder.WritePropertyEquality (name, nameof (NSView.WantsLayer), true);
 
 			if (!figmaNode.visible) {
-				builder.WriteEquality (name, nameof (NSView.Hidden), !figmaNode.visible);
+				builder.WritePropertyEquality (name, nameof (NSView.Hidden), !figmaNode.visible);
 			}
 
-			builder.WriteEquality(name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
+			builder.WritePropertyEquality(name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 
 			//if (drawFrameSize && figmaNode is IAbsoluteBoundingBox container) {
 			//	var sizeConstructor = typeof (CGSize).GetConstructor (

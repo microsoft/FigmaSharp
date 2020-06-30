@@ -100,18 +100,18 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaNode items = frame.FirstChild(s => s.name == ComponentString.ITEMS);
 
             if (items != null)
             {
-                code.WriteEquality(name, nameof(NSSegmentedControl.SegmentCount), "" + items.GetChildren(t => t.visible).Count());
-                code.WriteEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillEqually);
-                code.WriteEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.Rounded);
-                code.WriteEquality(name, nameof(NSSegmentedControl.SelectedSegment), "0");
-                code.WriteEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentCount), "" + items.GetChildren(t => t.visible).Count());
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillEqually);
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.Rounded);
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SelectedSegment), "0");
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
                 code.AppendLine();
 
                 int i = 0;

@@ -83,7 +83,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
 			FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()
@@ -93,14 +93,14 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			{
 				if (group.name == ComponentString.STYLE_DETERMINATE)
 				{
-					code.WriteEquality(name, nameof(NSProgressIndicator.Indeterminate), false);
-					code.WriteEquality(name, nameof(NSProgressIndicator.MinValue), "0");
-					code.WriteEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
-					code.WriteEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");
+					code.WritePropertyEquality(name, nameof(NSProgressIndicator.Indeterminate), false);
+					code.WritePropertyEquality(name, nameof(NSProgressIndicator.MinValue), "0");
+					code.WritePropertyEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
+					code.WritePropertyEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");
 				}
 
 				if (group.name == ComponentString.STYLE_INDETERMINATE)
-					code.WriteEquality(name, nameof(NSProgressIndicator.Indeterminate), true);
+					code.WritePropertyEquality(name, nameof(NSProgressIndicator.Indeterminate), true);
 			}
 
 			return code;
@@ -129,7 +129,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			code.WriteEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Spinning);
+			code.WritePropertyEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Spinning);
 
 			return code;
 		}
@@ -157,7 +157,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			code.WriteEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);
+			code.WritePropertyEquality(name, nameof(NSProgressIndicator.Style), NSProgressIndicatorStyle.Bar);
 
 			return code;
 		}

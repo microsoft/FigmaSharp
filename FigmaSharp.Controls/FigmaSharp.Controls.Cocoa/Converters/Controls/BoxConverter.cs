@@ -122,11 +122,11 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
             if (controlType == FigmaControlType.Separator)
-                code.WriteEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxSeparator);
+                code.WritePropertyEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxSeparator);
 
             if (controlType == FigmaControlType.BoxCustom)
             {
-                code.WriteEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
+                code.WritePropertyEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
                 bool borderSet = false;
 
                 FigmaVector rectangle = frame.children
@@ -138,19 +138,19 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     if ((rendererService.figmaProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
                     {
                         if (styleMap.Key == "fill")
-                            code.WriteEquality(name, nameof(NSBox.FillColor), ColorService.GetNSColorString(style.name));
+                            code.WritePropertyEquality(name, nameof(NSBox.FillColor), ColorService.GetNSColorString(style.name));
 
                         if (styleMap.Key == "stroke")
                         {
-                            code.WriteEquality(name, nameof(NSBox.BorderColor), ColorService.GetNSColorString(style.name));
-                            code.WriteEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
+                            code.WritePropertyEquality(name, nameof(NSBox.BorderColor), ColorService.GetNSColorString(style.name));
+                            code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
                             borderSet = true;
                         }
                     }
                 }
 
                 if (!borderSet)
-                    code.WriteEquality(name, nameof(NSBox.BorderWidth), "0");
+                    code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), "0");
             }
 
             FigmaText text = frame.children
@@ -162,12 +162,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 string stringTitle = CodeHelper.GetTranslatableString(text.characters,
                     rendererService.CurrentRendererOptions.TranslateLabels);
 
-                code.WriteEquality(name, nameof(NSBox.Title), stringTitle,
+                code.WritePropertyEquality(name, nameof(NSBox.Title), stringTitle,
                     inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
             }
             else
             {
-                code.WriteEquality(name, nameof(NSBox.Title), "", inQuotes: true);
+                code.WritePropertyEquality(name, nameof(NSBox.Title), "", inQuotes: true);
             }
 
             return code;

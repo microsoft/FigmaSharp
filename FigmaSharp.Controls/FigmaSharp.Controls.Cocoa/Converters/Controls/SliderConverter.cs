@@ -82,20 +82,20 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
-			code.WriteEquality(name, nameof(NSProgressIndicator.MinValue), "0");
-			code.WriteEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
+			code.WritePropertyEquality(name, nameof(NSProgressIndicator.MinValue), "0");
+			code.WritePropertyEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
 
             if (controlType == FigmaControlType.SliderLinear)
-				code.WriteEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");
+				code.WritePropertyEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");
 
 			FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()
 				.FirstOrDefault(s => s.visible);
 
 			if (group?.name == ComponentString.STATE_DISABLED)
-				code.WriteEquality(name, nameof(NSSlider.Enabled), false);
+				code.WritePropertyEquality(name, nameof(NSSlider.Enabled), false);
 
 			return code;
 		}
@@ -133,10 +133,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			var frame = (FigmaFrame)currentNode.Node;
 
-			code.WriteEquality(name, nameof(NSSlider.SliderType), NSSliderType.Linear);
+			code.WritePropertyEquality(name, nameof(NSSlider.SliderType), NSSliderType.Linear);
 
 			if (frame.absoluteBoundingBox.Height > frame.absoluteBoundingBox.Width)
-				code.WriteEquality(name, nameof(NSSlider.IsVertical), "1", inQuotes: false);
+				code.WritePropertyEquality(name, nameof(NSSlider.IsVertical), "1", inQuotes: false);
 
 			return code;
 		}
@@ -165,7 +165,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			StringBuilder code = base.OnConvertToCode(currentNode, parentNode, rendererService);
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
-			code.WriteEquality(name, nameof(NSSlider.SliderType), NSSliderType.Circular);
+			code.WritePropertyEquality(name, nameof(NSSlider.SliderType), NSSliderType.Circular);
 
 			return code;
 		}

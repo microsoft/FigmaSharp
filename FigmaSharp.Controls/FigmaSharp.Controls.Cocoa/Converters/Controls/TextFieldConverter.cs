@@ -138,7 +138,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				.FirstOrDefault(s => s.name == ComponentString.PASSWORD && s.visible);
 
 			if (passwordNode != null)
-				code.WriteEquality(name, nameof(NSSecureTextField.StringValue), ComponentString.PASSWORD, inQuotes: true);
+				code.WritePropertyEquality(name, nameof(NSSecureTextField.StringValue), ComponentString.PASSWORD, inQuotes: true);
 
 			FigmaText placeholderText = optionsGroup?.GetChildren().
 				OfType<FigmaText>().
@@ -146,7 +146,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase)) {
 				var stringLabel = CodeHelper.GetTranslatableString(placeholderText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				code.WriteEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
+				code.WritePropertyEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
 			}
 
 			FigmaText text = frame.children.
@@ -154,10 +154,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
 
 			if (text != null) {
-				code.WriteEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text, withWeight: false));
+				code.WritePropertyEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text, withWeight: false));
 
 				var stringLabel = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				code.WriteEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+				code.WritePropertyEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 
 			return code;

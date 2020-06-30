@@ -92,7 +92,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				if ((rendererService.figmaProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
 				{
 					if (styleMap.Key == "fill")
-						code.WriteEquality(name, nameof(NSColorWell.Color), ColorService.GetNSColorString(style.name));
+						code.WritePropertyEquality(name, nameof(NSColorWell.Color), ColorService.GetNSColorString(style.name));
 				}
 			}
 

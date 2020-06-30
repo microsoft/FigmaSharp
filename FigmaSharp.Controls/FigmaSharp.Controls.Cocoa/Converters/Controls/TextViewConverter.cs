@@ -98,30 +98,30 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
 			code.WriteConstructor (name, typeof (NSScrollView));
-			code.WriteEquality(name, nameof(NSScrollView.BorderType), NSBorderType.LineBorder.GetFullName());
-			code.WriteEquality(name, nameof(NSScrollView.HasHorizontalRuler), false);
-			code.WriteEquality(name, nameof(NSScrollView.HasVerticalScroller), true);
+			code.WritePropertyEquality(name, nameof(NSScrollView.BorderType), NSBorderType.LineBorder.GetFullName());
+			code.WritePropertyEquality(name, nameof(NSScrollView.HasHorizontalRuler), false);
+			code.WritePropertyEquality(name, nameof(NSScrollView.HasVerticalScroller), true);
 
 			code.AppendLine();
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(textViewName, typeof(NSTextView), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WriteEquality(textViewName,
+			code.WritePropertyEquality(textViewName,
 			    nameof(NSTextView.Frame),
 			    string.Format("new {0} ({1}, {2}, {3}, {4})",
 			    typeof(CoreGraphics.CGRect), 0, 0, name + ".ContentSize.Width", name + ".ContentSize.Height"));
 
-			code.WriteEquality(textViewName, nameof(NSTextView.AutoresizingMask), NSViewResizingMask.WidthSizable.GetFullName());
+			code.WritePropertyEquality(textViewName, nameof(NSTextView.AutoresizingMask), NSViewResizingMask.WidthSizable.GetFullName());
 
 			// TODO: Use CocoaConverter methods
 			switch (controlVariant)
 			{
 				case NativeControlVariant.Regular:
-					code.WriteEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+					code.WritePropertyEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
 					break;
 				case NativeControlVariant.Small:
-					code.WriteEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+					code.WritePropertyEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
 					break;
 			}
 
@@ -131,11 +131,11 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (text != null)
 			{
 				var stringLabel = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				code.WriteEquality (textViewName, nameof (NSTextView.Value), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+				code.WritePropertyEquality (textViewName, nameof (NSTextView.Value), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 			}
 
 			code.AppendLine();
-			code.WriteEquality(name, nameof(NSScrollView.DocumentView), textViewName);
+			code.WritePropertyEquality(name, nameof(NSScrollView.DocumentView), textViewName);
 
 			return code;
 		}

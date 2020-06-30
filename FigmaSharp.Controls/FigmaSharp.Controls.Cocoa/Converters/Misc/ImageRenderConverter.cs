@@ -62,7 +62,7 @@ namespace FigmaSharp.Controls.Cocoa
 			currentNode.Node.TryGetNodeCustomName(out string nodeName);
 
 			var imageNamedMethod = CodeGenerationHelpers.GetMethod(typeof(NSImage).FullName, nameof(NSImage.ImageNamed), nodeName, true);
-			builder.WriteEquality(currentNode.Name, nameof(NSImageView.Image), imageNamedMethod);
+			builder.WritePropertyEquality(currentNode.Name, nameof(NSImageView.Image), imageNamedMethod);
 
 			return builder;
 		}

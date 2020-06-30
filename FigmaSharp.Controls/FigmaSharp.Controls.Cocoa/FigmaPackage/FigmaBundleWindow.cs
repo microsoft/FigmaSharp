@@ -70,7 +70,7 @@ namespace FigmaSharp
 						.FirstChild (s => s.name == "title" && s.visible) as FigmaText;
 
 					if (title != null)
-						builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
+						builder.WritePropertyEquality(CodeGenerationHelpers.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
 
 					if (figmaNodeContainer.HasChildrenVisible("resize"))
 					{
@@ -115,19 +115,19 @@ namespace FigmaSharp
 			//Window Frame
 			if (FigmaNode is IAbsoluteBoundingBox box && box.absoluteBoundingBox != null) {
 				builder.AppendLine();
-				builder.WriteEquality (frameEntity, null, nameof (AppKit.NSWindow.Frame), instanciate: true);
+				builder.WritePropertyEquality (frameEntity, null, nameof (AppKit.NSWindow.Frame), instanciate: true);
 
 				string instance = typeof (CoreGraphics.CGSize).
 					GetConstructor (new string[] {
 						box.absoluteBoundingBox.Width.ToDesignerString (),
 						box.absoluteBoundingBox.Height.ToDesignerString ()
 					});
-				builder.WriteEquality (frameEntity, nameof (AppKit.NSWindow.Frame.Size), instance, instanciate: false);
+				builder.WritePropertyEquality (frameEntity, nameof (AppKit.NSWindow.Frame.Size), instance, instanciate: false);
 
 				string parameters = $"{frameEntity}, {true.ToDesignerString ()}";
 
 				builder.WriteMethod (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.SetFrame), parameters);
-				builder.WriteEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
+				builder.WritePropertyEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
 			}
 
 			var options = new CodeRenderServiceOptions() { TranslateLabels = translateLabels };

@@ -32,19 +32,19 @@ namespace FigmaSharp.Cocoa
 			return CodeGenerationHelpers.GetConstructor (sender.Name, typeFullName, includesVar);
 		}
 
-		public static string GetEquality (this Services.CodeNode sender, string propertyName, Enum value)
+		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, Enum value)
 		{
-			return GetEquality (sender, propertyName, value.GetFullName ());
+			return GetPropertyEquality (sender, propertyName, value.GetFullName ());
 		}
 
-		public static string GetEquality (this Services.CodeNode sender, string propertyName, bool value)
+		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, bool value)
 		{
-			return GetEquality (sender, propertyName, value.ToDesignerString ());
+			return GetPropertyEquality (sender, propertyName, value.ToDesignerString ());
 		}
 
-		public static string GetEquality (this Services.CodeNode sender, string propertyName, string value, bool inQuotes = false)
+		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, string value, bool inQuotes = false)
 		{
-			return CodeGenerationHelpers.GetEquality (sender.Name, propertyName, value, inQuotes);
+			return CodeGenerationHelpers.GetPropertyEquality (sender.Name, propertyName, value, inQuotes);
 		}
 
 		public static string GetMethod (this Services.CodeNode sender, string methodName, Enum parameter)
@@ -74,19 +74,19 @@ namespace FigmaSharp.Cocoa
 			builder.AppendLine (CodeGenerationHelpers.GetConstructor (viewName, typeFullName, includesVar));
 		}
 
-		public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, Enum value)
+		public static void WritePropertyEquality (this StringBuilder builder, string viewName, string propertyName, Enum value)
 		{
-			WriteEquality (builder, viewName, propertyName, value.GetFullName ());
+			WritePropertyEquality (builder, viewName, propertyName, value.GetFullName ());
 		}
 
-		public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, bool value)
+		public static void WritePropertyEquality (this StringBuilder builder, string viewName, string propertyName, bool value)
 		{
-			WriteEquality (builder, viewName, propertyName, value.ToDesignerString ());
+			WritePropertyEquality (builder, viewName, propertyName, value.ToDesignerString ());
 		}
 
-		public static void WriteEquality (this StringBuilder builder, string viewName, string propertyName, string value, bool inQuotes = false, bool instanciate = false)
+		public static void WritePropertyEquality (this StringBuilder builder, string viewName, string propertyName, string value, bool inQuotes = false, bool instanciate = false)
 		{
-			builder.AppendLine (CodeGenerationHelpers.GetEquality (viewName, propertyName, value, inQuotes, instanciate));
+			builder.AppendLine (CodeGenerationHelpers.GetPropertyEquality (viewName, propertyName, value, inQuotes, instanciate));
 		}
 	
 		public static void WriteMethod (this StringBuilder builder, string viewName, string methodName, Enum parameter)
@@ -122,7 +122,7 @@ namespace FigmaSharp.Cocoa
 
 		public static void WriteLayerEquality (this StringBuilder builder, string viewName, string propertyName, string value, bool inQuotes = false)
 		{
-			WriteEquality (builder, $"{LayerName}.{viewName}", propertyName, value, inQuotes);
+			WritePropertyEquality (builder, $"{LayerName}.{viewName}", propertyName, value, inQuotes);
 		}
 
 		#endregion

@@ -107,8 +107,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-            code.WriteEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaText text = frame.children
                 .OfType<FigmaText> ()
@@ -117,7 +117,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (text != null) {
                 var labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 
-                code.WriteEquality(name, nameof(NSButton.Title), labelTranslated,
+                code.WritePropertyEquality(name, nameof(NSButton.Title), labelTranslated,
                     inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
             }
             
@@ -129,15 +129,15 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (group != null) {
                 if (group.name == ComponentString.STATE_ON)
-                    code.WriteEquality (name, nameof (NSButton.State), NSCellStateValue.On);
+                    code.WritePropertyEquality (name, nameof (NSButton.State), NSCellStateValue.On);
 
                 if (group.name == ComponentString.STATE_OFF)
-                    code.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.Off);
+                    code.WritePropertyEquality(name, nameof(NSButton.State), NSCellStateValue.Off);
 
                 if (group.name == ComponentString.STATE_MIXED)
                 {
-                    code.WriteEquality(name, nameof(NSButton.AllowsMixedState), true);
-                    code.WriteEquality(name, nameof(NSButton.State), NSCellStateValue.Mixed);
+                    code.WritePropertyEquality(name, nameof(NSButton.AllowsMixedState), true);
+                    code.WritePropertyEquality(name, nameof(NSButton.State), NSCellStateValue.Mixed);
                 }
             }
 

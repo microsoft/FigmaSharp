@@ -86,7 +86,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            code.WriteEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()
@@ -95,10 +95,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (group != null)
             {
                 if (group.name == ComponentString.STATE_ON)
-                    code.WriteEquality (name, nameof (NSSwitch.State), "1", inQuotes: false);
+                    code.WritePropertyEquality (name, nameof (NSSwitch.State), "1", inQuotes: false);
 
                 if (group.name == ComponentString.STATE_OFF)
-                    code.WriteEquality(name, nameof(NSSwitch.State), "0", inQuotes: false);
+                    code.WritePropertyEquality(name, nameof(NSSwitch.State), "0", inQuotes: false);
             }
 
             return code;

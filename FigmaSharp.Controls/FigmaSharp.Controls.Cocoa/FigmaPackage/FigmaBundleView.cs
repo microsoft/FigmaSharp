@@ -49,7 +49,7 @@ namespace FigmaSharp
             //restore this state
             var builder = new System.Text.StringBuilder ();
 
-			builder.WriteEquality(CodeGenerationHelpers.This, nameof(AppKit.NSView.TranslatesAutoresizingMaskIntoConstraints), false);
+			builder.WritePropertyEquality(CodeGenerationHelpers.This, nameof(AppKit.NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 
 			var options = new CodeRenderServiceOptions() {
                 TranslateLabels = translateLabels

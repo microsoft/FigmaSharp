@@ -86,16 +86,16 @@ namespace FigmaSharp.Controls.Cocoa
 				currentNode.Node.TryGetNativeControlType(out var nativeControlType);
 
 				if (!currentNode.Node.visible)
-					builder.WriteEquality(currentNode.Name, nameof(NSView.Hidden), true);
+					builder.WritePropertyEquality(currentNode.Name, nameof(NSView.Hidden), true);
 
-				builder.WriteEquality(currentNode.Name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
+				builder.WritePropertyEquality(currentNode.Name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 
 				if (currentNode.Node.IsA11Enabled ()) {
 					bool hasAccessibility = false;
 
 					if (CanSetAccessibilityRole && currentNode.Node.IsA11Group()) {
 						var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
-						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
+						builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
 
                         hasAccessibility = true;
 					}
@@ -103,7 +103,7 @@ namespace FigmaSharp.Controls.Cocoa
 					if (CanSetAccessibilityLabel && currentNode.Node.TrySearchA11Label(out var label))
                     {
 						label = CodeHelper.GetTranslatableString(label, rendererService.CurrentRendererOptions.TranslateLabels);
-						builder.WriteEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+						builder.WritePropertyEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
                         hasAccessibility = true;
 					}
@@ -111,7 +111,7 @@ namespace FigmaSharp.Controls.Cocoa
 					if (CanSetAccessibilityHelp && currentNode.Node.TrySearchA11Help(out var help))
 					{
 						help = CodeHelper.GetTranslatableString(help, rendererService.CurrentRendererOptions.TranslateLabels);
-						builder.WriteEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+						builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
 
                         hasAccessibility = true;
 					}

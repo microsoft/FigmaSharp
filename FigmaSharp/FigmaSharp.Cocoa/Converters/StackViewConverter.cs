@@ -98,13 +98,13 @@ namespace FigmaSharp.Cocoa.Converters
          frame.horizontalPadding.ToString(),
          frame.verticalPadding.ToString(),
          frame.horizontalPadding.ToString());
-                code.WriteEquality(codeNode.Name, nameof(NSStackView.EdgeInsets), edgeInsets);
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.EdgeInsets), edgeInsets);
                 return;
             }
 
             if (propertyName == Properties.Spacing)
             {
-                code.WriteEquality(codeNode.Name, nameof(NSStackView.Spacing), frame.itemSpacing.ToDesignerString ());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Spacing), frame.itemSpacing.ToDesignerString ());
                 return;
             }
 
@@ -112,13 +112,13 @@ namespace FigmaSharp.Cocoa.Converters
             {
                 var orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
              NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
-                code.WriteEquality(codeNode.Name, nameof(NSStackView.Orientation), orientation.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Orientation), orientation.GetFullName());
                 return;
             }
 
             if (propertyName == Properties.Distribution)
             {
-                code.WriteEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.FillEqually.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.FillEqually.GetFullName());
                 return;
             }
         }

@@ -62,9 +62,9 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 				
 					if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal)
-						builder.WriteEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof(int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
+						builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof(int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
 
-					builder.WriteEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
+					builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
 
 					//height
 					var heightConstraintName = $"{name}HeightConstraint";
@@ -75,9 +75,9 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 					builder.AppendLine($"var {heightConstraintName} = {heightConstraintStringValue};");
 
 					if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
-						builder.WriteEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof (int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
+						builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof (int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
 
-					builder.WriteEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
+					builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
 
 					return builder.ToString();
 				}
@@ -161,7 +161,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 						var rightConstraintStringValue = CodeGenerationHelpers.GetRightConstraintEqualToAnchor (
 							currentNode.Name, -value, parentNodeName);
-						builder.WriteEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 					}
 
 					if (constraints.horizontal.Contains("LEFT"))
@@ -169,7 +169,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 						var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
 						var rightConstraintStringValue = CodeGenerationHelpers.GetLeftConstraintEqualToAnchor(
 						currentNode.Name, value2, parentNodeName);
-						builder.WriteEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 					}
 
 					if (constraints.vertical.Contains("BOTTOM") || constraints.horizontal == "SCALE")
@@ -180,7 +180,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 						var rightConstraintStringValue = CodeGenerationHelpers.GetBottomConstraintEqualToAnchor(
 					currentNode.Name, -value2, parentNodeName);
-						builder.WriteEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 					}
 
 					if (constraints.vertical.Contains("TOP"))
@@ -189,7 +189,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 						var rightConstraintStringValue = CodeGenerationHelpers.GetTopConstraintEqualToAnchor(
 						currentNode.Name, value, parentNodeName);
-						builder.WriteEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 					}
 
                     if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
@@ -198,7 +198,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 						var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
 					currentNode.Name, nameof (NSView.LeftAnchor), delta, parentNodeName, nameof(NSView.CenterXAnchor));
-						builder.WriteEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
                     }
 
                     if (constraints.vertical == "CENTER" || constraints.vertical == "SCALE")
@@ -207,7 +207,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 						var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
 				currentNode.Name, nameof(NSView.TopAnchor), delta, parentNodeName, nameof(NSView.CenterYAnchor));
-						builder.WriteEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
                     }
 
                     return builder.ToString();
