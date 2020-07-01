@@ -159,8 +159,8 @@ namespace FigmaSharp.Cocoa.Converters
             builder.WritePropertyEquality(viewObject, nameof(NSView.WantsLayer), true);
             builder.WritePropertyEquality(viewObject, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 
-            var circleShareLayerObject = viewObject.CreateChildStringObject("elipseNode", typeof(CAShapeLayer));
-            builder.WriteConstructor(circleShareLayerObject, renderVar);
+            var circleShareLayerObject = viewObject.CreateChildStringObject("ElipseNode", typeof(CAShapeLayer));
+            builder.WriteConstructor(circleShareLayerObject, includesVar: true);
 
             builder.WriteMethod(
                 viewObject.CreatePropertyName(nameof(NSView.Layer)),
