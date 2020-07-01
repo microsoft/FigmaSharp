@@ -32,6 +32,15 @@ namespace FigmaSharp.Converters
 {
     public abstract class ElipseConverterBase : NodeConverter
     {
+        public class Properties
+        {
+            public static string FillColor = "FillColor";
+            public static string StrokeColor = "StrokeColor";
+            public static string StrokeDashes = "StrokeDashes";
+            public static string LineWidth = "LineWidth";
+            public static string Opacity = "AlphaValue";
+        }
+
         public override bool IsLayer => true;
 
 		public override bool CanConvert(FigmaNode currentNode)
