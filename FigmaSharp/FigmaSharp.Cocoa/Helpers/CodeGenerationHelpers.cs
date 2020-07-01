@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using FigmaSharp.Cocoa.CodeGeneration;
 
 namespace FigmaSharp.Cocoa.Helpers
 {
@@ -101,7 +99,6 @@ namespace FigmaSharp.Cocoa.Helpers
 		{
 			return GetConstraintEqualToAnchor(firstViewName, nameof(AppKit.NSView.RightAnchor), firstViewValue, secondViewName, nameof(AppKit.NSView.RightAnchor));
 		}
-
 
 		public static string GetConstraintEqualToAnchor(string firstViewName, string firstAnchorPropertyName, float firstViewValue, string secondViewName, string secondAnchorPropertyName)
 		{

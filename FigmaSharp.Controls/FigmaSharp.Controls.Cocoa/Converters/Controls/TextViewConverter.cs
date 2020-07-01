@@ -48,7 +48,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				controlType == FigmaControlType.TextView;
 		}
 
-
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;

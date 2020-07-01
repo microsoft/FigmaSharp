@@ -1,21 +1,52 @@
 ﻿using System;
 using System.Text;
+using FigmaSharp.Cocoa.CodeGeneration;
 using FigmaSharp.Cocoa.Helpers;
 
 namespace FigmaSharp.Cocoa
 {
 	public static class CodeGenerationExtensions
 	{
+		public static string WithProperty(this Type type, string property)
+		{
+			return string.Format("{0}.{1}", type.FullName, property);
+		}
+
+		public static string CreatePropertyName(this Services.CodeNode sender, string propertyName)
+		{
+			return string.Format("{0}.{1}", sender.Name, propertyName);
+		}
+
+		public static string CreatePropertyName(this CocoaStringObject sender, string propertyName)
+		{
+			return string.Format("{0}.{1}", sender.Name, propertyName);
+		}
+
+		public static string CreateChildObjectName(this Services.CodeNode sender, string propertyName)
+		{
+			return string.Format("{0}{1}", sender.Name, propertyName);
+		}
+
+		public static string CreateChildObjectName(this CocoaStringObject sender, string propertyName)
+		{
+			return string.Format("{0}{1}", sender.Name, propertyName);
+		}
+
 		//typeof (CoreGraphics.CGPoint).FullName
-		public static string GetConstructor (this Type type, params string [] parameters)
+		public static string GetConstructor(this Type type, params string[] parameters)
 		{
 			string args;
 			if (parameters.Length > 0) {
-				args = string.Join (", ", parameters);
+				args = string.Join(", ", parameters);
 			} else {
 				args = string.Empty;
 			}
 			return $"new {type.FullName} ({args})";
+		}
+
+		public static string GetMethod(this Type type, string methodName, string parameters, bool inQuotes = false, bool includesSemicolon = true)
+		{
+			return CodeGenerationHelpers.GetMethod(type.FullName, methodName, parameters, inQuotes, includesSemicolon);
 		}
 
 		public static string GetFullName (this Enum myEnum)
@@ -78,6 +109,11 @@ namespace FigmaSharp.Cocoa
 		public static void WritePropertyEquality (this StringBuilder builder, string viewName, string propertyName, Enum value)
 		{
 			WritePropertyEquality (builder, viewName, propertyName, value.GetFullName ());
+		}
+
+		public static void WriteEquality(this StringBuilder builder, string viewName, string value, bool inQuotes = false, bool instanciate = false)
+		{
+			builder.AppendLine(CodeGenerationHelpers.GetEquality (viewName, value, inQuotes, instanciate));
 		}
 
 		public static void WritePropertyEquality (this StringBuilder builder, string viewName, string propertyName, bool value)
