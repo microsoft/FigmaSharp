@@ -60,7 +60,6 @@
     <Compile Include="ViewWrappers\Image.cs" />
     <Compile Include="ViewWrappers\ScrollView.cs" />
     <Compile Include="ViewWrappers\View.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="ViewWrappers\StackView.cs" />
     <Compile Include="ViewWrappers\Window.cs" />
     <Compile Include="ViewsHelper.cs" />
@@ -84,10 +83,13 @@
     <Compile Include="Graphics\XExtensions.cs" />
     <Compile Include="Graphics\PathExtensions.cs" />
     <Compile Include="ViewWrappers\SvgView.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\PathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
     <Folder Include="Graphics\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
