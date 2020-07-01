@@ -62,20 +62,27 @@ namespace FigmaSharp.Cocoa
 
 		public static string GetPropertyEquality (string viewName, string propertyName, string value, bool inQuotes = false, bool instanciate = false)
 		{
-			if (inQuotes) {
-				var isMultiLine = value.Contains ('\n');
+			string fullPropertyName;
+			if (string.IsNullOrEmpty (propertyName))
+				fullPropertyName = viewName;
+			else
+				fullPropertyName = $"{viewName}.{propertyName}";
+			return GetEquality(fullPropertyName, value, inQuotes, instanciate);
+		}
+
+		public static string GetEquality(string viewName, string value, bool inQuotes = false, bool instanciate = false)
+		{
+			if (inQuotes)
+			{
+				var isMultiLine = value.Contains('\n');
 				//maybe we want to detect here if is multiline
-				value = string.Format ("{0}\"{1}\"",
+				value = string.Format("{0}\"{1}\"",
 							isMultiLine ? "@" : "",
-								isMultiLine ? value.Replace ("\"", "\"\"") : value);
+								isMultiLine ? value.Replace("\"", "\"\"") : value);
 			}
 
 			var instanciateText = instanciate ? "var " : "";
-
-			if (string.IsNullOrEmpty (propertyName))
-				return $"{instanciateText}{viewName} = {value};";
-			else
-				return $"{instanciateText}{viewName}.{propertyName} = {value};";
+			return $"{instanciateText}{viewName} = {value};";
 		}
 
 		public static string GetMethod (string viewName, string methodName, Enum parameter)
