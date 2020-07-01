@@ -37,6 +37,8 @@ using FigmaSharp.Controls;
 using FigmaSharp.Services;
 using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
+using FigmaSharp.Cocoa.Helpers;
+using FigmaSharp.Cocoa.CodeGeneration;
 
 namespace FigmaSharp
 {
@@ -70,12 +72,12 @@ namespace FigmaSharp
 						.FirstChild (s => s.name == "title" && s.visible) as FigmaText;
 
 					if (title != null)
-						builder.WritePropertyEquality(CodeGenerationHelpers.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
+						builder.WritePropertyEquality(Members.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
 
 					if (figmaNodeContainer.HasChildrenVisible("resize"))
 					{
 						builder.AppendLine(string.Format("{0}.{1} |= {2};",
-							CodeGenerationHelpers.This,
+							Members.This,
 							nameof(AppKit.NSWindow.StyleMask),
 							AppKit.NSWindowStyle.Resizable.GetFullName()
 						));
@@ -84,7 +86,7 @@ namespace FigmaSharp
 					if (figmaNodeContainer.HasChildrenVisible ("close"))
 					{
 						builder.AppendLine(string.Format("{0}.{1} |= {2};",
-							CodeGenerationHelpers.This,
+							Members.This,
 							nameof(AppKit.NSWindow.StyleMask),
 							AppKit.NSWindowStyle.Closable.GetFullName()
 						));
@@ -93,7 +95,7 @@ namespace FigmaSharp
 					if (figmaNodeContainer.HasChildrenVisible("min"))
 					{
 						builder.AppendLine(string.Format("{0}.{1} |= {2};",
-							CodeGenerationHelpers.This,
+							Members.This,
 							nameof(AppKit.NSWindow.StyleMask),
 							AppKit.NSWindowStyle.Miniaturizable.GetFullName()
 						));
@@ -102,7 +104,7 @@ namespace FigmaSharp
 					if (figmaNodeContainer.HasChildrenVisible("max") == false)
 					{
 						builder.AppendLine(string.Format("{0}.{1} ({2}).{3} = {4};",
-							CodeGenerationHelpers.This,
+							Members.This,
 							nameof(NSWindow.StandardWindowButton),
 							NSWindowButton.ZoomButton.GetFullName(),
 							nameof(NSControl.Enabled),
@@ -126,8 +128,8 @@ namespace FigmaSharp
 
 				string parameters = $"{frameEntity}, {true.ToDesignerString ()}";
 
-				builder.WriteMethod (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.SetFrame), parameters);
-				builder.WritePropertyEquality (CodeGenerationHelpers.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
+				builder.WriteMethod (Members.This, nameof (AppKit.NSWindow.SetFrame), parameters);
+				builder.WritePropertyEquality (Members.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
 			}
 
 			var options = new CodeRenderServiceOptions() { TranslateLabels = translateLabels };
@@ -141,7 +143,7 @@ namespace FigmaSharp
 
 			if (centers) {
 				builder.AppendLine(string.Format("{0}.{1}();",
-				CodeGenerationHelpers.This,
+				Members.This,
 				nameof(AppKit.NSWindow.Center)
 				));
 			}

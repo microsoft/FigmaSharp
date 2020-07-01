@@ -1,5 +1,5 @@
 ﻿/* 
- * ElipseConverterBase.cs 
+ * ElipseConverter.cs 
  * 
  * Author:
  *   Jose Medrano <josmed@microsoft.com>
@@ -26,26 +26,27 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
+using System;
+using FigmaSharp.Services;
 
-namespace FigmaSharp.Converters
+namespace FigmaSharp.Cocoa.CodeGeneration
 {
-    public abstract class ElipseConverterBase : NodeConverter
+    public class CocoaNodeStringObject : CocoaStringObject
     {
-        public class Properties
+        CodeNode codeNode;
+        public CocoaNodeStringObject(CodeNode codeNode, Type type) : base(codeNode.Name, type)
         {
-            public static string FillColor = "FillColor";
-            public static string StrokeColor = "StrokeColor";
-            public static string StrokeDashes = "StrokeDashes";
-            public static string LineWidth = "LineWidth";
-            public static string Opacity = "AlphaValue";
+            this.codeNode = codeNode;
         }
 
-        public override bool IsLayer => true;
-
-		public override bool CanConvert(FigmaNode currentNode)
+        public void WantsLayer (bool value)
         {
-            return currentNode.GetType() == typeof(FigmaElipse);
+
+        }
+
+        public override object Clone()
+        {
+            return new CocoaNodeStringObject(codeNode, ObjectType);
         }
     }
 }

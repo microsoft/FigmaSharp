@@ -38,8 +38,10 @@
     <Compile Include="LocalFileTests.cs" />
     <Compile Include="NodeExtensionsTests.cs" />
     <Compile Include="NodeAccessibility.cs" />
-    <Compile Include="ToCode\CocoaConverters.cs" />
+    <Compile Include="ToCode\StackViewTests.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="ToCode\ElipseTests.cs" />
+    <Compile Include="ToCode\CocoaStringObjectTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">

@@ -43,7 +43,7 @@ namespace FigmaSharp.Cocoa.Converters
         public override bool ScanChildren (FigmaNode currentNode)
             => true;
 
-		public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             IView view;
             if (rendererService.FileProvider.RendersAsImage (currentNode))

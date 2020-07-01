@@ -43,6 +43,7 @@ using Foundation;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
+using FigmaSharp.Cocoa.Helpers;
 
 namespace FigmaSharp.Cocoa
 {
@@ -107,7 +108,7 @@ namespace FigmaSharp.Cocoa
 
         public static string ToDesignerString(this NSTextAlignment alignment)
         {
-            return string.Format ("{0}.{1}", nameof(NSTextAlignment), alignment.ToString());
+            return typeof(NSTextAlignment).WithProperty(alignment.ToString());
         }
 
         public static string ToDesignerString(this Color color, bool cgColor = false)
@@ -115,6 +116,14 @@ namespace FigmaSharp.Cocoa
             var cg = cgColor ? ".CGColor" : "";
             return $"NSColor.FromRgba({color.R.ToDesignerString ()}, {color.G.ToDesignerString ()}, {color.B.ToDesignerString ()}, {color.A.ToDesignerString ()}){cg}";
         }
+
+        public static string ToDesignerString(this NSNumber[] collection)
+        {
+            var builder = new StringBuilder();
+            var items = collection.Select(s => typeof(NSNumber).GetConstructor(s.Int32Value.ToString()))
+                .ToArray();
+            return string.Format("new {0}[] {1}", typeof(NSNumber).FullName, string.Join (',',items));
+        }   
 
         public static string ToDesignerString(this bool value)
         {

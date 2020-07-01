@@ -61,7 +61,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             if (text != null)
-                checkBox.Title = text.characters;
+                checkBox.Title = text.visible ? text.characters : string.Empty;
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 
@@ -116,8 +116,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (text != null) {
                 var labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-
-                code.WritePropertyEquality(name, nameof(NSButton.Title), labelTranslated,
+                code.WritePropertyEquality(name, nameof(NSButton.Title), text.visible ? labelTranslated : string.Empty,
                     inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
             }
             

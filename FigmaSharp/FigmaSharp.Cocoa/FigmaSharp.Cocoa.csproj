@@ -52,8 +52,6 @@
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
-    <Compile Include="Extensions\CodeGenerationExtensions.cs" />
-    <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
     <Compile Include="FigmaVersionMenu.cs" />
     <Compile Include="PropertyConfigure\CodePropertyConfigure.cs" />
@@ -67,19 +65,22 @@
     <Compile Include="Converters\Layers\VectorConverter.cs" />
     <Compile Include="TokenStore.cs" />
     <Compile Include="Converters\StackViewConverter.cs" />
+    <Compile Include="CodeGeneration\Members.cs" />
+    <Compile Include="Extensions\CodeGenerationExtensions.cs" />
+    <Compile Include="Helpers\CodeGenerationHelpers.cs" />
+    <Compile Include="CodeGeneration\CocoaStringObject.cs" />
+    <Compile Include="CodeGeneration\CocoaNodeStringObject.cs" />
+    <Compile Include="CodeGeneration\CocoaStringBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Helpers\" />
     <Folder Include="PropertyConfigure\" />
     <Folder Include="Converters\Layers\" />
+    <Folder Include="CodeGeneration\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
       <Name>FigmaSharp.Views</Name>
@@ -87,6 +88,10 @@
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
       <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
       <Name>FigmaSharp.Views.Cocoa</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">
+      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
+      <Name>FigmaSharp</Name>
     </ProjectReference>
   </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

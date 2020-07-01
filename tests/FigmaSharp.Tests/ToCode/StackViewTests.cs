@@ -37,18 +37,10 @@ using FigmaSharp.Cocoa.Converters;
 
 namespace FigmaSharp.Tests.ToCode
 {
-    [TestFixture]
-    public class CocoaConvertersTests
+    public class ConvertersTestBase
     {
-        const string mainNodeName = "Horizontal";
-
-        Converters.NodeConverter[] converters;
-        ControlRemoteNodeProvider provider;
-
-        public CocoaConvertersTests ()
-        {
-           
-        }
+        protected Converters.NodeConverter[] converters;
+        protected ControlRemoteNodeProvider provider;
 
         [SetUp]
         public void Init()
@@ -58,6 +50,17 @@ namespace FigmaSharp.Tests.ToCode
 
             provider = new ControlRemoteNodeProvider();
             provider.Load("sjjkWQHVrvxVDuQnm7AFMS");
+        }
+    }
+
+    [TestFixture (TestName = "StackView")]
+    public class StackViewTests : ConvertersTestBase
+    {
+        const string mainNodeName = "Horizontal";
+
+        public StackViewTests ()
+        {
+           
         }
 
         [TestCase (mainNodeName)]

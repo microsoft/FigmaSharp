@@ -28,6 +28,8 @@
 
 using System;
 using AppKit;
+using FigmaSharp.Cocoa.CodeGeneration;
+using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
@@ -38,7 +40,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 	{
 		protected virtual string GetDefaultParentName (FigmaNode currentNode, FigmaNode parentNode, CodeRenderService rendererService)
 		{
-			return CodeGenerationHelpers.This;
+			return Members.This;
 		}
 
 		public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
@@ -126,10 +128,8 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 					if (x != default || y != default)
 					{
-						var pointConstructor = CodeGenerationExtensions.GetConstructor(
-						 typeof(CoreGraphics.CGPoint),
-						 x.ToDesignerString(),
-						 y.ToDesignerString()
+						var pointConstructor = typeof(CoreGraphics.CGPoint)
+							.GetConstructor(x.ToDesignerString(), y.ToDesignerString()
 					);
 						return currentNode.GetMethod(nameof(AppKit.NSView.SetFrameOrigin), pointConstructor);
 					}

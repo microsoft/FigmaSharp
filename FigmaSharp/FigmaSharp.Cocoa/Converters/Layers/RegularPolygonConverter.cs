@@ -26,6 +26,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using System;
+using System.Text;
 using AppKit;
 using FigmaSharp.Converters;
 
@@ -40,7 +41,7 @@ namespace FigmaSharp.Cocoa.Converters
     public class RegularPolygonConverter : RegularPolygonConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode)
-         => typeof(NSView);
+         => typeof(NSImageView);
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
@@ -52,7 +53,11 @@ namespace FigmaSharp.Cocoa.Converters
 
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
-            return string.Empty;
+            var builder = new StringBuilder();
+            if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+                builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+            builder.Configure((FigmaVector)currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+            return builder.ToString();
         }
     }
 }

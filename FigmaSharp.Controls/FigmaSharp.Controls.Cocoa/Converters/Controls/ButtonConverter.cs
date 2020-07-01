@@ -83,7 +83,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
                 if (text != null && controlType != FigmaControlType.ButtonHelp)
-                    button.Title = text.characters;
+                    button.Title = text.visible ? text.characters : string.Empty;
 
                 if (group.name == ComponentString.STATE_DISABLED)
                     button.Enabled = false;
@@ -134,7 +134,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 if (text != null && controlType != FigmaControlType.ButtonHelp)
                 {
                     string labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-                    code.WritePropertyEquality(name, nameof(NSButton.Title), labelTranslated, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+                    code.WritePropertyEquality(name, nameof(NSButton.Title), text.visible ? labelTranslated : string.Empty, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
                 }
 
                 if (group.name == ComponentString.STATE_DISABLED)

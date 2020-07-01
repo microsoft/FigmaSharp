@@ -27,7 +27,8 @@
  */
 
 using AppKit;
-using FigmaSharp.Cocoa;
+using FigmaSharp.Cocoa.CodeGeneration;
+using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
@@ -43,8 +44,8 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
             if (currentNode.Parent.IsInstanceContent(rendererService.figmaProvider, out var figmaInstance))
             {
                 if (figmaInstance.IsDialog())
-                    return $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
-                return CodeGenerationHelpers.This;
+                    return $"{Members.This}.{nameof(NSWindow.ContentView)}";
+                return Members.This;
             }
 
             if (currentNode.Parent.IsComponentContent(rendererService.figmaProvider, out var figmaComponent))
@@ -53,21 +54,21 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
                 if (figmaComponent.TryGetInstanceDialogParentContainer (rendererService.figmaProvider, out var currentInstance))
                 {
                     if (currentInstance.IsDialog())
-                        return $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
+                        return $"{Members.This}.{nameof(NSWindow.ContentView)}";
                 }
-                return CodeGenerationHelpers.This;
+                return Members.This;
             }
 
             //window case
             if (currentNode.Parent.IsWindowContent() || currentNode.Parent.IsDialogParentContainer())
             {
-                var contentView = $"{CodeGenerationHelpers.This}.{nameof(NSWindow.ContentView)}";
+                var contentView = $"{Members.This}.{nameof(NSWindow.ContentView)}";
                 return contentView;
             }
 
             if (currentNode.Parent.IsMainDocumentView())
             {
-                return CodeGenerationHelpers.This;
+                return Members.This;
             }
 
             return null;
