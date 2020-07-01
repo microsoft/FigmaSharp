@@ -130,7 +130,9 @@ namespace FigmaSharp.Cocoa.Converters
             if (rendererService.NeedsRenderConstructor(codeNode, parentNode))
                 code.WriteConstructor(codeNode.Name, GetControlType(codeNode.Node), rendererService.NodeRendersVar(codeNode, parentNode));
 
-            ConfigureCodeProperty (Properties.EdgeInsets, codeNode, code);
+            code.WritePropertyEquality(codeNode.Name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
+
+            ConfigureCodeProperty(Properties.EdgeInsets, codeNode, code);
             ConfigureCodeProperty (Properties.Spacing, codeNode, code);
             ConfigureCodeProperty (Properties.Orientation, codeNode, code);
             ConfigureCodeProperty (Properties.Distribution, codeNode, code);
