@@ -43,6 +43,7 @@ using Foundation;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
+using FigmaSharp.Cocoa.Helpers;
 
 namespace FigmaSharp.Cocoa
 {

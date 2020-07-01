@@ -28,6 +28,8 @@ using System.Linq;
 using System.Text;
 using AppKit;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Cocoa.CodeGeneration;
+using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -118,10 +120,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			switch (controlVariant)
 			{
 				case NativeControlVariant.Regular:
-					code.WritePropertyEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SystemFontSize));
+					code.WritePropertyEquality(textViewName, nameof(NSTextView.Font), Members.Font.SystemFontOfSize(Members.Font.SystemFontSize));
 					break;
 				case NativeControlVariant.Small:
-					code.WritePropertyEquality(textViewName, nameof(NSTextView.Font), CodeGenerationHelpers.Font.SystemFontOfSize(CodeGenerationHelpers.Font.SmallSystemFontSize));
+					code.WritePropertyEquality(textViewName, nameof(NSTextView.Font), Members.Font.SystemFontOfSize(Members.Font.SmallSystemFontSize));
 					break;
 			}
 

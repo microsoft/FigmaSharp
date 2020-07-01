@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FigmaSharp.Cocoa.Helpers;
 
 namespace FigmaSharp.Cocoa
 {

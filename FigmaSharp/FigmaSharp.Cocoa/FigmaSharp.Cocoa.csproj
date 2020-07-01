@@ -52,8 +52,6 @@
     <Compile Include="FigmaApplication.cs" />
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
-    <Compile Include="Extensions\CodeGenerationExtensions.cs" />
-    <Compile Include="Helpers\CodeGenerationHelpers.cs" />
     <Compile Include="Extensions\CodeViewConfigureExtensions.cs" />
     <Compile Include="FigmaVersionMenu.cs" />
     <Compile Include="PropertyConfigure\CodePropertyConfigure.cs" />
@@ -67,13 +65,17 @@
     <Compile Include="Converters\Layers\VectorConverter.cs" />
     <Compile Include="TokenStore.cs" />
     <Compile Include="Converters\StackViewConverter.cs" />
+    <Compile Include="CodeGeneration\Members.cs" />
+    <Compile Include="Extensions\CodeGenerationExtensions.cs" />
+    <Compile Include="Helpers\CodeGenerationHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Helpers\" />
     <Folder Include="PropertyConfigure\" />
     <Folder Include="Converters\Layers\" />
+    <Folder Include="CodeGeneration\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigmaSharp\FigmaSharp.csproj">

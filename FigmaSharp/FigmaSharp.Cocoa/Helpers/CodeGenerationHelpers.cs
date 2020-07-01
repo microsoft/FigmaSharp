@@ -1,44 +1,13 @@
 ﻿using System;
 using System.Linq;
+using FigmaSharp.Cocoa.CodeGeneration;
 
-namespace FigmaSharp.Cocoa
+namespace FigmaSharp.Cocoa.Helpers
 {
-	public static class CodeGenerationHelpers
+    public static class CodeGenerationHelpers
 	{
 		//we need to move this into a better place than a Helper
 		//we also work in a better approach in a more dynamic way
-
-		#region Static Resources
-
-		public const string This = "this";
-
-        public static class Math
-        {
-			public static string Max (float min, float max)
-            {
-				return $"{typeof(Math).FullName}.{nameof(Math.Max)}({min.ToDesignerString()}, {max.ToDesignerString ()})";
-			}
-        }
-
-		public static class Font
-		{
-			public static string SystemFontOfSize(string font)
-			{
-				return GetMethod(typeof(AppKit.NSFont).FullName, nameof(AppKit.NSFont.SystemFontOfSize), font);
-			}
-
-			public static string BoldSystemFontOfSize(string font)
-			{
-				return GetMethod(typeof(AppKit.NSFont).FullName, nameof(AppKit.NSFont.BoldSystemFontOfSize), font);
-			}
-
-			public static string SystemFontSize { get; } = $"{typeof(AppKit.NSFont).FullName}.{nameof(AppKit.NSFont.SystemFontSize)}";
-			public static string SmallSystemFontSize { get; } = $"{typeof(AppKit.NSFont).FullName}.{nameof(AppKit.NSFont.SmallSystemFontSize)}";
-		}
-
-		public static string StringEmpty { get; } = $"{typeof(string).FullName}.{nameof(string.Empty)}";
-
-		#endregion
 
 		public static string GetConstructor (string viewName, Type type, bool includesVar = true)
 		{

@@ -29,6 +29,8 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Cocoa.CodeGeneration;
+using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
