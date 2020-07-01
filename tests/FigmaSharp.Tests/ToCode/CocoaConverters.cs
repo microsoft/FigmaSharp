@@ -33,6 +33,7 @@ using FigmaSharp.Controls.Cocoa.Converters;
 using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Models;
+using FigmaSharp.Cocoa.Converters;
 
 namespace FigmaSharp.Tests.ToCode
 {
