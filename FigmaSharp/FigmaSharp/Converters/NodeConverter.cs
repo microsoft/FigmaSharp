@@ -106,6 +106,20 @@ namespace FigmaSharp.Converters
 			return null;
         }
 
+        internal virtual bool IsFlexibleHorizontal(FigmaNode node)
+        {
+            if (node is IConstraints constrainedNode)
+                return constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal;
+            return false;
+        }
+
+        internal virtual bool IsFlexibleVertical(FigmaNode node)
+        {
+            if (node is IConstraints constrainedNode)
+                return constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical;
+            return false;
+        }
+
         protected bool ContainsType (FigmaNode currentNode, string name)
         {
 			var identifier = GetIdentifierValue (currentNode.name, "type") ?? currentNode.name;

@@ -29,6 +29,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa;
+using FigmaSharp;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
@@ -174,6 +177,23 @@ namespace FigmaSharp.Controls.Cocoa.Services
 				return false;
 			return base.RendersConstraints(node, parent, rendererService);
 		}
+
+		const string IsFlexibleHorizontalParameter = "isFlexibleHorizontal";
+		const string IsFlexibleVerticalParameter = "isFlexibleVertical";
+
+		internal override bool IsFlexibleHorizontal(CodeNode codeNode, NodeConverter converter)
+        {
+			if (codeNode.Node.TryGetAttributeValue(IsFlexibleHorizontalParameter, out var value) && value == "true")
+				return true;
+            return base.IsFlexibleHorizontal(codeNode, converter);
+		}
+	
+		internal override bool IsFlexibleVertical(CodeNode codeNode, NodeConverter converter)
+        {
+			if (codeNode.Node.TryGetAttributeValue(IsFlexibleVerticalParameter, out var value) && value == "true")
+				return true;
+			return base.IsFlexibleVertical(codeNode, converter);
+        }
 
         #endregion
     }

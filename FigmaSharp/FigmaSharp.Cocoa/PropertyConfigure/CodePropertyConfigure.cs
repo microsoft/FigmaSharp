@@ -30,6 +30,7 @@ using System;
 using AppKit;
 using FigmaSharp.Cocoa.CodeGeneration;
 using FigmaSharp.Cocoa.Helpers;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
@@ -43,7 +44,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 			return Members.This;
 		}
 
-		public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		public override string ConvertToCode(string propertyName, CodeNode currentNode, CodeNode parentNode, NodeConverter converter, CodeRenderService rendererService)
 		{
 			if (propertyName == PropertyNames.Frame)
 			{
@@ -62,8 +63,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 					var widthConstraintStringValue = CodeGenerationHelpers.GetWidthConstraintEqualToConstant (name, widthMaxStringValue);
 					builder.AppendLine($"var {widthConstraintName} = {widthConstraintStringValue};");
 
-				
-					if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal)
+					if (rendererService.IsFlexibleHorizontal (currentNode, converter))
 						builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof(int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
 
 					builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
@@ -76,7 +76,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 					builder.AppendLine($"var {heightConstraintName} = {heightConstraintStringValue};");
 
-					if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
+					if (rendererService.IsFlexibleVertical(currentNode, converter))
 						builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof (int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
 
 					builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);

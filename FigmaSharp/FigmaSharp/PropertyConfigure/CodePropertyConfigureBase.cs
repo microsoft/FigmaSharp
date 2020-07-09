@@ -26,12 +26,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Converters;
 using FigmaSharp.Services;
 
 namespace FigmaSharp.PropertyConfigure
 {
     public abstract class CodePropertyConfigureBase
     {
-        public abstract string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService);
+        public abstract string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, NodeConverter converter, CodeRenderService rendererService);
     }
 }
