@@ -151,7 +151,8 @@ namespace FigmaSharp.Tests.ToCode
 
             var nodeName = "currentNode";
             var codeNode = new CodeNode(new FigmaFrame(), nodeName);
-            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, codeNode, parentNode, null);
+
+            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, codeNode, parentNode, null, null);
 
             Assert.AreEqual($"{parentName}.AddArrangedSubview ({nodeName});", result);
         }

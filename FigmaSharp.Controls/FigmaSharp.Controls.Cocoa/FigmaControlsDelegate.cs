@@ -51,6 +51,13 @@ namespace FigmaSharp.Controls.Cocoa
 		{
 			if (converters == null) {
 				converters = new NodeConverter[] {
+					
+					// Other
+					new PlaceHolderConverter (),
+					new CustomViewConverter (),
+					new ImageRenderConverter (),
+
+
 					// Buttons
 					new ButtonConverter (),
 					new StepperConverter (),
@@ -82,9 +89,6 @@ namespace FigmaSharp.Controls.Cocoa
 					new BoxConverter (),
 					new DisclosureViewConverter (),
 
-					// Other
-					new CustomViewConverter (),
-					new ImageRenderConverter (),
 				};
 			}
 

@@ -103,6 +103,7 @@
     <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
     <Compile Include="Converters\Controls\TabViewConverter.cs" />
+    <Compile Include="Converters\Misc\PlaceHolderConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

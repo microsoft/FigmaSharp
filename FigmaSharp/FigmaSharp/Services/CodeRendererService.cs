@@ -8,30 +8,22 @@ using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp.Services
 {
-	public class CodeRenderService
+	public class CodeRenderService : RenderService
 	{
 		internal const string DefaultViewName = "view";
 
-		internal INodeProvider figmaProvider;
-
 		internal CodePropertyConfigureBase codePropertyConverter;
 
-		NodeConverter[] figmaConverters;
-		NodeConverter[] customConverters;
-
-		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters,
-			CodePropertyConfigureBase codePropertyConverter)
+		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] nodeConverters,
+			CodePropertyConfigureBase codePropertyConverter) : base (figmaProvider, nodeConverters)
 		{
-			this.customConverters = figmaViewConverters.Where (s => !s.IsLayer).ToArray ();
-			this.figmaConverters = figmaViewConverters.Where (s => s.IsLayer).ToArray (); ;
-			this.figmaProvider = figmaProvider;
 			this.codePropertyConverter = codePropertyConverter;
 		}
 
-		NodeConverter GetConverter (CodeNode node, NodeConverter[] converters)
+		NodeConverter GetConverter (CodeNode node, List<NodeConverter> converters)
 		{
 			foreach (var customViewConverter in converters) {
-				if (customViewConverter.CanConvert (node.Node)) {
+				if (customViewConverter.CanCodeConvert (node.Node)) {
 					return customViewConverter;
 				}
 			}
@@ -167,9 +159,9 @@ namespace FigmaSharp.Services
 
 		public NodeConverter GetNodeConverter (CodeNode node)
         {
-			var converter = GetConverter(node, customConverters);
+			var converter = GetConverter(node, CustomConverters);
 			if (converter == null)
-				converter = GetConverter(node, figmaConverters);
+				converter = GetConverter(node, DefaultConverters);
 			return converter;
 		}
 
