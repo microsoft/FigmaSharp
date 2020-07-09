@@ -114,7 +114,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 
         protected override bool NodeScansChildren (FigmaNode currentNode, NodeConverter converter, ViewRenderServiceOptions options)
 		{
-			if (fileProvider.RendersAsImage (currentNode))
+			if (nodeProvider.RendersAsImage (currentNode))
 				return false;
 
 			return base.NodeScansChildren (currentNode, converter, options);

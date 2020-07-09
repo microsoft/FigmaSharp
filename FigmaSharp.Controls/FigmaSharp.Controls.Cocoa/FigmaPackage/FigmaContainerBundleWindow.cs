@@ -160,7 +160,7 @@ namespace FigmaSharp
 		{
 			base.OnGetPartialDesignerClass(partialDesignerClass, codeRendererService, translateLabels);
 
-			var fileProvider = codeRendererService.figmaProvider;
+			var fileProvider = codeRendererService.NodeProvider;
 
 			var windows = GetReferencedWindows (fileProvider, FigmaNode);
 

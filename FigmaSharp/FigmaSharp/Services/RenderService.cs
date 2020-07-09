@@ -39,24 +39,24 @@ namespace FigmaSharp.Services
         protected readonly List<NodeConverter> DefaultConverters;
         public readonly List<NodeConverter> CustomConverters;
        
-        protected INodeProvider fileProvider;
-        public INodeProvider FileProvider => fileProvider;
+        protected INodeProvider nodeProvider;
+        public INodeProvider NodeProvider => nodeProvider;
 
-        public RenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters)
+        public RenderService(INodeProvider nodeProvider, NodeConverter[] nodeConverters)
         {
-            this.fileProvider = figmaProvider;
-            DefaultConverters = figmaViewConverters.Where(s => s.IsLayer).ToList();
-            CustomConverters = figmaViewConverters.Where(s => !s.IsLayer).ToList();
+            this.nodeProvider = nodeProvider;
+            DefaultConverters = nodeConverters.Where(s => s.IsLayer).ToList();
+            CustomConverters = nodeConverters.Where(s => !s.IsLayer).ToList();
         }
 
         public FigmaNode FindNodeByName(string name)
         {
-            return fileProvider.Nodes.FirstOrDefault(s => s.name == name);
+            return nodeProvider.Nodes.FirstOrDefault(s => s.name == name);
         }
 
         public FigmaNode FindNodeById(string id)
         {
-            return fileProvider.Nodes.FirstOrDefault(s => s.id == id);
+            return nodeProvider.Nodes.FirstOrDefault(s => s.id == id);
         }
 
         FigmaNode GetRecursively(string name, FigmaNode figmaNode)

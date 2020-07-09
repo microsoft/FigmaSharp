@@ -53,7 +53,7 @@ namespace FigmaSharp.Controls
 
         public static void RenderInWindow(this ViewRenderService sender, IWindow mainWindow, string windowLayerName, ViewRenderServiceOptions options = null)
         {
-            var windowFigmaNode = sender.FileProvider.FindByName (windowLayerName);
+            var windowFigmaNode = sender.NodeProvider.FindByName (windowLayerName);
 
             FigmaNode content = null;
 
