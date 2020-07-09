@@ -30,6 +30,7 @@ using AppKit;
 using FigmaSharp.Cocoa.CodeGeneration;
 using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
@@ -74,7 +75,7 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
             return null;
         }
 
-        public override string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        public override string ConvertToCode (string propertyName, CodeNode currentNode, CodeNode parentNode, NodeConverter converter, CodeRenderService rendererService)
         {
 			if (currentNode.Node.Parent != null && propertyName == PropertyNames.AddChild) {
 
@@ -82,8 +83,7 @@ namespace FigmaSharp.Controls.Cocoa.PropertyConfigure
                 if (!string.IsNullOrEmpty (defaultParentName))
                     return CodeGenerationHelpers.GetMethod(defaultParentName, nameof(NSView.AddSubview), currentNode.Name);
             }
-
-            return base.ConvertToCode (propertyName, currentNode, parentNode, rendererService);
+            return base.ConvertToCode (propertyName, currentNode, parentNode, converter, rendererService);
         }
     }
 }

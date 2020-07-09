@@ -42,6 +42,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
+        internal override bool IsFlexibleHorizontal(FigmaNode node) => true;
+
         public override bool CanConvert(FigmaNode currentNode)
         {
             currentNode.TryGetNativeControlType(out var controlType);

@@ -86,11 +86,7 @@ namespace FigmaSharp.Services
 			//on node skipped we don't render
 			if (!isNodeSkipped) {
 				//if (figmaProvider.RendersProperties (node)) {
-				converter = GetConverter (node, customConverters);
-				//bool navigateChild = true;
-				if (converter == null) {
-					converter = GetConverter (node, figmaConverters);
-				}
+				converter = GetNodeConverter(node);
 
 				if (converter != null) {
 					if (!node.HasName) {
@@ -129,22 +125,22 @@ namespace FigmaSharp.Services
 					builder.AppendLineIfValue (code.Replace (Resources.Ids.Conversion.NameIdentifier, node.Name));
 					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 
-
+					//TODO: this could be removed to converters base
 					if (CurrentRendererOptions.ShowAddChild && RendersAddChild(node, parent, this))
 					{
-						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.AddChild, node, parent, this));
+						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.AddChild, node, parent, converter, this));
 						OnChildAdded(builder, node, parent, converter, codePropertyConverter);
 					}
 
 					if (CurrentRendererOptions.ShowSize && RendersSize(node, parent, this))
                     {
-						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Frame, node, parent, this));
+						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Frame, node, parent, converter, this));
 						OnFrameSet(builder, node, parent, converter, codePropertyConverter);
 					}
 
 					if (CurrentRendererOptions.ShowConstraints && RendersConstraints(node, parent, this))
 					{
-						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Constraints, node, parent, this));
+						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Constraints, node, parent, converter, this));
 					}
 
 					calculatedParentNode = node;
@@ -167,6 +163,24 @@ namespace FigmaSharp.Services
 				//first loop
 				Clear ();
 			}
+		}
+
+		public NodeConverter GetNodeConverter (CodeNode node)
+        {
+			var converter = GetConverter(node, customConverters);
+			if (converter == null)
+				converter = GetConverter(node, figmaConverters);
+			return converter;
+		}
+
+        internal virtual bool IsFlexibleVertical(CodeNode nodeNode, NodeConverter converter)
+        {
+			return converter.IsFlexibleVertical(nodeNode.Node);
+		}
+
+        internal virtual bool IsFlexibleHorizontal(CodeNode nodeNode, NodeConverter converter)
+        {
+			return converter.IsFlexibleHorizontal (nodeNode.Node);
 		}
 
         protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, CodeRenderService figmaCodeRendererService)
