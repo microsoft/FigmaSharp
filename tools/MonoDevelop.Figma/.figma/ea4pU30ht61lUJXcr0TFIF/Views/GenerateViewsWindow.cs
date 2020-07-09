@@ -137,7 +137,11 @@ namespace MonoDevelop.Figma
 			var csProjectFile = currentProject.AddFile(publicCsClassFilePath);
 			designerProjectFile.DependsOn = csProjectFile.FilePath;
 			designerProjectFile.Metadata.SetValue(FigmaFile.FigmaPackageId, bundle.FileId);
-			designerProjectFile.Metadata.SetValue(FigmaFile.FigmaNodeId, figmaBundleView.FigmaNode.id);
+
+			if (!figmaBundleView.FigmaNode.TryGetNodeCustomName(out string customName))
+				customName = figmaBundleView.FigmaNode.name;
+
+			designerProjectFile.Metadata.SetValue(FigmaFile.FigmaNodeCustomName, customName);
 			return csProjectFile;
 		}
 

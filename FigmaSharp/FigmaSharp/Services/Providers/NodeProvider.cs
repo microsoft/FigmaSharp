@@ -140,6 +140,16 @@ namespace FigmaSharp.Services
 			return Nodes.FirstOrDefault (s => s.name == name);
 		}
 
+		public FigmaNode FindByCustomName(string name)
+		{
+			var found = Nodes.FirstOrDefault(s => s.TryGetNodeCustomName (out var customName) && customName == name);
+			if (found != null)
+			{
+				return found;
+			}
+			return Nodes.FirstOrDefault(s => s.name == name);
+		}
+
 		void ProcessNodeRecursively (FigmaNode node, FigmaNode parent)
 		{
 			node.Parent = parent;
