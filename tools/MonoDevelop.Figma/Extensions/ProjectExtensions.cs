@@ -43,7 +43,7 @@ namespace MonoDevelop.Figma
 
 		public static bool TryGetNodeName (this ProjectFile sender, out string nodeName)
 		{
-			nodeName = sender.Metadata.GetValue(FigmaFile.FigmaNodeId, null);
+			nodeName = sender.Metadata.GetValue(FigmaFile.FigmaNodeCustomName, null);
 			return !string.IsNullOrEmpty (nodeName);
 		}
 
@@ -56,7 +56,7 @@ namespace MonoDevelop.Figma
 		public static bool TryGetFigmaNode (this ProjectFile sender, NodeProvider fileProvider, out FigmaNode figmaNode)
 		{
 			if (sender.IsFigmaDesignerFile () && TryGetNodeName (sender,out var figmaName)) {
-				figmaNode = fileProvider.FindById (figmaName);
+				figmaNode = fileProvider.FindByCustomName (figmaName);
 				return figmaNode != null;
             }
 			figmaNode = null;
@@ -89,7 +89,11 @@ namespace MonoDevelop.Figma
                 partialFilePath.DependsOn = figmaBundleView.PublicCsClassFilePath;
 
                 partialFilePath.Metadata.SetValue(FigmaFile.FigmaPackageId, figmaBundleView.Bundle.FileId);
-				partialFilePath.Metadata.SetValue(FigmaFile.FigmaNodeId, figmaBundleView.FigmaNode.id);
+
+				if (!figmaBundleView.FigmaNode.TryGetNodeCustomName (out var customName)) {
+					customName = figmaBundleView.FigmaNode.name;
+				}
+				partialFilePath.Metadata.SetValue(FigmaFile.FigmaNodeCustomName, customName);
 			}
 
             if (savesInProject)
