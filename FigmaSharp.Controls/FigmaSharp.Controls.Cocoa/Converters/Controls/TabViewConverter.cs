@@ -40,7 +40,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     public class TabViewConverter : CocoaConverter
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSTabView);
-        public override bool ScanChildren(FigmaNode currentNode) => true;
+
 
         public override bool CanConvert(FigmaNode currentNode)
         {
