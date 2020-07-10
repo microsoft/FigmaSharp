@@ -32,7 +32,7 @@ namespace MonoDevelop.Figma.Services
             if (service is CodeRenderService viewRenderService)
             {
                 if (viewRenderService.Options.TranslateLabels)
-                    return string.Format ($"{0}.{1} (\"{2}\")",
+                    return string.Format ("{0}.{1} (\"{2}\")",
                         typeof(Core.GettextCatalog).FullName, nameof (Core.GettextCatalog.GetString), text);
             }
             return text;
