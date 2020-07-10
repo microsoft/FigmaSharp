@@ -11,10 +11,10 @@ clean:
 	find . -type d -name packages -exec rm -rf {} \;
 
 pack:
-	msbuild FigmaSharp.Mac.sln $(ARGS) /p:CreatePackage=true
+	msbuild /Users/jmedrano/FigmaSharp/tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:CreatePackage=true
 
 install:
-	msbuild FigmaSharp.Mac.sln $(ARGS) /p:InstallAddin=true
+	msbuild /Users/jmedrano/FigmaSharp/tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:InstallAddin=true
 
 check-dependencies:
 	#updating the submodules
