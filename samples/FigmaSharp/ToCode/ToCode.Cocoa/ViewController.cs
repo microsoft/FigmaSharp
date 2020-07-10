@@ -10,7 +10,20 @@ using Foundation;
 
 namespace ToCode.Cocoa
 {
-    public partial class ViewController : NSViewController
+	public class MonoDevelopTranslationService : ITranslationService
+	{
+		public string GetTranslatedText(string text, RenderService service)
+		{
+			if (service is CodeRenderService viewRenderService)
+			{
+				if (viewRenderService.Options.TranslateLabels)
+					return string.Format("Core.GettextCatalog.GetString (\"{0}\")", text);
+			};
+			return text;
+		}
+	}
+
+	public partial class ViewController : NSViewController
 	{
 		FigmaNodeView data;
 		OutlinePanel outlinePanel;
@@ -18,6 +31,8 @@ namespace ToCode.Cocoa
 
 		FigmaDesignerDelegate figmaDelegate;
 		CodeRenderService codeRenderer;
+
+		MonoDevelopTranslationService translationService = new MonoDevelopTranslationService();
 
 		const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 
@@ -59,14 +74,14 @@ namespace ToCode.Cocoa
 			RefreshTree(fileIds);
 		}
 
-		void RefreshTree (string docId)
-        {
+		void RefreshTree(string docId)
+		{
 			var converters = FigmaControlsContext.Current.GetConverters();
 			fileProvider = new ControlRemoteNodeProvider();
 			fileProvider.Load(docId);
 
 			var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
-			codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter);
+			codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter, translationService);
 
 			data = new FigmaNodeView(fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
@@ -106,7 +121,7 @@ namespace ToCode.Cocoa
 			var className = currentSelectedNode.GetClassName ();
 			var bundle = FigmaBundle.Empty ("1234", null, string.Empty);
 			var figmaBundleView = FigmaControlsContext.Current.GetBundleView (bundle, className, currentSelectedNode);
-			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer, translateStrings: openUrlButton.State == NSCellStateValue.On);
+			var publicPartialClass = figmaBundleView.GetFigmaPartialDesignerClass (codeRenderer, translateStrings: translateButton.State == NSCellStateValue.On);
 			var code = publicPartialClass.Generate ();
 			CopyToLogView (code);
 		}
