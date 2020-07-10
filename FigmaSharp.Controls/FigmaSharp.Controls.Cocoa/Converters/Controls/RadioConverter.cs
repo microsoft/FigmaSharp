@@ -110,10 +110,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (text != null)
             {
-                var labelTranslated = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
+                var labelTranslated = rendererService.TranslationService.GetTranslatedText(text.characters, rendererService);
 
                 code.WritePropertyEquality(name, nameof(NSButton.Title), text.visible ? labelTranslated : string.Empty,
-                    inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+                    inQuotes: !rendererService.Options.TranslateLabels);
             }
 
             FigmaGroup group = frame.children

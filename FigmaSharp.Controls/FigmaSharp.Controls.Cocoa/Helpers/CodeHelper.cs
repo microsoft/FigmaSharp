@@ -29,13 +29,6 @@ namespace FigmaSharp.Controls.Cocoa.Helpers
 {
     public static class CodeHelper
 	{
-		public static string GetTranslatableString(string text, bool needsTranslation = false)
-		{
-			if (needsTranslation)
-				return $"TranslationCatalog.GetString (\"{text}\")";
-			return text;
-		}
-
 		public static string GetNSFontSizeString(NativeControlVariant controlVariant)
 		{
 			if (controlVariant == NativeControlVariant.Small)

@@ -23,7 +23,9 @@ namespace MonoDevelop.Figma
 			await fileProvider.LoadAsync(figmaBundle.FileId);
 
 			Console.WriteLine($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");
-			var codeRendererService = new NativeViewCodeService(fileProvider);
+			var codeRendererService = new NativeViewCodeService(fileProvider) {
+				TranslationService = new Services.MonoDevelopTranslationService()
+			};
 
 			await Task.Run(() => {
 				figmaBundle.Update(version, fileProvider, includeImages: includeImages);

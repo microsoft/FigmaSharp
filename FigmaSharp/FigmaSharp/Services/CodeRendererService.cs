@@ -15,9 +15,10 @@ namespace FigmaSharp.Services
 		internal CodePropertyConfigureBase codePropertyConverter;
 
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] nodeConverters,
-			CodePropertyConfigureBase codePropertyConverter) : base (figmaProvider, nodeConverters)
+			CodePropertyConfigureBase codePropertyConverter, ITranslationService translationService = null) : base (figmaProvider, nodeConverters)
 		{
 			this.codePropertyConverter = codePropertyConverter;
+			this.TranslationService = translationService;
 		}
 
 		NodeConverter GetConverter (CodeNode node, List<NodeConverter> converters)
@@ -30,23 +31,23 @@ namespace FigmaSharp.Services
 			return null;
 		}
 
-		internal CodeRenderServiceOptions CurrentRendererOptions { get; set; }
+		public ITranslationService TranslationService { get; internal set; }
+		public CodeRenderServiceOptions Options { get; internal set; }
 		internal CodeNode ParentMainNode { get; set; }
 		internal CodeNode MainNode { get; set; }
 
 		public bool IsMainNode (FigmaNode figmaNode) => MainNode != null && figmaNode == MainNode?.Node;
 
-
 		readonly internal List<CodeNode> Nodes = new List<CodeNode>();
 
 		public virtual void Clear ()
 		{
-			CurrentRendererOptions = null;
+			Options = null;
 			ParentMainNode = null;
 			MainNode = null;
 		}
 
-		public void GetCode (StringBuilder builder, CodeNode node, CodeNode parent = null, CodeRenderServiceOptions currentRendererOptions = null)
+		public void GetCode (StringBuilder builder, CodeNode node, CodeNode parent = null, CodeRenderServiceOptions currentRendererOptions = null, ITranslationService translateService = null)
 		{
 			//in first level we clear all identifiers
 			if (parent == null) {
@@ -59,7 +60,9 @@ namespace FigmaSharp.Services
 					OnStartGetCode ();
 					
 					//we initialize
-					CurrentRendererOptions = currentRendererOptions ?? new CodeRenderServiceOptions ();
+					Options = currentRendererOptions ?? new CodeRenderServiceOptions ();
+
+					TranslationService = translateService ?? TranslationService ?? new DefaultTranslationService();
 
 					//we store our main node
 					MainNode = node;
@@ -101,7 +104,7 @@ namespace FigmaSharp.Services
 						identifiers.Add (identifier, lastIndex);
 					}
 
-					if (CurrentRendererOptions.ShowComments)
+					if (Options.ShowComments)
                     {
 						builder.AppendLine();
 						builder.AppendLine($"// View:     {node.Name}");
@@ -118,19 +121,19 @@ namespace FigmaSharp.Services
 					OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 
 					//TODO: this could be removed to converters base
-					if (CurrentRendererOptions.ShowAddChild && RendersAddChild(node, parent, this))
+					if (Options.ShowAddChild && RendersAddChild(node, parent, this))
 					{
 						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.AddChild, node, parent, converter, this));
 						OnChildAdded(builder, node, parent, converter, codePropertyConverter);
 					}
 
-					if (CurrentRendererOptions.ShowSize && RendersSize(node, parent, this))
+					if (Options.ShowSize && RendersSize(node, parent, this))
                     {
 						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Frame, node, parent, converter, this));
 						OnFrameSet(builder, node, parent, converter, codePropertyConverter);
 					}
 
-					if (CurrentRendererOptions.ShowConstraints && RendersConstraints(node, parent, this))
+					if (Options.ShowConstraints && RendersConstraints(node, parent, this))
 					{
 						builder.AppendLineIfValue(codePropertyConverter.ConvertToCode(PropertyNames.Constraints, node, parent, converter, this));
 					}
@@ -143,7 +146,7 @@ namespace FigmaSharp.Services
 			}
 
 			//without converter we scan the children automatically
-			var navigateChild = CurrentRendererOptions.ScanChildren && (converter?.ScanChildren (node.Node) ?? true); 
+			var navigateChild = Options.ScanChildren && (converter?.ScanChildren (node.Node) ?? true); 
 			if (navigateChild && HasChildrenToRender (node)) {
 				foreach (var item in GetChildrenToRender (node)) {
 					var figmaNode = new CodeNode(item, parent: node);
@@ -264,7 +267,7 @@ namespace FigmaSharp.Services
 		{
 			if (parent != null
 				&& IsMainNode (parent.Node)
-				&& (CurrentRendererOptions?.RendersConstructorFirstElement ?? false)
+				&& (Options?.RendersConstructorFirstElement ?? false)
 				)
 				return false;
 			else {
