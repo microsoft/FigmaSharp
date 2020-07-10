@@ -43,11 +43,11 @@
             _label="Open on Figma Website"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
         />
-        <CommandItem 
+       <!-- <CommandItem 
             id = "MonoDevelop.Figma.Commands.MergeFigmaFile"
             _label="Nest Figma Document"
             insertafter="MonoDevelop.FigmaSharp.ProjectPad.Separator"
-        />
+        />-->
     </Extension>
     
     <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Add">

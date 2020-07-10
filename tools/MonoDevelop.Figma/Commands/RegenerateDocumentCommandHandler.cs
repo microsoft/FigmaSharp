@@ -72,7 +72,9 @@ namespace MonoDevelop.Figma.Commands
                     fileProvider.Load(bundle.DocumentFilePath);
                     bundle.Reload();
 
-                    var codeRendererService = new NativeViewCodeService(fileProvider);
+                    var codeRendererService = new NativeViewCodeService(fileProvider) {
+                        TranslationService = new Services.MonoDevelopTranslationService()
+                    };
                     bundle.SaveAll(includeImages, fileProvider);
                 });
 

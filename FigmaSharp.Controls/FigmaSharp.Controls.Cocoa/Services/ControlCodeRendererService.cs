@@ -29,9 +29,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FigmaSharp.Cocoa;
-using FigmaSharp.Controls.Cocoa;
-using FigmaSharp;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
@@ -43,15 +40,15 @@ namespace FigmaSharp.Controls.Cocoa.Services
     {
 		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
 
-		public NativeViewCodeService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null) : base (figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
-			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter ())
+		public NativeViewCodeService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null, ITranslationService translationService = null) : base(figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
+			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter(), translationService)
 		{
 
 		}
 
 		internal override bool NeedsRenderConstructor(CodeNode node, CodeNode parent)
 		{
-			if (parent != null && IsMainNode(parent.Node) && (CurrentRendererOptions?.RendersConstructorFirstElement ?? false))
+			if (parent != null && IsMainNode(parent.Node) && (Options?.RendersConstructorFirstElement ?? false))
 				return false;
 			return true;
 		}

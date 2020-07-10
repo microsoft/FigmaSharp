@@ -37,6 +37,7 @@ using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
+using MonoDevelop.Figma.Services;
 using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma
@@ -176,7 +177,9 @@ namespace MonoDevelop.Figma
 		{
             var converters = FigmaControlsContext.Current.GetConverters ();
             var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter ();
-            codeRenderer = new NativeViewCodeService (fileProvider, converters, codePropertyConverter);
+            codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter) {
+                TranslationService = new MonoDevelopTranslationService()
+            };
         }
 
         public override void SetFrameSize(CGSize newSize)

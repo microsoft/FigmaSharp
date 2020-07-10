@@ -31,6 +31,7 @@
         <Folder Include="PropertyProviders\" />
         <Folder Include="Helpers\" />
         <Folder Include="ProjectItems\" />
+        <Folder Include="Services\" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />

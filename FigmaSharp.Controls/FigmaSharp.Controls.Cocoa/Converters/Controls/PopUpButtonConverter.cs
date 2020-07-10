@@ -98,11 +98,11 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty(text.characters)) {
-				var stringLabel = CodeHelper.GetTranslatableString(text.characters,
-                    rendererService.CurrentRendererOptions.TranslateLabels);
+				var stringLabel = rendererService.TranslationService.GetTranslatedText(text.characters,
+                    rendererService);
 
 				code.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
-					inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+					inQuotes: !rendererService.Options.TranslateLabels);
 			}
 
 			return code;

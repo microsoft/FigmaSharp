@@ -9,6 +9,7 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Helpers;
 using FigmaSharp.Models;
+using MonoDevelop.Figma.Services;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 
@@ -25,7 +26,7 @@ namespace MonoDevelop.Figma
 			InitializeComponent ();
 
 			this.currentProject = currentProject;
-
+			
 			var nameSpace = currentProject.GetDefaultFigmaNamespace();
 
 			this.namespacePopUp.RemoveAll();
@@ -104,7 +105,9 @@ namespace MonoDevelop.Figma
 			await currentProject.IncludeBundleAsync (currentBundle, includeImages, savesInProject: false);
 
 			//to generate all layers we need a code renderer
-			var codeRendererService = new NativeViewCodeService (fileProvider);
+			var codeRendererService = new NativeViewCodeService(fileProvider) {
+				TranslationService = new MonoDevelopTranslationService()
+			};
 
 			var mainFigmaNodes = fileProvider.GetMainGeneratedLayers();
 			foreach (var figmaNode in mainFigmaNodes)

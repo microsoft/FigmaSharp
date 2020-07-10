@@ -145,8 +145,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				FirstOrDefault (s => s.name == ComponentString.PLACEHOLDER && s.visible);
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase)) {
-				var stringLabel = CodeHelper.GetTranslatableString(placeholderText.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				code.WritePropertyEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, true);
+				var stringLabel = rendererService.TranslationService.GetTranslatedText(placeholderText.characters, rendererService);
+				code.WritePropertyEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, false);
 			}
 
 			FigmaText text = frame.children.
@@ -156,8 +156,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (text != null) {
 				code.WritePropertyEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text, withWeight: false));
 
-				var stringLabel = CodeHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
-				code.WritePropertyEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.CurrentRendererOptions.TranslateLabels);
+				var stringLabel = rendererService.TranslationService.GetTranslatedText(text.characters, rendererService);
+				code.WritePropertyEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.Options.TranslateLabels);
 			}
 
 			return code;
