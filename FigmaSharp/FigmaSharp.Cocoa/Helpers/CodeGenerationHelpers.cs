@@ -41,11 +41,7 @@ namespace FigmaSharp.Cocoa.Helpers
 		{
 			if (inQuotes)
 			{
-				var isMultiLine = value.Contains('\n');
-				//maybe we want to detect here if is multiline
-				value = string.Format("{0}\"{1}\"",
-							isMultiLine ? "@" : "",
-								isMultiLine ? value.Replace("\"", "\"\"") : value);
+				value = string.Format("\"{0}\"", value.Replace("\n", "\\n"));
 			}
 
 			var instanciateText = instanciate ? "var " : "";
