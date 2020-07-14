@@ -65,7 +65,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			("Text/Link", NSColor.LinkColor, nameof(NSColor.LinkColor)),
 			("Text/Placeholder", NSColor.PlaceholderTextColor, nameof(NSColor.PlaceholderTextColor)),
 			("Text/Window Frame", NSColor.WindowFrameText, nameof(NSColor.WindowFrameText)),
-			("Text/Menu Item Selected", NSColor.SelectedMenuItemText, nameof(NSColor.SelectedMenuItemText)),
+			("Text/MenuItem Selected", NSColor.SelectedMenuItemText, nameof(NSColor.SelectedMenuItemText)),
 			("Text/Control Selected Alternate", NSColor.AlternateSelectedControlText, nameof(NSColor.AlternateSelectedControlText)),
 			("Text/Header", NSColor.HeaderText, nameof(NSColor.HeaderText)),
 			("Text/Text", NSColor.Text, nameof(NSColor.Text)),

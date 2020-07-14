@@ -178,7 +178,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 			AddSubview(LiveButton);
 
-			LiveButton.TopAnchor.ConstraintEqualToAnchor(TopAnchor, 5).Active = true;
+			LiveButton.TopAnchor.ConstraintEqualToAnchor(TopAnchor, 6).Active = true;
 			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, -7).Active = true;
 		}
 
@@ -191,7 +191,7 @@ namespace FigmaSharp.Controls.Cocoa
 			highlight.WantsLayer = true;
 			highlight.Layer.ZPosition = 1;
 			highlight.BoxType = NSBoxType.NSBoxCustom;
-			highlight.BorderColor = NSColor.Highlight.ColorWithAlphaComponent(0.33f);
+			highlight.BorderColor = NSColor.Highlight.ColorWithAlphaComponent(0.22f);
 			highlight.BorderWidth = 1f;
 			highlight.CornerRadius = 4f;
 
@@ -272,12 +272,12 @@ namespace FigmaSharp.Controls.Cocoa
 
 
 			// Title bar
-			titleBar.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 22);
-			titleField.Frame = new CGRect(0, Frame.Height - 25, Frame.Width, 22);
+			titleBar.Frame = new CGRect(0, Frame.Height - 23, Frame.Width, 22);
+			titleField.Frame = new CGRect(0, Frame.Height - 26, Frame.Width, 22);
 
 
 			// Traffic lights
-			int posX = 9, posY = 5;
+			int posX = 9, posY = 6;
 			int width = 12, height = width;
 			int spacing = 8;
 
@@ -295,7 +295,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 
 			// Separator
-			separator.Frame = new CGRect(0, Frame.Height - 22, Frame.Width, 1);
+			separator.Frame = new CGRect(0, Frame.Height - 23, Frame.Width, 1);
 
 
 			// Highlight
