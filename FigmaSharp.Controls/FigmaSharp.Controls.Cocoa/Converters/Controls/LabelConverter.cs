@@ -26,7 +26,9 @@
 using System;
 using System.Linq;
 using System.Text;
+
 using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Controls.Cocoa.Services;
@@ -82,7 +84,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (controlType == FigmaControlType.LabelHeader)
                 label.Font = NSFont.SystemFontOfSize(headerFontSize, ViewHelper.GetNSFontWeight(text));
 
-            if (text?.styles != null) {
+            if (text?.styles != null)
+            {
                 foreach (var styleMap in text.styles)
                 {
                     if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
