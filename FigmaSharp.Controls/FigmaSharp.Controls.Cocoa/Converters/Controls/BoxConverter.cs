@@ -159,7 +159,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (text != null)
             {
-                string stringTitle = rendererService.TranslationService.GetTranslatedText (text.characters, rendererService);
+                string stringTitle = rendererService.GetTranslatedText (text.characters);
 
                 code.WritePropertyEquality(name, nameof(NSBox.Title), stringTitle,
                     inQuotes: !rendererService.Options.TranslateLabels);

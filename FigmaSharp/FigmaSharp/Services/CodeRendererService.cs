@@ -203,7 +203,15 @@ namespace FigmaSharp.Services
 			
 		}
 
-		public bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)
+        internal string GetTranslatedText(string text)
+        {
+            if (Options.TranslateLabels) {
+				return TranslationService.GetTranslatedStringText(text);
+			}
+			return text;
+		}
+
+        public bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)
         {
 			if (currentNode.Node.GetNodeTypeName () == "mastercontent") {
 				return false;

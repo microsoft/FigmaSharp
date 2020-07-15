@@ -22,20 +22,15 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 using FigmaSharp.Services;
-
+using FigmaSharp.Cocoa;
 namespace MonoDevelop.Figma.Services
 {
     public class MonoDevelopTranslationService : ITranslationService
     {
-        public string GetTranslatedText(string text, RenderService service)
+        public string GetTranslatedStringText(string text)
         {
-            if (service is CodeRenderService viewRenderService)
-            {
-                if (viewRenderService.Options.TranslateLabels)
-                    return string.Format ("{0}.{1} (\"{2}\")",
-                        typeof(Core.GettextCatalog).FullName, nameof (Core.GettextCatalog.GetString), text);
-            }
-            return text;
+             return typeof(Core.GettextCatalog)
+                .GetMethod(nameof(Core.GettextCatalog.GetString), text, true, false);
         }
     }
 }

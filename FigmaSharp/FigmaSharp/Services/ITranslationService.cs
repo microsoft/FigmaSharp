@@ -26,11 +26,11 @@ namespace FigmaSharp.Services
 {
     public interface ITranslationService
     {
-        string GetTranslatedText(string text, RenderService service);
+        string GetTranslatedStringText(string text);
     }
 
     public class DefaultTranslationService : ITranslationService
     {
-        public string GetTranslatedText(string text, RenderService service) => text;
+        public string GetTranslatedStringText(string text) => text;
     }
 }

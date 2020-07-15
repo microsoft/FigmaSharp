@@ -145,7 +145,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				FirstOrDefault (s => s.name == ComponentString.PLACEHOLDER && s.visible);
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase)) {
-				var stringLabel = rendererService.TranslationService.GetTranslatedText(placeholderText.characters, rendererService);
+				var stringLabel = rendererService.GetTranslatedText(placeholderText.characters);
 				code.WritePropertyEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, inQuotes: true);
 			}
 
@@ -156,7 +156,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (text != null) {
 				code.WritePropertyEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text, withWeight: false));
 
-				var stringLabel = rendererService.TranslationService.GetTranslatedText(text.characters, rendererService);
+				var stringLabel = rendererService.GetTranslatedText(text.characters);
 				code.WritePropertyEquality (name, nameof (NSTextField.StringValue), stringLabel, inQuotes: !rendererService.Options.TranslateLabels);
 			}
 

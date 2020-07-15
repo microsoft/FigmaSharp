@@ -102,7 +102,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 					if (CanSetAccessibilityLabel && currentNode.Node.TrySearchA11Label(out var label))
 					{
-						label = rendererService.TranslationService.GetTranslatedText(label, rendererService);
+						label = rendererService.GetTranslatedText (label);
 						builder.WritePropertyEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, inQuotes: !rendererService.Options.TranslateLabels);
 
 						hasAccessibility = true;
@@ -110,7 +110,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 					if (CanSetAccessibilityHelp && currentNode.Node.TrySearchA11Help(out var help))
 					{
-						help = rendererService.TranslationService.GetTranslatedText (help, rendererService);
+						help = rendererService.GetTranslatedText (help);
 						builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.Options.TranslateLabels);
 
 						hasAccessibility = true;

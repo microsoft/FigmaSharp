@@ -115,7 +115,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 .FirstOrDefault ();
 
             if (text != null) {
-                var labelTranslated = rendererService.TranslationService.GetTranslatedText(text.characters, rendererService);
+                var labelTranslated = rendererService.GetTranslatedText(text.characters);
                 code.WritePropertyEquality(name, nameof(NSButton.Title), text.visible ? labelTranslated : string.Empty,
                     inQuotes: !rendererService.Options.TranslateLabels);
             }
