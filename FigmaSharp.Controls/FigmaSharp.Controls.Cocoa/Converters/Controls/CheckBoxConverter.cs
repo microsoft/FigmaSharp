@@ -61,7 +61,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             if (text != null)
-                checkBox.Title = text.visible ? text.characters : string.Empty;
+                checkBox.Title = text.visible ? rendererService.GetTranslatedText (text.characters) : string.Empty;
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 

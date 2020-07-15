@@ -29,7 +29,7 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-    public class ViewRenderServiceOptions
+    public class ViewRenderServiceOptions : RenderServiceOptions
     {
         public bool IsToViewProcessed { get; set; } = true;
         public bool AreImageProcessed { get; set; } = true;

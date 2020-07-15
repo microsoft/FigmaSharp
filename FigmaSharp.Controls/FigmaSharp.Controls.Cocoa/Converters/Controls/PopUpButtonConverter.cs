@@ -68,7 +68,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
 			if (text != null)
-				popUp.AddItem(text.characters);
+				popUp.AddItem(rendererService.GetTranslatedText (text.characters));
 
 			return new View(popUp);
 		}

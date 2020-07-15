@@ -85,7 +85,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
                 if (text != null && controlType != FigmaControlType.ButtonHelp)
-                    button.Title = text.visible ? text.characters : string.Empty;
+                    button.Title = text.visible ? rendererService.GetTranslatedText (text.characters) : string.Empty;
 
                 if (group.name == ComponentString.STATE_DISABLED)
                     button.Enabled = false;

@@ -65,7 +65,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			   .FirstOrDefault (s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty(text.characters))
-				combobox.StringValue = text.characters;
+				combobox.StringValue = rendererService.GetTranslatedText (text.characters);
 
 			return new View(combobox);
 		}

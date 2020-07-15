@@ -38,12 +38,21 @@ namespace FigmaSharp.Services
     {
         protected readonly List<NodeConverter> DefaultConverters;
         public readonly List<NodeConverter> CustomConverters;
-       
+
+        protected RenderServiceOptions baseOptions;
+        public ITranslationService TranslationService { get; internal set; }
+
         protected INodeProvider nodeProvider;
         public INodeProvider NodeProvider => nodeProvider;
 
-        public RenderService(INodeProvider nodeProvider, NodeConverter[] nodeConverters)
+        protected void SetOptions (RenderServiceOptions options)
         {
+            baseOptions = options;
+        }
+
+        public RenderService(INodeProvider nodeProvider, NodeConverter[] nodeConverters, ITranslationService translationService = null)
+        {
+            this.TranslationService = translationService ?? new DefaultTranslationService ();
             this.nodeProvider = nodeProvider;
             DefaultConverters = nodeConverters.Where(s => s.IsLayer).ToList();
             CustomConverters = nodeConverters.Where(s => !s.IsLayer).ToList();
@@ -78,6 +87,15 @@ namespace FigmaSharp.Services
                 }
             }
             return null;
+        }
+
+        internal string GetTranslatedText(string text)
+        {
+            if (baseOptions.TranslateLabels && TranslationService != null)
+            {
+                return TranslationService.GetTranslatedStringText(text);
+            }
+            return text;
         }
 
         protected NodeConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<NodeConverter> customViewConverters)

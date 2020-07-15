@@ -69,7 +69,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     FigmaText text = firstChild.FirstChild (s => s.name == ComponentString.TITLE) as FigmaText;
 
                     if (text != null)
-                        items.Add(new NSTabViewItem() { Label = text.characters });
+                        items.Add(new NSTabViewItem() { Label = rendererService.GetTranslatedText (text.characters ?? string.Empty) });
                 }
             }
 

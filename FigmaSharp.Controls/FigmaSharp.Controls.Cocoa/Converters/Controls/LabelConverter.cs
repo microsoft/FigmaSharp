@@ -76,7 +76,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (text != null)
             {
-                label.StringValue = text.characters;
+                label.StringValue = rendererService.GetTranslatedText (text.characters ?? string.Empty);
                 label.Alignment = ViewHelper.GetNSTextAlignment(text);
                 label.Font = ViewHelper.GetNSFont(controlVariant, text);
             }
