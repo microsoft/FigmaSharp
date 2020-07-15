@@ -1,9 +1,14 @@
 ﻿namespace FigmaSharp.Services
 {
-    public class CodeRenderServiceOptions
+    public class RenderServiceOptions
+    {
+        public bool TranslateLabels { get; set; }
+    }
+
+    public class CodeRenderServiceOptions : RenderServiceOptions
     {
         public bool RendersConstructorFirstElement { get; set; }
-        public bool TranslateLabels { get; set; }
+        
         public bool ScanChildren { get; set; } = true;
 
         public bool ShowComments { get; set; } = true;

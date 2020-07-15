@@ -38,10 +38,10 @@ namespace FigmaSharp.Controls.Cocoa.Services
 {
     public class ControlViewRenderingService : ViewRenderService
 	{
-		public ControlViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyConfigureBase propertySetter = null)
+		public ControlViewRenderingService (INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ViewPropertyConfigureBase propertySetter = null, ITranslationService translationService = null)
             : base (figmaProvider,
                   figmaViewConverters ?? FigmaControlsContext.Current.GetConverters (),
-                  propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter()
+                  propertySetter ?? FigmaControlsContext.Current.GetViewPropertySetter(), translationService
                   )
 		{
 
@@ -65,6 +65,8 @@ namespace FigmaSharp.Controls.Cocoa.Services
             if (options == null) {
                 options = new ViewRenderServiceOptions() { GenerateMainView = false };
             }
+
+            SetOptions(options);
 
             var content = node.GetWindowContent() ?? node;
             ProcessFromNode(content, mainWindow.Content, options);

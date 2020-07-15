@@ -64,7 +64,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             if (text != null)
-                radio.Title = text.visible ? text.characters : string.Empty;
+                radio.Title = text.visible && !string.IsNullOrEmpty(text.characters) ? rendererService.GetTranslatedText(text.characters) : string.Empty;
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 

@@ -101,7 +101,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                    .FirstOrDefault(s => (s.name == ComponentString.TITLE && s.visible));
 
                 if (text != null)
-                    box.Title = text.characters;
+                    box.Title = rendererService.GetTranslatedText (text.characters);
                 else
                     box.Title = "";
             }

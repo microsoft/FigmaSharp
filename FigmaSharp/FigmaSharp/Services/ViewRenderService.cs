@@ -47,12 +47,13 @@ namespace FigmaSharp.Services
 
         public ViewPropertyConfigureBase PropertySetter { get; }
 
-        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetViewPropertyConfigure ())
+        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ITranslationService translationService = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetViewPropertyConfigure (), translationService)
         {
           
         }
 
-        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter) : base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters ())
+        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter, ITranslationService translationService = null) :
+            base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters (), translationService)
         {
             this.PropertySetter = propertySetter;
         }
@@ -143,6 +144,8 @@ namespace FigmaSharp.Services
             ImageVectors.Clear();
             NodesProcessed.Clear();
 
+            SetOptions(options);
+
             Console.WriteLine($"Reading successfull");
 
             FigmaCanvas canvas;
@@ -197,6 +200,8 @@ namespace FigmaSharp.Services
             if (options == null) {
                 options = new ViewRenderServiceOptions();
             }
+
+            SetOptions(options);
 
             ProcessFromNode(node, mainWindow.Content, options);
 

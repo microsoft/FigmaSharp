@@ -98,9 +98,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				.FirstOrDefault(s => s.name == ComponentString.PLACEHOLDER && s.visible);
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase))
-				textField.PlaceholderString = placeholderText.characters;
-
-
+				textField.PlaceholderString = rendererService.GetTranslatedText (placeholderText.characters ?? string.Empty);
 
 			FigmaText text = frame.children
 				.OfType<FigmaText> ()
@@ -109,7 +107,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (text != null)
 			{
 				textField.Alignment = ViewHelper.GetNSTextAlignment(text);
-				textField.StringValue = text.characters;
+				textField.StringValue = rendererService.GetTranslatedText (text.characters ?? string.Empty);
 			}
 
 			textField.ControlSize = ViewHelper.GetNSControlSize(controlVariant);

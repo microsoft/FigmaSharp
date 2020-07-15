@@ -15,10 +15,9 @@ namespace FigmaSharp.Services
 		internal CodePropertyConfigureBase codePropertyConverter;
 
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] nodeConverters,
-			CodePropertyConfigureBase codePropertyConverter, ITranslationService translationService = null) : base (figmaProvider, nodeConverters)
+			CodePropertyConfigureBase codePropertyConverter, ITranslationService translationService = null) : base (figmaProvider, nodeConverters, translationService)
 		{
 			this.codePropertyConverter = codePropertyConverter;
-			this.TranslationService = translationService;
 		}
 
 		NodeConverter GetConverter (CodeNode node, List<NodeConverter> converters)
@@ -31,8 +30,8 @@ namespace FigmaSharp.Services
 			return null;
 		}
 
-		public ITranslationService TranslationService { get; internal set; }
-		public CodeRenderServiceOptions Options { get; internal set; }
+		public CodeRenderServiceOptions Options => (CodeRenderServiceOptions)baseOptions;
+
 		internal CodeNode ParentMainNode { get; set; }
 		internal CodeNode MainNode { get; set; }
 
@@ -42,7 +41,7 @@ namespace FigmaSharp.Services
 
 		public virtual void Clear ()
 		{
-			Options = null;
+			SetOptions(null);
 			ParentMainNode = null;
 			MainNode = null;
 		}
@@ -58,9 +57,10 @@ namespace FigmaSharp.Services
 
 					identifiers.Clear ();
 					OnStartGetCode ();
-					
+
 					//we initialize
-					Options = currentRendererOptions ?? new CodeRenderServiceOptions ();
+
+					SetOptions(currentRendererOptions ?? new CodeRenderServiceOptions());
 
 					TranslationService = translateService ?? TranslationService ?? new DefaultTranslationService();
 
@@ -201,14 +201,6 @@ namespace FigmaSharp.Services
 		protected virtual void OnPreConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
 			
-		}
-
-        internal string GetTranslatedText(string text)
-        {
-            if (Options.TranslateLabels) {
-				return TranslationService.GetTranslatedStringText(text);
-			}
-			return text;
 		}
 
         public bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)

@@ -66,7 +66,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			FigmaText text = texts.FirstOrDefault(s => s.name == "lbl" && s.visible);
 
 			if (text != null) {
-				textView.Value = text.characters;
+				textView.Value = rendererService.GetTranslatedText (text.characters ?? string.Empty);
 
 				// TODO: text styling
 				// textView.TextStorage.Append(new Foundation.NSAttributedString(""), null);
