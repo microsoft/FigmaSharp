@@ -12,14 +12,9 @@ namespace ToCode.Cocoa
 {
 	public class MonoDevelopTranslationService : ITranslationService
 	{
-		public string GetTranslatedText(string text, RenderService service)
+		public string GetTranslatedStringText (string text)
 		{
-			if (service is CodeRenderService viewRenderService)
-			{
-				if (viewRenderService.Options.TranslateLabels)
-					return string.Format("Core.GettextCatalog.GetString (\"{0}\")", text);
-			};
-			return text;
+			return string.Format("Core.GettextCatalog.GetString (\"{0}\")", text);
 		}
 	}
 
