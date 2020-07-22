@@ -123,11 +123,17 @@ namespace FigmaSharp.Controls.Cocoa
 			string title = "";
 			var frame = (FigmaFrame)currentNode;
 
-			var nativeView = new FakeWindowView(title);
-			nativeView.LiveButtonAlwaysVisible = LiveButtonAlwaysVisible;
-			nativeView.Configure (currentNode);
+			BaseFakeWindowView fakeWindowView;
 
-			var view = new View(nativeView);
+			// Detect Big Sur (Darwin kernel version 20)
+			if (Environment.OSVersion.Version.Major >= 20)
+				fakeWindowView = new FakeBigSurWindowView(title);
+			else
+				fakeWindowView = new FakeWindowView(title);
+
+			fakeWindowView.Configure (currentNode);
+
+			var view = new View(fakeWindowView);
 
 			var windowComponent = currentNode.GetDialogInstanceFromParentContainer();
 			if (windowComponent != null) {
@@ -135,18 +141,18 @@ namespace FigmaSharp.Controls.Cocoa
 				var optionsNode = windowComponent.Options ();
 				if (optionsNode is IFigmaNodeContainer figmaNodeContainer)
 				{
-					nativeView.CloseButtonHidden = (figmaNodeContainer.HasChildrenVisible("close") == false);
-					nativeView.MinButtonHidden   = (figmaNodeContainer.HasChildrenVisible("min")   == false);
-					nativeView.MaxButtonHidden   = (figmaNodeContainer.HasChildrenVisible("max")   == false);
+					fakeWindowView.CloseButtonHidden = (figmaNodeContainer.HasChildrenVisible("close") == false);
+					fakeWindowView.MinButtonHidden   = (figmaNodeContainer.HasChildrenVisible("min")   == false);
+					fakeWindowView.MaxButtonHidden   = (figmaNodeContainer.HasChildrenVisible("max")   == false);
 
 					var titleText = (FigmaText) optionsNode.GetChildren().FirstOrDefault(s => s.name == "title" && s.visible);
 
 					if (titleText != null)
-						nativeView.Title = titleText.characters;
+						fakeWindowView.Title = titleText.characters;
 				}
 			}
 
-			nativeView.LiveButton.Activated += async (s, e) => {
+			fakeWindowView.LiveButton.Activated += async (s, e) => {
 				var window = new Window(view.Allocation);
 
 				LivePreviewLoading?.Invoke(this, EventArgs.Empty);
@@ -167,7 +173,7 @@ namespace FigmaSharp.Controls.Cocoa
 				layoutManager.Run(processedNodes, window.Content, secondaryRender);
 
 				var nativeWindow = (NSWindow)window.NativeObject;
-				nativeWindow.Appearance = nativeView.EffectiveAppearance;
+				nativeWindow.Appearance = fakeWindowView.EffectiveAppearance;
 				nativeWindow.ContentMinSize = nativeWindow.ContentView.Frame.Size;
 
 				nativeWindow.Center();

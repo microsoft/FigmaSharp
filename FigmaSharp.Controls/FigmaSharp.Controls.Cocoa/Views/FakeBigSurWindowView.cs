@@ -1,42 +1,44 @@
-﻿// Authors:
-//   Hylke Bons <hylbo@microsoft.com>
-//
-// Copyright (C) 2020 Microsoft, Corp
-//
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+﻿/* 
+ * Author:
+ *   Hylke Bons <hylbo@microsoft.com>
+ *
+ * Copyright (C) 2020 Microsoft, Corp
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 using AppKit;
+using Foundation;
 using CoreAnimation;
 using CoreGraphics;
-using Foundation;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	class FakeWindowView : BaseFakeWindowView
+	class FakeBigSurWindowView : BaseFakeWindowView
 	{
-		public FakeWindowView (string title) : base (title)
+		public FakeBigSurWindowView (string title) : base(title)
 		{
 			WantsLayer = true;
 
 			Layer.BorderWidth = 1;
-			Layer.CornerRadius = 5;
+			Layer.CornerRadius = 9;
 			Layer.ZPosition = 1;
 
 
@@ -70,7 +72,7 @@ namespace FigmaSharp.Controls.Cocoa
 			titleBar.Layer = titleBarGradient;
 
 			titleField.StringValue = title;
-			titleField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+			titleField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
 			titleField.Alignment = NSTextAlignment.Center;
 			titleField.DrawsBackground = false;
 			titleField.Editable = false;
@@ -240,8 +242,8 @@ namespace FigmaSharp.Controls.Cocoa
 
 
 			// Title bar
-			titleBar.Frame = new CGRect(0, Frame.Height - 23, Frame.Width, 22);
-			titleField.Frame = new CGRect(0, Frame.Height - 26, Frame.Width, 22);
+			titleBar.Frame = new CGRect(0, Frame.Height - 30, Frame.Width, 30);
+			titleField.Frame = new CGRect(0, Frame.Height - 28, Frame.Width, 22);
 
 
 			// Traffic lights
@@ -261,8 +263,10 @@ namespace FigmaSharp.Controls.Cocoa
 			// Live button
 			LiveButton.Hidden = true;
 
+
 			// Separator
-			separator.Frame = new CGRect(0, Frame.Height - 23, Frame.Width, 1);
+			separator.Frame = new CGRect(0, Frame.Height - 30, Frame.Width, 1);
+
 
 			// Highlight
 			highlight.Frame = new CGRect(1, 1, Frame.Width - 2, Frame.Height - 2);
