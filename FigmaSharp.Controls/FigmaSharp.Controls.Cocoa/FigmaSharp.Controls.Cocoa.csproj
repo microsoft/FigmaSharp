@@ -63,7 +63,7 @@
     <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
     <Compile Include="CocoaConverter.ComponentStrings.cs" />
     <Compile Include="Views\FakeSheetView.cs" />
-    <Compile Include="Views\FakeWindowView.cs" />
+    <Compile Include="Views\FakeBigSurWindowView.cs" />
     <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
     <Compile Include="Helpers\CodeHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
@@ -104,6 +104,8 @@
     <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
     <Compile Include="Converters\Controls\TabViewConverter.cs" />
     <Compile Include="Converters\Misc\PlaceHolderConverter.cs" />
+    <Compile Include="Views\BaseFakeWindowView.cs" />
+    <Compile Include="Views\FakeWindowView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

@@ -25,20 +25,20 @@
  */
 
 using AppKit;
+using Foundation;
 using CoreAnimation;
 using CoreGraphics;
-using Foundation;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	class FakeWindowView : BaseFakeWindowView
+	class FakeBigSurWindowView : BaseFakeWindowView
 	{
-		public FakeWindowView (string title) : base (title)
+		public FakeBigSurWindowView (string title) : base(title)
 		{
 			WantsLayer = true;
 
 			Layer.BorderWidth = 1;
-			Layer.CornerRadius = 5;
+			Layer.CornerRadius = 9;
 			Layer.ZPosition = 1;
 
 
@@ -72,7 +72,7 @@ namespace FigmaSharp.Controls.Cocoa
 			titleBar.Layer = titleBarGradient;
 
 			titleField.StringValue = title;
-			titleField.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
+			titleField.Font = NSFont.BoldSystemFontOfSize(NSFont.SystemFontSize);
 			titleField.Alignment = NSTextAlignment.Center;
 			titleField.DrawsBackground = false;
 			titleField.Editable = false;
@@ -242,8 +242,8 @@ namespace FigmaSharp.Controls.Cocoa
 
 
 			// Title bar
-			titleBar.Frame = new CGRect(0, Frame.Height - 23, Frame.Width, 22);
-			titleField.Frame = new CGRect(0, Frame.Height - 26, Frame.Width, 22);
+			titleBar.Frame = new CGRect(0, Frame.Height - 30, Frame.Width, 30);
+			titleField.Frame = new CGRect(0, Frame.Height - 28, Frame.Width, 22);
 
 
 			// Traffic lights
@@ -263,8 +263,10 @@ namespace FigmaSharp.Controls.Cocoa
 			// Live button
 			LiveButton.Hidden = true;
 
+
 			// Separator
-			separator.Frame = new CGRect(0, Frame.Height - 23, Frame.Width, 1);
+			separator.Frame = new CGRect(0, Frame.Height - 30, Frame.Width, 1);
+
 
 			// Highlight
 			highlight.Frame = new CGRect(1, 1, Frame.Width - 2, Frame.Height - 2);
