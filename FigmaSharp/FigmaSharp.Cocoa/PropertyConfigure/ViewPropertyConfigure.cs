@@ -56,6 +56,9 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
             }
             if (propertyName == PropertyNames.Constraints)
             {
+                if (!rendererService.HasConstraints(currentNode, converter))
+                    return;
+
                 if (currentNode is IConstraints constrainedNode && currentViewNode?.View?.NativeObject is AppKit.NSView nativeView && parentViewNode?.View?.NativeObject is AppKit.NSView parentNativeView)
                 {
                     var constraints = constrainedNode.constraints;
@@ -120,8 +123,10 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
             {
                 if (currentNode is IAbsoluteBoundingBox absoluteBounding)
                 {
-                    var nativeView = currentViewNode?.View?.NativeObject as AppKit.NSView;
+                    if (!rendererService.HasConstraints(currentNode, converter))
+                        return;
 
+                    var nativeView = currentViewNode?.View?.NativeObject as AppKit.NSView;
                     if (rendererService.HasWidthConstraint(currentNode, converter))
                     {
                         var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));

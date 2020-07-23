@@ -39,8 +39,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class TabViewConverter : CocoaConverter
     {
-        internal override bool HasHeightConstraint() => true;
-
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSTabView);
 
         public override bool CanConvert(FigmaNode currentNode)

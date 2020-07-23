@@ -37,6 +37,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class SwitchConverter : CocoaConverter
     {
+        internal override bool HasHeightConstraint() => false;
+
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSSwitch);
 
         public override bool CanSetAccessibilityLabel => false;

@@ -77,7 +77,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 		}
 	}
 
-
 	public class WindowPanelConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSPanel);

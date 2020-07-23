@@ -41,6 +41,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class ComboBoxConverter : CocoaConverter
 	{
+		internal override bool HasHeightConstraint() => false;
+
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSComboBox);
 
 		public override bool CanConvert(FigmaNode currentNode)

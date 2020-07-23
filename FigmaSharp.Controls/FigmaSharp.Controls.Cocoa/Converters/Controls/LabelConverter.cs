@@ -41,8 +41,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class LabelConverter : CocoaConverter
     {
-        internal override bool HasHeightConstraint() => true;
-
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSTextField);
 
         public override bool CanConvert(FigmaNode currentNode)

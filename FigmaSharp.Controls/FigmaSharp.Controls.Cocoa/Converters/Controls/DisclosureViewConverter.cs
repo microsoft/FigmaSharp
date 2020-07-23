@@ -39,7 +39,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class DisclosureViewConverter : CocoaConverter
 	{
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
+		internal override bool HasHeightConstraint() => false;
+
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{

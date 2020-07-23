@@ -29,6 +29,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
@@ -175,9 +176,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			return base.RendersConstraints(node, parent, rendererService);
 		}
 
-
 		#endregion
-
 
 		#region Flexible Views
 		const string IsFlexibleHorizontalParameter = "isFlexibleHorizontal";

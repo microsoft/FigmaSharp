@@ -25,6 +25,8 @@
 
 using System;
 using System.Linq;
+
+using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls.Cocoa

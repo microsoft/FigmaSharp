@@ -26,6 +26,8 @@ using System;
 using System.Text;
 
 using AppKit;
+
+using FigmaSharp.Cocoa;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
@@ -70,10 +72,17 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Distribution)
             {
-                stackView.Distribution = NSStackViewDistribution.Fill;
+                node.TryGetAttributeValue (DistributionPropertyName, out var value);
+
+                NSStackViewDistribution distribution = NSStackViewDistribution.Fill;
+                if (!string.IsNullOrEmpty (value))
+                    Enum.TryParse(value.ToCamelCase(), out distribution);
+                stackView.Distribution = distribution;
                 return;
             }
         }
+
+        const string DistributionPropertyName = "distribution";
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
@@ -118,7 +127,15 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Distribution)
             {
-                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.Fill.GetFullName());
+                codeNode.Node.TryGetAttributeValue(DistributionPropertyName, out var value);
+                NSStackViewDistribution distribution = NSStackViewDistribution.Fill;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var parameter = typeof(NSStackViewDistribution).WithProperty(value.ToCamelCase());
+                    Enum.TryParse(parameter, out distribution); ;
+                }
+
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), distribution.GetFullName());
                 return;
             }
         }

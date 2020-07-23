@@ -7,6 +7,11 @@ namespace FigmaSharp.Cocoa
 {
 	public static class CodeGenerationExtensions
 	{
+		public static string GetFullProperty (this Enum enumeration, string property)
+		{
+			return enumeration.GetType().WithProperty(property.ToCamelCase());
+		}
+
 		public static string WithProperty(this Type type, string property)
 		{
 			return string.Format("{0}.{1}", type.FullName, property);

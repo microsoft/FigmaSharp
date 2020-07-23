@@ -28,6 +28,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
@@ -187,8 +188,6 @@ namespace FigmaSharp.Controls.Cocoa.Services
         }
 
         #endregion
-
-
 
         internal ViewNode[] GetProcessedNodes(FigmaNode[] mainNodes)
 		{

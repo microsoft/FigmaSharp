@@ -89,6 +89,18 @@ namespace FigmaSharp.Services
             return null;
         }
 
+        const string HasConstraintsParameter = "hasConstraints";
+        internal virtual bool HasConstraints(FigmaNode currentNode, NodeConverter converter)
+        {
+            if (currentNode.TryGetAttributeValue(HasConstraintsParameter, out var value))
+            {
+                if (value == "true")
+                    return true;
+                if (value == "false")
+                    return false;
+            }
+            return true;
+        }
 
         internal virtual bool HasWidthConstraint(FigmaNode currentNode, NodeConverter converter)
         {

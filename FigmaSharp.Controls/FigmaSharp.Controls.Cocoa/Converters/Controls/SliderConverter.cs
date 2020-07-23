@@ -40,7 +40,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public abstract class SliderConverter : CocoaConverter
     {
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSSlider);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSSlider);
 
 		public override bool CanSetAccessibilityLabel => false;
 

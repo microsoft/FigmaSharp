@@ -39,8 +39,6 @@ namespace FigmaSharp.Controls.Cocoa
 {
 	public abstract class CocoaConverter : NodeConverter
 	{
-		internal override bool HasHeightConstraint() => false;
-
 		public override bool ScanChildren(FigmaNode currentNode)
 		{
 			return false;

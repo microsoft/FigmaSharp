@@ -38,6 +38,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public abstract class ProgressIndicatorConverter : CocoaConverter
     {
+		internal override bool HasHeightConstraint() => false;
+
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
