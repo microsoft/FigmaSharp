@@ -22,6 +22,9 @@ namespace FigmaSharpApp
 		AppKit.NSPopUpButton PagePopUpButton { get; set; }
 
 		[Outlet]
+		AppKit.NSPopUpButton LangPopupButton { get; set; }
+
+		[Outlet]
 		AppKit.NSButton RefreshButton { get; set; }
 
 		[Outlet]

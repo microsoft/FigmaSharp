@@ -421,7 +421,7 @@ Gw
                     <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titleVisibility="hidden" id="csp-8t-ctO">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="317" width="640" height="480"/>
+                        <rect key="contentRect" x="245" y="317" width="800" height="480"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="320" height="320"/>
                         <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="z7L-HX-hhV">
@@ -504,6 +504,38 @@ Gw
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </progressIndicator>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="DFE9D589-C3C3-46CD-8006-0573A68C6861" label="LangLabel" paletteLabel="LangLabel" sizingBehavior="auto" id="eCZ-EE-geC">
+                                    <nil key="toolTip"/>
+                                    <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="845-MP-AJ1">
+                                        <rect key="frame" x="12" y="14" width="38" height="16"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Lang" id="fk7-xy-JMB">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="B4817F68-4956-46F2-AB87-42AA80BCE3BC" label="LangCombo" paletteLabel="LangCombo" sizingBehavior="auto" id="llO-nz-bLG">
+                                    <nil key="toolTip"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="VfA-ct-XMy">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="Llc-fE-DiU" id="n2t-Yx-Wp1">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <menu key="menu" id="Bus-gV-sXh">
+                                                <items>
+                                                    <menuItem title="Item 1" state="on" id="Llc-fE-DiU"/>
+                                                    <menuItem title="Item 2" id="mI3-9G-gdE">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Item 3" id="0Lb-7M-30y"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="NHv-Gm-Lms"/>
@@ -512,6 +544,8 @@ Gw
                                 <toolbarItem reference="8jD-Ch-646"/>
                                 <toolbarItem reference="nwy-jM-blc"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
+                                <toolbarItem reference="eCZ-EE-geC"/>
+                                <toolbarItem reference="llO-nz-bLG"/>
                                 <toolbarItem reference="Y1v-Tf-uql"/>
                                 <toolbarItem reference="skh-lC-i6L"/>
                             </defaultToolbarItems>
@@ -522,6 +556,7 @@ Gw
                     </window>
                     <connections>
                         <outlet property="DarkModeButton" destination="du5-wr-dXP" id="ZqO-BX-oqq"/>
+                        <outlet property="LangPopupButton" destination="VfA-ct-XMy" id="GPF-k5-5u9"/>
                         <outlet property="MainToolbar" destination="z7L-HX-hhV" id="1Xy-J8-wDQ"/>
                         <outlet property="PagePopUpButton" destination="fWU-rn-Zi4" id="SI2-eg-muq"/>
                         <outlet property="RefreshButton" destination="iXD-EU-bKJ" id="ZWE-0H-D3R"/>
@@ -533,7 +568,7 @@ Gw
                 </windowController>
                 <customObject id="mhM-RN-F0i" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1374" y="346"/>
+            <point key="canvasLocation" x="1454" y="346"/>
         </scene>
         <!--Document View Controller-->
         <scene sceneID="9Jh-cp-1WU">
