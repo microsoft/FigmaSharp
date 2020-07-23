@@ -58,12 +58,15 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-          <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />     
+    <Reference Include="System.Web" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Views\" />
+    <Folder Include="Translation\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -93,6 +96,8 @@
       <DependentUpon>FileContainerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\RecentStore.cs" />
+    <Compile Include="Translation\GoogleTranslationService.cs" />
+    <Compile Include="Translation\AzureTranslatorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard">

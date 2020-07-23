@@ -50,6 +50,7 @@ namespace FigmaSharpApp
 		public event EventHandler<int> PageChanged;
 
 		public event EventHandler RefreshRequested;
+		public event EventHandler<string> LanguageChanged;
 
 		public DocumentWindowController (IntPtr handle) : base (handle)
 		{
@@ -71,6 +72,8 @@ namespace FigmaSharpApp
 			};
 			versionsMainMenu = NSApplication.SharedApplication.MainMenu.ItemWithTitle("Versions");
 
+            LangPopupButton.Activated += LangPopupButton_Activated;
+
 			CGRect frame = Window.Frame;
 			ShouldCascadeWindows = true;
 
@@ -88,7 +91,21 @@ namespace FigmaSharpApp
 			firstWindow = false;
 		}
 
-		public bool UsesDarkMode = false;
+        private void LangPopupButton_Activated(object sender, EventArgs e)
+        {
+			LanguageChanged?.Invoke(this, LangPopupButton.SelectedItem?.Title);
+		}
+
+        public bool UsesDarkMode = false;
+
+		public void RefreshLangCombo(string[] items)
+		{
+			LangPopupButton.RemoveAllItems();
+			foreach (var item in items)
+			{
+				LangPopupButton.AddItem(item);
+			}
+		}
 
 		public void ToggleDarkMode()
 		{

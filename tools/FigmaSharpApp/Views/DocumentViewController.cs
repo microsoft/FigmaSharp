@@ -25,6 +25,7 @@
  */
 
 using System;
+using System.Linq;
 using AppKit;
 using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Models;
@@ -32,6 +33,8 @@ using FigmaSharp.Services;
 using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Views.Cocoa;
 using Foundation;
+using FigmaSharpApp.Translation;
+using System.Text;
 
 namespace FigmaSharpApp
 {
@@ -48,19 +51,20 @@ namespace FigmaSharpApp
 		ScrollView MainScrollView;
 		NSScrollView NativeScrollView;
 
+		IAppTranslationService translationService;
 
 		public DocumentViewController(IntPtr handle) : base(handle)
 		{
 		}
 
-
 		public void OnInitialize()
 		{
+			translationService = new GoogleTranslationService();
+
 			MainScrollView = CreateScrollView();
 			NativeScrollView = (NSScrollView)MainScrollView.NativeObject;
 
 			View.AddSubview(NativeScrollView);
-
 
 			var windowDelegate = new WindowDelegate();
 
@@ -73,15 +77,80 @@ namespace FigmaSharpApp
 
 			View.Window.WeakDelegate = windowDelegate;
 
-
 			windowController = (DocumentWindowController)View.Window.WindowController;
+
+			windowController.RefreshLangCombo(translationService.GetTranlationLangs());
+            windowController.LanguageChanged += WindowController_LanguageChanged;
+
 			windowController.VersionSelected += WindowController_VersionSelected;
 			windowController.RefreshRequested += WindowController_RefreshRequested;
 			windowController.PageChanged += WindowController_PageChanged;
 		}
 
+		void RefreshTranslationFromComponents ()
+        {
+			StringBuilder toTranslate = new StringBuilder();
+			int count = 0;
 
-		ScrollView CreateScrollView()
+			foreach (var item in rendererService.NodesProcessed)
+			{
+				if (item.View.NativeObject is AppKit.NSTextField || item.View.NativeObject is AppKit.NSTextView || item.View.NativeObject is AppKit.NSButton)
+				{
+					if (count >0)
+                    {
+						toTranslate.Append("|");
+					}
+
+					if (item.FigmaNode is FigmaFrame frame)
+                    {
+						FigmaText text = null;
+						if (item.View.NativeObject is AppKit.NSButton)
+                        {
+							var group = frame.children.OfType<FigmaGroup>().FirstOrDefault(s => s.visible);
+							if (group != null)
+								text = group.children.OfType<FigmaText>().FirstOrDefault(s => s.name == ComponentString.TITLE);
+						}
+						if (text == null)
+							text = frame.children.OfType<FigmaText>().FirstOrDefault(s => s.name == ComponentString.TITLE && s.visible);
+						if (text != null)
+                        {
+							toTranslate.Append(string.Format("{0}${1}", frame.id, text.characters ?? ""));
+						}
+					}
+					count++;
+				}
+			}
+
+			var translated = translationService.GetTranslatedStringText(toTranslate.ToString());
+			var data = translated.Split('|');
+            foreach (var item in data)
+            {
+				var index = item.IndexOf("$");
+				if (index > -1)
+                {
+					string nodeId = item.Substring(0, index).Trim().Replace(" ",string.Empty);
+					var processedNode = rendererService.NodesProcessed.FirstOrDefault(s => s.FigmaNode.id == nodeId);
+					if (processedNode != null)
+					{
+						var translatedText = item.Substring(index + 1).Trim ();
+						if (processedNode.View.NativeObject is AppKit.NSTextField textField)
+							textField.StringValue = translatedText;
+						else if (processedNode.View.NativeObject is AppKit.NSButton button)
+							button.Title = translatedText;
+						else if (processedNode.View.NativeObject is AppKit.NSTextView textView)
+							textView.Value = translatedText;
+					}
+				}
+			}
+		}
+
+        private void WindowController_LanguageChanged(object sender, string lang)
+        {
+			translationService.SetOutputLanguageLanguage(lang);
+			RefreshTranslationFromComponents();
+		}
+
+        ScrollView CreateScrollView()
 		{
 			var scrollView = new ScrollView();
 			var nativeScrollView = (NSScrollView)scrollView.NativeObject;
@@ -96,7 +165,6 @@ namespace FigmaSharpApp
 			return scrollView;
 		}
 
-
 		public void LoadDocument(string token, string documentId, FigmaFileVersion version = null)
 		{
 			Token = token;
@@ -106,12 +174,10 @@ namespace FigmaSharpApp
 			Load(version: version, pageIndex: CurrentPageIndex);
 		}
 
-
 		public void Reload(FigmaFileVersion version = null, int pageIndex = 0)
 		{
 			Load(version: version, pageIndex: pageIndex);
 		}
-
 
 		void WindowController_PageChanged(object sender, int pageIndex)
 		{
@@ -172,7 +238,7 @@ namespace FigmaSharpApp
 			}
 
 			var scrollView = CreateScrollView();
-			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new ViewRenderServiceOptions() { StartPage = pageIndex });
+			await rendererService.StartAsync (DocumentID, scrollView.ContentView, new ViewRenderServiceOptions() { StartPage = pageIndex, TranslateLabels = true });
 
 			windowController.ToggleToolbarSpinner(toggle_on: true);
 

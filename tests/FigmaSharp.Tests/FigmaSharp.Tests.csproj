@@ -31,6 +31,8 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.1</Version>
     </PackageReference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGeneratorTests.cs" />
@@ -42,6 +44,7 @@
     <Compile Include="Resources.cs" />
     <Compile Include="ToCode\ElipseTests.cs" />
     <Compile Include="ToCode\CocoaStringObjectTests.cs" />
+    <Compile Include="TranslationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
