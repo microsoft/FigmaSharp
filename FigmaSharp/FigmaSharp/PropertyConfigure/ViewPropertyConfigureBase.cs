@@ -26,14 +26,13 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-using FigmaSharp.Models;
+using FigmaSharp.Converters;
 using FigmaSharp.Services;
-using FigmaSharp.Views;
 
 namespace FigmaSharp.PropertyConfigure
 {
     public abstract class ViewPropertyConfigureBase
     {
-        public abstract void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, ViewRenderService rendererService);
+        public abstract void Configure(string propertyName, ViewNode currentNode, ViewNode parentNode, NodeConverter converter, ViewRenderService rendererService);
     }
 }

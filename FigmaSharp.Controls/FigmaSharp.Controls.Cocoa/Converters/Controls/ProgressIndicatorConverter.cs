@@ -40,7 +40,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     {
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
 
-
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;

@@ -70,7 +70,7 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Distribution)
             {
-                stackView.Distribution = NSStackViewDistribution.FillEqually;
+                stackView.Distribution = NSStackViewDistribution.Fill;
                 return;
             }
         }
@@ -118,7 +118,7 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Distribution)
             {
-                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.FillEqually.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.Fill.GetFullName());
                 return;
             }
         }

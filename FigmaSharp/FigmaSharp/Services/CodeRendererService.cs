@@ -160,22 +160,12 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		public NodeConverter GetNodeConverter (CodeNode node)
+        public NodeConverter GetNodeConverter (CodeNode node)
         {
 			var converter = GetConverter(node, CustomConverters);
 			if (converter == null)
 				converter = GetConverter(node, DefaultConverters);
 			return converter;
-		}
-
-        internal virtual bool IsFlexibleVertical(CodeNode nodeNode, NodeConverter converter)
-        {
-			return converter.IsFlexibleVertical(nodeNode.Node);
-		}
-
-        internal virtual bool IsFlexibleHorizontal(CodeNode nodeNode, NodeConverter converter)
-        {
-			return converter.IsFlexibleHorizontal (nodeNode.Node);
 		}
 
         protected virtual bool RendersConstraints(CodeNode node, CodeNode parent, CodeRenderService figmaCodeRendererService)

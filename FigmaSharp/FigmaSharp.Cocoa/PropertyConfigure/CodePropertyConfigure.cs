@@ -52,34 +52,39 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 				if (currentNode.Node is IAbsoluteBoundingBox absoluteBounding)
 				{
-					var constrainedNode = currentNode.Node as IConstraints;
-
 					var name = currentNode.Name;
-					
-					//width
-					var widthConstraintName = $"{name}WidthConstraint";
 
-					var widthMaxStringValue = Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1).ToDesignerString ();
-					var widthConstraintStringValue = CodeGenerationHelpers.GetWidthConstraintEqualToConstant (name, widthMaxStringValue);
-					builder.AppendLine($"var {widthConstraintName} = {widthConstraintStringValue};");
+					if (rendererService.HasWidthConstraint(currentNode.Node, converter))
+					{
+						//width
+						var widthConstraintName = $"{name}WidthConstraint";
 
-					if (rendererService.IsFlexibleHorizontal (currentNode, converter))
-						builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof(int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
+						var widthMaxStringValue = Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1).ToDesignerString();
+						var widthConstraintStringValue = CodeGenerationHelpers.GetWidthConstraintEqualToConstant(name, widthMaxStringValue);
+						builder.AppendLine($"var {widthConstraintName} = {widthConstraintStringValue};");
 
-					builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
+						if (rendererService.IsFlexibleHorizontal(currentNode, converter))
+							builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof(int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
 
-					//height
-					var heightConstraintName = $"{name}HeightConstraint";
+						builder.WritePropertyEquality(widthConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
 
-					var heightStringValue = Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1).ToDesignerString();
-					var heightConstraintStringValue = CodeGenerationHelpers.GetHeightConstraintEqualToConstant(name, heightStringValue);
+					}
 
-					builder.AppendLine($"var {heightConstraintName} = {heightConstraintStringValue};");
+					if (rendererService.HasHeightConstraint(currentNode.Node, converter))
+					{
+						//height
+						var heightConstraintName = $"{name}HeightConstraint";
 
-					if (rendererService.IsFlexibleVertical(currentNode, converter))
-						builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof (int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
+						var heightStringValue = Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1).ToDesignerString();
+						var heightConstraintStringValue = CodeGenerationHelpers.GetHeightConstraintEqualToConstant(name, heightStringValue);
 
-					builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
+						builder.AppendLine($"var {heightConstraintName} = {heightConstraintStringValue};");
+
+						if (rendererService.IsFlexibleVertical(currentNode, converter))
+							builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Priority), $"({typeof(int).FullName}){typeof(NSLayoutPriority)}.{nameof(NSLayoutPriority.DefaultLow)}");
+
+						builder.WritePropertyEquality(heightConstraintName, nameof(AppKit.NSLayoutConstraint.Active), true);
+					}
 
 					return builder.ToString();
 				}

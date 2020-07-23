@@ -26,24 +26,23 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using FigmaSharp.Models;
 using FigmaSharp.Views;
 
-namespace FigmaSharp.Models
+namespace FigmaSharp.Services
 {
-    public class ViewNode
+    public class ViewNode : ContainerNode
     {
-        public ViewNode (FigmaNode figmaNode, IView view, ViewNode parentView = null)
+        public ViewNode (FigmaNode figmaNode, IView view, ViewNode parentView = null) : base (figmaNode)
         {
-            FigmaNode = figmaNode;
             View = view;
             ParentView = parentView;
         }
 
-        public FigmaNode FigmaNode { get; set; }
         public IView View { get; set; }
         public ViewNode ParentView { get; set; }
 
         public override string ToString() =>
-            FigmaNode?.ToString() ?? base.ToString();
+            base.Node?.ToString() ?? base.ToString();
     }
 }

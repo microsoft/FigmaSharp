@@ -28,6 +28,7 @@
 
 using System;
 using AppKit;
+using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
@@ -37,19 +38,25 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 {
     public class ViewPropertyConfigure : ViewPropertyConfigureBase
     {
-        public override void Configure(string propertyName, IView view, FigmaNode currentNode, IView parent, FigmaNode parentNode, ViewRenderService rendererService)
+        public override void Configure(string propertyName, ViewNode currentViewNode, ViewNode parentViewNode, NodeConverter converter, ViewRenderService rendererService)
         {
+            var currentNode = currentViewNode.Node;
+            var parentNode = parentViewNode?.Node;
+
             if (propertyName == PropertyNames.AddChild)
             {
-                if ((parentNode?.IsStackView() ?? false) && parent?.NativeObject is AppKit.NSStackView stackView)
-                    stackView.AddArrangedSubview(view.NativeObject as NSView);
-                else
-                    parent?.AddChild(view);
+                if (parentViewNode?.View != null)
+                {
+                    if (parentNode.IsStackView() && parentViewNode.View.NativeObject is AppKit.NSStackView stackView)
+                        stackView.AddArrangedSubview(currentViewNode.View.NativeObject as NSView);
+                    else
+                        parentViewNode.View.AddChild(currentViewNode.View);
+                }
                 return;
             }
             if (propertyName == PropertyNames.Constraints)
             {
-                if (currentNode is IConstraints constrainedNode && view.NativeObject is AppKit.NSView nativeView && parent.NativeObject is AppKit.NSView parentNativeView)
+                if (currentNode is IConstraints constrainedNode && currentViewNode?.View?.NativeObject is AppKit.NSView nativeView && parentViewNode?.View?.NativeObject is AppKit.NSView parentNativeView)
                 {
                     var constraints = constrainedNode.constraints;
                     var absoluteBoundingBox = ((IAbsoluteBoundingBox)currentNode)
@@ -113,24 +120,24 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
             {
                 if (currentNode is IAbsoluteBoundingBox absoluteBounding)
                 {
-                    var nativeView = view.NativeObject as AppKit.NSView;
+                    var nativeView = currentViewNode?.View?.NativeObject as AppKit.NSView;
 
-                    var parentNativeView = parent.NativeObject as AppKit.NSView;
-                    var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
+                    if (rendererService.HasWidthConstraint(currentNode, converter))
+                    {
+                        var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
+                        if (rendererService.IsFlexibleHorizontal(currentViewNode, converter))
+                            widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
+                        widthConstraint.Active = true;
+                    }
 
-                    var constrainedNode = currentNode as IConstraints;
-                    if (constrainedNode != null && constrainedNode.constraints.IsFlexibleHorizontal)
-                        widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
+                    if (rendererService.HasHeightConstraint(currentNode, converter))
+                    {
+                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
+                        if (rendererService.IsFlexibleVertical(currentViewNode, converter))
+                            heightConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
 
-                    widthConstraint.Active = true;
-
-                    var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
-
-                    if (constrainedNode != null && constrainedNode.constraints.IsFlexibleVertical)
-                        heightConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
-
-                    heightConstraint.Active = true;
-
+                        heightConstraint.Active = true;
+                    }
                 }
                 return;
             }

@@ -41,8 +41,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class BoxConverter : CocoaConverter
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSBox);
+        internal override bool HasHeightConstraint() => true;
 
+        public override Type GetControlType(FigmaNode currentNode) => typeof(NSBox);
 
         public override bool CanConvert(FigmaNode currentNode)
         {

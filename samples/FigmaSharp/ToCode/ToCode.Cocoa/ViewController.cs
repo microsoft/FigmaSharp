@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using AppKit;
 using FigmaSharp;
@@ -29,7 +31,7 @@ namespace ToCode.Cocoa
 
 		MonoDevelopTranslationService translationService = new MonoDevelopTranslationService();
 
-		const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
+		//const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
@@ -62,12 +64,20 @@ namespace ToCode.Cocoa
 			scrollView.LeftAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.LeftAnchor).Active = true;
 			scrollView.RightAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.RightAnchor).Active = true;
 
+			translateButton.State = NSCellStateValue.Off;
+
 			figmaDelegate = new FigmaDesignerDelegate ();
 
-			urlTextField.StringValue = fileIds;
-
-			RefreshTree(fileIds);
+			if (File.Exists (FilePath))
+            {
+				urlTextField.StringValue = File.ReadAllText(FilePath) ?? string.Empty;
+				RefreshTree(urlTextField.StringValue);
+            }
 		}
+
+        public string FilePath => Path.Combine(Path.GetDirectoryName(GetType ().Assembly.Location), "config.cfg");
+
+		const string UrlRegistryKey = "keyUrl";
 
 		void RefreshTree(string docId)
 		{
@@ -75,8 +85,15 @@ namespace ToCode.Cocoa
 			fileProvider = new ControlRemoteNodeProvider();
 			fileProvider.Load(docId);
 
-			var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
+			if (fileProvider.Response == null)
+            {
+				return;
+            }
+
+				var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
 			codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter, translationService);
+
+			
 
 			data = new FigmaNodeView(fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
@@ -87,6 +104,9 @@ namespace ToCode.Cocoa
 
         private void UrlTextField_Activated(object sender, EventArgs e)
         {
+			if (string.IsNullOrEmpty(urlTextField.StringValue))
+				return;
+			System.IO.File.WriteAllText(FilePath, urlTextField.StringValue);
 			RefreshTree(urlTextField.StringValue);
 		}
 

@@ -89,6 +89,27 @@ namespace FigmaSharp.Services
             return null;
         }
 
+
+        internal virtual bool HasWidthConstraint(FigmaNode currentNode, NodeConverter converter)
+        {
+            return converter.HasWidthConstraint();
+        }
+
+        internal virtual bool HasHeightConstraint(FigmaNode currentNode, NodeConverter converter)
+        {
+            return converter.HasHeightConstraint();
+        }
+
+        internal virtual bool IsFlexibleVertical(ContainerNode currentNode, NodeConverter converter)
+        {
+            return converter.IsFlexibleVertical(currentNode.Node);
+        }
+
+        internal virtual bool IsFlexibleHorizontal(ContainerNode currentNode, NodeConverter converter)
+        {
+            return converter.IsFlexibleHorizontal(currentNode.Node);
+        }
+
         internal string GetTranslatedText(string text)
         {
             if (baseOptions.TranslateLabels && TranslationService != null)
@@ -96,6 +117,14 @@ namespace FigmaSharp.Services
                 return TranslationService.GetTranslatedStringText(text);
             }
             return text;
+        }
+
+        public NodeConverter GetConverter(FigmaNode node)
+        {
+            var converter = GetProcessedConverter(node, CustomConverters);
+            if (converter == null)
+                converter = GetProcessedConverter(node, DefaultConverters);
+            return converter;
         }
 
         protected NodeConverter GetProcessedConverter(FigmaNode currentNode, IEnumerable<NodeConverter> customViewConverters)

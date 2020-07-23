@@ -92,9 +92,9 @@ namespace FigmaSharp.Controls.Cocoa.Services
 
         protected override bool RendersConstraints(ViewNode currentNode, ViewNode parentNode, RenderService rendererService)
         {
-            if (currentNode.FigmaNode.IsDialogParentContainer())
+            if (currentNode.Node.IsDialogParentContainer())
                 return false;
-            if (currentNode.FigmaNode.IsNodeWindowContent())
+            if (currentNode.Node.IsNodeWindowContent())
                 return false;
             return base.RendersConstraints (currentNode, parentNode, rendererService);
         }
@@ -130,13 +130,73 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			return false;
 		}
 
+        #region Flexible Views
+
+        const string HasWidthConstraintParameter = "hasWidthConstraint";
+        const string HasHeightConstraintParameter = "hasHeightConstraint";
+
+        const string IsFlexibleHorizontalParameter = "isFlexibleHorizontal";
+        const string IsFlexibleVerticalParameter = "isFlexibleVertical";
+
+        internal override bool IsFlexibleHorizontal(ContainerNode currentNode, NodeConverter converter)
+        {
+            if (currentNode.Node.TryGetAttributeValue(IsFlexibleHorizontalParameter, out var value))
+            {
+                if (value == "true")
+                    return true;
+                if (value == "false")
+                    return false;
+            }
+            return base.IsFlexibleHorizontal(currentNode, converter);
+        }
+
+        internal override bool IsFlexibleVertical(ContainerNode currentNode, NodeConverter converter)
+        {
+            if (currentNode.Node.TryGetAttributeValue(IsFlexibleVerticalParameter, out var value))
+            {
+                if (value == "true")
+                    return true;
+                if (value == "false")
+                    return false;
+            }
+            return base.IsFlexibleVertical(currentNode, converter);
+        }
+
+        internal override bool HasHeightConstraint(FigmaNode currentNode, NodeConverter converter)
+        {
+            if (currentNode.TryGetAttributeValue(HasHeightConstraintParameter, out var value))
+            {
+                if (value == "true")
+                    return true;
+                if (value == "false")
+                    return false;
+            }
+            return base.HasHeightConstraint(currentNode, converter);
+        }
+
+        internal override bool HasWidthConstraint(FigmaNode currentNode, NodeConverter converter)
+        {
+            if (currentNode.TryGetAttributeValue(HasWidthConstraintParameter, out var value))
+            {
+                if (value == "true")
+                    return true;
+                if (value == "false")
+                    return false;
+            }
+            return base.HasWidthConstraint(currentNode, converter);
+        }
+
+        #endregion
+
+
+
         internal ViewNode[] GetProcessedNodes(FigmaNode[] mainNodes)
 		{
             ViewNode[] resultNodes = new ViewNode[mainNodes.Length];
 			for (int i = 0; i < mainNodes.Length; i++)
 			{
                 var currentNode = mainNodes[i];
-                resultNodes[i] = NodesProcessed.FirstOrDefault(s => s.FigmaNode == currentNode);
+                resultNodes[i] = NodesProcessed.FirstOrDefault(s => s.Node == currentNode);
             }
             return resultNodes;
 		}

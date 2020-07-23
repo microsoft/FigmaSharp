@@ -61,7 +61,7 @@ namespace FigmaSharp.Services
                 {
                     try
                     {
-                        var recoveredKey = ResourceHelper.FromLocalResourceNameToUrlResourceName(vector.FigmaNode.id);
+                        var recoveredKey = ResourceHelper.FromLocalResourceNameToUrlResourceName(vector.Node.id);
                         string filePath = Path.Combine(ResourcesDirectory, string.Concat(recoveredKey, ImageFormat));
 
                         if (!System.IO.File.Exists(filePath))

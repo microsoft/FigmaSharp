@@ -71,7 +71,7 @@ namespace FigmaSharp.Services
                 {
                     var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
                     Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
-                    var ids = vectors.Select(s => CreateEmptyImageNodeRequest(s.FigmaNode))
+                    var ids = vectors.Select(s => CreateEmptyImageNodeRequest(s.Node))
                         .ToArray();
 
                     var figmaImageResponse = AppContext.Api.GetImages(File, ids, imageFormat);
@@ -110,8 +110,8 @@ namespace FigmaSharp.Services
 
                         foreach (var figmaNodeId in imageUrl.Item2)
                         {
-                            var vector = imageFigmaNodes.FirstOrDefault(s => s.FigmaNode.id == figmaNodeId);
-                            Console.Write("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
+                            var vector = imageFigmaNodes.FirstOrDefault(s => s.Node.id == figmaNodeId);
+                            Console.Write("[{0}:{1}:{2}] {3}...", vector.Node.GetType(), vector.Node.id, vector.Node.name, imageUrl);
 
                             if (vector != null && vector.View is ISvgView imageView)
                             {
@@ -132,8 +132,8 @@ namespace FigmaSharp.Services
                         var Image = AppContext.Current.GetImage(imageUrl.Item1);
                         foreach (var figmaNodeId in imageUrl.Item2)
                         {
-                            var vector = imageFigmaNodes.FirstOrDefault(s => s.FigmaNode.id == figmaNodeId);
-                            Console.WriteLine("[{0}:{1}:{2}] {3}...", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, imageUrl);
+                            var vector = imageFigmaNodes.FirstOrDefault(s => s.Node.id == figmaNodeId);
+                            Console.WriteLine("[{0}:{1}:{2}] {3}...", vector.Node.GetType(), vector.Node.id, vector.Node.name, imageUrl);
 
                             if (vector != null)
                             {
@@ -149,7 +149,7 @@ namespace FigmaSharp.Services
                                     }
                                     else
                                     {
-                                        Console.WriteLine("[{0}:{1}:{2}] Error cannot assign the image to the current view {3}", vector.FigmaNode.GetType(), vector.FigmaNode.id, vector.FigmaNode.name, vector.View.GetType().FullName);
+                                        Console.WriteLine("[{0}:{1}:{2}] Error cannot assign the image to the current view {3}", vector.Node.GetType(), vector.Node.id, vector.Node.name, vector.View.GetType().FullName);
                                     }
                                 });
                             }
