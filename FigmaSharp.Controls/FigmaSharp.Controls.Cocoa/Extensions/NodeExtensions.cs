@@ -293,54 +293,6 @@ namespace FigmaSharp.Controls.Cocoa
             return figmaNode.FirstChild(s => s.name == "!options");
         }
 
-        public static bool TryGetAttributeValue(this FigmaNode node, string parameter, out string value)
-        {
-            //we want remove special chars
-            parameter = FigmaSharp.ServiceExtensions.FilterName (parameter);
-
-            value = node.name;
-            try
-            {
-                var index = value.IndexOf(parameter);
-                if (index > -1 && index < value.Length)
-                {
-                    value = value.Substring(index + parameter.Length);
-                    index = value.IndexOf("\"");
-                    if (index > -1 && index < value.Length)
-                    {
-                        value = value.Substring(index + 1);
-                        index = value.IndexOf("\"");
-                        if (index > -1 && index < value.Length)
-                        {
-                            value = value.Substring(0, index);
-                            return true;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-            value = null;
-            return false;
-        }
-
-        public static bool TryGetChildPropertyValue(this FigmaNode node, string property, out string value)
-        {
-            if (node is IFigmaNodeContainer container && container.children != null)
-            {
-                foreach (var item in container.children)
-                {
-                    if (TryGetAttributeValue(item, property, out value))
-                    {
-                        return true;
-                    }
-                }
-            }
-            value = null;
-            return false;
-        }
-
         //public static NativeControlComponentType ToControlType (this FigmaInstance figmaInstance)
         //{
         //    if (figmaInstance.Component != null) {

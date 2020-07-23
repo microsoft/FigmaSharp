@@ -38,6 +38,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public class RadioConverter : CocoaConverter
 	{
+        internal override bool HasHeightConstraint() => false;
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
 		public override bool CanConvert(FigmaNode currentNode)

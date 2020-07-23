@@ -38,6 +38,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class PopUpButtonConverter : CocoaConverter
 	{
+		internal override bool HasHeightConstraint() => false;
+
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSPopUpButton);
 
 		public override bool CanConvert(FigmaNode currentNode)

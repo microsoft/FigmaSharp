@@ -181,7 +181,7 @@ namespace FigmaSharp
 		{
 			foreach (var node in rendererService.NodesProcessed)
 			{
-				if (node.View.NativeObject is T && node.FigmaNode.name == name)
+				if (node.View.NativeObject is T && node.Node.name == name)
 				{
 					return (T)node.View.NativeObject;
 				}
@@ -193,7 +193,7 @@ namespace FigmaSharp
 		{
 			foreach (var node in rendererService.NodesProcessed)
 			{
-				if (node.View.NativeObject is T && node.FigmaNode.name == name)
+				if (node.View.NativeObject is T && node.Node.name == name)
 				{
 					yield return (T)node.View.NativeObject;
 				}
@@ -204,7 +204,7 @@ namespace FigmaSharp
 		{
 			foreach (var node in rendererService.NodesProcessed)
 			{
-				if (node.View.NativeObject is T && node.FigmaNode.name.StartsWith(name, stringComparison))
+				if (node.View.NativeObject is T && node.Node.name.StartsWith(name, stringComparison))
 				{
 					yield return (T)node.View.NativeObject;
 				}

@@ -40,6 +40,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class ButtonConverter : CocoaConverter
     {
+        internal override bool HasHeightConstraint() => false;
+
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
         internal override bool IsFlexibleHorizontal(FigmaNode node) => true;

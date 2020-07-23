@@ -106,6 +106,16 @@ namespace FigmaSharp.Converters
 			return null;
         }
 
+        internal virtual bool HasWidthConstraint ()
+        {
+            return true;
+        }
+
+        internal virtual bool HasHeightConstraint()
+        {
+            return true;
+        }
+
         internal virtual bool IsFlexibleHorizontal(FigmaNode node)
         {
             if (node is IConstraints constrainedNode)

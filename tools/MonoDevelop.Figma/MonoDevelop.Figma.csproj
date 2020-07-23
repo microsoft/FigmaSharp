@@ -141,19 +141,19 @@
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
-          <FigmaNodeId>38:682</FigmaNodeId>
+          <FigmaNodeCustomName>PackageUpdateWindow</FigmaNodeCustomName>
           <DependentUpon>PackageUpdateWindow.cs</DependentUpon>
         </Compile>
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
-          <FigmaNodeId>38:693</FigmaNodeId>
+          <FigmaNodeCustomName>FigmaPackageWindow</FigmaNodeCustomName>
           <DependentUpon>FigmaPackageWindow.cs</DependentUpon>
         </Compile>
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
-          <FigmaNodeId>38:714</FigmaNodeId>
+          <FigmaNodeCustomName>GenerateViewsWindow</FigmaNodeCustomName>
           <DependentUpon>GenerateViewsWindow.cs</DependentUpon>
         </Compile>
       </ItemGroup>

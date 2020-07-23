@@ -29,6 +29,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FigmaSharp.Cocoa;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
@@ -175,23 +176,63 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			return base.RendersConstraints(node, parent, rendererService);
 		}
 
+		#endregion
+
+		#region Flexible Views
 		const string IsFlexibleHorizontalParameter = "isFlexibleHorizontal";
 		const string IsFlexibleVerticalParameter = "isFlexibleVertical";
 
-		internal override bool IsFlexibleHorizontal(CodeNode codeNode, NodeConverter converter)
-        {
-			if (codeNode.Node.TryGetAttributeValue(IsFlexibleHorizontalParameter, out var value) && value == "true")
-				return true;
-            return base.IsFlexibleHorizontal(codeNode, converter);
+		internal override bool IsFlexibleHorizontal(ContainerNode currentNode, NodeConverter converter)
+		{
+			if (currentNode.Node.TryGetAttributeValue(IsFlexibleHorizontalParameter, out var value))
+			{
+				if (value == "true")
+					return true;
+				if (value == "false")
+					return false;
+			}
+			return base.IsFlexibleHorizontal(currentNode, converter);
 		}
-	
-		internal override bool IsFlexibleVertical(CodeNode codeNode, NodeConverter converter)
-        {
-			if (codeNode.Node.TryGetAttributeValue(IsFlexibleVerticalParameter, out var value) && value == "true")
-				return true;
-			return base.IsFlexibleVertical(codeNode, converter);
-        }
 
-        #endregion
-    }
+		internal override bool IsFlexibleVertical(ContainerNode currentNode, NodeConverter converter)
+		{
+			if (currentNode.Node.TryGetAttributeValue(IsFlexibleVerticalParameter, out var value))
+			{
+				if (value == "true")
+					return true;
+				if (value == "false")
+					return false;
+			}
+			return base.IsFlexibleVertical(currentNode, converter);
+		}
+
+		const string HasWidthConstraintParameter = "hasWidthConstraint";
+		const string HasHeightConstraintParameter = "hasHeightConstraint";
+
+		internal override bool HasHeightConstraint(FigmaNode currentNode, NodeConverter converter)
+		{
+			if (currentNode.TryGetAttributeValue(HasHeightConstraintParameter, out var value))
+			{
+				if (value == "true")
+					return true;
+				if (value == "false")
+					return false;
+			}
+			return base.HasHeightConstraint(currentNode, converter);
+		}
+
+		internal override bool HasWidthConstraint(FigmaNode currentNode, NodeConverter converter)
+		{
+			if (currentNode.TryGetAttributeValue(HasWidthConstraintParameter, out var value))
+			{
+				if (value == "true")
+					return true;
+				if (value == "false")
+					return false;
+			}
+			return base.HasWidthConstraint(currentNode, converter);
+		}
+
+		#endregion
+	}
 }

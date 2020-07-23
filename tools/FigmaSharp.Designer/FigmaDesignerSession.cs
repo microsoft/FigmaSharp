@@ -51,7 +51,7 @@ namespace FigmaSharp.Designer
 
         public List<ViewNode> ProcessedNodes => rendererService.NodesProcessed;
 
-        public ViewNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.FigmaNode is FigmaCanvas).ToArray ();
+        public ViewNode[] MainViews => rendererService.NodesProcessed.Where (s => s.ParentView != null && s.ParentView.Node is FigmaCanvas).ToArray ();
 
         public FigmaDesignerSession(INodeProvider figmaFileProvider, ViewRenderService figmaViewRendererService, StoryboardLayoutManager figmaViewRendererDistributionService)
         {
@@ -111,14 +111,14 @@ namespace FigmaSharp.Designer
 
         public IView GetViewWrapper(FigmaNode e)
         {
-            var processed = ProcessedNodes.FirstOrDefault(s => s.FigmaNode == e);
+            var processed = ProcessedNodes.FirstOrDefault(s => s.Node == e);
             return processed?.View;
         }
 
         public FigmaNode GetModel(IView e)
         {
             var processed = ProcessedNodes.FirstOrDefault(s => s.View != null && s.View.NativeObject == e.NativeObject);
-            return processed?.FigmaNode;
+            return processed?.Node;
         }
 
         public void DeleteView(FigmaNode e)

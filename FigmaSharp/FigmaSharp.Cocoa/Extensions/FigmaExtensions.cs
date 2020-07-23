@@ -53,7 +53,7 @@ namespace FigmaSharp.Cocoa
         {
             foreach (var node in rendererService.NodesProcessed)
             {
-                if ( node.FigmaNode.name == name)
+                if ( node.Node.name == name)
                 {
                     return (NSView)node.View.NativeObject;
                 }

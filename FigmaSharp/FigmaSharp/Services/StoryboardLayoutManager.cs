@@ -13,7 +13,7 @@ namespace FigmaSharp.Services
 
         public void Run(IView contentView, ViewRenderService rendererService)
         {
-            var mainNodes = rendererService.NodesProcessed.Where(s => s.FigmaNode.Parent is FigmaCanvas)
+            var mainNodes = rendererService.NodesProcessed.Where(s => s.Node.Parent is FigmaCanvas)
                 .ToArray ();
             Run(mainNodes, contentView, rendererService);
         }
@@ -21,8 +21,8 @@ namespace FigmaSharp.Services
         public void Run (ViewNode[] mainViews, IView contentView, ViewRenderService rendererService)
         {
             var orderedNodes = mainViews
-        .OrderBy(s => ((IAbsoluteBoundingBox)s.FigmaNode).absoluteBoundingBox.Left)
-        .ThenBy(s => ((IAbsoluteBoundingBox)s.FigmaNode).absoluteBoundingBox.Top)
+        .OrderBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Left)
+        .ThenBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Top)
         .ToArray();
 
             //We want know the background color of the figma camvas and apply to our scrollview
@@ -30,7 +30,7 @@ namespace FigmaSharp.Services
             if (firstNode == null)
                 return;
 
-            var canvas = firstNode.ParentView?.FigmaNode as FigmaCanvas;
+            var canvas = firstNode.ParentView?.Node as FigmaCanvas;
             if (canvas != null) {
                 contentView.BackgroundColor = canvas.backgroundColor;
                 if (contentView.Parent is IScrollView scrollview) {
@@ -38,7 +38,7 @@ namespace FigmaSharp.Services
 
                     //we need correct current initial positioning
                     var rectangle = orderedNodes
-                        .Select(s => s.FigmaNode)
+                        .Select(s => s.Node)
                         .GetBoundRectangle();
                     scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
@@ -46,17 +46,20 @@ namespace FigmaSharp.Services
 
             if (UsesConstraints) {
                 foreach (var node in orderedNodes)
+                {
+                    Converters.NodeConverter converter = rendererService.GetConverter(node.Node);
                     rendererService.PropertySetter.Configure(PropertyNames.Constraints,
-                        node.View, node.FigmaNode, node.ParentView?.View, node.ParentView?.FigmaNode, rendererService);
+                        node, node.ParentView, converter, rendererService);
+                }
             } else {
                 var rectangle = orderedNodes
-                       .Select(s => s.FigmaNode)
+                       .Select(s => s.Node)
                        .GetBoundRectangle();
 
                 foreach (var node in orderedNodes)
                 {
                     //we need correct current initial positioning
-                    if (node.FigmaNode is IAbsoluteBoundingBox box)
+                    if (node.Node is IAbsoluteBoundingBox box)
                     {
                         node.View.SetPosition(-rectangle.X + box.absoluteBoundingBox.X + VerticalMargins, -rectangle.Y + box.absoluteBoundingBox.Y + HorizontalMargins);
                     }

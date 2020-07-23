@@ -114,7 +114,7 @@ namespace FigmaSharp.Services
                 {
                     foreach (var processedNode in NodesProcessed)
                     {
-                        if (NodeProvider.RendersAsImage(processedNode.FigmaNode))
+                        if (NodeProvider.RendersAsImage(processedNode.Node))
                         {
                             ImageVectors.Add(processedNode);
                         }
@@ -262,7 +262,7 @@ namespace FigmaSharp.Services
         {
             foreach (var node in NodesProcessed)
             {
-                if (node.View is T && node.FigmaNode.name.StartsWith(name, stringComparison))
+                if (node.View is T && node.Node.name.StartsWith(name, stringComparison))
                 {
                     return (T)node.View;
                 }
@@ -274,7 +274,7 @@ namespace FigmaSharp.Services
         {
             foreach (var node in NodesProcessed)
             {
-                if (node.View is T && node.FigmaNode.name == name)
+                if (node.View is T && node.Node.name == name)
                 {
                     return (T)node.View;
                 }
@@ -287,7 +287,7 @@ namespace FigmaSharp.Services
             var node = nodeProvider.FindByPath(path);
             if (node == null)
                 return default(T);
-            var processed = NodesProcessed.FirstOrDefault(s => s.FigmaNode == node);
+            var processed = NodesProcessed.FirstOrDefault(s => s.Node == node);
             if (processed == null)
                 return default(T);
 
@@ -298,7 +298,7 @@ namespace FigmaSharp.Services
         {
             foreach (var node in NodesProcessed)
             {
-                if (node.View is T && node.FigmaNode.name.StartsWith(name, stringComparison))
+                if (node.View is T && node.Node.name.StartsWith(name, stringComparison))
                 {
                     yield return (T)node.View;
                 }
@@ -309,7 +309,7 @@ namespace FigmaSharp.Services
         {
             foreach (var node in NodesProcessed)
             {
-                if (node.View is T && node.FigmaNode.name == name)
+                if (node.View is T && node.Node.name == name)
                 {
                     yield return (T)node.View;
                 }
@@ -320,7 +320,7 @@ namespace FigmaSharp.Services
         {
             foreach (var node in NodesProcessed)
             {
-                if (node.FigmaNode.name == name)
+                if (node.Node.name == name)
                 {
                     return node.View;
                 }
@@ -330,12 +330,12 @@ namespace FigmaSharp.Services
 
         public ViewNode FindProcessedNodeByName(string name)
         {
-            return NodesProcessed.FirstOrDefault(s => s.FigmaNode.name == name);
+            return NodesProcessed.FirstOrDefault(s => s.Node.name == name);
         }
 
         public ViewNode FindProcessedNodeById(string Id)
         {
-            return NodesProcessed.FirstOrDefault(s => s.FigmaNode.id == Id);
+            return NodesProcessed.FirstOrDefault(s => s.Node.id == Id);
         }
 
         #endregion
@@ -347,18 +347,22 @@ namespace FigmaSharp.Services
             {
                 if (child.View == null)
                 {
-                    Console.WriteLine("Node {0} has no view to process... skipping", child.FigmaNode);
+                    Console.WriteLine("Node {0} has no view to process... skipping", child.Node);
                     continue;
                 }
 
-                if (RendersAddChild(child, parentNode, this))
-                    PropertySetter.Configure(PropertyNames.AddChild, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                var converter = GetConverter(child.Node);
+                if (converter != null)
+                {
+                    if (RendersAddChild(child, parentNode, this))
+                        PropertySetter.Configure(PropertyNames.AddChild, child, parentNode, converter, this);
 
-                if (RendersSize (child, parentNode, this))
-                    PropertySetter.Configure(PropertyNames.Frame, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                    if (RendersSize(child, parentNode, this))
+                        PropertySetter.Configure(PropertyNames.Frame, child, parentNode, converter, this);
 
-                if (RendersConstraints(child, parentNode, this))
-                    PropertySetter.Configure(PropertyNames.Constraints, child.View, child.FigmaNode, parentNode.View, parentNode.FigmaNode, this);
+                    if (RendersConstraints(child, parentNode, this))
+                        PropertySetter.Configure(PropertyNames.Constraints, child, parentNode, converter, this);
+                }
 
                 RecursivelyConfigureViews (child, options);
             }
@@ -371,7 +375,7 @@ namespace FigmaSharp.Services
 
         protected virtual bool RendersConstraints (ViewNode currentNode,ViewNode parent, RenderService rendererService)
         {
-            return !((currentNode != null && firstNode == currentNode.FigmaNode) || (currentNode.FigmaNode is FigmaCanvas || currentNode.FigmaNode.Parent is FigmaCanvas));
+            return !((currentNode != null && firstNode == currentNode.Node) || (currentNode.Node is FigmaCanvas || currentNode.Node.Parent is FigmaCanvas));
         }
 
         protected virtual bool RendersSize (ViewNode currentNode, ViewNode parent, RenderService rendererService)
@@ -400,7 +404,7 @@ namespace FigmaSharp.Services
                 Refresh(options);
 
                 //we render only if there is a canvas and GenerateViews is enabled
-                var canvas = NodesProcessed.FirstOrDefault(s => s.FigmaNode is FigmaCanvas);
+                var canvas = NodesProcessed.FirstOrDefault(s => s.Node is FigmaCanvas);
                 if (canvas != null && options.ConfigureViews)
                 {
                     RecursivelyConfigureViews(canvas, options);
@@ -433,7 +437,7 @@ namespace FigmaSharp.Services
                 Refresh(options);
 
                 //we render only if there is a canvas and GenerateViews is enabled
-                var canvas = NodesProcessed.FirstOrDefault(s => s.FigmaNode is FigmaCanvas);
+                var canvas = NodesProcessed.FirstOrDefault(s => s.Node is FigmaCanvas);
                 if (canvas != null && options.ConfigureViews) {
                     RecursivelyConfigureViews(canvas, options);
                 }
@@ -458,11 +462,7 @@ namespace FigmaSharp.Services
             if (SkipsNode(currentNode, parent, options))
                 return;
 
-            var converter = GetProcessedConverter(currentNode, CustomConverters);
-            if (converter == null)
-            {
-                converter = GetProcessedConverter(currentNode, DefaultConverters);
-            }
+            var converter = GetConverter(currentNode);
 
             ViewNode currentProcessedNode = null;
             if (converter != null)
@@ -478,7 +478,7 @@ namespace FigmaSharp.Services
 
             if (NodeScansChildren(currentNode, converter, options))
             {
-                foreach (var item in GetCurrentChildren(currentNode, parent?.FigmaNode, converter, options))
+                foreach (var item in GetCurrentChildren(currentNode, parent?.Node, converter, options))
                 {
                     GenerateViewsRecursively(item, currentProcessedNode ?? parent, options);
                 }

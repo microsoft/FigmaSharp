@@ -38,6 +38,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
     public class TextFieldConverter : CocoaConverter
 	{
+		internal override bool HasHeightConstraint() => false;
+
 		public override Type GetControlType(FigmaNode currentNode)
 		{
 			FigmaNode optionsGroup = currentNode.Options();

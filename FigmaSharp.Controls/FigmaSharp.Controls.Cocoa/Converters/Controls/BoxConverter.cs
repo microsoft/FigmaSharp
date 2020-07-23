@@ -43,7 +43,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSBox);
 
-
         public override bool CanConvert(FigmaNode currentNode)
         {
             currentNode.TryGetNativeControlType(out var value);

@@ -3,19 +3,16 @@ using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
 {
-	public class CodeNode
+    public class CodeNode : ContainerNode
 	{
-		public CodeNode (FigmaNode node, string name = null, bool isClass = false, CodeNode parent = null)
+		public CodeNode (FigmaNode node, string name = null, bool isClass = false, CodeNode parent = null) : base (node)
 		{
-			Node = node;
 			Name = name;
 			IsClass = isClass;
 			Parent = parent;
 		}
 
 		public bool HasName => !string.IsNullOrEmpty (Name);
-
-		public FigmaNode Node { get; private set; }
 
 		public CodeNode Parent { get; private set; }
 

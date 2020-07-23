@@ -35,7 +35,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public class CustomViewConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode)
+		internal override bool HasHeightConstraint() => true;
+
+        public override Type GetControlType(FigmaNode currentNode)
 		{
 			var customType = GetIdentifierValue(currentNode.name, "type", true);
 			if (customType != null) {

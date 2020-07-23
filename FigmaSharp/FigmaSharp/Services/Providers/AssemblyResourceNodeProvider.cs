@@ -57,7 +57,7 @@ namespace FigmaSharp.Services
             {
                 foreach (var vector in imageFigmaNodes)
                 {
-                    var recoveredKey = ResourceHelper.FromLocalResourceNameToUrlResourceName(vector.FigmaNode.id);
+                    var recoveredKey = ResourceHelper.FromLocalResourceNameToUrlResourceName(vector.Node.id);
                     var image = AppContext.Current.GetImageFromManifest(Assembly, recoveredKey);
                     if (image != null && vector.View is IImageView imageView)
                     {
