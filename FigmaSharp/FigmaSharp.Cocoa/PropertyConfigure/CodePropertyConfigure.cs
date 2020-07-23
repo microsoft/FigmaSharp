@@ -48,8 +48,10 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 		{
 			if (propertyName == PropertyNames.Frame)
 			{
-				System.Text.StringBuilder builder = new System.Text.StringBuilder();
+				if (!rendererService.HasConstraints(currentNode.Node, converter))
+					return string.Empty;
 
+				System.Text.StringBuilder builder = new System.Text.StringBuilder();
 				if (currentNode.Node is IAbsoluteBoundingBox absoluteBounding)
 				{
 					var name = currentNode.Name;
@@ -144,6 +146,9 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 			if (propertyName == PropertyNames.Constraints)
 			{
+				if (!rendererService.HasConstraints(currentNode.Node, converter))
+					return string.Empty;
+
 				if (currentNode.Node is IConstraints constrainedNode && currentNode.Node.Parent != null)
 				{
 					var parentNodeName = parentNode == null ?
