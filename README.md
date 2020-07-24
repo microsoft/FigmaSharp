@@ -26,7 +26,7 @@ Do you have questions, need support, or want to contribute? Join the [chat on Di
 
 ## Visual Studio extension
 
-The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and bundle them into your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
+The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and generate Packages ready to use in your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
 
 
 <br/>
