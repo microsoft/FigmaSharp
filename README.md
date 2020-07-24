@@ -44,4 +44,20 @@ The app previews Figma documents without having to install Visual Studio. Downlo
 
 To run the samples, open `FigmaSharp.Mac.sln` in [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/).
 In each sample project's **Project Options**, go to **Run → Configurations → Default** and add an environment variable called `TOKEN`, then paste in your Personal Access Token.
+
+
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+Keep calm and hack the planet.
  
