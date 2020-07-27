@@ -83,7 +83,8 @@ namespace FigmaSharp.Controls
         NotDefined,
 
         Regular,
-        Small
+        Small,
+        Large
     }
 
     public static class ControlTypeService
