@@ -1,5 +1,5 @@
 ﻿// Authors:
-//   hbons <hylbo@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //

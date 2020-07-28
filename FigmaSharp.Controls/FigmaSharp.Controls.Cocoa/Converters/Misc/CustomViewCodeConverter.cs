@@ -24,12 +24,13 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Linq;
 using System.Text;
+
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Cocoa;
-using System.Linq;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {

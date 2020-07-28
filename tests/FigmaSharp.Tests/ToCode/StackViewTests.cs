@@ -1,7 +1,7 @@
 ﻿// Authors:
-//   jmedrano <josmed@microsoft.com>
+//   Jose Medrano <josmed@microsoft.com>
 //
-// Copyright (C) 2020 Microsoft, Corp
+// Copyright (C) 2018 Microsoft, Corp
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,19 +21,19 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-using System;
+
 using System.Linq;
+using System.Text;
+
 using NUnit.Framework;
-using FigmaSharp.Services;
-using FigmaSharp.Controls;
+
+using FigmaSharp.Cocoa.Converters;
+using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
-using System.Text;
-using FigmaSharp.Controls.Cocoa.Converters;
-using FigmaSharp.Cocoa.PropertyConfigure;
-using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Models;
-using FigmaSharp.Cocoa.Converters;
+using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Tests.ToCode
 {

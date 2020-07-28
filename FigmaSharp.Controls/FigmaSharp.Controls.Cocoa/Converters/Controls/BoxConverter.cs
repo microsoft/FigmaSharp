@@ -30,7 +30,6 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
-using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Services;

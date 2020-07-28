@@ -1,4 +1,5 @@
 ﻿// Authors:
+//   Jose Medrano <josmed@microsoft.com>
 //   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
@@ -27,7 +28,6 @@ using System.Text;
 
 using AppKit;
 
-using FigmaSharp.Cocoa;
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
