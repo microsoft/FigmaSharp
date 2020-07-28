@@ -6,7 +6,7 @@ Below is our guidance for how to report issues, propose new features, and submit
 
 Please follow this simple rule to help us eliminate any unnecessary wasted effort & frustration, and ensure an efficient and effective use of everyone's time - yours, ours, and other community members':
 
-> 👉 If you have a question, think you've discovered an issue, would like to propose a new feature, etc., then find/file an issue **BEFORE** starting work to fix/implement it.
+  👉 If you have a question, think you've discovered an issue, would like to propose a new feature, etc., then find/file an issue **BEFORE** starting work to fix/implement it.
 
 ### Search existing issues first
 
@@ -32,9 +32,13 @@ If no existing item describes your issue/feature, great - please file a new issu
 
   👉 Tip: About this mac dialog
 
+  ![About dialog](https://github.com/netonjm/FigmaSharp/blob/master/icons/AboutSystem.png)
+
 * What version of Visual Studio for Mac are you using
 
   👉 Tip: About dialog in VisualStudio for Mac
+  
+  ![Visual Studio for Mac About dialog](https://github.com/netonjm/FigmaSharp/blob/master/icons/AboutVisualStudio.png)
 
 * Don't assume we're experts in setting up YOUR environment and don't assume we are experts in YOUR workflow. Teach us to help you!
 * **We LOVE detailed repro steps!** What steps do we need to take to reproduce the issue? Assume we love to read repro steps. As much detail as you can stand is probably _barely_ enough detail for us!
