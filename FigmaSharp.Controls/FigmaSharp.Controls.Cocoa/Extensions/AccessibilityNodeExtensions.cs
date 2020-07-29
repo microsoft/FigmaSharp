@@ -1,6 +1,6 @@
 ﻿// Authors:
 //   Hylke Bons <hylbo@microsoft.com>
-//   jmedrano <josmed@microsoft.com>
+//   Jose Medrano <josmed@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -23,10 +23,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
 using System.Linq;
-
-using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls.Cocoa

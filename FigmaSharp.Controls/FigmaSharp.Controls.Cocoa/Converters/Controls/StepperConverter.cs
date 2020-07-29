@@ -25,7 +25,9 @@
 
 using System;
 using System.Text;
+
 using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;

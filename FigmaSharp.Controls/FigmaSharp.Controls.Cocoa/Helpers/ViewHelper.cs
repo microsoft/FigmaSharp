@@ -1,5 +1,5 @@
 ﻿// Authors:
-//   hbons <hylbo@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -23,10 +23,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Linq;
-
 using AppKit;
-
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Controls.Cocoa.Helpers

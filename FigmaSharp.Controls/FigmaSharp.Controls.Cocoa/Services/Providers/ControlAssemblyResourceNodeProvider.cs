@@ -1,7 +1,7 @@
 ﻿// Authors:
-//   jmedrano <josmed@microsoft.com>
+//   Jose Medrano <josmed@microsoft.com>
 //
-// Copyright (C) 2020 Microsoft, Corp
+// Copyright (C) 2018 Microsoft, Corp
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,7 +21,9 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 using System.Reflection;
+
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 

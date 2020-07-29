@@ -25,7 +25,9 @@
 
 using System;
 using System.Linq;
+
 using AppKit;
+
 using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Converters;
