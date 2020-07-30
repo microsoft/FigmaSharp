@@ -63,7 +63,7 @@ namespace FigmaSharp
 						.FirstChild (s => s.name == "title" && s.visible) as FigmaText;
 
 					if (title != null)
-						builder.WritePropertyEquality(Members.This, nameof(AppKit.NSWindow.Title), title.characters ?? "", inQuotes: true);
+						builder.WriteTranslatedEquality(Members.This, nameof(NSWindow.Title), title.characters, codeRendererService);
 
 					if (figmaNodeContainer.HasChildrenVisible("resize"))
 					{

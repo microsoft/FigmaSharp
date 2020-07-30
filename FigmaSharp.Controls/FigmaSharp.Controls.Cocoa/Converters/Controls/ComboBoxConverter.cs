@@ -67,7 +67,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			   .FirstOrDefault (s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty(text.characters))
-				combobox.StringValue = rendererService.GetTranslatedText (text.characters);
+				combobox.StringValue = rendererService.GetTranslatedText (text);
 
 			return new View(combobox);
 		}
@@ -93,7 +93,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				.FirstOrDefault (s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty (text.characters)) {
-				code.WritePropertyEquality(name, nameof(NSButton.StringValue), text.characters, inQuotes: true);
+				code.WriteTranslatedEquality (name, nameof(NSButton.StringValue), text, rendererService);
 
 				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 

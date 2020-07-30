@@ -71,7 +71,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				   .OfType<FigmaText>()
 				   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
-			if (text != null)
+			if (text != null && !string.IsNullOrEmpty (text.characters))
 				popUp.AddItem(rendererService.GetTranslatedText (text.characters));
 
 			return new View(popUp);
@@ -102,8 +102,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			   .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty(text.characters)) {
-				var stringLabel = rendererService.GetTranslatedText(text.characters);
-
+				var stringLabel = rendererService.GetTranslatedText(text);
 				code.WriteMethod(name, nameof(NSPopUpButton.AddItem), stringLabel,
 					inQuotes: !rendererService.Options.TranslateLabels);
 			}

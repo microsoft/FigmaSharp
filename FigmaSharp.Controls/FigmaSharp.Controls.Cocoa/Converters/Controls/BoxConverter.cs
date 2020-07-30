@@ -99,9 +99,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                    .FirstOrDefault(s => (s.name == ComponentString.TITLE && s.visible));
 
                 if (text != null)
-                    box.Title = rendererService.GetTranslatedText (text.characters);
+                    box.Title = rendererService.GetTranslatedText (text);
                 else
-                    box.Title = "";
+                    box.Title = string.Empty;
             }
 
             return new View(box);
@@ -156,16 +156,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                .FirstOrDefault(s => (s.name == ComponentString.TITLE && s.visible));
 
             if (text != null)
-            {
-                string stringTitle = rendererService.GetTranslatedText (text.characters);
-
-                code.WritePropertyEquality(name, nameof(NSBox.Title), stringTitle,
-                    inQuotes: !rendererService.Options.TranslateLabels);
-            }
+                code.WriteTranslatedEquality(name, nameof(NSBox.Title), text.characters, rendererService);
             else
-            {
-                code.WritePropertyEquality(name, nameof(NSBox.Title), "", inQuotes: true);
-            }
+                code.WritePropertyEquality(name, nameof(NSBox.Title), string.Empty, inQuotes: true);
 
             return code;
         }

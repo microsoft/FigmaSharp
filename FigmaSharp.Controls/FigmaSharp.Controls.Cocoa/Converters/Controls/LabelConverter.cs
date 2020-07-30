@@ -76,7 +76,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (text != null)
             {
-                label.StringValue = rendererService.GetTranslatedText (text.characters ?? string.Empty);
+                label.StringValue = rendererService.GetTranslatedText (text);
                 label.Alignment = ViewHelper.GetNSTextAlignment(text);
                 label.Font = ViewHelper.GetNSFont(controlVariant, text);
             }
@@ -123,8 +123,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             code.WritePropertyEquality(name, nameof(NSTextField.DrawsBackground), false);
             code.WritePropertyEquality(name, nameof(NSTextField.PreferredMaxLayoutWidth), "1");
 
-            var labelComponent = rendererService.GetTranslatedText(text.characters);
-            code.WritePropertyEquality(name, nameof(NSTextField.StringValue), labelComponent, inQuotes: !rendererService.Options.TranslateLabels);
+            code.WriteTranslatedEquality(name, nameof(NSTextField.StringValue), text, rendererService);
 
             if (text != null)
                 code.WritePropertyEquality(name, nameof(NSTextField.Alignment), CodeHelper.GetNSTextAlignmentString(text).ToString());

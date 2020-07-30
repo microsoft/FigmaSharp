@@ -80,7 +80,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                         continue;
                     
                     var text = (FigmaText)state.FirstChild(s => s.name == ComponentString.TITLE);
-                    segmentedControl.SetLabel(rendererService.GetTranslatedText(text.characters ?? string.Empty), i);
+                    segmentedControl.SetLabel(rendererService.GetTranslatedText(text), i);
 
                     i++;
                 }

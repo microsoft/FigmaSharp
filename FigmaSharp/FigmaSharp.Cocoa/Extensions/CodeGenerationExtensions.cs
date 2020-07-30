@@ -27,6 +27,8 @@ using System.Text;
 
 using FigmaSharp.Cocoa.CodeGeneration;
 using FigmaSharp.Cocoa.Helpers;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Cocoa
 {
@@ -155,7 +157,18 @@ namespace FigmaSharp.Cocoa
 		{
 			builder.AppendLine (CodeGenerationHelpers.GetPropertyEquality (viewName, propertyName, value, inQuotes, instanciate));
 		}
-	
+
+		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, FigmaText value, CodeRenderService codeRenderService,  bool instanciate = false, bool textCondition = true)
+		{
+			WriteTranslatedEquality(builder, viewName, propertyName, value.characters, codeRenderService, instanciate, value.visible);
+		}
+
+		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, string value, CodeRenderService codeRenderService, bool instanciate = false, bool textCondition = true)
+		{
+			var stringLabel = textCondition ? codeRenderService.GetTranslatedText(value ?? "") : string.Empty;
+			builder.AppendLine(CodeGenerationHelpers.GetPropertyEquality(viewName, propertyName, stringLabel, inQuotes: !codeRenderService.Options.TranslateLabels, instanciate: instanciate));
+		}
+
 		public static void WriteMethod (this StringBuilder builder, string viewName, string methodName, Enum parameter)
 		{
 			WriteMethod (builder, viewName, methodName, parameter.GetFullName ());
