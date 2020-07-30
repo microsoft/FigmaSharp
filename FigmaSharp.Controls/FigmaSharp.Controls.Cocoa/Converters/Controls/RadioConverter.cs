@@ -67,7 +67,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             if (text != null)
-                radio.Title = text.visible && !string.IsNullOrEmpty(text.characters) ? rendererService.GetTranslatedText(text.characters) : string.Empty;
+                radio.Title = rendererService.GetTranslatedText(text);
 
             frame.TryGetNativeControlVariant(out var controlVariant);
 
@@ -112,12 +112,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 .FirstOrDefault();
 
             if (text != null)
-            {
-                var labelTranslated = rendererService.GetTranslatedText(text.characters);
-
-                code.WritePropertyEquality(name, nameof(NSButton.Title), text.visible ? labelTranslated : string.Empty,
-                    inQuotes: !rendererService.Options.TranslateLabels);
-            }
+                code.WriteTranslatedEquality(name, nameof(NSButton.Title), text, rendererService);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()

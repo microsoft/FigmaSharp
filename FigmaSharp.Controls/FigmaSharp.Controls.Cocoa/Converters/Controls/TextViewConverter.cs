@@ -66,7 +66,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			FigmaText text = texts.FirstOrDefault(s => s.name == "lbl" && s.visible);
 
 			if (text != null) {
-				textView.Value = rendererService.GetTranslatedText (text.characters ?? string.Empty);
+				textView.Value = rendererService.GetTranslatedText (text.characters);
 
 				// TODO: text styling
 				// textView.TextStorage.Append(new Foundation.NSAttributedString(""), null);
@@ -130,10 +130,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			FigmaText text = texts.FirstOrDefault (s => s.name == ComponentString.TEXT && s.visible);
 
 			if (text != null)
-			{
-				var stringLabel = rendererService.GetTranslatedText(text.characters);
-				code.WritePropertyEquality (textViewName, nameof (NSTextView.Value), stringLabel, inQuotes: !rendererService.Options.TranslateLabels);
-			}
+				code.WriteTranslatedEquality (textViewName, nameof (NSTextView.Value), text.characters, rendererService, textCondition: text.visible);
 
 			code.AppendLine();
 			code.WritePropertyEquality(name, nameof(NSScrollView.DocumentView), textViewName);

@@ -118,8 +118,17 @@ namespace FigmaSharp.Services
             return converter.IsFlexibleHorizontal(currentNode.Node);
         }
 
-        internal string GetTranslatedText(string text)
+        internal string GetTranslatedText(FigmaText text)
+            => GetTranslatedText(text.characters, text.visible);
+
+        internal string GetTranslatedText(string text, bool textCondition = true)
         {
+            //translation false 
+            if (!textCondition)
+                return string.Empty;
+
+            text = text ?? string.Empty;
+            text = text.Replace(System.Environment.NewLine, "\\n");
             if (baseOptions.TranslateLabels && TranslationService != null)
             {
                 return TranslationService.GetTranslatedStringText(text);

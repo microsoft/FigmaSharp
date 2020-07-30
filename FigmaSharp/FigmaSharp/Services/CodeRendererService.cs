@@ -54,7 +54,11 @@ namespace FigmaSharp.Services
 			return null;
 		}
 
-		public CodeRenderServiceOptions Options => (CodeRenderServiceOptions)baseOptions;
+		public CodeRenderServiceOptions Options
+		{
+			get => (CodeRenderServiceOptions)baseOptions;
+			internal set => baseOptions = value;
+		}
 
 		internal CodeNode ParentMainNode { get; set; }
 		internal CodeNode MainNode { get; set; }
