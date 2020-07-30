@@ -148,7 +148,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase)) {
 				var stringLabel = rendererService.GetTranslatedText(placeholderText.characters);
-				code.WritePropertyEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, inQuotes: true);
+				code.WritePropertyEquality(name, nameof(NSTextField.PlaceholderString), stringLabel, inQuotes: !rendererService.Options.TranslateLabels);
 			}
 
 			FigmaText text = frame.children.
