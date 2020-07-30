@@ -158,15 +158,33 @@ namespace FigmaSharp.Cocoa
 			builder.AppendLine (CodeGenerationHelpers.GetPropertyEquality (viewName, propertyName, value, inQuotes, instanciate));
 		}
 
-		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, FigmaText value, CodeRenderService codeRenderService,  bool instanciate = false, bool textCondition = true)
+		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, FigmaText value, CodeRenderService codeRenderService,  bool instanciate = false)
 		{
 			WriteTranslatedEquality(builder, viewName, propertyName, value.characters, codeRenderService, instanciate, value.visible);
 		}
 
 		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, string value, CodeRenderService codeRenderService, bool instanciate = false, bool textCondition = true)
 		{
-			var stringLabel = textCondition ? codeRenderService.GetTranslatedText(value ?? "") : string.Empty;
-			builder.AppendLine(CodeGenerationHelpers.GetPropertyEquality(viewName, propertyName, stringLabel, inQuotes: !codeRenderService.Options.TranslateLabels, instanciate: instanciate));
+			bool needQuotes;
+			string result;
+			if (textCondition && !string.IsNullOrEmpty(value))
+			{
+				if (codeRenderService.Options != null && codeRenderService.Options.TranslateLabels)
+                {
+					result = codeRenderService.GetTranslatedText(value);
+					needQuotes = false;
+				} else
+                {
+					result = value;
+					needQuotes = true;
+				}
+			}
+			else
+			{
+				result = string.Empty;
+				needQuotes = true;
+			}
+			builder.AppendLine(CodeGenerationHelpers.GetPropertyEquality(viewName, propertyName, result, inQuotes: needQuotes, instanciate: instanciate));
 		}
 
 		public static void WriteMethod (this StringBuilder builder, string viewName, string methodName, Enum parameter)

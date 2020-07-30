@@ -48,6 +48,9 @@ namespace FigmaSharp
 
 			partialDesignerClass.Usings.Add (nameof (AppKit));
 
+			var options = new CodeRenderServiceOptions() { TranslateLabels = translateLabels };
+			codeRendererService.Options = options;
+
 			//restore this state
 			var builder = new System.Text.StringBuilder ();
 			//builder.AppendLine ("//HACK: Temporal Window Frame Size");
@@ -63,7 +66,8 @@ namespace FigmaSharp
 						.FirstChild (s => s.name == "title" && s.visible) as FigmaText;
 
 					if (title != null)
-						builder.WriteTranslatedEquality(Members.This, nameof(NSWindow.Title), title.characters, codeRendererService);
+						if (translateLabels)
+							builder.WriteTranslatedEquality(Members.This, nameof(NSWindow.Title), title.characters, codeRendererService);
 
 					if (figmaNodeContainer.HasChildrenVisible("resize"))
 					{
@@ -123,7 +127,6 @@ namespace FigmaSharp
 				builder.WritePropertyEquality (Members.This, nameof (AppKit.NSWindow.ContentMinSize), "this.ContentView.Frame.Size");
 			}
 
-			var options = new CodeRenderServiceOptions() { TranslateLabels = translateLabels };
 			codeRendererService.GetCode (builder, new CodeNode(FigmaNode, null), null, options);
 			partialDesignerClass.InitializeComponentContent = builder.ToString ();
 
