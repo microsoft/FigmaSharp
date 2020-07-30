@@ -128,6 +128,7 @@ namespace FigmaSharp.Services
                 return string.Empty;
 
             text = text ?? string.Empty;
+            text = text.Replace(System.Environment.NewLine, "\\n");
             if (baseOptions.TranslateLabels && TranslationService != null)
             {
                 return TranslationService.GetTranslatedStringText(text);
