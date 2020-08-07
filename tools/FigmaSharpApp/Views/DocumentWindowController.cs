@@ -182,6 +182,39 @@ namespace FigmaSharpApp
 			RefreshRequested?.Invoke (this, EventArgs.Empty);
 		}
 
+
+        partial void WarningsClicked(NSObject sender)
+        {
+			var popover = new NSPopover();
+			var controller = new NSViewController();
+			//controller.View = new NSView(new CGRect(0, 0, 400, 200));
+			controller.View = Create();
+			popover.ContentViewController = controller;
+			popover.ContentSize = new CGSize(400, 200);
+			popover.Behavior = NSPopoverBehavior.Transient;
+			popover.Animates = true;
+
+			popover.Show(WarningsButton.View.Frame, WarningsButton.View, NSRectEdge.MinYEdge);
+
+        }
+
+
+		public static WarningsView Create()
+		{
+			NSArray arr;
+			NSBundle.MainBundle.LoadNibNamed(nameof(WarningsView), null, out arr);
+			for (nuint i = 0; i < arr.Count; i++)
+			{
+				var v = arr.GetItem<NSObject>(i);
+				if (v is WarningsView) return v as WarningsView;
+			}
+			return null;
+		}
+
+
+
+
+
 		public void ToggleToolbarSpinner (bool toggle_on)
 		{
 			if (toggle_on)

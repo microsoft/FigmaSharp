@@ -93,6 +93,10 @@
       <DependentUpon>FileContainerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\RecentStore.cs" />
+    <Compile Include="WarningsView.cs" />
+    <Compile Include="WarningsView.designer.cs">
+      <DependentUpon>WarningsView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard">

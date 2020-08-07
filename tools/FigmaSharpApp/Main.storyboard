@@ -312,7 +312,7 @@
                                 <rect key="frame" x="191" y="98" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="☰  →  Help and Account  →  Personal Access Tokens" allowsEditingTextAttributes="YES" id="guI-t9-Uwa">
-                                    <font key="font" metaFont="toolTip"/>
+                                    <font key="font" metaFont="menu" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -321,7 +321,7 @@
                                 <rect key="frame" x="190" y="114" width="320" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" alignment="left" title="Get your token from the Figma app:" allowsEditingTextAttributes="YES" id="kCe-3j-BSd">
-                                    <font key="font" metaFont="toolTip"/>
+                                    <font key="font" metaFont="menu" size="11"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -421,10 +421,10 @@ Gw
                     <window key="window" title="Figma Document" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titleVisibility="hidden" id="csp-8t-ctO">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="317" width="640" height="480"/>
+                        <rect key="contentRect" x="245" y="317" width="677" height="480"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="320" height="320"/>
-                        <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="z7L-HX-hhV">
+                        <toolbar key="toolbar" implicitIdentifier="4919774D-CC48-418E-8F6F-4143C954F581" centeredItem="nwy-jM-blc" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="z7L-HX-hhV">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="9F39E333-9625-4E6A-A52F-9418CAA7D6F8" label="Refresh" paletteLabel="Refresh" toolTip="Refresh" id="NHv-Gm-Lms">
                                     <size key="minSize" width="56" height="32"/>
@@ -449,7 +449,7 @@ Gw
                                     <button key="view" toolTip="Dark Mode – ⌘D" verticalHuggingPriority="750" id="du5-wr-dXP">
                                         <rect key="frame" x="5" y="14" width="56" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="☾" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
+                                        <buttonCell key="cell" type="push" title="􀇁" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="63Q-PM-b8H">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -491,7 +491,7 @@ Gw
                                         <rect key="frame" x="0.0" y="14" width="49" height="17"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Page:" id="15S-mK-Y1y">
-                                            <font key="font" metaFont="toolTip"/>
+                                            <font key="font" metaFont="menu" size="11"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -504,10 +504,25 @@ Gw
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </progressIndicator>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="29C7F4F7-3B37-435E-A0F8-10F30AEAF1BA" label="Warnings" paletteLabel="Warnings" sizingBehavior="auto" id="bLm-WB-yqM">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="2s5-3L-5lc">
+                                        <rect key="frame" x="0.0" y="14" width="56" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="bevel" title="⚠️" bezelStyle="regularSquare" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="w7v-y3-Y7u">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" size="12" name="AppleColorEmoji"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="WarningsClicked:" target="qmD-kN-bD5" id="aKe-Tp-3yu"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="NHv-Gm-Lms"/>
                                 <toolbarItem reference="ipb-hp-J6A"/>
+                                <toolbarItem reference="bLm-WB-yqM"/>
                                 <toolbarItem reference="zk5-q5-OOS"/>
                                 <toolbarItem reference="8jD-Ch-646"/>
                                 <toolbarItem reference="nwy-jM-blc"/>
@@ -528,12 +543,154 @@ Gw
                         <outlet property="Spinner" destination="zk5-q5-OOS" id="wIB-x2-4u2"/>
                         <outlet property="TitleTextField" destination="zI9-VO-MN3" id="zIy-c7-78l"/>
                         <outlet property="ToolbarSpinner" destination="Ohc-c8-to8" id="ppc-DV-tk1"/>
+                        <outlet property="WarningsButton" destination="bLm-WB-yqM" id="vHa-si-xR0"/>
                         <segue destination="kAC-hG-JBc" kind="relationship" relationship="window.shadowedContentViewController" id="rg3-ZZ-CIr"/>
                     </connections>
                 </windowController>
                 <customObject id="mhM-RN-F0i" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1374" y="346"/>
+            <point key="canvasLocation" x="1392.5" y="346"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="TdP-EZ-ezF">
+            <objects>
+                <viewController id="qv1-bV-j6i" sceneMemberID="viewController">
+                    <view key="view" id="WiJ-Qf-Urb" customClass="WarningsView">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kgg-a0-Bmd">
+                                <rect key="frame" x="20" y="266" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="⚠️" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="zWB-V9-Oqd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="en3-mB-wOq">
+                                <rect key="frame" x="17" y="182" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="⚠️" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="5sc-We-0YT">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-vb-iG6">
+                                <rect key="frame" x="17" y="146" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="⚠️" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LfA-oD-6zS">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPB-UP-5md">
+                                <rect key="frame" x="444" y="274" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFollowLinkFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="WOO-Qg-phv">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGD-0V-4Rd">
+                                <rect key="frame" x="444" y="239" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFollowLinkFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Dnv-xP-eSq">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nln-T8-b9x">
+                                <rect key="frame" x="404" y="153" width="19" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFollowLinkFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="6GQ-97-6Wy">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5QG-gQ-IoS">
+                                <rect key="frame" x="404" y="117" width="19" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFollowLinkFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ecC-tB-auw">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Xs-s4-7N1">
+                                <rect key="frame" x="62" y="200" width="283" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Image name contains unsupported characters" id="Ebp-2M-8mY">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MeW-3h-zCh">
+                                <rect key="frame" x="54" y="237" width="294" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Variable name contains unsupported characters" id="RIU-6e-1R2">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3X5-tI-Uo5">
+                                <rect key="frame" x="62" y="162" width="163" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Unknown keyword &quot;!what&quot;" id="eCr-fO-z1t">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kFX-QD-5gX">
+                                <rect key="frame" x="62" y="118" width="305" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Accessibility properties are enabled but not set" id="3G7-qc-d91">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p6p-PJ-MwB">
+                                <rect key="frame" x="62" y="88" width="305" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="&quot;MyWindow&quot; needs a !content layer group" id="o2n-OJ-FVY">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xJq-e8-b1a">
+                                <rect key="frame" x="24" y="142" width="440" height="5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </box>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cad-m9-dam">
+                                <rect key="frame" x="17" y="106" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="⚠️" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jje-xU-stX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Ysd-yH-SVK">
+                                <rect key="frame" x="0.0" y="261" width="480" height="5"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            </box>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Hn-bc-OhP">
+                                <rect key="frame" x="54" y="274" width="384" height="16"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="The name &quot;closeButton&quot; exists in multiple places" id="3NS-b6-tWI">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="IYq-mk-lsX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2084" y="216"/>
         </scene>
         <!--Document View Controller-->
         <scene sceneID="9Jh-cp-1WU">
@@ -558,7 +715,10 @@ Gw
                 </viewController>
                 <customObject id="lDY-4l-kRL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1374" y="1004"/>
+            <point key="canvasLocation" x="1392" y="1004"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
+    </resources>
 </document>

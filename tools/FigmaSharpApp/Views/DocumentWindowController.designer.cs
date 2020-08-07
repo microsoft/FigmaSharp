@@ -33,6 +33,9 @@ namespace FigmaSharpApp
 		[Outlet]
 		AppKit.NSProgressIndicator ToolbarSpinner { get; set; }
 
+		[Outlet]
+		AppKit.NSToolbarItem WarningsButton { get; set; }
+
 		[Action ("DarkModeClicked:")]
 		partial void DarkModeClicked (Foundation.NSObject sender);
 
@@ -41,6 +44,9 @@ namespace FigmaSharpApp
 
 		[Action ("ToggleDarkModeClicked:")]
 		partial void ToggleDarkModeClicked (Foundation.NSObject sender);
+
+		[Action ("WarningsClicked:")]
+		partial void WarningsClicked (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -64,11 +70,6 @@ namespace FigmaSharpApp
 				RefreshButton = null;
 			}
 
-			if (ToolbarSpinner != null) {
-				ToolbarSpinner.Dispose ();
-				ToolbarSpinner = null;
-			}
-
 			if (Spinner != null) {
 				Spinner.Dispose ();
 				Spinner = null;
@@ -77,6 +78,16 @@ namespace FigmaSharpApp
 			if (TitleTextField != null) {
 				TitleTextField.Dispose ();
 				TitleTextField = null;
+			}
+
+			if (ToolbarSpinner != null) {
+				ToolbarSpinner.Dispose ();
+				ToolbarSpinner = null;
+			}
+
+			if (WarningsButton != null) {
+				WarningsButton.Dispose ();
+				WarningsButton = null;
 			}
 		}
 	}
