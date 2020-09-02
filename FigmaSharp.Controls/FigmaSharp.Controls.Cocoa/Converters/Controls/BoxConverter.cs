@@ -127,8 +127,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 code.WritePropertyEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
                 bool borderSet = false;
 
-                FigmaVector rectangle = frame.children
-                    .OfType<FigmaVector>()
+                RectangleVector rectangle = frame.children
+                    .OfType<RectangleVector>()
                     .FirstOrDefault();
 
                 foreach (var styleMap in rectangle?.styles)
@@ -146,6 +146,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                         }
                     }
                 }
+
+                code.WritePropertyEquality(name, nameof(NSBox.CornerRadius), rectangle.cornerRadius.ToString());
 
                 if (!borderSet)
                     code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), "0");
