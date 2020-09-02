@@ -11,10 +11,10 @@ clean:
 	find . -type d -name packages -exec rm -rf {} \;
 
 pack:
-	msbuild /Users/jmedrano/FigmaSharp/tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:CreatePackage=true
+	msbuild tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:CreatePackage=true
 
 install:
-	msbuild /Users/jmedrano/FigmaSharp/tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:InstallAddin=true
+	msbuild tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj $(ARGS) /p:InstallAddin=true
 
 check-dependencies:
 	#updating the submodules
