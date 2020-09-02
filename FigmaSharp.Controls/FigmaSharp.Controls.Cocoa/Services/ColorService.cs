@@ -43,7 +43,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		}
 
 		static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
-		                          = new List<(string StyleName, NSColor Color, string ColorName)>
+		                   = new List<(string StyleName, NSColor Color, string ColorName)>
 		{
 			// System color palette
 			("System/Red", NSColor.SystemRedColor, nameof(NSColor.SystemRedColor)),
@@ -87,7 +87,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			("Chrome/Control BG", NSColor.ControlBackground, nameof(NSColor.ControlBackground)),
 			("Chrome/Content Selected BG", NSColor.SelectedContentBackgroundColor, nameof(NSColor.SelectedContentBackgroundColor)),
 			("Chrome/Content Selected Unemphasized BG", NSColor.UnemphasizedSelectedContentBackgroundColor, nameof(NSColor.UnemphasizedSelectedContentBackgroundColor)),
-			("Chrome/Content Alternating BG", NSColor.AlternatingContentBackgroundColors[1], nameof(NSColor.AlternatingContentBackgroundColors)),
+			("Chrome/Content Alternating BG", NSColor.AlternatingContentBackgroundColors[1], nameof(NSColor.AlternatingContentBackgroundColors) + "[1]"),
 			("Chrome/Control", NSColor.Control, nameof(NSColor.Control)),
 			("Chrome/Control Selected", NSColor.SelectedControl, nameof(NSColor.SelectedControl)),
 			("Chrome/Control Accent", NSColor.ControlAccentColor, nameof(NSColor.ControlAccentColor)),
