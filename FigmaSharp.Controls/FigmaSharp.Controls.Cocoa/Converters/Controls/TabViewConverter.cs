@@ -1,6 +1,7 @@
 ﻿// Authors:
 //   Jose Medrano <josmed@microsoft.com>
 //   Hylke Bons <hylbo@microsoft.com>
+//   Vaclav Vancura <vacvan@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -32,6 +33,7 @@ using AppKit;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
@@ -52,7 +54,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         {
             var frame = (FigmaFrame)currentNode;
             var tabView = new NSTabView();
-           
+
+            frame.TryGetNativeControlVariant (out var controlVariant);
+            tabView.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
+
             List<NSTabViewItem> items = new List<NSTabViewItem>();
             var tabNodes = frame.FirstChild (s => s.name == ComponentString.ITEMS);
 
@@ -93,6 +98,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             if (itemNodes == null)
                 return null;
+
+            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
             code.AppendLine();
             code.AppendLine($"{ name }.{ nameof(NSTabView.SetItems) }(");
