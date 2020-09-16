@@ -51,7 +51,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             currentNode.TryGetNativeControlType(out var controlType);
 
             return controlType == FigmaControlType.Button ||
-                   controlType == FigmaControlType.ButtonHelp;
+                   controlType == FigmaControlType.ButtonHelp ||
+                   controlType == FigmaControlType.ButtonRoundRect;
         }
 
         protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
@@ -66,6 +67,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             {
                 case FigmaControlType.Button:
                     button.BezelStyle = NSBezelStyle.Rounded;
+                    break;
+                case FigmaControlType.ButtonRoundRect:
+                    button.BezelStyle = NSBezelStyle.RoundRect;
                     break;
                 case FigmaControlType.ButtonHelp:
                     button.BezelStyle = NSBezelStyle.HelpButton;
@@ -116,6 +120,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             {
                 case FigmaControlType.Button:
                     code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+                    break;
+                case FigmaControlType.ButtonRoundRect:
+                    code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.RoundRect);
                     break;
                 case FigmaControlType.ButtonHelp:
                     code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.HelpButton);
