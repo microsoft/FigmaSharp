@@ -45,6 +45,9 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
 		                   = new List<(string StyleName, NSColor Color, string ColorName)>
 		{
+			("Black", NSColor.Black, nameof(NSColor.Black)),
+			("White", NSColor.White, nameof(NSColor.White)),
+
 			// System color palette
 			("System/Red", NSColor.SystemRedColor, nameof(NSColor.SystemRedColor)),
 			("System/Green", NSColor.SystemGreenColor, nameof(NSColor.SystemGreenColor)),
