@@ -24,12 +24,20 @@
 
 using AppKit;
 using FigmaSharp.Views.Cocoa;
+using MonoDevelop.Components;
+using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma
 {
 	class ViewHelpers
     {
-        public static NSStackView CreateHorizontalStackView(int spacing = 10) => new NSStackView()
+		public static AppKit.NSAppearance GetCurrentIdeAppearance()
+		{
+			return AppKit.NSAppearance.GetAppearance(
+				IdeTheme.UserInterfaceTheme == Theme.Dark ? AppKit.NSAppearance.NameDarkAqua : AppKit.NSAppearance.NameAqua);
+		}
+
+		public static NSStackView CreateHorizontalStackView(int spacing = 10) => new NSStackView()
         {
             Orientation = NSUserInterfaceLayoutOrientation.Horizontal,
             Alignment = NSLayoutAttribute.CenterY,

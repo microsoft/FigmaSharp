@@ -22,6 +22,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using MonoDevelop.Components;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui.Pads.ProjectPad;
@@ -60,6 +61,7 @@ namespace MonoDevelop.Figma.Commands
             }
 
             var figmaBundleWindow = new FigmaPackageWindow(currentProject);
+            figmaBundleWindow.Appearance = ViewHelpers.GetCurrentIdeAppearance();
             var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
 
             currentIdeWindow.AddChildWindow(figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
