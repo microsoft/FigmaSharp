@@ -35,6 +35,8 @@ namespace FigmaSharp.Controls
         // Buttons
         Button,
         ButtonHelp,
+        ButtonRoundRect,
+
         Stepper,
         SegmentedControl,
 
@@ -95,10 +97,15 @@ namespace FigmaSharp.Controls
             new List<(string name, FigmaControlType nativeControlType, NativeControlVariant nativeControlVariant)>
         {
             // Buttons
-            ("Button",            FigmaControlType.Button,     NativeControlVariant.Regular),
-            ("Button Small",      FigmaControlType.Button,     NativeControlVariant.Small),
+            ("Button",       FigmaControlType.Button, NativeControlVariant.Regular),
+            ("Button Small", FigmaControlType.Button, NativeControlVariant.Small),
+
+            ("Button/RoundRect",       FigmaControlType.ButtonRoundRect, NativeControlVariant.Regular),
+            ("Button/RoundRect Small", FigmaControlType.ButtonRoundRect, NativeControlVariant.Small),
+
             ("Button/Help",       FigmaControlType.ButtonHelp, NativeControlVariant.Regular),
             ("Button/Help Small", FigmaControlType.ButtonHelp, NativeControlVariant.Small),
+
 
             ("Stepper",       FigmaControlType.Stepper, NativeControlVariant.Regular),
             ("Stepper Small", FigmaControlType.Stepper, NativeControlVariant.Small),
