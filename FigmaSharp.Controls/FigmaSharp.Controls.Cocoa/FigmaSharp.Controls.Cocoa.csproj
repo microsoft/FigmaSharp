@@ -104,6 +104,7 @@
     <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
     <Compile Include="Converters\Controls\TabViewConverter.cs" />
     <Compile Include="Converters\Misc\PlaceHolderConverter.cs" />
+    <Compile Include="Converters\Controls\ButtonSymbolConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

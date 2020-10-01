@@ -57,6 +57,7 @@ namespace FigmaSharp.Controls.Cocoa
 
 					// Buttons
 					new ButtonConverter (),
+					new ButtonSymbolConverter(),
 					new StepperConverter (),
 					new SegmentedControlConverter (),
 
