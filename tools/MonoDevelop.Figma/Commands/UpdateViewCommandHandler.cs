@@ -59,6 +59,7 @@ namespace MonoDevelop.Figma.Commands
 
             var bundle = FigmaBundle.FromDirectoryPath(currentFolder.Path.FullPath);
             var figmaBundleWindow = new PackageUpdateWindow();
+            figmaBundleWindow.Appearance = ViewHelpers.GetCurrentIdeAppearance();
             figmaBundleWindow.Load(bundle, currentFolder.Project);
 
             var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
