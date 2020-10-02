@@ -125,11 +125,12 @@ namespace FigmaSharp.Controls.Cocoa
 
 			BaseFakeWindowView fakeWindowView;
 
-			// Detect Big Sur (Darwin kernel version 20)
-			if (Environment.OSVersion.Version.Major >= 20)
+#if OS_MAC_BIGSUR
+			if (MacSystemInformation.OsVersion < MacSystemInformation.BigSur)
 				fakeWindowView = new FakeBigSurWindowView(title);
 			else
-				fakeWindowView = new FakeWindowView(title);
+#endif
+			fakeWindowView = new FakeWindowView(title);
 
 			fakeWindowView.Configure (currentNode);
 

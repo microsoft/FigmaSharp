@@ -36,8 +36,10 @@ namespace FigmaSharp.Controls.Cocoa.Helpers
 			if (controlVariant == NativeControlVariant.Small)
 				return NSControlSize.Small;
 
+#if OS_MAC_BIGSUR
 			if (controlVariant == NativeControlVariant.Large)
 				return NSControlSize.Large;
+#endif
 
 			return NSControlSize.Regular;
 		}
