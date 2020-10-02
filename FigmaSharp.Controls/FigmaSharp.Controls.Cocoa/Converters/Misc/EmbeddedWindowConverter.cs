@@ -126,7 +126,7 @@ namespace FigmaSharp.Controls.Cocoa
 			BaseFakeWindowView fakeWindowView;
 
 #if OS_MAC_BIGSUR
-			if (MacSystemInformation.OsVersion < MacSystemInformation.BigSur)
+			if (MacSystemInformation.OsVersion >= MacSystemInformation.BigSur)
 				fakeWindowView = new FakeBigSurWindowView(title);
 			else
 #endif
