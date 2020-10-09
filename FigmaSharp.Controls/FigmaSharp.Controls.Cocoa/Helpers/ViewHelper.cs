@@ -1,5 +1,6 @@
 ﻿// Authors:
 //   Hylke Bons <hylbo@microsoft.com>
+//   Vaclav Vancura <vacvan@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -34,6 +35,15 @@ namespace FigmaSharp.Controls.Cocoa.Helpers
 		{
 			if (controlVariant == NativeControlVariant.Small)
 				return NSControlSize.Small;
+
+#if OS_MAC_BIGSUR
+			//we need a os check to don't get an exception in runtime
+			if (MacSystemInformation.OsVersion >= MacSystemInformation.BigSur)
+			{
+				if (controlVariant == NativeControlVariant.Large)
+					return NSControlSize.Large;
+			}
+#endif
 
 			return NSControlSize.Regular;
 		}

@@ -1,6 +1,7 @@
 ﻿// Authors:
 //   Jose Medrano <josmed@microsoft.com>
 //   Hylke Bons <hylbo@microsoft.com>
+//   Vaclav Vancura <vacvan@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -30,6 +31,7 @@ using System.Text;
 using AppKit;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -59,7 +61,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             var switchControl = new NSSwitch();
 
             frame.TryGetNativeControlVariant (out var controlVariant);
-            switchControl.ControlSize = NSControlSize.Regular;
+            switchControl.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
@@ -90,7 +92,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), NSControlSize.Regular);
+            code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup> ()

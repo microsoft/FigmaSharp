@@ -71,6 +71,7 @@
     <Compile Include="CodeGeneration\CocoaStringObject.cs" />
     <Compile Include="CodeGeneration\CocoaNodeStringObject.cs" />
     <Compile Include="CodeGeneration\CocoaStringBuilder.cs" />
+    <Compile Include="MacSystemInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
