@@ -6,11 +6,11 @@
 
 FigmaSharp turns your Figma design into .NET objects and can generate code and layout files to create native apps. Free and Open Source software under the [MIT LICENSE]().
 
-[![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
+[![Build Status](https://travis-ci.org/microsoft/FigmaSharp.svg?branch=master)](https://travis-ci.org/microsoft/FigmaSharp)
 
 # Getting started
 
-We recommend reading through the [Wiki](https://github.com/microsoft/FigmaSharp/wiki) to get a sense of the FigmaSharp workflow.
+We recommend reading through the [Wiki](https://github.com/micosoft/FigmaSharp/wiki) to get a sense of the FigmaSharp workflow.
 
 To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**.
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
