@@ -85,8 +85,6 @@
     <Compile Include="ViewWrappers\SvgView.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\PathExtensions.cs" />
-    <Compile Include="IDrawableView.cs" />
-    <Compile Include="IFlippedView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />

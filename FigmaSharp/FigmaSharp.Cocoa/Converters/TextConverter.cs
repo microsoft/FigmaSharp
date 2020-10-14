@@ -24,84 +24,28 @@
 
 using System;
 using System.Text;
-using System.Linq;
-using AppKit;
+
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 using FigmaSharp.Views.Native.Cocoa;
-using Foundation;
 
 namespace FigmaSharp.Cocoa.Converters
 {
     public class TextConverter : TextConverterBase
     {
-        public override IView ConvertToView (FigmaNode node, ViewNode parent, ViewRenderService rendererService)
+        public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
-            var text = (FigmaText)node;
+            var figmaText = ((FigmaText)currentNode);
+            Console.WriteLine("'{0}' with Font:'{1}({2})' s:{3} w:{4} ...", figmaText.characters, figmaText.style.fontFamily, figmaText.style.fontPostScriptName, figmaText.style.fontSize, figmaText.style.fontWeight);
             var label = new Label();
-			var nativeLabel = label.NativeObject as FNSTextField;
-            nativeLabel.Font = text.style.ToNSFont();
-
-            nativeLabel.StringValue = text.characters ?? string.Empty;
-            nativeLabel.Hidden = !text.visible;
-            nativeLabel.Alignment = text.style.textAlignHorizontal == "CENTER" ? NSTextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? NSTextAlignment.Left : NSTextAlignment.Right;
-            nativeLabel.AlphaValue = text.opacity;
-
-            if (nativeLabel.Cell is VerticalAlignmentTextCell cell)
-                cell.VerticalAligment = text.style.textAlignVertical == "CENTER" ? VerticalTextAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalTextAlignment.Top : VerticalTextAlignment.Bottom;
-
-            //text color
-            if (text.TryGetNSColorByStyleKey(rendererService, FigmaStyle.Keys.Fill, out var color))
-                nativeLabel.TextColor = color;
-            else
-            {
-                var fills = text.fills.FirstOrDefault();
-                if (fills?.visible ?? false)
-                    nativeLabel.TextColor = fills.color.ToNSColor();
-            }
-
-            if (text.characterStyleOverrides != null && text.characterStyleOverrides.Length > 0)
-            {
-                var attributedText = new NSMutableAttributedString(nativeLabel.AttributedStringValue);
-                for (int i = 0; i < text.characterStyleOverrides.Length; i++)
-                {
-                    var range = new NSRange(i, 1);
-
-                    var key = text.characterStyleOverrides[i].ToString();
-                    if (!text.styleOverrideTable.ContainsKey(key))
-                    {
-                        //we want the default values
-                        attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, nativeLabel.TextColor, range);
-                        attributedText.AddAttribute(NSStringAttributeKey.Font, nativeLabel.Font, range);
-                        continue;
-                    }
-
-                    //if there is a style to override
-                    var styleOverrided = text.styleOverrideTable[key];
-
-                    //set the color
-                    NSColor fontColorOverrided = nativeLabel.TextColor;
-                    var fillOverrided = styleOverrided.fills?.FirstOrDefault();
-                    if (fillOverrided != null && fillOverrided.visible)
-                        fontColorOverrided = fillOverrided.color.ToNSColor();
-
-                    attributedText.AddAttribute(NSStringAttributeKey.ForegroundColor, fontColorOverrided, range);
-
-                    //TODO: we can improve this
-                    //set the font for this character
-                    NSFont fontOverrided = nativeLabel.Font;
-                    if (styleOverrided.fontFamily != null)
-                    {
-                        fontOverrided = FigmaExtensions.ToNSFont(styleOverrided);
-                    }
-                    attributedText.AddAttribute(NSStringAttributeKey.Font, fontOverrided, range);
-                }
-
-                nativeLabel.AttributedStringValue = attributedText;
-            }
+			var textField = label.NativeObject as FNSTextField;
+			textField.Font = figmaText.style.ToNSFont();
+			label.Text = figmaText.characters;
+            textField.Configure(figmaText);
+            textField.Configure (currentNode);
             return label;
         }
 

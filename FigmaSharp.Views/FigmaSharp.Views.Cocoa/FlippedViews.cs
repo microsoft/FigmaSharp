@@ -30,225 +30,160 @@ using Foundation;
 
 namespace FigmaSharp.Views.Native.Cocoa
 {
-    public class FNSSearchField : NSSearchField, IFlippedView
-    {
-        public override bool IsFlipped => true;
+	public interface IFlippedView
+	{
+		bool MouseDownMovesWindow { get; set; }
+	}
 
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
-    }
+	public class FNSSearchField : NSSearchField, IFlippedView
+	{
+		public override bool IsFlipped => true;
 
-    public class FNSBox : NSBox, IFlippedView
-    {
-        public override bool IsFlipped => true;
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	}
 
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
-    }
+	public class FNSBox : NSBox, IFlippedView
+	{
+		public override bool IsFlipped => true;
 
-    public class FNSProgressIndicator : NSProgressIndicator, IFlippedView
-    {
-        public override bool IsFlipped => true;
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	}
 
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
-    }
+	public class FNSProgressIndicator : NSProgressIndicator, IFlippedView
+	{
+		public override bool IsFlipped => true;
 
-    public class FNWindow : NSWindow
-    {
-        public event EventHandler<Key> KeyDownPressed;
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	}
 
-        bool IsMovableByWindowBackground;
-        public override bool MovableByWindowBackground
-        {
-            get => IsMovableByWindowBackground;
-            set => IsMovableByWindowBackground = value;
-        }
+	public class FNWindow : NSWindow
+	{
+		public event EventHandler<Key> KeyDownPressed;
 
-        public FNWindow()
-        {
-        }
+		bool IsMovableByWindowBackground;
+		public override bool MovableByWindowBackground {
+			get => IsMovableByWindowBackground;
+			set => IsMovableByWindowBackground = value;
+		}
 
-        public FNWindow(NSCoder coder) : base(coder)
-        {
-        }
+		public FNWindow ()
+		{
+		}
 
-        public FNWindow(CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation) : base(contentRect, aStyle, bufferingType, deferCreation)
-        {
-        }
+		public FNWindow (NSCoder coder) : base (coder)
+		{
+		}
 
-        public FNWindow(CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation, NSScreen screen) : base(contentRect, aStyle, bufferingType, deferCreation, screen)
-        {
-        }
+		public FNWindow (CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation) : base (contentRect, aStyle, bufferingType, deferCreation)
+		{
+		}
 
-        protected FNWindow(NSObjectFlag t) : base(t)
-        {
-        }
+		public FNWindow (CGRect contentRect, NSWindowStyle aStyle, NSBackingStore bufferingType, bool deferCreation, NSScreen screen) : base (contentRect, aStyle, bufferingType, deferCreation, screen)
+		{
+		}
 
-        protected internal FNWindow(IntPtr handle) : base(handle)
-        {
-        }
+		protected FNWindow (NSObjectFlag t) : base (t)
+		{
+		}
 
-        public override void KeyDown(NSEvent theEvent)
-        {
-            KeyDownPressed?.Invoke(this, (Key)theEvent.KeyCode);
-            base.KeyDown(theEvent);
-        }
-    }
+		protected internal FNWindow (IntPtr handle) : base (handle)
+		{
+		}
 
-    public class FNSView : NSView, IDrawableView
-    {
-        NSColor backgroundColor;
-        public NSColor BackgroundColor
-        {
-            get => backgroundColor;
-            set
-            {
-                if (value == null)
-                    value = NSColor.Clear;
-                backgroundColor = value;
+		public override void KeyDown (NSEvent theEvent)
+		{
+			KeyDownPressed?.Invoke (this, (Key)theEvent.KeyCode);
+			base.KeyDown (theEvent);
+		}
+	}
 
-                if (!WantsLayer)
-                    WantsLayer = true;
-                Layer.BackgroundColor = value.CGColor;
-            }
-        }
+	public class FNSView : NSView
+	{
+		public override bool IsFlipped => true;
 
-        public override void ViewDidChangeEffectiveAppearance()
-        {
-            //base.ViewDidChangeEffectiveAppearance();
-            if (backgroundColor != null)
-                Layer.BackgroundColor = backgroundColor.CGColor;
-        }
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
+	}
+	public class FNSScrollview : NSScrollView, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+		public override bool IsFlipped => true;
+	}
+	public class FNSTextField : NSTextField, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSScrollview : NSScrollView, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSTextView : NSScrollView, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSTextField : NSTextField, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSTabView : NSTabView, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSTextView : NSScrollView, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSButton : NSButton, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSTabView : NSTabView, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSStepper : NSStepper, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSButton : NSButton, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSPopUpButton : NSPopUpButton, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSStepper : NSStepper, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSImageView : NSImageView, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSPopUpButton : NSPopUpButton, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSStackView : NSStackView, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 
-    public class FNSImageView : NSImageView, IFlippedView, IDrawableView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
+	public class FNSSlider : NSSlider, IFlippedView
+	{
+		public bool MouseDownMovesWindow { get; set; }
+		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
-        public override bool IsFlipped => true;
-
-        NSColor backgroundColor;
-        public NSColor BackgroundColor
-        {
-            get => backgroundColor;
-            set
-            {
-                if (value == null)
-                    value = NSColor.Clear;
-                backgroundColor = value;
-
-                if (!WantsLayer)
-                    WantsLayer = true;
-                Layer.BackgroundColor = value.CGColor;
-            }
-        }
-
-        public override void ViewDidChangeEffectiveAppearance()
-        {
-            if (backgroundColor != null)
-                BackgroundColor = backgroundColor;
-        }
-    }
-
-    public class FNSStackView : NSStackView, IFlippedView, IDrawableView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
-
-        public override bool IsFlipped => true;
-
-        NSColor backgroundColor;
-        public NSColor BackgroundColor
-        {
-            get => backgroundColor;
-            set
-            {
-                if (value == null)
-                    value = NSColor.Clear;
-                if (!WantsLayer)
-                    WantsLayer = true;
-                backgroundColor = value;
-                Layer.BackgroundColor = value.CGColor;
-            }
-        }
-
-        public override void ViewDidChangeEffectiveAppearance()
-        {
-            base.ViewDidChangeEffectiveAppearance();
-            if (backgroundColor != null)
-                BackgroundColor = backgroundColor;
-        }
-    }
-
-    public class FNSSlider : NSSlider, IFlippedView
-    {
-        public bool MouseDownMovesWindow { get; set; }
-        public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
-
-        public override bool IsFlipped => true;
-    }
+		public override bool IsFlipped => true;
+	}
 }

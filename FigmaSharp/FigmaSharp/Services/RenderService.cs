@@ -36,8 +36,6 @@ namespace FigmaSharp.Services
         public readonly List<NodeConverter> CustomConverters;
 
         protected RenderServiceOptions baseOptions;
-
-        public IColorService ColorService { get; internal set; }
         public ITranslationService TranslationService { get; internal set; }
 
         protected INodeProvider nodeProvider;
@@ -48,10 +46,9 @@ namespace FigmaSharp.Services
             baseOptions = options;
         }
 
-        public RenderService(INodeProvider nodeProvider, NodeConverter[] nodeConverters, ITranslationService translationService = null, IColorService colorService = null)
+        public RenderService(INodeProvider nodeProvider, NodeConverter[] nodeConverters, ITranslationService translationService = null)
         {
             this.TranslationService = translationService ?? new DefaultTranslationService ();
-            this.ColorService = colorService ?? AppContext.Current.GetDefaultColorService();
             this.nodeProvider = nodeProvider;
             DefaultConverters = nodeConverters.Where(s => s.IsLayer).ToList();
             CustomConverters = nodeConverters.Where(s => !s.IsLayer).ToList();

@@ -44,7 +44,7 @@ namespace FigmaSharp.Cocoa
 			return string.Format("{0}.{1}", type.FullName, property);
 		}
 
-		public static string CreatePropertyName(this CodeNode sender, string propertyName)
+		public static string CreatePropertyName(this Services.CodeNode sender, string propertyName)
 		{
 			return string.Format("{0}.{1}", sender.Name, propertyName);
 		}
@@ -54,7 +54,7 @@ namespace FigmaSharp.Cocoa
 			return string.Format("{0}.{1}", sender.Name, propertyName);
 		}
 
-		public static string CreateChildObjectName(this CodeNode sender, string propertyName)
+		public static string CreateChildObjectName(this Services.CodeNode sender, string propertyName)
 		{
 			return string.Format("{0}{1}", sender.Name, propertyName);
 		}
@@ -86,42 +86,42 @@ namespace FigmaSharp.Cocoa
 			return string.Format ("{0}.{1}", myEnum.GetType ().Name, myEnum.ToString ());
 		}
 
-		public static string GetConstructor (this CodeNode sender, Type type, bool includesVar = true)
+		public static string GetConstructor (this Services.CodeNode sender, Type type, bool includesVar = true)
 		{
 			return GetConstructor (sender, type.FullName, includesVar);
 		}
 
-		public static string GetConstructor (this CodeNode sender, string typeFullName, bool includesVar = true)
+		public static string GetConstructor (this Services.CodeNode sender, string typeFullName, bool includesVar = true)
 		{
 			return CodeGenerationHelpers.GetConstructor (sender.Name, typeFullName, includesVar);
 		}
 
-		public static string GetPropertyEquality (this CodeNode sender, string propertyName, Enum value)
+		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, Enum value)
 		{
 			return GetPropertyEquality (sender, propertyName, value.GetFullName ());
 		}
 
-		public static string GetPropertyEquality (this CodeNode sender, string propertyName, bool value)
+		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, bool value)
 		{
 			return GetPropertyEquality (sender, propertyName, value.ToDesignerString ());
 		}
 
-		public static string GetPropertyEquality (this CodeNode sender, string propertyName, string value, bool inQuotes = false)
+		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, string value, bool inQuotes = false)
 		{
 			return CodeGenerationHelpers.GetPropertyEquality (sender.Name, propertyName, value, inQuotes);
 		}
 
-		public static string GetMethod (this CodeNode sender, string methodName, Enum parameter)
+		public static string GetMethod (this Services.CodeNode sender, string methodName, Enum parameter)
 		{
 			return GetMethod (sender, methodName, parameter.GetFullName ());
 		}
 
-		public static string GetMethod (this CodeNode sender, string methodName, bool parameter)
+		public static string GetMethod (this Services.CodeNode sender, string methodName, bool parameter)
 		{
 			return CodeGenerationHelpers.GetMethod (sender.Name, methodName, parameter);
 		}
 
-		public static string GetMethod (this CodeNode sender, string methodName, string parameters, bool inQuotes = false)
+		public static string GetMethod (this Services.CodeNode sender, string methodName, string parameters, bool inQuotes = false)
 		{
 			return CodeGenerationHelpers.GetMethod (sender.Name, methodName, parameters, inQuotes);
 		}
