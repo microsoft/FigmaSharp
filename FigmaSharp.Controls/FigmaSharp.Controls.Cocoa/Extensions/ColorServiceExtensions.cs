@@ -1,7 +1,7 @@
 ﻿// Authors:
-//   Jose Medrano <josmed@microsoft.com>
+//   jmedrano <josmed@microsoft.com>
 //
-// Copyright (C) 2018 Microsoft, Corp
+// Copyright (C) 2020 Microsoft, Corp
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -21,38 +21,17 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+using System;
+using AppKit;
+using FigmaSharp.Services;
 
-using System.Collections.Generic;
-
-namespace FigmaSharp.Models
+namespace FigmaSharp.Services
 {
-    public interface IAbsoluteBoundingBox
-    {
-        Rectangle absoluteBoundingBox { get; set; }
-    }
-
-    public interface IConstraints
-    {
-        FigmaLayoutConstraint constraints { get; set; }
-    }
-
-    public interface IFigmaNodeContainer
-    {
-        FigmaNode[] children { get; set; }
-    }
-
-    public interface IFigmaStyle
-    {
-        Dictionary<string, string> styles { get; set; }
-    }
-
-    public interface IFigmaDocumentContainer : IFigmaNodeContainer, IAbsoluteBoundingBox
-    {
-        Color backgroundColor { get; set; }
-    }
-
-    public interface IFigmaImage
-    {
-        bool HasImage();
-    }
+	public static class ColorServiceExtensions
+	{
+		public static NSColor GetNSColor (this IColorService colorService, string styleName)
+        {
+			return colorService.GetColorFromStyle(styleName) as NSColor;
+		}
+	}
 }

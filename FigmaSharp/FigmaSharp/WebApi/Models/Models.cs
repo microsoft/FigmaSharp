@@ -97,7 +97,7 @@ namespace FigmaSharp.Models
         public FigmaLayoutConstraint constraints { get; set; }
     }
 
-    public class FigmaFrame : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    public class FigmaFrame : FigmaNode, IFigmaDocumentContainer, IAbsoluteBoundingBox, IConstraints, IFigmaImage, IFigmaStyle
     {
         public virtual bool HasImage()
         {
@@ -250,6 +250,10 @@ namespace FigmaSharp.Models
         [Category("General")]
         [DisplayName("RectangleCornerRadii")]
         public float[] rectangleCornerRadii { get; set; }
+
+        [Category("Style")]
+        [DisplayName("Styles")]
+        public Dictionary<string, string> styles { get; set; }
     }
 
     public class FigmaPoint : FigmaNode
@@ -263,7 +267,7 @@ namespace FigmaSharp.Models
         public float y { get; set; }
     }
 
-    public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage
+    public class FigmaVector : FigmaNode, IAbsoluteBoundingBox, IConstraints, IFigmaImage, IFigmaStyle
     {
         public virtual bool HasImage()
         {

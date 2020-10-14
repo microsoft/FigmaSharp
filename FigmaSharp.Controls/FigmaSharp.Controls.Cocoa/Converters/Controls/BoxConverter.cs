@@ -73,19 +73,13 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
                 if (rectangle != null)
                 {
-                    foreach (var styleMap in rectangle.styles)
-                    {
-                        if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
-                        {
-                            if (styleMap.Key == "fill")
-                                box.FillColor = ColorService.GetNSColor(style.name);
+                    if (rectangle.TryGetNSColorByStyleKey(rendererService, FigmaStyle.Keys.Fill, out var fillColor))
+                        box.FillColor = fillColor;
 
-                            if (styleMap.Key == "stroke")
-                            {
-                                box.BorderColor = ColorService.GetNSColor(style.name);
-                                box.BorderWidth = rectangle.strokeWeight;
-                            }
-                        }
+                    if (rectangle.TryGetNSColorByStyleKey(rendererService, FigmaStyle.Keys.Stroke, out var strokeColor))
+                    {
+                        box.BorderColor = strokeColor;
+                        box.BorderWidth = rectangle.strokeWeight;
                     }
 
                     box.CornerRadius = rectangle.cornerRadius;
@@ -131,19 +125,16 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     .OfType<RectangleVector>()
                     .FirstOrDefault();
 
-                foreach (var styleMap in rectangle?.styles)
+                if (rectangle != null)
                 {
-                    if ((rendererService.NodeProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
-                    {
-                        if (styleMap.Key == "fill")
-                            code.WritePropertyEquality(name, nameof(NSBox.FillColor), ColorService.GetNSColorString(style.name));
+                    if (rectangle.TryGetStringColorByStyleKey(rendererService, FigmaStyle.Keys.Fill, out var fillColor))
+                        code.WritePropertyEquality(name, nameof(NSBox.FillColor), fillColor);
 
-                        if (styleMap.Key == "stroke")
-                        {
-                            code.WritePropertyEquality(name, nameof(NSBox.BorderColor), ColorService.GetNSColorString(style.name));
-                            code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
-                            borderSet = true;
-                        }
+                    if (rectangle.TryGetStringColorByStyleKey(rendererService, FigmaStyle.Keys.Stroke, out var strokeColor))
+                    {
+                        code.WritePropertyEquality(name, nameof(NSBox.BorderColor), strokeColor);
+                        code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
+                        borderSet = true;
                     }
                 }
 

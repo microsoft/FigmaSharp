@@ -32,6 +32,7 @@ using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.Converters;
 using FigmaSharp.Helpers;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
@@ -53,6 +54,7 @@ namespace FigmaSharp.Cocoa
 
         static readonly CodePropertyConfigureBase codePropertyConverter = new CodePropertyConfigure ();
         static readonly ViewPropertyConfigureBase propertySetter = new ViewPropertyConfigure ();
+        static readonly IColorService defaultColorService = new Services.ColorService ();
 
         public bool IsVerticalAxisFlipped => false;
 
@@ -95,8 +97,8 @@ namespace FigmaSharp.Cocoa
 
         public void BeginInvoke(Action handler) => NSApplication.SharedApplication.InvokeOnMainThread(handler);
 
-
         public CodePropertyConfigureBase GetCodePropertyConfigure () => codePropertyConverter;
         public ViewPropertyConfigureBase GetViewPropertyConfigure () => propertySetter;
+        public IColorService GetDefaultColorService() => defaultColorService;
     }
 }
