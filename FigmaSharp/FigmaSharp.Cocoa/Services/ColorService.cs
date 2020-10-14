@@ -27,23 +27,14 @@ using System.Linq;
 using System.Collections.Generic;
 
 using AppKit;
+using FigmaSharp.Services;
 
-namespace FigmaSharp.Controls.Cocoa.Services
+namespace FigmaSharp.Cocoa.Services
 {
-	public static class ColorService
-	{
-		public static string GetNSColorString(string colorStyleName)
-		{
-			return $"{nameof(NSColor)}.{ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).ColorName}";
-		}
-
-		public static NSColor GetNSColor(string colorStyleName)
-		{
-			return ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).Color;
-		}
-
+    public class ColorService : IColorService
+    {
 		static readonly IReadOnlyList<(string StyleName, NSColor Color, string ColorName)> ThemeColors
-		                   = new List<(string StyleName, NSColor Color, string ColorName)>
+						   = new List<(string StyleName, NSColor Color, string ColorName)>
 		{
 			("Black", NSColor.Black, nameof(NSColor.Black)),
 			("White", NSColor.White, nameof(NSColor.White)),
@@ -99,5 +90,25 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			("Misc/Find Highlight", NSColor.FindHighlightColor, nameof(NSColor.FindHighlightColor)),
 			("Misc/Keyboard Focus Indicator", NSColor.KeyboardFocusIndicator, nameof(NSColor.KeyboardFocusIndicator)),
 		};
-	}
+
+		public string GetStyleFromColor(object color)
+        {
+			return ThemeColors.FirstOrDefault(c => c.Color == color as NSColor).StyleName;
+		}
+
+        public object GetStyleFromStringColor(string color)
+        {
+			return ThemeColors.FirstOrDefault(c => c.ColorName == color).StyleName;
+		}
+
+        public object GetColorFromStyle(string colorStyleName)
+        {
+			return ThemeColors.FirstOrDefault(c => c.StyleName == colorStyleName).Color;
+		}
+
+        public string GetStringColorFromStyle(string style)
+        {
+			return $"{nameof(NSColor)}.{ThemeColors.FirstOrDefault(c => c.StyleName == style).ColorName}";
+		}
+    }
 }

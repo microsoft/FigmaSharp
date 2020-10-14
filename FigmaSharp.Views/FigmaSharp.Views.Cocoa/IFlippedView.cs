@@ -22,37 +22,10 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System.Collections.Generic;
-
-namespace FigmaSharp.Models
+namespace FigmaSharp.Views.Native.Cocoa
 {
-    public interface IAbsoluteBoundingBox
+    public interface IFlippedView
     {
-        Rectangle absoluteBoundingBox { get; set; }
-    }
-
-    public interface IConstraints
-    {
-        FigmaLayoutConstraint constraints { get; set; }
-    }
-
-    public interface IFigmaNodeContainer
-    {
-        FigmaNode[] children { get; set; }
-    }
-
-    public interface IFigmaStyle
-    {
-        Dictionary<string, string> styles { get; set; }
-    }
-
-    public interface IFigmaDocumentContainer : IFigmaNodeContainer, IAbsoluteBoundingBox
-    {
-        Color backgroundColor { get; set; }
-    }
-
-    public interface IFigmaImage
-    {
-        bool HasImage();
+        bool MouseDownMovesWindow { get; set; }
     }
 }

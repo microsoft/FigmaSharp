@@ -27,6 +27,7 @@ using System.Reflection;
 
 using FigmaSharp.Converters;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -62,6 +63,8 @@ namespace FigmaSharp
         }
 
         public void BeginInvoke(Action handler) => figmaDelegate.BeginInvoke(handler);
+
+        public IColorService GetDefaultColorService() =>  figmaDelegate.GetDefaultColorService();
 
         public IView CreateEmptyView() => figmaDelegate.CreateEmptyView();
 

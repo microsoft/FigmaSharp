@@ -27,19 +27,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
 using AppKit;
 using CoreGraphics;
-using Foundation;
-
-using FigmaSharp.Models;
 using FigmaSharp.Cocoa.Helpers;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+using Foundation;
 
 namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {
-        public static NSView FindNativeViewByName(this Services.ViewRenderService rendererService, string name)
+        public static NSView FindNativeViewByName(this ViewRenderService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {
@@ -179,22 +178,22 @@ namespace FigmaSharp.Cocoa
         {
             if (style.fontPostScriptName != null)
             {
+                if (style.fontPostScriptName.EndsWith("-Medium"))
+                    return NSFontWeight.Medium;
+                if (style.fontPostScriptName.EndsWith("-UltraLight"))
+                    return NSFontWeight.UltraLight;
+                if (style.fontPostScriptName.EndsWith("-Black"))
+                    return NSFontWeight.Black;
                 if (style.fontPostScriptName.EndsWith("-Bold"))
-                {
-                    return NSFontWeight.Regular;
-                }
+                    return NSFontWeight.Bold;
                 if (style.fontPostScriptName.EndsWith("-Light"))
-                {
                     return NSFontWeight.Light;
-                }
                 if (style.fontPostScriptName.EndsWith("-Thin"))
-                {
                     return NSFontWeight.Thin;
-                }
                 if (style.fontPostScriptName.EndsWith("-SemiBold"))
-                {
                     return NSFontWeight.Semibold;
-                }
+                if (style.fontPostScriptName.EndsWith("-Heavy"))
+                    return NSFontWeight.Heavy;
             }
 
             return NSFontWeight.Regular;

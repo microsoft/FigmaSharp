@@ -84,16 +84,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (controlType == FigmaControlType.LabelHeader)
                 label.Font = NSFont.SystemFontOfSize(headerFontSize, ViewHelper.GetNSFontWeight(text));
 
-            if (text?.styles != null)
-            {
-                foreach (var styleMap in text.styles)
-                {
-                    if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
-                    {
-                        if (styleMap.Key == "fill")
-                            label.TextColor = ColorService.GetNSColor(style.name);
-                    }
-                }
+            if (text.TryGetNSColorByStyleKey (rendererService, FigmaStyle.Keys.Fill, out var color)) {
+                label.TextColor = color;
             }
 
             return new View(label);
@@ -138,14 +130,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 code.WritePropertyEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text));
             }
 
-            foreach (var styleMap in text?.styles)
-            {
-                if ((rendererService.NodeProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
-                {
-                    if (styleMap.Key == "fill")
-                        code.WritePropertyEquality(name, nameof(NSTextField.TextColor), ColorService.GetNSColorString(style.name));
-                }
-            }
+            if (text.TryGetStringColorByStyleKey (rendererService, FigmaStyle.Keys.Fill, out var color))
+                code.WritePropertyEquality(name, nameof(NSTextField.TextColor), color);
 
             return code;
         }

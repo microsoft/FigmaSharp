@@ -27,6 +27,7 @@ using System.Reflection;
 
 using FigmaSharp.Converters;
 using FigmaSharp.PropertyConfigure;
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 
 namespace FigmaSharp
@@ -51,5 +52,6 @@ namespace FigmaSharp
         
         CodePropertyConfigureBase GetCodePropertyConfigure();
         ViewPropertyConfigureBase GetViewPropertyConfigure();
+        IColorService GetDefaultColorService();
     }
 }

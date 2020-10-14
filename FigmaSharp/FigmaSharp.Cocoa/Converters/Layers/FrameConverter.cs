@@ -32,6 +32,7 @@ using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Cocoa.Converters
 {
@@ -51,23 +52,26 @@ namespace FigmaSharp.Cocoa.Converters
                 view  = new View ();
 
             var currengroupView = view.NativeObject as NSView;
-            var FigmaFrame = (FigmaFrame)currentNode;
-            currengroupView.Configure(currentNode);
+            var frame = (FigmaFrame)currentNode;
 
-            currengroupView.AlphaValue = FigmaFrame.opacity;
+            currengroupView.Hidden = !frame.visible;
+            currengroupView.AlphaValue = frame.opacity;
 
-			if (FigmaFrame.HasFills) {
-                foreach (var fill in FigmaFrame.fills) {
+			if (frame.HasFills) {
+                foreach (var fill in frame.fills) {
 					if (fill.type == "IMAGE") {
 						//we need to add this to our service
                     } else if (fill.type == "SOLID") {
                        if (fill.visible) {
-                            currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
-                        }
+                            var drawableView = (IDrawableView)currengroupView;
+                            if (frame.TryGetNSColorByStyleKey(rendererService, FigmaStyle.Keys.Fills, out var fillColor))
+                                drawableView.BackgroundColor = fillColor;
+                            else
+                                drawableView.BackgroundColor = fill.color.ToNSColor ();
+                       }
                     } else {
                         Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
 					}
-                    //currengroupView.Layer.Hidden = !fill.visible;
                 }
             }
 		
