@@ -45,13 +45,13 @@ namespace FigmaSharp.Services
 
         public ViewPropertyConfigureBase PropertySetter { get; }
 
-        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ITranslationService translationService = null, IColorService colorService = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetViewPropertyConfigure (), translationService: translationService, colorService: colorService)
+        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, ITranslationService translationService = null) : this (figmaProvider, figmaViewConverters, AppContext.Current.GetViewPropertyConfigure (), translationService)
         {
           
         }
 
-        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter, ITranslationService translationService = null, IColorService colorService = null) :
-            base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters (), translationService, colorService)
+        public ViewRenderService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters, ViewPropertyConfigureBase propertySetter, ITranslationService translationService = null) :
+            base(figmaProvider, figmaViewConverters ?? AppContext.Current.GetFigmaConverters (), translationService)
         {
             this.PropertySetter = propertySetter;
         }

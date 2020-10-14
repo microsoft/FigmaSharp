@@ -78,7 +78,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
                 {
                     if (styleMap.Key == "fill")
-                        button.ContentTintColor = rendererService.ColorService.GetNSColor(style.name);
+                        button.ContentTintColor = ColorService.GetNSColor(style.name);
                 }
             }
 
@@ -114,7 +114,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
                 {
                     if (styleMap.Key == "fill")
-                        code.WritePropertyEquality(name, nameof(NSButton.ContentTintColor), rendererService.ColorService.GetStringColorFromStyle(style.name));
+                        code.WritePropertyEquality(name, nameof(NSButton.ContentTintColor), ColorService.GetNSColorString(style.name));
                 }
             }
 

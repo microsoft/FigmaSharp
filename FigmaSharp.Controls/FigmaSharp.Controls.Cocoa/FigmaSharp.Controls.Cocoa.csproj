@@ -67,6 +67,7 @@
     <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
     <Compile Include="Helpers\CodeHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="Services\ColorService.cs" />
     <Compile Include="Services\Providers\ControlFileNodeProvider.cs" />
     <Compile Include="Services\Providers\ControlRemoteNodeProvider.cs" />
     <Compile Include="Services\Providers\ControlAssemblyResourceNodeProvider.cs" />
@@ -104,7 +105,6 @@
     <Compile Include="Converters\Controls\TabViewConverter.cs" />
     <Compile Include="Converters\Misc\PlaceHolderConverter.cs" />
     <Compile Include="Converters\Controls\ButtonSymbolConverter.cs" />
-    <Compile Include="Extensions\ColorServiceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">

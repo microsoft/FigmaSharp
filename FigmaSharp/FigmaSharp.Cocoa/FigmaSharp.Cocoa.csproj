@@ -71,8 +71,6 @@
     <Compile Include="CodeGeneration\CocoaStringObject.cs" />
     <Compile Include="CodeGeneration\CocoaNodeStringObject.cs" />
     <Compile Include="CodeGeneration\CocoaStringBuilder.cs" />
-    <Compile Include="Services\ColorService.cs" />
-    <Compile Include="Extensions\FigmaTextExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
@@ -81,7 +79,6 @@
     <Folder Include="Converters\Layers\" />
     <Folder Include="CodeGeneration\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">

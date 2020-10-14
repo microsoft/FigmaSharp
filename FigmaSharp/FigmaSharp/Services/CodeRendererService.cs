@@ -39,7 +39,7 @@ namespace FigmaSharp.Services
 		internal CodePropertyConfigureBase codePropertyConverter;
 
 		public CodeRenderService (INodeProvider figmaProvider, NodeConverter[] nodeConverters,
-			CodePropertyConfigureBase codePropertyConverter, ITranslationService translationService = null, IColorService colorService = null) : base (figmaProvider, nodeConverters, translationService: translationService, colorService:colorService)
+			CodePropertyConfigureBase codePropertyConverter, ITranslationService translationService = null) : base (figmaProvider, nodeConverters, translationService)
 		{
 			this.codePropertyConverter = codePropertyConverter;
 		}

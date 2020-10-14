@@ -27,18 +27,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using AppKit;
 using CoreGraphics;
-using FigmaSharp.Cocoa.Helpers;
-using FigmaSharp.Models;
-using FigmaSharp.Services;
 using Foundation;
+
+using FigmaSharp.Models;
+using FigmaSharp.Cocoa.Helpers;
 
 namespace FigmaSharp.Cocoa
 {
     public static class FigmaExtensions
     {
-        public static NSView FindNativeViewByName(this ViewRenderService rendererService, string name)
+        public static NSView FindNativeViewByName(this Services.ViewRenderService rendererService, string name)
         {
             foreach (var node in rendererService.NodesProcessed)
             {

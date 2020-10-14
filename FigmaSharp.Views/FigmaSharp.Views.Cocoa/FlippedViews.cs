@@ -100,36 +100,9 @@ namespace FigmaSharp.Views.Native.Cocoa
 		}
 	}
 
-    public interface IDrawableView
-    {
-		NSColor BackgroundColor { get; set; }
-	}
-
-	public class FNSView : NSView, IDrawableView
+	public class FNSView : NSView
 	{
-		NSColor backgroundColor;
-		public NSColor BackgroundColor {
-			get => backgroundColor;
-			set
-            {
-				if (value == null)
-					value = NSColor.Clear;
-				backgroundColor = value;
-
-				if (!WantsLayer)
-					WantsLayer = true;
-				Layer.BackgroundColor = value.CGColor;
-			}
-		}
-
-        public override void ViewDidChangeEffectiveAppearance()
-        {
-            //base.ViewDidChangeEffectiveAppearance();
-			if (backgroundColor != null)
-				Layer.BackgroundColor = backgroundColor.CGColor;
-		}
-
-        public override bool IsFlipped => true;
+		public override bool IsFlipped => true;
 
 		public bool MouseDownMovesWindow { get; set; }
 		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
@@ -190,64 +163,20 @@ namespace FigmaSharp.Views.Native.Cocoa
 		public override bool IsFlipped => true;
 	}
 
-	public class FNSImageView : NSImageView, IFlippedView, IDrawableView
+	public class FNSImageView : NSImageView, IFlippedView
 	{
 		public bool MouseDownMovesWindow { get; set; }
 		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
 		public override bool IsFlipped => true;
-
-		NSColor backgroundColor;
-		public NSColor BackgroundColor
-		{
-			get => backgroundColor;
-			set
-			{
-				if (value == null)
-					value = NSColor.Clear;
-				backgroundColor = value;
-
-				if (!WantsLayer)
-					WantsLayer = true;
-				Layer.BackgroundColor = value.CGColor;
-			}
-		}
-
-		public override void ViewDidChangeEffectiveAppearance()
-		{
-			if (backgroundColor != null)
-				BackgroundColor = backgroundColor;
-		}
 	}
 
-	public class FNSStackView : NSStackView, IFlippedView, IDrawableView
+	public class FNSStackView : NSStackView, IFlippedView
 	{
 		public bool MouseDownMovesWindow { get; set; }
 		public override bool MouseDownCanMoveWindow => MouseDownMovesWindow;
 
 		public override bool IsFlipped => true;
-
-		NSColor backgroundColor;
-		public NSColor BackgroundColor
-		{
-			get => backgroundColor;
-			set
-			{
-				if (value == null)
-					value = NSColor.Clear;
-				if (!WantsLayer)
-					WantsLayer = true;
-				backgroundColor = value;
-				Layer.BackgroundColor = value.CGColor;
-			}
-		}
-
-		public override void ViewDidChangeEffectiveAppearance()
-		{
-			base.ViewDidChangeEffectiveAppearance();
-			if (backgroundColor != null)
-				BackgroundColor = backgroundColor;
-		}
 	}
 
 	public class FNSSlider : NSSlider, IFlippedView
