@@ -178,22 +178,22 @@ namespace FigmaSharp.Cocoa
         {
             if (style.fontPostScriptName != null)
             {
-                if (style.fontPostScriptName.EndsWith("-Medium"))
-                    return NSFontWeight.Medium;
-                if (style.fontPostScriptName.EndsWith("-UltraLight"))
-                    return NSFontWeight.UltraLight;
-                if (style.fontPostScriptName.EndsWith("-Black"))
-                    return NSFontWeight.Black;
                 if (style.fontPostScriptName.EndsWith("-Bold"))
-                    return NSFontWeight.Bold;
+                {
+                    return NSFontWeight.Regular;
+                }
                 if (style.fontPostScriptName.EndsWith("-Light"))
+                {
                     return NSFontWeight.Light;
+                }
                 if (style.fontPostScriptName.EndsWith("-Thin"))
+                {
                     return NSFontWeight.Thin;
+                }
                 if (style.fontPostScriptName.EndsWith("-SemiBold"))
+                {
                     return NSFontWeight.Semibold;
-                if (style.fontPostScriptName.EndsWith("-Heavy"))
-                    return NSFontWeight.Heavy;
+                }
             }
 
             return NSFontWeight.Regular;
