@@ -50,9 +50,9 @@ namespace FigmaSharp.Controls.Cocoa
 				converters = new NodeConverter[] {
 					
 					// Other
-					new PlaceHolderConverter (),
+					new PlaceholderKeywordConverter (),
 					new CustomViewConverter (),
-					new ImageRenderConverter (),
+					new ImageKeywordConverter (),
 
 
 					// Buttons

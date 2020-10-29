@@ -32,13 +32,14 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-	public class PlaceHolderConverter : CocoaConverter
+	public class PlaceholderKeywordConverter : CocoaConverter
 	{
 		public override bool ScanChildren(FigmaNode currentNode) => false;
 
-        const string PlaceHolderName = "placeholder";
+        const string PlaceholderName = "placeholder";
+
 		public override bool CanConvert(FigmaNode currentNode) => false;
-        public override bool CanCodeConvert(FigmaNode currentNode) => currentNode.GetNodeTypeName() == PlaceHolderName;
+        public override bool CanCodeConvert(FigmaNode currentNode) => currentNode.GetNodeTypeName() == PlaceholderName;
 		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)

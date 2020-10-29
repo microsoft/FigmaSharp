@@ -37,7 +37,7 @@ using FigmaSharp.Views;
 
 namespace FigmaSharp.Controls.Cocoa
 {
-	public class ImageRenderConverter : CocoaConverter
+	public class ImageKeywordConverter : CocoaConverter
 	{
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
 
