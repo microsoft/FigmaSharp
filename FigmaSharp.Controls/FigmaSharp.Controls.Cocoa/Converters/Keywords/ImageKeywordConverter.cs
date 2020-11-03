@@ -39,20 +39,28 @@ namespace FigmaSharp.Controls.Cocoa
 {
 	public class ImageKeywordConverter : CocoaConverter
 	{
+		const string ImageKeyword = "!image";
+
+
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
+
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
-			return currentNode.name.StartsWith("!image");
+			return currentNode.name.StartsWith(ImageKeyword);
 		}
+
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var vector = new FigmaSharp.Views.Cocoa.ImageView();
-			var currengroupView = (NSImageView)vector.NativeObject;
+
+			var currengroupView = (NSImageView) vector.NativeObject;
 			currengroupView.Configure(currentNode);
+
 			return vector;
 		}
+
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
