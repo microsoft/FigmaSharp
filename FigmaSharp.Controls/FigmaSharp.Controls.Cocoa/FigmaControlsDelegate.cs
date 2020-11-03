@@ -48,12 +48,12 @@ namespace FigmaSharp.Controls.Cocoa
 		{
 			if (converters == null) {
 				converters = new NodeConverter[] {
-					
-					// Other
-					new PlaceholderKeywordConverter (),
+
+					// Keywords
 					new CustomViewConverter (),
 					new ImageKeywordConverter (),
-
+					new IconKeywordConverter (),
+					new PlaceholderKeywordConverter (),
 
 					// Buttons
 					new ButtonConverter (),
@@ -86,7 +86,6 @@ namespace FigmaSharp.Controls.Cocoa
 					new TabViewConverter (),
 					new BoxConverter (),
 					new DisclosureViewConverter (),
-
 				};
 			}
 

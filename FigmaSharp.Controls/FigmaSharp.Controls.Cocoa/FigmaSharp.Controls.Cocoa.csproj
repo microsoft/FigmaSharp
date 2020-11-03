@@ -105,6 +105,7 @@
     <Compile Include="Converters\Controls\ButtonSymbolConverter.cs" />
     <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
     <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
+    <Compile Include="Converters\Keywords\IconKeywordConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
