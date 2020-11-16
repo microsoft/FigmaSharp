@@ -1,6 +1,5 @@
 ﻿// Authors:
 //   Jose Medrano <josmed@microsoft.com>
-//   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -26,47 +25,39 @@
 using System;
 using System.Text;
 
-using AppKit;
-
 using FigmaSharp.Cocoa;
-using FigmaSharp.Cocoa.CodeGeneration;
-using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
-namespace FigmaSharp.Controls.Cocoa
+namespace FigmaSharp.Controls.Cocoa.Converters
 {
-	public class ImageRenderConverter : CocoaConverter
+	public class PlaceholderKeywordConverter : CocoaConverter
 	{
-		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
+		public override bool ScanChildren(FigmaNode currentNode) => false;
 
-		public override bool CanConvert(FigmaNode currentNode)
-		{
-			return currentNode.name.StartsWith("!image");
-		}
+        const string PlaceholderKeyword = "!placeholder";
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
-		{
-			var vector = new FigmaSharp.Views.Cocoa.ImageView();
-			var currengroupView = (NSImageView)vector.NativeObject;
-			currengroupView.Configure(currentNode);
-			return vector;
-		}
+		public override bool CanConvert(FigmaNode currentNode) => false;
+        public override bool CanCodeConvert(FigmaNode currentNode) => currentNode.GetNodeTypeName() == PlaceholderKeyword;
+		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var builder = new StringBuilder();
-			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
-
-			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
-			currentNode.Node.TryGetNodeCustomName(out string nodeName);
-
-			var imageNamedMethod = CodeGenerationHelpers.GetMethod(typeof(NSImage).FullName, nameof(NSImage.ImageNamed), nodeName, true);
-			builder.WritePropertyEquality(currentNode.Name, nameof(NSImageView.Image), imageNamedMethod);
-
+			var type = GetControlType(currentNode.Node);
+			if (type != null)
+			{
+				if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+					builder.WriteConstructor(currentNode.Name, type, !currentNode.Node.TryGetNodeCustomName(out var _));
+			}
+			
 			return builder;
+		}
+
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

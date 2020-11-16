@@ -60,11 +60,10 @@
     <Compile Include="FigmaControlsDelegate.cs" />
     <Compile Include="Services\ControlCodeRendererService.cs" />
     <Compile Include="Services\ControlViewRenderingService.cs" />
-    <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
     <Compile Include="CocoaConverter.ComponentStrings.cs" />
     <Compile Include="Views\FakeSheetView.cs" />
     <Compile Include="Views\FakeWindowView.cs" />
-    <Compile Include="Converters\Misc\ImageRenderConverter.cs" />
+    <Compile Include="Converters\Keywords\ImageKeywordConverter.cs" />
     <Compile Include="Helpers\CodeHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="Services\ColorService.cs" />
@@ -94,7 +93,6 @@
     <Compile Include="Converters\Controls\WindowConverter.cs" />
     <Compile Include="Converters\CocoaConverter.cs" />
     <Compile Include="PropertyConfigure\ControlCodePropertyConfigure.cs" />
-    <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
     <Compile Include="CocoaThemes.cs" />
     <Compile Include="Extensions\ImageNodeExtensions.cs" />
     <Compile Include="WebApi\ControlImageNodeRequest.cs" />
@@ -103,8 +101,11 @@
     <Compile Include="Extensions\ServiceExtensions.cs" />
     <Compile Include="Extensions\AccessibilityNodeExtensions.cs" />
     <Compile Include="Converters\Controls\TabViewConverter.cs" />
-    <Compile Include="Converters\Misc\PlaceHolderConverter.cs" />
+    <Compile Include="Converters\Keywords\PlaceholderKeywordConverter.cs" />
     <Compile Include="Converters\Controls\ButtonSymbolConverter.cs" />
+    <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
+    <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
+    <Compile Include="Converters\Keywords\IconKeywordConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
@@ -114,7 +115,7 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Services\" />
-    <Folder Include="Converters\Misc\" />
+    <Folder Include="Converters\Keywords\" />
     <Folder Include="Views\" />
     <Folder Include="Services\Providers\" />
     <Folder Include="FigmaPackage\" />
@@ -122,6 +123,7 @@
     <Folder Include="PropertyConfigure\" />
     <Folder Include="Extensions\" />
     <Folder Include="WebApi\" />
+    <Folder Include="Converters\Misc\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
