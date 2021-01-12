@@ -40,7 +40,7 @@ namespace FigmaSharp.Wpf.Converters
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             IView view;
-            if (rendererService.FileProvider.RendersAsImage(currentNode))
+            if (rendererService.NodeProvider.RendersAsImage(currentNode))
                 view = new ImageView();
             else
                 view = new View();

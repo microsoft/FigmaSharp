@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo ("FigmaSharp.Controls")]
 [assembly: InternalsVisibleTo ("FigmaSharp.Controls.Cocoa")]
 [assembly: InternalsVisibleTo ("FigmaSharp.Cocoa")]
+[assembly: InternalsVisibleTo ("FigmaSharp.Wpf")]
 [assembly: InternalsVisibleTo ("MonoDevelop.Figma")]
 [assembly: InternalsVisibleTo ("FigmaSharp.Tests")]
 [assembly: InternalsVisibleTo ("FigmaSharpApp")]

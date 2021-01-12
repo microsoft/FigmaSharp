@@ -55,13 +55,21 @@ namespace FigmaSharp.Wpf
             }
             textElement.FontFamily = new FontFamily(family);
 
-            if(style.fontSize > 0)
+            if (style.fontSize > 0)
                 textElement.FontSize = style.fontSize;// -3 ;
 
             textElement.FontWeight = FontWeight.FromOpenTypeWeight(style.fontWeight);
             if (style.letterSpacing != default)
             {
-                textElement.FontStretch = FontStretch.FromOpenTypeStretch(style.letterSpacing > 9 ? 9 : (int)style.letterSpacing);
+                try
+                {
+                    textElement.FontStretch = FontStretch.FromOpenTypeStretch(style.letterSpacing > 9 ? 9 : (int)style.letterSpacing);
+                }
+                catch (Exception ex)
+                {
+
+                }
+               
             }
 
             var fill = style.fills.FirstOrDefault();

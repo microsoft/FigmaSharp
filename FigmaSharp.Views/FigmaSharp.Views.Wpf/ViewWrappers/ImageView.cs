@@ -37,6 +37,7 @@ namespace FigmaSharp.Views.Wpf
          
         public ImageView(System.Windows.Controls.Image imageView) : base(imageView)
         {
+            this.imageView = imageView;
         }
 
         public ImageView() : this(new System.Windows.Controls.Image())
