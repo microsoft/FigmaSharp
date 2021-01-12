@@ -64,7 +64,7 @@ namespace FigmaSharp.Wpf.Converters
                     {
                         if (fill.visible)
                         {
-                            //currengroupView.Layer.BackgroundColor = fill.color.ToCGColor();
+                            view.BackgroundColor = fill.color;
                         }
                     }
                     else

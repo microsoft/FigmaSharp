@@ -23,37 +23,58 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+
 using System.Windows.Controls;
 using System.Windows.Media;
 
-using FigmaSharp.Models;
-using FigmaSharp.Views; 
-
 namespace FigmaSharp.Views.Wpf
 {
-    public class ImageView : View, IImageView
+    public class CanvasImage : Canvas, IDisposable
     {
-        readonly CanvasImage imageView;
-         
-        public ImageView(CanvasImage imageView) : base(imageView)
+        System.Windows.Controls.Image imageView;
+
+        public CanvasImage()
         {
-            this.imageView = imageView;
+            imageView = new System.Windows.Controls.Image();
+            imageView.ClipToBounds = true;
+            this.SizeChanged += CanvasImage_SizeChanged;
         }
 
-        public ImageView() : this(new CanvasImage())
+        private void CanvasImage_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
         {
+            Refresh();
         }
 
-        IImage image;
-        public IImage Image 
+        internal void SetImage(ImageSource imageSource)
         {
-            get => image;
-            set
+            if (imageSource == null)
             {
-                image = value;
-                var nativeImage = (ImageSource)Image.NativeObject;
-                imageView.SetImage (nativeImage);
+                Children.Remove(imageView);
+                imageView.Source = null;
             }
+            else
+            {
+                if (!Children.Contains(imageView))
+                    Children.Add(imageView);
+                imageView.Source = imageSource;
+
+                Refresh();
+            }
+        }
+
+        void Refresh()
+        {
+            if (!Children.Contains(imageView))
+                return;
+            SetLeft(imageView, 0);
+            SetTop(imageView, 0);
+            imageView.Width = Width;
+            imageView.Height = Height;
+        }
+
+        public void Dispose()
+        {
+            this.SizeChanged -= CanvasImage_SizeChanged;
         }
     }
 }

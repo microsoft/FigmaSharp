@@ -23,7 +23,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-
+using System.Windows;
 using FigmaSharp.Converters; 
 using FigmaSharp.Models; 
 using FigmaSharp.Services;
@@ -39,11 +39,9 @@ namespace FigmaSharp.Wpf.Converters
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
             var figmaEntity = (RectangleVector)currentNode;
-
-            var image = new CanvasImage();
-            var rectangleView = new View(image); 
-            image.Configure(figmaEntity);
-             
+            var rectangleView = new ImageView();
+            var nativeView = (FrameworkElement)rectangleView.NativeObject;
+            nativeView.Configure(figmaEntity);
             return rectangleView;
         } 
 

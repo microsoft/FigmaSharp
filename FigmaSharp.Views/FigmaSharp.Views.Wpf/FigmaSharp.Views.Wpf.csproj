@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="ViewsHelper.cs" />
+    <Compile Include="Views\CanvasImage.cs" />
     <Compile Include="ViewWrappers\Image.cs" />
     <Compile Include="ViewWrappers\ImageView.cs" />
     <Compile Include="ViewWrappers\ScrollView.cs" />

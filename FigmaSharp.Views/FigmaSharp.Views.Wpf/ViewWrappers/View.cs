@@ -37,7 +37,7 @@ namespace FigmaSharp.Views.Wpf
     {
         protected FrameworkElement nativeView;
 
-        public View() :this(new FrameworkElement())
+        public View() : this(new Canvas())
         { 
         }
 
@@ -51,11 +51,14 @@ namespace FigmaSharp.Views.Wpf
         {
             get
             {
-                return parent;
+                return new View ((FrameworkElement)System.Windows.Media.VisualTreeHelper.GetParent (nativeView));
             }
             set
             {
-                parent = value;
+                if (parent != null)
+                {
+                    parent.AddChild(this);
+                }
             }
         }
 
@@ -95,7 +98,10 @@ namespace FigmaSharp.Views.Wpf
          
         public string Identifier { get => nativeView.Name; set { } }
         public string NodeName { get => nativeView.Name; set { } }
-        public bool Hidden { get => true; set { }  }
+        public bool Hidden { 
+            get => true;
+            set { }  
+        }
 
         public Rectangle Allocation {
             get {
@@ -115,11 +121,6 @@ namespace FigmaSharp.Views.Wpf
                 children.Add(view);
                 panel.Children.Add((FrameworkElement)view.NativeObject);
             }
-        }
-
-        public virtual void CreateConstraints(FigmaNode current)
-        {
-          
         }
 
         public virtual void RemoveChild(IView view)
@@ -215,17 +216,27 @@ namespace FigmaSharp.Views.Wpf
         {
         }
 
-        public float CornerRadius { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool MovableByWindowBackground { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public float CornerRadius { get; set; }
+        public bool MovableByWindowBackground { get; set; }
 
-        public Size IntrinsicContentSize => throw new NotImplementedException();
+        public Size IntrinsicContentSize => Size;
 
         public Color BackgroundColor {
             get { 
-                return Color.White;
+                if (nativeView is Canvas canvas)
+                {
+                    return canvas.Background.ToFigmaColor();
+                }
+                throw new NotImplementedException("");
             } 
-            set
-            { 
+            set 
+            {
+                if (nativeView is Canvas canvas)
+                {
+                    canvas.Background = value.ToColor();
+                    return;
+                }
+                throw new NotImplementedException("");
             }
         }
 
