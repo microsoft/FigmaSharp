@@ -111,13 +111,16 @@ namespace FigmaSharp.Wpf.PropertyConfigure
             {
                 if (currentNode.View.NativeObject is FrameworkElement && currentNode.View.NativeObject is FrameworkElement)
                 {
-                    //var absoluteBoundingBox = ((IAbsoluteBoundingBox)currentNode)
-                    //    .absoluteBoundingBox;
-                    //var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)parentNode)
-                    //    .absoluteBoundingBox;
-                    //var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-                    //var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
-                    //currentNode.View.SetPosition(value2, value);
+                    var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)parentNode.Node)
+                        .absoluteBoundingBox;
+
+                    if (currentNode.Node is IAbsoluteBoundingBox box)
+                    {
+                        currentNode.View.SetAllocation(-absoluteBoundBoxParent.X + box.absoluteBoundingBox.X,
+                            -absoluteBoundBoxParent.Y + box.absoluteBoundingBox.Y,
+                            absoluteBoundBoxParent.Width, absoluteBoundBoxParent.Height
+                            );
+                    }
 
                     //var parentNativeView = parent.NativeObject as AppKit.NSView;
                     //var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
