@@ -8,6 +8,7 @@ bring it to our attention. Post an issue or email us:
 
 The attached notices are provided for information only.
 
+
 License notice for Newtonsoft.Json
 ------------------------------------
 
@@ -23,9 +24,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 License notice for Microsoft Libraries/NuGets
-Includes: System.ComponentModel.Annotations, NETStandard.Library, Microsoft.NETCore.App, System.Drawing.Common
-------------------------------------
+---------------------------------------------
 
+Includes: System.ComponentModel.Annotations, NETStandard.Library, Microsoft.NETCore.App, System.Drawing.Common
 https://github.com/dotnet/runtime/blob/master/LICENSE.TXT
 
 The MIT License (MIT)
@@ -52,8 +53,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
 License notice for MonoDevelop.Addins
-------------------------------------
+-------------------------------------
 
 https://github.com/mhutch/MonoDevelop.AddinMaker/blob/master/LICENSE
 
@@ -79,8 +81,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
 License notice for NUnit
-------------------------------------
+------------------------
 
 https://github.com/nunit/nunit/blob/master/LICENSE.txt
 
@@ -106,8 +109,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+
 License notice for Xamarin.Mac
-------------------------------------
+------------------------------
 
 https://github.com/nunit/nunit/blob/master/LICENSE.txt
 
@@ -139,7 +143,7 @@ SOFTWARE.
 
 
 License notice for Xamarin.Forms
-------------------------------------
+--------------------------------
 
 https://github.com/xamarin/Xamarin.Forms/blob/master/LICENSE
 
@@ -168,6 +172,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
 
 License notice for Figma design tool
 ------------------------------------
