@@ -1,5 +1,6 @@
 ﻿// Authors:
 //   Jose Medrano <josmed@microsoft.com>
+//   Hylke Bons <hylbo@microsoft.com>
 //
 // Copyright (C) 2020 Microsoft, Corp
 //
@@ -25,38 +26,55 @@
 using System;
 using System.Text;
 
+using AppKit;
+
 using FigmaSharp.Cocoa;
+using FigmaSharp.Cocoa.CodeGeneration;
+using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
 
-namespace FigmaSharp.Controls.Cocoa.Converters
+namespace FigmaSharp.Controls.Cocoa
 {
-	public class PlaceHolderConverter : CocoaConverter
+	public class ImageKeywordConverter : CocoaConverter
 	{
-		public override bool ScanChildren(FigmaNode currentNode) => false;
+		const string ImageKeyword = "!image";
 
-        const string PlaceHolderName = "placeholder";
-		public override bool CanConvert(FigmaNode currentNode) => false;
-        public override bool CanCodeConvert(FigmaNode currentNode) => currentNode.GetNodeTypeName() == PlaceHolderName;
-		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
+
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
+
+
+		public override bool CanConvert(FigmaNode currentNode)
+		{
+			return currentNode.name.StartsWith(ImageKeyword);
+		}
+
+
+		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
+		{
+			var vector = new FigmaSharp.Views.Cocoa.ImageView();
+
+			var currengroupView = (NSImageView) vector.NativeObject;
+			currengroupView.Configure(currentNode);
+
+			return vector;
+		}
+
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var builder = new StringBuilder();
-			var type = GetControlType(currentNode.Node);
-			if (type != null)
-			{
-				if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-					builder.WriteConstructor(currentNode.Name, type, !currentNode.Node.TryGetNodeCustomName(out var _));
-			}
-			
-			return builder;
-		}
+			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
+				builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
-		{
-			throw new NotImplementedException();
+			builder.Configure(currentNode.Node, Resources.Ids.Conversion.NameIdentifier);
+			currentNode.Node.TryGetNodeCustomName(out string nodeName);
+
+			var imageNamedMethod = CodeGenerationHelpers.GetMethod(typeof(NSImage).FullName, nameof(NSImage.ImageNamed), nodeName, true);
+			builder.WritePropertyEquality(currentNode.Name, nameof(NSImageView.Image), imageNamedMethod);
+
+			return builder;
 		}
 	}
 }

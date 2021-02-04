@@ -31,6 +31,7 @@ namespace FigmaSharp.Controls.Cocoa
 		public const string TEXT = "Text";
 		public const string PASSWORD = "Password";
 		public const string PLACEHOLDER = "Placeholder";
+		public const string SYMBOL = "Symbol";
 
 		// Values
 		public const string VALUE = "Value";

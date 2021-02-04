@@ -92,6 +92,8 @@ Once you've discussed your proposed feature/fix/etc. with a team member, and you
 1. Create a [Draft Pull Request (PR)](https://github.blog/2019-02-14-introducing-draft-pull-requests/)
 1. Work on your changes
 
+**Before send the PR it's important in spend a little time thinking about a beautiful title and a detailed description about the new functionality you want to add or problem you want to fix to facilitate the work of the people who are reviewing it.**
+
 ### Code Review
 
 When you'd like the team to take a look, (even if the work is not yet fully-complete), mark the PR as 'Ready For Review' so that the team can review your work and provide comments, suggestions, and request changes. It may take several cycles, but the end result will be solid, testable, conformant code that is safe for us to merge.

@@ -187,7 +187,13 @@ namespace FigmaSharpApp
 			if (response != null)
 			{
 				windowController.Window.Title = windowController.Title = response.name;
-				windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
+
+				// NOTE: Figma does not (yet) support color styles for the document background,
+				// so for now use UnderPageBackgroundColor to get a good contrast in all themes
+				//
+				// windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
+				windowController.Window.BackgroundColor = NSColor.UnderPageBackgroundColor;
+				NativeScrollView.BackgroundColor = NSColor.UnderPageBackgroundColor;
 
 				windowController.UpdatePagesPopupButton(response.document, pageIndex);
 				await windowController.UpdateVersionMenu(DocumentID);

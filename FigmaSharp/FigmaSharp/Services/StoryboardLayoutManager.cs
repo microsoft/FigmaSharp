@@ -57,9 +57,9 @@ namespace FigmaSharp.Services
 
             var canvas = firstNode.ParentView?.Node as FigmaCanvas;
             if (canvas != null) {
-                contentView.BackgroundColor = canvas.backgroundColor;
+                //contentView.BackgroundColor = canvas.backgroundColor;
                 if (contentView.Parent is IScrollView scrollview) {
-                    scrollview.BackgroundColor = canvas.backgroundColor;
+                    //scrollview.BackgroundColor = canvas.backgroundColor;
 
                     //we need correct current initial positioning
                     var rectangle = orderedNodes

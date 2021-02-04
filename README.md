@@ -6,26 +6,29 @@
 
 FigmaSharp turns your Figma design into .NET objects and can generate code and layout files to create native apps. Free and Open Source software under the [MIT LICENSE]().
 
-[![Build Status](https://travis-ci.org/netonjm/FigmaSharp.svg?branch=master)](https://travis-ci.org/netonjm/FigmaSharp)
+[![Build Status](https://travis-ci.org/microsoft/FigmaSharp.svg?branch=master)](https://travis-ci.org/microsoft/FigmaSharp)
 
 # Getting started
 
-We recommend reading through the [Wiki](https://github.com/netonjm/FigmaSharp/wiki) to get a sense of the FigmaSharp workflow.
+We recommend reading through the [Wiki](https://github.com/microsoft/FigmaSharp/wiki) to get a sense of the FigmaSharp workflow.
 
 To get documents from [figma.com](https://www.figma.com/) you'll need to generate a **Personal Access Token**.
 Sign in to Figma and in the main menu, go to **Help and Account  →  Account Settings** and select **Create new token**.
 This will be your only chance to copy the token, so make sure you keep a copy in a secure place.
 
-Try out automatic builds of the FigmaSharp app and Visual Studio extension from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. 
+Try out automatic builds of the FigmaSharp app and Visual Studio extension from the [Releases](https://github.com/microsoft/FigmaSharp/releases) page. 
 
 Do you have questions, need support, or want to contribute? Join the [chat on Discord](https://discord.gg/F3GEYqp).
 
-<br/>
+
+## Visual Studio extension
+
+The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and generate Packages ready to use in your projects. Download the .mpack from the [Releases](https://github.com/microsoft/FigmaSharp/releases) page. 
 
 
 ## FigmaSharp app and Visual Studio extension
 
-The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and generate Packages ready to use in your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page t. Install it via **Visual Studio → Extensions → Install from file…**.
+The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and generate Packages ready to use in your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. Install it via **Visual Studio → Extensions → Install from file…**.
 
 The FigmaSharp app previews Figma documents without having to install Visual Studio. Download the .app from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page.
 

@@ -36,6 +36,7 @@ namespace FigmaSharp.Controls
         Button,
         ButtonHelp,
         ButtonRoundRect,
+        ButtonSymbol,
 
         Stepper,
         SegmentedControl,
@@ -105,6 +106,8 @@ namespace FigmaSharp.Controls
 
             ("Button/Help",       FigmaControlType.ButtonHelp, NativeControlVariant.Regular),
             ("Button/Help Small", FigmaControlType.ButtonHelp, NativeControlVariant.Small),
+
+            ("Button/Symbol", FigmaControlType.ButtonSymbol, NativeControlVariant.Regular),
 
 
             ("Stepper",       FigmaControlType.Stepper, NativeControlVariant.Regular),
