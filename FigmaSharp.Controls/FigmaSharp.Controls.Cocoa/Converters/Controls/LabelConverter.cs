@@ -99,6 +99,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             return new View(label);
         }
 
+
         protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
             var code = new StringBuilder();

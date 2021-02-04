@@ -38,9 +38,10 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-    public class TextFieldConverter : CocoaConverter
+	public class TextFieldConverter : CocoaConverter
 	{
 		internal override bool HasHeightConstraint() => false;
+
 
 		public override Type GetControlType(FigmaNode currentNode)
 		{
@@ -87,8 +88,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			FigmaNode optionsGroup = frame.Options();
 
 			FigmaNode passwordNode = optionsGroup?.GetChildren()
-	            .OfType<FigmaNode>()
-	            .FirstOrDefault(s => s.name == ComponentString.PASSWORD && s.visible);
+				.OfType<FigmaNode>()
+				.FirstOrDefault(s => s.name == ComponentString.PASSWORD && s.visible);
 
 			if (passwordNode != null)
 			{
@@ -106,7 +107,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			FigmaText text = frame.children
 				.OfType<FigmaText> ()
-                .FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
+				.FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
 
 			if (text != null)
 			{
@@ -151,8 +152,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			}
 
 			FigmaText text = frame.children.
-                OfType<FigmaText> ().
-                FirstOrDefault (s => s.name == ComponentString.TITLE && s.visible);
+				OfType<FigmaText> ().
+				FirstOrDefault(s => s.name == ComponentString.TITLE && s.visible);
 
 			if (text != null) {
 				code.WritePropertyEquality(name, nameof(NSTextField.Font), CodeHelper.GetNSFontString(controlVariant, text, withWeight: false));

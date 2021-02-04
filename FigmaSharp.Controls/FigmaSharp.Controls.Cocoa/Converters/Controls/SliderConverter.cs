@@ -39,10 +39,10 @@ using FigmaSharp.Views.Cocoa;
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public abstract class SliderConverter : CocoaConverter
-    {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(NSSlider);
-
+	{
 		public override bool CanSetAccessibilityLabel => false;
+		public override Type GetControlType(FigmaNode currentNode) => typeof(NSSlider);
+
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
@@ -70,6 +70,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return new View(slider);
 		}
 
+
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var code = new StringBuilder();
@@ -87,7 +88,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			code.WritePropertyEquality(name, nameof(NSProgressIndicator.MinValue), "0");
 			code.WritePropertyEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
 
-            if (controlType == FigmaControlType.SliderLinear)
+			if (controlType == FigmaControlType.SliderLinear)
 				code.WritePropertyEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");
 
 			FigmaGroup group = frame.children
@@ -120,7 +121,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			var frame = (FigmaFrame) currentNode;
 
-            if (frame.absoluteBoundingBox.Height > frame.absoluteBoundingBox.Width)
+			if (frame.absoluteBoundingBox.Height > frame.absoluteBoundingBox.Width)
 				slider.IsVertical = 1;
 
 			return view;

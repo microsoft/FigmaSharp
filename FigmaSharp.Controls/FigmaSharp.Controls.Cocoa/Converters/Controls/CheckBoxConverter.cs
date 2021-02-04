@@ -42,6 +42,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     {
         internal override bool HasHeightConstraint() => false;
 
+
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
         public override bool CanConvert(FigmaNode currentNode)
@@ -49,6 +50,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             return currentNode.TryGetNativeControlType(out var controlType) &&
                 controlType == FigmaControlType.CheckBox;
         }
+
 
         protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
         {

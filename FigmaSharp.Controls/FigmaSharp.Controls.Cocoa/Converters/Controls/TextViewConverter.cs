@@ -48,6 +48,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				controlType == FigmaControlType.TextView;
 		}
 
+
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
@@ -56,7 +57,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			var scrollView = new NSScrollView();
 
 			var textView = new NSTextView(
-                new CoreGraphics.CGRect(0, 0, scrollView.ContentSize.Width, scrollView.ContentSize.Height));
+				new CoreGraphics.CGRect(0, 0, scrollView.ContentSize.Width, scrollView.ContentSize.Height));
 
 			textView.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSize);
 			textView.AutoresizingMask = NSViewResizingMask.WidthSizable;
@@ -79,11 +80,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			frame.TryGetNativeControlVariant(out var controlVariant);
 
-            if (controlVariant == NativeControlVariant.Small)
+			if (controlVariant == NativeControlVariant.Small)
 				textView.Font = NSFont.SystemFontOfSize(NSFont.SmallSystemFontSize);
 
 			return new View(scrollView);
 		}
+
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
@@ -109,9 +111,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				code.WriteConstructor(textViewName, typeof(NSTextView), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			code.WritePropertyEquality(textViewName,
-			    nameof(NSTextView.Frame),
-			    string.Format("new {0} ({1}, {2}, {3}, {4})",
-			    typeof(CoreGraphics.CGRect), 0, 0, name + ".ContentSize.Width", name + ".ContentSize.Height"));
+				nameof(NSTextView.Frame),
+				string.Format("new {0} ({1}, {2}, {3}, {4})",
+				typeof(CoreGraphics.CGRect), 0, 0, name + ".ContentSize.Width", name + ".ContentSize.Height"));
 
 			code.WritePropertyEquality(textViewName, nameof(NSTextView.AutoresizingMask), NSViewResizingMask.WidthSizable.GetFullName());
 

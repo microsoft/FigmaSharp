@@ -74,8 +74,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             tabView.SetItems(items.ToArray());
 
-			return new View(tabView);
+            return new View(tabView);
         }
+
 
         protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {

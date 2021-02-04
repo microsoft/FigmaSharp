@@ -39,16 +39,17 @@ using FigmaSharp.Controls.Cocoa.Helpers;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-    public class ComboBoxConverter : CocoaConverter
+	public class ComboBoxConverter : CocoaConverter
 	{
 		internal override bool HasHeightConstraint() => false;
+
 
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSComboBox);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == FigmaControlType.ComboBox;
+				controlType == FigmaControlType.ComboBox;
 		}
 
 
