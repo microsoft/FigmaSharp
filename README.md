@@ -21,43 +21,37 @@ Try out automatic builds of the FigmaSharp app and Visual Studio extension from 
 Do you have questions, need support, or want to contribute? Join the [chat on Discord](https://discord.gg/F3GEYqp).
 
 
-<br/>
-
-
 ## Visual Studio extension
 
 The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and generate Packages ready to use in your projects. Download the .mpack from the [Releases](https://github.com/microsoft/FigmaSharp/releases) page. 
 
 
-<br/>
+## FigmaSharp app and Visual Studio extension
 
+The [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) extension contains the tools to preview Figma documents and generate Packages ready to use in your projects. Download the .mpack from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page. Install it via **Visual Studio → Extensions → Install from file…**.
 
-## FigmaSharp app
-
-The app previews Figma documents without having to install Visual Studio. Download the .app from the [Releases](https://github.com/microsoft/FigmaSharp/releases) page.
-
+The FigmaSharp app previews Figma documents without having to install Visual Studio. Download the .app from the [Releases](https://github.com/netonjm/FigmaSharp/releases) page.
 
 <br/>
 
 
 ## Building from source
 
-To run the samples, open `FigmaSharp.Mac.sln` in [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/).
-In each sample project's **Project Options**, go to **Run → Configurations → Default** and add an environment variable called `TOKEN`, then paste in your Personal Access Token.
+Make sure to have the latest version of [Xcode](https://developer.apple.com/xcode/). Also install Xamarin.Mac, you can get it via the Visual Studio for Mac Installer.
+
+Open `FigmaSharp.Mac.sln` in [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/). For each project in the `Tools` or `Samples` folder you want to run, open the project's **Project Options**, go to **Run → Configurations → Default** and add an environment variable called `TOKEN`, then paste in the **Personal Access Token** for your Figma account.
 
 
+### Visual Studio for Mac extension
 
-<br/>
+Select `MonoDevelop.Figma`  in the target selector in the toolbar and run it. This will start a new Visual Studio for Mac instance with the extension enabled. Alternatively, you can run `make` in the FigmaSharp source folder. This will generate a **.mpack** file that can be installed on other computers.
 
-<br/>
 
-<br/>
+### FigmaSharpApp
 
-<br/>
+Select `FigmaSharpApp`  in the target selector in the toolbar and run it.
 
-<br/>
 
 <br/>
 
 Keep calm and hack the planet.
- 
