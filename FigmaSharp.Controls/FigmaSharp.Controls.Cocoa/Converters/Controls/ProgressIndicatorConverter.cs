@@ -39,10 +39,10 @@ using FigmaSharp.Views.Cocoa;
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public abstract class ProgressIndicatorConverter : CocoaConverter
-    {
+	{
 		internal override bool HasHeightConstraint() => false;
-
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
+
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
@@ -73,6 +73,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			return new View(progressIndicator);
 		}
+
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
@@ -146,6 +147,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return currentNode.TryGetNativeControlType(out var controlType) &&
 				controlType == FigmaControlType.ProgressIndicatorBar;
 		}
+
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{

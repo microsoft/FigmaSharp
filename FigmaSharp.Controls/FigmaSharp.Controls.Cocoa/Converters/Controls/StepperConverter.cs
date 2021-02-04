@@ -39,15 +39,15 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 {
 	public class StepperConverter : CocoaConverter
 	{
+		public override bool CanSetAccessibilityLabel => false;
+
+
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSStepper);
 
-        public override bool CanSetAccessibilityLabel => false;
-
-
-        public override bool CanConvert(FigmaNode currentNode)
+		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == FigmaControlType.Stepper;
+				controlType == FigmaControlType.Stepper;
 		}
 
 

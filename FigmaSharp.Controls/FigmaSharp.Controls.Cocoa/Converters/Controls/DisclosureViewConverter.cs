@@ -37,17 +37,19 @@ using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-    public class DisclosureViewConverter : CocoaConverter
+	public class DisclosureViewConverter : CocoaConverter
 	{
 		internal override bool HasHeightConstraint() => false;
+
 
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSView);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == FigmaControlType.DisclosureView;
+				controlType == FigmaControlType.DisclosureView;
 		}
+
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
@@ -58,7 +60,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			/* TODO
 			var subView = new NSView(disclosureView.Bounds);
 			subView.WantsLayer = true;
-		    subView.Layer.BackgroundColor = NSColor.Red.CGColor;
+			subView.Layer.BackgroundColor = NSColor.Red.CGColor;
 
 
 			var disclosureTriangle = new NSButton();
@@ -66,11 +68,11 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			disclosureTriangle.SetButtonType(NSButtonType.PushOnPushOff);
 			disclosureTriangle.BezelStyle = NSBezelStyle.Disclosure;
 
-            disclosureTriangle.Activated += delegate {
+			disclosureTriangle.Activated += delegate {
 
 			//	disclosureTriangle.State = NSCellStateValue.Off;
 
-	        };
+			};
 
 
 			disclosureView.AddSubview(disclosureTriangle);
@@ -85,6 +87,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			*/
 			return new View(disclosureView);
 		}
+
 
 		protected override StringBuilder OnConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
@@ -112,7 +115,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 					code.WriteEquality (name, nameof (NSButton.ControlSize), NSControlSize.Regular);
 					break;
 			}
-            */
+			*/
 			return code;
 		}
 	}

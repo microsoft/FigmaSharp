@@ -38,32 +38,35 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-	public class RadioConverter : CocoaConverter
-	{
+    public class RadioConverter : CocoaConverter
+    {
         internal override bool HasHeightConstraint() => false;
+
+
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
 
-		public override bool CanConvert(FigmaNode currentNode)
-		{
-			return currentNode.TryGetNativeControlType(out var controlType) &&
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            return currentNode.TryGetNativeControlType(out var controlType) &&
                 controlType == FigmaControlType.Radio;
-		}
-
-		public override bool ScanChildren(FigmaNode currentNode)
-		{
-			return false;
-		}
+        }
 
 
-		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
-		{
-			var frame = (FigmaFrame)currentNode;
+        public override bool ScanChildren(FigmaNode currentNode)
+        {
+            return false;
+        }
 
-			var radio = new NSButton();
-			radio.SetButtonType(NSButtonType.Radio);
 
-			FigmaText text = frame.children
-				.OfType<FigmaText>()
+        protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
+        {
+            var frame = (FigmaFrame)currentNode;
+
+            var radio = new NSButton();
+            radio.SetButtonType(NSButtonType.Radio);
+
+            FigmaText text = frame.children
+                .OfType<FigmaText>()
                 .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             if (text != null)
@@ -75,23 +78,24 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             radio.Font = ViewHelper.GetNSFont(controlVariant, text);
 
             FigmaGroup group = frame.children
-				.OfType<FigmaGroup>()
-				.FirstOrDefault(s => (s.name == ComponentString.STATE_ON || s.name == ComponentString.STATE_OFF) && s.visible);
+                .OfType<FigmaGroup>()
+                .FirstOrDefault(s => (s.name == ComponentString.STATE_ON || s.name == ComponentString.STATE_OFF) && s.visible);
 
-			if (group != null)
-			{
-				if (group.name == ComponentString.STATE_ON)
-					radio.State = NSCellStateValue.On;
+            if (group != null)
+            {
+                if (group.name == ComponentString.STATE_ON)
+                    radio.State = NSCellStateValue.On;
 
-				if (group.name == ComponentString.STATE_OFF)
-					radio.State = NSCellStateValue.Off;
-			}
+                if (group.name == ComponentString.STATE_OFF)
+                    radio.State = NSCellStateValue.Off;
+            }
 
-			return new View(radio);
-		}
+            return new View(radio);
+        }
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
-		{
+
+        protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        {
             var code = new StringBuilder();
             string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
@@ -129,5 +133,5 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             return code;
         }
-	}
+    }
 }

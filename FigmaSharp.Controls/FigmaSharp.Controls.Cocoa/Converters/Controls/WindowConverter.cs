@@ -86,7 +86,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == FigmaControlType.WindowPanel;
+				controlType == FigmaControlType.WindowPanel;
 		}
 
 

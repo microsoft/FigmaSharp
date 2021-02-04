@@ -38,9 +38,10 @@ using FigmaSharp.Views.Cocoa;
 
 namespace FigmaSharp.Controls.Cocoa.Converters
 {
-    public class PopUpButtonConverter : CocoaConverter
+	public class PopUpButtonConverter : CocoaConverter
 	{
 		internal override bool HasHeightConstraint() => false;
+
 
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSPopUpButton);
 
@@ -48,8 +49,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 		{
 			currentNode.TryGetNativeControlType(out var value);
 
-            return (value == FigmaControlType.PopUpButton ||
-                    value == FigmaControlType.PopUpButtonPullDown);
+			return (value == FigmaControlType.PopUpButton ||
+				value == FigmaControlType.PopUpButtonPullDown);
 		}
 
 
@@ -68,14 +69,15 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			popUp.Font = ViewHelper.GetNSFont(controlVariant);
 
 			FigmaText text = frame.children
-				   .OfType<FigmaText>()
-				   .FirstOrDefault(s => s.name == ComponentString.TITLE);
+				.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty (text.characters))
 				popUp.AddItem(rendererService.GetTranslatedText (text.characters));
 
 			return new View(popUp);
 		}
+
 
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
@@ -98,8 +100,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
 			FigmaText text = frame.children
-			   .OfType<FigmaText>()
-			   .FirstOrDefault(s => s.name == ComponentString.TITLE);
+				.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty(text.characters)) {
 				var stringLabel = rendererService.GetTranslatedText(text);

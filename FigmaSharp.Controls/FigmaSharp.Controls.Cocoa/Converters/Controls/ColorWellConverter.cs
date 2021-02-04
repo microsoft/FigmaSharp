@@ -42,6 +42,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 	{
 		internal override bool HasHeightConstraint() => false;
 
+
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSColorWell);
 
 		public override bool CanConvert(FigmaNode currentNode)
@@ -86,8 +87,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			FigmaVector rectangle = frame.children
-	            .OfType<FigmaVector>()
-	            .FirstOrDefault(s => s.name == ComponentString.VALUE);
+				.OfType<FigmaVector>()
+				.FirstOrDefault(s => s.name == ComponentString.VALUE);
 
 			foreach (var styleMap in rectangle?.styles)
 			{

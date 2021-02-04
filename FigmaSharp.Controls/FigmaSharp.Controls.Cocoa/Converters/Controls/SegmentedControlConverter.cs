@@ -41,6 +41,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     public class SegmentedControlConverter : CocoaConverter
     {
         internal override bool HasHeightConstraint() => false;
+
+
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSSegmentedControl);
 
         public override bool CanConvert(FigmaNode currentNode)
@@ -90,6 +92,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             return new View(segmentedControl);
         }
+
 
         protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
         {
