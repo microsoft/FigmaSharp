@@ -16,7 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Services\" />
     <Folder Include="Properties\" />
     <Folder Include="PropertyConfigure\" />
     <Folder Include="FigmaFile\" />
@@ -27,7 +26,6 @@
     <Folder Include="WebApi\Models\" />
     <Folder Include="Services\Nodes\" />
     <Folder Include="Services\Providers\" />
-    <Folder Include="Converters\Layers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1">

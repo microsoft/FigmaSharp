@@ -48,14 +48,21 @@ namespace FigmaSharp.Wpf
     public class FigmaDelegate : IFigmaDelegate
     {
         static readonly NodeConverter[] figmaViewConverters = {
-            new RegularPolygonConverter (),
-            new Converters.PointConverter (),
-            new FrameConverter (),
-            new TextConverter (),
-            new Converters.VectorConverter (),
-            new RectangleVectorConverter (),
-            new ElipseConverter (),
-            new LineConverter ()
+            //new RegularPolygonConverter (),
+            //new Converters.PointConverter (),
+            //new FrameConverter (),
+            //new TextConverter (),
+            //new Converters.VectorConverter (),
+            //new RectangleVectorConverter (),
+            //new ElipseConverter (),
+            //new LineConverter (),
+            //new InstanceConverter(),
+            new ButtonConverter()
+        };
+
+        static readonly NodeConverter[] figmaControlConverters =
+        {
+            new ButtonConverter()
         };
 
         public bool IsVerticalAxisFlipped => false;

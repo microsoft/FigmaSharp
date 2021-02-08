@@ -119,6 +119,13 @@ namespace FigmaSharp.Wpf
             //view.Layer.CornerRadius = child.cornerRadius;
         }
 
+        public static void Configure(this Button button, FigmaFrame frame)
+        {
+            Console.WriteLine("Dimensions: {0} x {1}", frame.absoluteBoundingBox.Width, frame.absoluteBoundingBox.Height);
+            button.MaxWidth = frame.absoluteBoundingBox.Width;
+            button.MaxHeight = frame.absoluteBoundingBox.Height;
+        }
+
         public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);

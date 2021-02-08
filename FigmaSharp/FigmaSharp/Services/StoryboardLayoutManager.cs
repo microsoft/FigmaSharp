@@ -22,6 +22,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Linq;
 
 using FigmaSharp.Models;
@@ -33,8 +34,8 @@ namespace FigmaSharp.Services
     public class StoryboardLayoutManager
     {
         public bool UsesConstraints { get; set; }
-        public int HorizontalMargins { get; set; } = 64;
-        public int VerticalMargins { get; set; } = 64;
+        public int HorizontalMargins { get; set; } = 0;
+        public int VerticalMargins { get; set; } = 0;
 
         public void Run(IView contentView, ViewRenderService rendererService)
         {
@@ -46,9 +47,9 @@ namespace FigmaSharp.Services
         public void Run (ViewNode[] mainViews, IView contentView, ViewRenderService rendererService)
         {
             var orderedNodes = mainViews
-        .OrderBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Left)
-        .ThenBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Top)
-        .ToArray();
+                .OrderBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Left)
+                .ThenBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Top)
+                .ToArray();
 
             //We want know the background color of the figma camvas and apply to our scrollview
             var firstNode = orderedNodes.FirstOrDefault();
@@ -58,15 +59,21 @@ namespace FigmaSharp.Services
             var canvas = firstNode.ParentView?.Node as FigmaCanvas;
             if (canvas != null) {
                 //contentView.BackgroundColor = canvas.backgroundColor;
+                Console.WriteLine("Canvas found!");
+                Console.WriteLine(contentView.Parent);
                 if (contentView.Parent is IScrollView scrollview) {
-                    //scrollview.BackgroundColor = canvas.backgroundColor;
 
                     //we need correct current initial positioning
                     var rectangle = orderedNodes
                         .Select(s => s.Node)
                         .GetBoundRectangle();
+                    Console.WriteLine(rectangle);
                     scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
+            }
+            else
+            {
+                Console.Write("No canvas found");
             }
 
             if (UsesConstraints) {

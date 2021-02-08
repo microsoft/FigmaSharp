@@ -17,7 +17,8 @@ namespace BasicRendering.Wpf
     {
         public App()
         {
-            var token = Environment.GetEnvironmentVariable("TOKEN");
+            //var token = Environment.GetEnvironmentVariable("TOKEN");
+            var token = "68053-90047720-9c08-4d61-95da-d704bf883f11";
             if (string.IsNullOrEmpty(token))
             {
                 token = Settings.Default.TOKEN;

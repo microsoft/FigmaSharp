@@ -25,8 +25,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using FigmaSharp.Models;
+using FigmaSharp.Services;
+using FigmaSharp.Controls;
 
 namespace FigmaSharp
 {
@@ -120,6 +121,73 @@ namespace FigmaSharp
             return false;
         }
 
+        public static bool TryGetNativeControlType(this FigmaNode node, out FigmaControlType nativeControlType)
+        {
+            nativeControlType = FigmaControlType.NotDefined;
+            if (node is FigmaComponentEntity)
+            {
+                nativeControlType = GetNativeControlType(node.name);
+                return nativeControlType != FigmaControlType.NotDefined;
+            }
+
+            if (node is FigmaInstance figmaInstance && figmaInstance.Component != null)
+            {
+                nativeControlType = figmaInstance.Component.ToNativeControlType();
+                return nativeControlType != FigmaControlType.NotDefined;
+            }
+
+            return false;
+        }
+
+        public static bool TryGetNativeControlVariant(this FigmaNode node, out NativeControlVariant nativeControlVariant)
+        {
+            nativeControlVariant = NativeControlVariant.NotDefined;
+            if (node is FigmaComponentEntity)
+            {
+                nativeControlVariant = GetNativeControlVariant(node.name);
+                return nativeControlVariant != NativeControlVariant.NotDefined;
+            }
+
+            if (node is FigmaInstance figmaInstance && figmaInstance.Component != null)
+            {
+                nativeControlVariant = figmaInstance.Component.ToNativeControlVariant();
+                return nativeControlVariant != NativeControlVariant.NotDefined;
+            }
+
+            return false;
+        }
+
+        static FigmaControlType GetNativeControlType(string name)
+        {
+            var found = ControlTypeService.GetByName(name);
+            if (found.Equals(default))
+            {
+                Console.WriteLine("Component Key not found: {0}", name);
+                return FigmaControlType.NotDefined;
+            }
+            return found.nativeControlType;
+        }
+
+        static NativeControlVariant GetNativeControlVariant(string name)
+        {
+            var found = ControlTypeService.GetByName(name);
+            if (found.Equals(default))
+            {
+                Console.WriteLine("Component Key not found: {0}", name);
+                return NativeControlVariant.NotDefined;
+            }
+            return found.nativeControlVariant;
+        }
+
+        public static FigmaControlType ToNativeControlType(this FigmaComponent figmaComponent)
+        {
+            return GetNativeControlType(figmaComponent.name);
+        }
+
+        public static NativeControlVariant ToNativeControlVariant(this FigmaComponent figmaComponent)
+        {
+            return GetNativeControlVariant(figmaComponent.name);
+        }
         public static void CalculateBounds(this IFigmaNodeContainer figmaNodeContainer)
         {
             if (figmaNodeContainer is IAbsoluteBoundingBox calculatedBounds)

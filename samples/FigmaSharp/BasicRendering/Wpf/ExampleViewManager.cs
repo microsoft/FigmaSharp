@@ -36,7 +36,7 @@ namespace BasicRendering.Wpf
 {
     public class ExampleViewManager
     {
-        const string fileName = "qVIUSmz8AkK158q8pY3L23";// https://www.figma.com/file/qVIUSmz8AkK158q8pY3L23/NicoTest?node-id=0%3A1
+        const string fileName = "sn4uDNIWoyVWt4befXIzK8"; // https://www.figma.com/file/sn4uDNIWoyVWt4befXIzK8/FigmaSharp-WPF-sandbox?node-id=0%3A1
 
         readonly NodeProvider fileProvider;
 
