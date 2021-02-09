@@ -8,7 +8,10 @@ namespace FigmaSharp.Controls
         NotDefined,
 
         //Buttons
-        Button
+        Button,
+
+        //TextBoxes
+        TextBox
     }
 
     public enum NativeControlVariant
@@ -27,7 +30,11 @@ namespace FigmaSharp.Controls
             {
                 //Buttons
                 ("Button", FigmaControlType.Button, NativeControlVariant.Regular),
-                ("Button", FigmaControlType.Button, NativeControlVariant.Default)
+                ("Button", FigmaControlType.Button, NativeControlVariant.Default),
+
+                //TextFields
+                ("TextField", FigmaControlType.TextBox, NativeControlVariant.Regular),
+                ("TextField", FigmaControlType.TextBox, NativeControlVariant.Default),
             };
     }
 }

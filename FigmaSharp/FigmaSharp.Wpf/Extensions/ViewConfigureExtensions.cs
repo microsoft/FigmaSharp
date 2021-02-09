@@ -126,6 +126,12 @@ namespace FigmaSharp.Wpf
             button.MaxHeight = frame.absoluteBoundingBox.Height;
         }
 
+        public static void Configure(this TextBox textBox, FigmaFrame frame)
+        {
+            textBox.MaxWidth = frame.absoluteBoundingBox.Width;
+            textBox.MaxHeight = frame.absoluteBoundingBox.Height;
+        }
+
         public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);

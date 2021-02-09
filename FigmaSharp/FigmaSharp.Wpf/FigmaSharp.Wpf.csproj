@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\Controls\TextBoxConverter.cs" />
     <Compile Include="Converters\Controls\ButtonConverter.cs" />
     <Compile Include="Converters\InstanceConverter.cs" />
     <Compile Include="Converters\RegularPolygonConverter.cs" />

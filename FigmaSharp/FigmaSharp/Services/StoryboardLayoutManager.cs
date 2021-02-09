@@ -34,8 +34,8 @@ namespace FigmaSharp.Services
     public class StoryboardLayoutManager
     {
         public bool UsesConstraints { get; set; }
-        public int HorizontalMargins { get; set; } = 0;
-        public int VerticalMargins { get; set; } = 0;
+        public int HorizontalMargins { get; set; } = 64;
+        public int VerticalMargins { get; set; } = 64;
 
         public void Run(IView contentView, ViewRenderService rendererService)
         {
@@ -51,7 +51,7 @@ namespace FigmaSharp.Services
                 .ThenBy(s => ((IAbsoluteBoundingBox)s.Node).absoluteBoundingBox.Top)
                 .ToArray();
 
-            //We want know the background color of the figma camvas and apply to our scrollview
+            //We want know the background color of the figma canvas and apply to our scrollview
             var firstNode = orderedNodes.FirstOrDefault();
             if (firstNode == null)
                 return;
@@ -59,8 +59,6 @@ namespace FigmaSharp.Services
             var canvas = firstNode.ParentView?.Node as FigmaCanvas;
             if (canvas != null) {
                 //contentView.BackgroundColor = canvas.backgroundColor;
-                Console.WriteLine("Canvas found!");
-                Console.WriteLine(contentView.Parent);
                 if (contentView.Parent is IScrollView scrollview) {
 
                     //we need correct current initial positioning
@@ -73,7 +71,8 @@ namespace FigmaSharp.Services
                 else if (contentView.Parent is IView view)
                 {
                     Console.WriteLine("Found a view");
-
+                    //scrollview.SetPosition(new Point(100, 200));
+                    //view.BackgroundColor = new Color(255, 0, 0);
                 }
             }
             else
@@ -92,6 +91,8 @@ namespace FigmaSharp.Services
                 var rectangle = orderedNodes
                        .Select(s => s.Node)
                        .GetBoundRectangle();
+
+                Console.WriteLine(rectangle);
 
                 foreach (var node in orderedNodes)
                 {
