@@ -70,6 +70,11 @@ namespace FigmaSharp.Services
                     Console.WriteLine(rectangle);
                     scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
+                else if (contentView.Parent is IView view)
+                {
+                    Console.WriteLine("Found a view");
+
+                }
             }
             else
             {

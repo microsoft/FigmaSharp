@@ -10,3 +10,4 @@ nuget.exe
 .user
 *.user
 .DS_Store
+ApplicationSettings.config

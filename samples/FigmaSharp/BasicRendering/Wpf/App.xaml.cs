@@ -1,8 +1,10 @@
-﻿using BasicRendering.Wpf.Properties;
+﻿using System.Configuration;
+using System.Collections.Specialized;
+
+using BasicRendering.Wpf.Properties;
 using FigmaSharp.Wpf;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +20,9 @@ namespace BasicRendering.Wpf
         public App()
         {
             //var token = Environment.GetEnvironmentVariable("TOKEN");
-            var token = "68053-90047720-9c08-4d61-95da-d704bf883f11";
+            //var token = "158001-91ae4d14-ccd3-40a6-b8e2-9c13194a94b3";
+            var token = ConfigurationManager.AppSettings.Get("FIGMATOKEN");
+            Console.WriteLine(token);
             if (string.IsNullOrEmpty(token))
             {
                 token = Settings.Default.TOKEN;
