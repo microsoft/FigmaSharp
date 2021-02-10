@@ -16,6 +16,9 @@ namespace FigmaSharp.Controls
         //TextBlocks
         TextBlock,
 
+        //Checkboxes
+        Checkbox,
+
         //Windows
         Window,
         WindowPanel
@@ -44,7 +47,11 @@ namespace FigmaSharp.Controls
                 ("TextField", FigmaControlType.TextBox, NativeControlVariant.Default),
 
                 //Labels
-                ("TextBlock", FigmaControlType.TextBlock, NativeControlVariant.Regular)
+                ("TextBlock", FigmaControlType.TextBlock, NativeControlVariant.Regular),
+
+                //Checkboxes
+                ("Checkbox", FigmaControlType.Checkbox, NativeControlVariant.Regular),
+                ("Checkbox", FigmaControlType.Checkbox, NativeControlVariant.Default)
             };
     }
 }

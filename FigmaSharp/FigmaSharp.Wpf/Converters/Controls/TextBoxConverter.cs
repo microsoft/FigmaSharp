@@ -3,12 +3,14 @@ using System.Linq;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.Extensions;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Controls;
 using FigmaSharp.Views.Wpf;
 using FigmaSharp.Helpers;
 using System.Windows.Controls;
+using System.Windows.Automation;
 
 namespace FigmaSharp.Wpf.Converters
 {
@@ -46,6 +48,23 @@ namespace FigmaSharp.Wpf.Converters
             if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase))
             {
                 // There is no placeholderText property for TextBox controls in WPF...
+            }
+
+            textBox.Configure(frame);
+            if (currentNode.TrySearchA11Label(out var label))
+            {
+                if (label != null)
+                {
+                    AutomationProperties.SetName(textBox, label);
+                }
+            }
+
+            if (currentNode.TrySearchA11Help(out var help))
+            {
+                if (help != null)
+                {
+                    AutomationProperties.SetHelpText(textBox, help);
+                }
             }
 
             FigmaGroup group = frame.children

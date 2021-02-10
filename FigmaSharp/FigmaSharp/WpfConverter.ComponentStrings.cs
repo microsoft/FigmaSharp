@@ -8,9 +8,14 @@ namespace FigmaSharp.Controls
     {
         public const string TITLE = "Title";
         public const string BACKGROUND = "bg";
+        public const string PLACEHOLDER = "Placeholder";
+        public const string PASSWORD = "Password";
 
         public const string STATE_DISABLED = "State: Disabled";
 
-        public const string PLACEHOLDER = "Placeholder";
+        //Checkbox, Radio, and Switch
+        public const string STATE_ON = "State: On";
+        public const string STATE_OFF = "State: Off";
+        
     }
 }

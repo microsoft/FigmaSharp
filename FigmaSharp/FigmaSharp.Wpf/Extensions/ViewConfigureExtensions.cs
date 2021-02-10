@@ -131,6 +131,12 @@ namespace FigmaSharp.Wpf
             textBox.MaxHeight = frame.absoluteBoundingBox.Height;
         }
 
+        public static void Configure(this CheckBox checkbox, FigmaFrame frame)
+        {
+            checkbox.MaxWidth = frame.absoluteBoundingBox.Width;
+            checkbox.MaxHeight = frame.absoluteBoundingBox.Height;
+        }
+
         public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);
