@@ -27,5 +27,12 @@ namespace FigmaSharp.Helpers
 
             return 0;
         }
+
+        public static string GetTextFontWeight(FigmaText text)
+        {
+            FigmaTypeStyle style = text.style;
+            return "Regular";
+        }
     }
+
 }

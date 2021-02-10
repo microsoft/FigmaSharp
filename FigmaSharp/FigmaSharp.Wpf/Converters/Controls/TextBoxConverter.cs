@@ -20,7 +20,6 @@ namespace FigmaSharp.Wpf.Converters
         public override bool CanConvert(FigmaNode currentNode)
         {
             currentNode.TryGetNativeControlType(out var controlType);
-            Console.WriteLine(controlType);
             return controlType == FigmaControlType.TextBox;
         }
         public override IView ConvertToView(FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
@@ -36,6 +35,17 @@ namespace FigmaSharp.Wpf.Converters
                 case FigmaControlType.TextBox:
                     // apply any styles here
                     break;
+            }
+
+            FigmaNode optionsGroup = frame.Options();
+
+            FigmaText placeholderText = optionsGroup?.GetChildren()
+                .OfType<FigmaText>()
+                .FirstOrDefault(s => s.name == ComponentString.PLACEHOLDER && s.visible);
+
+            if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase))
+            {
+                // There is no placeholderText property for TextBox controls in WPF...
             }
 
             FigmaGroup group = frame.children

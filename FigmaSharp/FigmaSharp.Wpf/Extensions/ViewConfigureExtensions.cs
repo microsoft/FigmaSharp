@@ -45,7 +45,7 @@ namespace FigmaSharp.Wpf
             view.Opacity = child.opacity;
             if (view is Panel canvas)
             {
-                canvas.Background = child.backgroundColor.ToColor();
+                canvas.Background = child.fills[0].color.ToColor();
             }
         }
 
@@ -121,7 +121,6 @@ namespace FigmaSharp.Wpf
 
         public static void Configure(this Button button, FigmaFrame frame)
         {
-            Console.WriteLine("Dimensions: {0} x {1}", frame.absoluteBoundingBox.Width, frame.absoluteBoundingBox.Height);
             button.MaxWidth = frame.absoluteBoundingBox.Width;
             button.MaxHeight = frame.absoluteBoundingBox.Height;
         }

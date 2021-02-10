@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Converters\Controls\TextBoxConverter.cs" />
     <Compile Include="Converters\Controls\ButtonConverter.cs" />
+    <Compile Include="Converters\Controls\TextBlockConverter.cs" />
     <Compile Include="Converters\InstanceConverter.cs" />
     <Compile Include="Converters\RegularPolygonConverter.cs" />
     <Compile Include="PropertyConfigure\FigmaCodePropertyConverter.cs" />

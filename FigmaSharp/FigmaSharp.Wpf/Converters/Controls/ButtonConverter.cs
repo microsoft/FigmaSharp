@@ -3,11 +3,14 @@ using System.Linq;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
+using FigmaSharp.Extensions;
 using FigmaSharp.Views;
 using FigmaSharp.Services;
 using FigmaSharp.Controls;
 using FigmaSharp.Views.Wpf;
 using System.Windows.Controls;
+using System.Windows.Automation;
+using System.Windows;
 
 namespace FigmaSharp.Wpf.Converters
 {
@@ -19,7 +22,6 @@ namespace FigmaSharp.Wpf.Converters
         public override bool CanConvert(FigmaNode currentNode)
         {
             currentNode.TryGetNativeControlType(out var controlType);
-            Console.WriteLine(controlType);
             return controlType == FigmaControlType.Button;
         }
         public override IView ConvertToView(FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
@@ -43,6 +45,22 @@ namespace FigmaSharp.Wpf.Converters
 
             button.Configure(frame);
 
+            if (currentNode.TrySearchA11Label(out var label))
+            {
+                if (label != null)
+                {
+                    AutomationProperties.SetName(button, label);
+                }
+            }
+
+            if (currentNode.TrySearchA11Help(out var help))
+            {
+                if (help != null)
+                {
+                    AutomationProperties.SetHelpText(button, help);
+                }
+            }
+
             if (group != null)
             {
                 FigmaText text = group.children
@@ -51,6 +69,10 @@ namespace FigmaSharp.Wpf.Converters
                 button.Content = text.characters;
                 button.Foreground = text.fills[0].color.ToColor();
                 button.Foreground.Opacity = text.opacity;
+                button.FontSize = text.style.fontSize;
+                button.FontWeight = FontWeight.FromOpenTypeWeight(text.style.fontWeight);
+                //AutomationProperties.SetHelpText(button, "test");
+
 
                 FigmaVector rect = group.children
                     .OfType<FigmaVector>()
@@ -62,7 +84,6 @@ namespace FigmaSharp.Wpf.Converters
                     {
                         if(rect.fills[0].type == "SOLID")
                         {
-                            Console.WriteLine(rect.fills);
                             button.Background = rect.fills[0].color.ToColor();
                         } 
                     }

@@ -11,7 +11,14 @@ namespace FigmaSharp.Controls
         Button,
 
         //TextBoxes
-        TextBox
+        TextBox,
+
+        //TextBlocks
+        TextBlock,
+
+        //Windows
+        Window,
+        WindowPanel
     }
 
     public enum NativeControlVariant
@@ -35,6 +42,9 @@ namespace FigmaSharp.Controls
                 //TextFields
                 ("TextField", FigmaControlType.TextBox, NativeControlVariant.Regular),
                 ("TextField", FigmaControlType.TextBox, NativeControlVariant.Default),
+
+                //Labels
+                ("TextBlock", FigmaControlType.TextBlock, NativeControlVariant.Regular)
             };
     }
 }

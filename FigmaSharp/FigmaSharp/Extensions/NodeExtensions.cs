@@ -94,6 +94,40 @@ namespace FigmaSharp
             return false;
         }
 
+        public static bool IsDialog(this FigmaNode figmaNode)
+        {
+            if (TryGetNativeControlType(figmaNode, out var value) &&
+                (value == FigmaControlType.WindowPanel || value == FigmaControlType.Window))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static FigmaInstance GetDialogInstanceFromParentContainer(this FigmaNode figmaNode)
+        {
+            if (!(figmaNode is IFigmaNodeContainer container))
+            {
+                return null;
+            }
+            var dialog = container.children.OfType<FigmaInstance>()
+                .FirstOrDefault(s => s.IsDialog());
+            return dialog;
+        }
+
+        public static FigmaNode GetWindowContent(this FigmaNode figmaNode)
+        {
+            if (figmaNode is IFigmaNodeContainer nodeContainer)
+            {
+                if (figmaNode.IsDialogParentContainer())
+                {
+                    var content = nodeContainer.children.FirstOrDefault(s => s.IsWindowContent());
+                    return content;
+                }
+            }
+            return null;
+        }
+
         public static bool TryGetNodeCustomName(this FigmaNode node, out string customName)
         {
             customName = node.name;
@@ -179,6 +213,56 @@ namespace FigmaSharp
             return found.nativeControlVariant;
         }
 
+        public static bool IsWindowContent(this FigmaNode figmaNode)
+        {
+            return (figmaNode.Parent?.IsDialogParentContainer() ?? false) && figmaNode.IsNodeWindowContent();
+        }
+
+        public static bool IsDialogParentContainer(this FigmaNode figmaNode)
+        {
+            return figmaNode is IFigmaNodeContainer container
+                && container.children.Any(s => s.IsDialog());
+        }
+
+        public static IEnumerable<FigmaNode> GetChildren(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null, bool reverseChildren = false)
+        {
+            if ((figmaNode.GetWindowContent() ?? figmaNode) is IFigmaNodeContainer container)
+            {
+                var figmaInstance = figmaNode.GetDialogInstanceFromParentContainer();
+                IEnumerable<FigmaNode> children = container.children;
+                if (reverseChildren)
+                {
+                    children.Reverse();
+                }
+
+                foreach (var child in children)
+                {
+                    if (child == figmaInstance)
+                    {
+                        continue;
+                    }
+                    if (func == null || (func != null && func.Invoke(child))){
+                        yield return child;
+                    }
+                }
+            }
+        }
+
+        public static FigmaNode FirstChild(this FigmaNode figmaNode, Func<FigmaNode, bool> func = null)
+        {
+            var item = figmaNode.GetChildren(s => func?.Invoke(s) ?? true);
+            return item.FirstOrDefault();
+        }
+
+        public static FigmaNode Options(this FigmaNode figmaNode)
+        {
+            if (figmaNode == null)
+            {
+                return null;
+            }
+            return figmaNode.FirstChild(s => s.name == "!options");
+        }
+
         public static FigmaControlType ToNativeControlType(this FigmaComponent figmaComponent)
         {
             return GetNativeControlType(figmaComponent.name);
@@ -188,6 +272,12 @@ namespace FigmaSharp
         {
             return GetNativeControlVariant(figmaComponent.name);
         }
+
+        public static bool IsNodeWindowContent(this FigmaNode figmaNode)
+        {
+            return figmaNode.GetNodeTypeName() == "content";
+        }
+
         public static void CalculateBounds(this IFigmaNodeContainer figmaNodeContainer)
         {
             if (figmaNodeContainer is IAbsoluteBoundingBox calculatedBounds)

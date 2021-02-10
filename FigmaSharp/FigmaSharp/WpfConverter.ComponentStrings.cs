@@ -10,5 +10,7 @@ namespace FigmaSharp.Controls
         public const string BACKGROUND = "bg";
 
         public const string STATE_DISABLED = "State: Disabled";
+
+        public const string PLACEHOLDER = "Placeholder";
     }
 }

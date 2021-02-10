@@ -58,7 +58,8 @@ namespace FigmaSharp.Wpf
             //new LineConverter (),
             //new InstanceConverter(),
             new ButtonConverter(),
-            new TextBoxConverter()
+            new TextBoxConverter(),
+            new TextBlockConverter()
         };
 
         static readonly NodeConverter[] figmaControlConverters =
