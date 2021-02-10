@@ -16,8 +16,9 @@ namespace FigmaSharp.Controls
         //TextBlocks
         TextBlock,
 
-        //Checkboxes
+        //Selections
         Checkbox,
+        ComboBox,
 
         //Windows
         Window,
@@ -51,7 +52,11 @@ namespace FigmaSharp.Controls
 
                 //Checkboxes
                 ("Checkbox", FigmaControlType.Checkbox, NativeControlVariant.Regular),
-                ("Checkbox", FigmaControlType.Checkbox, NativeControlVariant.Default)
+                ("Checkbox", FigmaControlType.Checkbox, NativeControlVariant.Default),
+
+                //ComboBoxes
+                ("ComboBox", FigmaControlType.ComboBox, NativeControlVariant.Regular),
+                ("ComboBox", FigmaControlType.ComboBox, NativeControlVariant.Default)
             };
     }
 }

@@ -36,7 +36,7 @@ using System.Windows.Automation;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class CheckboxConverter : TextConverterBase
+    public class CheckboxConverter : FrameConverterBase
     {
         public override Type GetControlType(FigmaNode currentNode) => typeof(ICheckBox);
 

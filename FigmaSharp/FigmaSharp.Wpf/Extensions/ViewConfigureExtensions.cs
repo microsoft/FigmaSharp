@@ -137,6 +137,12 @@ namespace FigmaSharp.Wpf
             checkbox.MaxHeight = frame.absoluteBoundingBox.Height;
         }
 
+        public static void Configure(this ComboBox comboBox, FigmaFrame frame)
+        {
+            comboBox.MaxWidth = frame.absoluteBoundingBox.Width;
+            comboBox.MaxHeight = frame.absoluteBoundingBox.Height;
+        }
+
         public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);

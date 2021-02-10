@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\Controls\ComboBoxConverter.cs" />
     <Compile Include="Converters\Controls\CheckboxConverter.cs" />
     <Compile Include="Converters\Controls\TextBoxConverter.cs" />
     <Compile Include="Converters\Controls\ButtonConverter.cs" />
