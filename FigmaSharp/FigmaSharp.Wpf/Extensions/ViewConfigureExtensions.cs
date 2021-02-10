@@ -143,6 +143,12 @@ namespace FigmaSharp.Wpf
             comboBox.MaxHeight = frame.absoluteBoundingBox.Height;
         }
 
+        public static void Configure(this RadioButton radioButton, FigmaFrame frame)
+        {
+            radioButton.MaxWidth = frame.absoluteBoundingBox.Width;
+            radioButton.MaxHeight = frame.absoluteBoundingBox.Height;
+        }
+
         public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);

@@ -19,6 +19,7 @@ namespace FigmaSharp.Controls
         //Selections
         Checkbox,
         ComboBox,
+        RadioButton,
 
         //Windows
         Window,
@@ -56,7 +57,11 @@ namespace FigmaSharp.Controls
 
                 //ComboBoxes
                 ("ComboBox", FigmaControlType.ComboBox, NativeControlVariant.Regular),
-                ("ComboBox", FigmaControlType.ComboBox, NativeControlVariant.Default)
+                ("ComboBox", FigmaControlType.ComboBox, NativeControlVariant.Default),
+
+                //Radios
+                ("RadioButton", FigmaControlType.RadioButton, NativeControlVariant.Regular),
+                ("RadioButton", FigmaControlType.RadioButton, NativeControlVariant.Default)
             };
     }
 }
