@@ -62,7 +62,9 @@ namespace FigmaSharp.Wpf
             new TextBlockConverter(),
             new CheckboxConverter(),
             new ComboBoxConverter(),
-            new RadioButtonConverter()
+            new RadioButtonConverter(),
+            new SliderConverter(),
+            new ProgressBarConverter()
         };
 
         static readonly NodeConverter[] figmaControlConverters =

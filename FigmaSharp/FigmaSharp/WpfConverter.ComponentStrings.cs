@@ -16,6 +16,13 @@ namespace FigmaSharp.Controls
         //Checkbox, Radio, and Switch
         public const string STATE_ON = "State: On";
         public const string STATE_OFF = "State: Off";
-        
+
+        //Slider
+        public const string THUMB = "thumb";
+
+        //ProgressBar
+        public const string STYLE_DETERMINATE = "Style: Determinate";
+        public const string STYLE_INDETERMINATE = "Style: Indeterminate";
+        public const string VALUE = "Value";
     }
 }

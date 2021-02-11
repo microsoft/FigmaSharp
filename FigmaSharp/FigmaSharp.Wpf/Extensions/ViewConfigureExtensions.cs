@@ -149,6 +149,35 @@ namespace FigmaSharp.Wpf
             radioButton.MaxHeight = frame.absoluteBoundingBox.Height;
         }
 
+        public static void Configure(this Slider slider, FigmaFrame frame)
+        {
+            slider.MaxWidth = frame.absoluteBoundingBox.Width;
+            slider.MaxHeight = frame.absoluteBoundingBox.Height;
+
+            slider.Maximum = 1;
+            slider.Minimum = 0;
+            slider.Value = 0.5;
+
+            var orientation = frame.name.Split('/');
+            if(orientation.Length > 0)
+            {
+                if (orientation[1] == "Vertical") 
+                {
+                    slider.Orientation = Orientation.Vertical;
+                }
+                else
+                {
+                    slider.Orientation = Orientation.Horizontal;
+                }
+            }
+        }
+
+        public static void Configure(this ProgressBar progressBar, FigmaVector frame)
+        {
+            progressBar.MaxWidth = frame.absoluteBoundingBox.Width;
+            progressBar.MaxHeight = frame.absoluteBoundingBox.Height;
+        }
+
         public static void Configure(this TextBlock label, FigmaText text)
         {
             Configure(label, (FigmaNode)text);

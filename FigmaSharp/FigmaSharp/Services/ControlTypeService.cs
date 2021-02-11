@@ -21,6 +21,12 @@ namespace FigmaSharp.Controls
         ComboBox,
         RadioButton,
 
+        //Sliders
+        Slider,
+
+        //ProgressBars
+        ProgressBar,
+
         //Windows
         Window,
         WindowPanel
@@ -61,7 +67,15 @@ namespace FigmaSharp.Controls
 
                 //Radios
                 ("RadioButton", FigmaControlType.RadioButton, NativeControlVariant.Regular),
-                ("RadioButton", FigmaControlType.RadioButton, NativeControlVariant.Default)
+                ("RadioButton", FigmaControlType.RadioButton, NativeControlVariant.Default),
+
+                //Sliders
+                ("Slider/Horizontal", FigmaControlType.Slider, NativeControlVariant.Regular),
+                ("Slider/Vertical", FigmaControlType.Slider, NativeControlVariant.Regular),
+
+                //ProgressBars
+                ("ProgressBar", FigmaControlType.ProgressBar, NativeControlVariant.Regular),
+                ("ProgressBar", FigmaControlType.ProgressBar, NativeControlVariant.Default)
             };
     }
 }

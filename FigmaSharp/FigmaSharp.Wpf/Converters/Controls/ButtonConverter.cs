@@ -61,6 +61,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    button.ToolTip = tooltip;
+                }
+            }
+
             if (group != null)
             {
                 FigmaText text = group.children

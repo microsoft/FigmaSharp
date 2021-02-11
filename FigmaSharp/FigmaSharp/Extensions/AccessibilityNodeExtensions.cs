@@ -11,6 +11,7 @@ namespace FigmaSharp.Extensions
         internal const string a11yLabel = "label";
         internal const string a11yHelp = "help";
         internal const string a11yRole = "role";
+        internal const string tooltip = "tooltip";
 
         internal const string a11yRoleGroup = "group";
 
@@ -52,6 +53,17 @@ namespace FigmaSharp.Extensions
         {
             var a11Node = figmaNode.GetA11Node();
             if (a11Node != null && a11Node.TryGetChildPropertyValue(a11yHelp, out label))
+            {
+                return true;
+            }
+            label = null;
+            return false;
+        }
+
+        public static bool TrySearchTooltip(this FigmaNode figmaNode, out string label)
+        {
+            var a11Node = figmaNode.GetA11Node();
+            if(a11Node != null && a11Node.TryGetChildPropertyValue(tooltip, out label))
             {
                 return true;
             }
