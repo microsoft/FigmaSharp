@@ -78,6 +78,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    progressBar.ToolTip = tooltip;
+                }
+            }
+
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
                 .FirstOrDefault(s => (s.name == ComponentString.STYLE_DETERMINATE || s.name == ComponentString.STYLE_INDETERMINATE) && s.visible);

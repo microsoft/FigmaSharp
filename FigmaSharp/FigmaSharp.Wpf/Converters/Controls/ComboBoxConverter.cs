@@ -91,6 +91,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    comboBox.ToolTip = tooltip;
+                }
+            }
+
             FigmaText text = frame.children
                     .OfType<FigmaText>()
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);

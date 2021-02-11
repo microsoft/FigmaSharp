@@ -60,6 +60,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    radioButton.ToolTip = tooltip;
+                }
+            }
+
             radioButton.Content = text.characters;
             radioButton.Foreground = text.fills[0].color.ToColor();
             radioButton.Foreground.Opacity = text.opacity;

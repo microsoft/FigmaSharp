@@ -67,6 +67,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    textBox.ToolTip = tooltip;
+                }
+            }
+
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
                 .FirstOrDefault(s => s.visible);

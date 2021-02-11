@@ -82,6 +82,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    checkbox.ToolTip = tooltip;
+                }
+            }
+
             checkbox.Content = text.characters;
             checkbox.Foreground = text.fills[0].color.ToColor();
             checkbox.Foreground.Opacity = text.opacity;
