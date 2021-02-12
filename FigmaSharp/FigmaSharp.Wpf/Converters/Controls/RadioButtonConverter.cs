@@ -68,6 +68,14 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
+            if (currentNode.TrySearchControlGroupId(out var id))
+            {
+                if (id != null)
+                {
+                    radioButton.GroupName = id;
+                }
+            }
+
             radioButton.Content = text.characters;
             radioButton.Foreground = text.fills[0].color.ToColor();
             radioButton.Foreground.Opacity = text.opacity;

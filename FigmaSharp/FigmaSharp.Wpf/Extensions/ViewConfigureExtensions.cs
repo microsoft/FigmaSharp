@@ -119,6 +119,15 @@ namespace FigmaSharp.Wpf
             //view.Layer.CornerRadius = child.cornerRadius;
         }
 
+        public static void ConfigureAcceleratorKey(this Button button, string text, string key)
+        {
+            var keyIndex = text.IndexOf(key);
+            if (keyIndex > -1)
+            {
+                text = text.Insert(keyIndex, "_");
+                button.Content = text;
+            }
+        }
         public static void Configure(this Button button, FigmaFrame frame)
         {
             button.MaxWidth = frame.absoluteBoundingBox.Width;

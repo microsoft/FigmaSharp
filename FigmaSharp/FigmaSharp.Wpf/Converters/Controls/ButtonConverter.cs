@@ -74,13 +74,24 @@ namespace FigmaSharp.Wpf.Converters
                 FigmaText text = group.children
                     .OfType<FigmaText>()
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);
-                button.Content = text.characters;
                 button.Foreground = text.fills[0].color.ToColor();
                 button.Foreground.Opacity = text.opacity;
                 button.FontSize = text.style.fontSize;
                 button.FontWeight = FontWeight.FromOpenTypeWeight(text.style.fontWeight);
-                //AutomationProperties.SetHelpText(button, "test");
 
+                if (currentNode.TrySearchAcceleratorKey(out var key))
+                {
+                    if (key != null)
+                    {
+                        button.ConfigureAcceleratorKey(text.characters, key);
+                        //AutomationProperties.SetAccessKey(button, key);
+                        //AutomationProperties.SetAcceleratorKey(button, key);
+                    }
+                }
+                else
+                {
+                    button.Content = text.characters;
+                }
 
                 FigmaVector rect = group.children
                     .OfType<FigmaVector>()

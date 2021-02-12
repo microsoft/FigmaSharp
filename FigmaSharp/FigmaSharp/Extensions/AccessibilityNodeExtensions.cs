@@ -11,6 +11,7 @@ namespace FigmaSharp.Extensions
         internal const string a11yLabel = "label";
         internal const string a11yHelp = "help";
         internal const string a11yRole = "role";
+        internal const string a11yKey = "key";
         internal const string tooltip = "tooltip";
 
         internal const string a11yRoleGroup = "group";
@@ -68,6 +69,17 @@ namespace FigmaSharp.Extensions
                 return true;
             }
             label = null;
+            return false;
+        }
+
+        public static bool TrySearchAcceleratorKey(this FigmaNode figmaNode, out string key)
+        {
+            var a11Node = figmaNode.GetA11Node();
+            if (a11Node != null && a11Node.TryGetChildPropertyValue(a11yKey, out key))
+            {
+                return true;
+            }
+            key = null;
             return false;
         }
     }
