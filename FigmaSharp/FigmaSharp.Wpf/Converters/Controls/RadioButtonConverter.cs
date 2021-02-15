@@ -44,21 +44,7 @@ namespace FigmaSharp.Wpf.Converters
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             radioButton.Configure(frame);
-            if (currentNode.TrySearchA11Label(out var label))
-            {
-                if (label != null)
-                {
-                    AutomationProperties.SetName(radioButton, label);
-                }
-            }
-
-            if (currentNode.TrySearchA11Help(out var help))
-            {
-                if (help != null)
-                {
-                    AutomationProperties.SetHelpText(radioButton, help);
-                }
-            }
+            radioButton.ConfigureAutomationProperties(frame);
 
             if (currentNode.TrySearchTooltip(out var tooltip))
             {
@@ -68,11 +54,11 @@ namespace FigmaSharp.Wpf.Converters
                 }
             }
 
-            if (currentNode.TrySearchControlGroupId(out var id))
+            if (currentNode.TrySearchControlGroupName(out var name))
             {
-                if (id != null)
+                if (name != null)
                 {
-                    radioButton.GroupName = id;
+                    radioButton.GroupName = name;
                 }
             }
 

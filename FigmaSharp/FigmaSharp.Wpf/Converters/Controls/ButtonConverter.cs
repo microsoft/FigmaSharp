@@ -44,30 +44,8 @@ namespace FigmaSharp.Wpf.Converters
                 .FirstOrDefault(s => s.visible);
 
             button.Configure(frame);
-
-            if (currentNode.TrySearchA11Label(out var label))
-            {
-                if (label != null)
-                {
-                    AutomationProperties.SetName(button, label);
-                }
-            }
-
-            if (currentNode.TrySearchA11Help(out var help))
-            {
-                if (help != null)
-                {
-                    AutomationProperties.SetHelpText(button, help);
-                }
-            }
-
-            if (currentNode.TrySearchTooltip(out var tooltip))
-            {
-                if (tooltip != null)
-                {
-                    button.ToolTip = tooltip;
-                }
-            }
+            button.ConfigureAutomationProperties(frame);
+            button.ConfigureTooltip(frame);
 
             if (group != null)
             {
@@ -84,8 +62,6 @@ namespace FigmaSharp.Wpf.Converters
                     if (key != null)
                     {
                         button.ConfigureAcceleratorKey(text.characters, key);
-                        //AutomationProperties.SetAccessKey(button, key);
-                        //AutomationProperties.SetAcceleratorKey(button, key);
                     }
                 }
                 else

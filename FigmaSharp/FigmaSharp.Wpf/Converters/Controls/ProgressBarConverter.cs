@@ -62,29 +62,8 @@ namespace FigmaSharp.Wpf.Converters
                     break;
             }
 
-            if (currentNode.TrySearchA11Label(out var label))
-            {
-                if (label != null)
-                {
-                    AutomationProperties.SetName(progressBar, label);
-                }
-            }
-
-            if (currentNode.TrySearchA11Help(out var help))
-            {
-                if (help != null)
-                {
-                    AutomationProperties.SetHelpText(progressBar, help);
-                }
-            }
-
-            if (currentNode.TrySearchTooltip(out var tooltip))
-            {
-                if (tooltip != null)
-                {
-                    progressBar.ToolTip = tooltip;
-                }
-            }
+            progressBar.ConfigureAutomationProperties(frame);
+            progressBar.Configure(frame);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()

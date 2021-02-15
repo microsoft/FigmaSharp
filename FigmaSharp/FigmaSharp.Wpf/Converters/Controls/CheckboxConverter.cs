@@ -66,62 +66,24 @@ namespace FigmaSharp.Wpf.Converters
                     .FirstOrDefault(s => s.name == ComponentString.TITLE);
 
             checkbox.Configure(frame);
-            if (currentNode.TrySearchA11Label(out var label))
+            checkbox.ConfigureAutomationProperties(frame);
+            checkbox.ConfigureTooltip(frame);
+
+            if (currentNode.TrySearchAcceleratorKey(out var key))
             {
-                if (label != null)
+                if (key != null)
                 {
-                    AutomationProperties.SetName(checkbox, label);
+                    checkbox.ConfigureAcceleratorKey(text.characters, key);
                 }
             }
-
-            if (currentNode.TrySearchA11Help(out var help))
+            else
             {
-                if (help != null)
-                {
-                    AutomationProperties.SetHelpText(checkbox, help);
-                }
+                checkbox.Content = text.characters;
             }
-
-            if (currentNode.TrySearchTooltip(out var tooltip))
-            {
-                if (tooltip != null)
-                {
-                    checkbox.ToolTip = tooltip;
-                }
-            }
-
-            checkbox.Content = text.characters;
             checkbox.Foreground = text.fills[0].color.ToColor();
             checkbox.Foreground.Opacity = text.opacity;
 
             //TODO: investigate how to apply style to check box
-
-            //FigmaVector rect = frame.children
-            //        .OfType<FigmaVector>()
-            //        .FirstOrDefault(s => s.name == ComponentString.BACKGROUND);
-
-            //if (rect != null)
-            //{
-            //    if (rect.fills.Length > 0)
-            //    {
-            //        if (rect.fills[0].type == "SOLID")
-            //        {
-            //            checkbox.Background = rect.fills[0].color.ToColor();
-            //        }
-            //    }
-
-            //    checkbox.Background.Opacity = rect.opacity;
-            //    if (rect.strokes.Length > 0)
-            //    {
-            //        checkbox.BorderBrush = rect.strokes[0].color.ToColor();
-            //        checkbox.BorderThickness = new System.Windows.Thickness(rect.strokeWeight);
-            //    }
-            //    else
-            //    {
-            //        checkbox.BorderThickness = new System.Windows.Thickness(0);
-            //    }
-
-            //}
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()

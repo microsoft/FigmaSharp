@@ -51,27 +51,14 @@ namespace FigmaSharp.Wpf.Converters
             }
 
             textBox.Configure(frame);
-            if (currentNode.TrySearchA11Label(out var label))
-            {
-                if (label != null)
-                {
-                    AutomationProperties.SetName(textBox, label);
-                }
-            }
+            textBox.ConfigureAutomationProperties(frame);
+            textBox.ConfigureTooltip(frame);
 
-            if (currentNode.TrySearchA11Help(out var help))
+            if (currentNode.TrySearchControlGroupName(out var name))
             {
-                if (help != null)
+                if (name != null)
                 {
-                    AutomationProperties.SetHelpText(textBox, help);
-                }
-            }
-
-            if (currentNode.TrySearchTooltip(out var tooltip))
-            {
-                if (tooltip != null)
-                {
-                    textBox.ToolTip = tooltip;
+                    textBox.Name = name;
                 }
             }
 

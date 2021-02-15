@@ -5,7 +5,8 @@ namespace FigmaSharp.Extensions
 {
     internal static class ControlGroupNodeExtensions
     {
-        internal const string controlGroupId = "id";
+        internal const string controlGroupName = "name";
+        internal const string controlGroupTarget = "target";
 
         internal const string controlRoleGroup = "group";
         internal const string controlGroupRole = "role";
@@ -33,14 +34,24 @@ namespace FigmaSharp.Extensions
             return (figmaNode as IFigmaNodeContainer)?.children?.FirstOrDefault(s => s.GetNodeTypeName() == controlGroupNodeName);
         }
 
-        public static bool TrySearchControlGroupId(this FigmaNode figmaNode, out string id)
+        public static bool TrySearchControlGroupName(this FigmaNode figmaNode, out string name)
         {
             var controlGroupNode = figmaNode.GetControlGroupNode();
-            if (controlGroupNode != null && controlGroupNode.TryGetChildPropertyValue(controlGroupId, out id))
+            if (controlGroupNode != null && controlGroupNode.TryGetChildPropertyValue(controlGroupName, out name))
             {
                 return true;
             }
-            id = null;
+            name = null;
+            return false;
+        }
+        public static bool TrySearchControlGroupTarget(this FigmaNode figmaNode, out string target)
+        {
+            var controlGroupNode = figmaNode.GetControlGroupNode();
+            if (controlGroupNode != null && controlGroupNode.TryGetChildPropertyValue(controlGroupTarget, out target))
+            {
+                return true;
+            }
+            target = null;
             return false;
         }
     }

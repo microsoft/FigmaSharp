@@ -26,6 +26,7 @@ using System;
 using System.Linq;
 
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -55,8 +56,8 @@ namespace FigmaSharp.Wpf
 
             if (child is IAbsoluteBoundingBox container)
             {
-                view.Width = (int) container.absoluteBoundingBox.Width;
-                view.Height = (int) container.absoluteBoundingBox.Height;
+                view.MaxWidth = (int) container.absoluteBoundingBox.Width;
+                view.MaxHeight = (int) container.absoluteBoundingBox.Height;
             }
         }
 
@@ -115,17 +116,60 @@ namespace FigmaSharp.Wpf
         public static void Configure(this FrameworkElement view, RectangleVector child)
         {
             Configure(view, (FigmaVector)child);
-
-            //view.Layer.CornerRadius = child.cornerRadius;
         }
 
         public static void ConfigureAcceleratorKey(this Button button, string text, string key)
+        {
+            button.Content = getAcceleratorText(text, key);
+        }
+
+        public static void ConfigureAcceleratorKey(this CheckBox checkbox, string text, string key)
+        {
+            checkbox.Content = getAcceleratorText(text, key);
+        }
+
+        public static void ConfigureAcceleratorKey(this Label label, string text, string key)
+        {
+            label.Content = getAcceleratorText(text, key);
+        }
+
+        private static string getAcceleratorText(string text, string key)
         {
             var keyIndex = text.IndexOf(key);
             if (keyIndex > -1)
             {
                 text = text.Insert(keyIndex, "_");
-                button.Content = text;
+            }
+            return text;
+        }
+
+        public static void ConfigureAutomationProperties(this DependencyObject control, FigmaFrame figmaFrame)
+        {
+            if (figmaFrame.TrySearchA11Label(out var label))
+            {
+                if (label != null)
+                {
+                    AutomationProperties.SetName(control, label);
+                }
+            }
+
+            if (figmaFrame.TrySearchA11Help(out var help))
+            {
+                if (help != null)
+                {
+                    AutomationProperties.SetHelpText(control, help);
+                }
+            }
+        }
+
+        public static void ConfigureTooltip(this FrameworkElement frameworkElement, FigmaFrame figmaFrame)
+        {
+            if (figmaFrame.TrySearchTooltip(out var tooltip))
+            {
+                if (tooltip != null)
+                {
+                    frameworkElement.ToolTip = tooltip;
+                }
             }
         }
         public static void Configure(this Button button, FigmaFrame frame)
@@ -189,8 +233,9 @@ namespace FigmaSharp.Wpf
 
         public static void Configure(this TextBlock label, FigmaText text)
         {
-            Configure(label, (FigmaNode)text);
-             
+            label.MaxWidth = (int)text.absoluteBoundingBox.Width;
+            label.Height = (int)text.absoluteBoundingBox.Height;
+
             label.TextAlignment = text.style.textAlignHorizontal == "CENTER" ? TextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? TextAlignment.Left : TextAlignment.Right;
             
             // textblock doesn't support vertical text alignment, unfortunately
@@ -244,6 +289,24 @@ namespace FigmaSharp.Wpf
                 run.ConfigureStyle(text.style);
                 label.Inlines.Add(run);
             }
+        }
+
+        public static void Configure(this Label label, FigmaText text)
+        {
+            label.MaxWidth = (int)text.absoluteBoundingBox.Width;
+            label.MaxHeight = (int)text.absoluteBoundingBox.Height;
+            //Configure(label, (FigmaNode)text);
+            label.HorizontalContentAlignment = text.style.textAlignHorizontal == "CENTER" ? HorizontalAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+
+            // textblock doesn't support vertical text alignment, unfortunately
+            label.VerticalAlignment = text.style.textAlignVertical == "CENTER" ? VerticalAlignment.Center : text.style.textAlignVertical == "TOP" ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+
+            label.Opacity = text.opacity;
+
+            label.FontSize = text.style.fontSize;
+            label.FontWeight = FontWeight.FromOpenTypeWeight(text.style.fontWeight);
+            label.Content = text.characters;
+            label.Padding = new Thickness(0);
         }
     }
 }

@@ -16,6 +16,9 @@ namespace FigmaSharp.Controls
         //TextBlocks
         TextBlock,
 
+        //Labels
+        Label,
+
         //Selections
         Checkbox,
         ComboBox,
@@ -26,6 +29,9 @@ namespace FigmaSharp.Controls
 
         //ProgressBars
         ProgressBar,
+
+        //Separators
+        Separator,
 
         //Windows
         Window,
@@ -50,12 +56,13 @@ namespace FigmaSharp.Controls
                 ("Button", FigmaControlType.Button, NativeControlVariant.Regular),
                 ("Button", FigmaControlType.Button, NativeControlVariant.Default),
 
-                //TextFields
-                ("TextField", FigmaControlType.TextBox, NativeControlVariant.Regular),
-                ("TextField", FigmaControlType.TextBox, NativeControlVariant.Default),
+                //TextBoxes
+                ("TextBox", FigmaControlType.TextBox, NativeControlVariant.Regular),
+                ("TextBox", FigmaControlType.TextBox, NativeControlVariant.Default),
 
                 //Labels
                 ("TextBlock", FigmaControlType.TextBlock, NativeControlVariant.Regular),
+                ("Label", FigmaControlType.Label, NativeControlVariant.Regular),
 
                 //Checkboxes
                 ("Checkbox", FigmaControlType.Checkbox, NativeControlVariant.Regular),
@@ -75,7 +82,10 @@ namespace FigmaSharp.Controls
 
                 //ProgressBars
                 ("ProgressBar", FigmaControlType.ProgressBar, NativeControlVariant.Regular),
-                ("ProgressBar", FigmaControlType.ProgressBar, NativeControlVariant.Default)
+                ("ProgressBar", FigmaControlType.ProgressBar, NativeControlVariant.Default),
+
+                //Separators
+                ("Separator", FigmaControlType.Separator, NativeControlVariant.Regular)
             };
     }
 }

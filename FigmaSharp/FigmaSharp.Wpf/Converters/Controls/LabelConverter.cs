@@ -24,6 +24,7 @@
 
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using FigmaSharp.Controls;
 using FigmaSharp.Converters;
@@ -31,71 +32,70 @@ using FigmaSharp.Extensions;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 using FigmaSharp.Views;
-using FigmaSharp.Views.Wpf;
-using System.Windows.Automation;
-using System.Windows.Media;
+using FigmaSharp.Views.Wpf; 
 
 namespace FigmaSharp.Wpf.Converters
 {
-    public class SliderConverter : FrameConverterBase
+    public class LabelConverter : TextConverterBase
     {
-        public override Type GetControlType(FigmaNode currentNode) => typeof(ISlider);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(Label);
 
         public override bool CanConvert(FigmaNode currentNode)
         {
             currentNode.TryGetNativeControlType(out var controlType);
-            return controlType == FigmaControlType.Slider;
+            return controlType == FigmaControlType.Label;
         }
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
-            var slider = new Slider();
+            var label = new Label();
 
             var frame = (FigmaFrame)currentNode;
             frame.TryGetNativeControlType(out var controlType);
             frame.TryGetNativeControlVariant(out var controlVariant);
 
-            switch (controlType)
+            FigmaText text = frame.children
+                    .OfType<FigmaText>()
+                    .FirstOrDefault(s => s.name == ComponentString.TITLE);
+
+            label.Configure(text);
+
+            //if (currentNode.TrySearchControlGroupTarget(out var name))
+            //{
+            //    if (name != null)
+            //    {
+            //        FrameworkElement target = new FrameworkElement();
+            //        Console.WriteLine("Found target {0}", target.FindName(name) as FrameworkElement);
+            //        label.Target = target.FindName(name) as FrameworkElement;
+            //    }
+            //}
+
+            //TODO: investigate onLoaded events to find target control
+
+            if (currentNode.TrySearchAcceleratorKey(out var key))
             {
-                case FigmaControlType.Slider:
-                    // apply any styles here
-                    break;
-            }
-
-            slider.Configure(frame);
-            slider.ConfigureAutomationProperties(frame);
-            slider.ConfigureTooltip(frame);
-
-            FigmaGroup group = frame.children
-                .OfType<FigmaGroup>()
-                .FirstOrDefault(s => s.visible);
-
-            if (group != null)
-            {
-                if(group.name == ComponentString.STATE_DISABLED)
+                if (key != null)
                 {
-                    slider.IsEnabled = false;
-                }
-
-                FigmaVector thumb = group.children
-                    .OfType<FigmaVector>()
-                    .FirstOrDefault(s => s.name == ComponentString.THUMB);
-
-                if (thumb != null)
-                {
-                    if (slider.Orientation == Orientation.Horizontal)
-                    {
-                        slider.Value = (thumb.absoluteBoundingBox.X + thumb.absoluteBoundingBox.Width/2) / frame.absoluteBoundingBox.Width;
-                    }
-                    if (slider.Orientation == Orientation.Vertical)
-                    {
-                        slider.Value = 1 - ((thumb.absoluteBoundingBox.Y + thumb.absoluteBoundingBox.Height/2) / frame.absoluteBoundingBox.Height);
-                    }
+                    label.ConfigureAcceleratorKey(text.characters, key);
                 }
             }
 
-            var wrapper = new View(slider);
+
+            var wrapper = new View(label);
             return wrapper;
+        }
+
+        private void GetTargetControl(FigmaNode currentNode, Label label)
+        {
+            if (currentNode.TrySearchControlGroupTarget(out var name))
+            {
+                if (name != null)
+                {
+                    FrameworkElement target = new FrameworkElement();
+                    Console.WriteLine("Found target {0}", target.FindName(name) as FrameworkElement);
+                    label.Target = target.FindName(name) as FrameworkElement;
+                }
+            }
         }
          
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)

@@ -75,21 +75,7 @@ namespace FigmaSharp.Wpf.Converters
             }
 
             comboBox.Configure(frame);
-            if (currentNode.TrySearchA11Label(out var label))
-            {
-                if (label != null)
-                {
-                    AutomationProperties.SetName(comboBox, label);
-                }
-            }
-
-            if (currentNode.TrySearchA11Help(out var help))
-            {
-                if (help != null)
-                {
-                    AutomationProperties.SetHelpText(comboBox, help);
-                }
-            }
+            comboBox.ConfigureAutomationProperties(frame);
 
             if (currentNode.TrySearchTooltip(out var tooltip))
             {
