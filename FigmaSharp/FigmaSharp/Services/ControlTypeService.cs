@@ -9,9 +9,11 @@ namespace FigmaSharp.Controls
 
         //Buttons
         Button,
+        Hyperlink,
 
         //TextBoxes
         TextBox,
+        PasswordBox,
 
         //TextBlocks
         TextBlock,
@@ -55,10 +57,12 @@ namespace FigmaSharp.Controls
                 //Buttons
                 ("Button", FigmaControlType.Button, NativeControlVariant.Regular),
                 ("Button", FigmaControlType.Button, NativeControlVariant.Default),
+                ("Hyperlink", FigmaControlType.Hyperlink, NativeControlVariant.Regular),
 
                 //TextBoxes
                 ("TextBox", FigmaControlType.TextBox, NativeControlVariant.Regular),
                 ("TextBox", FigmaControlType.TextBox, NativeControlVariant.Default),
+                ("PasswordBox", FigmaControlType.PasswordBox, NativeControlVariant.Regular),
 
                 //Labels
                 ("TextBlock", FigmaControlType.TextBlock, NativeControlVariant.Regular),

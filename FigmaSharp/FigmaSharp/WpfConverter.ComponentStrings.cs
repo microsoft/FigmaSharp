@@ -20,6 +20,9 @@ namespace FigmaSharp.Controls
         //Slider
         public const string THUMB = "thumb";
 
+        //Hyperlink
+        public const string URL = "URL";
+
         //ProgressBar
         public const string STYLE_DETERMINATE = "Style: Determinate";
         public const string STYLE_INDETERMINATE = "Style: Indeterminate";

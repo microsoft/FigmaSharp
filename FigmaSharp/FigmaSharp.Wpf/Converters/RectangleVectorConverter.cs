@@ -40,8 +40,11 @@ namespace FigmaSharp.Wpf.Converters
         {
             var figmaEntity = (RectangleVector)currentNode;
             var rectangleView = new ImageView();
+
             var nativeView = (FrameworkElement)rectangleView.NativeObject;
             nativeView.Configure(figmaEntity);
+            Console.WriteLine("Image size: {0} x {1}", figmaEntity.absoluteBoundingBox.Width, figmaEntity.absoluteBoundingBox.Height);
+            Console.WriteLine("View size: {0} x {1}", rectangleView.Width, rectangleView.Height);
             return rectangleView;
         } 
 

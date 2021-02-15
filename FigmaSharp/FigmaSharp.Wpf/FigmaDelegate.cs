@@ -66,7 +66,9 @@ namespace FigmaSharp.Wpf
             new SliderConverter(),
             new ProgressBarConverter(),
             new LabelConverter(),
-            new SeparatorConverter()
+            new SeparatorConverter(),
+            new PasswordBoxConverter(),
+            new HyperlinkConverter(),
         };
 
         static readonly NodeConverter[] figmaControlConverters =

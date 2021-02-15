@@ -65,7 +65,6 @@ namespace FigmaSharp.Services
                     var rectangle = orderedNodes
                         .Select(s => s.Node)
                         .GetBoundRectangle();
-                    Console.WriteLine(rectangle);
                     scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
                 }
                 else if (contentView.Parent is IView view)

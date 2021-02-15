@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\Controls\HyperlinkConverter.cs" />
     <Compile Include="Converters\Controls\SeparatorConverter.cs" />
     <Compile Include="Converters\Controls\ProgressBarConverter.cs" />
     <Compile Include="Converters\Controls\SliderConverter.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Converters\Controls\ComboBoxConverter.cs" />
     <Compile Include="Converters\Controls\CheckboxConverter.cs" />
     <Compile Include="Converters\Controls\LabelConverter.cs" />
+    <Compile Include="Converters\Controls\PasswordBoxConverter.cs" />
     <Compile Include="Converters\Controls\TextBoxConverter.cs" />
     <Compile Include="Converters\Controls\ButtonConverter.cs" />
     <Compile Include="Converters\Controls\TextBlockConverter.cs" />
