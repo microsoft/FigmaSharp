@@ -68,8 +68,8 @@ namespace FigmaSharp.Wpf
                 return;
             SetLeft(imageView, 0);
             SetTop(imageView, 0);
-            imageView.Width = Width;
-            imageView.Height = Height;
+            imageView.MaxWidth = Width;
+            imageView.MaxHeight = Height;
         }
 
         public void Dispose()

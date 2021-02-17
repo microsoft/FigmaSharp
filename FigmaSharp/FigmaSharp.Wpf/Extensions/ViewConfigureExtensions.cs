@@ -36,6 +36,8 @@ using FigmaSharp.Extensions;
 using FigmaSharp.Models;
 using FigmaSharp.Views.Wpf;
 
+using PseudoLocalizer;
+
 namespace FigmaSharp.Wpf
 {
     public static class ViewConfigureExtensions
@@ -168,7 +170,19 @@ namespace FigmaSharp.Wpf
             {
                 if (tooltip != null)
                 {
-                    frameworkElement.ToolTip = tooltip;
+                    frameworkElement.ToolTip = tooltip.PseudoLocalize();
+                }
+            }
+        }
+
+        public static void ConfigureTabIndex(this Control control, FigmaFrame figmaFrame)
+        {
+            if (figmaFrame.TrySearchTabIndex(out var index))
+            {
+                if(index != null)
+                {
+                    control.TabIndex = Int16.Parse(index);
+                    
                 }
             }
         }
@@ -198,8 +212,10 @@ namespace FigmaSharp.Wpf
 
         public static void Configure(this TextBlock label, FigmaText text)
         {
-            label.MaxWidth = (int)text.absoluteBoundingBox.Width;
-            label.Height = (int)text.absoluteBoundingBox.Height;
+            //label.MaxWidth = (int)text.absoluteBoundingBox.Width;
+            //label.MaxHeight = (int)text.absoluteBoundingBox.Height;
+            label.MaxWidth = text.absoluteBoundingBox.Width;
+            label.MaxHeight = text.absoluteBoundingBox.Height + text.style.lineHeightPx;
 
             label.TextAlignment = text.style.textAlignHorizontal == "CENTER" ? TextAlignment.Center : text.style.textAlignHorizontal == "LEFT" ? TextAlignment.Left : TextAlignment.Right;
             

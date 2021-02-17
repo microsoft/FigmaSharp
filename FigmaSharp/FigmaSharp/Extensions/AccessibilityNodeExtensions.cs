@@ -13,6 +13,7 @@ namespace FigmaSharp.Extensions
         internal const string a11yRole = "role";
         internal const string a11yKey = "key";
         internal const string tooltip = "tooltip";
+        internal const string tabIndex = "tabIndex";
 
         internal const string a11yRoleGroup = "group";
 
@@ -80,6 +81,17 @@ namespace FigmaSharp.Extensions
                 return true;
             }
             key = null;
+            return false;
+        }
+
+        public static bool TrySearchTabIndex(this FigmaNode figmaNode, out string index)
+        {
+            var a11Node = figmaNode.GetA11Node();
+            if (a11Node != null && a11Node.TryGetChildPropertyValue(tabIndex, out index))
+            {
+                return true;
+            }
+            index = null;
             return false;
         }
     }

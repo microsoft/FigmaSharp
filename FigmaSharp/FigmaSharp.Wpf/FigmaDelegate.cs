@@ -53,7 +53,7 @@ namespace FigmaSharp.Wpf
             //new FrameConverter (),
             //new TextConverter (),
             //new Converters.VectorConverter (),
-            //new RectangleVectorConverter (),
+            new RectangleVectorConverter (),
             //new ElipseConverter (),
             //new LineConverter (),
             //new InstanceConverter(),

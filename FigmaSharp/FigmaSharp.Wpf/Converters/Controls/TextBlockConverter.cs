@@ -53,12 +53,12 @@ namespace FigmaSharp.Wpf.Converters
             frame.TryGetNativeControlType(out var controlType);
             frame.TryGetNativeControlVariant(out var controlVariant);
 
-            switch (controlType)
-            {
-                case FigmaControlType.TextBlock:
-                    // apply any styles here
-                    break;
-            }
+            //switch (controlType)
+            //{
+            //    case FigmaControlType.TextBlock:
+            //        // apply any styles here
+            //        break;
+            //}
 
             FigmaText text = frame.children
                     .OfType<FigmaText>()

@@ -24,7 +24,8 @@
 
 using System;
 using System.Windows;
-using FigmaSharp.Converters; 
+using FigmaSharp.Converters;
+using System.Windows.Controls;
 using FigmaSharp.Models; 
 using FigmaSharp.Services;
 using FigmaSharp.Views;
@@ -43,6 +44,8 @@ namespace FigmaSharp.Wpf.Converters
 
             var nativeView = (FrameworkElement)rectangleView.NativeObject;
             nativeView.Configure(figmaEntity);
+            nativeView.MaxHeight = figmaEntity.absoluteBoundingBox.Width;
+            nativeView.MaxHeight = figmaEntity.absoluteBoundingBox.Height;
             Console.WriteLine("Image size: {0} x {1}", figmaEntity.absoluteBoundingBox.Width, figmaEntity.absoluteBoundingBox.Height);
             Console.WriteLine("View size: {0} x {1}", rectangleView.Width, rectangleView.Height);
             return rectangleView;

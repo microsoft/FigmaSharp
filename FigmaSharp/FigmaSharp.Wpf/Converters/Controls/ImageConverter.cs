@@ -14,10 +14,10 @@ using System.Windows;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    class ButtonConverter: FrameConverterBase
+    class ImageConverter: FrameConverterBase
     {
        
-        public override Type GetControlType(FigmaNode currentNode) => typeof(IButton);
+        public override Type GetControlType(FigmaNode currentNode) => typeof(IImage);
 
         public override bool CanConvert(FigmaNode currentNode)
         {
@@ -46,7 +46,6 @@ namespace FigmaSharp.Wpf.Converters
             button.Configure(frame);
             button.ConfigureAutomationProperties(frame);
             button.ConfigureTooltip(frame);
-            button.ConfigureTabIndex(frame);
 
             if (group != null)
             {
