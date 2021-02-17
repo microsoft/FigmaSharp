@@ -172,35 +172,6 @@ namespace FigmaSharp.Wpf
                 }
             }
         }
-        public static void Configure(this Button button, FigmaFrame frame)
-        {
-            button.MaxWidth = frame.absoluteBoundingBox.Width;
-            button.MaxHeight = frame.absoluteBoundingBox.Height;
-        }
-
-        public static void Configure(this TextBox textBox, FigmaFrame frame)
-        {
-            textBox.MaxWidth = frame.absoluteBoundingBox.Width;
-            textBox.MaxHeight = frame.absoluteBoundingBox.Height;
-        }
-
-        public static void Configure(this CheckBox checkbox, FigmaFrame frame)
-        {
-            checkbox.MaxWidth = frame.absoluteBoundingBox.Width;
-            checkbox.MaxHeight = frame.absoluteBoundingBox.Height;
-        }
-
-        public static void Configure(this ComboBox comboBox, FigmaFrame frame)
-        {
-            comboBox.MaxWidth = frame.absoluteBoundingBox.Width;
-            comboBox.MaxHeight = frame.absoluteBoundingBox.Height;
-        }
-
-        public static void Configure(this RadioButton radioButton, FigmaFrame frame)
-        {
-            radioButton.MaxWidth = frame.absoluteBoundingBox.Width;
-            radioButton.MaxHeight = frame.absoluteBoundingBox.Height;
-        }
 
         public static void Configure(this Slider slider, FigmaFrame frame)
         {
@@ -223,12 +194,6 @@ namespace FigmaSharp.Wpf
                     slider.Orientation = Orientation.Horizontal;
                 }
             }
-        }
-
-        public static void Configure(this ProgressBar progressBar, FigmaVector frame)
-        {
-            progressBar.MaxWidth = frame.absoluteBoundingBox.Width;
-            progressBar.MaxHeight = frame.absoluteBoundingBox.Height;
         }
 
         public static void Configure(this TextBlock label, FigmaText text)
