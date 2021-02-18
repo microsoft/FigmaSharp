@@ -35,6 +35,9 @@ namespace FigmaSharp.Controls
         //Separators
         Separator,
 
+        //TreeViews
+        TreeView,
+
         //Windows
         Window,
         WindowPanel
@@ -89,7 +92,10 @@ namespace FigmaSharp.Controls
                 ("ProgressBar", FigmaControlType.ProgressBar, NativeControlVariant.Default),
 
                 //Separators
-                ("Separator", FigmaControlType.Separator, NativeControlVariant.Regular)
+                ("Separator", FigmaControlType.Separator, NativeControlVariant.Regular),
+
+                //TreeViews
+                ("TreeView", FigmaControlType.TreeView, NativeControlVariant.Regular)
             };
     }
 }

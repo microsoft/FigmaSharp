@@ -27,5 +27,9 @@ namespace FigmaSharp.Controls
         public const string STYLE_DETERMINATE = "Style: Determinate";
         public const string STYLE_INDETERMINATE = "Style: Indeterminate";
         public const string VALUE = "Value";
+
+        //TreeView
+        public const string ITEMS = "Items";
+        public const string ITEM_TITLE = "ItemTitle";
     }
 }

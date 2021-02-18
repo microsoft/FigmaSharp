@@ -78,9 +78,6 @@ namespace FigmaSharp.Wpf.Converters
 
             textBlock.Configure(text);
             textBlock.ConfigureTooltip(frame);
-            textBlock.ConfigureTabIndex(frame);
-
-
 
             var wrapper = new View(textBlock);
             return wrapper;
