@@ -45,14 +45,8 @@ namespace FigmaSharp.Wpf.Converters
 
             radioButton.Configure(frame);
             radioButton.ConfigureAutomationProperties(frame);
-
-            if (currentNode.TrySearchTooltip(out var tooltip))
-            {
-                if (tooltip != null)
-                {
-                    radioButton.ToolTip = tooltip;
-                }
-            }
+            radioButton.ConfigureTooltip(frame);
+            radioButton.ConfigureTabIndex(frame);
 
             if (currentNode.TrySearchControlGroupName(out var name))
             {

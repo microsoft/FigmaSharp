@@ -72,18 +72,14 @@ namespace FigmaSharp.Wpf.Converters
                 Hyperlink hyperlink = new Hyperlink(run);
                 hyperlink.NavigateUri = new Uri(url.characters);
                 textBlock.Inlines.Add(hyperlink);
+                
             }
 
 
             textBlock.Configure(text);
+            textBlock.ConfigureTooltip(frame);
+            textBlock.ConfigureTabIndex(frame);
 
-            if (currentNode.TrySearchAcceleratorKey(out var key))
-            {
-                if (key != null)
-                {
-                    //textBlock.ConfigureAcceleratorKey(text.characters, key);
-                }
-            }
 
 
             var wrapper = new View(textBlock);

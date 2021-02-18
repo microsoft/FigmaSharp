@@ -53,6 +53,7 @@ namespace FigmaSharp.Wpf.Converters
             textBox.Configure(frame);
             textBox.ConfigureAutomationProperties(frame);
             textBox.ConfigureTooltip(frame);
+            textBox.ConfigureTabIndex(frame);
 
             if (currentNode.TrySearchControlGroupName(out var name))
             {

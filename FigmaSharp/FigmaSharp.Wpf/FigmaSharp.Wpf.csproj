@@ -48,7 +48,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\Controls\ImageConverter.cs" />
     <Compile Include="Converters\Controls\HyperlinkConverter.cs" />
     <Compile Include="Converters\Controls\SeparatorConverter.cs" />
     <Compile Include="Converters\Controls\ProgressBarConverter.cs" />

@@ -68,6 +68,7 @@ namespace FigmaSharp.Wpf.Converters
             checkbox.Configure(frame);
             checkbox.ConfigureAutomationProperties(frame);
             checkbox.ConfigureTooltip(frame);
+            checkbox.ConfigureTabIndex(frame);
 
             if (currentNode.TrySearchAcceleratorKey(out var key))
             {

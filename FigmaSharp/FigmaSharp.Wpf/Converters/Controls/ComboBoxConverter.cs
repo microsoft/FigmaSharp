@@ -76,14 +76,8 @@ namespace FigmaSharp.Wpf.Converters
 
             comboBox.Configure(frame);
             comboBox.ConfigureAutomationProperties(frame);
-
-            if (currentNode.TrySearchTooltip(out var tooltip))
-            {
-                if (tooltip != null)
-                {
-                    comboBox.ToolTip = tooltip;
-                }
-            }
+            comboBox.ConfigureTooltip(frame);
+            comboBox.ConfigureTabIndex(frame);
 
             FigmaText text = frame.children
                     .OfType<FigmaText>()
