@@ -69,7 +69,8 @@ namespace FigmaSharp.Wpf
             new SeparatorConverter(),
             new PasswordBoxConverter(),
             new HyperlinkConverter(),
-            new TreeViewConverter()
+            new TreeViewConverter(),
+            new ListBoxConverter()
         };
 
         static readonly NodeConverter[] figmaControlConverters =

@@ -38,6 +38,9 @@ namespace FigmaSharp.Controls
         //TreeViews
         TreeView,
 
+        //Lists
+        ListBox,
+
         //Windows
         Window,
         WindowPanel
@@ -95,7 +98,10 @@ namespace FigmaSharp.Controls
                 ("Separator", FigmaControlType.Separator, NativeControlVariant.Regular),
 
                 //TreeViews
-                ("TreeView", FigmaControlType.TreeView, NativeControlVariant.Regular)
+                ("TreeView", FigmaControlType.TreeView, NativeControlVariant.Regular),
+
+                //Lists
+                ("ListBox", FigmaControlType.ListBox, NativeControlVariant.Regular)
             };
     }
 }
