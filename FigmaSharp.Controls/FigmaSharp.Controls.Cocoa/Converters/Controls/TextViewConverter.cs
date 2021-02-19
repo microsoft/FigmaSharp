@@ -63,7 +63,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			textView.TextContainer.Size = new CoreGraphics.CGSize( scrollView.ContentSize.Width, float.MaxValue);
 
 			var texts = frame.children.OfType<FigmaText>();
-			FigmaText text = texts.FirstOrDefault(s => s.name == "lbl" && s.visible);
+			FigmaText text = texts.FirstOrDefault(s => s.name == ComponentString.TEXT && s.visible);
 
 			if (text != null) {
 				textView.Value = rendererService.GetTranslatedText (text.characters);
