@@ -36,6 +36,7 @@ namespace FigmaSharp.Controls.Cocoa
 		// Values
 		public const string VALUE = "Value";
 		public const string ITEMS = "Items";
+		public const string COLUMNS = "Columns";
 
 		// States
 		public const string STATE_REGULAR = "State: Regular";
