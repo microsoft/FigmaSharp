@@ -41,10 +41,11 @@ namespace FigmaSharp.Controls.Cocoa.Converters
     public class ButtonConverter : CocoaConverter
     {
         internal override bool HasHeightConstraint() => false;
+        internal override bool IsFlexibleHorizontal(FigmaNode node) => true;
+        public override bool CanSetAccessibilityLabel => false;
+
 
         public override Type GetControlType(FigmaNode currentNode) => typeof(NSButton);
-
-        internal override bool IsFlexibleHorizontal(FigmaNode node) => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
@@ -54,6 +55,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                    controlType == FigmaControlType.ButtonHelp ||
                    controlType == FigmaControlType.ButtonRoundRect;
         }
+
 
         protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
         {
