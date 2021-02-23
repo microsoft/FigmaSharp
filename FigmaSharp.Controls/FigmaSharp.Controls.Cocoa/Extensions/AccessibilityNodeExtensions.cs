@@ -40,8 +40,8 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static bool IsAccessibilityGroup(this FigmaNode node)
         {
-            var a11node = node.GetAccessibilityNode();
-            if (a11node != null && a11node.TryGetChildPropertyValue(a11yRole, out var value) && value == a11yRoleGroup)
+            var a11yNode = node.GetAccessibilityNode();
+            if (a11yNode != null && a11yNode.TryGetChildPropertyValue(a11yRole, out var value) && value == a11yRoleGroup)
                 return true;
             return false;
         }
@@ -58,8 +58,8 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static bool TrySearchAccessibilityLabel(this FigmaNode node, out string label)
         {
-            var a11node = node.GetAccessibilityNode();
-            if (a11node != null && a11node.TryGetChildPropertyValue(a11yLabel, out label))
+            var a11yNode = node.GetAccessibilityNode();
+            if (a11yNode != null && a11yNode.TryGetChildPropertyValue(a11yLabel, out label))
                 return true;
             label = null;
             return false;
@@ -67,8 +67,8 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static bool TrySearchAccessibilityHelp(this FigmaNode node, out string label)
         {
-            var a11node = node.GetAccessibilityNode();
-            if (a11node != null && a11node.TryGetChildPropertyValue(a11yHelp, out label))
+            var a11yNode = node.GetAccessibilityNode();
+            if (a11yNode != null && a11yNode.TryGetChildPropertyValue(a11yHelp, out label))
             {
                 return true;
             }

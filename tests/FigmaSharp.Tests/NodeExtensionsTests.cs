@@ -83,12 +83,12 @@ namespace FigmaSharp.Tests
             Assert.IsTrue(node.IsSingleImageViewNode());
 
             //we add a random node
-            var a11node = new FigmaFrame() { name = "!a11y" };
-            node.children = new FigmaNode[] { a11node };
+            var a11yNode = new FigmaFrame() { name = "!a11y" };
+            node.children = new FigmaNode[] { a11yNode };
             Assert.IsTrue(node.IsSingleImageViewNode());
 
             var theme = new FigmaFrame() { name = "!theme:\"Light\"" };
-            node.children = new FigmaNode[] { a11node, theme };
+            node.children = new FigmaNode[] { a11yNode, theme };
 
             Assert.IsFalse(node.IsSingleImageViewNode());
         }

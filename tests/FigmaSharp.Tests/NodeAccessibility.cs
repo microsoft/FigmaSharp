@@ -34,8 +34,8 @@ namespace FigmaSharp.Tests
     {
         FigmaFrame AddAccessibilityNode (FigmaFrame parentNode)
         {
-            var a11node = new FigmaFrame() { name = $"{AccessibilityNodeExtensions.a11yNodeName}" };
-            return AddNode(a11node, parentNode);
+            var a11yNode = new FigmaFrame() { name = $"{AccessibilityNodeExtensions.a11yNodeName}" };
+            return AddNode(a11yNode, parentNode);
         }
 
         FigmaFrame AddNode(FigmaFrame node, FigmaFrame parentNode)
@@ -49,18 +49,18 @@ namespace FigmaSharp.Tests
         public void AccessibilityLabelTitleDescription()
         {
             var node = new FigmaFrame() { name = "!image" };
-            var a11node = AddAccessibilityNode(node);
+            var a11yNode = AddAccessibilityNode(node);
 
             var label = "hello";
             var a11label = new FigmaFrame() { name = CreateParameter (AccessibilityNodeExtensions.a11yLabel, label) };
-            AddNode(a11label, a11node);
+            AddNode(a11label, a11yNode);
 
             Assert.IsTrue(node.TrySearchAccessibilityLabel(out var outlabel));
             Assert.AreEqual(label, outlabel);
 
             var help = "this help";
             var a11lhelp = new FigmaFrame() { name = CreateParameter(AccessibilityNodeExtensions.a11yHelp, help) };
-            AddNode(a11lhelp, a11node);
+            AddNode(a11lhelp, a11yNode);
 
             Assert.IsTrue(node.TrySearchAccessibilityHelp(out var outhelp));
             Assert.AreEqual(help, outhelp);
@@ -73,8 +73,8 @@ namespace FigmaSharp.Tests
             node.name = $"!image";
             Assert.IsNull (node.GetAccessibilityNode());
             //we add a random node
-            var a11node = AddAccessibilityNode(node);
-            Assert.AreEqual(a11node, node.GetAccessibilityNode ());
+            var a11yNode = AddAccessibilityNode(node);
+            Assert.AreEqual(a11yNode, node.GetAccessibilityNode ());
         }
 
         string CreateParameter(string param, string value, bool isDisabled = false) => string.Format("{2}{0}:\"{1}\"", param, value, isDisabled ? "!": "");
@@ -86,12 +86,12 @@ namespace FigmaSharp.Tests
             node.name = $"!image";
             Assert.IsNull(node.GetAccessibilityNode());
             //we add a random node
-            var a11node = AddAccessibilityNode(node);
+            var a11yNode = AddAccessibilityNode(node);
 
             var roleGroup = new FigmaFrame() {
                 name = CreateParameter(AccessibilityNodeExtensions.a11yRole, AccessibilityNodeExtensions.a11yRoleGroup)
             };
-            AddNode(roleGroup, a11node);
+            AddNode(roleGroup, a11yNode);
             Assert.IsTrue(node.IsAccessibilityGroup());
         }
 
@@ -104,12 +104,12 @@ namespace FigmaSharp.Tests
             Assert.IsFalse(node.IsAccessibilityEnabled());
 
             //we add a random node
-            var a11node = AddAccessibilityNode(node);
-            Assert.AreEqual(a11node, node.GetAccessibilityNode());
-            a11node.visible = true;
+            var a11yNode = AddAccessibilityNode(node);
+            Assert.AreEqual(a11yNode, node.GetAccessibilityNode());
+            a11yNode.visible = true;
             Assert.IsTrue(node.IsAccessibilityEnabled());
 
-            a11node.visible = false;
+            a11yNode.visible = false;
             Assert.IsFalse(node.IsAccessibilityEnabled());
         }
     }
