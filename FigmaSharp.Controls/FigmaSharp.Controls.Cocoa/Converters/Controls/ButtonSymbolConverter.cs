@@ -82,7 +82,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 }
             }
 
-            if (frame.TrySearchA11Label(out var tooltip))
+            if (frame.TrySearchAccessibilityLabel(out var tooltip))
                 button.ToolTip = tooltip; // TODO: code generation
 
             return new View(button);
