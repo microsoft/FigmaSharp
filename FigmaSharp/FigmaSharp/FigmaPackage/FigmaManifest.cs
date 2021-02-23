@@ -62,15 +62,14 @@ namespace FigmaSharp
 
 		public void ToComment (StringBuilder builder)
 		{
-			string date = Date.ToString("yyyy-MM-dd");
-			string time = Date.ToString("HH:mm");
+			string timestamp = Date.ToString("r");
 
 			builder.AppendLine ($"// This file was auto-generated using");
-			builder.AppendLine ($"// FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {date} at {time}");
+			builder.AppendLine ($"// FigmaSharp {ApiVersion} and Figma API {RemoteApiVersion} on {timestamp}");
 			builder.AppendLine ($"//");
 			builder.AppendLine ($"// Document title:   {DocumentTitle}");
 			builder.AppendLine ($"// Document version: {DocumentVersion}");
-			builder.AppendLine ($"// Document URL:     {FileId}");
+			builder.AppendLine ($"// Document URL:     https://figma.com/file/{FileId}");
 			builder.AppendLine ($"// Namespace:        {Namespace}");
 			builder.AppendLine ($"//");
 			builder.AppendLine ($"// Changes to this file may cause incorrect behavior");
