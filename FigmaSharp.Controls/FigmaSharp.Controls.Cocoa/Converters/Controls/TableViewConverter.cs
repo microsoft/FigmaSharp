@@ -92,7 +92,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 column.HeaderCell.Alignment = Helpers.ViewHelper.GetNSTextAlignment(text);
                 column.Identifier = "Column" + columnCount;
                 column.Title = rendererService.GetTranslatedText(text);
-                column.Width = text.absoluteBoundingBox.Width;
+                column.Width = (tableColumNode as FigmaFrame).absoluteBoundingBox.Width;
 
                 tableView.AddColumn(column);
                 columnCount++;
