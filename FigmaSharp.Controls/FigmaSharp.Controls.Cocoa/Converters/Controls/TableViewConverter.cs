@@ -29,9 +29,10 @@ using System.Text;
 
 using AppKit;
 
+using FigmaSharp.Cocoa;
+using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
-using FigmaSharp.Cocoa;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
@@ -52,6 +53,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         {
             var frame = (FigmaFrame)currentNode;
             var tableView = new NSTableView();
+
 
             var columnNodes = frame.FirstChild (s => s.name == ComponentString.COLUMNS && s.visible);
 
@@ -98,7 +100,21 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 columnCount++;
             }
 
-            // TODO: Move the sibling !content frame down a few pixels
+
+            var rectangle = (RectangleVector) frame.FirstChild(s => s.name == ComponentString.BACKGROUND && s.visible);
+
+            if (rectangle != null)
+            {
+                foreach (var styleMap in rectangle.styles)
+                {
+                    if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style) &&
+                        styleMap.Key == "fill")
+                    {
+                            tableView.BackgroundColor = ColorService.GetNSColor(style.name);
+                    }
+                }
+            }
+
 
             return new View(scrollView);
         }
@@ -150,7 +166,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             string tableViewName = currentNode.Name;
 
             currentNode.Name = name;
-
             var frame = (FigmaFrame)currentNode.Node;
 
             code.WriteConstructor(name, typeof(NSScrollView));
@@ -206,6 +221,22 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
             code.WritePropertyEquality(name, nameof(NSScrollView.DocumentView), tableViewName, inQuotes: false);
             code.AppendLine();
+
+
+            var rectangle = (RectangleVector)frame.FirstChild(s => s.name == ComponentString.BACKGROUND && s.visible);
+
+            if (rectangle != null)
+            {
+                foreach (var styleMap in rectangle.styles)
+                {
+                    if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style) &&
+                        styleMap.Key == "fill")
+                    {
+                        code.WritePropertyEquality(tableViewName, nameof(NSTableView.BackgroundColor), ColorService.GetNSColorString(style.name));
+                    }
+                }
+            }
+
 
             return code;
         }

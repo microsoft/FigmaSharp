@@ -46,6 +46,9 @@ namespace FigmaSharp.Controls.Cocoa
 		public const string STATE_DEFAULT = "State: Default";
 		public const string STATE_SELECTED = "State: Selected";
 
+		// Decoration
+		public const string BACKGROUND = "Background";
+
 		public const string FOCUS = "Focus";
 
 		// CheckBox, Radio, and Switch
