@@ -448,7 +448,7 @@ namespace FigmaSharp.Services
         }
 
         //TODO: This 
-        protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
+        protected virtual void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
         {
             Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 

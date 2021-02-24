@@ -48,7 +48,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\Controls\RowDefinitionConverter.cs" />
     <Compile Include="Converters\Controls\ListBoxConverter.cs" />
+    <Compile Include="Converters\Controls\GridConverter.cs" />
+    <Compile Include="Converters\Controls\StackPanelConverter.cs" />
     <Compile Include="Converters\Controls\TreeViewConverter.cs" />
     <Compile Include="Converters\Controls\HyperlinkConverter.cs" />
     <Compile Include="Converters\Controls\SeparatorConverter.cs" />
@@ -66,6 +69,7 @@
     <Compile Include="Converters\RegularPolygonConverter.cs" />
     <Compile Include="PropertyConfigure\FigmaCodePropertyConverter.cs" />
     <Compile Include="PropertyConfigure\FigmaViewPropertySetter.cs" />
+    <Compile Include="Services\ControlViewRenderService.cs" />
     <Compile Include="Views\CanvasImage.cs" />
     <Compile Include="Converters\ElipseConverter.cs" />
     <Compile Include="Converters\FrameConverter.cs" />
@@ -77,7 +81,7 @@
     <Compile Include="Extensions\FigmaExtensions.cs" />
     <Compile Include="Extensions\ViewConfigureExtensions.cs" />
     <Compile Include="FigmaApplication.cs" />
-    <Compile Include="FigmaDelegate.cs" />
+    <Compile Include="FigmaControlDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

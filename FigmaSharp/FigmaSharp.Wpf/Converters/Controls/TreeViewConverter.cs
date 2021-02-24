@@ -40,7 +40,6 @@ namespace FigmaSharp.Wpf.Converters
                 treeViewItem.Header = group.name;
                 foreach (FigmaNode node in group.children)
                 {
-                    Console.WriteLine(node.name);
                     TreeViewItem treeItemChild = getTreeViewItems(node);
                     if (treeItemChild != null)
                     {

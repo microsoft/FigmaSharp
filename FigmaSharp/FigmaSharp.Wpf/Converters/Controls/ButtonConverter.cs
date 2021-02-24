@@ -48,6 +48,7 @@ namespace FigmaSharp.Wpf.Converters
             button.ConfigureTooltip(frame);
             button.ConfigureTabIndex(frame);
 
+
             if (group != null)
             {
                 FigmaText text = group.children
@@ -104,11 +105,8 @@ namespace FigmaSharp.Wpf.Converters
                 
             }
 
-
-            
-
-            var buttonWrapper = new View(button);
-            return buttonWrapper;
+            var wrapper = new View(button);
+            return wrapper;
         }
 
         public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)

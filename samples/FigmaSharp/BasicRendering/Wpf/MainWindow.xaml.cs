@@ -38,7 +38,6 @@ namespace BasicRendering.Wpf
         public MainWindow()
         {
             InitializeComponent();
-            
             var scrollViewWrapper = new ScrollView(ContainerPanel);
             manager = new ExampleViewManager(scrollViewWrapper);
             this.Width = scrollViewWrapper.Width;

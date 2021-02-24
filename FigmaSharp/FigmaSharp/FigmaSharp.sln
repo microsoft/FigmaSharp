@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0833
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRendering.Wpf", "..\..\samples\FigmaSharp\BasicRendering\Wpf\BasicRendering.Wpf.csproj", "{D19CA994-F936-418C-BE42-4699F80C651D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Views.Wpf", "..\..\FigmaSharp.Views\FigmaSharp.Views.Wpf\FigmaSharp.Views.Wpf.csproj", "{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{D19CA994-F936-418C-BE42-4699F80C651D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D19CA994-F936-418C-BE42-4699F80C651D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D19CA994-F936-418C-BE42-4699F80C651D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCCA4D3-0725-46B8-868D-BC56A8385A7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

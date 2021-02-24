@@ -34,7 +34,7 @@ namespace FigmaSharp.Wpf
         public static void Init(string token)
         {
             //Figma initialization
-            var applicationDelegate = new FigmaDelegate();
+            var applicationDelegate = new FigmaControlDelegate();
             AppContext.Current.Configuration(applicationDelegate, token);
         }
     }

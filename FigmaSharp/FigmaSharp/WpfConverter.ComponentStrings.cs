@@ -31,5 +31,12 @@ namespace FigmaSharp.Controls
         //TreeView
         public const string ITEMS = "Items";
         public const string ITEM_TITLE = "ItemTitle";
+
+        //Grids
+        public const string ROW_DEFINITION = "rowDefinition";
+        public const string COLUMN_DEFINITION = "columnDefinition";
+
+        public const string STAR = "*";
+        public const string AUTO = "auto";
     }
 }

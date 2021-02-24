@@ -65,11 +65,11 @@ namespace FigmaSharp.Services
                     var rectangle = orderedNodes
                         .Select(s => s.Node)
                         .GetBoundRectangle();
-                    scrollview.SetContentSize(rectangle.Width + VerticalMargins * 2, rectangle.Height + HorizontalMargins * 2);
+                    scrollview.SetContentSize(rectangle.Width, rectangle.Height);
                 }
                 else if (contentView.Parent is IView view)
                 {
-                    Console.WriteLine("Found a view");
+                    //Console.WriteLine("Found a view");
                     //scrollview.SetPosition(new Point(100, 200));
                     //view.BackgroundColor = new Color(255, 0, 0);
                 }
@@ -90,8 +90,6 @@ namespace FigmaSharp.Services
                 var rectangle = orderedNodes
                        .Select(s => s.Node)
                        .GetBoundRectangle();
-
-                Console.WriteLine(rectangle);
 
                 foreach (var node in orderedNodes)
                 {

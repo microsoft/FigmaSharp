@@ -189,24 +189,38 @@ namespace FigmaSharp.Wpf
 
         public static void Configure(this Slider slider, FigmaFrame frame)
         {
-            slider.MaxWidth = frame.absoluteBoundingBox.Width;
-            slider.MaxHeight = frame.absoluteBoundingBox.Height;
+            Configure((FrameworkElement)slider, frame);
 
             slider.Maximum = 1;
             slider.Minimum = 0;
             slider.Value = 0.5;
 
             var orientation = frame.name.Split('/');
-            if(orientation.Length > 0)
+            if(orientation.Length > 1)
             {
-                if (orientation[1] == "Vertical") 
-                {
-                    slider.Orientation = Orientation.Vertical;
-                }
-                else
-                {
-                    slider.Orientation = Orientation.Horizontal;
-                }
+                slider.Orientation = GetOrientation(orientation[1]);
+            }
+        }
+
+        public static void Configure(this StackPanel stackPanel, FigmaFrame frame)
+        {
+            Configure((FrameworkElement)stackPanel, frame);
+            var orientation = frame.name.Split('/');
+            if (orientation.Length > 1)
+            {
+                stackPanel.Orientation = GetOrientation(orientation[1]);
+            }
+        }
+
+        public static Orientation GetOrientation (string orientation)
+        {
+            if (orientation == "Vertical")
+            {
+                return Orientation.Vertical;
+            }
+            else
+            {
+                return Orientation.Horizontal;
             }
         }
 

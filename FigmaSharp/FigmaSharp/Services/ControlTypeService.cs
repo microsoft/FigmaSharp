@@ -41,6 +41,12 @@ namespace FigmaSharp.Controls
         //Lists
         ListBox,
 
+        //StackPanels
+        StackPanel,
+
+        //Grids
+        Grid,
+
         //Windows
         Window,
         WindowPanel
@@ -50,7 +56,8 @@ namespace FigmaSharp.Controls
     {
         NotDefined,
         Regular,
-        Default
+        Default,
+        Custom
     }
     class ControlTypeService
     {
@@ -101,7 +108,15 @@ namespace FigmaSharp.Controls
                 ("TreeView", FigmaControlType.TreeView, NativeControlVariant.Regular),
 
                 //Lists
-                ("ListBox", FigmaControlType.ListBox, NativeControlVariant.Regular)
+                ("ListBox", FigmaControlType.ListBox, NativeControlVariant.Regular),
+
+                //StackPanels
+                ("StackPanel", FigmaControlType.StackPanel, NativeControlVariant.Regular),
+                ("StackPanel/Vertical", FigmaControlType.StackPanel, NativeControlVariant.Regular),
+                ("StackPanel/Horizontal", FigmaControlType.StackPanel, NativeControlVariant.Regular),
+
+                //Grids
+                ("Grid", FigmaControlType.Grid, NativeControlVariant.Regular)
             };
     }
 }

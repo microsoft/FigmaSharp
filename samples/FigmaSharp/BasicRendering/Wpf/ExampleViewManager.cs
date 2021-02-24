@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 
 using FigmaSharp.Models;
 using FigmaSharp.Services;
+using FigmaSharp.Wpf.Services;
 using FigmaSharp.Views;
 
 namespace BasicRendering.Wpf
@@ -57,7 +58,8 @@ namespace BasicRendering.Wpf
 
             //we initialize our renderer service, this uses all the converters passed
             //and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
-            var rendererService = new ViewRenderService(fileProvider, converters);
+            
+            var rendererService = new ControlViewRenderService(fileProvider, converters);
             rendererService.Start(fileName, scrollView);
 
             //now we have all the views processed and the relationship we can distribute all the views into the desired base view
@@ -71,6 +73,9 @@ namespace BasicRendering.Wpf
             var canvas = fileProvider.Nodes.OfType<FigmaCanvas>().FirstOrDefault();
             if (canvas != null)
                 scrollView.BackgroundColor = canvas.backgroundColor;
+
+            //scrollView.Width = canvas.absoluteBoundingBox.Width + 128;
+            //scrollView.Height = canvas.absoluteBoundingBox.Height + 128;
 
             //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
             scrollView.AdjustToContent();

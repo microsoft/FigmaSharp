@@ -40,8 +40,11 @@ namespace FigmaSharp.Wpf.PropertyConfigure
     {
         public override void Configure(string propertyName, ViewNode currentNode, ViewNode parentNode, NodeConverter converter, ViewRenderService rendererService)
         {
+
+            Console.WriteLine(propertyName);
             if (propertyName == PropertyNames.AddChild)
             {
+                Console.WriteLine("Adding child '{0}' to {1}", currentNode.Node.name, parentNode.Node.name);
                 parentNode?.View?.AddChild(currentNode.View);
                 return;
             }
