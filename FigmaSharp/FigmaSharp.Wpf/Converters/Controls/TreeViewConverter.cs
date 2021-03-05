@@ -71,6 +71,7 @@ namespace FigmaSharp.Wpf.Converters
             treeView.ConfigureAutomationProperties(frame);
             treeView.ConfigureTooltip(frame);
             treeView.ConfigureTabIndex(frame);
+            treeView.configureAlignment(parent);
 
             if (items != null)
             {

@@ -11,6 +11,8 @@ namespace FigmaSharp.Controls
         public const string PLACEHOLDER = "Placeholder";
         public const string PASSWORD = "Password";
 
+        public const string STATE = "State";
+
         public const string STATE_DISABLED = "State: Disabled";
 
         //Checkbox, Radio, and Switch
@@ -38,5 +40,8 @@ namespace FigmaSharp.Controls
 
         public const string STAR = "*";
         public const string AUTO = "auto";
+
+        public const string GRID_ROW = "row";
+        public const string GRID_COLUMN = "column";
     }
 }

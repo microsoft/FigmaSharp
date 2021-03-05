@@ -37,6 +37,7 @@ namespace FigmaSharp.Wpf.Converters
                 .FirstOrDefault(s => s.visible);
 
             separator.Configure(frame);
+            separator.configureAlignment(parent);
 
 
             FigmaVector rect = frame.children

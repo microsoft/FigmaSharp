@@ -233,6 +233,62 @@ namespace FigmaSharp.Models
         }
 
         [Category("AutoLayout")]
+        [DisplayName("Primary Axis Align Items")]
+        public string primaryAxisAlignItems { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Primary Axis Align Items")]
+
+        public FigmaAxisAlignment PrimaryAxisAlignment
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(primaryAxisAlignItems))
+                {
+                    return FigmaAxisAlignment.MIN;
+                }
+
+                foreach (var item in Enum.GetValues(typeof(FigmaAxisAlignment)))
+                {
+                    if (item.ToString().ToUpper() == primaryAxisAlignItems)
+                    {
+                        return (FigmaAxisAlignment)item;
+                    }
+                }
+
+                return FigmaAxisAlignment.MIN;
+            }
+        }
+
+        [Category("AutoLayout")]
+        [DisplayName("Counter Axis Align Items")]
+        public string counterAxisAlignItems { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Counter Axis Align Items")]
+
+        public FigmaAxisAlignment CounterAxisAlignment
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(counterAxisAlignItems))
+                {
+                    return FigmaAxisAlignment.MIN;
+                }
+                
+                foreach (var item in Enum.GetValues(typeof(FigmaAxisAlignment)))
+                {
+                    if (item.ToString() == counterAxisAlignItems)
+                    {
+                        return (FigmaAxisAlignment)item;
+                    }
+                }
+
+                return FigmaAxisAlignment.MIN;
+            }
+        }
+
+        [Category("AutoLayout")]
         [DisplayName("Item Spacing")]
         public float itemSpacing { get; set; }
 

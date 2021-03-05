@@ -31,9 +31,10 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
-
+using FigmaSharp.Controls;
 using FigmaSharp.Extensions;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 using FigmaSharp.Views.Wpf;
 
 using PseudoLocalizer;
@@ -183,6 +184,120 @@ namespace FigmaSharp.Wpf
                 {
                     control.TabIndex = Int16.Parse(index);
                     
+                }
+            }
+        }
+
+        public static void configureAlignment(this Control control, ViewNode parent)
+        {
+            if (parent.View.NativeObject.GetType() == typeof(StackPanel))
+            {
+                var frame = (FigmaFrame)parent.Node;
+                if (frame.LayoutMode != FigmaLayoutMode.None)
+                {
+                    Console.WriteLine("Layout Mode: {0}", frame.layoutMode);
+                    Console.WriteLine("Primary alignment: {0}", frame.PrimaryAxisAlignment);
+                    Console.WriteLine("Counter alignment: {0}", frame.CounterAxisAlignment);
+                    control.HorizontalAlignment = GetHorizontalAlignment(frame.LayoutMode, frame.PrimaryAxisAlignment, frame.CounterAxisAlignment);
+                    control.VerticalAlignment = GetVerticalAlignment(frame.LayoutMode, frame.PrimaryAxisAlignment, frame.CounterAxisAlignment);
+                }
+            }
+        }
+
+        public static HorizontalAlignment GetHorizontalAlignment(FigmaLayoutMode layoutMode, FigmaAxisAlignment primaryAxisAlignment, FigmaAxisAlignment counterAxisAlignment)
+        {
+            if(layoutMode != FigmaLayoutMode.None)
+            {
+                if(layoutMode == FigmaLayoutMode.Horizontal)
+                {
+                    if(primaryAxisAlignment == FigmaAxisAlignment.MIN)
+                    {
+                        return HorizontalAlignment.Left;
+                    }
+                    if(primaryAxisAlignment == FigmaAxisAlignment.CENTER)
+                    {
+                        return HorizontalAlignment.Center;
+                    }
+                    if(primaryAxisAlignment == FigmaAxisAlignment.MAX)
+                    {
+                        return HorizontalAlignment.Right;
+                    }
+                }
+                if(layoutMode == FigmaLayoutMode.Vertical)
+                {
+                    if (counterAxisAlignment == FigmaAxisAlignment.MIN)
+                    {
+                        return HorizontalAlignment.Left;
+                    }
+                    if (counterAxisAlignment == FigmaAxisAlignment.CENTER)
+                    {
+                        return HorizontalAlignment.Center;
+                    }
+                    if (counterAxisAlignment == FigmaAxisAlignment.MAX)
+                    {
+                        return HorizontalAlignment.Right;
+                    }
+                }
+            }
+            return HorizontalAlignment.Left;
+        }
+
+        public static VerticalAlignment GetVerticalAlignment(FigmaLayoutMode layoutMode, FigmaAxisAlignment primaryAxisAlignment, FigmaAxisAlignment counterAxisAlignment)
+        {
+            if (layoutMode != FigmaLayoutMode.None)
+            {
+                if (layoutMode == FigmaLayoutMode.Vertical)
+                {
+                    if (primaryAxisAlignment == FigmaAxisAlignment.MIN)
+                    {
+                        return VerticalAlignment.Top;
+                    }
+                    if (primaryAxisAlignment == FigmaAxisAlignment.CENTER)
+                    {
+                        return VerticalAlignment.Center;
+                    }
+                    if (primaryAxisAlignment == FigmaAxisAlignment.MAX)
+                    {
+                        return VerticalAlignment.Bottom;
+                    }
+                }
+                if (layoutMode == FigmaLayoutMode.Horizontal)
+                {
+                    if (counterAxisAlignment == FigmaAxisAlignment.MIN)
+                    {
+                        return VerticalAlignment.Top;
+                    }
+                    if (counterAxisAlignment == FigmaAxisAlignment.CENTER)
+                    {
+                        return VerticalAlignment.Center;
+                    }
+                    if (counterAxisAlignment == FigmaAxisAlignment.MAX)
+                    {
+                        return VerticalAlignment.Bottom;
+                    }
+                }
+                
+            }
+            return VerticalAlignment.Top;
+        }
+
+        public static void ConfigureGridPosition(this Control control, FigmaFrame figmaFrame, ViewNode parent)
+        {
+            if (parent.View.NativeObject.GetType() == typeof(Grid))
+            {
+                if (figmaFrame.TryGetGridRowPosition(out int rowPosition))
+                {
+                    if (rowPosition > -1)
+                    {
+                        control.SetValue(Grid.RowProperty, rowPosition);
+                    }
+                }
+                if (figmaFrame.TryGetGridColumnPosition(out int columnPosition))
+                {
+                    if (columnPosition > -1)
+                    {
+                        control.SetValue(Grid.ColumnProperty, columnPosition);
+                    }
                 }
             }
         }

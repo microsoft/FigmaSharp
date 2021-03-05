@@ -78,6 +78,7 @@ namespace FigmaSharp.Wpf.Converters
             comboBox.ConfigureAutomationProperties(frame);
             comboBox.ConfigureTooltip(frame);
             comboBox.ConfigureTabIndex(frame);
+            comboBox.configureAlignment(parent);
 
             FigmaText text = frame.children
                     .OfType<FigmaText>()

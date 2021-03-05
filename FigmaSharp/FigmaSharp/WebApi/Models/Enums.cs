@@ -36,6 +36,14 @@ namespace FigmaSharp.Models
         Horizontal
     }
 
+    public enum FigmaAxisAlignment
+    {
+        MIN,
+        CENTER,
+        MAX,
+        SPACE_BETWEEN
+    }
+
     public enum FigmaBlendMode
     {
         //normal

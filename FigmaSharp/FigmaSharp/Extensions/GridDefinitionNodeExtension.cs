@@ -16,6 +16,8 @@ namespace FigmaSharp.Extensions
 
         internal const string gridDefinitionNodeName = "GridDefinitions";
 
+        internal const string gridPositionNodeName = "GridPosition";
+
         public static bool IsGridDefinition(this FigmaNode figmaNode)
         {
             var gridDefinitionNode = figmaNode.GetGridDefinitionsNode(); 
@@ -47,6 +49,11 @@ namespace FigmaSharp.Extensions
         public static FigmaNode GetColumnDefinitionsNode(this FigmaNode figmaNode)
         {
             return (figmaNode as IFigmaNodeContainer)?.children?.FirstOrDefault(s => s.GetNodeTypeName() == columnDefinitionsNodeName);
+        }
+
+        public static FigmaNode GetGridPositionNode(this FigmaNode figmaNode)
+        {
+            return (figmaNode as IFigmaNodeContainer)?.children?.FirstOrDefault(s => s.GetNodeTypeName() == gridPositionNodeName);
         }
 
         public static bool TrySearchRowDefinitions(this FigmaNode figmaNode, out List<RowDefinition> rowDefinitions)
@@ -93,7 +100,53 @@ namespace FigmaSharp.Extensions
             return false;
         }
 
-        // TODO: add grid row and column position retrieval
+        // TODO: add grid row and column position retrieval i.e. if parent is a grid, find it's position
+        public static bool TryGetGridRowPosition(this FigmaNode figmaNode, out int rowPosition)
+        {
+            var gridPositionNode = figmaNode.GetGridPositionNode();
+            if(gridPositionNode != null)
+            {
+                Console.WriteLine("Found gridPosition Node");
+                FigmaText gridRow = gridPositionNode.GetChildren()
+                    .OfType<FigmaText>()
+                    .FirstOrDefault(s => s.name.Contains(ComponentString.GRID_ROW));
+
+                if (gridRow != null)
+                {
+                    Console.WriteLine("gridRow: {0}", gridRow);
+                    var rowData = gridRow.name.Split(':');
+                    if (rowData.Length > 1)
+                    {
+                        rowPosition = Int16.Parse(rowData[1].Trim());
+                        return true;
+                    }
+                }
+            }
+            rowPosition = -1;
+            return false;
+        }
+        public static bool TryGetGridColumnPosition(this FigmaNode figmaNode, out int rowPosition)
+        {
+            var gridPositionNode = figmaNode.GetGridPositionNode();
+            if (gridPositionNode != null)
+            {
+                FigmaText gridColumn = gridPositionNode.GetChildren()
+                    .OfType<FigmaText>()
+                    .FirstOrDefault(s => s.name.Contains(ComponentString.GRID_COLUMN));
+
+                if (gridColumn != null)
+                {
+                    var rowData = gridColumn.name.Split(':');
+                    if (rowData.Length > 1)
+                    {
+                        rowPosition = Int16.Parse(rowData[1].Trim());
+                        return true;
+                    }
+                }
+            }
+            rowPosition = -1;
+            return false;
+        }
 
         private static GridLength GetGridLength(FigmaNode figmaNode)
         {

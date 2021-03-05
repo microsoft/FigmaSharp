@@ -44,6 +44,7 @@ namespace FigmaSharp.Wpf.Converters
             passwordBox.ConfigureAutomationProperties(frame);
             passwordBox.ConfigureTooltip(frame);
             passwordBox.ConfigureTabIndex(frame);
+            passwordBox.configureAlignment(parent);
 
             if (currentNode.TrySearchControlGroupName(out var name))
             {

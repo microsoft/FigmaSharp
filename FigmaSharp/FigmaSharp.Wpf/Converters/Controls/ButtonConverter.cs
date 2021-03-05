@@ -41,12 +41,14 @@ namespace FigmaSharp.Wpf.Converters
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()
-                .FirstOrDefault(s => s.visible);
+                .FirstOrDefault(s => s.visible && s.name.Contains(ComponentString.STATE));
 
             button.Configure(frame);
             button.ConfigureAutomationProperties(frame);
             button.ConfigureTooltip(frame);
             button.ConfigureTabIndex(frame);
+            button.ConfigureGridPosition(frame, parent);
+            button.configureAlignment(parent);
 
 
             if (group != null)

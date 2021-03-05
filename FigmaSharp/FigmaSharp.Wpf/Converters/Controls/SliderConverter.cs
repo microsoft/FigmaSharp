@@ -66,6 +66,7 @@ namespace FigmaSharp.Wpf.Converters
             slider.ConfigureAutomationProperties(frame);
             slider.ConfigureTooltip(frame);
             slider.ConfigureTabIndex(frame);
+            slider.configureAlignment(parent);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()

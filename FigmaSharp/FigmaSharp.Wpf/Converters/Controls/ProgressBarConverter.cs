@@ -64,6 +64,7 @@ namespace FigmaSharp.Wpf.Converters
 
             progressBar.ConfigureAutomationProperties(frame);
             progressBar.Configure(frame);
+            progressBar.configureAlignment(parent);
 
             FigmaGroup group = frame.children
                 .OfType<FigmaGroup>()

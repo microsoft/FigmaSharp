@@ -54,6 +54,7 @@ namespace FigmaSharp.Wpf.Converters
             textBox.ConfigureAutomationProperties(frame);
             textBox.ConfigureTooltip(frame);
             textBox.ConfigureTabIndex(frame);
+            textBox.configureAlignment(parent);
 
             if (currentNode.TrySearchControlGroupName(out var name))
             {

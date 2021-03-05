@@ -35,7 +35,7 @@ namespace FigmaSharp.Wpf.Converters
 
             stackPanel.Configure(frame);
 
-            if(frame.fills.Length > 0)
+            if (frame.fills.Length > 0)
             {
                 if(frame.fills[0].type == "SOLID")
                 {

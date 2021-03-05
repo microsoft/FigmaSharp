@@ -41,6 +41,7 @@ namespace FigmaSharp.Wpf.Converters
             listBox.ConfigureAutomationProperties(frame);
             listBox.ConfigureTooltip(frame);
             listBox.ConfigureTabIndex(frame);
+            listBox.configureAlignment(parent);
 
             if (items != null)
             {
