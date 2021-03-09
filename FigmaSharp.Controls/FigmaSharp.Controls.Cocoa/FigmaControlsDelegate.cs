@@ -85,6 +85,7 @@ namespace FigmaSharp.Controls.Cocoa
 					// Containers
 					new TabViewConverter (),
 					new TableViewConverter (),
+					new OutlineViewConverter (),
 					new BoxConverter (),
 					new DisclosureViewConverter (),
 				};

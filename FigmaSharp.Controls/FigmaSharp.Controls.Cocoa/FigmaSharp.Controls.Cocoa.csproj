@@ -107,12 +107,14 @@
     <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
     <Compile Include="Converters\Keywords\IconKeywordConverter.cs" />
     <Compile Include="Converters\Controls\TableViewConverter.cs" />
+    <Compile Include="Converters\Controls\OutlineViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Converters\Templates\TableView.template.cs" />
+    <None Include="Converters\Templates\OutlineView.template.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
