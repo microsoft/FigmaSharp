@@ -5,7 +5,7 @@ using AppKit;
 
 namespace NAMESPACE
 {
-    partial class MyTableView : AppKit.NSTableView
+    partial class MYTABLEVIEW : AppKit.NSTableView
     {
         public MyTableView()
         {
