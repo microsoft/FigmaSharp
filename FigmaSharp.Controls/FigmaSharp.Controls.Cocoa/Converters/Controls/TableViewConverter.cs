@@ -63,14 +63,30 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             scrollView.DrawsBackground = true;
             scrollView.DocumentView = tableView;
 
+            tableView.DataSource = new TableDataSource();
+            tableView.Delegate   = new TableDelegate();
+
+
+            var rectangle = (RectangleVector)frame.FirstChild(s => s.name == ComponentString.BACKGROUND && s.visible);
+
+            if (rectangle != null)
+            {
+                foreach (var styleMap in rectangle.styles)
+                {
+                    if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style) &&
+                        styleMap.Key == "fill")
+                    {
+                        tableView.BackgroundColor = ColorService.GetNSColor(style.name);
+                    }
+                }
+            }
+
+
             if (columnNodes == null)
             {
                 tableView.HeaderView = null;
                 return new View(scrollView);
             }
-
-            tableView.DataSource = new TableDataSource();
-            tableView.Delegate   = new TableDelegate();
 
             // TODO: Parse options layers
             tableView.UsesAlternatingRowBackgroundColors = false;
@@ -86,7 +102,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
                 if (text == null)
                     continue;
-                
+
                 string title = text.characters;
 
                 NSTableColumn column = new NSTableColumn();
@@ -99,22 +115,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 tableView.AddColumn(column);
                 columnCount++;
             }
-
-
-            var rectangle = (RectangleVector) frame.FirstChild(s => s.name == ComponentString.BACKGROUND && s.visible);
-
-            if (rectangle != null)
-            {
-                foreach (var styleMap in rectangle.styles)
-                {
-                    if (rendererService.NodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style) &&
-                        styleMap.Key == "fill")
-                    {
-                            tableView.BackgroundColor = ColorService.GetNSColor(style.name);
-                    }
-                }
-            }
-
 
             return new View(scrollView);
         }
