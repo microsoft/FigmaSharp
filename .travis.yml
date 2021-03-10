@@ -36,7 +36,7 @@ deploy:
   # Publish each build to GitHub Releases
   - provider: releases
     on:
-      repo: netonjm/FigmaSharp
+      repo: microsoft/FigmaSharp
     file:
       - ${TRAVIS_BUILD_DIR}/FigmaSharpApp-${TRAVIS_COMMIT}.zip
       - ${TRAVIS_BUILD_DIR}/FigmaSharpExtension-${TRAVIS_COMMIT}.mpack
