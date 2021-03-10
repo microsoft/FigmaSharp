@@ -50,6 +50,6 @@ deploy:
   - provider: script
     script: bash ./scripts/ci/publish_nugets.sh
     on:
-      branch: master
+      branch: main
       tags: true
 
