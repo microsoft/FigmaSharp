@@ -221,14 +221,12 @@ namespace FigmaSharp.Services
 			
 		}
 
-        public bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode)
+        public virtual bool NodeRendersVar (CodeNode currentNode, CodeNode parentNode, Type nodeType)
         {
 			if (currentNode.Node.GetNodeTypeName () == "mastercontent") {
 				return false;
             }
-
 			return !currentNode.Node.TryGetNodeCustomName(out var _);
-
 		}
 
         protected virtual void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)

@@ -36,7 +36,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 {
     public class NativeViewCodeService : CodeRenderService
     {
-		public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
+		public List<ClassMember> PrivateMembers = new List<ClassMember>();
 
 		public NativeViewCodeService(INodeProvider figmaProvider, NodeConverter[] figmaViewConverters = null, CodePropertyConfigureBase codePropertyConverter = null, ITranslationService translationService = null) : base(figmaProvider, figmaViewConverters ?? FigmaControlsContext.Current.GetConverters(true),
 			codePropertyConverter ?? FigmaControlsContext.Current.GetCodePropertyConverter(), translationService)
@@ -82,6 +82,13 @@ namespace FigmaSharp.Controls.Cocoa.Services
 		internal override bool IsMainViewContainer (CodeNode node)
 		{
 			return node.Node.IsWindowContent ();
+		}
+
+		public override bool NodeRendersVar(CodeNode currentNode, CodeNode parentNode, System.Type nodeType)
+		{
+			if (nodeType.NeedsWeakRef())
+				return false;
+			return base.NodeRendersVar(currentNode, parentNode, nodeType);
 		}
 
 		internal override FigmaNode[] GetChildrenToRender (CodeNode node)
@@ -144,15 +151,14 @@ namespace FigmaSharp.Controls.Cocoa.Services
 
 		protected override void OnPostConvertToCode (StringBuilder builder, CodeNode node, CodeNode parent, NodeConverter converter, CodePropertyConfigureBase codePropertyConverter)
 		{
-			if (!NodeRendersVar (node, parent)) {
+			var controlType = converter.GetControlType(node.Node);
+			if (!NodeRendersVar (node, parent, controlType)) {
 				if (node.Node.TryGetNodeCustomName (out string name)) {
-					var controlType = converter.GetControlType(node.Node);
-					PrivateMembers.Add ((controlType.FullName, name));
+					PrivateMembers.Add (new ClassMember(controlType.FullName, name, isWeakReference: controlType.NeedsWeakRef()));
 				}
 			}
 			base.OnPostConvertToCode (builder, node, parent, converter, codePropertyConverter);
 		}
-
 
         protected override bool RendersAddChild(CodeNode node, CodeNode parent, CodeRenderService figmaCodeRendererService)
         {

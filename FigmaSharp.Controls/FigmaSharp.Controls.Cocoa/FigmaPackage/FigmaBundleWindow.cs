@@ -46,7 +46,8 @@ namespace FigmaSharp
 			if (FigmaNode == null)
 				return;
 
-			partialDesignerClass.Usings.Add (nameof (AppKit));
+			partialDesignerClass.Usings.Add(nameof(System));
+			partialDesignerClass.Usings.Add(nameof(AppKit));
 
 			var options = new CodeRenderServiceOptions() { TranslateLabels = translateLabels };
 			codeRendererService.Options = options;
@@ -149,6 +150,7 @@ namespace FigmaSharp
 
 		protected override void OnGetPublicDesignerClass (FigmaPublicPartialClass publicPartialClass)
 		{
+			publicPartialClass.Usings.Add (nameof(System));
 			publicPartialClass.Usings.Add (nameof (AppKit));
 			publicPartialClass.BaseClass = typeof (AppKit.NSWindow).FullName;
 		}

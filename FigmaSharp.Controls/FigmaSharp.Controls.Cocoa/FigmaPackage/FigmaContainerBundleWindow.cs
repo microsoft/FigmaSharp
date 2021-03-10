@@ -160,9 +160,6 @@ namespace FigmaSharp
 			var fileProvider = codeRendererService.NodeProvider;
 
 			var windows = GetReferencedWindows (fileProvider, FigmaNode);
-
-			var converter = codeRendererService.codePropertyConverter;
-
 			var names = windows.OfType <FigmaFrame> ()
 				.ToList ();
 
@@ -176,8 +173,8 @@ namespace FigmaSharp
 			var figmaCode = new CodeNode(FigmaNode);
 			var contentClassMethod = new ShowContentMethodCodeObject (names, contentName, currentContent, enumName, figmaCode, codeRendererService);
             partialDesignerClass.Methods.Add (contentClassMethod);
-			partialDesignerClass.PrivateMembers.Add ((typeof(AppKit.NSView).FullName, currentContent));
-			partialDesignerClass.PrivateMembers.Add ((enumName, contentClassMethod.SelectedContentName));
+			partialDesignerClass.PrivateMembers.Add (new ClassMember(typeof(AppKit.NSView).FullName, currentContent, isWeakReference: true));
+			partialDesignerClass.PrivateMembers.Add (new ClassMember(enumName, contentClassMethod.SelectedContentName, isWeakReference: true));
 		}
 
 		static IEnumerable<FigmaNode> GetReferencedWindows (INodeProvider fileProvider, FigmaNode node)

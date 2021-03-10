@@ -42,14 +42,12 @@ namespace FigmaSharp.Controls.Cocoa
 	{
 		const string IconKeyword = "!icon";
 
-
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSImageView);
 
 		public override bool CanConvert(FigmaNode currentNode)
 		{
 			return currentNode.name.StartsWith(IconKeyword);
 		}
-
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
@@ -63,14 +61,13 @@ namespace FigmaSharp.Controls.Cocoa
 			return new View(iconView);
 		}
 
-
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var code = new StringBuilder();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				code.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node)));
 
 			var frame = (FigmaFrame)currentNode.Node;
 			frame.TryGetNodeCustomName(out string iconName);

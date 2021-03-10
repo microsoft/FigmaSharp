@@ -41,10 +41,11 @@ namespace FigmaSharp
 			if (FigmaNode == null)
 				return;
 
-            partialDesignerClass.Usings.Add (nameof (AppKit));
+			partialDesignerClass.Usings.Add(nameof (AppKit));
+			partialDesignerClass.Usings.Add(nameof(System));
 
-            //restore this state
-            var builder = new System.Text.StringBuilder ();
+			//restore this state
+			var builder = new System.Text.StringBuilder ();
 
 			builder.WritePropertyEquality(Members.This, nameof(AppKit.NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 

@@ -54,11 +54,18 @@ namespace FigmaSharp.Cocoa.Converters
             var figmaText = (FigmaText)currentNode.Node;
 
             StringBuilder builder = new StringBuilder();
-            if (rendererService.NeedsRenderConstructor (currentNode, parentNode))
-                builder.WritePropertyEquality (currentNode.Name, null, FigmaExtensions.CreateLabelToDesignerString (figmaText.characters), instanciate: true);
-
+            if (rendererService.NeedsRenderConstructor (currentNode, parentNode)) {
+                builder.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node)));
+            }
             //builder.Configure(figmaText, currentNode.Name);
             builder.Configure (currentNode.Node, currentNode.Name);
+
+            builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSTextField.Editable), false.ToDesignerString());
+            builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSTextField.Bordered), false.ToDesignerString());
+            builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSTextField.Bezeled), false.ToDesignerString());
+            builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSTextField.DrawsBackground), false.ToDesignerString());
+
+            builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSTextField.StringValue), figmaText.characters, inQuotes:true);
 
             var alignment = FigmaExtensions.ToNSTextAlignment (figmaText.style.textAlignHorizontal);
 			if (alignment != default) {

@@ -25,12 +25,29 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System;
 
 namespace FigmaSharp
 {
+	public class ClassMember
+	{
+		public ClassMember(string fullname, string name, bool isWeakReference)
+		{
+			FullName = fullname;
+			Name = name;
+            IsWeakReference = isWeakReference;
+        }
+
+        public bool IsWeakReference { get; set; }
+        public string Name { get; set; }
+        public string FullName { get; set; }
+    }
+
     public class FigmaPartialDesignerClass : FigmaClassBase
     {
-        public List<(string memberType, string name)> PrivateMembers = new List<(string memberType, string name)>();
+        List<ClassMember> privateMembers = new List<ClassMember>();
+        public List<ClassMember> PrivateMembers => privateMembers;
+
         public string Namespace { get; set; }
         public string ClassName { get; set; }
 
@@ -73,19 +90,88 @@ namespace FigmaSharp
 
         protected void GenerateMembers(StringBuilder sb)
         {
+            GeneratePrivateMembers(sb);
+            GenerateWeakMembers(sb);
+        }
+
+        const string WeakConstant = "weak";
+
+        string GetWeakPropertyName (string name) => $"{WeakConstant}{name.ToCamelCase()}";
+
+        void GenerateWeakMembers(StringBuilder sb)
+        {
             //private members
             var groupedMembers = PrivateMembers
-                .Select(s => s.memberType)
+                .Where(s => s.IsWeakReference)
+                .Select(s => s.FullName)
                 .Distinct();
+
+            if (!groupedMembers.Any())
+                return;
 
             foreach (var member in groupedMembers)
             {
-                var items = PrivateMembers
-                    .Where(s => s.memberType == member)
-                    .Select(s => s.name)
+                var members = PrivateMembers
+                    .Where(s => s.FullName == member && s.IsWeakReference)
                     .ToArray();
 
-                var separatedValues = string.Join(", ", items);
+                var separatedValues = string.Join(", ", members.Select(s => GetWeakPropertyName(s.Name)));
+                AppendLine(sb, $"{nameof(System.WeakReference)}<{member}> {separatedValues};");
+            }
+
+            AppendComment(sb, "Weak Properties");
+            foreach (var member in groupedMembers)
+            {
+                var members = PrivateMembers
+                    .Where(s => s.FullName == member && s.IsWeakReference)
+                    .ToArray();
+
+				foreach (var item in members)
+				{
+                    var snippet = GetWeakMemberSnippet(item.FullName, item.Name, GetWeakPropertyName(item.Name));
+					foreach (var line in snippet.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+					{
+                        AppendLine (sb, line);
+					}
+                }
+            }
+
+            AppendLine(sb);
+        }
+
+        string GetWeakMemberSnippet (string type, string name, string targetName)
+		{
+            return @"{{type}} {{name}}
+{
+    get
+    {
+        {{targetName}}.TryGetTarget(out var output);
+        return output;
+    }
+}"
+.Replace("{{type}}", type)
+.Replace("{{name}}", name)
+.Replace("{{targetName}}", targetName);
+        }
+
+        void GeneratePrivateMembers(StringBuilder sb)
+		{
+            //private members
+            var groupedMembers = PrivateMembers
+                .Where(s => !s.IsWeakReference)
+                .Select(s => s.FullName)
+                .Distinct();
+
+            if (!groupedMembers.Any())
+                return;
+
+            foreach (var member in groupedMembers)
+            {
+                var members = PrivateMembers
+                    .Where(s => s.FullName == member && !s.IsWeakReference)
+                    .ToArray();
+
+                var separatedValues = string.Join(", ", members.Select(s => s.Name));
                 AppendLine(sb, $"private {member} {separatedValues};");
             }
             AppendLine(sb);

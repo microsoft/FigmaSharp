@@ -47,7 +47,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 controlType == FigmaControlType.TabView;
         }
 
-
         protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
         {
             var frame = (FigmaFrame)currentNode;
@@ -87,7 +86,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+                code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node)));
 
             var itemNodes = frame.FirstChild(s => s.name == ComponentString.ITEMS);
 
