@@ -106,12 +106,16 @@
     <Compile Include="Converters\Misc\EmbeddedWindowConverter.cs" />
     <Compile Include="Converters\Misc\CustomViewCodeConverter.cs" />
     <Compile Include="Converters\Keywords\IconKeywordConverter.cs" />
-    <Compile Include="Converters\Templates\Resources.template.cs" />
+    <Compile Include="Converters\Controls\TableViewConverter.cs" />
+    <Compile Include="Converters\Controls\OutlineViewConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="figma.manifest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Converters\Templates\TableView.template.cs" />
+    <None Include="Converters\Templates\OutlineView.template.cs" />
+    <None Include="Converters\Templates\Resources.template.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
@@ -125,6 +129,7 @@
     <Folder Include="Extensions\" />
     <Folder Include="WebApi\" />
     <Folder Include="Converters\Misc\" />
+    <Folder Include="Converters\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
