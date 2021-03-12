@@ -108,6 +108,7 @@
     <Compile Include="Converters\Keywords\IconKeywordConverter.cs" />
     <Compile Include="Converters\Controls\TableViewConverter.cs" />
     <Compile Include="Converters\Controls\OutlineViewConverter.cs" />
+    <Compile Include="Converters\Templates\Resources.template.cs" />
     <None Include="Converters\Templates\OutlineView.template.cs" />
     <None Include="Converters\Templates\Resources.template.cs" />
   </ItemGroup>
