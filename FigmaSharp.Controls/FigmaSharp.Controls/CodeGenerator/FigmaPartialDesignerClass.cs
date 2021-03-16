@@ -100,6 +100,8 @@ namespace FigmaSharp
 
         void GenerateWeakMembers(StringBuilder sb)
         {
+            AppendLine(sb, string.Empty);
+            AppendComment(sb, "Weak Members");
             //private members
             var groupedMembers = PrivateMembers
                 .Where(s => s.IsWeakReference)
@@ -119,6 +121,7 @@ namespace FigmaSharp
                 AppendLine(sb, $"{nameof(System.WeakReference)}<{member}> {separatedValues};");
             }
 
+            AppendLine(sb, string.Empty);
             AppendComment(sb, "Weak Properties");
             foreach (var member in groupedMembers)
             {
@@ -140,19 +143,7 @@ namespace FigmaSharp
         }
 
         string GetWeakMemberSnippet (string type, string name, string targetName)
-		{
-            return @"{{type}} {{name}}
-{
-    get
-    {
-        {{targetName}}.TryGetTarget(out var output);
-        return output;
-    }
-}"
-.Replace("{{type}}", type)
-.Replace("{{name}}", name)
-.Replace("{{targetName}}", targetName);
-        }
+            => $"{type} {name} => {targetName}.TryGetTarget(out var target) ? target : null;";
 
         void GeneratePrivateMembers(StringBuilder sb)
 		{
