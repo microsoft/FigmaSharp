@@ -27,6 +27,8 @@ namespace FigmaSharp.Controls.Cocoa
 	// Use Xcode Interface Builder names
 	public static class ComponentString
 	{
+		public const string OPTIONS = "Options";
+
 		public const string TITLE = "Title";
 		public const string TEXT = "Text";
 		public const string PASSWORD = "Password";
@@ -36,12 +38,16 @@ namespace FigmaSharp.Controls.Cocoa
 		// Values
 		public const string VALUE = "Value";
 		public const string ITEMS = "Items";
+		public const string COLUMNS = "Columns";
 
 		// States
 		public const string STATE_REGULAR = "State: Regular";
 		public const string STATE_DISABLED = "State: Disabled";
 		public const string STATE_DEFAULT = "State: Default";
 		public const string STATE_SELECTED = "State: Selected";
+
+		// Decoration
+		public const string BACKGROUND = "Background";
 
 		public const string FOCUS = "Focus";
 

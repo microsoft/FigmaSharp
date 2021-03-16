@@ -69,6 +69,8 @@ namespace FigmaSharp.Controls
 
         // Containers
         TabView,
+        TableView,
+        OutlineView,
         DisclosureView,
 
         Box,
@@ -174,6 +176,8 @@ namespace FigmaSharp.Controls
 
             // Containers
             ("TabView",        FigmaControlType.TabView,        NativeControlVariant.Regular),
+            ("TableView",      FigmaControlType.TableView,      NativeControlVariant.Regular),
+            ("OutlineView",    FigmaControlType.OutlineView,    NativeControlVariant.Regular),
             ("DisclosureView", FigmaControlType.DisclosureView, NativeControlVariant.Regular),
 
             ("Box",                  FigmaControlType.Box,       NativeControlVariant.Regular),
