@@ -103,9 +103,10 @@ namespace FigmaSharp.Controls.Cocoa
 
 		public FigmaBundleViewBase GetBundleView (FigmaBundle bundle, string name, FigmaNode figmaNode)
 		{
-			if (figmaNode.IsComponentContainer ())  {
-				return new FigmaContainerBundleWindow(bundle, name, figmaNode);
-			}
+			//TODO: let's disable for now the special logic for about dialog. It needs a review
+			//if (figmaNode.IsComponentContainer ())  {
+			//	return new FigmaContainerBundleWindow(bundle, name, figmaNode);
+			//}
 
 			if (figmaNode is IFigmaNodeContainer nodeContainer) {
 				foreach (var figmaInstance in nodeContainer.children) {
