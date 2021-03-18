@@ -1,0 +1,60 @@
+trigger:
+  - main
+
+jobs:
+- job: 'BuildFigmaSharpMac'
+
+  pool:
+    vmImage: 'macOS-10.15'
+
+  variables:
+    - name: SOURCES_DIRECTORY
+      value: $(Build.SourcesDirectory)
+    - name: SOURCE_VERSION
+      value: $(Build.SourceVersion)
+
+  steps:
+    - task: Bash@3
+      name: 'BuildMacApp'
+      inputs:
+        targetType: 'inline'
+        script: |
+          msbuild tools/FigmaSharpApp/FigmaSharpApp.csproj /p:"Configuration=Release;Platform=AnyCPU" /restore
+
+    - task: Bash@3
+      name: 'BuildMacExtension'
+      inputs:
+        targetType: 'inline'
+        script: |
+          msbuild tools/MonoDevelop.Figma/MonoDevelop.Figma.csproj /p:Configuration=Release /p:InstallAddin=true /restore
+
+    - task: ArchiveFiles@2
+      name: 'PrepareMacApp'
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)/tools/FigmaSharpApp/bin/Release/FigmaSharpApp.app'
+        includeRootFolder: true
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/FigmaSharpApp-$(Build.SourceVersion).zip'
+        replaceExistingArchive: true
+
+    - task: Bash@3
+      name: 'PrepareMacExtension'
+      inputs:
+        targetType: 'inline'
+        script: |
+          mv ${SOURCES_DIRECTORY}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${SOURCES_DIRECTORY}/FigmaSharpExtension-${SOURCE_VERSION}.mpack
+
+    - task: PublishBuildArtifacts@1
+      name: 'PublishMacApp'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/FigmaSharpApp-$(Build.SourceVersion).zip'
+        ArtifactName: 'MacBuilds'
+        publishLocation: 'Container'
+
+    - task: PublishBuildArtifacts@1
+      name: 'PublishMacExtension'
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/FigmaSharpExtension-$(Build.SourceVersion).mpack'
+        ArtifactName: 'MacBuilds'
+        publishLocation: 'Container'
+
