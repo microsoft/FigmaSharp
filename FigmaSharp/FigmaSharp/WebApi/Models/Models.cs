@@ -271,14 +271,9 @@ namespace FigmaSharp.Models
         {
             get
             {
-                if (string.IsNullOrEmpty(counterAxisAlignItems))
-                {
-                    return FigmaAxisAlignment.MIN;
-                }
-                
                 foreach (var item in Enum.GetValues(typeof(FigmaAxisAlignment)))
                 {
-                    if (item.ToString() == counterAxisAlignItems)
+                    if (item.ToString().ToUpper() == counterAxisAlignItems)
                     {
                         return (FigmaAxisAlignment)item;
                     }
@@ -298,6 +293,22 @@ namespace FigmaSharp.Models
 
         [DisplayName("Vertical Padding")]
         public float verticalPadding { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Left")]
+        public float paddingLeft { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Top")]
+        public float paddingTop { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Right")]
+        public float paddingRight { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Bottom")]
+        public float paddingBottom { get; set; }
 
         [Category("General")]
         [DisplayName("Corner Radius")]

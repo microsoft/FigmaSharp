@@ -116,7 +116,10 @@ namespace FigmaSharp.Controls
                 ("StackPanel/Horizontal", FigmaControlType.StackPanel, NativeControlVariant.Regular),
 
                 //Grids
-                ("Grid", FigmaControlType.Grid, NativeControlVariant.Regular)
+                ("Grid", FigmaControlType.Grid, NativeControlVariant.Regular),
+
+                //Windows
+                ("Window", FigmaControlType.Window, NativeControlVariant.Regular)
             };
     }
 }

@@ -14,16 +14,16 @@ using System.Windows;
 
 namespace FigmaSharp.Wpf.Converters
 {
-    class StackPanelConverter: FrameConverterBase
+    class EmbeddedWindowConverter: NodeConverter
     {
        
-        public override Type GetControlType(FigmaNode currentNode) => typeof(StackPanel);
-        public override bool ScanChildren(FigmaNode currentNode) => true;
+        public override Type GetControlType(FigmaNode currentNode) => typeof(Window);
+        //public override bool ScanChildren(FigmaNode currentNode) => true;
 
         public override bool CanConvert(FigmaNode currentNode)
         {
             currentNode.TryGetNativeControlType(out var controlType);
-            return controlType == FigmaControlType.StackPanel;
+            return controlType == FigmaControlType.Window;
         }
         public override IView ConvertToView(FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {

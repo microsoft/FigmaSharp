@@ -116,7 +116,7 @@ namespace FigmaSharp.Wpf
             }
         }
          
-        public static void Configure(this FrameworkElement view, RectangleVector child)
+        public static void Configure(this FrameworkElement view, RectangleVector child, ViewNode parent)
         {
             Configure(view, (FigmaVector)child);
         }
@@ -188,7 +188,7 @@ namespace FigmaSharp.Wpf
             }
         }
 
-        public static void configureAlignment(this Control control, ViewNode parent)
+        public static void configureAlignment(this FrameworkElement frameworkElement, ViewNode parent)
         {
             if (parent.View.NativeObject.GetType() == typeof(StackPanel))
             {
@@ -198,10 +198,32 @@ namespace FigmaSharp.Wpf
                     Console.WriteLine("Layout Mode: {0}", frame.layoutMode);
                     Console.WriteLine("Primary alignment: {0}", frame.PrimaryAxisAlignment);
                     Console.WriteLine("Counter alignment: {0}", frame.CounterAxisAlignment);
-                    control.HorizontalAlignment = GetHorizontalAlignment(frame.LayoutMode, frame.PrimaryAxisAlignment, frame.CounterAxisAlignment);
-                    control.VerticalAlignment = GetVerticalAlignment(frame.LayoutMode, frame.PrimaryAxisAlignment, frame.CounterAxisAlignment);
+                    frameworkElement.HorizontalAlignment = GetHorizontalAlignment(frame.LayoutMode, frame.PrimaryAxisAlignment, frame.CounterAxisAlignment);
+                    frameworkElement.VerticalAlignment = GetVerticalAlignment(frame.LayoutMode, frame.PrimaryAxisAlignment, frame.CounterAxisAlignment);
+                    frameworkElement.Margin = GetMargins(frame);
                 }
             }
+        }
+
+        public static Thickness GetMargins(FigmaFrame frame)
+        {
+            var margins = new Thickness();
+            if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
+            {
+                margins.Top = frame.paddingTop;
+                margins.Bottom = frame.paddingBottom;
+                margins.Left = frame.itemSpacing / 2;
+                margins.Right = frame.itemSpacing / 2;
+                
+            }
+            if (frame.LayoutMode == FigmaLayoutMode.Vertical)
+            {
+                margins.Left = frame.paddingLeft;
+                margins.Right = frame.paddingRight;
+                margins.Top = frame.itemSpacing / 2;
+                margins.Bottom = frame.itemSpacing / 2;
+            }
+            return margins;
         }
 
         public static HorizontalAlignment GetHorizontalAlignment(FigmaLayoutMode layoutMode, FigmaAxisAlignment primaryAxisAlignment, FigmaAxisAlignment counterAxisAlignment)
@@ -214,30 +236,30 @@ namespace FigmaSharp.Wpf
                     {
                         return HorizontalAlignment.Left;
                     }
-                    if(primaryAxisAlignment == FigmaAxisAlignment.CENTER)
+                    else if(primaryAxisAlignment == FigmaAxisAlignment.CENTER)
                     {
                         return HorizontalAlignment.Center;
                     }
-                    if(primaryAxisAlignment == FigmaAxisAlignment.MAX)
+                    else if(primaryAxisAlignment == FigmaAxisAlignment.MAX)
                     {
                         return HorizontalAlignment.Right;
                     }
                 }
-                if(layoutMode == FigmaLayoutMode.Vertical)
+                else if(layoutMode == FigmaLayoutMode.Vertical)
                 {
                     if (counterAxisAlignment == FigmaAxisAlignment.MIN)
                     {
                         return HorizontalAlignment.Left;
                     }
-                    if (counterAxisAlignment == FigmaAxisAlignment.CENTER)
+                    else if (counterAxisAlignment == FigmaAxisAlignment.CENTER)
                     {
                         return HorizontalAlignment.Center;
                     }
-                    if (counterAxisAlignment == FigmaAxisAlignment.MAX)
+                    else if (counterAxisAlignment == FigmaAxisAlignment.MAX)
                     {
                         return HorizontalAlignment.Right;
                     }
-                }
+                } 
             }
             return HorizontalAlignment.Left;
         }
@@ -252,33 +274,33 @@ namespace FigmaSharp.Wpf
                     {
                         return VerticalAlignment.Top;
                     }
-                    if (primaryAxisAlignment == FigmaAxisAlignment.CENTER)
+                    else if (primaryAxisAlignment == FigmaAxisAlignment.CENTER)
                     {
                         return VerticalAlignment.Center;
                     }
-                    if (primaryAxisAlignment == FigmaAxisAlignment.MAX)
+                    else if (primaryAxisAlignment == FigmaAxisAlignment.MAX)
                     {
                         return VerticalAlignment.Bottom;
                     }
                 }
-                if (layoutMode == FigmaLayoutMode.Horizontal)
+                else if (layoutMode == FigmaLayoutMode.Horizontal)
                 {
                     if (counterAxisAlignment == FigmaAxisAlignment.MIN)
                     {
                         return VerticalAlignment.Top;
                     }
-                    if (counterAxisAlignment == FigmaAxisAlignment.CENTER)
+                    else if (counterAxisAlignment == FigmaAxisAlignment.CENTER)
                     {
                         return VerticalAlignment.Center;
                     }
-                    if (counterAxisAlignment == FigmaAxisAlignment.MAX)
+                    else if (counterAxisAlignment == FigmaAxisAlignment.MAX)
                     {
                         return VerticalAlignment.Bottom;
                     }
                 }
                 
             }
-            return VerticalAlignment.Top;
+            return VerticalAlignment.Bottom;
         }
 
         public static void ConfigureGridPosition(this Control control, FigmaFrame figmaFrame, ViewNode parent)
