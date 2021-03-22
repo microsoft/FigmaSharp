@@ -115,6 +115,10 @@ namespace FigmaSharp.Models
         public FigmaExportSetting[] exportSettings { get; set; }
 
         [Category("General")]
+        [DisplayName("Children")]
+        public FigmaNode[] children { get; set; }
+
+        [Category("General")]
         [DisplayName("Blend Mode")]
         public string blendMode { get; set; }
 
@@ -132,17 +136,13 @@ namespace FigmaSharp.Models
         [Description("[DEPRECATED] Background of the node. This is deprecated, as backgrounds for frames are now in the fills field.")]
         public FigmaBackground[] background { get; set; }
 
-        [Category("Transition")]
-        [DisplayName("Transition Node ID")]
-        public string transitionNodeID { get; set; }
+        [Category("General")]
+        [DisplayName("Corner Radius")]
+        public float cornerRadius { get; set; }
 
-        [Category("Transition")]
-        [DisplayName("Transition Duration")]
-        public float transitionDuration { get; set; }
-
-        [Category("Transition")]
-        [DisplayName("Transition Easing")]
-        public string transitionEasing { get; set; }
+        [Category("General")]
+        [DisplayName("RectangleCornerRadii")]
+        public float[] rectangleCornerRadii { get; set; }
 
         [Category("General")]
         [DisplayName("Opacity")]
@@ -183,13 +183,26 @@ namespace FigmaSharp.Models
         [Description("Does this node mask sibling nodes in front of it?")]
         public bool isMask { get; set; }
 
-        [DisplayName("Children")]
-        public FigmaNode[] children { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Node ID")]
+        public string transitionNodeID { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Duration")]
+        public float transitionDuration { get; set; }
+
+        [Category("Transition")]
+        [DisplayName("Transition Easing")]
+        public string transitionEasing { get; set; }
+
 
         [DisplayName("Fills")]
         public FigmaPaint[] fills { get; set; }
         public bool HasFills => fills?.Length > 0;
 
+
+        [Category("Stroke")]
         [DisplayName("Strokes")]
         public FigmaPaint[] strokes { get; set; }
         public bool HasStrokes => strokes?.Length > 0;
@@ -206,13 +219,6 @@ namespace FigmaSharp.Models
         [DisplayName("Stroke Align")]
         public string strokeAlign { get; set; }
 
-        [Category("AutoLayout")]
-        [DisplayName("Layout Align")]
-        public string layoutAlign { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Layout Mode")]
-        public string layoutMode { get; set; }
 
         [Category("AutoLayout")]
         [DisplayName("Layout Mode")]
@@ -233,18 +239,16 @@ namespace FigmaSharp.Models
         }
 
         [Category("AutoLayout")]
+        [DisplayName("Layout Mode")]
+        public string layoutMode { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Layout Align")]
+        public string layoutAlign { get; set; }
+
+        [Category("AutoLayout")]
         [DisplayName("Item Spacing")]
         public float itemSpacing { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Horizontal Padding")]
-        [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
-        public float horizontalPadding { get; set; }
-
-        [Category("AutoLayout")]
-        [DisplayName("Vertical Padding")]
-        [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
-        public float verticalPadding { get; set; }
 
         [Category("AutoLayout")]
         [DisplayName("Padding Left")]
@@ -262,13 +266,15 @@ namespace FigmaSharp.Models
         [DisplayName("Padding Bottom")]
         public float paddingBottom { get; set; }
 
-        [Category("General")]
-        [DisplayName("Corner Radius")]
-        public float cornerRadius { get; set; }
+        [Category("AutoLayout")]
+        [DisplayName("Horizontal Padding")]
+        [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
+        public float horizontalPadding { get; set; }
 
-        [Category("General")]
-        [DisplayName("RectangleCornerRadii")]
-        public float[] rectangleCornerRadii { get; set; }
+        [Category("AutoLayout")]
+        [DisplayName("Vertical Padding")]
+        [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
+        public float verticalPadding { get; set; }
     }
 
     public class FigmaPoint : FigmaNode
