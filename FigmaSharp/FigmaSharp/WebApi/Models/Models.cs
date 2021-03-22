@@ -243,8 +243,20 @@ namespace FigmaSharp.Models
         public string layoutMode { get; set; }
 
         [Category("AutoLayout")]
-        [DisplayName("Layout Align")]
-        public string layoutAlign { get; set; }
+        [DisplayName("Primary Axis Sizing Mode")]
+        public string primaryAxisSizingMode { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Counter Axis Sizing Mode")]
+        public string counterAxisSizingMode { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Primary Axis Align Items")]
+        public string primaryAxisAlignItems { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Counter Axis Align Items")]
+        public string counterAxisAlignItems { get; set; }
 
         [Category("AutoLayout")]
         [DisplayName("Item Spacing")]
@@ -275,6 +287,15 @@ namespace FigmaSharp.Models
         [DisplayName("Vertical Padding")]
         [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
         public float verticalPadding { get; set; }
+
+
+        [Category("AutoLayout Child")]
+        [DisplayName("Layout Grow")]
+        public int layoutGrow { get; set; }
+
+        [Category("AutoLayout Child")]
+        [DisplayName("Layout Align")]
+        public string layoutAlign { get; set; }
     }
 
     public class FigmaPoint : FigmaNode
