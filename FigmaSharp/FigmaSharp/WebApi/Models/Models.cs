@@ -238,10 +238,29 @@ namespace FigmaSharp.Models
 
         [Category("AutoLayout")]
         [DisplayName("Horizontal Padding")]
+        [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
         public float horizontalPadding { get; set; }
 
+        [Category("AutoLayout")]
         [DisplayName("Vertical Padding")]
+        [Description("[DEPRECATED] Deprecated in favor of setting individual paddings.")]
         public float verticalPadding { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Left")]
+        public float paddingLeft { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Top")]
+        public float paddingTop { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Right")]
+        public float paddingRight { get; set; }
+
+        [Category("AutoLayout")]
+        [DisplayName("Padding Bottom")]
+        public float paddingBottom { get; set; }
 
         [Category("General")]
         [DisplayName("Corner Radius")]

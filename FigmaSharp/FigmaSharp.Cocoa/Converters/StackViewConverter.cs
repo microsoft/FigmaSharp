@@ -49,10 +49,10 @@ namespace FigmaSharp.Cocoa.Converters
             if (propertyName == Properties.EdgeInsets)
             {
                 stackView.EdgeInsets = new NSEdgeInsets(
-                   top: frame.verticalPadding,
-                   left: frame.horizontalPadding,
-                   bottom: frame.verticalPadding,
-                   right: frame.horizontalPadding
+                   top: frame.paddingTop,
+                   left: frame.paddingLeft,
+                   bottom: frame.paddingBottom,
+                   right: frame.paddingRight
                 );
                 return;
             }
@@ -103,10 +103,10 @@ namespace FigmaSharp.Cocoa.Converters
             if (propertyName == Properties.EdgeInsets)
             {
                 var edgeInsets = typeof(NSEdgeInsets).GetConstructor(
-         frame.verticalPadding.ToString(),
-         frame.horizontalPadding.ToString(),
-         frame.verticalPadding.ToString(),
-         frame.horizontalPadding.ToString());
+                    frame.paddingTop.ToString(),
+                    frame.paddingRight.ToString(),
+                    frame.paddingBottom.ToString(),
+                    frame.paddingLeft.ToString());
                 code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.EdgeInsets), edgeInsets);
                 return;
             }
