@@ -88,6 +88,29 @@ namespace FigmaSharp.Tests
             Assert.IsNotEmpty(classCode);
         }
 
+
+        [Test]
+        public void PartialDesignerWeak()
+        {
+            var codeGenerator = new FigmaPartialDesignerClass();
+            codeGenerator.Manifest = new FigmaManifest()
+            {
+                Date = DateTime.Now,
+                FileId = "https://www.figma.com/file/fKugSkFGdwOF4vDsPGnJee/",
+                DocumentVersion = "0.1f",
+                RemoteApiVersion = "1.1"
+            };
+            codeGenerator.Usings.Add("System");
+            codeGenerator.Usings.Add("AppKit");
+            codeGenerator.ClassName = "MyGeneratedCustomView";
+            codeGenerator.Namespace = "LocalFile.Cocoa";
+
+            codeGenerator.PrivateMembers.Add (new ClassMember ("AppKit.NSComboBox", "ComboBox", true));
+
+            var classCode = codeGenerator.Generate();
+            Assert.IsNotEmpty(classCode);
+        }
+
         [Test]
         public void PublicPartialClassGenerationTest()
         {

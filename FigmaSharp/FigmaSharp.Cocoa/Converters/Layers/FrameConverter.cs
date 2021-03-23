@@ -82,7 +82,7 @@ namespace FigmaSharp.Cocoa.Converters
             var name = Resources.Ids.Conversion.NameIdentifier;
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+                builder.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node)));
 
             builder.Configure(FigmaFrame, currentNode.Name);
             return builder.ToString();

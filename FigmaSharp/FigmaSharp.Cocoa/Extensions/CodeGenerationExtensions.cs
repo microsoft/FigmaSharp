@@ -86,14 +86,14 @@ namespace FigmaSharp.Cocoa
 			return string.Format ("{0}.{1}", myEnum.GetType ().Name, myEnum.ToString ());
 		}
 
-		public static string GetConstructor (this Services.CodeNode sender, Type type, bool includesVar = true)
+		public static string GetConstructor (this Services.CodeNode sender, Type type, bool includesVar = true, bool isWeak = false)
 		{
-			return GetConstructor (sender, type.FullName, includesVar);
+			return GetConstructor (sender, type.FullName, includesVar, isWeak);
 		}
 
-		public static string GetConstructor (this Services.CodeNode sender, string typeFullName, bool includesVar = true)
+		public static string GetConstructor (this Services.CodeNode sender, string typeFullName, bool includesVar = true, bool isWeak = false)
 		{
-			return CodeGenerationHelpers.GetConstructor (sender.Name, typeFullName, includesVar);
+			return CodeGenerationHelpers.GetConstructor (sender.Name, typeFullName, includesVar, isWeak);
 		}
 
 		public static string GetPropertyEquality (this Services.CodeNode sender, string propertyName, Enum value)
@@ -130,12 +130,12 @@ namespace FigmaSharp.Cocoa
 
 		public static void WriteConstructor (this StringBuilder builder, string viewName, Type type, bool includesVar = true)
 		{
-			WriteConstructor (builder, viewName, type.FullName, includesVar);
+			builder.AppendLine(CodeGenerationHelpers.GetConstructor(viewName, type, includesVar));
 		}
 
-		public static void WriteConstructor (this StringBuilder builder, string viewName, string typeFullName, bool includesVar = true)
+		public static void WriteConstructor (this StringBuilder builder, string viewName, string typeFullName, bool includesVar = true, bool isWeak = false)
 		{
-			builder.AppendLine (CodeGenerationHelpers.GetConstructor (viewName, typeFullName, includesVar));
+			builder.AppendLine (CodeGenerationHelpers.GetConstructor (viewName, typeFullName, includesVar, isWeak));
 		}
 
 		public static void WritePropertyEquality (this StringBuilder builder, string viewName, string propertyName, Enum value)

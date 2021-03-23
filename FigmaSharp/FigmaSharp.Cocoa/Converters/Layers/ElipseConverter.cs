@@ -135,7 +135,7 @@ namespace FigmaSharp.Cocoa.Converters
                 currentNode,
                 builder,
                 rendererService.NeedsRenderConstructor(currentNode, parentNode),
-                rendererService.NodeRendersVar(currentNode, parentNode)
+                rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node))
                 );
             ConfigureCodeProperty(Properties.Opacity, currentNode, builder);
             ConfigureCodeProperty(Properties.FillColor, currentNode, builder);

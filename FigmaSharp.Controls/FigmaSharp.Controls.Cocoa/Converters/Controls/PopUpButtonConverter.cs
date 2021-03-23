@@ -87,7 +87,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node)));
 
 			code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
 

@@ -116,7 +116,7 @@ namespace FigmaSharp
 			partialDesignerClass.Save(partialDesignerClassFilePath);
 		}
 
-			public void Generate (string directoryPath, CodeRenderService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
+		public void Generate (string directoryPath, CodeRenderService codeRendererService, bool writePublicClassIfExists = true, string namesSpace = null, bool translateStrings = false)
 		{
 			if (!Directory.Exists(directoryPath))
 				Directory.CreateDirectory(directoryPath);

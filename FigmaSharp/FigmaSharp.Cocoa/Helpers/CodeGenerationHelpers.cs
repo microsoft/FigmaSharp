@@ -33,12 +33,26 @@ namespace FigmaSharp.Cocoa.Helpers
 
 		public static string GetConstructor (string viewName, Type type, bool includesVar = true)
 		{
-			return GetConstructor (viewName, type.FullName, includesVar);
+			return GetConstructor (viewName, type.FullName, includesVar, type.NeedsWeakRef());
 		}
 
-		public static string GetConstructor (string viewName, string typeFullName, bool includesVar = true)
+		const string WeakConstant = "weak";
+		public static string GetWeakPropertyName(string name) => $"{WeakConstant}{name.ToCamelCase()}";
+
+		public static string GetConstructor (string viewName, string typeFullName, bool includesVar = true, bool isWeak = false)
 		{
-			return $"{(includesVar ? "var " : string.Empty)}{viewName} = new {typeFullName}();";
+			var constructor = new System.Text.StringBuilder();
+			constructor.Append ("new ");
+			if (isWeak)
+				constructor.Append($"WeakReference<{typeFullName}>(new ");
+			constructor.Append(typeFullName);
+			constructor.Append("()");
+			if (isWeak)
+				constructor.Append(")");
+
+			var varName = isWeak ? GetWeakPropertyName(viewName) : viewName;
+
+			return $"{(includesVar ? "var " : string.Empty)}{varName} = {constructor};";
 		}
 
 		public static string GetPropertyEquality (string viewName, string propertyName, Enum value)

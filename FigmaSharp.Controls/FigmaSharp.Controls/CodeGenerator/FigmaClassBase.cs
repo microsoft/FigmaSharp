@@ -52,10 +52,8 @@ namespace FigmaSharp
             {
                 Manifest.ToComment(builder);
             }
-            foreach (var current in Comments)
-            {
-                builder.AppendLine($"// {current}");
-            }
+
+            AppendComment (builder, Comments.ToArray ());
         }
 
         public void Save(string filePath)
@@ -137,6 +135,14 @@ namespace FigmaSharp
             AppendLine(sb, "{");
             if (addTabIndex)
                 CurrentTabIndex++;
+        }
+
+        public void AppendComment(StringBuilder sb, params string[] line)
+        {
+            foreach (var current in line)
+            {
+                sb.AppendLine($"// {current}");
+            }
         }
 
         public void AppendLine(StringBuilder sb, string line)

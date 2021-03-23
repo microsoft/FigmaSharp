@@ -106,7 +106,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			code.AppendLine();
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				code.WriteConstructor(textViewName, typeof(NSTextView), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor(textViewName, typeof(NSTextView), rendererService.NodeRendersVar(currentNode, parentNode, GetControlType(currentNode.Node)));
 
 			code.WritePropertyEquality(textViewName,
 			    nameof(NSTextView.Frame),

@@ -145,7 +145,7 @@ namespace FigmaSharp.Cocoa.Converters
             var code = new StringBuilder();
 
             if (rendererService.NeedsRenderConstructor(codeNode, parentNode))
-                code.WriteConstructor(codeNode.Name, GetControlType(codeNode.Node), rendererService.NodeRendersVar(codeNode, parentNode));
+                code.WriteConstructor(codeNode.Name, GetControlType(codeNode.Node), rendererService.NodeRendersVar(codeNode, parentNode, GetControlType(codeNode.Node)));
 
             code.WritePropertyEquality(codeNode.Name, nameof(NSView.TranslatesAutoresizingMaskIntoConstraints), false);
 
