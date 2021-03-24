@@ -146,7 +146,7 @@ namespace FigmaSharp
 			if (Version == null) {
 				Version = new FigmaFileVersion() { id = Manifest.DocumentVersion };
 			}
-			Console.WriteLine($"[Done] Refreshed Figma Package from remote Figma API");
+			LoggingService.LogInfo($"[Done] Refreshed Figma Package from remote Figma API");
 		}
 
 		//Generates the .figmafile
@@ -203,7 +203,7 @@ namespace FigmaSharp
 				bundle.Load (fullPath);
 				return bundle;
 			} catch (Exception ex) {
-				Console.WriteLine (ex);
+				LoggingService.LogError ("[FIGMA] Error", ex);
 				//not a bundle
 				return null;
 			}
@@ -242,7 +242,7 @@ namespace FigmaSharp
         //    foreach (var item in mainNodes)
         //    {
         //        GenerateFigmaFile(item);
-        //        Console.WriteLine($"[Done] Generated '{item.name}' file");
+        //        LoggingService.LogInfo($"[Done] Generated '{item.name}' file");
         //    }
         //}
 
@@ -254,7 +254,7 @@ namespace FigmaSharp
         //	var mainNodes = figmaFileProvider.GetMainLayers();
         //	foreach (var item in mainNodes) {
         //		GenerateFigmaFile (item);
-        //		Console.WriteLine($"[Done] Generated '{item.name}' file");
+        //		LoggingService.LogInfo($"[Done] Generated '{item.name}' file");
         //	}
         //}
 
@@ -264,7 +264,7 @@ namespace FigmaSharp
         //	if (figmaFileView != null) {
         //		Views.Add(figmaFileView);
         //	} else {
-        //		Console.WriteLine("Cannot generate a file for '{0}': Invalid ClassName. Skipping...", figmaNode.name);
+        //		LoggingService.LogInfo("Cannot generate a file for '{0}': Invalid ClassName. Skipping...", figmaNode.name);
         //	}
         //}
 
@@ -320,7 +320,7 @@ namespace FigmaSharp
 			SaveLocalDocument (includeImages, provider);
 			//if (createViews)
 			//	SaveViews (codeRendererService, writePublicClassIfExists, translateLabels: translateLabels);
-			Console.WriteLine ($"[Done] Saved all the files from Figma Package");
+			LoggingService.LogInfo($"[Done] Saved all the files from Figma Package");
 		}
 
 		#endregion

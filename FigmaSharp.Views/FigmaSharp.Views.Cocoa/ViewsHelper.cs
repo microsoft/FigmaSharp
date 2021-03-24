@@ -26,7 +26,7 @@ using System;
 using System.Reflection;
 
 using AppKit;
-
+using FigmaSharp.Services;
 using FigmaSharp.Views.Native.Cocoa;
 
 namespace FigmaSharp.Views.Cocoa
@@ -79,10 +79,9 @@ namespace FigmaSharp.Views.Cocoa
 					return NSImage.FromStream (stream);
 				}
 			} catch (System.ArgumentNullException) {
-				Console.WriteLine ("[ERROR] File '{0}' not found in Resources and/or not set Build action to EmbeddedResource", resource);
+				LoggingService.LogError(string.Format("[FIGMA]  File '{0}' not found in Resources and/or not set Build action to EmbeddedResource", resource));
 			} catch (System.Exception ex) {
-				Console.WriteLine (ex);
-
+				LoggingService.LogError("[FIGMA] Error.", ex);
 			}
 			return null;
 		}

@@ -48,7 +48,7 @@ namespace FigmaSharp.Services
 
         public override void OnStartImageLinkProcessing(List<ViewNode> imageFigmaNodes)
         {
-            Console.WriteLine($"Loading images..");
+            LoggingService.LogInfo($"Loading images..");
 
             if (imageFigmaNodes.Count > 0)
             {
@@ -63,7 +63,7 @@ namespace FigmaSharp.Services
                 }
             }
 
-            Console.WriteLine("Ended image link processing");
+            LoggingService.LogInfo("Ended image link processing");
             OnImageLinkProcessed();
         }
     }

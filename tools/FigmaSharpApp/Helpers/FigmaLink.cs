@@ -23,6 +23,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+using FigmaSharp.Services;
 
 namespace FigmaSharpApp
 {
@@ -42,12 +43,12 @@ namespace FigmaSharpApp
 					if (id.Contains ("/"))
 						id = id.Substring (0, id.IndexOf ("/"));
 
-					Console.WriteLine ("FigmaLink: Parsed: {0}", id);
+					LoggingService.LogInfo ("FigmaLink: Parsed: {0}", id);
 					return id;
 				}
 
 			} catch {
-				Console.WriteLine ("FigmaLink: Could not parse: {0}", link);
+				LoggingService.LogError ("FigmaLink: Could not parse: {0}", link);
 			}
 
 			return link;

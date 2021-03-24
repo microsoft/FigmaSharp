@@ -64,7 +64,7 @@ namespace MonoDevelop.Figma.Commands
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error.", ex);
             }
             info.Visible = info.Enabled = false;
         }

@@ -50,7 +50,7 @@ namespace FigmaSharp.Services
         public override void OnStartImageLinkProcessing(List<ViewNode> imageFigmaNodes)
         {
             //not needed in local files
-            Console.WriteLine($"Loading images..");
+            LoggingService.LogInfo($"Loading images..");
 
             if (imageFigmaNodes.Count > 0)
             {
@@ -74,16 +74,16 @@ namespace FigmaSharp.Services
                     }
                     catch (FileNotFoundException ex)
                     {
-                        Console.WriteLine("[FIGMA.RENDERER] Resource '{0}' not found.", ex.Message);
+                        LoggingService.LogError("[FIGMA.RENDERER] Resource '{0}' not found.", ex);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        LoggingService.LogError("[FIGMA.RENDERER] Error.", ex);
                     }
                 }
             }
 
-            Console.WriteLine("Ended image link processing");
+            LoggingService.LogInfo("Ended image link processing");
             OnImageLinkProcessed();
         }
     }

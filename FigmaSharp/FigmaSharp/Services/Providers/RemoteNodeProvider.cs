@@ -62,13 +62,13 @@ namespace FigmaSharp.Services
 
                 //var imageCache = new Dictionary<string, List<string>>();
                 List<Tuple<string, List<string>>> imageCacheResponse = new List<Tuple<string, List<string>>>();
-                Console.WriteLine("Detected a total of {0} possible {1} images.  ", totalImages, imageFormat);
+                LoggingService.LogInfo("Detected a total of {0} possible {1} images.  ", totalImages, imageFormat);
 
                 var images = new List<string>();
                 for (int i = 0; i < numberLoop; i++)
                 {
                     var vectors = imageFigmaNodes.Skip(i * CallNumber).Take(CallNumber);
-                    Console.WriteLine("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
+                    LoggingService.LogInfo("[{0}/{1}] Processing Images ... {2} ", i, numberLoop, vectors.Count());
                     var ids = vectors.Select(s => CreateEmptyImageNodeRequest(s.Node))
                         .ToArray();
 
@@ -96,7 +96,7 @@ namespace FigmaSharp.Services
                 }
 
                 //get images not dupplicates
-                Console.WriteLine("Finished image to download {0}", images.Count);
+                LoggingService.LogInfo("Finished image to download {0}", images.Count);
 
                 if (imageFormat == ImageFormat.svg)
                 {
@@ -109,7 +109,7 @@ namespace FigmaSharp.Services
                         foreach (var figmaNodeId in imageUrl.Item2)
                         {
                             var vector = imageFigmaNodes.FirstOrDefault(s => s.Node.id == figmaNodeId);
-                            Console.Write("[{0}:{1}:{2}] {3}...", vector.Node.GetType(), vector.Node.id, vector.Node.name, imageUrl);
+                            LoggingService.LogInfo("[{0}:{1}:{2}] {3}...", vector.Node.GetType(), vector.Node.id, vector.Node.name, imageUrl);
 
                             if (vector != null && vector.View is ISvgView imageView)
                             {
@@ -118,7 +118,7 @@ namespace FigmaSharp.Services
                                     imageView.Load(image);
                                 });
                             }
-                            Console.Write("OK \n");
+                            LoggingService.LogInfo("OK \n");
                         }
                     }
                 }
@@ -131,7 +131,7 @@ namespace FigmaSharp.Services
                         foreach (var figmaNodeId in imageUrl.Item2)
                         {
                             var vector = imageFigmaNodes.FirstOrDefault(s => s.Node.id == figmaNodeId);
-                            Console.WriteLine("[{0}:{1}:{2}] {3}...", vector.Node.GetType(), vector.Node.id, vector.Node.name, imageUrl);
+                            LoggingService.LogInfo("[{0}:{1}:{2}] {3}...", vector.Node.GetType(), vector.Node.id, vector.Node.name, imageUrl);
 
                             if (vector != null)
                             {
@@ -147,18 +147,18 @@ namespace FigmaSharp.Services
                                     }
                                     else
                                     {
-                                        Console.WriteLine("[{0}:{1}:{2}] Error cannot assign the image to the current view {3}", vector.Node.GetType(), vector.Node.id, vector.Node.name, vector.View.GetType().FullName);
+                                        LoggingService.LogInfo("[{0}:{1}:{2}] Error cannot assign the image to the current view {3}", vector.Node.GetType(), vector.Node.id, vector.Node.name, vector.View.GetType().FullName);
                                     }
                                 });
                             }
-                            Console.Write("OK \n");
+                            LoggingService.LogInfo("OK \n");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error.", ex);
             }
         }
 

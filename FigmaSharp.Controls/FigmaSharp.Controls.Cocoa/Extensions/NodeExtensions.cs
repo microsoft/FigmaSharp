@@ -122,7 +122,7 @@ namespace FigmaSharp.Controls.Cocoa
             var found = ControlTypeService.GetByName(name);
             if (found.Equals(default))
             {
-                Console.WriteLine("Component Key not found: {0}", name);
+                LoggingService.LogError("Component Key not found: {0}", name);
                 return FigmaControlType.NotDefined;
             }
             return found.nativeControlType;
@@ -133,7 +133,7 @@ namespace FigmaSharp.Controls.Cocoa
             var found = ControlTypeService.GetByName(name);
             if (found.Equals(default))
             {
-                Console.WriteLine("Component Key not found: {0}", name);
+                LoggingService.LogError("Component Key not found: {0}", name);
                 return NativeControlVariant.NotDefined;
             }
             return found.nativeControlVariant;
@@ -301,7 +301,7 @@ namespace FigmaSharp.Controls.Cocoa
         //            return found.nativeControlComponentType;
         //        }
 
-        //        Console.WriteLine ("Component Key not found: {0} - {1}", figmaInstance.Component.key, figmaInstance.Component.name);
+        //        LoggingService.LogError (string.Format("Component Key not found: {0} - {1}", figmaInstance.Component.key, figmaInstance.Component.name));
         //        //throw new KeyNotFoundException(figmaInstance.Component.key);
         //    }
         //    return NativeControlComponentType.NotDefined;

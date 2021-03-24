@@ -26,7 +26,7 @@ using System;
 
 using AppKit;
 using CoreGraphics;
-
+using FigmaSharp.Services;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
 
@@ -114,7 +114,7 @@ namespace FigmaSharp.Designer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("BorderedWindow.SetParentWindow error", ex);
             }
         }
 

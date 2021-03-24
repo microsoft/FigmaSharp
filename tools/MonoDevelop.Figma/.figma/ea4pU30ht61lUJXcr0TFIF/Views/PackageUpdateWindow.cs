@@ -112,7 +112,7 @@ namespace MonoDevelop.Figma
 						.ToArray();
 					return result;
 				} catch (Exception ex) {
-					Console.WriteLine(ex);
+					LoggingService.LogError("[FIGMA] Error.", ex);
 					return null;
 				}
 			});

@@ -48,7 +48,7 @@ namespace MonoDevelop.Figma
 			var fileProvider = new ControlRemoteNodeProvider() { Version = version };
 			await fileProvider.LoadAsync(figmaBundle.FileId);
 
-			Console.WriteLine($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");
+			FigmaSharp.Services.LoggingService.LogInfo($"[Done] Loaded Remote File provider for Version {version?.id ?? "Current"}");
 			var codeRendererService = new NativeViewCodeService(fileProvider) {
 				TranslationService = new Services.MonoDevelopTranslationService()
 			};

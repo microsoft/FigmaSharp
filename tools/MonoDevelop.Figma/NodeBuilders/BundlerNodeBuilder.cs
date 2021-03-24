@@ -58,7 +58,7 @@ namespace MonoDevelop.Figma
 						bundle = FigmaBundle.FromDirectoryPath(pr.Path.FullPath);
 					} catch (Exception ex) {
 						//if the bundle is removed by any reason whyle updating
-						Console.WriteLine(ex);
+						LoggingService.LogError("CustomFigmaFundlerNodeBuilder", ex);
 					}
 
 					if (bundle != null && bundle.Manifest != null && !string.IsNullOrEmpty (bundle.Manifest.DocumentTitle)) {

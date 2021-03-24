@@ -54,7 +54,7 @@ namespace FigmaSharp.Converters
 					}
 				}
 			} catch (System.Exception ex) {
-				Console.WriteLine (ex);
+				LoggingService.LogError("[FIGMA] Error", ex);
 
 			}
 			return default (T);
@@ -69,7 +69,7 @@ namespace FigmaSharp.Converters
 				foreach (var property in properties) {
 					var data = property.Split (':');
 					if (data.Length != 2) {
-						Console.WriteLine ($"Error format in parameter: '{property}'");
+						LoggingService.LogError ($"Error format in parameter: '{property}'");
 						continue;
 					}
 					ids.Add (data[0], data[1]);

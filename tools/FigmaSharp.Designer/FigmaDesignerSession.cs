@@ -70,11 +70,11 @@ namespace FigmaSharp.Designer
             }
             catch (DirectoryNotFoundException ex)
             {
-                Console.WriteLine("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
+                LoggingService.LogInfo("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA.RENDERER] Error", ex);
             }
         }
 
@@ -89,11 +89,11 @@ namespace FigmaSharp.Designer
             }
             catch (DirectoryNotFoundException ex)
             {
-                Console.WriteLine("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
+                LoggingService.LogInfo("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA.RENDERER] Error", ex);
             }
         }
 
@@ -171,7 +171,7 @@ namespace FigmaSharp.Designer
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex);
+                            LoggingService.LogError("FigmaDesignerSession Error", ex);
                         }
                     }
                 }
@@ -191,7 +191,7 @@ namespace FigmaSharp.Designer
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        LoggingService.LogError("FigmaDesignerSession Error", ex);
                     }
                 }
             }

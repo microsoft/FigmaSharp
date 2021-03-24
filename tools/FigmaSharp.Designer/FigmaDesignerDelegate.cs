@@ -33,6 +33,7 @@ using CoreGraphics;
 using FigmaSharp.Models;
 using FigmaSharp.Views;
 using FigmaSharp.Views.Cocoa;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Designer
 {
@@ -123,7 +124,7 @@ namespace FigmaSharp.Designer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    LoggingService.LogError("[FIGMA] Error", ex);
                 }
             }
         }
@@ -200,7 +201,7 @@ namespace FigmaSharp.Designer
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex);
+                            LoggingService.LogError("[FIGMA] Error", ex);
                         }
                     }
                 }
@@ -217,7 +218,7 @@ namespace FigmaSharp.Designer
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        LoggingService.LogError("[FIGMA] Error", ex);
                     }
                 }
             }

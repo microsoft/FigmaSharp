@@ -195,10 +195,15 @@ namespace MonoDevelop.Figma
 			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Generating views…");
 
 			var selectedData = Data.Where(s => s.Value);
-			foreach (var item in selectedData)
+
+			int count = selectedData.Count();
+
+			using (var stepMonitor = monitor.BeginTask($"Generating views…", count))
 			{
-				using (var stepMonitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Generating {item.Description}…")) {
+				foreach (var item in selectedData)
+				{
 					await CreateBundleView(item.View, project, item.fileProvider, translationsCheckbox.State == NSCellStateValue.On);
+					monitor.Step(1);
 				}
 			}
 

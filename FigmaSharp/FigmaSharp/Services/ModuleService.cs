@@ -74,10 +74,10 @@ namespace FigmaSharp.Services
 
         public static void LoadModules (string directory)
         {
-            Console.WriteLine("Loading all directory modules from {0}", directory);
+            LoggingService.LogInfo("Loading all directory modules from {0}", directory);
             if (!Directory.Exists(directory))
             {
-                Console.WriteLine("[{0}] Error. Directory not found.", directory);
+                LoggingService.LogError("[{0}] Error. Directory not found.", directory);
                 return;
             }
 
@@ -89,28 +89,28 @@ namespace FigmaSharp.Services
 
         public static void LoadModuleDirectory (string directory)
         {
-            Console.WriteLine("Loading module directory: {0}", directory);
+            LoggingService.LogInfo("Loading module directory: {0}", directory);
 
             if (!Directory.Exists(directory))
             {
-                Console.WriteLine("[{0}] Error. Directory not found.", directory);
+                LoggingService.LogError("[{0}] Error. Directory not found.", directory);
                 return;
             }
 
             var manifestFilePath = Path.Combine(directory, "figma.manifest");
             if (!File.Exists(manifestFilePath))
             {
-                Console.WriteLine("Error figma.manifest not found in directory '{0}'", directory);
+                LoggingService.LogError("Error figma.manifest not found in directory '{0}'", directory);
                 return;
             }
 
-            Console.WriteLine("Loading figma.manifest in {0} ...", manifestFilePath);
+            LoggingService.LogInfo("Loading figma.manifest in {0} ...", manifestFilePath);
 
             var file = File.ReadAllText (manifestFilePath);
             var manifest = JsonConvert.DeserializeObject<FigmaAssemblyManifest>(file);
 
-            Console.WriteLine("Version: {0}", manifest.version);
-            Console.WriteLine("Platform: {0}", manifest.platform);
+            LoggingService.LogInfo("Version: {0}", manifest.version);
+            LoggingService.LogInfo("Platform: {0}", manifest.platform);
 
             var enumeratedFiles = Directory.EnumerateFiles(directory, "*.dll").ToArray();
             LoadModule(manifest.platform, enumeratedFiles);
@@ -120,18 +120,18 @@ namespace FigmaSharp.Services
         {
             Dictionary<Assembly, string> instanciableTypes = new Dictionary<Assembly, string>();
 
-            Console.WriteLine("Loading {0}...", string.Join(",", filePaths));
+            LoggingService.LogInfo("Loading {0}...", string.Join(",", filePaths));
 
             foreach (var file in filePaths)
             {
                 if (!File.Exists (file))
                 {
-                    Console.WriteLine("[{0}] Error. File not found.", file);
+                    LoggingService.LogError("[{0}] Error. File not found.", file);
                     continue;
                 }
 
                 var fileName = Path.GetFileName(file);
-                Console.WriteLine("[{0}] Found.", fileName);
+                LoggingService.LogInfo("[{0}] Found.", fileName);
                 try
                 {
                     var assembly = Assembly.LoadFile(file);
@@ -139,7 +139,7 @@ namespace FigmaSharp.Services
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("[{0}] Error loading: {1}", fileName, ex);
+                    LoggingService.LogError(string.Format("[{0}] Error loading", fileName), ex);
                 }
             }
 
@@ -150,7 +150,7 @@ namespace FigmaSharp.Services
                 ProcessCodePositionConverters (assemblyTypes.Key, platform);
             }
 
-            Console.WriteLine("[{0}] Finished.");
+            LoggingService.LogInfo("Finished.");
         }
 
         public static void ProcessConverters (Assembly assembly, string platform)
@@ -166,10 +166,10 @@ namespace FigmaSharp.Services
                 {
                     if (type.GetTypeInfo().IsAbstract)
                     {
-                        Console.WriteLine("[{0}] Skipping {1} (abstract class).", assembly, type);
+                        LoggingService.LogInfo("[{0}] Skipping {1} (abstract class).", assembly, type);
                         continue;
                     }
-                    Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
+                    LoggingService.LogInfo("[{0}] Creating instance {1}...", assembly, type);
                     try
                     {
                         if (Activator.CreateInstance(type) is NodeConverter element)
@@ -177,14 +177,14 @@ namespace FigmaSharp.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        LoggingService.LogError("[FIGMA] Error", ex);
                     }
-                    Console.WriteLine("[{0}] Loaded.", type);
+                    LoggingService.LogInfo("[{0}] Loaded.", type);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error", ex);
             }
         }
 
@@ -201,7 +201,7 @@ namespace FigmaSharp.Services
                 {
                     if (type.GetTypeInfo().IsAbstract)
                     {
-                        Console.WriteLine("[{0}] Skipping {1} (abstract class).", assembly, type);
+                        LoggingService.LogInfo("[{0}] Skipping {1} (abstract class).", assembly, type);
                         continue;
                     }
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
@@ -212,14 +212,14 @@ namespace FigmaSharp.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        LoggingService.LogError("[FIGMA] Error", ex);
                     }
-                    Console.WriteLine("[{0}] Loaded.", type);
+                    LoggingService.LogInfo("[{0}] Loaded.", type);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error", ex);
             }
         }
 
@@ -236,7 +236,7 @@ namespace FigmaSharp.Services
                 {
                     if (type.GetTypeInfo().IsAbstract)
                     {
-                        Console.WriteLine("[{0}] Skipping {1} (abstract class).", assembly, type);
+                        LoggingService.LogInfo("[{0}] Skipping {1} (abstract class).", assembly, type);
                         continue;
                     }
                     Console.WriteLine("[{0}] Creating instance {1}...", assembly, type);
@@ -247,14 +247,14 @@ namespace FigmaSharp.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        LoggingService.LogError("[FIGMA] Error", ex);
                     }
-                    Console.WriteLine("[{0}] Loaded.", type);
+                    LoggingService.LogInfo("[{0}] Loaded.", type);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error", ex);
             }
         }
 

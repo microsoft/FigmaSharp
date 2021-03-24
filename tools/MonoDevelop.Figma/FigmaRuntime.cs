@@ -55,8 +55,7 @@ namespace MonoDevelop.Figma
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(TokenMessage);
-                        Console.WriteLine(ex.ToString());
+                        LoggingService.LogError(TokenMessage, ex);
                     }
                 }
                 return PropertyService.Get<string>(FigmaSetting) ?? string.Empty;
@@ -73,8 +72,7 @@ namespace MonoDevelop.Figma
                     catch (Exception ex)
                     {
                         exception = ex;
-                        Console.WriteLine(TokenMessage);
-                        Console.WriteLine(exception.ToString());
+                        LoggingService.LogError(TokenMessage, ex);
                     }
                 }
 
