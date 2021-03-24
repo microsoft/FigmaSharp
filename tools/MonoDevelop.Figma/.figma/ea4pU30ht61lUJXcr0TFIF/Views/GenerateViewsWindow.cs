@@ -192,7 +192,9 @@ namespace MonoDevelop.Figma
 
 		private async void CreateButton_Activated(object sender, EventArgs e)
 		{
-			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Generating views…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor(
+				$"Generating views…",
+				"Views generated successfully");
 
 			var selectedData = Data.Where(s => s.Value);
 

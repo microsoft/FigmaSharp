@@ -60,7 +60,9 @@ namespace MonoDevelop.Figma.Commands
                 }
                 var includeImages = true;
 
-                using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Regenerating ‘{bundle.Manifest.DocumentTitle}’…");
+                using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor(
+                    $"Regenerating ‘{bundle.Manifest.DocumentTitle}’…",
+                    $"‘{bundle.Manifest.DocumentTitle}’ regenerated successfully");
 
                 await Task.Run(() =>
                 {

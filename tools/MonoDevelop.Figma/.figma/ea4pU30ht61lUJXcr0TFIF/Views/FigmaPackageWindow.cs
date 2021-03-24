@@ -87,7 +87,9 @@ namespace MonoDevelop.Figma
 
 		async Task GenerateBundle (string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
-			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor ($"Adding package ‘{fileId}’…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor (
+				$"Adding package ‘{fileId}’…",
+				"Package added successfully");
 
 			//we need to ask to figma server to get nodes as demmand
 			var fileProvider = new ControlRemoteNodeProvider();

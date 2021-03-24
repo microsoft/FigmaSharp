@@ -58,7 +58,9 @@ namespace MonoDevelop.Figma
 		{
 			PerformClose(this);
 
-			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Updating ‘{mainBundle.Manifest.DocumentTitle}’…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor(
+				$"Updating ‘{mainBundle.Manifest.DocumentTitle}’…",
+				$"‘{mainBundle.Manifest.DocumentTitle}’ updated successfully");
 
 			//we need search current added views and regenerate them
 			var files = project.GetAllFigmaDesignerFiles()

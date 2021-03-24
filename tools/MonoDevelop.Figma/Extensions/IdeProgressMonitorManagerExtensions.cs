@@ -32,7 +32,10 @@ namespace MonoDevelop.Figma
 {
     static class IdeProgressMonitorManagerExtensions
     {
-        public static ProgressMonitor GetFigmaProgressMonitor(this IdeProgressMonitorManager manager, string title)
+        public static ProgressMonitor GetFigmaProgressMonitor(
+            this IdeProgressMonitorManager manager,
+            string title,
+            string successMessage = null)
         {
             var consoleMonitor = IdeApp.Workbench.ProgressMonitors.GetOutputProgressMonitor(
                 "FigmaConsole",
@@ -51,21 +54,29 @@ namespace MonoDevelop.Figma
                 false,
                 pad);
 
-            var monitor = new FigmaAggregatedProgressMonitor(consoleMonitor);
+            var monitor = new FigmaAggregatedProgressMonitor(consoleMonitor, successMessage);
             monitor.AddFollowerMonitor(statusMonitor);
             return monitor;
         }
 
         class FigmaAggregatedProgressMonitor : AggregatedProgressMonitor
         {
-            public FigmaAggregatedProgressMonitor(ProgressMonitor monitor)
+            readonly string successMessage;
+
+            public FigmaAggregatedProgressMonitor(ProgressMonitor monitor, string successMessage)
                 : base(monitor)
             {
+                this.successMessage = successMessage;
                 ExtensionLoggingService.AddProgressMonitor(this);
             }
 
             protected override void OnDispose(bool disposing)
             {
+                if (!string.IsNullOrEmpty(successMessage) && HasErrors && !HasWarnings)
+                {
+                    ReportSuccess(successMessage);
+                }
+
                 ExtensionLoggingService.RemoveProgressMonitor(this);
                 base.OnDispose(disposing);
             }
