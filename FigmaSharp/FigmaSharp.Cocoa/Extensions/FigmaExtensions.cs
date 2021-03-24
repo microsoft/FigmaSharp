@@ -34,6 +34,7 @@ using Foundation;
 
 using FigmaSharp.Models;
 using FigmaSharp.Cocoa.Helpers;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Cocoa
 {
@@ -217,8 +218,8 @@ namespace FigmaSharp.Cocoa
                     font = NSFont.SystemFontOfSize (style.fontSize, GetFontWeight (style));
 
             } catch (Exception ex) {
-                Console.WriteLine ($"Font not found in system: {family} .. using system default font.");
-                Console.WriteLine (ex);
+                LoggingService.LogInfo ($"Font not found in system: {family} .. using system default font.");
+                LoggingService.LogError ("[FIGMA] Error", ex);
                 font = NSFont.SystemFontOfSize (style.fontSize, GetFontWeight (style));
             }
 
@@ -226,7 +227,7 @@ namespace FigmaSharp.Cocoa
 
             //if (FontConversion.TryGetValue (family, out string newFamilyName))
             //{
-            //    Console.WriteLine("{0} font was in the conversion dicctionary and was replaced by {1}.", family, newFamilyName);
+            //    LoggingService.LogInfo("{0} font was in the conversion dicctionary and was replaced by {1}.", family, newFamilyName);
             //    family = newFamilyName;
             //}
 
@@ -241,7 +242,7 @@ namespace FigmaSharp.Cocoa
             //}
             //catch (Exception ex)
             //{
-            //    Console.WriteLine(ex);
+            //    LoggingService.LogError("[FIGMA] Error", ex);
             //}
 
             //if (font == null)
@@ -252,10 +253,10 @@ namespace FigmaSharp.Cocoa
             //    }
             //    catch (Exception ex)
             //    {
-            //        Console.WriteLine(ex);
+            //        LoggingService.LogError("[FIGMA] Error", ex);
             //    }
             //}
-           // return font;
+            // return font;
         }
 
         public static CGPoint GetRelativePosition(this IAbsoluteBoundingBox parent, IAbsoluteBoundingBox node)

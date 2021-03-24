@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma
@@ -57,18 +58,16 @@ namespace MonoDevelop.Figma
 		{
 			PerformClose(this);
 
-			IdeApp.Workbench.StatusBar.BeginProgress($"Updating ‘{mainBundle.Manifest.DocumentTitle}’…");
-			IdeApp.Workbench.StatusBar.AutoPulse = true;
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor(
+				$"Updating ‘{mainBundle.Manifest.DocumentTitle}’…",
+				$"‘{mainBundle.Manifest.DocumentTitle}’ updated successfully");
 
 			//we need search current added views and regenerate them
 			var files = project.GetAllFigmaDesignerFiles()
 				.Where(s => s.TryGetFigmaPackageId(out var packageId) && packageId == mainBundle.FileId);
 
 			var version = versionMenu.GetFileVersion(versionPopUp.SelectedItem);
-			await project.UpdateFigmaFilesAsync (files, mainBundle, version, translationsCheckbox.State == AppKit.NSCellStateValue.On);
-
-			IdeApp.Workbench.StatusBar.AutoPulse = false;
-			IdeApp.Workbench.StatusBar.EndProgress();
+			await project.UpdateFigmaFilesAsync(monitor, files, mainBundle, version, translationsCheckbox.State == AppKit.NSCellStateValue.On);
 		}
 
 		static IEnumerable<FigmaBundle> GetFromFigmaDirectory (string directory)
@@ -116,7 +115,7 @@ namespace MonoDevelop.Figma
 						.ToArray();
 					return result;
 				} catch (Exception ex) {
-					Console.WriteLine(ex);
+					LoggingService.LogError("[FIGMA] Error.", ex);
 					return null;
 				}
 			});

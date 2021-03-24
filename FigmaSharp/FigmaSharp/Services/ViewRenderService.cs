@@ -122,18 +122,17 @@ namespace FigmaSharp.Services
                     nodeProvider.OnStartImageLinkProcessing(ImageVectors);
                 }
 
-                Console.WriteLine("View generation finished.");
+                LoggingService.LogInfo("View generation finished.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading resource");
-                Console.WriteLine(ex);
+                LoggingService.LogError("Error reading resource" , ex);
             }
         }
 
         private void FileProvider_ImageLinksProcessed(object sender, EventArgs e)
         {
-            Console.WriteLine($"Image Links ended.");
+            LoggingService.LogInfo($"Image Links ended.");
         }
 
         public void Refresh(ViewRenderServiceOptions options)
@@ -144,7 +143,7 @@ namespace FigmaSharp.Services
 
             SetOptions(options);
 
-            Console.WriteLine($"Reading successfull");
+            LoggingService.LogInfo($"Reading successfull");
 
             FigmaCanvas canvas;
             if (options.StartPage >= 0 && options.StartPage <= nodeProvider.Response.document.children.Length)
@@ -345,7 +344,7 @@ namespace FigmaSharp.Services
             {
                 if (child.View == null)
                 {
-                    Console.WriteLine("Node {0} has no view to process... skipping", child.Node);
+                    LoggingService.LogInfo("Node {0} has no view to process... skipping", child.Node);
                     continue;
                 }
 
@@ -387,8 +386,8 @@ namespace FigmaSharp.Services
                 options = new ViewRenderServiceOptions();
             }
 
-            Console.WriteLine("[FigmaViewRenderer] Starting process..");
-            Console.WriteLine($"Reading {figmaName} from resources..");
+            LoggingService.LogInfo("[FigmaViewRenderer] Starting process..");
+            LoggingService.LogInfo($"Reading {figmaName} from resources..");
 
             this.container = container;
 
@@ -410,8 +409,7 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading resource");
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error reading resource", ex);
             }
         }
 
@@ -421,8 +419,8 @@ namespace FigmaSharp.Services
                 options = new ViewRenderServiceOptions();
             }
 
-            Console.WriteLine("[FigmaViewRenderer] Starting process..");
-            Console.WriteLine($"Reading {figmaName} from resources..");
+            LoggingService.LogInfo("[FigmaViewRenderer] Starting process..");
+            LoggingService.LogInfo($"Reading {figmaName} from resources..");
 
             this.container = container;
 
@@ -442,18 +440,17 @@ namespace FigmaSharp.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading resource");
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error reading resource.", ex);
             }
         }
 
         //TODO: This 
         protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
         {
-            Console.WriteLine("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
+            LoggingService.LogInfo("[{0}.{1}] Processing {2}..", currentNode?.id, currentNode?.name, currentNode?.GetType());
 
             //if (currentNode.name.StartsWith ("#") || currentNode.name.StartsWith ("//")) {
-            //    Console.WriteLine ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
+            //    LoggingService.LogInfo ("[{0}.{1}] Detected skipped flag in name.. Skipping...", currentNode?.id, currentNode?.name, currentNode?.GetType ());
             //    return;
             //}
 
@@ -471,7 +468,7 @@ namespace FigmaSharp.Services
             }
             else
             {
-                Console.WriteLine("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
+                LoggingService.LogInfo("[{1}.{2}] There is no Converter for this type: {0}", currentNode.GetType(), currentNode.id, currentNode.name);
             }
 
             if (NodeScansChildren(currentNode, converter, options))

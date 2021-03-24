@@ -62,7 +62,7 @@ namespace FigmaSharp.Cocoa.Converters
                             currengroupView.Layer.BackgroundColor = fill.color.ToCGColor (fill.opacity);
                         }
                     } else {
-                        Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
+                        LoggingService.LogWarning ($"NOT IMPLEMENTED FILL : {fill.type}");
                     }
                 }
             }

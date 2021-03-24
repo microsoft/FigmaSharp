@@ -27,6 +27,7 @@ using System.Globalization;
 using System.Xml.Linq;
 
 using AppKit;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {
@@ -110,7 +111,7 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error.", ex);
             }
           
             return NSColor.Clear;

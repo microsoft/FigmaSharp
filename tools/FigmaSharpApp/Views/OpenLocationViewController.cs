@@ -28,6 +28,7 @@ using AppKit;
 using Foundation;
 
 using FigmaSharp.Cocoa;
+using FigmaSharp.Services;
 
 namespace FigmaSharpApp
 {
@@ -129,7 +130,7 @@ namespace FigmaSharpApp
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex);
+					LoggingService.LogError("[FIGMA] Error.", ex);
 				}
 			}
 			PerformSegue ("OpenLocationSegue", this);

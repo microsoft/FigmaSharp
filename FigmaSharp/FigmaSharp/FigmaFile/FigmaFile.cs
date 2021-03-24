@@ -92,7 +92,7 @@ namespace FigmaSharp
         /// </summary>
         public void Reload ()
         {
-            Console.WriteLine($"Loading views..");
+            LoggingService.LogInfo($"Loading views..");
             try
             {
                 FigmaImages.Clear();
@@ -106,8 +106,7 @@ namespace FigmaSharp
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading resource");
-                Console.WriteLine(ex);
+                LoggingService.LogError($"[FIGMA.FILE] Error reading resource", ex);
             }
         }
 

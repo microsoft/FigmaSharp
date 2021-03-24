@@ -9,6 +9,7 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Helpers;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 using MonoDevelop.Figma.Services;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
@@ -86,8 +87,9 @@ namespace MonoDevelop.Figma
 
 		async Task GenerateBundle (string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
-			IdeApp.Workbench.StatusBar.AutoPulse = true;
-			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor (
+				$"Adding package ‘{fileId}’…",
+				"Package added successfully");
 
 			//we need to ask to figma server to get nodes as demmand
 			var fileProvider = new ControlRemoteNodeProvider();
@@ -102,7 +104,7 @@ namespace MonoDevelop.Figma
 			});
 
 			//now we need to add to Monodevelop all the stuff
-			await currentProject.IncludeBundleAsync (currentBundle, includeImages, savesInProject: false);
+			await currentProject.IncludeBundleAsync (monitor, currentBundle, includeImages, savesInProject: false);
 
 			//to generate all layers we need a code renderer
 			var codeRendererService = new NativeViewCodeService(fileProvider) {
@@ -121,9 +123,6 @@ namespace MonoDevelop.Figma
 			}
 
 			await IdeApp.ProjectOperations.SaveAsync(currentProject);
-
-			IdeApp.Workbench.StatusBar.EndProgress ();
-			IdeApp.Workbench.StatusBar.AutoPulse = false;
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)
@@ -171,7 +170,7 @@ namespace MonoDevelop.Figma
 						.ToArray ();
 					return result;
 				} catch (Exception ex) {
-					Console.WriteLine (ex);
+					LoggingService.LogError ("[FIGMA] Error", ex);
 					return null;
 				}
 			});

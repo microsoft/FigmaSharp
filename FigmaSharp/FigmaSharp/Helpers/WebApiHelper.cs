@@ -28,7 +28,7 @@ using System.Linq;
 using System.Reflection;
 
 using FigmaSharp.Models;
-
+using FigmaSharp.Services;
 using Newtonsoft.Json;
 
 namespace FigmaSharp.Helpers
@@ -84,7 +84,7 @@ namespace FigmaSharp.Helpers
                 {
                     if (stream == null)
                     {
-                        Console.WriteLine("Resource '{0}' not found in assembly '{1}'", resource, assembly.FullName);
+                        LoggingService.LogWarning("Resource '{0}' not found in assembly '{1}'", resource, assembly.FullName);
                         return null;
                     }
                     using (TextReader tr = new StreamReader(stream))
@@ -95,7 +95,7 @@ namespace FigmaSharp.Helpers
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine("Cannot read resource '{0}' in assembly '{1}'", resource, ex);
+                LoggingService.LogError(string.Format("[FIGMA] Cannot read resource '{0}' in assembly '{1}'", resource), ex);
                 return null;
             }
         }
@@ -122,7 +122,7 @@ namespace FigmaSharp.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingService.LogError("[FIGMA] Error.", ex);
             }
             return string.Empty;
         }

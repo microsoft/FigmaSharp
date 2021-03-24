@@ -70,14 +70,11 @@ namespace FigmaSharp.Services
 					ProcessNodeRecursively (item, null);
 			} catch (System.Net.WebException ex) {
 				if (!AppContext.Current.IsApiConfigured)
-					Console.Error.WriteLine ($"Cannot connect to Figma server: TOKEN not configured.");
+					LoggingService.LogError ($"Cannot connect to Figma server: TOKEN not configured.", ex);
 				else
-					Console.Error.WriteLine ($"Cannot connect to Figma server: wrong TOKEN?");
-
-				Console.WriteLine (ex);
+					LoggingService.LogError ($"Cannot connect to Figma server: wrong TOKEN?", ex);
 			} catch (Exception ex) {
-				Console.WriteLine ($"Error reading remote resources. Ensure you added NewtonSoft nuget or cannot parse the to json?");
-				Console.WriteLine (ex);
+				LoggingService.LogError ($"Error reading remote resources. Ensure you added NewtonSoft nuget or cannot parse the to json?", ex);
 			}
 		}
 
@@ -237,7 +234,7 @@ namespace FigmaSharp.Services
 					}
 					catch (Exception ex)
 					{
-						Console.WriteLine(ex);
+						LoggingService.LogError("[FIGMA] Error.", ex);
 					}
 				}
 			};

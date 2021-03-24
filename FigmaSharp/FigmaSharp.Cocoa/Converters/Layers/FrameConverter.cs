@@ -65,7 +65,7 @@ namespace FigmaSharp.Cocoa.Converters
                             currengroupView.Layer.BackgroundColor = fill.color.ToCGColor ();
                         }
                     } else {
-                        Console.WriteLine ($"NOT IMPLEMENTED FILL : {fill.type}");
+                        LoggingService.LogWarning ($"NOT IMPLEMENTED FILL : {fill.type}");
 					}
                     //currengroupView.Layer.Hidden = !fill.visible;
                 }

@@ -29,6 +29,7 @@ using System.Text;
 using System.Globalization;
 
 using CoreGraphics;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {
@@ -265,7 +266,7 @@ namespace FigmaSharp.Views.Cocoa.Graphics
 				}
 				else
 				{
-					Console.WriteLine("Don't know how to handle the path command: " + command);
+					LoggingService.LogError("Don't know how to handle the path command: " + command);
 				}
 			}
 			else
@@ -350,7 +351,7 @@ namespace FigmaSharp.Views.Cocoa.Graphics
 			}
 			else
 			{
-				Console.WriteLine("Don't know how to handle the path command: " + command);
+				LoggingService.LogWarning("Don't know how to handle the path command: " + command);
 			}
 
 			if (!(command == 'C' || command == 'c' || command == 's' || command == 'S'))

@@ -23,6 +23,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
+using FigmaSharp.Services;
 using FigmaSharp.Views.Cocoa.Graphics;
 
 namespace FigmaSharp.Views.Cocoa
@@ -32,7 +33,7 @@ namespace FigmaSharp.Views.Cocoa
         public void Load(string image)
         {
             ((SvgNSView)nativeView).Load(image);
-            Console.WriteLine(image);
+            LoggingService.LogInfo(image);
         }
 
         public SvgView() : base (new SvgNSView ())
