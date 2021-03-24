@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FigmaSharp;
 using FigmaSharp.Cocoa;
 using FigmaSharp.Models;
+using FigmaSharp.Services;
 using MonoDevelop.Ide;
 
 namespace MonoDevelop.Figma
@@ -64,7 +65,7 @@ namespace MonoDevelop.Figma
 				.Where(s => s.TryGetFigmaPackageId(out var packageId) && packageId == mainBundle.FileId);
 
 			var version = versionMenu.GetFileVersion(versionPopUp.SelectedItem);
-			await project.UpdateFigmaFilesAsync(files, mainBundle, version, translationsCheckbox.State == AppKit.NSCellStateValue.On);
+			await project.UpdateFigmaFilesAsync(monitor, files, mainBundle, version, translationsCheckbox.State == AppKit.NSCellStateValue.On);
 		}
 
 		static IEnumerable<FigmaBundle> GetFromFigmaDirectory (string directory)

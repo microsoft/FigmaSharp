@@ -42,7 +42,7 @@ namespace MonoDevelop.Figma
 {
     public static class Extensions
 	{
-		public static async Task UpdateFigmaFilesAsync (this Project sender, IEnumerable<ProjectFile> projectFiles, FigmaBundle figmaBundle, FigmaFileVersion version, bool translateStrings)
+		public static async Task UpdateFigmaFilesAsync (this Project sender, ProgressMonitor monitor, IEnumerable<ProjectFile> projectFiles, FigmaBundle figmaBundle, FigmaFileVersion version, bool translateStrings)
         {
 			var includeImages = true;
 			var fileProvider = new ControlRemoteNodeProvider() { Version = version };
@@ -56,7 +56,7 @@ namespace MonoDevelop.Figma
 			await Task.Run(() => {
 				figmaBundle.Update(version, fileProvider, includeImages: includeImages);
 			});
-			await sender.IncludeBundleAsync(figmaBundle, includeImages: includeImages);
+			await sender.IncludeBundleAsync(monitor, figmaBundle, includeImages: includeImages);
 
 			foreach (var designerFile in projectFiles) {
 				if (designerFile.TryGetFigmaNode(fileProvider, out var figmaNode)) {
@@ -191,9 +191,9 @@ namespace MonoDevelop.Figma
 			return bundle;
 		}
 
-		public static async Task IncludeBundleAsync (this Project currentProject, FigmaBundle bundle, bool includeImages = false, bool savesInProject = true)
+		public static async Task IncludeBundleAsync (this Project currentProject, ProgressMonitor monitor, FigmaBundle bundle, bool includeImages = false, bool savesInProject = true)
 		{
-			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor("Including files into current project…");
+			using var task = monitor.BeginTask("Including files into current project…", 1);
 
 			var figmaFolder = Path.Combine(currentProject.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
 			if (!currentProject.PathExistsInProject(figmaFolder))

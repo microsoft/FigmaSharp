@@ -24,6 +24,7 @@
 
 using FigmaSharp.Controls.Cocoa;
 using MonoDevelop.Components.Commands;
+using MonoDevelop.Figma.Services;
 
 namespace MonoDevelop.Figma.Commands
 {
@@ -31,6 +32,7 @@ namespace MonoDevelop.Figma.Commands
     {
         protected override void Run()
         {
+            ExtensionLoggingService.Init();
             Resources.Init();
             FigmaControlsApplication.Init(FigmaRuntime.Token);
         }

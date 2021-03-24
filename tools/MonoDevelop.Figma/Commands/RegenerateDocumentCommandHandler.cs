@@ -75,7 +75,7 @@ namespace MonoDevelop.Figma.Commands
                     bundle.SaveAll(includeImages, fileProvider);
                 });
 
-                await currentFolder.Project.IncludeBundleAsync(bundle, includeImages)
+                await currentFolder.Project.IncludeBundleAsync(monitor, bundle, includeImages)
                     .ConfigureAwait(true);
             }
         }

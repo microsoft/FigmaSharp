@@ -23,6 +23,9 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using MonoDevelop.Core;
+using MonoDevelop.Core.ProgressMonitoring;
+using MonoDevelop.Figma.Services;
+using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
 
 namespace MonoDevelop.Figma
@@ -31,13 +34,41 @@ namespace MonoDevelop.Figma
     {
         public static ProgressMonitor GetFigmaProgressMonitor(this IdeProgressMonitorManager manager, string title)
         {
-            return manager.GetStatusProgressMonitor(
+            var consoleMonitor = IdeApp.Workbench.ProgressMonitors.GetOutputProgressMonitor(
+                "FigmaConsole",
+                GettextCatalog.GetString("Figma Console"),
+                Stock.Console,
+                false,
+                true);
+
+            Pad pad = IdeApp.Workbench.ProgressMonitors.GetPadForMonitor(consoleMonitor);
+
+            var statusMonitor = manager.GetStatusProgressMonitor(
                 title,
                 Stock.StatusSolutionOperation,
                 false,
+                true,
                 false,
-                false,
-                null);
+                pad);
+
+            var monitor = new FigmaAggregatedProgressMonitor(consoleMonitor);
+            monitor.AddFollowerMonitor(statusMonitor);
+            return monitor;
+        }
+
+        class FigmaAggregatedProgressMonitor : AggregatedProgressMonitor
+        {
+            public FigmaAggregatedProgressMonitor(ProgressMonitor monitor)
+                : base(monitor)
+            {
+                ExtensionLoggingService.AddProgressMonitor(this);
+            }
+
+            protected override void OnDispose(bool disposing)
+            {
+                ExtensionLoggingService.RemoveProgressMonitor(this);
+                base.OnDispose(disposing);
+            }
         }
     }
 }
