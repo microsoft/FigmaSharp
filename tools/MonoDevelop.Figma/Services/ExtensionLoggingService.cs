@@ -50,12 +50,15 @@ namespace MonoDevelop.Figma.Services
                     {
                         switch (level)
                         {
-                            case LogLevel.Info:
-                                monitor.Log.WriteLine(message);
+                            case LogLevel.Warn:
+                                monitor.ReportWarning(message);
                                 break;
-
+                            case LogLevel.Error:
+                            case LogLevel.Fatal:
+                                monitor.ReportError(message);
+                                break;
                             default:
-                                monitor.Log.WriteLine(string.Format("{0}: {1}", level.ToString().ToUpper(), message));
+                                monitor.Log.WriteLine(message);
                                 break;
                         }
                     }

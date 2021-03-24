@@ -122,7 +122,7 @@ namespace FigmaSharp.Controls.Cocoa
             var found = ControlTypeService.GetByName(name);
             if (found.Equals(default))
             {
-                LoggingService.LogError("Component Key not found: {0}", name);
+                LoggingService.LogWarning("Component Key not found: {0}", name);
                 return FigmaControlType.NotDefined;
             }
             return found.nativeControlType;
@@ -133,7 +133,7 @@ namespace FigmaSharp.Controls.Cocoa
             var found = ControlTypeService.GetByName(name);
             if (found.Equals(default))
             {
-                LoggingService.LogError("Component Key not found: {0}", name);
+                LoggingService.LogWarning("Component Key not found: {0}", name);
                 return NativeControlVariant.NotDefined;
             }
             return found.nativeControlVariant;
