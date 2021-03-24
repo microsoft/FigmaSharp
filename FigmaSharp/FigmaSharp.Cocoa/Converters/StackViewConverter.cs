@@ -66,23 +66,16 @@ namespace FigmaSharp.Cocoa.Converters
             if (propertyName == Properties.Orientation)
             {
                 stackView.Orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-               NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                    NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
                 return;
             }
 
             if (propertyName == Properties.Distribution)
             {
-                node.TryGetAttributeValue (DistributionPropertyName, out var value);
-
-                NSStackViewDistribution distribution = NSStackViewDistribution.Fill;
-                if (!string.IsNullOrEmpty (value))
-                    Enum.TryParse(value.ToCamelCase(), out distribution);
-                stackView.Distribution = distribution;
+                stackView.Distribution = NSStackViewDistribution.FillProportionally;
                 return;
             }
         }
-
-        const string DistributionPropertyName = "distribution";
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
@@ -120,22 +113,14 @@ namespace FigmaSharp.Cocoa.Converters
             if (propertyName == Properties.Orientation)
             {
                 var orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-             NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                    NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
                 code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Orientation), orientation.GetFullName());
                 return;
             }
 
             if (propertyName == Properties.Distribution)
             {
-                codeNode.Node.TryGetAttributeValue(DistributionPropertyName, out var value);
-                NSStackViewDistribution distribution = NSStackViewDistribution.Fill;
-                if (!string.IsNullOrEmpty(value))
-                {
-                    var parameter = typeof(NSStackViewDistribution).WithProperty(value.ToCamelCase());
-                    Enum.TryParse(parameter, out distribution); ;
-                }
-
-                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), distribution.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.FillProportionally.GetFullName());
                 return;
             }
         }
