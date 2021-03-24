@@ -193,7 +193,7 @@ namespace MonoDevelop.Figma
 
 		public static async Task IncludeBundleAsync (this Project currentProject, FigmaBundle bundle, bool includeImages = false, bool savesInProject = true)
 		{
-			Ide.IdeApp.Workbench.StatusBar.ShowMessage("Including files into current project…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor("Including files into current project…");
 
 			var figmaFolder = Path.Combine(currentProject.BaseDirectory.FullPath, FigmaBundle.FigmaDirectoryName);
 			if (!currentProject.PathExistsInProject(figmaFolder))

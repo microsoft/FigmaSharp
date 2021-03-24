@@ -60,8 +60,7 @@ namespace MonoDevelop.Figma.Commands
                 }
                 var includeImages = true;
 
-                IdeApp.Workbench.StatusBar.AutoPulse = true;
-                IdeApp.Workbench.StatusBar.BeginProgress($"Regenerating ‘{bundle.Manifest.DocumentTitle}’…");
+                using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Regenerating ‘{bundle.Manifest.DocumentTitle}’…");
 
                 await Task.Run(() =>
                 {
@@ -75,9 +74,6 @@ namespace MonoDevelop.Figma.Commands
                     };
                     bundle.SaveAll(includeImages, fileProvider);
                 });
-
-                IdeApp.Workbench.StatusBar.EndProgress();
-                IdeApp.Workbench.StatusBar.AutoPulse = false;
 
                 await currentFolder.Project.IncludeBundleAsync(bundle, includeImages)
                     .ConfigureAwait(true);

@@ -192,21 +192,18 @@ namespace MonoDevelop.Figma
 
 		private async void CreateButton_Activated(object sender, EventArgs e)
 		{
-			IdeApp.Workbench.StatusBar.AutoPulse = true;
-			IdeApp.Workbench.StatusBar.BeginProgress($"Generating views…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Generating views…");
 
 			var selectedData = Data.Where(s => s.Value);
 			foreach (var item in selectedData)
 			{
-				IdeApp.Workbench.StatusBar.ShowMessage($"Generating {item.Description}…");
-				await CreateBundleView(item.View, project, item.fileProvider, translationsCheckbox.State == NSCellStateValue.On);
+				using (var stepMonitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor($"Generating {item.Description}…")) {
+					await CreateBundleView(item.View, project, item.fileProvider, translationsCheckbox.State == NSCellStateValue.On);
+				}
 			}
 
 			await IdeApp.ProjectOperations.SaveAsync(project);
 			project.NeedsReload = true;
-
-			IdeApp.Workbench.StatusBar.EndProgress();
-			IdeApp.Workbench.StatusBar.AutoPulse = false;
 
 			this.Close();
 		}

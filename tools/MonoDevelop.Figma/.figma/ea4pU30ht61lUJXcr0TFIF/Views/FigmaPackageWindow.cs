@@ -86,8 +86,7 @@ namespace MonoDevelop.Figma
 
 		async Task GenerateBundle (string fileId, FigmaFileVersion version, string namesSpace, bool includeImages, bool translateLabels)
 		{
-			IdeApp.Workbench.StatusBar.AutoPulse = true;
-			IdeApp.Workbench.StatusBar.BeginProgress ($"Adding package ‘{fileId}’…");
+			using var monitor = IdeApp.Workbench.ProgressMonitors.GetFigmaProgressMonitor ($"Adding package ‘{fileId}’…");
 
 			//we need to ask to figma server to get nodes as demmand
 			var fileProvider = new ControlRemoteNodeProvider();
@@ -121,9 +120,6 @@ namespace MonoDevelop.Figma
 			}
 
 			await IdeApp.ProjectOperations.SaveAsync(currentProject);
-
-			IdeApp.Workbench.StatusBar.EndProgress ();
-			IdeApp.Workbench.StatusBar.AutoPulse = false;
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)
