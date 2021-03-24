@@ -65,8 +65,29 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Orientation)
             {
-                stackView.Orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-                    NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                stackView.Orientation = NSUserInterfaceLayoutOrientation.Horizontal;
+                stackView.Alignment = NSLayoutAttribute.Top;
+
+                if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
+                {
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    stackView.Alignment = NSLayoutAttribute.Top; break;
+                        case "CENTER": stackView.Alignment = NSLayoutAttribute.CenterY; break;
+                        case "MAX":    stackView.Alignment = NSLayoutAttribute.Bottom; break;
+                    }
+
+                } else {
+                    stackView.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
+
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    stackView.Alignment = NSLayoutAttribute.Left; break;
+                        case "CENTER": stackView.Alignment = NSLayoutAttribute.CenterX; break;
+                        case "MAX":    stackView.Alignment = NSLayoutAttribute.Right; break;
+                    }
+                }
+
                 return;
             }
 
@@ -112,9 +133,31 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Orientation)
             {
-                var orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-                    NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                NSUserInterfaceLayoutOrientation orientation = NSUserInterfaceLayoutOrientation.Horizontal;
+                NSLayoutAttribute layoutAttribute = NSLayoutAttribute.Top;
+
+                if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
+                {
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    layoutAttribute = NSLayoutAttribute.Top; break;
+                        case "CENTER": layoutAttribute = NSLayoutAttribute.CenterY; break;
+                        case "MAX":    layoutAttribute = NSLayoutAttribute.Bottom; break;
+                    }
+                } else {
+                    orientation = NSUserInterfaceLayoutOrientation.Vertical;
+
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    layoutAttribute = NSLayoutAttribute.Left; break;
+                        case "CENTER": layoutAttribute = NSLayoutAttribute.CenterX; break;
+                        case "MAX":    layoutAttribute = NSLayoutAttribute.Right; break;
+                    }
+                }
+
                 code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Orientation), orientation.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Alignment), layoutAttribute.GetFullName());
+
                 return;
             }
 
