@@ -72,9 +72,10 @@ jobs:
       inputs:
         gitHubConnection: 'github.com_hbons'
         repositoryName: '$(Build.Repository.Name)'
-        action: 'create'
+        action: 'edit'
         target: '$(Build.SourceVersion)'
-        tagSource: 'userSpecifiedTag'
         tag: 'ci'
+        title: 'Latest builds from Azure Pipelines'
+        assetUploadMode: 'replace'
         isPreRelease: true
         addChangeLog: false
