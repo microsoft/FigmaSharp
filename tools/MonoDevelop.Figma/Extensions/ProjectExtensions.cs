@@ -108,7 +108,10 @@ namespace MonoDevelop.Figma
 
 		public static async Task AddFigmaBundleViewAsync (this Project sender, FigmaBundleViewBase figmaBundleView, bool savesInProject = true)
 		{
-            if (!sender.PathExistsInProject(figmaBundleView.PublicCsClassFilePath))
+			await sender.FormatFileAsync(figmaBundleView.PublicCsClassFilePath);
+			await sender.FormatFileAsync(figmaBundleView.PartialDesignerClassFilePath);
+
+			if (!sender.PathExistsInProject(figmaBundleView.PublicCsClassFilePath))
 				sender.AddFile(figmaBundleView.PublicCsClassFilePath);
 
             if (!sender.PathExistsInProject(figmaBundleView.PartialDesignerClassFilePath))
@@ -289,5 +292,39 @@ namespace MonoDevelop.Figma
 		//		&& pr.Parent is ProjectFolder figmaProject && figmaProject.Path.FileName == FigmaDirectoryName
 		//		&& figmaProject.Parent is Project;
 		//}
+
+		public static async Task FormatFileAsync(this Project project, string file)
+		{
+			try
+			{
+				await FormatFileInternalAsync(project, file);
+			}
+			catch (Exception ex)
+			{
+				FigmaSharp.Services.LoggingService.LogError("File formatting failed", ex);
+			}
+		}
+
+		static async Task FormatFileInternalAsync(Project project, string file)
+		{
+			var template = new CustomSingleFileDescriptionTemplate();
+			Stream stream = await template.CreateFileContentAsync(project, project, "C#", file, string.Empty);
+
+			byte[] buffer = new byte[2048];
+			int nr;
+			FileStream fs = null;
+			try
+			{
+				fs = File.Create(file);
+				while ((nr = stream.Read(buffer, 0, 2048)) > 0)
+					fs.Write(buffer, 0, nr);
+			}
+			finally
+			{
+				stream.Close();
+				if (fs != null)
+					fs.Close();
+			}
+		}
 	}
 }

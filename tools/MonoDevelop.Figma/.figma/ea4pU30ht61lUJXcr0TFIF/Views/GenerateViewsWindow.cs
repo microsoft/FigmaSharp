@@ -135,6 +135,9 @@ namespace MonoDevelop.Figma
 			var partialDesignerClassFilePath = Path.Combine(outputDirectory, figmaBundleView.PartialDesignerClassName);
 			var publicCsClassFilePath = Path.Combine(outputDirectory, figmaBundleView.PublicCsClassName);
 
+			await project.FormatFileAsync(partialDesignerClassFilePath);
+			await project.FormatFileAsync(publicCsClassFilePath);
+
 			var designerProjectFile = currentProject.AddFile(partialDesignerClassFilePath);
 			var csProjectFile = currentProject.AddFile(publicCsClassFilePath);
 			designerProjectFile.DependsOn = csProjectFile.FilePath;
