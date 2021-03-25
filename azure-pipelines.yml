@@ -69,15 +69,6 @@ jobs:
 
     - task: GitHubRelease@1
       inputs:
-        gitHubConnection: 
-        repositoryName: '$(Build.Repository.Name)'
-        action: 'create'
-        target: '$(Build.SourceVersion)'
-        tagSource: 'gitTag'
-        addChangeLog: false
-
-    - task: GitHubRelease@1
-      inputs:
         gitHubConnection: 'GitHubToken'
         repositoryName: '$(Build.Repository.Name)'
         action: 'create'
