@@ -44,7 +44,14 @@ jobs:
       inputs:
         targetType: 'inline'
         script: |
-          mv ${SOURCES_DIRECTORY}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${ARTIFACT_STAGINGDIRECTORY}/FigmaSharpExtension-${SOURCE_VERSION}.mpack
+          mv ${SOURCES_DIRECTORY}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${SOURCES_DIRECTORY}/FigmaSharpExtension-${SOURCE_VERSION}.mpack
+
+    - task: CopyFiles@2
+      name: 'CopyMacExtension'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: 'igmaSharpExtension-*.mpack'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
       name: 'PublishMacApp'
