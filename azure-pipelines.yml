@@ -12,6 +12,8 @@ jobs:
       value: $(Build.SourcesDirectory)
     - name: SOURCE_VERSION
       value: $(Build.SourceVersion)
+    - name: ARTIFACT_STAGING_DIRECTORY
+      value: $(Build.ArtifactStagingDirectory)
 
   steps:
     - task: Bash@3
@@ -42,7 +44,7 @@ jobs:
       inputs:
         targetType: 'inline'
         script: |
-          mv ${SOURCES_DIRECTORY}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${SOURCES_DIRECTORY}/FigmaSharpExtension-${SOURCE_VERSION}.mpack
+          mv ${SOURCES_DIRECTORY}/tools/MonoDevelop.Figma/bin/Release/*/*.mpack ${ARTIFACT_STAGINGDIRECTORY}/FigmaSharpExtension-${SOURCE_VERSION}.mpack
 
     - task: PublishBuildArtifacts@1
       name: 'PublishMacApp'
@@ -54,7 +56,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       name: 'PublishMacExtension'
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)/FigmaSharpExtension-$(Build.SourceVersion).mpack'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/FigmaSharpExtension-$(Build.SourceVersion).mpack'
         ArtifactName: 'MacBuilds'
         publishLocation: 'Container'
 
