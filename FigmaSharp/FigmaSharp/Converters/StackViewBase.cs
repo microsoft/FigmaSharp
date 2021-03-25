@@ -37,6 +37,13 @@ namespace FigmaSharp.Converters
         }
 
         public override bool IsLayer => true;
-        public override bool CanConvert(FigmaNode currentNode) => currentNode.IsAutoLayout();
+
+        public override bool CanConvert(FigmaNode currentNode)
+        {
+            // Only AutoLayout frames that have "Hug Contents" along 
+            // the main axis need to be turned into NSStackView
+            return currentNode.IsAutoLayout() &&
+                   (currentNode as FigmaFrame).primaryAxisSizingMode == "AUTO";
+        }
     }
 }
