@@ -50,7 +50,7 @@ jobs:
       name: 'CopyMacExtension'
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: 'igmaSharpExtension-*.mpack'
+        Contents: 'FigmaSharpExtension-*.mpack'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
