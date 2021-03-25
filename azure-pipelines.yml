@@ -74,6 +74,6 @@ jobs:
         repositoryName: '$(Build.Repository.Name)'
         action: 'create'
         target: '$(Build.SourceVersion)'
-        tagSource: 'gitTag'
-        tagPattern: '*'
+        tagSource: 'userSpecifiedTag'
+        tag: 'ci'
         addChangeLog: false
