@@ -68,8 +68,9 @@ jobs:
         publishLocation: 'Container'
 
     - task: GitHubRelease@1
+      name: 'PublishToGitHub'
       inputs:
-        gitHubConnection: 'GitHubToken'
+        gitHubConnection: 'github.com_hbons'
         repositoryName: '$(Build.Repository.Name)'
         action: 'create'
         target: '$(Build.SourceVersion)'
