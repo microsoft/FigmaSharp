@@ -44,7 +44,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
             {
                 if (parentViewNode?.View != null)
                 {
-                    if (parentNode.IsStackView() && parentViewNode.View.NativeObject is AppKit.NSStackView stackView)
+                    if (parentNode.IsAutoLayout() && parentViewNode.View.NativeObject is AppKit.NSStackView stackView)
                         stackView.AddArrangedSubview(currentViewNode.View.NativeObject as NSView);
                     else
                         parentViewNode.View.AddChild(currentViewNode.View);

@@ -37,6 +37,6 @@ namespace FigmaSharp.Converters
         }
 
         public override bool IsLayer => true;
-        public override bool CanConvert(FigmaNode currentNode) => currentNode.IsStackView();
+        public override bool CanConvert(FigmaNode currentNode) => currentNode.IsAutoLayout();
     }
 }
