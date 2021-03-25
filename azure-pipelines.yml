@@ -75,4 +75,5 @@ jobs:
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
+        tagPattern: '*'
         addChangeLog: false
