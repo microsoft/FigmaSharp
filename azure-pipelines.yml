@@ -60,3 +60,11 @@ jobs:
         ArtifactName: 'MacBuilds'
         publishLocation: 'Container'
 
+    - task: GitHubRelease@1
+      inputs:
+        gitHubConnection: 
+        repositoryName: '$(Build.Repository.Name)'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: 'gitTag'
+        addChangeLog: false
