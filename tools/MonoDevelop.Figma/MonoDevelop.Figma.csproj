@@ -133,6 +133,10 @@
       <ItemGroup>
         <None Include=".figma\ea4pU30ht61lUJXcr0TFIF\manifest.json" />
         <None Include=".figma\ea4pU30ht61lUJXcr0TFIF\document.figma" />
+        <None Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\Converters\Templates\Resources.template.cs">
+          <Link>Templates\Resources.template.cs</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
       </ItemGroup>
       <ItemGroup>
         <BundleResource Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\motivation.png" />

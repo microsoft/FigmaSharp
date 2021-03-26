@@ -1,6 +1,7 @@
 /*
 */
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AppKit;
@@ -9,6 +10,7 @@ using FigmaSharp.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
 using FigmaSharp.Helpers;
 using FigmaSharp.Models;
+using MonoDevelop.Core;
 using MonoDevelop.Figma.Services;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
@@ -120,10 +122,41 @@ namespace MonoDevelop.Figma
 				await currentProject.AddFigmaBundleViewAsync (figmaBundleView, savesInProject: false);
 			}
 
+			CopyCodeTemplates(currentBundle, namesSpace);
+
 			await IdeApp.ProjectOperations.SaveAsync(currentProject);
 
 			IdeApp.Workbench.StatusBar.EndProgress ();
 			IdeApp.Workbench.StatusBar.AutoPulse = false;
+		}
+
+		void CopyCodeTemplates(FigmaBundle bundle, string namesSpace)
+		{
+			FilePath assemblyLocation = typeof(FigmaPackageWindow).Assembly.Location;
+			FilePath templateFileName = assemblyLocation.ParentDirectory.Combine("Templates", "Resources.template.cs");
+
+			FilePath destinationFileName = bundle.ResourcesDirectoryPath;
+			destinationFileName = destinationFileName.Combine("Resources.cs");
+
+			if (currentProject.PathExistsInProject(destinationFileName))
+			{
+				LoggingService.LogInfo("Resources.template.cs file already exists in project");
+				return;
+			}
+
+			if (File.Exists(destinationFileName))
+			{
+				LoggingService.LogInfo("Resources.template.cs file already exists not replacing");
+				return;
+			}
+
+			string text = File.ReadAllText(templateFileName);
+			text = text.Replace("NAMESPACE", namesSpace);
+
+			File.WriteAllText(destinationFileName, text);
+
+			var projectFile = new ProjectFile(destinationFileName, BuildAction.Compile);
+			currentProject.AddFile(projectFile);
 		}
 
 		private void CancelButton_Activated (object sender, EventArgs e)
