@@ -67,6 +67,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			if (text != null) {
 				textView.Value = rendererService.GetTranslatedText (text.characters);
+				textView.Value = textView.Value.Replace("\\n", Environment.NewLine);
 
 				// TODO: text styling
 				// textView.TextStorage.Append(new Foundation.NSAttributedString(""), null);
