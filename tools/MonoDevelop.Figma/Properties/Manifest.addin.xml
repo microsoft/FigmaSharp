@@ -5,6 +5,7 @@
         <Import assembly="FigmaSharp.Cocoa.dll" />
         <Import assembly="FigmaSharp.Controls.dll" />
         <Import assembly="FigmaSharp.Controls.Cocoa.dll" />
+        <Import file="Templates/Resource.template.cs" />
     </Runtime>
     <Extension path="/MonoDevelop/Ide/StartupHandlers">
         <Class class="MonoDevelop.Figma.Commands.FigmaInitCommand"/>
