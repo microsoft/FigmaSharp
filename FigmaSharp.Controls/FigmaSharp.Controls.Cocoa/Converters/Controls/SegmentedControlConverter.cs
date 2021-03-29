@@ -66,9 +66,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (items != null)
             {
                 segmentedControl.SegmentCount = items.GetChildren(t => t.visible).Count();
-                segmentedControl.SegmentDistribution = NSSegmentDistribution.FillEqually;
+                segmentedControl.SegmentDistribution = NSSegmentDistribution.FillProportionally;
                 segmentedControl.SegmentStyle = NSSegmentStyle.Rounded;
-                segmentedControl.SelectedSegment = 0;
 
                 int i = 0;
                 foreach (FigmaNode button in items.GetChildren(t => t.visible))
@@ -81,12 +80,15 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     
                     var text = (FigmaText)state.FirstChild(s => s.name == ComponentString.TITLE);
                     segmentedControl.SetLabel(rendererService.GetTranslatedText(text), i);
+                    segmentedControl.SetSelected(selected: state.name == ComponentString.STATE_SELECTED, i);
 
                     i++;
                 }
-            }
 
-            segmentedControl.TrackingMode = NSSegmentSwitchTracking.SelectOne;
+                segmentedControl.TrackingMode = (segmentedControl.SelectedSegment == -1)
+                    ? NSSegmentSwitchTracking.Momentary
+                    : NSSegmentSwitchTracking.SelectOne;
+            }
 
             return new View(segmentedControl);
         }
@@ -111,13 +113,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (items != null)
             {
                 code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentCount), "" + items.GetChildren(t => t.visible).Count());
-                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillEqually);
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillProportionally);
                 code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.Rounded);
-                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SelectedSegment), "0");
-                code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
                 code.AppendLine();
 
                 int i = 0;
+                bool hasSelection = false;
                 foreach (FigmaNode button in items.GetChildren(t => t.visible))
                 {
                     FigmaNode state = button.FirstChild(s => s.visible &&
@@ -128,10 +129,22 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
                     var text = (FigmaText)state.FirstChild(s => s.name == ComponentString.TITLE);
                     code.WriteMethod(name, nameof(NSSegmentedControl.SetLabel), $"\"{ text.characters }\", { i }");
+
+                    if (state.name == ComponentString.STATE_SELECTED)
+                    {
+                        hasSelection = true;
+                        code.WriteMethod(name, nameof(NSSegmentedControl.SetSelected), $"{ bool.TrueString.ToLower() }, { i }");
+                    }
+
                     i++;
                 }
 
                 code.AppendLine();
+
+                if (hasSelection)
+                    code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
+                else
+                    code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.Momentary);
             }
 
             return code;
