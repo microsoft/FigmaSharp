@@ -65,6 +65,8 @@ namespace MonoDevelop.Figma
 						designerFile.FilePath.ParentDirectory,
 						figmaBundle.Namespace,
 						translateStrings);
+
+					await sender.FormatFileAsync(designerFile.FilePath);
 				}
 			}
 		}
