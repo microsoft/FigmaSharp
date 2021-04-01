@@ -216,7 +216,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 if (text == null)
                     continue;
 
-                string columnId = "Column" + columnCount;
+                string columnId = "OutlineColumn" + columnCount;
 
                 code.WriteConstructor(columnId, typeof(NSTableColumn));
 
