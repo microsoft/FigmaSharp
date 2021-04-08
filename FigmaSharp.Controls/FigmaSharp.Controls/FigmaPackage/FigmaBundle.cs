@@ -141,6 +141,7 @@ namespace FigmaSharp
 			if (Manifest != null && Document != null) {
 				Manifest.DocumentTitle = Document.name;
 				Manifest.DocumentVersion = Document.version;
+				Manifest.DocumentLastModified = Document.lastModified;
 			}
 
 			if (Version == null) {
