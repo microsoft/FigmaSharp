@@ -59,6 +59,10 @@ namespace FigmaSharp.Controls.Cocoa
 			NSImageView iconView = new NSImageView();
 			iconView.Image = NSImage.ImageNamed(iconName);
 			iconView.ImageScaling = NSImageScale.ProportionallyUpOrDown;
+
+			if (iconView.Image == null)
+				iconView.Image = NSImage.ImageNamed(NSImageName.Caution);
+
 			iconView.Image.Size = new CGSize(frame.absoluteBoundingBox.Width, frame.absoluteBoundingBox.Height);
 
 			return new View(iconView);
