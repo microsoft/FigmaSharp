@@ -40,6 +40,7 @@ namespace FigmaSharp.Services
 		public CodeNode Parent { get; private set; }
 
 		public string Name { get; set; }
+		public string OriginalName => Node.name;
 
 		public bool IsClass { get; private set; }
 	}
