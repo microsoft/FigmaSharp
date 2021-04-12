@@ -78,6 +78,9 @@ namespace FigmaSharp.Services
 			}
 		}
 
+		public static readonly string SkipCharacters = "//";
+		public static readonly string SkipKeyword = "!skip";
+
 		public FigmaNode[] GetMainGeneratedLayers ()
 		{
 			return GetMainLayers (s => s.TryGetNodeCustomName (out var customName) && !s.name.StartsWith("#") && !s.name.StartsWith("//")).ToArray();
