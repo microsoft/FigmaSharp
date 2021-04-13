@@ -95,27 +95,27 @@ namespace FigmaSharp.Controls.Cocoa
 
 					if (CanSetAccessibilityRole && currentNode.Node.IsA11Group()) {
 						var fullRoleName = $"{typeof(AppKit.NSAccessibilityRoles).FullName}.{nameof(AppKit.NSAccessibilityRoles.GroupRole)}";
-						builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
+						// builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityRole), fullRoleName);
 
 						hasAccessibility = true;
 					}
 
 					if (CanSetAccessibilityLabel && currentNode.Node.TrySearchA11Label(out var label))
 					{
-						builder.WriteTranslatedEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, rendererService);
+						//builder.WriteTranslatedEquality(currentNode.Name, GetAccessibilityTitle(nativeControlType), label, rendererService);
 						hasAccessibility = true;
 					}
 
 					if (CanSetAccessibilityHelp && currentNode.Node.TrySearchA11Help(out var help))
 					{
 						help = rendererService.GetTranslatedText (help);
-						builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.Options.TranslateLabels);
+						//builder.WritePropertyEquality(currentNode.Name, nameof(AppKit.NSView.AccessibilityHelp), help, inQuotes: !rendererService.Options.TranslateLabels);
 
 						hasAccessibility = true;
 					}
 
-					if (hasAccessibility)
-						builder.AppendLine();
+					// if (hasAccessibility)
+					//	builder.AppendLine();
 				}
 
 				return builder.ToString();
