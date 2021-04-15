@@ -62,6 +62,17 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			combobox.ControlSize = ViewHelper.GetNSControlSize(controlVariant);
 			combobox.Font = ViewHelper.GetNSFont(controlVariant);
 
+
+			FigmaNode optionsGroup = frame.Options();
+
+			FigmaText placeholderText = optionsGroup?.GetChildren()
+				.OfType<FigmaText>()
+				.FirstOrDefault(s => s.name == ComponentString.PLACEHOLDER && s.visible);
+
+			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase))
+				combobox.PlaceholderString = rendererService.GetTranslatedText(placeholderText);
+
+
 			FigmaText text = frame.children
 			   .OfType<FigmaText> ()
 			   .FirstOrDefault (s => s.name == ComponentString.TITLE);
@@ -87,6 +98,19 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 			code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+
+
+			FigmaNode optionsGroup = frame.Options();
+
+			FigmaText placeholderText = optionsGroup?.GetChildren().
+				OfType<FigmaText>().
+				FirstOrDefault(s => s.name == ComponentString.PLACEHOLDER && s.visible);
+
+			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase))
+			{
+				code.WriteTranslatedEquality(name, nameof(NSTextField.PlaceholderString), placeholderText, rendererService);
+			}
+
 
 			FigmaText text = frame.children
 				.OfType<FigmaText> ()
