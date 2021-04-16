@@ -79,6 +79,11 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			return node.Node.IsSkipped();
 		}
 
+		internal override bool SkipChildNodes(CodeNode node)
+		{
+			return node.Node.IsSkipped();
+		}
+
 		internal override bool IsMainViewContainer (CodeNode node)
 		{
 			return node.Node.IsWindowContent ();

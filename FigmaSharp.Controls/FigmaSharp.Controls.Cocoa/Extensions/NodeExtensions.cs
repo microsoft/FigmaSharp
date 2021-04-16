@@ -298,14 +298,9 @@ namespace FigmaSharp.Controls.Cocoa
             if (figmaNode.name.StartsWith('!'))
             {
                 string typeName = figmaNode.GetNodeTypeName();
-                bool skipped = StringComparer.OrdinalIgnoreCase.Equals("skip", typeName);
-                if (skipped)
-                {
-                    return skipped;
-                }
+                return StringComparer.OrdinalIgnoreCase.Equals("skip", typeName);
             }
-
-            return figmaNode.Parent?.IsSkipped() == true;
+            return false;
         }
 
         //public static NativeControlComponentType ToControlType (this FigmaInstance figmaInstance)
