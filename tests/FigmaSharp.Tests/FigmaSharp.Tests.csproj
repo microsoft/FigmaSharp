@@ -41,6 +41,7 @@
     <Compile Include="Resources.cs" />
     <Compile Include="ToCode\ElipseTests.cs" />
     <Compile Include="ToCode\CocoaStringObjectTests.cs" />
+    <Compile Include="ToCode\CodePropertyConfigureTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">

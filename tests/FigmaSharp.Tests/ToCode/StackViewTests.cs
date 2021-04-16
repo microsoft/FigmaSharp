@@ -37,10 +37,17 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.Tests.ToCode
 {
-    public class ConvertersTestBase
+	public class ConvertersTestBase
     {
+        protected FigmaNode StackViewNode => provider.FindByName("StackView");
+        protected FigmaNode StackViewHorizontalNode => provider.FindByName("Horizontal");
+        protected FigmaNode StackViewVerticalNode => provider.FindByName("Vertical");
+
         protected Converters.NodeConverter[] converters;
         protected ControlRemoteNodeProvider provider;
+
+        protected CodeRenderService service;
+        protected CodePropertyConfigure propertyConfigure;
 
         [SetUp]
         public void Init()
@@ -49,7 +56,10 @@ namespace FigmaSharp.Tests.ToCode
             converters = FigmaControlsContext.Current.GetConverters(true);
 
             provider = new ControlRemoteNodeProvider();
-            provider.Load("sjjkWQHVrvxVDuQnm7AFMS");
+            provider.Load("6crgoezVRZOEgn5EXOB0Pj");
+
+            propertyConfigure = new CodePropertyConfigure();
+            service = new CodeRenderService(provider, converters, propertyConfigure);
         }
     }
 
