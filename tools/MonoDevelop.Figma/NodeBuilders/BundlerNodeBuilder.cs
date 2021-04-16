@@ -43,14 +43,33 @@ namespace MonoDevelop.Figma
 
 		static IconId packageUpdateIcon = new IconId("md-package-update");
 		static Xwt.Drawing.Image figmaOverlay = Xwt.Drawing.Image.FromResource(typeof(CustomFigmaBundlerNodeBuilder).Assembly, "figma-overlay.png");
+		static Xwt.Drawing.Image figmaOverlayError = Xwt.Drawing.Image.FromResource(typeof(CustomFigmaBundlerNodeBuilder).Assembly, "figma-error-overlay.png");
+
+		bool HasError (Projects.ProjectFile designerFile, Projects.ProjectFile projectFile)
+		{
+			if (!(designerFile.DependsOnFile == projectFile && designerFile.Metadata.HasProperty(FigmaFile.FigmaPackageId)
+					&& designerFile.Metadata.HasProperty(FigmaFile.FigmaNodeCustomName)))
+				return true;
+
+			//get current package id
+			var packageId = designerFile.Metadata.GetValue(FigmaFile.FigmaPackageId);
+
+			//the package was removed from any reason
+			var found = designerFile.Project.GetFigmaPackages ().Any (s => s.FileId == packageId);
+			return !found;
+		}
 
 		public override void BuildNode (ITreeBuilder builder, object dataObject, NodeInfo nodeInfo)
 		{
 			if (dataObject is Projects.ProjectFile file)
 			{
-				if (file.IsFigmaDesignerFile () || file.IsFigmaCSFile())
+				if (file.IsFigmaDesignerFile ())
 				{
-					nodeInfo.OverlayBottomLeft = figmaOverlay;
+					nodeInfo.OverlayBottomLeft = HasError(file, file.DependsOnFile) ? figmaOverlayError : figmaOverlay;
+				}
+				else if (file.IsFigmaCSFile (out var designerFile))
+				{
+					nodeInfo.OverlayBottomLeft = HasError(designerFile, file) ? figmaOverlayError : figmaOverlay;
 				}
 			}
 			else if (dataObject is ProjectFolder pr) {
@@ -70,6 +89,7 @@ namespace MonoDevelop.Figma
 					} else {
 						nodeInfo.Label = pr.Path.FileNameWithoutExtension;
 					}
+				
 					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.Package);
 					Task.Run(() => {
 						var query = new FigmaFileVersionQuery(bundle.FileId);

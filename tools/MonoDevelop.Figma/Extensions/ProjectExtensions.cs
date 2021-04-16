@@ -100,7 +100,7 @@ namespace MonoDevelop.Figma
 				.EndsWith(FigmaBundleViewBase.PartialDesignerExtension);
 		}
 
-		public static bool IsFigmaCSFile(this ProjectFile file)
+		public static bool IsFigmaDesignerFile(this ProjectFile file)
 		{
 			if (file.FilePath.FullPath.ToString().EndsWith(FigmaBundleViewBase.PartialDesignerExtension))
 			{
@@ -113,22 +113,21 @@ namespace MonoDevelop.Figma
 			return false;
 		}
 
-		public static bool IsFigmaDesignerFile (this ProjectFile file)
+		public static bool IsFigmaCSFile (this ProjectFile file, out ProjectFile designerFile)
 		{
 			var filePath = file.FilePath.FullPath.ToString();
 			if (!filePath.EndsWith(FigmaBundleViewBase.PartialDesignerExtension) && filePath.EndsWith(FigmaBundleViewBase.PublicCsExtension))
 			{
-				var fileName = System.IO.Path.GetFileNameWithoutExtension(filePath) + FigmaBundleViewBase.PartialDesignerExtension;
-				var fullpath = System.IO.Path.Combine(file.FilePath.ParentDirectory.FullPath, fileName);
+				var fileName = Path.GetFileNameWithoutExtension(filePath) + FigmaBundleViewBase.PartialDesignerExtension;
+				var fullpath = Path.Combine(file.FilePath.ParentDirectory.FullPath, fileName);
 				var projectFile = file.Project.GetProjectFile(fullpath);
-				if (projectFile != null
-					&& projectFile.DependsOnFile == file
-					&& projectFile.Metadata.HasProperty(FigmaFile.FigmaPackageId)
-					&& projectFile.Metadata.HasProperty(FigmaFile.FigmaNodeCustomName))
+				if (projectFile != null)
 				{
+					designerFile = projectFile;
 					return true;
 				}
 			}
+			designerFile = null;
 			return false;
 		}
 
