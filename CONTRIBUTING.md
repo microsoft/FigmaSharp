@@ -98,6 +98,11 @@ Once you've discussed your proposed feature/fix/etc. with a team member, and you
 
 When you'd like the team to take a look, (even if the work is not yet fully-complete), mark the PR as 'Ready For Review' so that the team can review your work and provide comments, suggestions, and request changes. It may take several cycles, but the end result will be solid, testable, conformant code that is safe for us to merge.
 
+### PR Guidelines
+
+- Try to don't create a PR with multiple fixes, all the PR's must be atomic to facilitate the review and include a descriptive message (or link a problem associated with it), this is done so that in the case of a regression it facilitates an understanding of why the change was made and make it easier to reverse it.
+- Every new PR's should include (if possible) a test case that covers their functionality.
+
 ### Merge
 
 Once your code has been reviewed and approved by the requisite number of team members, it will be merged into the master branch. Once merged, your PR will be automatically closed.
