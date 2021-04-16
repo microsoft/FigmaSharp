@@ -18,7 +18,7 @@ namespace MonoDevelop.Figma
 
 		public override bool CanBuildNode (Type dataType)
 		{
-			return typeof (ProjectFolder).IsAssignableFrom (dataType);
+			return typeof (ProjectFolder).IsAssignableFrom (dataType) || typeof(Projects.ProjectFile).IsAssignableFrom(dataType);
 		}
 
 		public override Type CommandHandlerType {
@@ -42,17 +42,21 @@ namespace MonoDevelop.Figma
 		}
 
 		static IconId packageUpdateIcon = new IconId("md-package-update");
+		static Xwt.Drawing.Image figmaOverlay = Xwt.Drawing.Image.FromResource(typeof(CustomFigmaBundlerNodeBuilder).Assembly, "figma-overlay.png");
 
 		public override void BuildNode (ITreeBuilder builder, object dataObject, NodeInfo nodeInfo)
 		{
-			if (dataObject is ProjectFolder pr) {
-				//if (pr.IsFigmaBundleDirectory ()) {
-				//	nodeInfo.Label = BundlesFolderLabel;
-				//	nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.AssetsFolder);
-				//	return;
-				//}
+			if (dataObject is Projects.ProjectFile file)
+			{
+				if (file.IsFigmaDesignerFile () || file.IsFigmaCSFile())
+				{
+					nodeInfo.OverlayBottomLeft = figmaOverlay;
+				}
+			}
+			else if (dataObject is ProjectFolder pr) {
 
-				if (pr.IsDocumentDirectoryBundle ()) {
+				if (pr.IsDocumentDirectoryBundle ())
+				{
 					FigmaBundle bundle = null;
 					try {
 						bundle = FigmaBundle.FromDirectoryPath(pr.Path.FullPath);
