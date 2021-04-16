@@ -76,7 +76,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			if (node.Node.IsParentMainContainerContent ())
 				return true;
 
-			return false;
+			return node.Node.IsSkipped();
 		}
 
 		internal override bool IsMainViewContainer (CodeNode node)
