@@ -27,15 +27,19 @@ using NUnit.Framework;
 
 namespace FigmaSharp.Tests
 {
-	[TestFixture]
-	public class FigmaApiTests
+	public class TestBase
 	{
-		public FigmaApiTests ()
+		[SetUp]
+		public virtual void Init()
 		{
-			var token = "XX";
-			AppContext.Current.SetAccessToken (token);
+			Controls.Cocoa.FigmaControlsApplication.Init(Resources.PublicToken);
 		}
+	}
 
+
+	[TestFixture]
+	public class FigmaApiTests : TestBase
+	{
 		//[Test]
 		//public void RemoteConverterTest ()
 		//{
@@ -60,24 +64,25 @@ namespace FigmaSharp.Tests
 		//	Assert.IsTrue (file.images.Count > 0);
 		//}
 
+		static string fileId = "6AMAixZCkmIrezBY7W7jKU";
+
 		[Test]
 		public void GetFileTest ()
 		{
-			var file = AppContext.Api.GetFile (new FigmaFileQuery ("fKugSkFGdwOF4vDsPGnJee"));
+			var file = AppContext.Api.GetFile (new FigmaFileQuery (fileId));
 			Assert.IsNotNull (file);
 		}
 
 		[Test]
 		public void GetFileVersionTest ()
 		{
-			var response = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery ("QzEgq2772k2eeMF2sVNc3kEY"));
+			var response = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery (fileId));
 			Assert.IsNotNull (response);
 		}
 
 		[Test]
 		public void GetFirstFileVersionTest ()
 		{
-			var fileId = "QzEgq2772k2eeMF2sVNc3kEY";
 			var firstVersion = AppContext.Api.GetFileVersions (new FigmaFileVersionQuery (fileId))
 				.versions.GroupByCreatedAt()
 				.FirstOrDefault ();

@@ -37,7 +37,7 @@ using FigmaSharp.Services;
 
 namespace FigmaSharp.Tests.ToCode
 {
-	public class ConvertersTestBase
+	public class ConvertersTestBase : TestBase
     {
         protected FigmaNode StackViewNode => provider.FindByName("StackView");
         protected FigmaNode StackViewHorizontalNode => provider.FindByName("Horizontal");
@@ -50,13 +50,13 @@ namespace FigmaSharp.Tests.ToCode
         protected CodePropertyConfigure propertyConfigure;
 
         [SetUp]
-        public void Init()
+        public override void Init()
         {
-            FigmaControlsApplication.Init(Resources.PublicToken);
+            base.Init();
             converters = FigmaControlsContext.Current.GetConverters(true);
 
             provider = new ControlRemoteNodeProvider();
-            provider.Load("6crgoezVRZOEgn5EXOB0Pj");
+            provider.Load("6AMAixZCkmIrezBY7W7jKU");
 
             propertyConfigure = new CodePropertyConfigure();
             service = new CodeRenderService(provider, converters, propertyConfigure);
@@ -155,15 +155,17 @@ namespace FigmaSharp.Tests.ToCode
             var codeConfigure = new CodePropertyConfigure();
 
             var parentName = "parentNode";
-            var parentNode = new CodeNode(provider.FindByName(mainNodeName), parentName); ;
-            Assert.NotNull(parentNode.Node);
-            Assert.IsTrue(parentNode.Node.IsStackView ());
+            var parentNode = provider.FindByName(mainNodeName);
+            Assert.NotNull(parentNode);
+            Assert.IsTrue(parentNode.IsStackView());
 
+            var parentCodeNode = new CodeNode(parentNode, parentName); 
             var nodeName = "currentNode";
-            var codeNode = new CodeNode(new FigmaFrame(), nodeName);
 
-            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, codeNode, parentNode, null, null);
+            var childNode = parentCodeNode.Node.GetChildren().FirstOrDefault();
+            var childCodeNode = new CodeNode(childNode, nodeName);
 
+            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, childCodeNode, parentCodeNode, null, null);
             Assert.AreEqual($"{parentName}.AddArrangedSubview ({nodeName});", result);
         }
     }
