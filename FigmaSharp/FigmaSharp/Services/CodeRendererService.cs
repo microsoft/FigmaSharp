@@ -173,15 +173,12 @@ namespace FigmaSharp.Services
 				}
 			}
 
-			if (!SkipChildNodes(node))
-			{
-				//without converter we scan the children automatically
-				var navigateChild = Options.ScanChildren && (converter?.ScanChildren (node.Node) ?? true);
-				if (navigateChild && HasChildrenToRender (node)) {
-					foreach (var item in GetChildrenToRender (node)) {
-						var figmaNode = new CodeNode(item, parent: node);
-						GetCode (builder, figmaNode, calculatedParentNode);
-					}
+			//without converter we scan the children automatically
+			var navigateChild = Options.ScanChildren && (converter?.ScanChildren (node.Node) ?? true);
+			if (navigateChild && HasChildrenToRender (node)) {
+				foreach (var item in GetChildrenToRender (node)) {
+					var figmaNode = new CodeNode(item, parent: node);
+					GetCode (builder, figmaNode, calculatedParentNode);
 				}
 			}
 
@@ -315,11 +312,6 @@ namespace FigmaSharp.Services
 		}
 
 		internal virtual bool IsNodeSkipped (CodeNode node)
-		{
-			return false;
-		}
-
-		internal virtual bool SkipChildNodes (CodeNode node)
 		{
 			return false;
 		}
