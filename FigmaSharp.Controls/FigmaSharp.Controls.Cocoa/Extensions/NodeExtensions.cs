@@ -295,6 +295,11 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static bool IsSkipped(this FigmaNode figmaNode)
         {
+            if (figmaNode.name.StartsWith("//"))
+            {
+                return true;
+            }
+
             if (figmaNode.name.StartsWith('!'))
             {
                 string typeName = figmaNode.GetNodeTypeName();
