@@ -26,6 +26,7 @@ using NUnit.Framework;
 
 using FigmaSharp.Controls;
 using FigmaSharp.Models;
+using FigmaSharp.Controls.Cocoa;
 
 namespace FigmaSharp.Tests
 {
@@ -110,6 +111,34 @@ namespace FigmaSharp.Tests
             Assert.IsTrue(node.TryGetNodeCustomName (out value));
             Assert.AreEqual(nodeName, value);
             Assert.AreEqual(nodeType, node.GetNodeTypeName ());
+        }
+
+        [TestCase("!skip \"AboutHero\"", true)]
+        [TestCase("!skipfoo \"AboutHero\"", false)]
+        [TestCase("!image \"AboutHero\"", false)]
+        [TestCase("// \"AboutHero\"", true)]
+        public void NodeIsSkipped(string nodeName, bool expectedResult)
+        {
+            var node = new FigmaFrame();
+            node.name = nodeName;
+
+            bool result = node.IsSkipped();
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestCase("!skip \"AboutHero\"", false)]
+        [TestCase("!skipfoo \"AboutHero\"", false)]
+        [TestCase("!image \"AboutHero\"", false)]
+        [TestCase("// \"AboutHero\"", true)]
+        public void NodeIsRenderSkipped(string nodeName, bool expectedResult)
+        {
+            var node = new FigmaFrame();
+            node.name = nodeName;
+
+            bool result = node.IsRenderSkipped();
+
+            Assert.AreEqual(expectedResult, result);
         }
     }
 }
