@@ -161,64 +161,69 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 					var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)(parentNode == null ? currentNode.Node.Parent : currentNode.Node.Parent))
 						.absoluteBoundingBox;
 
-					if (constraints.horizontal.Contains("RIGHT") || constraints.horizontal == "SCALE")
+					if (!parentNode.Node.IsStackView())
 					{
-						var endPosition1 = absoluteBoundingBox.X + absoluteBoundingBox.Width;
-						var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
-						var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
+						if (constraints.horizontal.Contains("RIGHT") || constraints.horizontal == "SCALE")
+						{
+							var endPosition1 = absoluteBoundingBox.X + absoluteBoundingBox.Width;
+							var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
+							var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
 
-						var rightConstraintStringValue = CodeGenerationHelpers.GetRightConstraintEqualToAnchor (
-							currentNode.Name, -value, parentNodeName);
-						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+							var rightConstraintStringValue = CodeGenerationHelpers.GetRightConstraintEqualToAnchor(
+								currentNode.Name, -value, parentNodeName);
+							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						}
+
+						if (constraints.horizontal.Contains("LEFT"))
+						{
+							var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
+							var rightConstraintStringValue = CodeGenerationHelpers.GetLeftConstraintEqualToAnchor(
+							currentNode.Name, value2, parentNodeName);
+							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						}
+
+						if (constraints.vertical.Contains("BOTTOM") || constraints.horizontal == "SCALE")
+						{
+							var endPosition1 = absoluteBoundingBox.Y + absoluteBoundingBox.Height;
+							var endPosition2 = absoluteBoundBoxParent.Y + absoluteBoundBoxParent.Height;
+							var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
+
+							var rightConstraintStringValue = CodeGenerationHelpers.GetBottomConstraintEqualToAnchor(
+						currentNode.Name, -value2, parentNodeName);
+							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						}
+
+						if (constraints.vertical.Contains("TOP"))
+						{
+							var parentFrameObject = currentNode.Node as FigmaFrame;
+
+							var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
+
+							var rightConstraintStringValue = CodeGenerationHelpers.GetTopConstraintEqualToAnchor(
+							currentNode.Name, value, parentNodeName);
+							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						}
+
+						if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
+						{
+							var delta = absoluteBoundingBox.X - absoluteBoundBoxParent.X - absoluteBoundBoxParent.Center.X;
+
+							var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
+						currentNode.Name, nameof(NSView.LeftAnchor), delta, parentNodeName, nameof(NSView.CenterXAnchor));
+							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						}
+
+						if (constraints.vertical == "CENTER" || constraints.vertical == "SCALE")
+						{
+							var delta = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y - absoluteBoundBoxParent.Center.Y;
+
+							var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
+					currentNode.Name, nameof(NSView.TopAnchor), delta, parentNodeName, nameof(NSView.CenterYAnchor));
+							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
+						}
 					}
 
-					if (constraints.horizontal.Contains("LEFT"))
-					{
-						var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-						var rightConstraintStringValue = CodeGenerationHelpers.GetLeftConstraintEqualToAnchor(
-						currentNode.Name, value2, parentNodeName);
-						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
-					}
-
-					if (constraints.vertical.Contains("BOTTOM") || constraints.horizontal == "SCALE")
-					{
-						var endPosition1 = absoluteBoundingBox.Y + absoluteBoundingBox.Height;
-						var endPosition2 = absoluteBoundBoxParent.Y + absoluteBoundBoxParent.Height;
-						var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
-
-						var rightConstraintStringValue = CodeGenerationHelpers.GetBottomConstraintEqualToAnchor(
-					currentNode.Name, -value2, parentNodeName);
-						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
-					}
-
-					if (constraints.vertical.Contains("TOP"))
-					{
-						var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
-
-						var rightConstraintStringValue = CodeGenerationHelpers.GetTopConstraintEqualToAnchor(
-						currentNode.Name, value, parentNodeName);
-						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
-					}
-
-                    if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
-                    {
-                        var delta = absoluteBoundingBox.X - absoluteBoundBoxParent.X - absoluteBoundBoxParent.Center.X;
-
-						var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
-					currentNode.Name, nameof (NSView.LeftAnchor), delta, parentNodeName, nameof(NSView.CenterXAnchor));
-						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
-                    }
-
-                    if (constraints.vertical == "CENTER" || constraints.vertical == "SCALE")
-                    {
-                        var delta = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y - absoluteBoundBoxParent.Center.Y;
-
-						var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
-				currentNode.Name, nameof(NSView.TopAnchor), delta, parentNodeName, nameof(NSView.CenterYAnchor));
-						builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
-                    }
-
-                    return builder.ToString();
+					return builder.ToString();
 				}
 				return string.Empty;
 			}
