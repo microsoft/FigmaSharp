@@ -165,7 +165,10 @@ namespace FigmaSharp.Tests.ToCode
             var childNode = parentCodeNode.Node.GetChildren().FirstOrDefault();
             var childCodeNode = new CodeNode(childNode, nodeName);
 
-            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, childCodeNode, parentCodeNode, null, null);
+            var result = codeConfigure.ConvertToCode(PropertyNames.AddChild, childCodeNode, null, null, null);
+            Assert.IsTrue(string.IsNullOrEmpty(result));
+
+            result = codeConfigure.ConvertToCode(PropertyNames.AddChild, childCodeNode, parentCodeNode, null, null);
             Assert.AreEqual($"{parentName}.AddArrangedSubview ({nodeName});", result);
         }
     }
