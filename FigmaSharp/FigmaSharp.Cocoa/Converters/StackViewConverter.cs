@@ -46,6 +46,9 @@ namespace FigmaSharp.Cocoa.Converters
             var frame = (FigmaFrame)node;
             var stackView = (NSStackView)view.NativeObject;
 
+            if (!node.visible)
+                stackView.Hidden = true;
+
             if (propertyName == Properties.EdgeInsets)
             {
                 stackView.EdgeInsets = new NSEdgeInsets(
@@ -99,6 +102,9 @@ namespace FigmaSharp.Cocoa.Converters
         public void ConfigureCodeProperty(string propertyName, CodeNode codeNode, StringBuilder code)
         {
             var frame = (FigmaFrame)codeNode.Node;
+
+            if (!codeNode.Node.visible)
+                code.WritePropertyEquality(codeNode.Name, nameof(NSView.Hidden), true);
 
             if (propertyName == Properties.EdgeInsets)
             {
