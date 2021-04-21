@@ -121,7 +121,7 @@ namespace MonoDevelop.Figma
 				var fileName = Path.GetFileNameWithoutExtension(filePath) + FigmaBundleViewBase.PartialDesignerExtension;
 				var fullpath = Path.Combine(file.FilePath.ParentDirectory.FullPath, fileName);
 				var projectFile = file.Project.GetProjectFile(fullpath);
-				if (projectFile != null)
+				if (projectFile != null && IsFigmaDesignerFile(projectFile))
 				{
 					designerFile = projectFile;
 					return true;
