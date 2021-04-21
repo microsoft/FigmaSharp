@@ -161,7 +161,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 					var absoluteBoundBoxParent = ((IAbsoluteBoundingBox)(parentNode == null ? currentNode.Node.Parent : currentNode.Node.Parent))
 						.absoluteBoundingBox;
 
-					if (!parentNode.Node.IsStackView())
+					if (parentNode != null && !parentNode.Node.IsStackView())
 					{
 						if (constraints.horizontal.Contains("RIGHT") || constraints.horizontal == "SCALE")
 						{
