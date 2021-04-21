@@ -56,7 +56,7 @@ namespace MonoDevelop.Figma.Commands
 			var directoryPath = item.FilePath.ParentDirectory.FullPath;
 
 			//we detect what file is
-			if (item.IsFigmaDesignerFile ())
+			if (item.HasFigmaDesignerFileExtension ())
 			{
 				//hackname
 				fileName = Path.GetFileNameWithoutExtension(fileName);

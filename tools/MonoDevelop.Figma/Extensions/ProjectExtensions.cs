@@ -85,7 +85,7 @@ namespace MonoDevelop.Figma
 
 		public static bool TryGetFigmaNode (this ProjectFile sender, NodeProvider fileProvider, out FigmaNode figmaNode)
 		{
-			if (sender.IsFigmaDesignerFile () && TryGetNodeName (sender,out var figmaName)) {
+			if (sender.HasFigmaDesignerFileExtension () && TryGetNodeName (sender,out var figmaName)) {
 				figmaNode = fileProvider.FindByCustomName (figmaName);
 				return figmaNode != null;
             }
@@ -93,11 +93,42 @@ namespace MonoDevelop.Figma
 			return false;
 		}
 
-		public static bool IsFigmaDesignerFile (this ProjectFile sender)
+		public static bool HasFigmaDesignerFileExtension (this ProjectFile sender)
 		{
 			return sender.Metadata.HasProperty(FigmaFile.FigmaPackageId) &&
 				sender.FilePath.FullPath.ToString()
 				.EndsWith(FigmaBundleViewBase.PartialDesignerExtension);
+		}
+
+		public static bool IsFigmaDesignerFile(this ProjectFile file)
+		{
+			if (file.FilePath.FullPath.ToString().EndsWith(FigmaBundleViewBase.PartialDesignerExtension))
+			{
+				if (file.Metadata.HasProperty(FigmaFile.FigmaPackageId)
+					&& file.Metadata.HasProperty(FigmaFile.FigmaNodeCustomName))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool IsFigmaCSFile (this ProjectFile file, out ProjectFile designerFile)
+		{
+			var filePath = file.FilePath.FullPath.ToString();
+			if (!filePath.EndsWith(FigmaBundleViewBase.PartialDesignerExtension) && filePath.EndsWith(FigmaBundleViewBase.PublicCsExtension))
+			{
+				var fileName = Path.GetFileNameWithoutExtension(filePath) + FigmaBundleViewBase.PartialDesignerExtension;
+				var fullpath = Path.Combine(file.FilePath.ParentDirectory.FullPath, fileName);
+				var projectFile = file.Project.GetProjectFile(fullpath);
+				if (projectFile != null && IsFigmaDesignerFile(projectFile))
+				{
+					designerFile = projectFile;
+					return true;
+				}
+			}
+			designerFile = null;
+			return false;
 		}
 
 		public static bool HasAnyFigmaPackage (this Project sender)
@@ -177,7 +208,7 @@ namespace MonoDevelop.Figma
 
 		public static IEnumerable<ProjectFile> GetAllFigmaDesignerFiles (this Project currentProject)
 		{
-			return currentProject.Files.OfType<ProjectFile>().Where(s => s.IsFigmaDesignerFile());
+			return currentProject.Files.OfType<ProjectFile>().Where(s => s.HasFigmaDesignerFileExtension());
 		}
 
 		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, INodeProvider fileProvider, string namesSpace = null)

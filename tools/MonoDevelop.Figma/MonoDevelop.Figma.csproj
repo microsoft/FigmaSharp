@@ -56,6 +56,14 @@
         <None Remove="Resources\vs-prefs-figma~dark%402x.png" />
         <None Remove="Resources\vs-prefs-figma~sel.png" />
         <None Remove="Resources\vs-prefs-figma~sel%402x.png" />
+        <None Remove="Resources\figma-overlay.png" />
+        <None Remove="Resources\figma-overlay%402x.png" />
+        <None Remove="Resources\figma-overlay~sel.png" />
+        <None Remove="Resources\figma-overlay~sel%402x.png" />
+        <None Remove="Resources\figma-overlay-error.png" />
+        <None Remove="Resources\figma-overlay-error%402x.png" />
+        <None Remove="Resources\figma-overlay-error~sel.png" />
+        <None Remove="Resources\figma-overlay-error~sel%402x.png" />
       </ItemGroup>
       <ItemGroup>
         <EmbeddedResource Include="Resources\vs-pad-figma.png">
@@ -129,6 +137,30 @@
         </EmbeddedResource>
         <EmbeddedResource Include="Resources\folder-figmasharp-16%402x.png">
           <LogicalName>folder-figmasharp-16%402x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-overlay.png">
+          <LogicalName>figma-overlay.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-overlay%402x.png">
+          <LogicalName>figma-overlay@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-overlay~sel.png">
+          <LogicalName>figma-overlay~sel.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-overlay~sel%402x.png">
+          <LogicalName>figma-overlay~sel@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-error-overlay.png">
+          <LogicalName>figma-error-overlay.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-error-overlay%402x.png">
+          <LogicalName>figma-error-overlay@2x.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-error-overlay~sel.png">
+          <LogicalName>figma-error-overlay~sel.png</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\figma-error-overlay~sel%402x.png">
+          <LogicalName>figma-error-overlay~sel@2x.png</LogicalName>
         </EmbeddedResource>
       </ItemGroup>
       <ItemGroup>
