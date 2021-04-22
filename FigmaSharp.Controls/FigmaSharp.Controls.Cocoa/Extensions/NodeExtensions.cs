@@ -293,6 +293,21 @@ namespace FigmaSharp.Controls.Cocoa
             return figmaNode.FirstChild(s => s.name == "!options");
         }
 
+        public static bool IsSkipped(this FigmaNode figmaNode)
+        {
+            if (figmaNode.name.StartsWith("//"))
+            {
+                return true;
+            }
+
+            if (figmaNode.name.StartsWith('!'))
+            {
+                string typeName = figmaNode.GetNodeTypeName();
+                return StringComparer.OrdinalIgnoreCase.Equals("skip", typeName);
+            }
+            return false;
+        }
+
         //public static NativeControlComponentType ToControlType (this FigmaInstance figmaInstance)
         //{
         //    if (figmaInstance.Component != null) {
