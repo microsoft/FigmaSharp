@@ -42,6 +42,8 @@
     <Compile Include="ToCode\ElipseTests.cs" />
     <Compile Include="ToCode\CocoaStringObjectTests.cs" />
     <Compile Include="ToCode\CodePropertyConfigureTests.cs" />
+    <Compile Include="ToCode\SkipNodeTests.cs" />
+    <Compile Include="NSApplicationInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
@@ -71,7 +73,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ToCode\" />
+    <Reference Include="Xamarin.Mac">
+      <HintPath>/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/reference/full/Xamarin.Mac.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <XamarinMacFile Include="/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/libxammac.dylib" />
+  </ItemGroup>
+   <Target Name="AfterBuild">
+    <Copy SourceFiles="@(XamarinMacFile)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

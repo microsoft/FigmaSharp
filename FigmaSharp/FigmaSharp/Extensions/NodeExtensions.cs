@@ -272,5 +272,10 @@ namespace FigmaSharp
                 }
             }
         }
+
+        public static bool IsRenderSkipped(this FigmaNode figmaNode)
+        {
+            return figmaNode.name.StartsWith("//");
+        }
     }
 }

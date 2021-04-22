@@ -124,7 +124,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 			if (currentNode.IsDialog ()) {
 				return true;
 			}
-			return false;
+			return base.SkipsNode (currentNode, parentNode, options);
 		}
 
         #region Flexible Views

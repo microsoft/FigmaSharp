@@ -60,6 +60,8 @@ namespace FigmaSharp.Services
         {
             if (options != null && options.ToIgnore != null && options.ToIgnore.Contains(currentNode))
                 return true;
+            if (currentNode.IsRenderSkipped())
+                return true;
             return false;
         }
 
@@ -77,6 +79,11 @@ namespace FigmaSharp.Services
             {
                 return false;
             }
+
+            // This will not be used by the ViewRenderService when SkipsNode returns true. Added here
+            // in case something calls NodeScansChildren directly.
+            if (currentNode.IsRenderSkipped())
+                return false;
 
             return true;
         }
