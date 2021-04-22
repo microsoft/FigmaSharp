@@ -58,6 +58,11 @@ namespace FigmaSharp.Controls.Cocoa
 
 			NSImageView iconView = new NSImageView();
 			iconView.Image = NSImage.ImageNamed(iconName);
+			iconView.ImageScaling = NSImageScale.ProportionallyUpOrDown;
+
+			if (iconView.Image == null)
+				iconView.Image = NSImage.ImageNamed(NSImageName.Caution);
+
 			iconView.Image.Size = new CGSize(frame.absoluteBoundingBox.Width, frame.absoluteBoundingBox.Height);
 
 			return new View(iconView);
@@ -77,6 +82,8 @@ namespace FigmaSharp.Controls.Cocoa
 
 			code.WritePropertyEquality(name, nameof(NSImageView.Image),
 				$"{ typeof(NSImage) }.{ nameof(NSImage.ImageNamed) }(\"{ iconName }\")");
+
+			code.WritePropertyEquality(name, nameof(NSImageView.ImageScaling), NSImageScaling.ProportionallyUpOrDown);
 
 			code.WritePropertyEquality(name, $"{ nameof(NSImageView.Image) }.{ nameof(NSImageView.Image.Size) }",
 				$"new { typeof(CGSize) }({ frame.absoluteBoundingBox.Width }, { frame.absoluteBoundingBox.Height })");
