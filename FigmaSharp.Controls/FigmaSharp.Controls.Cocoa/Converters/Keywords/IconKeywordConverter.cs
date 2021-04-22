@@ -70,7 +70,7 @@ namespace FigmaSharp.Controls.Cocoa
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
 
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-				code.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
 			var frame = (FigmaFrame)currentNode.Node;
 			frame.TryGetNodeCustomName(out string iconName);
