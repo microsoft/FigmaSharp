@@ -172,6 +172,14 @@ namespace FigmaSharp.Services
 					calculatedParentNode = parent;
 				}
 			}
+			else
+			{
+				//if a node is skipped because is the first node we want to set as parent view
+				if (node == MainNode)
+				{
+					calculatedParentNode = node;
+				}
+			}
 
 			//without converter we scan the children automatically
 			var navigateChild = Options.ScanChildren && (converter?.ScanChildren (node.Node) ?? true);
