@@ -177,7 +177,7 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static bool IsInstanceContent(this FigmaNode node, INodeProvider provider, out FigmaInstance instanceDialog)
         {
-            if (node.Parent != null && TryGetInstanceDialogParentContainer(node.Parent, provider, out instanceDialog) && node.IsNodeWindowContent())
+            if (node.Parent != null && TryGetInstanceDialogParentContainer(node.Parent, provider, out instanceDialog))
             {
                 return true;
             }
@@ -187,7 +187,7 @@ namespace FigmaSharp.Controls.Cocoa
 
         public static bool IsComponentContent(this FigmaNode node, INodeProvider provider, out FigmaComponentEntity instanceDialog)
         {
-            if (node.Parent != null && TryGetComponentDialogParentContainer(node.Parent, provider, out instanceDialog) && node.IsNodeWindowContent())
+            if (node.Parent != null && TryGetComponentDialogParentContainer(node.Parent, provider, out instanceDialog))
             {
                 return true;
             }

@@ -149,9 +149,12 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
 				if (currentNode.Node is IConstraints constrainedNode && currentNode.Node.Parent != null)
 				{
-					var parentNodeName = parentNode == null ?
-						GetDefaultParentName(currentNode.Node, currentNode.Node.Parent, rendererService) :
-						parentNode.Name;
+					string parentNodeName = parentNode?.Name;
+					if (string.IsNullOrEmpty(parentNodeName))
+					{
+						//we try to resolve the name using the default behaviour
+						parentNodeName = GetDefaultParentName(currentNode.Node, currentNode.Node.Parent, rendererService);
+					}
 
 					var builder = new System.Text.StringBuilder();
 

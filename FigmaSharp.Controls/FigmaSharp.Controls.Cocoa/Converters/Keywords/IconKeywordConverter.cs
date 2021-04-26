@@ -83,7 +83,7 @@ namespace FigmaSharp.Controls.Cocoa
 			code.WritePropertyEquality(name, nameof(NSImageView.Image),
 				$"{ typeof(NSImage) }.{ nameof(NSImage.ImageNamed) }(\"{ iconName }\")");
 
-			code.WritePropertyEquality(name, nameof(NSImageView.ImageScaling), NSImageScaling.ProportionallyUpOrDown);
+			code.WritePropertyEquality(name, nameof(NSImageView.ImageScaling), NSImageScale.ProportionallyUpOrDown);
 
 			code.WritePropertyEquality(name, $"{ nameof(NSImageView.Image) }.{ nameof(NSImageView.Image.Size) }",
 				$"new { typeof(CGSize) }({ frame.absoluteBoundingBox.Width }, { frame.absoluteBoundingBox.Height })");
