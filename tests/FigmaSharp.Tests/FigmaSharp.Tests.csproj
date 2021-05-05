@@ -44,6 +44,7 @@
     <Compile Include="ToCode\CodePropertyConfigureTests.cs" />
     <Compile Include="ToCode\SkipNodeTests.cs" />
     <Compile Include="NSApplicationInitializer.cs" />
+    <Compile Include="ToCode\PlaceholderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
