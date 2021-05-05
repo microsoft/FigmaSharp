@@ -36,7 +36,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 	{
 		public override bool ScanChildren(FigmaNode currentNode) => false;
 
-        const string PlaceholderKeyword = "!placeholder";
+        const string PlaceholderKeyword = "placeholder";
 
 		public override bool CanConvert(FigmaNode currentNode) => false;
         public override bool CanCodeConvert(FigmaNode currentNode) => currentNode.GetNodeTypeName() == PlaceholderKeyword;
