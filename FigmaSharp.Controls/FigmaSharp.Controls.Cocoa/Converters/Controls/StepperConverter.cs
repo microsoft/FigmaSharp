@@ -76,7 +76,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSStepper.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
 			return code;
 		}

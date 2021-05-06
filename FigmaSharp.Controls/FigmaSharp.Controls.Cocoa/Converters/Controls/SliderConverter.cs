@@ -82,10 +82,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSSlider.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
-			code.WritePropertyEquality(name, nameof(NSProgressIndicator.MinValue), "0");
-			code.WritePropertyEquality(name, nameof(NSProgressIndicator.MaxValue), "1");
+			code.WritePropertyEquality(name, nameof(NSSlider.MinValue), "0");
+			code.WritePropertyEquality(name, nameof(NSSlider.MaxValue), "1");
 
             if (controlType == FigmaControlType.SliderLinear)
 				code.WritePropertyEquality(name, nameof(NSProgressIndicator.DoubleValue), "0.618");

@@ -109,7 +109,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             code.WriteMethod (name, nameof (NSButton.SetButtonType), NSButtonType.Switch);
 
             code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-            code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+            code.WritePropertyEquality(name, nameof(NSButton.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaText text = frame.children
                 .OfType<FigmaText> ()

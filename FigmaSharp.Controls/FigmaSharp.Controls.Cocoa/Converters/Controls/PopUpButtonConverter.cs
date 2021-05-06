@@ -89,13 +89,13 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WritePropertyEquality(name, nameof(NSButton.BezelStyle), NSBezelStyle.Rounded);
+			code.WritePropertyEquality(name, nameof(NSPopUpButton.BezelStyle), NSBezelStyle.Rounded);
 
 			if (controlType == FigmaControlType.PopUpButtonPullDown)
 				code.WritePropertyEquality(name, nameof(NSPopUpButton.PullsDown), true);
 
-			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-			code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSPopUpButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSPopUpButton.Font), CodeHelper.GetNSFontString(controlVariant));
 
 			FigmaText text = frame.children
 			   .OfType<FigmaText>()

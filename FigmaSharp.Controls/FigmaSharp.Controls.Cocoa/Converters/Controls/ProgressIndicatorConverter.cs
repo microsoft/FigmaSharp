@@ -44,6 +44,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 		public override Type GetControlType(FigmaNode currentNode) => typeof(NSProgressIndicator);
 
+
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var frame = (FigmaFrame)currentNode;
@@ -74,6 +75,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return new View(progressIndicator);
 		}
 
+
 		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
 		{
 			var code = new StringBuilder();
@@ -86,7 +88,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSProgressIndicator.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
 
 			FigmaGroup group = frame.children
 				.OfType<FigmaGroup>()
@@ -109,6 +111,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return code;
 		}
 	}
+
 
 	public class ProgressIndicatorCircularConverter : ProgressIndicatorConverter
 	{
@@ -146,6 +149,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return currentNode.TryGetNativeControlType(out var controlType) &&
 				controlType == FigmaControlType.ProgressIndicatorBar;
 		}
+
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
