@@ -96,8 +96,8 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
 				code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
-			code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-			code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSComboBox.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
+			code.WritePropertyEquality(name, nameof(NSComboBox.Font), CodeHelper.GetNSFontString(controlVariant));
 
 
 			FigmaNode optionsGroup = frame.Options();
@@ -108,7 +108,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			if (placeholderText != null && !placeholderText.characters.Equals(ComponentString.PLACEHOLDER, StringComparison.InvariantCultureIgnoreCase))
 			{
-				code.WriteTranslatedEquality(name, nameof(NSTextField.PlaceholderString), placeholderText, rendererService);
+				code.WriteTranslatedEquality(name, nameof(NSComboBox.PlaceholderString), placeholderText, rendererService);
 			}
 
 
@@ -117,7 +117,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				.FirstOrDefault (s => s.name == ComponentString.TITLE);
 
 			if (text != null && !string.IsNullOrEmpty (text.characters)) {
-				code.WriteTranslatedEquality (name, nameof(NSButton.StringValue), text, rendererService);
+				code.WriteTranslatedEquality (name, nameof(NSComboBox.StringValue), text, rendererService);
 
 				//string textLabel = NativeControlHelper.GetTranslatableString(text.characters, rendererService.CurrentRendererOptions.TranslateLabels);
 
