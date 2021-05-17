@@ -33,6 +33,33 @@ namespace FigmaSharp
 {
     public static class ConversionExtensions
 	{
+		public static Color GetColor (this string color)
+        {
+			color = color.Trim();
+			//rgb(2, 4, 7)
+			if (color.StartsWith("rgb"))
+            {
+				color = color.Substring(3).Trim();
+				if (color[0] == '(')
+					color = color.Substring(1);
+
+				var end = color.IndexOf(')');
+				color = color.Substring(0, end);
+				var colorElements = color.Split(',');
+
+				if (colorElements.Length == 3)
+                {
+					var r = float.Parse(colorElements[0].Trim()) / 255f;
+					var g = float.Parse(colorElements[1].Trim()) / 255f;
+					var b = float.Parse(colorElements[2].Trim()) / 255f;
+					return new Color(r, g, b);
+                }
+			}
+
+			throw new NotImplementedException(color);
+
+		}
+
 		public static CGSize ToCGSize (this Size size)
 		{
 			return new CGSize (size.Width, size.Height);

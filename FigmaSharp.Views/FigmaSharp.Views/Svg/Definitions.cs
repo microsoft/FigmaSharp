@@ -24,7 +24,10 @@
 
 using System;
 using System.Xml;
+using System.Linq;
 using System.Xml.Serialization;
+using ExCSS;
+using FigmaSharp.Services;
 
 namespace FigmaSharp.Views.Graphics
 {
@@ -36,10 +39,36 @@ namespace FigmaSharp.Views.Graphics
     [Serializable()]
     public class StyleDefinition : Definitions
     {
+        static StylesheetParser parser = new StylesheetParser();
+
         [XmlAttribute(attributeName: "type")]
         public string ContentType { get; set; }
 
         public string Content { get; set; }
+
+        string ParseStyleName (string name)
+        {
+            if (name.StartsWith("."))
+                name = name.Substring(1);
+            return name;
+        }
+
+        public StyleRule GetStyleRule(string name)
+        {
+            name = ParseStyleName(name);
+
+            if (Stylesheet == null)
+                return null;
+
+            var styleRule = Stylesheet.Children.OfType<StyleRule>()
+                .Where(s => ParseStyleName(s.SelectorText) == name)
+                .FirstOrDefault();
+
+            return styleRule;
+        }
+
+        [XmlIgnore]
+        public Stylesheet Stylesheet { get; private set; }
 
         [XmlText]
         public XmlNode[] CDataContent
@@ -65,6 +94,15 @@ namespace FigmaSharp.Views.Graphics
                 }
 
                 Content = value[0].Value;
+                try
+                {
+                    Stylesheet = parser.Parse(Content);
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.LogError(ex.ToString());
+                }
+                
             }
         }
     }

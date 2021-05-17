@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{49B431C8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Tests", "..\tests\FigmaSharp.Tests\FigmaSharp.Tests.csproj", "{97A18BDA-8AA6-40E6-9928-B30B49C134E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.View.Tests", "..\tests\FigmaSharp.Tests\FigmaSharp.View.Tests\FigmaSharp.View.Tests.csproj", "{B2932A65-7114-4EF7-A567-BC702480E6DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Views.Tests", "..\tests\FigmaSharp.Tests\FigmaSharp.View.Tests\FigmaSharp.Views.Tests.csproj", "{B2932A65-7114-4EF7-A567-BC702480E6DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp.Graphics", "..\FigmaSharp.Views.Graphics\FigmaSharp.Graphics\FigmaSharp.Graphics.csproj", "{A51C488D-ED6D-496E-82CA-9CBD3FD75EB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigmaSharp", "..\FigmaSharp\FigmaSharp\FigmaSharp.csproj", "{8CEE3689-8757-47BC-A78C-4F4232DB9176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A51C488D-ED6D-496E-82CA-9CBD3FD75EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51C488D-ED6D-496E-82CA-9CBD3FD75EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51C488D-ED6D-496E-82CA-9CBD3FD75EB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CEE3689-8757-47BC-A78C-4F4232DB9176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CEE3689-8757-47BC-A78C-4F4232DB9176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CEE3689-8757-47BC-A78C-4F4232DB9176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CEE3689-8757-47BC-A78C-4F4232DB9176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{97A18BDA-8AA6-40E6-9928-B30B49C134E2} = {49B431C8-FA45-48A6-86B7-81EC0777C501}

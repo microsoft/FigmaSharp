@@ -34,44 +34,49 @@ namespace FigmaSharp.Views.Cocoa.Graphics
 {
     public static class PathExtensions
     {
-        public static CAShapeLayer ToShape(this GPath element)
+        public static CALayer ToShape(this GPath element, Svg svg)
         {
             var shape = new CAShapeLayer();
             foreach (var item in element.Paths)
                 if (item is GPath gp)
-                    shape.AddSublayer(gp.ToShape());
+                    shape.AddSublayer(gp.ToShape(svg));
                 else if (item is Path pa)
-                    shape.AddSublayer(pa.ToShape());
+                    shape.AddSublayer(pa.ToShape(svg));
                 else if (item is CirclePath cir)
-                    shape.AddSublayer(cir.ToShape());
+                    shape.AddSublayer(cir.ToShape(svg));
                 else if (item is RectanglePath rec)
-                    shape.AddSublayer(rec.ToShape());
+                    shape.AddSublayer(rec.ToShape(svg));
                 else if (item is LinePath line)
-                    shape.AddSublayer(line.ToShape());
+                    shape.AddSublayer(line.ToShape(svg));
                 else if (item is TextPath text)
-                    shape.AddSublayer(text.ToShape());
+                    shape.AddSublayer(text.ToShape(svg));
             return shape;
         }
 
-        public static CAShapeLayer ToShape(this RectanglePath element)
+        public static CALayer ToShape(this RectanglePath element, Svg svg)
         {
             var shape = new CAShapeLayer();
 
-            var bezierPath = NSBezierPath.FromRect (new CGRect(0, 0, element.Width, element.Height));
+            var bezierPath = NSBezierPath.FromRect (new CGRect(element.X, element.Y, element.Width, element.Height));
+            shape.Frame = new CGRect(0, 0, element.Width, element.Height);
+
             shape.Path = bezierPath.ToCGPath();
 
+           
             if (!string.IsNullOrEmpty(element.Stroke))
                 shape.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
 
             if (!string.IsNullOrEmpty(element.Fill))
                 shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
 
+            shape.ApplyStyle(element, svg);
+
             shape.LineWidth = element.StrokeWidth * 2;
-            shape.Bounds = new CGRect(0, 0, element.Width, element.Height);
+           
             return shape;
         }
 
-        public static CAShapeLayer ToShape(this LinePath element)
+        public static CALayer ToShape(this LinePath element, Svg svg)
         {
             var line = new CAShapeLayer();
 
@@ -95,14 +100,14 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             return line;
         }
 
-        public static CATextLayer ToShape(this TextPath element)
+        public static CATextLayer ToShape(this TextPath element, Svg svg)
         {
             var text = new CATextLayer();
             text.FontSize = element.FontSize;
             return text;
         }
 
-        public static CAShapeLayer ToShape(this Path element)
+        public static CALayer ToShape(this Path element, Svg svg)
         {
             var shape = new CAShapeLayer();
          
@@ -110,17 +115,23 @@ namespace FigmaSharp.Views.Cocoa.Graphics
                 shape.Path = PathBuilder.Build(element.d);
 
             if (!string.IsNullOrEmpty(element.Stroke))
+            {
                 shape.StrokeColor = XExtensions.ConvertToNSColor(element.Stroke).CGColor;
+            }
 
             if (!string.IsNullOrEmpty(element.Fill))
+            {
                 shape.FillColor = XExtensions.ConvertToNSColor(element.Fill).CGColor;
-            
+            }
+
+            shape.ApplyStyle(element, svg);
+
             shape.LineWidth = element.StrokeWidth * 2;
 
             return shape;
         }
 
-        public static CAShapeLayer ToShape(this CirclePath element)
+        public static CALayer ToShape(this CirclePath element, Svg svg)
         {
             var shape = new CAShapeLayer();
             var bezierPath = NSBezierPath.FromOvalInRect(new CGRect(0, 0, element.Radio * 2, element.Radio * 2));

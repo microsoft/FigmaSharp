@@ -69,6 +69,9 @@ namespace FigmaSharp.Views.Graphics
         [XmlElement("text", Type = typeof(TextPath))]
         public HtmlElement[] Vectors { get; set; }
 
+        [XmlElement("style", Type = typeof(StyleDefinition))]
+        public StyleDefinition Style { get; set; }
+
         [XmlArray("defs")]
         [XmlArrayItem("style", typeof(StyleDefinition))]
         [XmlArrayItem("marker", typeof(MarkerDefinition))]

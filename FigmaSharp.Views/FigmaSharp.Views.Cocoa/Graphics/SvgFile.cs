@@ -124,17 +124,17 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             foreach (var vector in svg.Vectors)
             {
                 if (vector is GPath gpath)
-                    Add(gpath.ToShape());
+                    Add(gpath.ToShape(svg));
                 else if (vector is Path path)
-                    Add(path.ToShape());
+                    Add(path.ToShape(svg));
                 else if (vector is CirclePath circlePath)
-                    Add(circlePath.ToShape());
+                    Add(circlePath.ToShape(svg));
                 else if (vector is RectanglePath rectanglePath)
-                    Add(rectanglePath.ToShape());
+                    Add(rectanglePath.ToShape(svg));
                 else if (vector is LinePath linePath)
-                    Add(linePath.ToShape());
+                    Add(linePath.ToShape(svg));
                 else if (vector is TextPath textPath)
-                    Add(textPath.ToShape());
+                    Add(textPath.ToShape(svg));
             }
         }
 
@@ -146,60 +146,60 @@ namespace FigmaSharp.Views.Cocoa.Graphics
             {
                 var bounds = sh.Path.BoundingBox;
                
-                if (Scaling == PathScaling.AspectFit)
-                {
-                    nfloat factorX = Frame.Width / bounds.Width;
-                    nfloat factorY = Frame.Height / bounds.Height;
-                    nfloat factor = (nfloat) Math.Min(factorX, factorY);
+                //if (Scaling == PathScaling.AspectFit)
+                //{
+                //    nfloat factorX = Frame.Width / bounds.Width;
+                //    nfloat factorY = Frame.Height / bounds.Height;
+                //    nfloat factor = (nfloat) Math.Min(factorX, factorY);
 
-                    nfloat width = bounds.Width * factor;
-                    nfloat height = bounds.Height * factor;
-                    nfloat translateX = (Frame.Width - width) / 2f;
-                    nfloat translateY = (Frame.Height - height) / 2f;
+                //    nfloat width = bounds.Width * factor;
+                //    nfloat height = bounds.Height * factor;
+                //    nfloat translateX = (Frame.Width - width) / 2f;
+                //    nfloat translateY = (Frame.Height - height) / 2f;
 
-                    var transform = CGAffineTransform.MakeTranslation(-bounds.X, -bounds.Y);
-                    transform.Translate(translateX, translateY);
-                    transform.Scale (factor, factor);
-                    sh.AffineTransform = transform;
-                }
-                else if (Scaling == PathScaling.AspectFill)
-                {
-                    nfloat factorX = Frame.Width / bounds.Width;
-                    nfloat factorY = Frame.Height / bounds.Height;
-                    nfloat factor = (nfloat) Math.Max(factorX, factorY);
+                //    var transform = CGAffineTransform.MakeTranslation(-bounds.X, -bounds.Y);
+                //    transform.Translate(translateX, translateY);
+                //    transform.Scale (factor, factor);
+                //    sh.AffineTransform = transform;
+                //}
+                //else if (Scaling == PathScaling.AspectFill)
+                //{
+                //    nfloat factorX = Frame.Width / bounds.Width;
+                //    nfloat factorY = Frame.Height / bounds.Height;
+                //    nfloat factor = (nfloat) Math.Max(factorX, factorY);
 
-                    nfloat width = bounds.Width * factor;
-                    nfloat height = bounds.Height * factor;
-                    nfloat translateX = (Frame.Width - width) / 2f;
-                    nfloat translateY = (Frame.Height - height) / 2f;
+                //    nfloat width = bounds.Width * factor;
+                //    nfloat height = bounds.Height * factor;
+                //    nfloat translateX = (Frame.Width - width) / 2f;
+                //    nfloat translateY = (Frame.Height - height) / 2f;
 
-                    var transform = CGAffineTransform.MakeTranslation (-bounds.X, -bounds.Y);
-                    transform.Translate(translateX, translateY, 0);
-                    transform.Scale(factor, factor, 0);
-                    sh.AffineTransform = transform;
-                }
-                else if (Scaling == PathScaling.Fill)
-                {
-                    var factorX = Frame.Width / bounds.Width;
-                    var factorY = Frame.Height / bounds.Height;
-                    var transform = CGAffineTransform.MakeScale (factorX, factorY);
+                //    var transform = CGAffineTransform.MakeTranslation (-bounds.X, -bounds.Y);
+                //    transform.Translate(translateX, translateY, 0);
+                //    transform.Scale(factor, factor, 0);
+                //    sh.AffineTransform = transform;
+                //}
+                //else if (Scaling == PathScaling.Fill)
+                //{
+                //    var factorX = Frame.Width / bounds.Width;
+                //    var factorY = Frame.Height / bounds.Height;
+                //    var transform = CGAffineTransform.MakeScale (factorX, factorY);
 
-                    var translateX = bounds.X * factorX;
-                    var translateY = bounds.Y * factorY;
-                    transform.Translate(translateX, translateY);
-                    sh.AffineTransform = transform;
-                }
-                else
-                {
-                    var width = bounds.Width;
-                    var height = bounds.Height;
-                    var translateX = (Frame.Width - width) / 2;
-                    var translateY = (Frame.Height - height) / 2;
+                //    var translateX = bounds.X * factorX;
+                //    var translateY = bounds.Y * factorY;
+                //    transform.Translate(translateX, translateY);
+                //    sh.AffineTransform = transform;
+                //}
+                //else
+                //{
+                    //var width = bounds.Width;
+                    //var height = bounds.Height;
+                    //var translateX = (Frame.Width - width) / 2;
+                    //var translateY = (Frame.Height - height) / 2;
 
-                    var transform = CGAffineTransform.MakeTranslation (-bounds.X, -bounds.Y);
-                    transform.Translate(translateX, translateY);
-                    sh.AffineTransform = transform;
-                }
+                    //var transform = CGAffineTransform.MakeTranslation (-bounds.X, -bounds.Y);
+                    //transform.Translate(translateX, translateY);
+                    //sh.AffineTransform = transform;
+               // }
             }
         }
     }

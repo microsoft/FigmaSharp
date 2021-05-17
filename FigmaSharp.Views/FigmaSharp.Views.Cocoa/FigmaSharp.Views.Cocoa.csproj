@@ -10,7 +10,6 @@
     <AssemblyName>FigmaSharp.Views.Cocoa</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +25,7 @@
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
     <HttpClientHandler></HttpClientHandler>
-    <LinkMode></LinkMode>
+    <LinkMode>None</LinkMode>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
@@ -42,7 +41,7 @@
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
     <HttpClientHandler></HttpClientHandler>
-    <LinkMode></LinkMode>
+    <LinkMode>None</LinkMode>
     <XamMacArch></XamMacArch>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
@@ -53,6 +52,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Serialization" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="ExCSS">
+      <HintPath>..\..\samples\packages\ExCSS.4.1.0\lib\netstandard2.0\ExCSS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,21 +87,26 @@
     <Compile Include="ViewWrappers\SvgView.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\PathExtensions.cs" />
+    <Compile Include="Views\GradientLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewWrappers\" />
     <Folder Include="Graphics\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views.csproj">
       <Project>{16F5901F-4807-47DD-83EA-EA49E7B95568}</Project>
       <Name>FigmaSharp.Views</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
+      <Project>{8CEE3689-8757-47BC-A78C-4F4232DB9176}</Project>
+      <Name>FigmaSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

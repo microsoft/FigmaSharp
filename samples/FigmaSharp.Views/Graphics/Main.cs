@@ -9,7 +9,7 @@ namespace BasicGraphics.Cocoa
     {
 		static Page1 page1;
 		static Page2 page2;
-		//static Page3 page3;
+		static Page3 page3;
 
 		static PageView selectedPage;
 
@@ -31,7 +31,7 @@ namespace BasicGraphics.Cocoa
 
 			//mainWindow.Content.BackgroundColor = Color.Transparent;
 			mainWindow.Center();
-			mainWindow.MovableByWindowBackground = mainWindow.Content.MovableByWindowBackground = true;
+			//mainWindow.MovableByWindowBackground = mainWindow.Content.MovableByWindowBackground = true;
 			//mainWindow.Borderless = true;
 			//mainWindow.IsOpaque = false;
 			//mainWindow.BackgroundColor = Color.Transparent;
@@ -56,7 +56,7 @@ namespace BasicGraphics.Cocoa
 
 			page1 = new Page1(actionContainerView);
 			page2 = new Page2(actionContainerView);
-			//page3 = new Page3(actionContainerView);
+			page3 = new Page3(actionContainerView);
 
 			var button = new Button() { Text = "Transformation" };
 			buttonContentStackView.AddChild(button);
@@ -68,7 +68,7 @@ namespace BasicGraphics.Cocoa
 
 			var button3 = new Button() { Text = "Shapes" };
 			buttonContentStackView.AddChild(button3);
-			//button3.Clicked += (s, e) => SelectPage(page3);
+			button3.Clicked += (s, e) => SelectPage(page3);
 
 			//scrollView.SetContentSize(800, 1000);
 
@@ -90,6 +90,7 @@ namespace BasicGraphics.Cocoa
 
 			actionContainerView.Size = new Size(mainWindow.Size.Width - 20, mainWindow.Size.Height - 35);
 
+			selectedPage.OnWindowResize(mainWindow, EventArgs.Empty);
 			//selectedPage.OnWindowResize(null, EventArgs.Empty);
 		}
 

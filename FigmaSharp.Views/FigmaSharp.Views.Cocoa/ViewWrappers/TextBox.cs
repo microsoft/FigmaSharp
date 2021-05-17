@@ -42,6 +42,9 @@ namespace FigmaSharp.Views.Cocoa
 			this.textField = textField;
             this.textField.TranslatesAutoresizingMaskIntoConstraints = false;
 			textField.Changed += TextField_Changed;
+			textField.Editable = true;
+			textField.Selectable = true;
+			textField.Bezeled = true;
 		}
 
 		private void TextField_Changed (object sender, EventArgs e)

@@ -23,12 +23,39 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System.Linq;
+using ExCSS;
+using FigmaSharp.Services;
+using FigmaSharp.Views.Graphics;
 
 namespace FigmaSharp.Views
 {
 	public static class Extensions
 	{
+		static StylesheetParser parser = new StylesheetParser();
+
 		public static bool In (this string sender, params string[] values) =>
 			values.Any (s => s == sender);
+
+		public static Stylesheet ToStyleSheet (this StyleDefinition sender)
+        {
+            try
+            {
+				return parser.Parse(sender.Content);
+			}
+            catch (System.Exception ex)
+            {
+				LoggingService.LogInfo(ex.Message);
+			}
+			return null;
+        }
+
+		public static Stylesheet ToStyleSheet(this Definitions sender)
+		{
+			if (sender is StyleDefinition s)
+            {
+				return ToStyleSheet(s);
+            }
+			return null;
+		}
 	}
 }

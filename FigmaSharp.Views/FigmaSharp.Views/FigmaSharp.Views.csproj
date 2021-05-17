@@ -8,4 +8,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Svg\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ExCSS" Version="4.1.0" />
+  </ItemGroup>
 </Project>

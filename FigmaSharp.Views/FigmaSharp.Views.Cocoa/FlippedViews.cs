@@ -63,11 +63,11 @@ namespace FigmaSharp.Views.Native.Cocoa
 	{
 		public event EventHandler<Key> KeyDownPressed;
 
-		bool IsMovableByWindowBackground;
-		public override bool MovableByWindowBackground {
-			get => IsMovableByWindowBackground;
-			set => IsMovableByWindowBackground = value;
-		}
+		//bool IsMovableByWindowBackground;
+		//public override bool MovableByWindowBackground {
+		//	get => IsMovableByWindowBackground;
+		//	set => IsMovableByWindowBackground = value;
+		//}
 
 		public FNWindow ()
 		{

@@ -8,40 +8,72 @@ namespace BasicGraphics.Cocoa
 {
     public class Page2 : PageView
     {
-        const string Start = "star.svg";
-        const string Arrow = "arrow.svg";
-        const string Symbol = "symbol.svg";
-        const string Machine = "machine.svg";
-
         SvgView svgShapeView;
         ComboBox combo;
-
+        Button button;
+        TextBox textBox;
         public Page2(OptionsPanelGradienContentView actionContainerView) : base(actionContainerView)
         {
-            combo = new ComboBox() { Allocation = new Rectangle(10, 10, 100, 20) };
+            textBox = new TextBox();
 
-            combo.AddItem(Start);
-            combo.AddItem(Arrow);
-            combo.AddItem(Symbol);
-            combo.AddItem(Machine);
+            combo = new ComboBox();
+            foreach (var item in System.IO.Directory.GetFiles("/Users/jmedrano/FigmaSharp/samples/FigmaSharp.Views/Graphics/Resources/", "*.svg"))
+            {
+                combo.AddItem(System.IO.Path.GetFileName(item));
+            }
+
             combo.SelectionIndexChanged += (s, e) =>
             {
                 ShowSvg(combo.SelectedItem);
             };
+
+            button = new Button() { Text = "Convert"};
+            button.Clicked += Button_Clicked;
+        }
+
+        private void Button_Clicked(object sender, System.EventArgs e)
+        {
+            svgShapeView = new SvgView();
+
+            svgShapeView.Allocation = new Rectangle(40, 40, 300, 300);
+            svgShapeView.Load(textBox.Text);
+            actionContainerView.SetView(svgShapeView);
+        }
+
+        public override void OnWindowResize(object s, System.EventArgs e)
+        {
+            base.OnWindowResize(s, e);
+            button.Allocation = new Rectangle(300, 500, 100, 20);
+            textBox.Allocation = new Rectangle(300, 0, 400, 500);
         }
 
         void ShowSvg(string name)
         {
-            svgShapeView = new SvgView (name);
-            svgShapeView.Allocation = new Rectangle(40, 40, 300, 300);
+            var path = "/Users/jmedrano/FigmaSharp/samples/FigmaSharp.Views/Graphics/Resources/" + name;
+            var fullPath = System.IO.File.ReadAllText(path);
 
+            textBox.Text = fullPath;
+
+            svgShapeView = new SvgView ();
+          
+            svgShapeView.Allocation = new Rectangle(40, 40, 300, 300);
+            svgShapeView.Load(fullPath);
             actionContainerView.SetView(svgShapeView);
         }
 
         public override void OnShown()
         {
+            actionContainerView.AddChild(textBox);
+           
             actionContainerView.AddChild(combo);
-            ShowSvg(Start);
+
+            Allocation = new Rectangle(120, 120, 30, 20);
+
+            actionContainerView.AddChild(button);
+
+            button.Allocation = new Rectangle(50, 50, 50, 20);
+
+            //ShowSvg(Start);
         }
 
         public override void OnHide()

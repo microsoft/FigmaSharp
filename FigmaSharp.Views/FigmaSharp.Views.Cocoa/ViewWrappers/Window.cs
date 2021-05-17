@@ -48,39 +48,39 @@ namespace FigmaSharp.Views.Cocoa
 		public bool Resizable {
 			get => window.StyleMask.HasFlag (NSWindowStyle.Resizable);
 			set {
-				if (value) {
-					if (!Resizable)
-						window.StyleMask &= NSWindowStyle.Resizable;
-				} else {
-					if (Resizable)
-						window.StyleMask &= ~NSWindowStyle.Resizable;
-				}
+				//if (value) {
+				//	if (!Resizable)
+				//		window.StyleMask &= NSWindowStyle.Resizable;
+				//} else {
+				//	if (Resizable)
+				//		window.StyleMask &= ~NSWindowStyle.Resizable;
+				//}
 			}
 		}
 
 		public bool IsClosable {
 			get => window.StyleMask.HasFlag (NSWindowStyle.Closable);
 			set {
-				if (value) {
-					if (!IsClosable)
-						window.StyleMask &= NSWindowStyle.Closable;
-				} else {
-					if (IsClosable)
-						window.StyleMask &= ~NSWindowStyle.Closable;
-				}
+				//if (value) {
+				//	if (!IsClosable)
+				//		window.StyleMask &= NSWindowStyle.Closable;
+				//} else {
+				//	if (IsClosable)
+				//		window.StyleMask &= ~NSWindowStyle.Closable;
+				//}
 			}
 		}
 
 		public bool IsFullSizeContentView {
 			get => window.StyleMask.HasFlag (NSWindowStyle.FullSizeContentView);
 			set {
-				if (value) {
-					if (!IsFullSizeContentView)
-						window.StyleMask &= NSWindowStyle.FullSizeContentView;
-				} else {
-					if (IsFullSizeContentView)
-						window.StyleMask &= ~NSWindowStyle.FullSizeContentView;
-				}
+				//if (value) {
+				//	if (!IsFullSizeContentView)
+				//		window.StyleMask &= NSWindowStyle.FullSizeContentView;
+				//} else {
+				//	if (IsFullSizeContentView)
+				//		window.StyleMask &= ~NSWindowStyle.FullSizeContentView;
+				//}
 			}
 		}
 
@@ -92,21 +92,21 @@ namespace FigmaSharp.Views.Cocoa
 		public bool Borderless {
 			get => window.StyleMask.HasFlag (NSWindowStyle.Borderless);
 			set {
-				if (value) {
-					if (!Borderless)
-						window.StyleMask &= NSWindowStyle.Borderless;
-				} else {
-					if (Borderless) {
-						window.StyleMask &= ~NSWindowStyle.Borderless;
-					}
-				}
+				//if (value) {
+				//	if (!Borderless)
+				//		window.StyleMask &= NSWindowStyle.Borderless;
+				//} else {
+				//	if (Borderless) {
+				//		window.StyleMask &= ~NSWindowStyle.Borderless;
+				//	}
+				//}
 			}
 		}
 
 		public bool MovableByWindowBackground {
 			get => window.MovableByWindowBackground;
 			set {
-				window.MovableByWindowBackground = value;
+				//window.MovableByWindowBackground = value;
 			}
 		}
 
@@ -135,16 +135,16 @@ namespace FigmaSharp.Views.Cocoa
 		public bool ShowTitle {
 			get => !window.TitlebarAppearsTransparent;
 			set {
-				if (value) {
-					if (!ShowTitle)
-						window.StyleMask &= NSWindowStyle.Titled;
-				} else {
-					if (ShowTitle)
-						window.StyleMask &= ~NSWindowStyle.Titled;
-				}
+				//if (value) {
+				//	if (!ShowTitle)
+				//		window.StyleMask &= NSWindowStyle.Titled;
+				//} else {
+				//	if (ShowTitle)
+				//		window.StyleMask &= ~NSWindowStyle.Titled;
+				//}
 
-				window.TitleVisibility = value ? NSWindowTitleVisibility.Visible : NSWindowTitleVisibility.Hidden;
-				window.TitlebarAppearsTransparent = !value;
+				//window.TitleVisibility = value ? NSWindowTitleVisibility.Visible : NSWindowTitleVisibility.Hidden;
+				//window.TitlebarAppearsTransparent = !value;
 			}
 		}
 
