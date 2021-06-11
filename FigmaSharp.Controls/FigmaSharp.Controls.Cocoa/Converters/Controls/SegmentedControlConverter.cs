@@ -90,13 +90,16 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     i++;
                 }
 
-                if (segmentedControl.SelectedSegment == -1)
+                bool hasSelection = (segmentedControl.SelectedSegment > -1);
+
+                // Use tab-like behaviour if there is a selected item. Otherwise use the button-like behaviour
+                if (hasSelection)
                 {
-                    segmentedControl.TrackingMode = NSSegmentSwitchTracking.Momentary;
-                    segmentedControl.SegmentDistribution = NSSegmentDistribution.FillEqually;
-                } else { 
                     segmentedControl.TrackingMode = NSSegmentSwitchTracking.SelectOne;
                     segmentedControl.SegmentDistribution = NSSegmentDistribution.Fill;
+                } else {
+                    segmentedControl.TrackingMode = NSSegmentSwitchTracking.Momentary;
+                    segmentedControl.SegmentDistribution = NSSegmentDistribution.FillEqually;
                 }
             }
 
@@ -154,12 +157,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
                 code.AppendLine();
 
+                // Use tab-like behaviour if there is a selected item. Otherwise use the button-like behaviour
                 if (hasSelection)
                 {
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.Fill);
-                }
-                else {
+                } else {
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.Momentary);
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillEqually);
                 }
