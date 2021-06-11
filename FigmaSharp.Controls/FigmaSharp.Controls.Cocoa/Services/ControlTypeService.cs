@@ -40,6 +40,7 @@ namespace FigmaSharp.Controls
 
         Stepper,
         SegmentedControl,
+        SegmentedControlRoundRect,
 
         // Labels
         Label,
@@ -112,11 +113,15 @@ namespace FigmaSharp.Controls
             ("Button/Symbol", FigmaControlType.ButtonSymbol, NativeControlVariant.Regular),
 
 
+            ("SegmentedControl",                 FigmaControlType.SegmentedControl, NativeControlVariant.Regular),
+            ("SegmentedControl Small",           FigmaControlType.SegmentedControl, NativeControlVariant.Small),
+
+            ("SegmentedControl/RoundRect",       FigmaControlType.SegmentedControlRoundRect, NativeControlVariant.Regular),
+            ("SegmentedControl/RoundRect Small", FigmaControlType.SegmentedControlRoundRect, NativeControlVariant.Small),
+
+
             ("Stepper",       FigmaControlType.Stepper, NativeControlVariant.Regular),
             ("Stepper Small", FigmaControlType.Stepper, NativeControlVariant.Small),
-
-            ("SegmentedControl",       FigmaControlType.SegmentedControl, NativeControlVariant.Regular),
-            ("SegmentedControl Small", FigmaControlType.SegmentedControl, NativeControlVariant.Small),
 
 
             // Labels
