@@ -177,7 +177,7 @@ namespace FigmaSharp.Controls.Cocoa
 			AddSubview(LiveButton);
 
 			LiveButton.TopAnchor.ConstraintEqualToAnchor(TopAnchor, 6).Active = true;
-			LiveButton.RightAnchor.ConstraintEqualToAnchor(RightAnchor, -7).Active = true;
+			LiveButton.TrailingAnchor.ConstraintEqualToAnchor(TrailingAnchor, -7).Active = true;
 		}
 
 

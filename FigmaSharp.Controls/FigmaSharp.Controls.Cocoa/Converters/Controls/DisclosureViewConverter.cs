@@ -77,7 +77,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			disclosureView.AddSubview(subView);
 
 
-			disclosureTriangle.LeftAnchor.ConstraintEqualToAnchor(disclosureView.LeftAnchor, 8)
+			disclosureTriangle.LeadingAnchor.ConstraintEqualToAnchor(disclosureView.LeadingAnchor, 8)
 							.Active = true;
 
 			disclosureTriangle.TopAnchor.ConstraintEqualToAnchor(disclosureView.TopAnchor, 8)

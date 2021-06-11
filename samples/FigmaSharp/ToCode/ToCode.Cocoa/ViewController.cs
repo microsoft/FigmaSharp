@@ -86,8 +86,8 @@ namespace ToCode.Cocoa
 
 			scrollView.TopAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.TopAnchor).Active = true;
 			scrollView.BottomAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.BottomAnchor).Active = true;
-			scrollView.LeftAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.LeftAnchor).Active = true;
-			scrollView.RightAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.RightAnchor).Active = true;
+			scrollView.LeadingAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.LeadingAnchor).Active = true;
+			scrollView.TrailingAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.TrailingAnchor).Active = true;
 
 			translateButton.State = NSCellStateValue.Off;
 
