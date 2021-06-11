@@ -66,7 +66,7 @@ namespace FigmaSharp.Tests.ToCode
                 .Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             Assert.AreEqual(constraintsCode.Length, 2);
-            Assert.AreEqual("item2.LeftAnchor.ConstraintEqualToAnchor (item1.LeftAnchor, 19f).Active = true;", constraintsCode[0]);
+            Assert.AreEqual("item2.LeadingAnchor.ConstraintEqualToAnchor (item1.LeadingAnchor, 19f).Active = true;", constraintsCode[0]);
             Assert.AreEqual("item2.TopAnchor.ConstraintEqualToAnchor (item1.TopAnchor, 19f).Active = true;", constraintsCode[1]);
         }
     }

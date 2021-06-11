@@ -70,14 +70,14 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                         var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
                         var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
 
-                        var rightConstraint = nativeView.RightAnchor.ConstraintEqualToAnchor(parentNativeView.RightAnchor, -value);
+                        var rightConstraint = nativeView.TrailingAnchor.ConstraintEqualToAnchor(parentNativeView.TrailingAnchor, -value);
                         rightConstraint.Active = true;
                     }
 
                     if (constraints.horizontal.Contains ("LEFT"))
                     {
                         var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-                        nativeView.LeftAnchor.ConstraintEqualToAnchor(parentNativeView.LeftAnchor, value2)
+                        nativeView.LeadingAnchor.ConstraintEqualToAnchor(parentNativeView.LeadingAnchor, value2)
                             .Active = true;
                     }
 
@@ -101,7 +101,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                     if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
                     {
                         var delta = absoluteBoundingBox.X - absoluteBoundBoxParent.X - absoluteBoundBoxParent.Center.X;
-                        nativeView.LeftAnchor.ConstraintEqualToAnchor(parentNativeView.CenterXAnchor, delta)
+                        nativeView.LeadingAnchor.ConstraintEqualToAnchor(parentNativeView.CenterXAnchor, delta)
                             .Active = true;
                     }
 

@@ -53,7 +53,7 @@ namespace FigmaSharp.Views.Cocoa
             {
 				if (nativeView.Superview != null)
                 {
-					var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Left && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Left);
+					var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Leading && s.SecondItem == nativeView.Superview && s.SecondAttribute == NSLayoutAttribute.Leading);
 					if (xConstraint != null)
 					{
 						return (float)xConstraint.Constant;
@@ -66,14 +66,14 @@ namespace FigmaSharp.Views.Cocoa
 				if (nativeView.Superview == null)
 					return;
 
-				var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Left && s.SecondItem == nativeView.Superview);
+				var xConstraint = nativeView.Superview.Constraints.FirstOrDefault(s => s.FirstItem == nativeView && s.FirstAttribute == NSLayoutAttribute.Leading && s.SecondItem == nativeView.Superview);
 				if (xConstraint != null)
 				{
 					xConstraint.Constant = value;
 				}
 				else
 				{
-					nativeView.LeftAnchor.ConstraintEqualToAnchor(nativeView.Superview.LeftAnchor, value).Active = true;
+					nativeView.LeadingAnchor.ConstraintEqualToAnchor(nativeView.Superview.LeadingAnchor, value).Active = true;
 				}
 			}
         }

@@ -172,7 +172,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 							var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
 							var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
 
-							var rightConstraintStringValue = CodeGenerationHelpers.GetRightConstraintEqualToAnchor(
+							var rightConstraintStringValue = CodeGenerationHelpers.GetTrailingConstraintEqualToAnchor(
 								currentNode.Name, -value, parentNodeName);
 							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 						}
@@ -180,7 +180,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 						if (constraints.horizontal.Contains("LEFT"))
 						{
 							var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-							var rightConstraintStringValue = CodeGenerationHelpers.GetLeftConstraintEqualToAnchor(
+							var rightConstraintStringValue = CodeGenerationHelpers.GetLeadingConstraintEqualToAnchor(
 							currentNode.Name, value2, parentNodeName);
 							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 						}
@@ -212,7 +212,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 							var delta = absoluteBoundingBox.X - absoluteBoundBoxParent.X - absoluteBoundBoxParent.Center.X;
 
 							var rightConstraintStringValue = CodeGenerationHelpers.GetConstraintEqualToAnchor(
-						currentNode.Name, nameof(NSView.LeftAnchor), delta, parentNodeName, nameof(NSView.CenterXAnchor));
+						currentNode.Name, nameof(NSView.LeadingAnchor), delta, parentNodeName, nameof(NSView.CenterXAnchor));
 							builder.WritePropertyEquality(rightConstraintStringValue, nameof(NSLayoutConstraint.Active), true);
 						}
 
