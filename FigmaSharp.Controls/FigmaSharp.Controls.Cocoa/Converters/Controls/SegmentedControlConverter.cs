@@ -68,7 +68,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (items != null)
             {
                 segmentedControl.SegmentCount = items.GetChildren(t => t.visible).Count();
-                segmentedControl.SegmentDistribution = NSSegmentDistribution.Fill;
 
                 if (controlType == FigmaControlType.SegmentedControlRoundRect)
                     segmentedControl.SegmentStyle = NSSegmentStyle.RoundRect;
@@ -97,6 +96,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     segmentedControl.SegmentDistribution = NSSegmentDistribution.FillEqually;
                 } else { 
                     segmentedControl.TrackingMode = NSSegmentSwitchTracking.SelectOne;
+                    segmentedControl.SegmentDistribution = NSSegmentDistribution.Fill;
                 }
             }
 
@@ -122,7 +122,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (items != null)
             {
                 code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentCount), "" + items.GetChildren(t => t.visible).Count());
-                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.Fill);
 
                 if (controlType == FigmaControlType.SegmentedControlRoundRect)
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.RoundRect);
@@ -158,7 +157,9 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 if (hasSelection)
                 {
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
-                } else {
+                    code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.Fill);
+                }
+                else {
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.Momentary);
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillEqually);
                 }
