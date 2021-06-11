@@ -45,8 +45,10 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
         public override bool CanConvert(FigmaNode currentNode)
         {
-            return currentNode.TryGetNativeControlType(out var controlType) &&
-                controlType == FigmaControlType.SegmentedControl;
+            currentNode.TryGetNativeControlType(out var controlType);
+
+            return controlType == FigmaControlType.SegmentedControl ||
+                   controlType == FigmaControlType.SegmentedControlRoundRect;
         }
 
 
@@ -66,8 +68,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
             if (items != null)
             {
                 segmentedControl.SegmentCount = items.GetChildren(t => t.visible).Count();
-                segmentedControl.SegmentDistribution = NSSegmentDistribution.FillProportionally;
-                segmentedControl.SegmentStyle = NSSegmentStyle.Rounded;
+                segmentedControl.SegmentDistribution = NSSegmentDistribution.Fill;
+
+                if (controlType == FigmaControlType.SegmentedControlRoundRect)
+                    segmentedControl.SegmentStyle = NSSegmentStyle.RoundRect;
+                else
+                    segmentedControl.SegmentStyle = NSSegmentStyle.Rounded;
 
                 int i = 0;
                 foreach (FigmaNode button in items.GetChildren(t => t.visible))
@@ -110,15 +116,19 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
             code.WritePropertyEquality(name, nameof(NSButton.ControlSize), ViewHelper.GetNSControlSize(controlVariant));
-            code.WritePropertyEquality(name, nameof(NSSegmentedControl.Font), CodeHelper.GetNSFontString(controlVariant));
 
             FigmaNode items = frame.FirstChild(s => s.name == ComponentString.ITEMS);
 
             if (items != null)
             {
                 code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentCount), "" + items.GetChildren(t => t.visible).Count());
-                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillProportionally);
-                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.Rounded);
+                code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.Fill);
+
+                if (controlType == FigmaControlType.SegmentedControlRoundRect)
+                    code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.RoundRect);
+                else
+                    code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentStyle), NSSegmentStyle.Rounded);
+
                 code.AppendLine();
 
                 int i = 0;
