@@ -85,9 +85,13 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                     i++;
                 }
 
-                segmentedControl.TrackingMode = (segmentedControl.SelectedSegment == -1)
-                    ? NSSegmentSwitchTracking.Momentary
-                    : NSSegmentSwitchTracking.SelectOne;
+                if (segmentedControl.SelectedSegment == -1)
+                {
+                    segmentedControl.TrackingMode = NSSegmentSwitchTracking.Momentary;
+                    segmentedControl.SegmentDistribution = NSSegmentDistribution.FillEqually;
+                } else { 
+                    segmentedControl.TrackingMode = NSSegmentSwitchTracking.SelectOne;
+                }
             }
 
             return new View(segmentedControl);
@@ -142,9 +146,12 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 code.AppendLine();
 
                 if (hasSelection)
+                {
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.SelectOne);
-                else
+                } else {
                     code.WritePropertyEquality(name, nameof(NSSegmentedControl.TrackingMode), NSSegmentSwitchTracking.Momentary);
+                    code.WritePropertyEquality(name, nameof(NSSegmentedControl.SegmentDistribution), NSSegmentDistribution.FillEqually);
+                }
             }
 
             return code;
