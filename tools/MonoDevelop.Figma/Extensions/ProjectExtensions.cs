@@ -60,13 +60,19 @@ namespace MonoDevelop.Figma
 
 			foreach (var designerFile in projectFiles) {
 				if (designerFile.TryGetFigmaNode(fileProvider, out var figmaNode)) {
-					var fileView = figmaBundle.GetFigmaFileView(figmaNode);
-					fileView.GeneratePartialDesignerClass(codeRendererService,
-						designerFile.FilePath.ParentDirectory,
-						figmaBundle.Namespace,
-						translateStrings);
-
-					await sender.FormatFileAsync(designerFile.FilePath);
+					try
+					{
+						var fileView = figmaBundle.GetFigmaFileView(figmaNode);
+						fileView.GeneratePartialDesignerClass(codeRendererService,
+							designerFile.FilePath.ParentDirectory,
+							figmaBundle.Namespace,
+							translateStrings);
+						await sender.FormatFileAsync(designerFile.FilePath);
+					}
+					catch (Exception ex)
+					{
+						FigmaSharp.Services.LoggingService.LogError($"Cannot update {designerFile.FilePath}' with '{figmaNode.name}' node.", ex);
+					}
 				}
 			}
 		}
