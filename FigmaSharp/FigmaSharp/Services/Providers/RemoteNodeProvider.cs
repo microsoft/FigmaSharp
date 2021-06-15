@@ -100,7 +100,7 @@ namespace FigmaSharp.Services
 
                 if (imageFormat == ImageFormat.svg)
                 {
-                    //throw new NotImplementedException("svg not implemented");
+                    throw new NotImplementedException("svg not implemented");
                     //with all the keys now we get the dupplicated images
                     foreach (var imageUrl in imageCacheResponse)
                     {
@@ -172,9 +172,9 @@ namespace FigmaSharp.Services
 
             Task.Run(() =>
             {
-                var svgImages = imageFigmaNodes.Where(s => s.View is ISvgView).ToList();
-                if (svgImages.Count > 0)
-                    ProcessRemoteImages(svgImages, ImageFormat.svg);
+                //var svgImages = imageFigmaNodes.Where(s => s.View is ISvgView).ToList();
+                //if (svgImages.Count > 0)
+                //    ProcessRemoteImages(svgImages, ImageFormat.svg);
                 var images = imageFigmaNodes.Where(s => !(s.View is ISvgView)).ToList();
                 if (images.Count > 0)
                     ProcessRemoteImages(images, ImageFormat.png);
