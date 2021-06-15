@@ -52,10 +52,10 @@ namespace FigmaSharp.Cocoa.Converters
             if (propertyName == Properties.EdgeInsets)
             {
                 stackView.EdgeInsets = new NSEdgeInsets(
-                   top: frame.verticalPadding,
-                   left: frame.horizontalPadding,
-                   bottom: frame.verticalPadding,
-                   right: frame.horizontalPadding
+                   top: frame.paddingTop,
+                   left: frame.paddingLeft,
+                   bottom: frame.paddingBottom,
+                   right: frame.paddingRight
                 );
                 return;
             }
@@ -68,24 +68,38 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Orientation)
             {
-                stackView.Orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-               NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                stackView.Orientation = NSUserInterfaceLayoutOrientation.Horizontal;
+                stackView.Alignment = NSLayoutAttribute.Top;
+
+                if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
+                {
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    stackView.Alignment = NSLayoutAttribute.Top; break;
+                        case "CENTER": stackView.Alignment = NSLayoutAttribute.CenterY; break;
+                        case "MAX":    stackView.Alignment = NSLayoutAttribute.Bottom; break;
+                    }
+
+                } else {
+                    stackView.Orientation = NSUserInterfaceLayoutOrientation.Vertical;
+
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    stackView.Alignment = NSLayoutAttribute.Left; break;
+                        case "CENTER": stackView.Alignment = NSLayoutAttribute.CenterX; break;
+                        case "MAX":    stackView.Alignment = NSLayoutAttribute.Right; break;
+                    }
+                }
+
                 return;
             }
 
             if (propertyName == Properties.Distribution)
             {
-                node.TryGetAttributeValue (DistributionPropertyName, out var value);
-
-                NSStackViewDistribution distribution = NSStackViewDistribution.Fill;
-                if (!string.IsNullOrEmpty (value))
-                    Enum.TryParse(value.ToCamelCase(), out distribution);
-                stackView.Distribution = distribution;
+                stackView.Distribution = NSStackViewDistribution.FillProportionally;
                 return;
             }
         }
-
-        const string DistributionPropertyName = "distribution";
 
         public override IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
         {
@@ -109,10 +123,10 @@ namespace FigmaSharp.Cocoa.Converters
             if (propertyName == Properties.EdgeInsets)
             {
                 var edgeInsets = typeof(NSEdgeInsets).GetConstructor(
-         frame.verticalPadding.ToString(),
-         frame.horizontalPadding.ToString(),
-         frame.verticalPadding.ToString(),
-         frame.horizontalPadding.ToString());
+                    frame.paddingTop.ToString(),
+                    frame.paddingRight.ToString(),
+                    frame.paddingBottom.ToString(),
+                    frame.paddingLeft.ToString());
                 code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.EdgeInsets), edgeInsets);
                 return;
             }
@@ -125,23 +139,37 @@ namespace FigmaSharp.Cocoa.Converters
 
             if (propertyName == Properties.Orientation)
             {
-                var orientation = frame.LayoutMode == FigmaLayoutMode.Horizontal ?
-             NSUserInterfaceLayoutOrientation.Horizontal : NSUserInterfaceLayoutOrientation.Vertical;
+                NSUserInterfaceLayoutOrientation orientation = NSUserInterfaceLayoutOrientation.Horizontal;
+                NSLayoutAttribute layoutAttribute = NSLayoutAttribute.Top;
+
+                if (frame.LayoutMode == FigmaLayoutMode.Horizontal)
+                {
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    layoutAttribute = NSLayoutAttribute.Top; break;
+                        case "CENTER": layoutAttribute = NSLayoutAttribute.CenterY; break;
+                        case "MAX":    layoutAttribute = NSLayoutAttribute.Bottom; break;
+                    }
+                } else {
+                    orientation = NSUserInterfaceLayoutOrientation.Vertical;
+
+                    switch (frame.counterAxisAlignItems)
+                    {
+                        case "MIN":    layoutAttribute = NSLayoutAttribute.Left; break;
+                        case "CENTER": layoutAttribute = NSLayoutAttribute.CenterX; break;
+                        case "MAX":    layoutAttribute = NSLayoutAttribute.Right; break;
+                    }
+                }
+
                 code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Orientation), orientation.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Alignment), layoutAttribute.GetFullName());
+
                 return;
             }
 
             if (propertyName == Properties.Distribution)
             {
-                codeNode.Node.TryGetAttributeValue(DistributionPropertyName, out var value);
-                NSStackViewDistribution distribution = NSStackViewDistribution.Fill;
-                if (!string.IsNullOrEmpty(value))
-                {
-                    var parameter = typeof(NSStackViewDistribution).WithProperty(value.ToCamelCase());
-                    Enum.TryParse(parameter, out distribution); ;
-                }
-
-                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), distribution.GetFullName());
+                code.WritePropertyEquality(codeNode.Name, nameof(NSStackView.Distribution), NSStackViewDistribution.FillProportionally.GetFullName());
                 return;
             }
         }

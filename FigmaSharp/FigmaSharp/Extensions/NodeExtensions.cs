@@ -80,7 +80,7 @@ namespace FigmaSharp
             return false;
         }
 
-        public static bool IsStackView (this FigmaNode node)
+        public static bool IsAutoLayout (this FigmaNode node)
         {
             if (node is FigmaFrame frame)
             {
