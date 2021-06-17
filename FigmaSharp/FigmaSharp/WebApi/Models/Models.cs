@@ -250,6 +250,10 @@ namespace FigmaSharp.Models
         [Category("General")]
         [DisplayName("RectangleCornerRadii")]
         public float[] rectangleCornerRadii { get; set; }
+
+        [Category("Style")]
+        [DisplayName("Styles")]
+        public Dictionary<string, string> styles { get; set; }
     }
 
     public class FigmaPoint : FigmaNode
