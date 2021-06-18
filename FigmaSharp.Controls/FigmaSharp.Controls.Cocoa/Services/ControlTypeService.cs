@@ -185,16 +185,23 @@ namespace FigmaSharp.Controls
             ("OutlineView",    FigmaControlType.OutlineView,    NativeControlVariant.Regular),
             ("DisclosureView", FigmaControlType.DisclosureView, NativeControlVariant.Regular),
 
-            ("Box",                  FigmaControlType.Box,       NativeControlVariant.Regular),
-            ("Box/Custom",           FigmaControlType.BoxCustom, NativeControlVariant.Regular),
-            ("Separator/Vertical",   FigmaControlType.Separator, NativeControlVariant.Regular),
-            ("Separator/Horizontal", FigmaControlType.Separator, NativeControlVariant.Regular),
-
+            (Components.Box, FigmaControlType.Box, NativeControlVariant.Regular),
+            (Components.BoxCustom, FigmaControlType.BoxCustom, NativeControlVariant.Regular),
+            (Components.SeparatorVertical,   FigmaControlType.Separator, NativeControlVariant.Regular),
+            (Components.SeparatorHorizontal, FigmaControlType.Separator, NativeControlVariant.Regular),
 
             // Windows
             ( "Window",       FigmaControlType.Window,      NativeControlVariant.Regular),
             ( "Window/Sheet", FigmaControlType.WindowSheet, NativeControlVariant.Regular),
             ( "Window/Panel", FigmaControlType.WindowPanel, NativeControlVariant.Regular)
         };
+
+        public class Components
+        {
+            public const string Box = "Box";
+            public const string BoxCustom = "Box/Custom";
+            public const string SeparatorVertical = "Separator/Vertical";
+            public const string SeparatorHorizontal = "Separator/Horizontal";
+        }
     }
 }
