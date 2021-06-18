@@ -34,7 +34,7 @@ using System;
 namespace FigmaSharp.Tests.ToCode
 {
     [TestFixture(TestName = "CodePropertyConfigure")]
-    public class CodePropertyConfigureTests : ConvertersTestBase
+    public class CodePropertyConfigureTests : SampleTestBase
     {
         [Test]
         public void StackView_Children()

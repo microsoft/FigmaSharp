@@ -31,40 +31,13 @@ using FigmaSharp.Cocoa.Converters;
 using FigmaSharp.Cocoa.PropertyConfigure;
 using FigmaSharp.Controls.Cocoa;
 using FigmaSharp.Controls.Cocoa.Services;
-using FigmaSharp.Models;
 using FigmaSharp.PropertyConfigure;
 using FigmaSharp.Services;
 
 namespace FigmaSharp.Tests.ToCode
 {
-	public class ConvertersTestBase : TestBase
-    {
-        protected FigmaNode StackViewNode => provider.FindByName("StackView");
-        protected FigmaNode StackViewHorizontalNode => provider.FindByName("Horizontal");
-        protected FigmaNode StackViewVerticalNode => provider.FindByName("Vertical");
-
-        protected Converters.NodeConverter[] converters;
-        protected ControlRemoteNodeProvider provider;
-
-        protected CodeRenderService service;
-        protected CodePropertyConfigure propertyConfigure;
-
-        [SetUp]
-        public override void Init()
-        {
-            base.Init();
-            converters = FigmaControlsContext.Current.GetConverters(true);
-
-            provider = new ControlRemoteNodeProvider();
-            provider.Load("6AMAixZCkmIrezBY7W7jKU");
-
-            propertyConfigure = new CodePropertyConfigure();
-            service = new CodeRenderService(provider, converters, propertyConfigure);
-        }
-    }
-
     [TestFixture (TestName = "StackView")]
-    public class StackViewTests : ConvertersTestBase
+    public class StackViewTests : SampleTestBase
     {
         const string mainNodeName = "Horizontal";
 
