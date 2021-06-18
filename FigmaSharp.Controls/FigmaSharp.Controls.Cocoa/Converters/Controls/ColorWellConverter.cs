@@ -51,7 +51,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 		protected override IView OnConvertToView(FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
-			var colorWell = new NSColorWell();
+			var colorWell = new NSColorWell() { TranslatesAutoresizingMaskIntoConstraints = false };
 			var frame = (FigmaFrame)currentNode;
 
 			FigmaVector rectangle = frame.children
