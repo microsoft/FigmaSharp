@@ -127,7 +127,7 @@ namespace FigmaSharp.Cocoa.Converters
 
         #region Code
 
-        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+        public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
         {
             var builder = new CocoaStringBuilder();
 

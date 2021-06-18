@@ -85,7 +85,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
 		{
 			return string.Empty;
 		}
@@ -179,7 +179,7 @@ namespace FigmaSharp.Controls.Cocoa
 			return view;
 		}
 
-		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		public override string ConvertToCode (CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

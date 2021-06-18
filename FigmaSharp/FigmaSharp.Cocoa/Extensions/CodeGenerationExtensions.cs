@@ -158,12 +158,12 @@ namespace FigmaSharp.Cocoa
 			builder.AppendLine (CodeGenerationHelpers.GetPropertyEquality (viewName, propertyName, value, inQuotes, instanciate));
 		}
 
-		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, FigmaText value, CodeRenderService codeRenderService,  bool instanciate = false)
+		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, FigmaText value, ICodeRenderService codeRenderService,  bool instanciate = false)
 		{
 			WriteTranslatedEquality(builder, viewName, propertyName, value.characters, codeRenderService, instanciate, value.visible);
 		}
 
-		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, string value, CodeRenderService codeRenderService, bool instanciate = false, bool textCondition = true)
+		public static void WriteTranslatedEquality(this StringBuilder builder, string viewName, string propertyName, string value, ICodeRenderService codeRenderService, bool instanciate = false, bool textCondition = true)
 		{
 			bool needQuotes;
 			string result;

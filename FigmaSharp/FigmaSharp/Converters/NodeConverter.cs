@@ -138,6 +138,6 @@ namespace FigmaSharp.Converters
 
         public abstract IView ConvertToView (FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService);
 
-        public abstract string ConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService);
+        public abstract string ConvertToCode (CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService);
     }
 }

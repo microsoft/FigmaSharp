@@ -70,7 +70,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 				   controlType == FigmaControlType.SearchField;
 		}
 
-
 		protected override IView OnConvertToView (FigmaNode currentNode, ViewNode parentNode, ViewRenderService rendererService)
 		{
 			var textField = new NSTextField();
@@ -120,8 +119,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			return new View(textField);
 		}
 
-
-		protected override StringBuilder OnConvertToCode (CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		protected override StringBuilder OnConvertToCode (CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
 		{
 			var code = new StringBuilder();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
