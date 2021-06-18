@@ -113,23 +113,20 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
         {
             var code = new StringBuilder();
-            string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
-
             var frame = (FigmaFrame)currentNode.Node;
             currentNode.Node.TryGetNativeControlType(out FigmaControlType controlType);
             currentNode.Node.TryGetNativeControlVariant(out NativeControlVariant controlVariant);
 
             if (rendererService.NeedsRenderConstructor(currentNode, parentNode))
-                code.WriteConstructor(name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
+                code.WriteConstructor(currentNode.Name, GetControlType(currentNode.Node), rendererService.NodeRendersVar(currentNode, parentNode));
 
             if (controlType == FigmaControlType.Separator)
-                code.WritePropertyEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxSeparator);
+                code.WritePropertyEquality(currentNode.Name, nameof(NSBox.BoxType), NSBoxType.NSBoxSeparator);
 
             if (controlType == FigmaControlType.BoxCustom)
             {
-                code.WritePropertyEquality(name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
-                bool borderSet = false;
-
+                code.WritePropertyEquality(currentNode.Name, nameof(NSBox.BoxType), NSBoxType.NSBoxCustom);
+              
                 RectangleVector rectangle = frame.children
                     .OfType<RectangleVector>()
                     .FirstOrDefault();
@@ -138,37 +135,43 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 {
                     if (rectangle.styles != null)
                     {
+                        bool borderSet = false;
                         foreach (var styleMap in rectangle.styles)
                         {
-                            if ((rendererService.NodeProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
+                            if ((rendererService.NodeProvider is NodeProvider nodeProvider) && nodeProvider.TryGetStyle(styleMap.Value, out FigmaStyle style))
                             {
                                 if (styleMap.Key == "fill")
-                                    code.WritePropertyEquality(name, nameof(NSBox.FillColor), ColorService.GetNSColorString(style.name));
+                                    code.WritePropertyEquality(currentNode.Name, nameof(NSBox.FillColor), ColorService.GetNSColorString(style.name));
 
                                 if (styleMap.Key == "stroke")
                                 {
-                                    code.WritePropertyEquality(name, nameof(NSBox.BorderColor), ColorService.GetNSColorString(style.name));
-                                    code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
+                                    code.WritePropertyEquality(currentNode.Name, nameof(NSBox.BorderColor), ColorService.GetNSColorString(style.name));
+                                    code.WritePropertyEquality(currentNode.Name, nameof(NSBox.BorderWidth), rectangle.strokeWeight.ToString());
                                     borderSet = true;
                                 }
                             }
                         }
-                    }
-                    code.WritePropertyEquality(name, nameof(NSBox.CornerRadius), rectangle.cornerRadius.ToString());
-                }
 
-                if (!borderSet)
-                    code.WritePropertyEquality(name, nameof(NSBox.BorderWidth), "0");
+                        if (!borderSet)
+                            code.WritePropertyEquality(currentNode.Name, nameof(NSBox.BorderWidth), "0");
+                    }
+                    code.WritePropertyEquality(currentNode.Name, nameof(NSBox.CornerRadius), rectangle.cornerRadius.ToString());
+                }
             }
 
-            FigmaText text = frame.children
+            FigmaText text = null;
+
+            if (frame.children != null)
+            {
+                text = frame.children
                .OfType<FigmaText>()
                .FirstOrDefault(s => (s.name == ComponentString.TITLE && s.visible));
+            }
 
             if (text != null)
-                code.WriteTranslatedEquality(name, nameof(NSBox.Title), text.characters, rendererService);
+                code.WriteTranslatedEquality(currentNode.Name, nameof(NSBox.Title), text.characters, rendererService);
             else
-                code.WritePropertyEquality(name, nameof(NSBox.Title), string.Empty, inQuotes: true);
+                code.WritePropertyEquality(currentNode.Name, nameof(NSBox.Title), string.Empty, inQuotes: true);
 
             return code;
         }
