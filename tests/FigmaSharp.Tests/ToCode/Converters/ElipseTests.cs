@@ -32,7 +32,7 @@ using FigmaSharp.Services;
 namespace FigmaSharp.Tests.ToCode
 {
     [TestFixture(TestName = "Elipse")]
-    public class ElipseTests : ConvertersTestBase
+    public class ElipseTests : SampleTestBase
     {
         [Test]
         public void ElipseConverterTest()
@@ -59,6 +59,5 @@ namespace FigmaSharp.Tests.ToCode
 
             Assert.IsNotEmpty(builder.ToString());
         }
-
     }
 }

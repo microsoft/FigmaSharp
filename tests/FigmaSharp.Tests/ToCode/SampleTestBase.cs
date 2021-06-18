@@ -1,7 +1,7 @@
 ﻿// Authors:
-//   jmedrano <josmed@microsoft.com>
+//   Jose Medrano <josmed@microsoft.com>
 //
-// Copyright (C) 2021 Microsoft, Corp
+// Copyright (C) 2018 Microsoft, Corp
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -22,15 +22,37 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using NUnit.Framework;
+using FigmaSharp.Cocoa.PropertyConfigure;
+using FigmaSharp.Controls.Cocoa.Services;
+using FigmaSharp.Models;
+using FigmaSharp.Services;
+
 namespace FigmaSharp.Tests.ToCode
 {
-    public class BaseConverterTest
+    public class SampleTestBase : TestBase
     {
-        internal TestCodeService CodeService = new TestCodeService();
+        protected FigmaNode StackViewNode => provider.FindByName("StackView");
+        protected FigmaNode StackViewHorizontalNode => provider.FindByName("Horizontal");
+        protected FigmaNode StackViewVerticalNode => provider.FindByName("Vertical");
 
-        public BaseConverterTest()
+        protected Converters.NodeConverter[] converters;
+        protected ControlRemoteNodeProvider provider;
+
+        protected CodeRenderService service;
+        protected CodePropertyConfigure propertyConfigure;
+
+        [SetUp]
+        public override void Init()
         {
+            base.Init();
+            converters = FigmaControlsContext.Current.GetConverters(true);
 
+            provider = new ControlRemoteNodeProvider();
+            provider.Load("6AMAixZCkmIrezBY7W7jKU");
+
+            propertyConfigure = new CodePropertyConfigure();
+            service = new CodeRenderService(provider, converters, propertyConfigure);
         }
     }
 }
