@@ -43,6 +43,7 @@
     <Compile Include="NSApplicationInitializer.cs" />
     <Compile Include="ToCode\PlaceholderTests.cs" />
     <Compile Include="ToCode\CodePropertyConfigureTests.cs" />
+    <Compile Include="ToCode\Converters\BoxTests.cs" />
     <Compile Include="ToCode\Converters\ElipseTests.cs" />
     <Compile Include="ToCode\Converters\StackViewTests.cs" />
     <Compile Include="ToCode\SampleTestBase.cs" />
