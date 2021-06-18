@@ -1,7 +1,7 @@
 ﻿// Authors:
-//   Jose Medrano <josmed@microsoft.com>
+//   jmedrano <josmed@microsoft.com>
 //
-// Copyright (C) 2018 Microsoft, Corp
+// Copyright (C) 2021 Microsoft, Corp
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -22,35 +22,15 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using FigmaSharp.Converters;
-using FigmaSharp.Models;
-using FigmaSharp.Services;
-using FigmaSharp.Views;
-using FigmaSharp.Views.Cocoa;
-
-namespace LocalFile.Cocoa
+namespace FigmaSharp.Tests.ToCode
 {
-    class CreateAccountLinkConverter : NodeConverter
-	{
-		public const string SearchFilterId = "filter";
+    public class BaseConverterTest
+    {
+        internal TestCodeService CodeService = new TestCodeService();
 
-		public override bool CanConvert(FigmaNode currentNode) => currentNode.name == "CreateAccountLink";
+        public BaseConverterTest()
+        {
 
-		public override IView ConvertToView(FigmaNode currentNode, ViewNode parent, ViewRenderService rendererService)
-		{
-			var figmaText = (FigmaText)currentNode;
-			var linkButton = new Button
-			{
-				Text = figmaText.characters,
-				Border = false
-			};
-			return linkButton;
-		}
-
-		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService) => string.Empty;
-
-		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
-	}
+        }
+    }
 }
-

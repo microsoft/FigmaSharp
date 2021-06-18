@@ -42,7 +42,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
         public override bool CanCodeConvert(FigmaNode currentNode) => currentNode.GetNodeTypeName() == PlaceholderKeyword;
 		public override Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
 		{
 			var builder = new StringBuilder();
 			var type = GetControlType(currentNode.Node);

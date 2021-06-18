@@ -32,7 +32,19 @@ using FigmaSharp.PropertyConfigure;
 
 namespace FigmaSharp.Services
 {
-	public class CodeRenderService : RenderService
+    public interface ICodeRenderService
+	{
+		CodeRenderServiceOptions Options { get; }
+		void Clear();
+		void GetCode(StringBuilder builder, CodeNode node, CodeNode parent = null, CodeRenderServiceOptions currentRendererOptions = null, ITranslationService translateService = null);
+		bool NodeRendersVar(CodeNode currentNode, CodeNode parentNode);
+		bool NeedsRenderConstructor(CodeNode node, CodeNode parent);
+		string GetTranslatedText(FigmaText text);
+		string GetTranslatedText(string text, bool textCondition = true);
+		INodeProvider NodeProvider { get; }
+	}
+
+	public class CodeRenderService : RenderService, ICodeRenderService
 	{
 		internal const string DefaultViewName = "view";
 
@@ -289,7 +301,7 @@ namespace FigmaSharp.Services
 
 		#region Rendering Iteration
 
-		internal virtual bool NeedsRenderConstructor (CodeNode node, CodeNode parent)
+		public virtual bool NeedsRenderConstructor (CodeNode node, CodeNode parent)
 		{
 			if (parent != null
 				&& IsMainNode (parent.Node)

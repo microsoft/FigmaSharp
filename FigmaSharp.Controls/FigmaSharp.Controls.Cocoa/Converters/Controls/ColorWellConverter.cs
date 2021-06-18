@@ -71,7 +71,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 		}
 
 
-		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		protected override StringBuilder OnConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
 		{
 			var code = new StringBuilder();
 			string name = FigmaSharp.Resources.Ids.Conversion.NameIdentifier;
@@ -89,7 +89,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 
 			foreach (var styleMap in rectangle?.styles)
 			{
-				if ((rendererService.NodeProvider as NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
+				if (((NodeProvider)rendererService.NodeProvider).TryGetStyle(styleMap.Value, out FigmaStyle style))
 				{
 					if (styleMap.Key == "fill")
 						code.WritePropertyEquality(name, nameof(NSColorWell.Color), ColorService.GetNSColorString(style.name));

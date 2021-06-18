@@ -44,7 +44,7 @@ namespace FigmaSharp.Controls.Cocoa.Services
 
 		}
 
-		internal override bool NeedsRenderConstructor(CodeNode node, CodeNode parent)
+		public override bool NeedsRenderConstructor(CodeNode node, CodeNode parent)
 		{
 			if (parent != null && IsMainNode(parent.Node) && (Options?.RendersConstructorFirstElement ?? false))
 				return false;

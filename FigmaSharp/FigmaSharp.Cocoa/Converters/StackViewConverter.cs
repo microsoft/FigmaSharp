@@ -146,7 +146,7 @@ namespace FigmaSharp.Cocoa.Converters
             }
         }
 
-        public override string ConvertToCode (CodeNode codeNode, CodeNode parentNode, CodeRenderService rendererService)
+        public override string ConvertToCode (CodeNode codeNode, CodeNode parentNode, ICodeRenderService rendererService)
         {
             var code = new StringBuilder();
 

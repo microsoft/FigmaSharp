@@ -54,7 +54,7 @@ namespace LocalFile.Cocoa
 			return spinner;
 		}
 
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService)
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService)
 		{
 			return string.Empty;
 		}

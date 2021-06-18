@@ -44,7 +44,7 @@ namespace LocalFile.Cocoa
 		}
 
 		public override bool ScanChildren(FigmaNode currentNode) => false;
-		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, CodeRenderService rendererService) => string.Empty;
+		public override string ConvertToCode(CodeNode currentNode, CodeNode parentNode, ICodeRenderService rendererService) => string.Empty;
 
 		public override System.Type GetControlType(FigmaNode currentNode) => typeof(AppKit.NSView);
 	}
