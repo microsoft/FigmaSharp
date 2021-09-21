@@ -61,12 +61,7 @@ namespace MonoDevelop.Figma.Commands
             }
 
             var figmaBundleWindow = new FigmaPackageWindow(currentProject);
-            figmaBundleWindow.Appearance = ViewHelpers.GetCurrentIdeAppearance();
-            var currentIdeWindow = Components.Mac.GtkMacInterop.GetNSWindow(IdeApp.Workbench.RootWindow);
-
-            currentIdeWindow.AddChildWindow(figmaBundleWindow, AppKit.NSWindowOrderingMode.Above);
-            MessageService.PlaceDialog(figmaBundleWindow, MessageService.RootWindow);
-            IdeServices.DesktopService.FocusWindow(figmaBundleWindow);
+            MessageService.RunCustomDialog(figmaBundleWindow);
         }
     }
 }
