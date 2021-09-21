@@ -28,104 +28,102 @@ using FigmaSharp;
 using FigmaSharp.Designer;
 using FigmaSharp.Models;
 
-using Xwt.GtkBackend;
-
 namespace MonoDevelop.Figma
 {
-    class FigmaDesignerOutlinePad : Gtk.VBox
-    {
-        public event EventHandler<FigmaNode> RaiseFirstResponder;
-        public event EventHandler<FigmaNode> RaiseDeleteItem;
+    //class FigmaDesignerOutlinePad : Gtk.VBox
+    //{
+    //    public event EventHandler<FigmaNode> RaiseFirstResponder;
+    //    public event EventHandler<FigmaNode> RaiseDeleteItem;
 
-        static FigmaDesignerOutlinePad instance;
+    //    static FigmaDesignerOutlinePad instance;
 
-        public static FigmaDesignerOutlinePad Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new FigmaDesignerOutlinePad();
-                }
+    //    public static FigmaDesignerOutlinePad Instance
+    //    {
+    //        get
+    //        {
+    //            if (instance == null)
+    //            {
+    //                instance = new FigmaDesignerOutlinePad();
+    //            }
 
-                return instance;
-            }
-        }
+    //            return instance;
+    //        }
+    //    }
 
-        OutlinePanel outlinePanel;
-        public FigmaDesignerOutlinePad()
-        {
-            outlinePanel = new OutlinePanel();
+    //    OutlinePanel outlinePanel;
+    //    public FigmaDesignerOutlinePad()
+    //    {
+    //        outlinePanel = new OutlinePanel();
 
-            outlinePanel.RaiseFirstResponder += (s, e) =>
-            {
-                RaiseFirstResponder?.Invoke(s, e);
-            };
-            outlinePanel.RaiseDeleteItem += (s, e) =>
-            {
-                RaiseDeleteItem?.Invoke(s, e);
-            };
+    //        outlinePanel.RaiseFirstResponder += (s, e) =>
+    //        {
+    //            RaiseFirstResponder?.Invoke(s, e);
+    //        };
+    //        outlinePanel.RaiseDeleteItem += (s, e) =>
+    //        {
+    //            RaiseDeleteItem?.Invoke(s, e);
+    //        };
 
-            var widget = GtkMacInterop.NSViewToGtkWidget(outlinePanel.EnclosingScrollView);
-            CanFocus = widget.CanFocus = true;
-            Sensitive = widget.Sensitive = true;
+    //        var widget = GtkMacInterop.NSViewToGtkWidget(outlinePanel.EnclosingScrollView);
+    //        CanFocus = widget.CanFocus = true;
+    //        Sensitive = widget.Sensitive = true;
 
-            widget.Focused += FigmaDesignerOutlinePad_Focused;
+    //        widget.Focused += FigmaDesignerOutlinePad_Focused;
 
-            PackStart(widget, true, true, 0);
-            ShowAll();
+    //        PackStart(widget, true, true, 0);
+    //        ShowAll();
 
-            Focused += FigmaDesignerOutlinePad_Focused;
-        }
+    //        Focused += FigmaDesignerOutlinePad_Focused;
+    //    }
 
-        void FigmaDesignerOutlinePad_Focused(object o, Gtk.FocusedArgs args)
-        {
-            outlinePanel.FocusSelectedView();
-        }
+    //    void FigmaDesignerOutlinePad_Focused(object o, Gtk.FocusedArgs args)
+    //    {
+    //        outlinePanel.FocusSelectedView();
+    //    }
 
-        public void Focus(FigmaNode model)
-        {
-            if (data != null && model != null)
-            {
-                var found = Search (data, model);
-                if (found != null)
-                {
-                    outlinePanel.FocusNode(found);
-                }
-            }
-        }
+    //    public void Focus(FigmaNode model)
+    //    {
+    //        if (data != null && model != null)
+    //        {
+    //            var found = Search (data, model);
+    //            if (found != null)
+    //            {
+    //                outlinePanel.FocusNode(found);
+    //            }
+    //        }
+    //    }
 
-        static FigmaNodeView Search (FigmaNodeView nodeView, FigmaNode view)
-        {
-            if (nodeView.Wrapper != null && nodeView.Wrapper == view)
-            {
-                return nodeView;
-            }
+    //    static FigmaNodeView Search (FigmaNodeView nodeView, FigmaNode view)
+    //    {
+    //        if (nodeView.Wrapper != null && nodeView.Wrapper == view)
+    //        {
+    //            return nodeView;
+    //        }
 
-            if (nodeView.ChildCount == 0)
-            {
-                return null;
-            }
+    //        if (nodeView.ChildCount == 0)
+    //        {
+    //            return null;
+    //        }
 
-            for (int i = 0; i < nodeView.ChildCount; i++)
-            {
-                var node = (FigmaNodeView)nodeView.GetChild(i);
-                var found = Search(node, view);
-                if (found != null)
-                {
-                    return found;
-                }
-            }
-            return null;
-        }
+    //        for (int i = 0; i < nodeView.ChildCount; i++)
+    //        {
+    //            var node = (FigmaNodeView)nodeView.GetChild(i);
+    //            var found = Search(node, view);
+    //            if (found != null)
+    //            {
+    //                return found;
+    //            }
+    //        }
+    //        return null;
+    //    }
 
-        FigmaNodeView data;
-        internal void GenerateTree(FigmaDocument document, IFigmaDesignerDelegate figmaDelegate)
-        {
-            data = new FigmaNodeView(document);
-            figmaDelegate.ConvertToNodes (document, data);
-            outlinePanel.GenerateTree(data);
-        }
-    }
+    //    FigmaNodeView data;
+    //    internal void GenerateTree(FigmaDocument document, IFigmaDesignerDelegate figmaDelegate)
+    //    {
+    //        data = new FigmaNodeView(document);
+    //        figmaDelegate.ConvertToNodes (document, data);
+    //        outlinePanel.GenerateTree(data);
+    //    }
+    //}
 
 }

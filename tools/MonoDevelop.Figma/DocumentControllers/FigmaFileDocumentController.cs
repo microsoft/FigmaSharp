@@ -1,303 +1,303 @@
-﻿// Authors:
-//   Jose Medrano <josmed@microsoft.com>
-//
-// Copyright (C) 2018 Microsoft, Corp
-//
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+﻿//// Authors:
+////   Jose Medrano <josmed@microsoft.com>
+////
+//// Copyright (C) 2018 Microsoft, Corp
+////
+//// Permission is hereby granted, free of charge, to any person obtaining
+//// a copy of this software and associated documentation files (the
+//// "Software"), to deal in the Software without restriction, including
+//// without limitation the rights to use, copy, modify, merge, publish,
+//// distribute, sublicense, and/or sell copies of the Software, and to permit
+//// persons to whom the Software is furnished to do so, subject to the
+//// following conditions:
+////
+//// The above copyright notice and this permission notice shall be included in
+//// all copies or substantial portions of the Software.
+////
+//// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+//// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+//// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+//// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+//// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Threading.Tasks;
 
-using AppKit;
-using Gtk;
+//using AppKit;
+//using Gtk;
 
-using FigmaSharp;
-using FigmaSharp.Controls.Cocoa;
-using FigmaSharp.Controls.Cocoa.Services;
-using FigmaSharp.Designer;
-using FigmaSharp.Models;
-using FigmaSharp.Services;
-using FigmaSharp.Views;
-using FigmaSharp.Views.Cocoa;
+//using FigmaSharp;
+//using FigmaSharp.Controls.Cocoa;
+//using FigmaSharp.Controls.Cocoa.Services;
+//using FigmaSharp.Designer;
+//using FigmaSharp.Models;
+//using FigmaSharp.Services;
+//using FigmaSharp.Views;
+//using FigmaSharp.Views.Cocoa;
 
-using MonoDevelop.Components;
-using MonoDevelop.Core;
-using MonoDevelop.DesignerSupport;
-using MonoDevelop.Ide;
-using MonoDevelop.Ide.Gui;
-using MonoDevelop.Ide.Gui.Documents;
+//using MonoDevelop.Components;
+//using MonoDevelop.Core;
+//using MonoDevelop.DesignerSupport;
+//using MonoDevelop.Ide;
+//using MonoDevelop.Ide.Gui;
+//using MonoDevelop.Ide.Gui.Documents;
 
-namespace MonoDevelop.Figma
-{
-    [ExportFileDocumentController(
-        Id = "FigmaDesignerViewer",
-        Name = "Figma Designer",
-        FileExtension = ".figma",
-        CanUseAsDefault = true,
-        InsertBefore = "DefaultDisplayBinding")]
-    class FigmaFileDocumentController : FileDocumentController, IOutlinedDocument, IPropertyPadProvider
-    {
-        FigmaDesignerSession session;
-        IFigmaDesignerDelegate figmaDelegate;
-        FigmaDesignerSurface surface;
+//namespace MonoDevelop.Figma
+//{
+//    [ExportFileDocumentController(
+//        Id = "FigmaDesignerViewer",
+//        Name = "Figma Designer",
+//        FileExtension = ".figma",
+//        CanUseAsDefault = true,
+//        InsertBefore = "DefaultDisplayBinding")]
+//    class FigmaFileDocumentController : FileDocumentController, IOutlinedDocument, IPropertyPadProvider
+//    {
+//        FigmaDesignerSession session;
+//        IFigmaDesignerDelegate figmaDelegate;
+//        FigmaDesignerSurface surface;
 
-        FigmaDesignerOutlinePad outlinePad;
+//        //FigmaDesignerOutlinePad outlinePad;
 
-        ControlFileNodeProvider fileProvider;
-        ControlViewRenderingService rendererService;
-        StoryboardLayoutManager layoutManager;
+//        ControlFileNodeProvider fileProvider;
+//        ControlViewRenderingService rendererService;
+//        StoryboardLayoutManager layoutManager;
 
-        private FilePath filePath;
+//        private FilePath filePath;
 
-        Gtk.Widget _content;
-        //PropertyGrid grid;
+//        Gtk.Widget _content;
+//        //PropertyGrid grid;
 
-        readonly IScrollView scrollview;
+//        readonly IScrollView scrollview;
 
-        public FigmaFileDocumentController()
-        {
-            scrollview = new ScrollView ();
+//        public FigmaFileDocumentController()
+//        {
+//            scrollview = new ScrollView ();
 
-            var nativeScrollview = (FigmaSharp.Views.Native.Cocoa.FNSScrollview)scrollview.NativeObject;
-            nativeScrollview.TranslatesAutoresizingMaskIntoConstraints = true;
+//            var nativeScrollview = (FigmaSharp.Views.Native.Cocoa.FNSScrollview)scrollview.NativeObject;
+//            nativeScrollview.TranslatesAutoresizingMaskIntoConstraints = true;
 
-            _content = new GtkNSViewHost (nativeScrollview);
+//            _content = new GtkNSViewHost (nativeScrollview);
            
-            _content.ShowAll();
-        }
+//            _content.ShowAll();
+//        }
 
-        async void PropertyPad_Changed(object sender, EventArgs e)
-        {
-            await session.ReloadAsync (scrollview.ContentView, filePath.FileName, fileOptions);
-        }
+//        async void PropertyPad_Changed(object sender, EventArgs e)
+//        {
+//            await session.ReloadAsync (scrollview.ContentView, filePath.FileName, fileOptions);
+//        }
 
-        protected override Task OnSave()
-        {
-            session.Save(filePath);
-            HasUnsavedChanges = false;
-            return Task.FromResult(true);
-        }
+//        protected override Task OnSave()
+//        {
+//            session.Save(filePath);
+//            HasUnsavedChanges = false;
+//            return Task.FromResult(true);
+//        }
 
-		protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
-        {
-            if (!(modelDescriptor is FileDescriptor fileDescriptor))
-                throw new InvalidOperationException();
+//		protected override async Task OnInitialize(ModelDescriptor modelDescriptor, Properties status)
+//        {
+//            if (!(modelDescriptor is FileDescriptor fileDescriptor))
+//                throw new InvalidOperationException();
 
-            if (session == null)
-            {
-                Owner = fileDescriptor.Owner;
-                filePath = fileDescriptor.FilePath;
-                DocumentTitle = fileDescriptor.FilePath.FileName;
+//            if (session == null)
+//            {
+//                Owner = fileDescriptor.Owner;
+//                filePath = fileDescriptor.FilePath;
+//                DocumentTitle = fileDescriptor.FilePath.FileName;
 
-                figmaDelegate = new FigmaDesignerDelegate();
+//                figmaDelegate = new FigmaDesignerDelegate();
               
-                var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
+//                var localPath = Path.Combine (filePath.ParentDirectory.FullPath, FigmaBundle.ResourcesDirectoryName);
 
-                fileProvider = new ControlFileNodeProvider(localPath) { File = filePath.FullPath };
-                rendererService = new ControlViewRenderingService (fileProvider);
+//                fileProvider = new ControlFileNodeProvider(localPath) { File = filePath.FullPath };
+//                rendererService = new ControlViewRenderingService (fileProvider);
 
-                //we generate a new file provider for embeded windows
-                var tmpRemoteProvider = new FileNodeProvider(localPath) { File = filePath.FullPath };
-                rendererService.CustomConverters.Add (new EmbededWindowConverter(tmpRemoteProvider) { LiveButtonAlwaysVisible = false });
-                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter(tmpRemoteProvider));
+//                //we generate a new file provider for embeded windows
+//                var tmpRemoteProvider = new FileNodeProvider(localPath) { File = filePath.FullPath };
+//                rendererService.CustomConverters.Add (new EmbededWindowConverter(tmpRemoteProvider) { LiveButtonAlwaysVisible = false });
+//                rendererService.CustomConverters.Add (new EmbededSheetDialogConverter(tmpRemoteProvider));
 
-                layoutManager = new StoryboardLayoutManager();
-                session = new FigmaDesignerSession(fileProvider, rendererService, layoutManager);
-                //session.ModifiedChanged += HandleModifiedChanged;
-                session.ReloadFinished += Session_ReloadFinished;
+//                layoutManager = new StoryboardLayoutManager();
+//                session = new FigmaDesignerSession(fileProvider, rendererService, layoutManager);
+//                //session.ModifiedChanged += HandleModifiedChanged;
+//                session.ReloadFinished += Session_ReloadFinished;
 
-                surface = new FigmaDesignerSurface(figmaDelegate, session) {
-                    Session = session
-                };
+//                surface = new FigmaDesignerSurface(figmaDelegate, session) {
+//                    Session = session
+//                };
 
-                surface.FocusedViewChanged += Surface_FocusedViewChanged;
+//                surface.FocusedViewChanged += Surface_FocusedViewChanged;
 
-                var window = NSApplication.SharedApplication.MainWindow;
-                surface.SetWindow(new WindowInternalWrapper(window));
-                surface.StartHoverSelection();
+//                var window = NSApplication.SharedApplication.MainWindow;
+//                surface.SetWindow(new WindowInternalWrapper(window));
+//                surface.StartHoverSelection();
 
-                //IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
-                IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
-            }
-            await RefreshAll();
-            await base.OnInitialize(modelDescriptor, status);
-        }
+//                //IdeApp.Workbench.ActiveDocumentChanged += OnActiveDocumentChanged;
+//                IdeApp.Workbench.DocumentOpened += OnDocumentOpened;
+//            }
+//            await RefreshAll();
+//            await base.OnInitialize(modelDescriptor, status);
+//        }
 
-        void Surface_FocusedViewChanged(object sender, IView e)
-        {
-            var model = session.GetModel(e);
-			if (model == null) {
-                return;
-			}
+//        void Surface_FocusedViewChanged(object sender, IView e)
+//        {
+//            var model = session.GetModel(e);
+//			if (model == null) {
+//                return;
+//			}
 
-            if (outlinePad != null)  {
-                outlinePad.Focus(model);
-            }
-            //var currentWrapper = GetWrapper (model);
+//            //if (outlinePad != null)  {
+//            //    outlinePad.Focus(model);
+//            //}
+//            //var currentWrapper = GetWrapper (model);
 			
-            DesignerSupport.DesignerSupport.Service.PropertyPad?.SetCurrentObject (model, new object[] { model });
-            //PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
-        }
+//            DesignerSupport.DesignerSupport.Service.PropertyPad?.SetCurrentObject (model, new object[] { model });
+//            //PropertyPad.Instance.Control.CurrentObject = GetWrapper(model);
+//        }
 
-        void Session_ReloadFinished(object sender, EventArgs e)
-        {
-        }
+//        void Session_ReloadFinished(object sender, EventArgs e)
+//        {
+//        }
 
-        private void OnDocumentOpened(object sender, DocumentEventArgs e)
-        {
-            UpdateLayout();
-        }
+//        private void OnDocumentOpened(object sender, DocumentEventArgs e)
+//        {
+//            UpdateLayout();
+//        }
 
-        private void OnActiveDocumentChanged(object sender, EventArgs e)
-        {
-            UpdateLayout();
-        }
+//        private void OnActiveDocumentChanged(object sender, EventArgs e)
+//        {
+//            UpdateLayout();
+//        }
 
-        string lastLayout;
-        private void UpdateLayout()
-        {
-            var current = IdeApp.Workbench.ActiveDocument?.GetContent<string>();
-            if (current == null)
-            {
-                if (lastLayout != null && IdeApp.Workbench.CurrentLayout == "Visual Design")
-                    IdeApp.Workbench.CurrentLayout = lastLayout;
-                lastLayout = null;
-            }
-            else
-            {
-                if (IdeApp.Workbench.CurrentLayout != "Visual Design")
-                {
-                    if (lastLayout == null)
-                    {
-                        lastLayout = IdeApp.Workbench.CurrentLayout;
-                        IdeApp.Workbench.CurrentLayout = "Visual Design";
-                    }
-                }
-                //current.widget.SetFocus();
-            }
-        }
+//        string lastLayout;
+//        private void UpdateLayout()
+//        {
+//            var current = IdeApp.Workbench.ActiveDocument?.GetContent<string>();
+//            if (current == null)
+//            {
+//                if (lastLayout != null && IdeApp.Workbench.CurrentLayout == "Visual Design")
+//                    IdeApp.Workbench.CurrentLayout = lastLayout;
+//                lastLayout = null;
+//            }
+//            else
+//            {
+//                if (IdeApp.Workbench.CurrentLayout != "Visual Design")
+//                {
+//                    if (lastLayout == null)
+//                    {
+//                        lastLayout = IdeApp.Workbench.CurrentLayout;
+//                        IdeApp.Workbench.CurrentLayout = "Visual Design";
+//                    }
+//                }
+//                //current.widget.SetFocus();
+//            }
+//        }
 
-        #region IOutlinedDocument
+//        #region IOutlinedDocument
 
-        public Widget GetOutlineWidget()
-        {
-            outlinePad = FigmaDesignerOutlinePad.Instance;
-            outlinePad.GenerateTree(session.Response.document, figmaDelegate);
+//        public Widget GetOutlineWidget()
+//        {
+//            //outlinePad = FigmaDesignerOutlinePad.Instance;
+//            //outlinePad.GenerateTree(session.Response.document, figmaDelegate);
 
-            outlinePad.RaiseFirstResponder += OutlinePad_RaiseFirstResponder;
-            outlinePad.RaiseDeleteItem += OutlinePad_RaiseDeleteItem;
-            return outlinePad;
-        }
+//            //outlinePad.RaiseFirstResponder += OutlinePad_RaiseFirstResponder;
+//            //outlinePad.RaiseDeleteItem += OutlinePad_RaiseDeleteItem;
+//            return null;
+//        }
 
-        async void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
-        {
-            HasUnsavedChanges = true;
-            session.DeleteView(e);
-            await RefreshAll();
-        }
+//        async void OutlinePad_RaiseDeleteItem(object sender, FigmaNode e)
+//        {
+//            HasUnsavedChanges = true;
+//            session.DeleteView(e);
+//            await RefreshAll();
+//        }
 
-        ViewRenderServiceOptions fileOptions = new ViewRenderServiceOptions();
+//        ViewRenderServiceOptions fileOptions = new ViewRenderServiceOptions();
 
-        async Task RefreshAll()
-        {
-            await session.ReloadAsync (scrollview.ContentView, filePath, fileOptions);
-            if (outlinePad != null) {
-                outlinePad.GenerateTree(session.Response.document, figmaDelegate);
-                outlinePad.Focus(GetCurrentSelectedNode ());
-            }
-        }
+//        async Task RefreshAll()
+//        {
+//            await session.ReloadAsync (scrollview.ContentView, filePath, fileOptions);
+//            //if (outlinePad != null) {
+//            //    outlinePad.GenerateTree(session.Response.document, figmaDelegate);
+//            //    outlinePad.Focus(GetCurrentSelectedNode ());
+//            //}
+//        }
 
-		FigmaNode GetCurrentSelectedNode ()
-		{
-            var selectedView = surface.SelectedView;
-            var selectedModel = session.GetModel (selectedView);
-            return selectedModel;
-        }
+//		FigmaNode GetCurrentSelectedNode ()
+//		{
+//            var selectedView = surface.SelectedView;
+//            var selectedModel = session.GetModel (selectedView);
+//            return selectedModel;
+//        }
 
-        void OutlinePad_RaiseFirstResponder(object sender, FigmaNode e)
-        {
-            var view = session.GetViewWrapper(e);
-            surface.ChangeFocusedView(view);
-        }
+//        void OutlinePad_RaiseFirstResponder(object sender, FigmaNode e)
+//        {
+//            var view = session.GetViewWrapper(e);
+//            surface.ChangeFocusedView(view);
+//        }
 
-        public IEnumerable<Widget> GetToolbarWidgets()
-        {
-            yield break;
-        }
+//        public IEnumerable<Widget> GetToolbarWidgets()
+//        {
+//            yield break;
+//        }
 
-        public void ReleaseOutlineWidget()
-        {
-            // throw new NotImplementedException();
-        }
+//        public void ReleaseOutlineWidget()
+//        {
+//            // throw new NotImplementedException();
+//        }
 
-        #endregion
+//        #endregion
 
-        //#region ICustomPropertyPadProvider
+//        //#region ICustomPropertyPadProvider
 
-        //PropertyContentPad propertyPad;
+//        //PropertyContentPad propertyPad;
 
-        //public Widget GetCustomPropertyWidget()
-        //{
-        //    PropertyPad.Initialize(session);
-        //    propertyPad = PropertyPad.Instance;
-        //    return propertyPad.Control;
-        //}
+//        //public Widget GetCustomPropertyWidget()
+//        //{
+//        //    PropertyPad.Initialize(session);
+//        //    propertyPad = PropertyPad.Instance;
+//        //    return propertyPad.Control;
+//        //}
 
-        //public void DisposeCustomPropertyWidget()
-        //{
-        //    //throw new NotImplementedException();
-        //}
+//        //public void DisposeCustomPropertyWidget()
+//        //{
+//        //    //throw new NotImplementedException();
+//        //}
 
-        //#endregion
+//        //#endregion
 
-        protected override Control OnGetViewControl(DocumentViewContent view)
-        {
-            return _content;
-        }
+//        protected override Control OnGetViewControl(DocumentViewContent view)
+//        {
+//            return _content;
+//        }
 
-        protected override void OnDispose()
-        {
-            surface.StopHover();
-            base.OnDispose();
-        }
+//        protected override void OnDispose()
+//        {
+//            surface.StopHover();
+//            base.OnDispose();
+//        }
 
-		public object GetActiveComponent ()
-		{
-            return GetCurrentSelectedNode ();
-        }
+//		public object GetActiveComponent ()
+//		{
+//            return GetCurrentSelectedNode ();
+//        }
 
-		public object GetProvider ()
-		{
-            return GetCurrentSelectedNode ();
-        }
+//		public object GetProvider ()
+//		{
+//            return GetCurrentSelectedNode ();
+//        }
 
-		public void OnEndEditing (object obj)
-		{
+//		public void OnEndEditing (object obj)
+//		{
 			
-		}
+//		}
 
-		public void OnChanged (object obj)
-		{
+//		public void OnChanged (object obj)
+//		{
 			
-		}
-	}
-}
+//		}
+//	}
+//}
