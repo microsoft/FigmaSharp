@@ -22,9 +22,9 @@
         <NodeBuilder class = "MonoDevelop.Figma.CustomFigmaBundlerNodeBuilder"/>
     </Extension>
     
-     <Extension path = "/MonoDevelop/DesignerSupport/PropertyProviders">
+<!--     <Extension path = "/MonoDevelop/DesignerSupport/PropertyProviders">
             <Class class = "MonoDevelop.Figma.FigmaPropertyProvider"/>
-    </Extension>
+    </Extension>-->
     
      <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad">
        <SeparatorItem id="MonoDevelop.FigmaSharp.ProjectPad.Separator2" insertbefore="AddSectionEnd" />
@@ -115,7 +115,7 @@
         </Category>    
     </Extension>
     
-    <Extension path = "/MonoDevelop/Ide/Pads">
+<!--    <Extension path = "/MonoDevelop/Ide/Pads">
         <Pad id = "MonoDevelop.Figma.FigmaDragAndDropPad"
             class = "MonoDevelop.Figma.FigmaDragAndDropPad"
             _label="Figma Toolbox"
@@ -125,5 +125,5 @@
             defaultPlacement="Right"
             defaultStatus="AutoHide"
             />
-    </Extension>
+    </Extension>-->
 </ExtensionModel>
