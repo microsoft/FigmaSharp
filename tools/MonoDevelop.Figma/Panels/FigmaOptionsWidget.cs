@@ -67,7 +67,11 @@ namespace MonoDevelop.Figma
             tokenHorizontalStack.TrailingAnchor.ConstraintEqualToAnchor(personalTokenContainer.TrailingAnchor).Active = true;
             tokenHorizontalStack.TopAnchor.ConstraintEqualToAnchor(personalTokenContainer.TopAnchor).Active = true;
 
-            var tokenLabel = new NSLabel(GettextCatalog.GetString("Personal Access Token:"));
+            var tokenLabel = new NSLabel()
+            {
+                StringValue = GettextCatalog.GetString("Personal Access Token:")
+            };
+
             tokenHorizontalStack.AddArrangedSubview(tokenLabel);
 
             tokenEntry = new NSSecureTextField()
@@ -79,10 +83,12 @@ namespace MonoDevelop.Figma
 
             tokenEntry.WidthAnchor.ConstraintEqualToConstant(400).Active = true;
          
-            var tokenTip = new NSLabel(GettextCatalog.GetString("Get your token from the Figma app:\n" +
-                "Menu → Help and Account → Personal Access Tokens"));
-
-            tokenTip.TextColor = NSColor.SecondaryLabelColor;
+            var tokenTip = new NSLabel()
+            {
+                StringValue = GettextCatalog.GetString("Get your token from the Figma app:\n" +
+                "Menu → Help and Account → Personal Access Tokens"),
+                TextColor = NSColor.SecondaryLabelColor
+            };
 
             personalTokenContainer.AddSubview(tokenTip);
 
