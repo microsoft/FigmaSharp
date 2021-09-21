@@ -25,80 +25,95 @@
 using System;
 using Gtk;
 using MonoDevelop.Core;
+using AppKit;
+using MonoDevelop.Components.Mac;
 
 namespace MonoDevelop.Figma
 {
-    class FigmaOptionsWidget : VBox
+    class FigmaOptionsViewController : NSViewController
     {
-        Entry tokenEntry;
-        FigmaOptionsPanel panel;
+        NSSecureTextField tokenEntry;
 
-        public FigmaOptionsWidget(FigmaOptionsPanel figmaOptionsPanel)
+        public FigmaOptionsViewController()
         {
-            panel = figmaOptionsPanel;
-
-
-            var tokenLayout = new HBox();
-            var tokenTip = new Label("Get your token from the Figma app:\n" +
-                "Menu → Help and Account → Personal Access Tokens");
-
-            tokenTip.Sensitive = false;
-            tokenTip.Xalign = 0;
-            tokenTip.Xpad = 148;
-
-            var tokenLabel = new Label();
-            tokenLabel.Text = GettextCatalog.GetString("Personal Access Token:");
-
-            tokenEntry = new Entry(FigmaRuntime.Token)
-            {
-                Visibility = false,
-                WidthRequest = 400
+            var stackView = new NSStackView() {
+                TranslatesAutoresizingMaskIntoConstraints = false,
+                Orientation = NSUserInterfaceLayoutOrientation.Vertical,
+                Alignment = NSLayoutAttribute.Leading,
+                Spacing = 10,
+                Distribution = NSStackViewDistribution.Fill
             };
 
-            tokenEntry.Changed += NeedsStoreValue;
-            tokenEntry.FocusOutEvent += NeedsStoreValue;
+            View = stackView;
 
-            tokenLayout.PackStart(tokenLabel, false, false, 0);
-            tokenLayout.PackStart(tokenEntry, false, false, 6);
+            var personalTokenContainer = new NSView () { TranslatesAutoresizingMaskIntoConstraints = false };
+            stackView.AddArrangedSubview(personalTokenContainer);
 
+            personalTokenContainer.LeadingAnchor.ConstraintEqualToAnchor(stackView.LeadingAnchor).Active = true;
+            personalTokenContainer.TrailingAnchor.ConstraintEqualToAnchor(stackView.TrailingAnchor).Active = true;
+            personalTokenContainer.HeightAnchor.ConstraintEqualToConstant(100).Active = true;
 
-            var convertersLayout = new HBox();
+            var tokenHorizontalStack = new NSStackView()
+            {
+                TranslatesAutoresizingMaskIntoConstraints = false,
+                Orientation = NSUserInterfaceLayoutOrientation.Horizontal,
+                Alignment = NSLayoutAttribute.CenterY,
+                Spacing = 10,
+                Distribution = NSStackViewDistribution.Fill,
+            };
 
-            reloadButton = new Button() { Label = "Reload Converters" };
-            reloadButton.Activated += RefresButton_Activated;
+            personalTokenContainer.AddSubview (tokenHorizontalStack);
+            tokenHorizontalStack.LeadingAnchor.ConstraintEqualToAnchor(personalTokenContainer.LeadingAnchor).Active = true;
+            tokenHorizontalStack.TrailingAnchor.ConstraintEqualToAnchor(personalTokenContainer.TrailingAnchor).Active = true;
+            tokenHorizontalStack.TopAnchor.ConstraintEqualToAnchor(personalTokenContainer.TopAnchor).Active = true;
 
-            convertersLayout.PackStart(reloadButton, false, false, 6);
+            var tokenLabel = new NSLabel(GettextCatalog.GetString("Personal Access Token:"));
+            tokenHorizontalStack.AddArrangedSubview(tokenLabel);
 
+            tokenEntry = new NSSecureTextField()
+            {
+                TranslatesAutoresizingMaskIntoConstraints = false,
+                StringValue = FigmaRuntime.Token
+            };
+            tokenHorizontalStack.AddArrangedSubview(tokenEntry);
 
-            PackStart(tokenLayout, false, false, 0);
-            PackStart(tokenTip, false, false, 6);
-            PackStart(new Label(""), true, true, 0);
-            PackStart(new Label("<b>Debugging</b>") { UseMarkup = true, Xalign = 0 }, false, false, 0);
-            PackStart(convertersLayout, false, false, 6);
+            tokenEntry.WidthAnchor.ConstraintEqualToConstant(400).Active = true;
+         
+            var tokenTip = new NSLabel(GettextCatalog.GetString("Get your token from the Figma app:\n" +
+                "Menu → Help and Account → Personal Access Tokens"));
 
-            ShowAll();
+            tokenTip.TextColor = NSColor.SecondaryLabelColor;
+
+            personalTokenContainer.AddSubview(tokenTip);
+
+            tokenTip.LeadingAnchor.ConstraintEqualToAnchor(tokenEntry.LeadingAnchor).Active = true;
+            tokenTip.TopAnchor.ConstraintEqualToAnchor(tokenEntry.BottomAnchor).Active = true;
+
+            tokenTip.WidthAnchor.ConstraintEqualToConstant(400).Active = true;
+
+            tokenHorizontalStack.AddArrangedSubview(new NSView() { TranslatesAutoresizingMaskIntoConstraints =false });
+
+            //TODO: Disabled for now
+            //var convertersLayout = new HBox();
+            //reloadButton = new Button() { Label = "Reload Converters" };
+            //reloadButton.Activated += RefresButton_Activated;
+            //convertersLayout.PackStart(reloadButton, false, false, 6);
+            //PackStart(tokenLayout, false, false, 0);
+            //PackStart(tokenTip, false, false, 6);
+            //PackStart(new Label(""), true, true, 0);
+            //PackStart(new Label("<b>Debugging</b>") { UseMarkup = true, Xalign = 0 }, false, false, 0);
+            //PackStart(convertersLayout, false, false, 6);
+            //ShowAll();
         }
-
-        Button reloadButton;
 
         private void RefresButton_Activated(object sender, EventArgs e)
         {
 
         }
 
-        void NeedsStoreValue(object sender, EventArgs e)
-        {
-            FigmaRuntime.Token = tokenEntry.Text;
-        }
-
         internal void ApplyChanges()
         {
-            FigmaRuntime.Token = tokenEntry.Text;
-        }
-
-        public override void Dispose()
-        {
-            reloadButton.Activated -= RefresButton_Activated;
+            FigmaRuntime.Token = tokenEntry.StringValue;
         }
     }
 }

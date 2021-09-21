@@ -30,12 +30,12 @@ namespace MonoDevelop.Figma
 {
     class FigmaOptionsPanel : OptionsPanel
 	{
-		FigmaOptionsWidget widget;
+		FigmaOptionsViewController widget;
 
 		public override Control CreatePanelWidget ()
 		{
-			widget = new FigmaOptionsWidget (this);
-			return widget;
+			widget ??= new FigmaOptionsViewController ();
+			return widget.View;
 		}
 
 		public FilePath LoadSdkLocationSetting ()
