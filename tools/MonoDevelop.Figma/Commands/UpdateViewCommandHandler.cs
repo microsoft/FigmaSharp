@@ -62,7 +62,7 @@ namespace MonoDevelop.Figma.Commands
             figmaBundleWindow.Appearance = ViewHelpers.GetCurrentIdeAppearance();
             figmaBundleWindow.Load(bundle, currentFolder.Project);
 
-            MessageService.ShowCustomDialog(figmaBundleWindow, MessageService.RootWindow);
+            MessageService.RunCustomDialog(figmaBundleWindow);
         }
     }
 }
