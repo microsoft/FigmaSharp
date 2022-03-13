@@ -1,39 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="MonoDevelop.References.props" />
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
-    <PackOnBuild>true</PackOnBuild>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\</OutputPath>
+    <TargetFramework>net6.0</TargetFramework>
+       <ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>10.0</LangVersion>
     <ReleaseVersion>0.1.1</ReleaseVersion>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Xamarin.Mac" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
-        <Private>False</Private>        
-    </PackageReference>
-  </ItemGroup>
-      <ItemGroup>
-    <AddinReference Include="MonoDevelop.DesignerSupport" />
-  </ItemGroup>
-      <ItemGroup>
-        <Folder Include="Resources\" />
-        <Folder Include=".figma\" />
-        <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\" />
-        <Folder Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\" />
-        <Folder Include="Commands\" />
-        <Folder Include="NodeBuilders\" />
-        <Folder Include="Pads\" />
-        <Folder Include="Views\" />
-        <Folder Include="DocumentControllers\" />
-        <Folder Include="Panels\" />
-        <Folder Include="Extensions\" />
-        <Folder Include="PropertyProviders\" />
-        <Folder Include="Helpers\" />
-        <Folder Include="ProjectItems\" />
-        <Folder Include="Services\" />
-      </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
@@ -44,26 +19,8 @@
         <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj" />
       </ItemGroup>
       <ItemGroup>
-        <None Remove="Resources\vs-pad-figma.png" />
-        <None Remove="Resources\vs-pad-figma%402x.png" />
-        <None Remove="Resources\vs-pad-figma~dark.png" />
-        <None Remove="Resources\vs-pad-figma~dark%402x.png" />
-        <None Remove="Resources\vs-pad-figma~sel.png" />
-        <None Remove="Resources\vs-pad-figma~sel%402x.png" />
+        <None Remove="Microsoft.VisualStudioMac.Sdk" />
         <None Remove="Resources\vs-prefs-figma.png" />
-        <None Remove="Resources\vs-prefs-figma%402x.png" />
-        <None Remove="Resources\vs-prefs-figma~dark.png" />
-        <None Remove="Resources\vs-prefs-figma~dark%402x.png" />
-        <None Remove="Resources\vs-prefs-figma~sel.png" />
-        <None Remove="Resources\vs-prefs-figma~sel%402x.png" />
-        <None Remove="Resources\figma-overlay.png" />
-        <None Remove="Resources\figma-overlay%402x.png" />
-        <None Remove="Resources\figma-overlay~sel.png" />
-        <None Remove="Resources\figma-overlay~sel%402x.png" />
-        <None Remove="Resources\figma-overlay-error.png" />
-        <None Remove="Resources\figma-overlay-error%402x.png" />
-        <None Remove="Resources\figma-overlay-error~sel.png" />
-        <None Remove="Resources\figma-overlay-error~sel%402x.png" />
       </ItemGroup>
       <ItemGroup>
         <EmbeddedResource Include="Resources\vs-pad-figma.png">
@@ -171,23 +128,26 @@
         <BundleResource Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\motivation.png" />
       </ItemGroup>
       <ItemGroup>
-        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
           <FigmaNodeCustomName>PackageUpdateWindow</FigmaNodeCustomName>
           <DependentUpon>PackageUpdateWindow.cs</DependentUpon>
         </Compile>
-        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
           <FigmaNodeCustomName>FigmaPackageWindow</FigmaNodeCustomName>
           <DependentUpon>FigmaPackageWindow.cs</DependentUpon>
         </Compile>
-        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.designer.cs">
           <FigmaPackageId>ea4pU30ht61lUJXcr0TFIF</FigmaPackageId>
           <FigmaNodeCustomName>GenerateViewsWindow</FigmaNodeCustomName>
           <DependentUpon>GenerateViewsWindow.cs</DependentUpon>
         </Compile>
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.cs" />
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.cs" />
+        <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.cs" />
+      </ItemGroup>
+      <ItemGroup>
+        <PackageReference Include="Microsoft.VisualStudioMac.Sdk" Version="17.0.0-preview.7955" />
       </ItemGroup>
 </Project>

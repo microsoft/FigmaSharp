@@ -49,9 +49,9 @@ namespace MonoDevelop.Figma
             var personalTokenContainer = new NSView () { TranslatesAutoresizingMaskIntoConstraints = false };
             stackView.AddArrangedSubview(personalTokenContainer);
 
-            personalTokenContainer.LeadingAnchor.ConstraintEqualToAnchor(stackView.LeadingAnchor).Active = true;
-            personalTokenContainer.TrailingAnchor.ConstraintEqualToAnchor(stackView.TrailingAnchor).Active = true;
-            personalTokenContainer.HeightAnchor.ConstraintEqualToConstant(100).Active = true;
+            personalTokenContainer.LeadingAnchor.ConstraintEqualTo(stackView.LeadingAnchor).Active = true;
+            personalTokenContainer.TrailingAnchor.ConstraintEqualTo(stackView.TrailingAnchor).Active = true;
+            personalTokenContainer.HeightAnchor.ConstraintEqualTo(100).Active = true;
 
             var tokenHorizontalStack = new NSStackView()
             {
@@ -63,9 +63,9 @@ namespace MonoDevelop.Figma
             };
 
             personalTokenContainer.AddSubview (tokenHorizontalStack);
-            tokenHorizontalStack.LeadingAnchor.ConstraintEqualToAnchor(personalTokenContainer.LeadingAnchor).Active = true;
-            tokenHorizontalStack.TrailingAnchor.ConstraintEqualToAnchor(personalTokenContainer.TrailingAnchor).Active = true;
-            tokenHorizontalStack.TopAnchor.ConstraintEqualToAnchor(personalTokenContainer.TopAnchor).Active = true;
+            tokenHorizontalStack.LeadingAnchor.ConstraintEqualTo(personalTokenContainer.LeadingAnchor).Active = true;
+            tokenHorizontalStack.TrailingAnchor.ConstraintEqualTo(personalTokenContainer.TrailingAnchor).Active = true;
+            tokenHorizontalStack.TopAnchor.ConstraintEqualTo(personalTokenContainer.TopAnchor).Active = true;
 
             var tokenLabel = new NSLabel()
             {
@@ -81,7 +81,7 @@ namespace MonoDevelop.Figma
             };
             tokenHorizontalStack.AddArrangedSubview(tokenEntry);
 
-            tokenEntry.WidthAnchor.ConstraintEqualToConstant(400).Active = true;
+            tokenEntry.WidthAnchor.ConstraintEqualTo(400).Active = true;
          
             var tokenTip = new NSLabel()
             {
@@ -92,10 +92,10 @@ namespace MonoDevelop.Figma
 
             personalTokenContainer.AddSubview(tokenTip);
 
-            tokenTip.LeadingAnchor.ConstraintEqualToAnchor(tokenEntry.LeadingAnchor).Active = true;
-            tokenTip.TopAnchor.ConstraintEqualToAnchor(tokenEntry.BottomAnchor).Active = true;
+            tokenTip.LeadingAnchor.ConstraintEqualTo(tokenEntry.LeadingAnchor).Active = true;
+            tokenTip.TopAnchor.ConstraintEqualTo(tokenEntry.BottomAnchor).Active = true;
 
-            tokenTip.WidthAnchor.ConstraintEqualToConstant(400).Active = true;
+            tokenTip.WidthAnchor.ConstraintEqualTo(400).Active = true;
 
             tokenHorizontalStack.AddArrangedSubview(new NSView() { TranslatesAutoresizingMaskIntoConstraints =false });
 
