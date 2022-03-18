@@ -29,6 +29,7 @@ using CoreAnimation;
 using CoreGraphics;
 
 using FigmaSharp.Views.Graphics;
+using ObjCRuntime;
 
 namespace FigmaSharp.Views.Cocoa.Graphics
 {

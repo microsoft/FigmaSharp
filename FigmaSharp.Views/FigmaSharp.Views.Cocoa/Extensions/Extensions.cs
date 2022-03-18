@@ -28,6 +28,7 @@ using AppKit;
 using CoreGraphics;
 
 using FigmaSharp.Views;
+using ObjCRuntime;
 
 namespace FigmaSharp
 {

@@ -92,12 +92,12 @@ namespace FigmaSharp.Cocoa.Helpers
 
 		public static string GetWidthConstraintEqualToConstant(string viewName, string value)
 		{
-			return $"{viewName}.{nameof(AppKit.NSView.WidthAnchor)}.{nameof(AppKit.NSView.WidthAnchor.ConstraintEqualToConstant)} ({value})";
+			return $"{viewName}.{nameof(AppKit.NSView.WidthAnchor)}.{nameof(AppKit.NSView.WidthAnchor.ConstraintEqualTo)} ({value})";
 		}
 
 		public static string GetHeightConstraintEqualToConstant(string viewName, string value)
 		{
-			return $"{viewName}.{nameof(AppKit.NSView.HeightAnchor)}.{nameof(AppKit.NSView.HeightAnchor.ConstraintEqualToConstant)} ({value})";
+			return $"{viewName}.{nameof(AppKit.NSView.HeightAnchor)}.{nameof(AppKit.NSView.HeightAnchor.ConstraintEqualTo)} ({value})";
 		}
 
 		public static string GetLeadingConstraintEqualToAnchor(string firstViewName, float firstViewValue, string secondViewName)
@@ -122,7 +122,7 @@ namespace FigmaSharp.Cocoa.Helpers
 
 		public static string GetConstraintEqualToAnchor(string firstViewName, string firstAnchorPropertyName, float firstViewValue, string secondViewName, string secondAnchorPropertyName)
 		{
-			return $"{firstViewName}.{firstAnchorPropertyName}.{nameof(AppKit.NSView.TopAnchor.ConstraintEqualToAnchor)} ({secondViewName}.{secondAnchorPropertyName}, {firstViewValue}f)";
+			return $"{firstViewName}.{firstAnchorPropertyName}.{nameof(AppKit.NSView.TopAnchor.ConstraintEqualTo)} ({secondViewName}.{secondAnchorPropertyName}, {firstViewValue}f)";
 		}
 	}
 }

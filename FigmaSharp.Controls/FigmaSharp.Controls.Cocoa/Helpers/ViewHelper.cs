@@ -25,6 +25,7 @@
 using System;
 using AppKit;
 using FigmaSharp.Models;
+using ObjCRuntime;
 
 namespace FigmaSharp.Controls.Cocoa.Helpers
 {

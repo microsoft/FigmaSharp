@@ -57,13 +57,13 @@ namespace FigmaSharp.Cocoa
             var absolute = figmaLine.absoluteBoundingBox;
             var lineWidth = absolute.Width == 0 ? figmaLine.strokeWeight : absolute.Width;
 
-            var constraintWidth = figmaLineView.WidthAnchor.ConstraintEqualToConstant(lineWidth);
+            var constraintWidth = figmaLineView.WidthAnchor.ConstraintEqualTo(lineWidth);
             constraintWidth.Priority = (uint)NSLayoutPriority.DefaultLow;
             constraintWidth.Active = true;
 
             var lineHeight = absolute.Height == 0 ? figmaLine.strokeWeight : absolute.Height;
 
-            var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualToConstant(lineHeight);
+            var constraintHeight = figmaLineView.HeightAnchor.ConstraintEqualTo(lineHeight);
             constraintHeight.Priority = (uint)NSLayoutPriority.DefaultLow;
             constraintHeight.Active = true;
 
