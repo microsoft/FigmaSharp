@@ -70,14 +70,14 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                         var endPosition2 = absoluteBoundBoxParent.X + absoluteBoundBoxParent.Width;
                         var value = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
 
-                        var rightConstraint = nativeView.TrailingAnchor.ConstraintEqualToAnchor(parentNativeView.TrailingAnchor, -value);
+                        var rightConstraint = nativeView.TrailingAnchor.ConstraintEqualTo(parentNativeView.TrailingAnchor, -value);
                         rightConstraint.Active = true;
                     }
 
                     if (constraints.horizontal.Contains ("LEFT"))
                     {
                         var value2 = absoluteBoundingBox.X - absoluteBoundBoxParent.X;
-                        nativeView.LeadingAnchor.ConstraintEqualToAnchor(parentNativeView.LeadingAnchor, value2)
+                        nativeView.LeadingAnchor.ConstraintEqualTo(parentNativeView.LeadingAnchor, value2)
                             .Active = true;
                     }
 
@@ -87,21 +87,21 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                         var endPosition2 = absoluteBoundBoxParent.Y + absoluteBoundBoxParent.Height;
                         var value2 = Math.Max(endPosition1, endPosition2) - Math.Min(endPosition1, endPosition2);
 
-                        var bottomConstraint = nativeView.BottomAnchor.ConstraintEqualToAnchor(parentNativeView.BottomAnchor, -value2);
+                        var bottomConstraint = nativeView.BottomAnchor.ConstraintEqualTo(parentNativeView.BottomAnchor, -value2);
                         bottomConstraint.Active = true;
                     }
 
                     if (constraints.vertical.Contains ("TOP"))
                     {
                         var value = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y;
-                        nativeView.TopAnchor.ConstraintEqualToAnchor(parentNativeView.TopAnchor, value)
+                        nativeView.TopAnchor.ConstraintEqualTo(parentNativeView.TopAnchor, value)
                             .Active = true;
                     }
 
                     if (constraints.horizontal == "CENTER" || constraints.horizontal == "SCALE")
                     {
                         var delta = absoluteBoundingBox.X - absoluteBoundBoxParent.X - absoluteBoundBoxParent.Center.X;
-                        nativeView.LeadingAnchor.ConstraintEqualToAnchor(parentNativeView.CenterXAnchor, delta)
+                        nativeView.LeadingAnchor.ConstraintEqualTo(parentNativeView.CenterXAnchor, delta)
                             .Active = true;
                     }
 
@@ -109,7 +109,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                     {
                         var delta = absoluteBoundingBox.Y - absoluteBoundBoxParent.Y - absoluteBoundBoxParent.Center.Y;
                         //var delta = absoluteBoundBoxParent.Center.Substract(absoluteBoundingBox.Origin).Y;
-                        var test = nativeView.TopAnchor.ConstraintEqualToAnchor(parentNativeView.CenterYAnchor, delta);
+                        var test = nativeView.TopAnchor.ConstraintEqualTo(parentNativeView.CenterYAnchor, delta);
                         test.Active = true;
                     }
                 }
@@ -126,7 +126,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
                     var nativeView = currentViewNode?.View?.NativeObject as AppKit.NSView;
                     if (rendererService.HasWidthConstraint(currentNode, converter))
                     {
-                        var widthConstraint = nativeView.WidthAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
+                        var widthConstraint = nativeView.WidthAnchor.ConstraintEqualTo(Math.Max(absoluteBounding.absoluteBoundingBox.Width, 1));
                         if (rendererService.IsFlexibleHorizontal(currentViewNode, converter))
                             widthConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
                         widthConstraint.Active = true;
@@ -134,7 +134,7 @@ namespace FigmaSharp.Cocoa.PropertyConfigure
 
                     if (rendererService.HasHeightConstraint(currentNode, converter))
                     {
-                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualToConstant(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
+                        var heightConstraint = nativeView.HeightAnchor.ConstraintEqualTo(Math.Max(absoluteBounding.absoluteBoundingBox.Height, 1));
                         if (rendererService.IsFlexibleVertical(currentViewNode, converter))
                             heightConstraint.Priority = (float)NSLayoutPriority.DefaultLow;
 

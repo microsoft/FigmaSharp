@@ -73,7 +73,7 @@ namespace FigmaSharp.Views.Cocoa
 				}
 				else
 				{
-					nativeView.LeadingAnchor.ConstraintEqualToAnchor(nativeView.Superview.LeadingAnchor, value).Active = true;
+					nativeView.LeadingAnchor.ConstraintEqualTo(nativeView.Superview.LeadingAnchor, value).Active = true;
 				}
 			}
         }
@@ -102,7 +102,7 @@ namespace FigmaSharp.Views.Cocoa
 				}
 				else
 				{
-					nativeView.TopAnchor.ConstraintEqualToAnchor(nativeView.Superview.TopAnchor, value).Active = true;
+					nativeView.TopAnchor.ConstraintEqualTo(nativeView.Superview.TopAnchor, value).Active = true;
 				}
 			}
 		}
@@ -125,7 +125,7 @@ namespace FigmaSharp.Views.Cocoa
 				}
 				else
 				{
-					nativeView.WidthAnchor.ConstraintEqualToConstant(value).Active = true;
+					nativeView.WidthAnchor.ConstraintEqualTo(value).Active = true;
 				}
 			}
 		}
@@ -143,7 +143,7 @@ namespace FigmaSharp.Views.Cocoa
 					heightConstraint.Constant = value;
 				} else
                 {
-					nativeView.HeightAnchor.ConstraintEqualToConstant(value).Active = true;
+					nativeView.HeightAnchor.ConstraintEqualTo(value).Active = true;
 				}
 			}
 		}

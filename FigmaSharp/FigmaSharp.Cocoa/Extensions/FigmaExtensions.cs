@@ -35,6 +35,7 @@ using Foundation;
 using FigmaSharp.Models;
 using FigmaSharp.Cocoa.Helpers;
 using FigmaSharp.Services;
+using ObjCRuntime;
 
 namespace FigmaSharp.Cocoa
 {
