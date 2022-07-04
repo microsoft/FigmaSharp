@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1">
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1">
         <Private>False</Private>        
     </PackageReference>
   </ItemGroup>
