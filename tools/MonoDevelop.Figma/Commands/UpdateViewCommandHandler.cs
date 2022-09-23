@@ -51,7 +51,7 @@ namespace MonoDevelop.Figma.Commands
             info.Visible = info.Enabled = false;
         }
 
-        protected override void OnRun()
+        protected override async void OnRun()
         {
             var currentFolder = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFolder;
             if (currentFolder == null)
@@ -60,7 +60,8 @@ namespace MonoDevelop.Figma.Commands
             var bundle = FigmaBundle.FromDirectoryPath(currentFolder.Path.FullPath);
             var figmaBundleWindow = new PackageUpdateWindow();
             figmaBundleWindow.Appearance = ViewHelpers.GetCurrentIdeAppearance();
-            figmaBundleWindow.Load(bundle, currentFolder.Project);
+
+            await figmaBundleWindow.LoadAsync(bundle, currentFolder.Project);
 
             MessageService.RunCustomDialog(figmaBundleWindow);
         }

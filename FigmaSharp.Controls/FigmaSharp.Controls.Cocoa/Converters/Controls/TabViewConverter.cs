@@ -72,7 +72,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 }
             }
 
-            tabView.SetItems(items.ToArray());
+            tabView.Items = items.ToArray();
 
 			return new View(tabView);
         }
@@ -95,9 +95,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                 return null;
 
             code.AppendLine();
-            code.AppendLine($"{ name }.{ nameof(NSTabView.SetItems) }(");
-            code.AppendLine($"\tnew { typeof(NSTabViewItem[]) }");
-            code.AppendLine("\t{");
+            code.AppendLine($"{ name }.{ nameof(NSTabView.Items) } = new {typeof(NSTabViewItem[])};");
 
             foreach (FigmaNode tabNode in itemNodes.GetChildren(t => t.visible, reverseChildren: true))
             {
@@ -111,9 +109,6 @@ namespace FigmaSharp.Controls.Cocoa.Converters
                         code.AppendLine($"\t\tnew {typeof(NSTabViewItem)}() {{ {nameof(NSTabViewItem.Label)} = \"{text.characters}\" }},");
                 }
             }
-
-            code.AppendLine("\t}");
-            code.AppendLine(");");
 
             return code;
         }

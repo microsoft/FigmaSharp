@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Threading.Tasks;
 using FigmaSharp.Models;
 using FigmaSharp.Services;
 
@@ -111,11 +111,11 @@ namespace FigmaSharp
 		/// Updates and Reloads a bundler to a specific version
 		/// </summary>
 		/// <param name="version"></param>
-		public void Update (FigmaFileVersion version, NodeProvider provider, bool includeImages = true)
+		public async Task UpdateAsync (FigmaFileVersion version, NodeProvider provider, bool includeImages = true)
 		{
 			Version = version;
-			Reload ();
-			SaveAll (includeImages, provider);
+			await ReloadAsync ();
+			await SaveAllAsync (includeImages, provider);
 		}
 
 		public void Save ()
@@ -133,10 +133,10 @@ namespace FigmaSharp
 			}
 		}
 
-		internal void LoadLocalDocument ()
+		internal async Task LoadLocalDocumentAsync ()
 		{
 			//generate also Document.figma
-			Document = AppContext.Api.GetFile (new FigmaFileQuery (FileId, Version));
+			Document = await AppContext.Api.GetFileAsync (new FigmaFileQuery (FileId, Version));
 
 			if (Manifest != null && Document != null) {
 				Manifest.DocumentTitle = Document.name;
@@ -151,7 +151,7 @@ namespace FigmaSharp
 		}
 
 		//Generates the .figmafile
-		internal void SaveLocalDocument (bool includeImages, NodeProvider provider)
+		internal async Task SaveLocalDocumentAsync (bool includeImages, NodeProvider provider)
 		{
 			if (string.IsNullOrEmpty (FileId)) {
 				throw new InvalidOperationException ("id not set");
@@ -171,7 +171,7 @@ namespace FigmaSharp
 				return;
 
 			var resourcesDirectoryPath = Path.Combine (DirectoryPath, ResourcesDirectoryName);
-			GenerateOutputResourceFiles (provider, FileId, resourcesDirectoryPath);
+			await GenerateOutputResourceFilesAsync (provider, FileId, resourcesDirectoryPath);
 		}
 
 		#region Static Methods
@@ -211,7 +211,7 @@ namespace FigmaSharp
 		}
 
 		//Generates all the resources from the current .figmafile
-		internal static void GenerateOutputResourceFiles (NodeProvider provider, string fileId, string resourcesDirectoryPath)
+		internal static async Task GenerateOutputResourceFilesAsync (NodeProvider provider, string fileId, string resourcesDirectoryPath)
 		{
 			var figmaImageIds = new List<IImageNodeRequest>();
 			foreach (var mainNode in provider.Response.document.children)
@@ -231,7 +231,7 @@ namespace FigmaSharp
 
 				//2 scales
 				foreach (var scale in new int[] { 1,2 })
-					AppContext.Api.ProcessDownloadImages(fileId, downloadImages, scale: scale);
+					await AppContext.Api.ProcessDownloadImagesAsync(fileId, downloadImages, scale: scale);
 				provider.SaveResourceFiles(resourcesDirectoryPath, ImageFormat, downloadImages);
 			}
 		}
@@ -309,16 +309,16 @@ namespace FigmaSharp
 		/// Regenerates all bundle based in the current provider
 		/// </summary>
 		/// <param name="fileProvider"></param>
-		public void Reload ()
+		public Task ReloadAsync ()
 		{
 			//generate .figma file
-			LoadLocalDocument ();
+			return LoadLocalDocumentAsync ();
 		}
 
-		public void SaveAll (bool includeImages, NodeProvider provider)
+		public async Task SaveAllAsync (bool includeImages, NodeProvider provider)
 		{
 			Save ();
-			SaveLocalDocument (includeImages, provider);
+			await SaveLocalDocumentAsync (includeImages, provider);
 			//if (createViews)
 			//	SaveViews (codeRendererService, writePublicClassIfExists, translateLabels: translateLabels);
 			LoggingService.LogInfo($"[Done] Saved all the files from Figma Package");

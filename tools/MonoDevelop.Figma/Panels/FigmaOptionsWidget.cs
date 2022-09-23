@@ -87,7 +87,7 @@ namespace MonoDevelop.Figma
             {
                 StringValue = GettextCatalog.GetString("Get your token from the Figma app:\n" +
                 "Menu → Help and Account → Personal Access Tokens"),
-                TextColor = NSColor.SecondaryLabelColor
+                TextColor = NSColor.SecondaryLabel
             };
 
             personalTokenContainer.AddSubview(tokenTip);

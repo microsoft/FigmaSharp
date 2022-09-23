@@ -152,22 +152,20 @@ namespace FigmaSharpApp
 					VersionSelected?.Invoke (this, version);
 			};
 
-			var versions = await Task.Run(() =>
-			{
-				try
-				{
-					var query = new FigmaFileVersionQuery(link_id);
+			FigmaFileVersion[] versions = null;
 
-					return FigmaSharp.AppContext.Api.GetFileVersions(query)
-						.versions.GroupByCreatedAt()
-						.ToArray();
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex);
-					return new FigmaFileVersion[0];
-				}
-			});
+            try
+            {
+                var query = new FigmaFileVersionQuery(link_id);
+                var fileVersions = await FigmaSharp.AppContext.Api.GetFileVersionsAsync(query);
+                versions = fileVersions.versions.GroupByCreatedAt()
+                    .ToArray();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                versions = new FigmaFileVersion[0];
+            }
 
 			menuManager.Clear();
 

@@ -53,9 +53,8 @@ namespace MonoDevelop.Figma
 				TranslationService = new Services.MonoDevelopTranslationService()
 			};
 
-			await Task.Run(() => {
-				figmaBundle.Update(version, fileProvider, includeImages: includeImages);
-			});
+			await figmaBundle.UpdateAsync(version, fileProvider, includeImages: includeImages);
+
 			await sender.IncludeBundleAsync(monitor, figmaBundle, includeImages: includeImages);
 
 			foreach (var designerFile in projectFiles) {
@@ -217,7 +216,7 @@ namespace MonoDevelop.Figma
 			return currentProject.Files.OfType<ProjectFile>().Where(s => s.HasFigmaDesignerFileExtension());
 		}
 
-		public static FigmaBundle CreateBundle (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, INodeProvider fileProvider, string namesSpace = null)
+		public static async Task<FigmaBundle> CreateBundleAsync (this Project project, string fileId, FigmaSharp.Models.FigmaFileVersion version, INodeProvider fileProvider, string namesSpace = null)
 		{
 			var figmaFolder = project.GetFigmaFolder();
 
@@ -229,7 +228,7 @@ namespace MonoDevelop.Figma
 			var fullBundlePath = Path.Combine (figmaFolder, fileId);
 
 			var bundle = FigmaBundle.Empty (fileId, version, fullBundlePath, namesSpace);
-			bundle.Reload ();
+			await bundle.ReloadAsync ();
 			return bundle;
 		}
 

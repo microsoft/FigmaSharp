@@ -64,18 +64,16 @@ namespace MonoDevelop.Figma.Commands
                     $"Regenerating ‘{bundle.Manifest.DocumentTitle}’…",
                     $"‘{bundle.Manifest.DocumentTitle}’ regenerated successfully");
 
-                await Task.Run(() =>
-                {
-                    //we need to ask to figma server to get nodes as demmand
-                    var fileProvider = new ControlFileNodeProvider(bundle.ResourcesDirectoryPath);
-                    fileProvider.Load(bundle.DocumentFilePath);
-                    bundle.Reload();
+                //we need to ask to figma server to get nodes as demmand
+                var fileProvider = new ControlFileNodeProvider(bundle.ResourcesDirectoryPath);
+                fileProvider.Load(bundle.DocumentFilePath);
+                await bundle.ReloadAsync();
 
-                    var codeRendererService = new NativeViewCodeService(fileProvider) {
-                        TranslationService = new Services.MonoDevelopTranslationService()
-                    };
-                    bundle.SaveAll(includeImages, fileProvider);
-                });
+                var codeRendererService = new NativeViewCodeService(fileProvider)
+                {
+                    TranslationService = new Services.MonoDevelopTranslationService()
+                };
+                await bundle.SaveAllAsync(includeImages, fileProvider);
 
                 await currentFolder.Project.IncludeBundleAsync(monitor, bundle, includeImages)
                     .ConfigureAwait(true);

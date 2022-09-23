@@ -90,7 +90,7 @@ namespace MonoDevelop.Figma
 			}
 		}
 
-		internal async void Load (FigmaBundle bundle, Projects.Project project)
+		internal async Task LoadAsync (FigmaBundle bundle, Projects.Project project)
 		{
 			this.mainBundle = bundle;
 			this.project = project;
@@ -105,25 +105,20 @@ namespace MonoDevelop.Figma
 			ShowLoading(true);
 			EnableViews(false);
 
-			var versionTask = Task.Run(() => {
-				try {
-					var query = new FigmaFileVersionQuery(bundle.FileId);
-					var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query)
-						.versions;
-					var result = figmaFileVersions
-						.GroupByCreatedAt ()
-						.ToArray();
-					return result;
-				} catch (Exception ex) {
-					LoggingService.LogError("[FIGMA] Error.", ex);
-					return null;
-				}
-			});
+			FigmaFileVersion[] versions = null;
+            try
+            {
+                var query = new FigmaFileVersionQuery(bundle.FileId);
+				var response = await FigmaSharp.AppContext.Api.GetFileVersionsAsync(query);
+                versions = response.versions.GroupByCreatedAt().ToArray();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.LogError("[FIGMA] Error.", ex);
+            }
 
 			var figmaDirectory = Path.GetDirectoryName(bundle.DirectoryPath);
 			var currentProjectBundles = GetFromFigmaDirectory(figmaDirectory);
-
-			versions = await versionTask;
 
 			bundlePopUp.RemoveAllItems();
 			foreach (var figmaNode in currentProjectBundles) {

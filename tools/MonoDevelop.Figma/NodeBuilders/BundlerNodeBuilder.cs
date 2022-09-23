@@ -59,7 +59,7 @@ namespace MonoDevelop.Figma
 			return !found;
 		}
 
-		public override void BuildNode (ITreeBuilder builder, object dataObject, NodeInfo nodeInfo)
+		public override async void BuildNode (ITreeBuilder builder, object dataObject, NodeInfo nodeInfo)
 		{
 			if (dataObject is Projects.ProjectFile file)
 			{
@@ -91,32 +91,32 @@ namespace MonoDevelop.Figma
 					}
 				
 					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Stock.Package);
-					Task.Run(() => {
-						var query = new FigmaFileVersionQuery(bundle.FileId);
-						var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions(query).versions;
-						return figmaFileVersions
-							.GroupByCreatedAt()
-							.OrderByDescending (s => s.created_at)
-							.FirstOrDefault ();
-					}).ContinueWith (s => {
-						if (s.Result != null && s.Result.id != bundle.Version.id) {
-							Runtime.RunInMainThread(() => {
-								nodeInfo.StatusIcon = Context.GetIcon(packageUpdateIcon);
 
-								if (s.Result.IsNamed)
-									nodeInfo.StatusMessage = $"Update available: {s.Result.label}";
-								else
-									nodeInfo.StatusMessage = $"Update available: {s.Result.created_at.ToString("g")}";
-							});
-						}
-					});
-					return;
-				}
+                    var query = new FigmaFileVersionQuery(bundle.FileId);
 
-				if (pr.IsFigmaDirectory ()) {
-					nodeInfo.Label = FigmaFolderLabel;
-					nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Resources.Icons.FigmaPad);
-					return;
+					//TODO: make async
+					var figmaFileVersions = await FigmaSharp.AppContext.Api.GetFileVersionsAsync(query);
+                    var versions = figmaFileVersions.versions
+                                 .GroupByCreatedAt()
+                                 .OrderByDescending(s => s.created_at)
+                                 .FirstOrDefault();
+
+                    if (versions != null && versions.id != bundle.Version.id)
+                    {
+                        nodeInfo.StatusIcon = Context.GetIcon(packageUpdateIcon);
+
+                        if (versions.IsNamed)
+                            nodeInfo.StatusMessage = $"Update available: {versions.label}";
+                        else
+                            nodeInfo.StatusMessage = $"Update available: {versions.created_at.ToString("g")}";
+                        return;
+					}
+
+					if (pr.IsFigmaDirectory ()) {
+						nodeInfo.Label = FigmaFolderLabel;
+						nodeInfo.ClosedIcon = nodeInfo.Icon = Context.GetIcon (Resources.Icons.FigmaPad);
+						return;
+					}
 				}
 			}
 		}

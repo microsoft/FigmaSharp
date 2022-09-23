@@ -192,8 +192,8 @@ namespace FigmaSharpApp
 				// so for now use UnderPageBackgroundColor to get a good contrast in all themes
 				//
 				// windowController.Window.BackgroundColor = NativeScrollView.BackgroundColor;
-				windowController.Window.BackgroundColor = NSColor.UnderPageBackgroundColor;
-				NativeScrollView.BackgroundColor = NSColor.UnderPageBackgroundColor;
+				windowController.Window.BackgroundColor = NSColor.UnderPageBackground;
+				NativeScrollView.BackgroundColor = NSColor.UnderPageBackground;
 
 				windowController.UpdatePagesPopupButton(response.document, pageIndex);
 				await windowController.UpdateVersionMenu(DocumentID);

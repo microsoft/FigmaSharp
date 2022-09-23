@@ -121,7 +121,7 @@ namespace FigmaSharp.Controls.Cocoa.Converters
 			var frame = (FigmaFrame) currentNode;
 
             if (frame.absoluteBoundingBox.Height > frame.absoluteBoundingBox.Width)
-				slider.IsVertical = 1;
+				slider.IsVertical = true;
 
 			return view;
 		}

@@ -95,13 +95,9 @@ namespace MonoDevelop.Figma
 			var fileProvider = new ControlRemoteNodeProvider();
 			await fileProvider.LoadAsync (fileId);
 
-			//bundle generation
-			var currentBundle = await Task.Run (() =>
-			{
-				var bundle = currentProject.CreateBundle (fileId, version, fileProvider, namesSpace);
-				bundle.SaveAll (includeImages, fileProvider);
-				return bundle;
-			});
+            //bundle generation
+            var currentBundle = await currentProject.CreateBundleAsync(fileId, version, fileProvider, namesSpace);
+			await currentBundle.SaveAllAsync(includeImages, fileProvider);
 
 			//now we need to add to Monodevelop all the stuff
 			await currentProject.IncludeBundleAsync (monitor, currentBundle, includeImages, savesInProject: false);
@@ -161,19 +157,21 @@ namespace MonoDevelop.Figma
 				figmaUrlTextField.StringValue = fileId;
 			}
 
-			versions = await Task.Run (() => {
-				try {
-					var query = new FigmaFileVersionQuery (fileId);
-					var figmaFileVersions = FigmaSharp.AppContext.Api.GetFileVersions (query).versions;
-					var result = figmaFileVersions
-						.GroupByCreatedAt()
-						.ToArray ();
-					return result;
-				} catch (Exception ex) {
-					LoggingService.LogError ("[FIGMA] Error", ex);
-					return null;
-				}
-			});
+            try
+            {
+                var query = new FigmaFileVersionQuery(fileId);
+
+				var fileVersions = await FigmaSharp.AppContext.Api.GetFileVersionsAsync(query);
+
+				var figmaFileVersions = fileVersions.versions;
+                versions = figmaFileVersions
+                    .GroupByCreatedAt()
+                    .ToArray();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.LogError("[FIGMA] Error", ex);
+            }
 
 			ShowLoading(false);
 		
