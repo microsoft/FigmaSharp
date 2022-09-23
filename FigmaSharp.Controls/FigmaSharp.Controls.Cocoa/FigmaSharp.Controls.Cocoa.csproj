@@ -1,20 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\FigmaSharp.props" />
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\..\bin</OutputPath>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-macos</TargetFramework>
+    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
     <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <UseSGen>false</UseSGen>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <UseSGen>false</UseSGen>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="figma.manifest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Converters\Templates\OutlineView.template.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-    <None Include="Converters\Templates\Resources.template.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-    <None Include="Converters\Templates\TableView.template.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,9 +34,4 @@
     </ProjectReference>
   </ItemGroup>
   
-  <ItemGroup>
-    <Compile Remove="Converters\Templates\OutlineView.template.cs" />
-    <Compile Remove="Converters\Templates\Resources.template.cs" />
-    <Compile Remove="Converters\Templates\TableView.template.cs" />
-  </ItemGroup>
 </Project>

@@ -3,11 +3,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{97A18BDA-8AA6-40E6-9928-B30B49C134E2}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FigmaSharp.Tests</RootNamespace>
-    <AssemblyName>FigmaSharp.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFramework>net6.0-macos</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

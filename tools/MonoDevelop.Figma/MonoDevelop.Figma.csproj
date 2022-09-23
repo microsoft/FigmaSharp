@@ -3,12 +3,12 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>bin\</OutputPath>
-    <TargetFramework>net6.0</TargetFramework>
-       <ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>10.0</LangVersion>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
+    <TargetFramework>net6.0-macos</TargetFramework>
+    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
   </PropertyGroup>
+   <ItemGroup>
+        <PackageReference Include="Microsoft.VisualStudioMac.Sdk" Version="17.0.0" />
+   </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
         <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
@@ -17,10 +17,6 @@
         <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj" />
         <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj" />
         <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj" />
-      </ItemGroup>
-      <ItemGroup>
-        <None Remove="Microsoft.VisualStudioMac.Sdk" />
-        <None Remove="Resources\vs-prefs-figma.png" />
       </ItemGroup>
       <ItemGroup>
         <EmbeddedResource Include="Resources\vs-pad-figma.png">
@@ -121,10 +117,6 @@
         </EmbeddedResource>
       </ItemGroup>
       <ItemGroup>
-        <None Include=".figma\ea4pU30ht61lUJXcr0TFIF\manifest.json" />
-        <None Include=".figma\ea4pU30ht61lUJXcr0TFIF\document.figma" />
-      </ItemGroup>
-      <ItemGroup>
         <BundleResource Include=".figma\ea4pU30ht61lUJXcr0TFIF\Resources\motivation.png" />
       </ItemGroup>
       <ItemGroup>
@@ -146,8 +138,5 @@
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\FigmaPackageWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\GenerateViewsWindow.cs" />
         <Compile Include=".figma\ea4pU30ht61lUJXcr0TFIF\Views\PackageUpdateWindow.cs" />
-      </ItemGroup>
-      <ItemGroup>
-        <PackageReference Include="Microsoft.VisualStudioMac.Sdk" Version="17.0.0-preview.7955" />
       </ItemGroup>
 </Project>

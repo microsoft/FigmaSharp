@@ -2,16 +2,10 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\..\bin</OutputPath>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-macos</TargetFramework>
+    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
     <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Xamarin.Mac">
-      <HintPath>/usr/local/share/dotnet/packs/Microsoft.macOS.Ref/12.0.101-preview.10.251/ref/net6.0/Xamarin.Mac.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
     </ProjectReference>
