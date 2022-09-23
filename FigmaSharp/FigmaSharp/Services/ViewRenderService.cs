@@ -92,9 +92,6 @@ namespace FigmaSharp.Services
         {
             try
             {
-                var processedParentView = new ViewNode(figmaNode, View);
-                NodesProcessed.Add(processedParentView);
-
                 //in canvas we want calculate the bounds size
                 if (figmaNode is FigmaCanvas canvas)
                 {
@@ -103,6 +100,9 @@ namespace FigmaSharp.Services
 
                 if (figmaNode is FigmaCanvas || !options.GenerateMainView)
                 {
+                    var processedParentView = new ViewNode(figmaNode, View);
+                    NodesProcessed.Add(processedParentView);
+
                     if (figmaNode is IFigmaNodeContainer container)
                     {
                         foreach (var item in container.children)
@@ -111,7 +111,7 @@ namespace FigmaSharp.Services
                 }
                 else
                 {
-                    GenerateViewsRecursively(figmaNode, processedParentView, options);
+                    GenerateViewsRecursively(figmaNode, null, options);
                 }
 
                 //Images
