@@ -23,6 +23,9 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using AppKit;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 using FigmaSharp;
 using FigmaSharp.Controls.Cocoa;
