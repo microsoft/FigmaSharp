@@ -39,8 +39,7 @@ namespace FigmaSharpApp
 		string token_message;
 		const string token_message_unsaved = "No token found in keychain";
 
-
-		public OpenLocationViewController (IntPtr handle) : base (handle)
+        public OpenLocationViewController(ObjCRuntime.NativeHandle handle) : base (handle)
 		{
 		}
 
