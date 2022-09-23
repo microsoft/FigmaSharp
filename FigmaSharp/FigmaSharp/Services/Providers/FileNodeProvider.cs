@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.IO;
 
 using FigmaSharp.Helpers;
@@ -38,9 +39,9 @@ namespace FigmaSharp.Services
             ResourcesDirectory = resourcesDirectory;
         }
 
-        public override string GetContentTemplate(string file)
+        public override Task<string> GetContentTemplateAsync(string file)
         {
-            return System.IO.File.ReadAllText(file);
+            return System.IO.File.ReadAllTextAsync(file);
         }
 
         public string ResourcesDirectory { get; set; }

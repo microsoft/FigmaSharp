@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <TargetFramework>net6.0-macos</TargetFramework>
+
+  <TargetFramework>net6.0-macos</TargetFramework>
     <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
     <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <EnableCodeSigning>false</EnableCodeSigning>
     <UseSGen>false</UseSGen>
@@ -20,4 +20,5 @@
     <ProjectReference Include="..\FigmaSharp.Views\FigmaSharp.Views.csproj">
     </ProjectReference>
   </ItemGroup>
+
 </Project>

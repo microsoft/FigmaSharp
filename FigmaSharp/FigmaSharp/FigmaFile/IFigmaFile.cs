@@ -23,6 +23,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using FigmaSharp.Models;
 using FigmaSharp.Views;
@@ -36,6 +37,6 @@ namespace FigmaSharp
 
         void InitializeComponent();
 
-        void Reload ();
+        Task ReloadAsync ();
     }
 }

@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <TargetFramework>net6.0-macos</TargetFramework>
     <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
     <ReleaseVersion>0.1.1</ReleaseVersion>

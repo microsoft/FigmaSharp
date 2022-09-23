@@ -79,20 +79,22 @@ namespace LocalFile.Cocoa
 			const string fileName = "FwVa4JS5QsohRhNEnEBKslFk";
 
 			var fileProvider = new ControlRemoteNodeProvider ();
-			fileProvider.Load(fileName);
+			fileProvider.LoadAsync(fileName).ContinueWith(s =>
+			{
+                var rendererService = new ControlViewRenderingService(fileProvider);
+                //we want to include some special converters to handle windows like normal view containers
+                rendererService.CustomConverters.Add(new EmbededSheetDialogConverter(fileProvider));
+                rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
 
-			var rendererService = new ControlViewRenderingService(fileProvider);
-			//we want to include some special converters to handle windows like normal view containers
-			rendererService.CustomConverters.Add(new EmbededSheetDialogConverter(fileProvider));
-			rendererService.CustomConverters.Add(new EmbededWindowConverter(fileProvider));
+                rendererService.RenderInWindow(mainWindow);
 
-			rendererService.RenderInWindow (mainWindow);
+                new StoryboardLayoutManager()
+                    .Run(mainWindow.Content, rendererService);
 
-			new StoryboardLayoutManager()
-				.Run (mainWindow.Content, rendererService);
+                mainWindow.Center();
 
-            mainWindow.Center();
-		
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
 		}
 
 		#endregion

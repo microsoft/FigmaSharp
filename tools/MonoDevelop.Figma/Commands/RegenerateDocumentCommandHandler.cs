@@ -66,7 +66,7 @@ namespace MonoDevelop.Figma.Commands
 
                 //we need to ask to figma server to get nodes as demmand
                 var fileProvider = new ControlFileNodeProvider(bundle.ResourcesDirectoryPath);
-                fileProvider.Load(bundle.DocumentFilePath);
+                await fileProvider.LoadAsync(bundle.DocumentFilePath);
                 await bundle.ReloadAsync();
 
                 var codeRendererService = new NativeViewCodeService(fileProvider)

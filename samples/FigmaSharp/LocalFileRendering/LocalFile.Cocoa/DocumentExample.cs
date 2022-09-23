@@ -35,10 +35,12 @@ namespace LocalFile.Shared
             scrollView.ContentView = storyboard.ContentView;
 
             //we need reload after set the content to ensure the scrollview
-            storyboard.Reload();
-
-            //now we want recalculate all the bounds based in all the views generated
-            scrollView.AdjustToContent();
+            storyboard.ReloadAsync().ContinueWith((t) =>
+            {
+                //now we want recalculate all the bounds based in all the views generated
+                scrollView.AdjustToContent();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+          
         }
     }
 }

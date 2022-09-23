@@ -59,25 +59,6 @@ namespace FigmaSharp.Designer
 
         string baseDirectory;
 
-        public void Reload(IView contentView, string file, ViewRenderServiceOptions options)
-        {
-            try
-            {
-                rendererService.Start(file, contentView, options);
-                distributionService.Run(contentView, rendererService);
-
-                ReloadFinished?.Invoke(this, EventArgs.Empty);
-            }
-            catch (DirectoryNotFoundException ex)
-            {
-                LoggingService.LogInfo("[FIGMA.RENDERER] Resource directory not found ({0}). Images will not load", ex.Message);
-            }
-            catch (System.Exception ex)
-            {
-                LoggingService.LogError("[FIGMA.RENDERER] Error", ex);
-            }
-        }
-
         public async Task ReloadAsync (IView contentView, string file, ViewRenderServiceOptions options)
         {
             try

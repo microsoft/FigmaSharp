@@ -25,7 +25,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using FigmaSharp.Models;
 
 namespace FigmaSharp.Services
@@ -37,10 +36,9 @@ namespace FigmaSharp.Services
         List<FigmaNode> Nodes { get; }
         FigmaFileResponse Response { get; }
 
-        string GetContentTemplate(string file);
+        Task<string> GetContentTemplateAsync(string file);
 
         Task LoadAsync(string file);
-        void Load(string file);
         void Save(string filePath);
         void OnStartImageLinkProcessing(List<ViewNode> imageVectors);
 

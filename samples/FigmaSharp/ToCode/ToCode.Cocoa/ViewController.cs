@@ -58,15 +58,15 @@ namespace ToCode.Cocoa
 
 		//const string fileIds = "Rg3acHLy7Y0pkBiSWgu0ps";
 
-		public ViewController (IntPtr handle) : base (handle)
+		public ViewController (ObjCRuntime.NativeHandle handle) : base (handle)
 		{
 		}
 
-		public override void ViewDidLoad ()
+		public override async void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
-			copyCSButton.Activated += CopyCSButton_Activated;
+            copyCSButton.Activated += CopyCSButton_Activated;
 			copyDesignerCSButton.Activated += CopyDesignerCSButton_Activated;
 			openUrlButton.Activated += OpenUrlButton_Activated;
 
@@ -84,10 +84,10 @@ namespace ToCode.Cocoa
 			treeHierarchyContainer.TranslatesAutoresizingMaskIntoConstraints = false;
 			scrollView.TranslatesAutoresizingMaskIntoConstraints = false;
 
-			scrollView.TopAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.TopAnchor).Active = true;
-			scrollView.BottomAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.BottomAnchor).Active = true;
-			scrollView.LeadingAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.LeadingAnchor).Active = true;
-			scrollView.TrailingAnchor.ConstraintEqualToAnchor (treeHierarchyContainer.TrailingAnchor).Active = true;
+			scrollView.TopAnchor.ConstraintEqualTo (treeHierarchyContainer.TopAnchor).Active = true;
+			scrollView.BottomAnchor.ConstraintEqualTo(treeHierarchyContainer.BottomAnchor).Active = true;
+			scrollView.LeadingAnchor.ConstraintEqualTo(treeHierarchyContainer.LeadingAnchor).Active = true;
+			scrollView.TrailingAnchor.ConstraintEqualTo(treeHierarchyContainer.TrailingAnchor).Active = true;
 
 			translateButton.State = NSCellStateValue.Off;
 
@@ -96,7 +96,7 @@ namespace ToCode.Cocoa
 			if (File.Exists (FilePath))
             {
 				urlTextField.StringValue = File.ReadAllText(FilePath) ?? string.Empty;
-				RefreshTree(urlTextField.StringValue);
+				await RefreshTreeAsync(urlTextField.StringValue);
             }
 		}
 
@@ -104,11 +104,11 @@ namespace ToCode.Cocoa
 
 		const string UrlRegistryKey = "keyUrl";
 
-		void RefreshTree(string docId)
+		async Task RefreshTreeAsync(string docId)
 		{
 			var converters = FigmaControlsContext.Current.GetConverters();
 			fileProvider = new ControlRemoteNodeProvider();
-			fileProvider.Load(docId);
+			await fileProvider.LoadAsync(docId);
 
 			if (fileProvider.Response == null)
             {
@@ -118,8 +118,6 @@ namespace ToCode.Cocoa
 				var codePropertyConverter = FigmaControlsContext.Current.GetCodePropertyConverter();
 			codeRenderer = new NativeViewCodeService(fileProvider, converters, codePropertyConverter, translationService);
 
-			
-
 			data = new FigmaNodeView(fileProvider.Response.document);
 			figmaDelegate.ConvertToNodes(fileProvider.Response.document, data);
 			outlinePanel.GenerateTree(data);
@@ -127,12 +125,12 @@ namespace ToCode.Cocoa
 			((NSTextView)logTextField.DocumentView).Value = string.Empty;
 		}
 
-        private void UrlTextField_Activated(object sender, EventArgs e)
+        private	async void UrlTextField_Activated(object sender, EventArgs e)
         {
 			if (string.IsNullOrEmpty(urlTextField.StringValue))
 				return;
 			System.IO.File.WriteAllText(FilePath, urlTextField.StringValue);
-			RefreshTree(urlTextField.StringValue);
+			await RefreshTreeAsync(urlTextField.StringValue);
 		}
 
         private void OpenUrlButton_Activated (object sender, EventArgs e)

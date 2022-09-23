@@ -420,37 +420,6 @@ namespace FigmaSharp.Services
             }
         }
 
-        public void Start(string figmaName, IView container, ViewRenderServiceOptions options = null)
-        {
-            if (options == null) {
-                options = new ViewRenderServiceOptions();
-            }
-
-            LoggingService.LogInfo("[FigmaViewRenderer] Starting process..");
-            LoggingService.LogInfo($"Reading {figmaName} from resources..");
-
-            this.container = container;
-
-            try
-            {
-                if (options.LoadFileProvider)
-                    nodeProvider.Load(figmaName ?? nodeProvider.File);
-
-                //we generate all the processed nodes
-                Refresh(options);
-
-                //we render only if there is a canvas and GenerateViews is enabled
-                var canvas = NodesProcessed.FirstOrDefault(s => s.Node is FigmaCanvas);
-                if (canvas != null && options.ConfigureViews) {
-                    RecursivelyConfigureViews(canvas, options);
-                }
-            }
-            catch (Exception ex)
-            {
-                LoggingService.LogError("[FIGMA] Error reading resource.", ex);
-            }
-        }
-
         //TODO: This 
         protected void GenerateViewsRecursively(FigmaNode currentNode, ViewNode parent, ViewRenderServiceOptions options)
         {

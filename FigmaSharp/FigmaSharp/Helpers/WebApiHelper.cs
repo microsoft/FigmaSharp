@@ -77,27 +77,32 @@ namespace FigmaSharp.Helpers
             }
             try
             {
-                //TODO: not safe
-                var fullResourceName = string.Format("{0}.{1}", assembly.GetName().Name, resource);
-                var resources = assembly.GetManifestResourceNames();
-                using (var stream = assembly.GetManifestResourceStream(fullResourceName))
+                foreach (var fullResourceName in new string[]
+                  {
+                        assembly.GetName().Name,
+                        string.Format("{0}.{1}", assembly.GetName().Name, resource)
+                  })
                 {
-                    if (stream == null)
+                    var resources = assembly.GetManifestResourceNames();
+                    using (var stream = assembly.GetManifestResourceStream(fullResourceName))
                     {
-                        LoggingService.LogWarning("Resource '{0}' not found in assembly '{1}'", resource, assembly.FullName);
-                        return null;
+                        if (stream == null)
+                        {
+                            LoggingService.LogWarning("Resource '{0}' not found in assembly '{1}'", resource, assembly.FullName);
+                            return null;
+                        }
+                        using (TextReader tr = new StreamReader(stream))
+                        {
+                            return tr.ReadToEnd();
+                        };
                     }
-                    using (TextReader tr = new StreamReader(stream))
-                    {
-                        return tr.ReadToEnd();
-                    };
                 }
             }
             catch (System.Exception ex)
             {
                 LoggingService.LogError(string.Format("[FIGMA] Cannot read resource '{0}' in assembly '{1}'", resource), ex);
-                return null;
             }
+            return null;
         }
 
         public static FigmaFileResponse GetFigmaResponseFromFileContent (string figmaContent)

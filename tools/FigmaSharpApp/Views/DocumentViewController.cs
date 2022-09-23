@@ -49,7 +49,7 @@ namespace FigmaSharpApp
 		NSScrollView NativeScrollView;
 
 
-		public DocumentViewController(IntPtr handle) : base(handle)
+		public DocumentViewController(ObjCRuntime.NativeHandle handle) : base(handle)
 		{
 		}
 

@@ -1,93 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{b72209a6-b110-468f-b4be-be424397e632}</ProjectGuid>
-     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-   <OutputType>Exe</OutputType>
-    <RootNamespace>LocalFile.Cocoa</RootNamespace>
-    <AssemblyName>LocalFile.Cocoa</AssemblyName>
-     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-            <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-            <ReleaseVersion>0.1.1</ReleaseVersion>
-            <UseXamMacFullFramework>true</UseXamMacFullFramework>
-            <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+    <TargetFramework>net6.0-macos12.3</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
+    <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <EnableCodeSigning>false</EnableCodeSigning>
-    <CodeSigningKey>Mac Developer</CodeSigningKey>
-    <CreatePackage>false</CreatePackage>
-    <EnablePackageSigning>false</EnablePackageSigning>
-    <IncludeMonoRuntime>false</IncludeMonoRuntime>
-    <UseSGen>true</UseSGen>
-    <UseRefCounting>true</UseRefCounting>
-    <Profiling>true</Profiling>
-    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
-    <LinkMode>None</LinkMode>
-    <XamMacArch></XamMacArch>
-    <AOTMode>None</AOTMode>
+    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <DefineConstants></DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <EnableCodeSigning>false</EnableCodeSigning>
-    <CreatePackage>true</CreatePackage>
-    <EnablePackageSigning>false</EnablePackageSigning>
-    <IncludeMonoRuntime>true</IncludeMonoRuntime>
-    <UseSGen>true</UseSGen>
-    <UseRefCounting>true</UseRefCounting>
-    <LinkMode>None</LinkMode>
-    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
-    <XamMacArch></XamMacArch>
-    <AOTMode>None</AOTMode>
+    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.Mac" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
-   <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+   <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-128.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-128%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-16.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-256.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-256%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-32.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-512.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png" />
-    <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <None Remove="FigmaStoryboard.figma" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AppDelegate.cs" />
-    <Compile Include="DocumentExample.cs" />
-    <Compile Include="FigmaStoryboard.figma.cs">
-      <DependentUpon>FigmaStoryboard.figma</DependentUpon>
-      <LogicalName>Storyboard.figma.cs</LogicalName>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Main.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\101-13.png" />
@@ -107,37 +43,52 @@
     <EmbeddedResource Include="Resources\101-45.png" />
     <EmbeddedResource Include="Resources\101-8.png" />
     <EmbeddedResource Include="FigmaStoryboard.figma">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <LogicalName>FigmaStoryboard.figma</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj" />
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj" />
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj" />
+    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj" />
+    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{11142FD4-8D40-4724-883A-52E9A84A099B}</Project>
-      <Name>FigmaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
-      <Project>{A8372FD9-04BB-41F0-85C8-CBAB9E587501}</Project>
-      <Name>FigmaSharp.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj">
-      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
-      <Name>FigmaSharp.Controls.Cocoa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{9B7E2FF6-7A25-4903-9774-1C0FB56B2B19}</Project>
-      <Name>FigmaSharp.Views</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FigmaSharp.Views\FigmaSharp.Views.Cocoa\FigmaSharp.Views.Cocoa.csproj">
-      <Project>{3E0633F6-BD50-4D09-8601-A143F6CFDD44}</Project>
-      <Name>FigmaSharp.Views.Cocoa</Name>
-    </ProjectReference>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Contents.json">
+      <Link>Assets.xcassets\AppIcon.appiconset\Contents.json</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-128.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-128.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-128%402x.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-128%402x.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-16.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-16.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-16%402x.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-256.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-256.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-256%402x.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-256%402x.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-32.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-32.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-32%402x.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-512.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-512.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\Contents.json">
+      <Link>Assets.xcassets\Contents.json</Link>
+    </ImageAsset>
   </ItemGroup>
-     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

@@ -1,50 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0-macos</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
     <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.1</Version>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1">
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CodeGeneratorTests.cs" />
-    <Compile Include="FigmaApiTests.cs" />
-    <Compile Include="LocalFileTests.cs" />
-    <Compile Include="NodeExtensionsTests.cs" />
-    <Compile Include="NodeAccessibility.cs" />
-    <Compile Include="Resources.cs" />
-    <Compile Include="ToCode\CocoaStringObjectTests.cs" />
-    <Compile Include="ToCode\SkipNodeTests.cs" />
-    <Compile Include="NSApplicationInitializer.cs" />
-    <Compile Include="ToCode\PlaceholderTests.cs" />
-    <Compile Include="ToCode\CodePropertyConfigureTests.cs" />
-    <Compile Include="ToCode\Converters\BoxTests.cs" />
-    <Compile Include="ToCode\Converters\ElipseTests.cs" />
-    <Compile Include="ToCode\Converters\StackViewTests.cs" />
-    <Compile Include="ToCode\SampleTestBase.cs" />
-    <Compile Include="ToCode\TestCodeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
@@ -53,37 +16,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls\FigmaSharp.Controls.csproj">
-      <Project>{A138EB90-B46B-4928-A413-7F2E2C3E0CA5}</Project>
-      <Name>FigmaSharp.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views\FigmaSharp.Views.csproj">
-      <Project>{558ECD10-2DD2-4E41-B07B-CBF755C80486}</Project>
-      <Name>FigmaSharp.Views</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp\FigmaSharp.csproj">
-      <Project>{501083B2-B62E-4150-BC0F-5D049DFC6E42}</Project>
-      <Name>FigmaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp.Controls\FigmaSharp.Controls.Cocoa\FigmaSharp.Controls.Cocoa.csproj">
-      <Project>{DA803D6D-59D2-4BA0-8DEC-2C6B054B025C}</Project>
-      <Name>FigmaSharp.Controls.Cocoa</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FigmaSharp\FigmaSharp.Cocoa\FigmaSharp.Cocoa.csproj">
-      <Project>{C16867FC-93FC-4E4C-B4DF-6F40D9615E01}</Project>
-      <Name>FigmaSharp.Cocoa</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Xamarin.Mac">
-      <HintPath>/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/reference/full/Xamarin.Mac.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <XamarinMacFile Include="/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/libxammac.dylib" />
-    <Folder Include="ToCode\Converters\" />
-  </ItemGroup>
-   <Target Name="AfterBuild">
-    <Copy SourceFiles="@(XamarinMacFile)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
-  </Target>
 </Project>

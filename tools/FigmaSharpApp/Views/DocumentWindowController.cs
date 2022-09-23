@@ -48,7 +48,7 @@ namespace FigmaSharpApp
 
 		public event EventHandler RefreshRequested;
 
-		public DocumentWindowController (IntPtr handle) : base (handle)
+		public DocumentWindowController (ObjCRuntime.NativeHandle handle) : base (handle)
 		{
 			UsesDarkMode = NSApplication.SharedApplication.EffectiveAppearance.Name == NSAppearance.NameDarkAqua;
 		}

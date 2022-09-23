@@ -39,7 +39,7 @@ namespace LocalFile.Cocoa
 		//static ExampleViewManager manager;
 		static IScrollView scrollView;
 
-        const string fileName = "WOzDi5CXie6lQeXulTw1CO";
+        const string fileName = "xZVEsz7lWMItsbAooM8unB";
 
 		static void Main (string[] args)
 		{
@@ -69,19 +69,18 @@ namespace LocalFile.Cocoa
 			//we initialize our renderer service, this uses all the converters passed
 			//and generate a collection of NodesProcessed which is basically contains <FigmaModel, IView, FigmaParentModel>
 			var rendererService = new ViewRenderService (fileProvider);
-			rendererService.Start (fileName, scrollView.ContentView);
+			rendererService.StartAsync (fileName, scrollView.ContentView).ContinueWith(s =>
+			{
+                //now we have all the views processed and the relationship we can distribute all the views into the desired base view
+                var layoutManager = new StoryboardLayoutManager();
+                layoutManager.Run(scrollView.ContentView, rendererService);
 
-			//now we have all the views processed and the relationship we can distribute all the views into the desired base view
-			var layoutManager = new StoryboardLayoutManager();
-			layoutManager.Run (scrollView.ContentView, rendererService);
+                //NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
+                scrollView.AdjustToContent();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
 
-			//NOTE: some toolkits requires set the real size of the content of the scrollview before position layers
-			scrollView.AdjustToContent();
-
-			mainWindow.Show ();
-			//mainWindow.Title = manager.WindowTitle;
-
-			NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
+            mainWindow.Show();
+            NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
 			NSApplication.SharedApplication.Run ();
 		}
 	}

@@ -104,8 +104,8 @@ namespace LocalFile.Cocoa
 			Font = NSFont.SystemFontOfSize(SearchFontSize, NSFontWeight.Thin);
 
 			//default size needs to be changed before change cell 
-			WidthAnchor.ConstraintEqualToConstant(DefaultWidth).Active = true;
-			HeightAnchor.ConstraintEqualToConstant(DefaultHeight).Active = true;
+			WidthAnchor.ConstraintGreaterThanOrEqualTo(DefaultWidth).Active = true;
+			HeightAnchor.ConstraintGreaterThanOrEqualTo(DefaultHeight).Active = true;
 		}
 
 		public static nfloat SearchFontSize { get; internal set; } = 11;

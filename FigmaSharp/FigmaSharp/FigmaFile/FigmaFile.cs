@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using FigmaSharp.Converters;
 using FigmaSharp.Models;
@@ -90,13 +91,13 @@ namespace FigmaSharp
         /// <summary>
         /// Reload the specified includeImages.
         /// </summary>
-        public void Reload ()
+        public async Task ReloadAsync ()
         {
             LoggingService.LogInfo($"Loading views..");
             try
             {
                 FigmaImages.Clear();
-                rendererService. Start(file, ContentView);
+                await rendererService.StartAsync(file, ContentView);
 
                 var mainNodes = rendererService.NodesProcessed
                     .Where(s => s.ParentView == null)
@@ -115,7 +116,7 @@ namespace FigmaSharp
         /// </summary>
         public void InitializeComponent ()
         {
-            Reload ();
+            ReloadAsync ();
         }
     }
 }

@@ -28,6 +28,7 @@ using System.Reflection;
 
 using FigmaSharp.Helpers;
 using FigmaSharp.Views;
+using System.Threading.Tasks;
 
 namespace FigmaSharp.Services
 {
@@ -41,9 +42,10 @@ namespace FigmaSharp.Services
             File = file;
         }
 
-        public override string GetContentTemplate(string file)
+        public override Task<string> GetContentTemplateAsync(string file)
         {
-            return AppContext.Current.GetManifestResource(Assembly, file);
+            var resource = AppContext.Current.GetManifestResource(Assembly, file);
+            return Task.FromResult(resource);
         }
 
         public override void OnStartImageLinkProcessing(List<ViewNode> imageFigmaNodes)

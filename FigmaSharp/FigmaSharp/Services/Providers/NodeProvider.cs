@@ -50,9 +50,7 @@ namespace FigmaSharp.Services
 
 		public string File { get; set; }
 
-		public Task LoadAsync(string file) => Task.Run(() => Load(file));
-
-		public void Load (string file)
+		public async Task LoadAsync(string file)
 		{
 			this.File = file;
 
@@ -60,7 +58,7 @@ namespace FigmaSharp.Services
 			try {
 				Nodes.Clear ();
 
-				var contentTemplate = GetContentTemplate (file);
+				var contentTemplate = await GetContentTemplateAsync (file);
 
 				//parse the json into a model format
 				Response = WebApiHelper.GetFigmaResponseFromFileContent (contentTemplate);
@@ -161,7 +159,7 @@ namespace FigmaSharp.Services
 			}
 		}
 
-		public abstract string GetContentTemplate (string file);
+		public abstract Task<string> GetContentTemplateAsync (string file);
 
 		public abstract void OnStartImageLinkProcessing (List<ViewNode> imageFigmaNodes);
 

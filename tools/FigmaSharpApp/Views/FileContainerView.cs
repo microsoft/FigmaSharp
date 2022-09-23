@@ -9,7 +9,7 @@ namespace FigmaSharpApp
 {
 	public partial class FileContainerView : NSView
 	{
-		public FileContainerView (IntPtr handle) : base (handle)
+		public FileContainerView (ObjCRuntime.NativeHandle handle) : base (handle)
 		{
 		}
 
