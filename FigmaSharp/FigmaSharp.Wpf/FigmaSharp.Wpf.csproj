@@ -86,7 +86,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FigmaSharp.Views\FigmaSharp.Views.Wpf\FigmaSharp.Views.Wpf.csproj">
